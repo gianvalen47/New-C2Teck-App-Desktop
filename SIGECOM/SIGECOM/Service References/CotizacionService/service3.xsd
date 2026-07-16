@@ -1,0 +1,806 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+  <xs:element name="ConsultarSugerido">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConsultarSugeridoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ConsultarSugeridoResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataSet" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:element ref="xs:schema" />
+              <xs:any />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarMoneda">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+        <xs:element minOccurs="0" name="pCodMon" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pCodUsu" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pNomPc" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pDirIp" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarMonedaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ActualizarMonedaResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerArchivo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacionArchivo" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerArchivoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="ObtenerArchivoResult" nillable="true" type="q1:CotizacionArchivo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarArchivo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="Registro" nillable="true" type="q2:CotizacionArchivo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarArchivoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertarArchivoResult" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarArchivo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarArchivoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MostrarArchivoResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataSet" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:element ref="xs:schema" />
+              <xs:any />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BorrarArchivo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacionArchivo" type="xs:long" />
+        <xs:element minOccurs="0" name="pCodUsu" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pNomPc" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pDirIp" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BorrarArchivoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BorrarArchivoResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Mostrar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Anual" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MostrarResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataSet" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:element ref="xs:schema" />
+              <xs:any />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarPorId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarPorIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="MostrarPorIdResult" nillable="true" type="q3:Cotizacion" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Filtrar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Mes" type="xs:int" />
+        <xs:element minOccurs="0" name="Anio" type="xs:int" />
+        <xs:element minOccurs="0" name="pIdLocacion" type="xs:int" />
+        <xs:element minOccurs="0" name="pIdCliente" type="xs:int" />
+        <xs:element minOccurs="0" name="pEstado" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pNumCot" type="xs:int" />
+        <xs:element minOccurs="0" name="pIdPer" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FiltrarResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FiltrarResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataSet" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:element ref="xs:schema" />
+              <xs:any />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Buscar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdLocacion" type="xs:int" />
+        <xs:element minOccurs="0" name="pNumCot" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BuscarResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BuscarResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarNumCot">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdLocacion" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarNumCotResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MostrarNumCotResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Insertar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="Clase" nillable="true" type="q4:Cotizacion" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertarResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Actualizar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="Clase" nillable="true" type="q5:Cotizacion" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ActualizarResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Borrar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+        <xs:element minOccurs="0" name="pCodUsu" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BorrarResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BorrarResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerarDocumento">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="TipDoc" type="xs:int" />
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+        <xs:element minOccurs="0" name="pIdLocCli" type="xs:int" />
+        <xs:element minOccurs="0" name="pNumDoc" type="xs:int" />
+        <xs:element minOccurs="0" name="pFecDoc" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="pCodUsu" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pNomPc" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pDirIp" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Detalle" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataTable" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+              <xs:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="pCodJob" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerarDocumentoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GenerarDocumentoResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerarOrden">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+        <xs:element minOccurs="0" name="pFecha" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="pNumOrden" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pCodUsu" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="NomPc" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="DirIp" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="DespachoTotal" type="xs:boolean" />
+        <xs:element minOccurs="0" name="Detalle" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataTable" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+              <xs:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerarOrdenResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GenerarOrdenResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarEstados">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarEstadosResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MostrarEstadosResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataTable" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+              <xs:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarCabecera">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+        <xs:element minOccurs="0" name="pObsCab" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarCabeceraResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ActualizarCabeceraResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarDetalle">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+        <xs:element minOccurs="0" name="pObsDet" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarDetalleResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ActualizarDetalleResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Estado">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EstadoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EstadoResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SugerirNumero">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="TipDoc" type="xs:int" />
+        <xs:element minOccurs="0" name="pIdLocacion" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SugerirNumeroResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SugerirNumeroResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarHistoriaCotizacion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarHistoriaCotizacionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MostrarHistoriaCotizacionResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataSet" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:element ref="xs:schema" />
+              <xs:any />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerHistoriaCotizacion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdHisCoti" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerHistoriaCotizacionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="ObtenerHistoriaCotizacionResult" nillable="true" type="q6:HistoriaCotizacion" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarHistoriaCotizacion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="Clase" nillable="true" type="q7:HistoriaCotizacion" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarHistoriaCotizacionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertarHistoriaCotizacionResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Imprimir">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+        <xs:element minOccurs="0" name="StockPrincipal" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImprimirResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ImprimirResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataSet" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:element ref="xs:schema" />
+              <xs:any />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Reporte">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pCodEmp" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pCodOfi" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pCodAlm" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pFecha1" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="pFecha2" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="pIdCliente" type="xs:int" />
+        <xs:element minOccurs="0" name="pIdPer" type="xs:int" />
+        <xs:element minOccurs="0" name="pEstado" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pIdTipo" type="xs:int" />
+        <xs:element minOccurs="0" name="Opcion" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReporteResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReporteResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataSet" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:element ref="xs:schema" />
+              <xs:any />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerarCotizacion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+        <xs:element minOccurs="0" name="pFecha" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="pNumCot" type="xs:int" />
+        <xs:element minOccurs="0" name="pCodUsu" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pNomPc" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pDirIp" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerarCotizacionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GenerarCotizacionResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecalcularDescuento">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+        <xs:element minOccurs="0" name="Monto" type="xs:double" />
+        <xs:element minOccurs="0" name="pCodUsu" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecalcularDescuentoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RecalcularDescuentoResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarTipoRechazo">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarTipoRechazoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MostrarTipoRechazoResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataSet" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:element ref="xs:schema" />
+              <xs:any />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Rechazar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+        <xs:element minOccurs="0" name="pIdTipo" type="xs:int" />
+        <xs:element minOccurs="0" name="pObservacion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pCodUsu" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pNomPc" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pDirIp" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RechazarResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RechazarResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConsultarEstados">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConsultarEstadosResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ConsultarEstadosResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataSet" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:element ref="xs:schema" />
+              <xs:any />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerarGuiasMasivas">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+        <xs:element minOccurs="0" name="pNumDoc" type="xs:int" />
+        <xs:element minOccurs="0" name="pNumJob" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pFecDoc" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="pCodUsu" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerarGuiasMasivasResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GenerarGuiasMasivasResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarPorIdSugerido">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdSugerido" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarPorIdSugeridoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Models" minOccurs="0" name="MostrarPorIdSugeridoResult" nillable="true" type="q8:SugeridoCotizacion" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BuscarSugerido">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BuscarSugeridoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BuscarSugeridoResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarIdSugerido">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarIdSugeridoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MostrarIdSugeridoResult" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarSugerido">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:long" />
+        <xs:element minOccurs="0" name="pFactorSug" type="xs:double" />
+        <xs:element minOccurs="0" name="pDsctoSug" type="xs:double" />
+        <xs:element minOccurs="0" name="pObservacion" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarSugeridoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertarSugeridoResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarSugerido">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdSugerido" type="xs:long" />
+        <xs:element minOccurs="0" name="pFactorSug" type="xs:double" />
+        <xs:element minOccurs="0" name="pDsctoSug" type="xs:double" />
+        <xs:element minOccurs="0" name="pObservacion" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarSugeridoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ActualizarSugeridoResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BorrarSugerido">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdSugerido" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BorrarSugeridoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BorrarSugeridoResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EnviarCreditos">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:long" />
+        <xs:element minOccurs="0" name="pIdSugerido" type="xs:long" />
+        <xs:element minOccurs="0" name="pCodUsu" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pNomPc" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pDirIp" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EnviarCreditosResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EnviarCreditosResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarValidez">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:long" />
+        <xs:element minOccurs="0" name="pDiasValidez" type="xs:int" />
+        <xs:element minOccurs="0" name="pCodUsu" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pNomPc" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pDirIp" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarValidezResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ActualizarValidezResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BuscarAprobacion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BuscarAprobacionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BuscarAprobacionResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarMercaderiaSinStock">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdCotizacion" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarMercaderiaSinStockResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MostrarMercaderiaSinStockResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

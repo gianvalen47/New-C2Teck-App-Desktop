@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:tns="http://tempuri.org/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="PrecioService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IPrecioService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IPrecioService_PrecioMostrador_InputMessage">
+    <wsdl:part name="parameters" element="tns:PrecioMostrador" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_PrecioMostrador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PrecioMostradorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_PrecioMostrador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_PrecioSPCC_InputMessage">
+    <wsdl:part name="parameters" element="tns:PrecioSPCC" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_PrecioSPCC_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PrecioSPCCResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_PrecioSPCC_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_PrecioOferta_InputMessage">
+    <wsdl:part name="parameters" element="tns:PrecioOferta" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_PrecioOferta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PrecioOfertaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_PrecioOferta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_PrecioFabrica_InputMessage">
+    <wsdl:part name="parameters" element="tns:PrecioFabrica" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_PrecioFabrica_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PrecioFabricaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_PrecioFabrica_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_PrecioVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:PrecioVenta" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_PrecioVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PrecioVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_PrecioVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_FactorCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:FactorCliente" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_FactorCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FactorClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_FactorCliente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_DescuentoCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:DescuentoCliente" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_DescuentoCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DescuentoClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_DescuentoCliente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_MostrarStock_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarStock" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_MostrarStock_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarStockResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPrecioService_MostrarStock_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IPrecioService">
+    <wsdl:operation name="PrecioMostrador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPrecioService/PrecioMostrador" message="tns:IPrecioService_PrecioMostrador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPrecioService/PrecioMostradorResponse" message="tns:IPrecioService_PrecioMostrador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPrecioService_PrecioMostrador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PrecioSPCC">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPrecioService/PrecioSPCC" message="tns:IPrecioService_PrecioSPCC_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPrecioService/PrecioSPCCResponse" message="tns:IPrecioService_PrecioSPCC_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPrecioService_PrecioSPCC_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PrecioOferta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPrecioService/PrecioOferta" message="tns:IPrecioService_PrecioOferta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPrecioService/PrecioOfertaResponse" message="tns:IPrecioService_PrecioOferta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPrecioService_PrecioOferta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PrecioFabrica">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPrecioService/PrecioFabrica" message="tns:IPrecioService_PrecioFabrica_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPrecioService/PrecioFabricaResponse" message="tns:IPrecioService_PrecioFabrica_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPrecioService_PrecioFabrica_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PrecioVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPrecioService/PrecioVenta" message="tns:IPrecioService_PrecioVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPrecioService/PrecioVentaResponse" message="tns:IPrecioService_PrecioVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPrecioService_PrecioVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FactorCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPrecioService/FactorCliente" message="tns:IPrecioService_FactorCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPrecioService/FactorClienteResponse" message="tns:IPrecioService_FactorCliente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPrecioService_FactorCliente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DescuentoCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPrecioService/DescuentoCliente" message="tns:IPrecioService_DescuentoCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPrecioService/DescuentoClienteResponse" message="tns:IPrecioService_DescuentoCliente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPrecioService_DescuentoCliente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarStock">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPrecioService/MostrarStock" message="tns:IPrecioService_MostrarStock_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPrecioService/MostrarStockResponse" message="tns:IPrecioService_MostrarStock_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPrecioService_MostrarStock_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IPrecioService" type="tns:IPrecioService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IPrecioService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="PrecioMostrador">
+      <soap12:operation soapAction="http://tempuri.org/IPrecioService/PrecioMostrador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PrecioSPCC">
+      <soap12:operation soapAction="http://tempuri.org/IPrecioService/PrecioSPCC" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PrecioOferta">
+      <soap12:operation soapAction="http://tempuri.org/IPrecioService/PrecioOferta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PrecioFabrica">
+      <soap12:operation soapAction="http://tempuri.org/IPrecioService/PrecioFabrica" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PrecioVenta">
+      <soap12:operation soapAction="http://tempuri.org/IPrecioService/PrecioVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FactorCliente">
+      <soap12:operation soapAction="http://tempuri.org/IPrecioService/FactorCliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DescuentoCliente">
+      <soap12:operation soapAction="http://tempuri.org/IPrecioService/DescuentoCliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarStock">
+      <soap12:operation soapAction="http://tempuri.org/IPrecioService/MostrarStock" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PrecioService">
+    <wsdl:port name="NetTcpBinding_IPrecioService" binding="tns:NetTcpBinding_IPrecioService">
+      <soap12:address location="net.tcp://192.168.1.248/ServicioBLL/PrecioService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.1.248/ServicioBLL/PrecioService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

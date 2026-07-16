@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="TesoreriaDetService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ITesoreriaDetService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ITesoreriaDetService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_MostrarTipoMedioPago_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoMedioPago" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_MostrarTipoMedioPago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoMedioPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_MostrarTipoMedioPago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_ObtenerCentroCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCentroCosto" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_ObtenerCentroCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCentroCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_ObtenerCentroCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_MostrarCentroCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCentroCosto" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_MostrarCentroCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCentroCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_MostrarCentroCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_InsertarCentroCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCentroCosto" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_InsertarCentroCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCentroCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_InsertarCentroCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Duplicar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Duplicar" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Duplicar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DuplicarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_Duplicar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_MostrarPagosDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPagosDocumento" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_MostrarPagosDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPagosDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITesoreriaDetService_MostrarPagosDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="ITesoreriaDetService">
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITesoreriaDetService/Obtener" message="tns:ITesoreriaDetService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITesoreriaDetService/ObtenerResponse" message="tns:ITesoreriaDetService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITesoreriaDetService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITesoreriaDetService/Mostrar" message="tns:ITesoreriaDetService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITesoreriaDetService/MostrarResponse" message="tns:ITesoreriaDetService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITesoreriaDetService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITesoreriaDetService/Insertar" message="tns:ITesoreriaDetService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITesoreriaDetService/InsertarResponse" message="tns:ITesoreriaDetService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITesoreriaDetService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITesoreriaDetService/Actualizar" message="tns:ITesoreriaDetService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITesoreriaDetService/ActualizarResponse" message="tns:ITesoreriaDetService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITesoreriaDetService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITesoreriaDetService/Borrar" message="tns:ITesoreriaDetService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITesoreriaDetService/BorrarResponse" message="tns:ITesoreriaDetService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITesoreriaDetService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoMedioPago">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITesoreriaDetService/MostrarTipoMedioPago" message="tns:ITesoreriaDetService_MostrarTipoMedioPago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITesoreriaDetService/MostrarTipoMedioPagoResponse" message="tns:ITesoreriaDetService_MostrarTipoMedioPago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITesoreriaDetService_MostrarTipoMedioPago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCentroCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITesoreriaDetService/ObtenerCentroCosto" message="tns:ITesoreriaDetService_ObtenerCentroCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITesoreriaDetService/ObtenerCentroCostoResponse" message="tns:ITesoreriaDetService_ObtenerCentroCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITesoreriaDetService_ObtenerCentroCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCentroCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITesoreriaDetService/MostrarCentroCosto" message="tns:ITesoreriaDetService_MostrarCentroCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITesoreriaDetService/MostrarCentroCostoResponse" message="tns:ITesoreriaDetService_MostrarCentroCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITesoreriaDetService_MostrarCentroCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCentroCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITesoreriaDetService/InsertarCentroCosto" message="tns:ITesoreriaDetService_InsertarCentroCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITesoreriaDetService/InsertarCentroCostoResponse" message="tns:ITesoreriaDetService_InsertarCentroCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITesoreriaDetService_InsertarCentroCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Duplicar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITesoreriaDetService/Duplicar" message="tns:ITesoreriaDetService_Duplicar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITesoreriaDetService/DuplicarResponse" message="tns:ITesoreriaDetService_Duplicar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITesoreriaDetService_Duplicar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPagosDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITesoreriaDetService/MostrarPagosDocumento" message="tns:ITesoreriaDetService_MostrarPagosDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITesoreriaDetService/MostrarPagosDocumentoResponse" message="tns:ITesoreriaDetService_MostrarPagosDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITesoreriaDetService_MostrarPagosDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ITesoreriaDetService" type="tns:ITesoreriaDetService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ITesoreriaDetService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/ITesoreriaDetService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/ITesoreriaDetService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/ITesoreriaDetService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/ITesoreriaDetService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/ITesoreriaDetService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoMedioPago">
+      <soap12:operation soapAction="http://tempuri.org/ITesoreriaDetService/MostrarTipoMedioPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCentroCosto">
+      <soap12:operation soapAction="http://tempuri.org/ITesoreriaDetService/ObtenerCentroCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCentroCosto">
+      <soap12:operation soapAction="http://tempuri.org/ITesoreriaDetService/MostrarCentroCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCentroCosto">
+      <soap12:operation soapAction="http://tempuri.org/ITesoreriaDetService/InsertarCentroCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Duplicar">
+      <soap12:operation soapAction="http://tempuri.org/ITesoreriaDetService/Duplicar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPagosDocumento">
+      <soap12:operation soapAction="http://tempuri.org/ITesoreriaDetService/MostrarPagosDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TesoreriaDetService">
+    <wsdl:port name="NetTcpBinding_ITesoreriaDetService" binding="tns:NetTcpBinding_ITesoreriaDetService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/TesoreriaDetService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/TesoreriaDetService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

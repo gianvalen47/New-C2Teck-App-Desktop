@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:tns="http://tempuri.org/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="ReporteVentaService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IReporteVentaService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IReporteVentaService_RegistroVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroVenta" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaRepuestos_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroAuxiliarVentaRepuestos" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaRepuestos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroAuxiliarVentaRepuestosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaRepuestos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaBaterias_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroAuxiliarVentaBaterias" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaBaterias_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroAuxiliarVentaBateriasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaBaterias_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaServicio_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroAuxiliarVentaServicio" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaServicio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroAuxiliarVentaServicioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaServicio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaMotores_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroAuxiliarVentaMotores" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaMotores_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroAuxiliarVentaMotoresResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaMotores_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaOtros_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroAuxiliarVentaOtros" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaOtros_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroAuxiliarVentaOtrosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaOtros_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaNotaDebito_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroAuxiliarVentaNotaDebito" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaNotaDebito_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroAuxiliarVentaNotaDebitoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaNotaDebito_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaTransGratuita_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroAuxiliarVentaTransGratuita" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaTransGratuita_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroAuxiliarVentaTransGratuitaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVentaTransGratuita_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroResumenVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroResumenVenta" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroResumenVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroResumenVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroResumenVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IReporteVentaService">
+    <wsdl:operation name="RegistroVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroVenta" message="tns:IReporteVentaService_RegistroVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroVentaResponse" message="tns:IReporteVentaService_RegistroVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_RegistroVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistroAuxiliarVentaRepuestos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaRepuestos" message="tns:IReporteVentaService_RegistroAuxiliarVentaRepuestos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaRepuestosResponse" message="tns:IReporteVentaService_RegistroAuxiliarVentaRepuestos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_RegistroAuxiliarVentaRepuestos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistroAuxiliarVentaBaterias">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaBaterias" message="tns:IReporteVentaService_RegistroAuxiliarVentaBaterias_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaBateriasResponse" message="tns:IReporteVentaService_RegistroAuxiliarVentaBaterias_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_RegistroAuxiliarVentaBaterias_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistroAuxiliarVentaServicio">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaServicio" message="tns:IReporteVentaService_RegistroAuxiliarVentaServicio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaServicioResponse" message="tns:IReporteVentaService_RegistroAuxiliarVentaServicio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_RegistroAuxiliarVentaServicio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistroAuxiliarVentaMotores">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaMotores" message="tns:IReporteVentaService_RegistroAuxiliarVentaMotores_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaMotoresResponse" message="tns:IReporteVentaService_RegistroAuxiliarVentaMotores_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_RegistroAuxiliarVentaMotores_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistroAuxiliarVentaOtros">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaOtros" message="tns:IReporteVentaService_RegistroAuxiliarVentaOtros_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaOtrosResponse" message="tns:IReporteVentaService_RegistroAuxiliarVentaOtros_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_RegistroAuxiliarVentaOtros_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistroAuxiliarVentaNotaDebito">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaNotaDebito" message="tns:IReporteVentaService_RegistroAuxiliarVentaNotaDebito_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaNotaDebitoResponse" message="tns:IReporteVentaService_RegistroAuxiliarVentaNotaDebito_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_RegistroAuxiliarVentaNotaDebito_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistroAuxiliarVentaTransGratuita">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaTransGratuita" message="tns:IReporteVentaService_RegistroAuxiliarVentaTransGratuita_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaTransGratuitaResponse" message="tns:IReporteVentaService_RegistroAuxiliarVentaTransGratuita_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_RegistroAuxiliarVentaTransGratuita_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistroResumenVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroResumenVenta" message="tns:IReporteVentaService_RegistroResumenVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroResumenVentaResponse" message="tns:IReporteVentaService_RegistroResumenVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_RegistroResumenVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IReporteVentaService" type="tns:IReporteVentaService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IReporteVentaService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="RegistroVenta">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/RegistroVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RegistroAuxiliarVentaRepuestos">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaRepuestos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RegistroAuxiliarVentaBaterias">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaBaterias" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RegistroAuxiliarVentaServicio">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaServicio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RegistroAuxiliarVentaMotores">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaMotores" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RegistroAuxiliarVentaOtros">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaOtros" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RegistroAuxiliarVentaNotaDebito">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaNotaDebito" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RegistroAuxiliarVentaTransGratuita">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaTransGratuita" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RegistroResumenVenta">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/RegistroResumenVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ReporteVentaService">
+    <wsdl:port name="NetTcpBinding_IReporteVentaService" binding="tns:NetTcpBinding_IReporteVentaService">
+      <soap12:address location="net.tcp://192.168.1.79/ServicioBLL/ReporteVentaService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.1.79/ServicioBLL/ReporteVentaService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,760 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ActivoFijoService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IActivoFijoService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IActivoFijoService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarUbicacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUbicacion" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarUbicacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUbicacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarUbicacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_InsertarGasto_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarGasto" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_InsertarGasto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarGastoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_InsertarGasto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_BorrarGasto_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarGasto" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_BorrarGasto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarGastoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_BorrarGasto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarGasto_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarGasto" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarGasto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarGastoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarGasto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_BuscarGasto_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGasto" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_BuscarGasto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGastoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_BuscarGasto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ActualizarObservacionGasto_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarObservacionGasto" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ActualizarObservacionGasto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarObservacionGastoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ActualizarObservacionGasto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarTipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipo" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarTipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarTipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_DarBaja_InputMessage">
+    <wsdl:part name="parameters" element="tns:DarBaja" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_DarBaja_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DarBajaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_DarBaja_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ConsultarMemos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarMemos" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ConsultarMemos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarMemosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ConsultarMemos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ObtenerObservacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerObservacion" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ObtenerObservacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerObservacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ObtenerObservacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarObservacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarObservacion" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarObservacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarObservacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarObservacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_InsertarObservacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarObservacion" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_InsertarObservacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarObservacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_InsertarObservacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ActualizarObservacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarObservacion" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ActualizarObservacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarObservacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ActualizarObservacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_BorrarObservacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarObservacion" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_BorrarObservacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarObservacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_BorrarObservacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarArchivo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarArchivo" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarArchivo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarArchivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_MostrarArchivo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ObtenerArchivo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerArchivo" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ObtenerArchivo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerArchivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ObtenerArchivo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_InsertarArchivo_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarArchivo" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_InsertarArchivo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarArchivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_InsertarArchivo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ActualizarArchivo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarArchivo" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ActualizarArchivo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarArchivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_ActualizarArchivo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_BorrarArchivo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarArchivo" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_BorrarArchivo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarArchivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_BorrarArchivo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Reporte_InputMessage">
+    <wsdl:part name="parameters" element="tns:Reporte" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Reporte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActivoFijoService_Reporte_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IActivoFijoService">
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/Obtener" message="tns:IActivoFijoService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/ObtenerResponse" message="tns:IActivoFijoService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/Buscar" message="tns:IActivoFijoService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/BuscarResponse" message="tns:IActivoFijoService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/Filtrar" message="tns:IActivoFijoService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/FiltrarResponse" message="tns:IActivoFijoService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/Insertar" message="tns:IActivoFijoService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/InsertarResponse" message="tns:IActivoFijoService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/Actualizar" message="tns:IActivoFijoService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/ActualizarResponse" message="tns:IActivoFijoService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/Borrar" message="tns:IActivoFijoService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/BorrarResponse" message="tns:IActivoFijoService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUbicacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/MostrarUbicacion" message="tns:IActivoFijoService_MostrarUbicacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/MostrarUbicacionResponse" message="tns:IActivoFijoService_MostrarUbicacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_MostrarUbicacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/MostrarEstados" message="tns:IActivoFijoService_MostrarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/MostrarEstadosResponse" message="tns:IActivoFijoService_MostrarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_MostrarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarGasto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/InsertarGasto" message="tns:IActivoFijoService_InsertarGasto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/InsertarGastoResponse" message="tns:IActivoFijoService_InsertarGasto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_InsertarGasto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarGasto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/BorrarGasto" message="tns:IActivoFijoService_BorrarGasto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/BorrarGastoResponse" message="tns:IActivoFijoService_BorrarGasto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_BorrarGasto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarGasto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/MostrarGasto" message="tns:IActivoFijoService_MostrarGasto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/MostrarGastoResponse" message="tns:IActivoFijoService_MostrarGasto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_MostrarGasto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGasto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/BuscarGasto" message="tns:IActivoFijoService_BuscarGasto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/BuscarGastoResponse" message="tns:IActivoFijoService_BuscarGasto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_BuscarGasto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarObservacionGasto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/ActualizarObservacionGasto" message="tns:IActivoFijoService_ActualizarObservacionGasto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/ActualizarObservacionGastoResponse" message="tns:IActivoFijoService_ActualizarObservacionGasto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_ActualizarObservacionGasto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/MostrarTipo" message="tns:IActivoFijoService_MostrarTipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/MostrarTipoResponse" message="tns:IActivoFijoService_MostrarTipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_MostrarTipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DarBaja">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/DarBaja" message="tns:IActivoFijoService_DarBaja_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/DarBajaResponse" message="tns:IActivoFijoService_DarBaja_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_DarBaja_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarMemos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/ConsultarMemos" message="tns:IActivoFijoService_ConsultarMemos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/ConsultarMemosResponse" message="tns:IActivoFijoService_ConsultarMemos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_ConsultarMemos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerObservacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/ObtenerObservacion" message="tns:IActivoFijoService_ObtenerObservacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/ObtenerObservacionResponse" message="tns:IActivoFijoService_ObtenerObservacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_ObtenerObservacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarObservacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/MostrarObservacion" message="tns:IActivoFijoService_MostrarObservacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/MostrarObservacionResponse" message="tns:IActivoFijoService_MostrarObservacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_MostrarObservacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarObservacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/InsertarObservacion" message="tns:IActivoFijoService_InsertarObservacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/InsertarObservacionResponse" message="tns:IActivoFijoService_InsertarObservacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_InsertarObservacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarObservacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/ActualizarObservacion" message="tns:IActivoFijoService_ActualizarObservacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/ActualizarObservacionResponse" message="tns:IActivoFijoService_ActualizarObservacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_ActualizarObservacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarObservacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/BorrarObservacion" message="tns:IActivoFijoService_BorrarObservacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/BorrarObservacionResponse" message="tns:IActivoFijoService_BorrarObservacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_BorrarObservacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarArchivo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/MostrarArchivo" message="tns:IActivoFijoService_MostrarArchivo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/MostrarArchivoResponse" message="tns:IActivoFijoService_MostrarArchivo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_MostrarArchivo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArchivo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/ObtenerArchivo" message="tns:IActivoFijoService_ObtenerArchivo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/ObtenerArchivoResponse" message="tns:IActivoFijoService_ObtenerArchivo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_ObtenerArchivo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarArchivo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/InsertarArchivo" message="tns:IActivoFijoService_InsertarArchivo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/InsertarArchivoResponse" message="tns:IActivoFijoService_InsertarArchivo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_InsertarArchivo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarArchivo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/ActualizarArchivo" message="tns:IActivoFijoService_ActualizarArchivo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/ActualizarArchivoResponse" message="tns:IActivoFijoService_ActualizarArchivo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_ActualizarArchivo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarArchivo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/BorrarArchivo" message="tns:IActivoFijoService_BorrarArchivo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/BorrarArchivoResponse" message="tns:IActivoFijoService_BorrarArchivo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_BorrarArchivo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Reporte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActivoFijoService/Reporte" message="tns:IActivoFijoService_Reporte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActivoFijoService/ReporteResponse" message="tns:IActivoFijoService_Reporte_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IActivoFijoService_Reporte_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IActivoFijoService" type="tns:IActivoFijoService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IActivoFijoService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUbicacion">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/MostrarUbicacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/MostrarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarGasto">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/InsertarGasto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarGasto">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/BorrarGasto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarGasto">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/MostrarGasto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGasto">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/BuscarGasto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarObservacionGasto">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/ActualizarObservacionGasto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipo">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/MostrarTipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DarBaja">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/DarBaja" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarMemos">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/ConsultarMemos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerObservacion">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/ObtenerObservacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarObservacion">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/MostrarObservacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarObservacion">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/InsertarObservacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarObservacion">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/ActualizarObservacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarObservacion">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/BorrarObservacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarArchivo">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/MostrarArchivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArchivo">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/ObtenerArchivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarArchivo">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/InsertarArchivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarArchivo">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/ActualizarArchivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarArchivo">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/BorrarArchivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Reporte">
+      <soap12:operation soapAction="http://tempuri.org/IActivoFijoService/Reporte" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ActivoFijoService">
+    <wsdl:port name="NetTcpBinding_IActivoFijoService" binding="tns:NetTcpBinding_IActivoFijoService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/ActivoFijoService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/ActivoFijoService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

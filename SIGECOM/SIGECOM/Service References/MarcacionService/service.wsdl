@@ -1,0 +1,500 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MarcacionService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IMarcacionService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMarcacionService_MostrarLectores_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLectores" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_MostrarLectores_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLectoresResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_MostrarLectores_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_InsertarMarcacionEquipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMarcacionEquipo" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_InsertarMarcacionEquipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMarcacionEquipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_InsertarMarcacionEquipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_BuscarPago_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPago" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_BuscarPago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_BuscarPago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ReporteAsistencia_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteAsistencia" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ReporteAsistencia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteAsistenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ReporteAsistencia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ReporteTardanza_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteTardanza" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ReporteTardanza_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteTardanzaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ReporteTardanza_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ObtenerDirIp_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDirIp" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ObtenerDirIp_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDirIpResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ObtenerDirIp_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ObtenerPuerto_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPuerto" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ObtenerPuerto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPuertoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ObtenerPuerto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_DescargarMarcas_InputMessage">
+    <wsdl:part name="parameters" element="tns:DescargarMarcas" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_DescargarMarcas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DescargarMarcasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_DescargarMarcas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ProcesarMarcas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarMarcas" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ProcesarMarcas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarMarcasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ProcesarMarcas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ObtenerModelo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerModelo" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ObtenerModelo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerModeloResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ObtenerModelo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ReordenarMarcacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReordenarMarcacion" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ReordenarMarcacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReordenarMarcacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_ReordenarMarcacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_MostrarLectoresEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLectoresEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_MostrarLectoresEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLectoresEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionService_MostrarLectoresEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IMarcacionService">
+    <wsdl:operation name="MostrarLectores">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/MostrarLectores" message="tns:IMarcacionService_MostrarLectores_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/MostrarLectoresResponse" message="tns:IMarcacionService_MostrarLectores_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_MostrarLectores_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/Obtener" message="tns:IMarcacionService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/ObtenerResponse" message="tns:IMarcacionService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/Filtrar" message="tns:IMarcacionService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/FiltrarResponse" message="tns:IMarcacionService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/Insertar" message="tns:IMarcacionService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/InsertarResponse" message="tns:IMarcacionService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/Actualizar" message="tns:IMarcacionService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/ActualizarResponse" message="tns:IMarcacionService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/Borrar" message="tns:IMarcacionService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/BorrarResponse" message="tns:IMarcacionService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMarcacionEquipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/InsertarMarcacionEquipo" message="tns:IMarcacionService_InsertarMarcacionEquipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/InsertarMarcacionEquipoResponse" message="tns:IMarcacionService_InsertarMarcacionEquipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_InsertarMarcacionEquipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/BuscarPago" message="tns:IMarcacionService_BuscarPago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/BuscarPagoResponse" message="tns:IMarcacionService_BuscarPago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_BuscarPago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteAsistencia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/ReporteAsistencia" message="tns:IMarcacionService_ReporteAsistencia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/ReporteAsistenciaResponse" message="tns:IMarcacionService_ReporteAsistencia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_ReporteAsistencia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteTardanza">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/ReporteTardanza" message="tns:IMarcacionService_ReporteTardanza_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/ReporteTardanzaResponse" message="tns:IMarcacionService_ReporteTardanza_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_ReporteTardanza_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDirIp">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/ObtenerDirIp" message="tns:IMarcacionService_ObtenerDirIp_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/ObtenerDirIpResponse" message="tns:IMarcacionService_ObtenerDirIp_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_ObtenerDirIp_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPuerto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/ObtenerPuerto" message="tns:IMarcacionService_ObtenerPuerto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/ObtenerPuertoResponse" message="tns:IMarcacionService_ObtenerPuerto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_ObtenerPuerto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DescargarMarcas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/DescargarMarcas" message="tns:IMarcacionService_DescargarMarcas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/DescargarMarcasResponse" message="tns:IMarcacionService_DescargarMarcas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_DescargarMarcas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarMarcas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/ProcesarMarcas" message="tns:IMarcacionService_ProcesarMarcas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/ProcesarMarcasResponse" message="tns:IMarcacionService_ProcesarMarcas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_ProcesarMarcas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerModelo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/ObtenerModelo" message="tns:IMarcacionService_ObtenerModelo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/ObtenerModeloResponse" message="tns:IMarcacionService_ObtenerModelo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_ObtenerModelo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReordenarMarcacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/ReordenarMarcacion" message="tns:IMarcacionService_ReordenarMarcacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/ReordenarMarcacionResponse" message="tns:IMarcacionService_ReordenarMarcacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_ReordenarMarcacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLectoresEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionService/MostrarLectoresEmpresa" message="tns:IMarcacionService_MostrarLectoresEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionService/MostrarLectoresEmpresaResponse" message="tns:IMarcacionService_MostrarLectoresEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionService_MostrarLectoresEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IMarcacionService" type="tns:IMarcacionService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IMarcacionService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="MostrarLectores">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/MostrarLectores" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMarcacionEquipo">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/InsertarMarcacionEquipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPago">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/BuscarPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteAsistencia">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/ReporteAsistencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteTardanza">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/ReporteTardanza" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDirIp">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/ObtenerDirIp" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPuerto">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/ObtenerPuerto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DescargarMarcas">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/DescargarMarcas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarMarcas">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/ProcesarMarcas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerModelo">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/ObtenerModelo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReordenarMarcacion">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/ReordenarMarcacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLectoresEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionService/MostrarLectoresEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MarcacionService">
+    <wsdl:port name="NetTcpBinding_IMarcacionService" binding="tns:NetTcpBinding_IMarcacionService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/MarcacionService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/MarcacionService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

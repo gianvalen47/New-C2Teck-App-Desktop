@@ -1,0 +1,760 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CuentaContableService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ICuentaContableService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ICuentaContableService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BuscarCuenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarCuenta" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BuscarCuenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarCuentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BuscarCuenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_InsertarMayor_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMayor" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_InsertarMayor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMayorResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_InsertarMayor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ActualizarMayor_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMayor" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ActualizarMayor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMayorResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ActualizarMayor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BorrarMayor_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarMayor" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BorrarMayor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarMayorResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BorrarMayor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_FiltrarMayor_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarMayor" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_FiltrarMayor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarMayorResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_FiltrarMayor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BuscarMayor_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarMayor" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BuscarMayor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarMayorResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BuscarMayor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ObtenerMayor_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerMayor" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ObtenerMayor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerMayorResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ObtenerMayor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_InsertarSubCuenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarSubCuenta" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_InsertarSubCuenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarSubCuentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_InsertarSubCuenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ActualizarSubCuenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarSubCuenta" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ActualizarSubCuenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarSubCuentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ActualizarSubCuenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BorrarSubCuenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarSubCuenta" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BorrarSubCuenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarSubCuentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BorrarSubCuenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_MostrarSubCuenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSubCuenta" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_MostrarSubCuenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSubCuentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_MostrarSubCuenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ObtenerSubCuenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerSubCuenta" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ObtenerSubCuenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerSubCuentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ObtenerSubCuenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BuscarSubCuenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarSubCuenta" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BuscarSubCuenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarSubCuentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BuscarSubCuenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_MostrarCuentas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCuentas" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_MostrarCuentas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCuentasResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_MostrarCuentas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_InsertarCuentaDestino_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCuentaDestino" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_InsertarCuentaDestino_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCuentaDestinoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_InsertarCuentaDestino_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ActualizarCuentaDestino_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCuentaDestino" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ActualizarCuentaDestino_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCuentaDestinoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ActualizarCuentaDestino_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BorrarCuentaDestino_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCuentaDestino" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BorrarCuentaDestino_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCuentaDestinoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_BorrarCuentaDestino_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_FiltrarCuentaDestino_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarCuentaDestino" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_FiltrarCuentaDestino_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarCuentaDestinoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_FiltrarCuentaDestino_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ObtenerCuentaDestino_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCuentaDestino" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ObtenerCuentaDestino_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCuentaDestinoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ObtenerCuentaDestino_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_MostrarProcesoDifCam_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarProcesoDifCam" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_MostrarProcesoDifCam_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarProcesoDifCamResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_MostrarProcesoDifCam_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ObtenerIdCuenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdCuenta" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ObtenerIdCuenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdCuentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_ObtenerIdCuenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICuentaContableService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="ICuentaContableService">
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/Obtener" message="tns:ICuentaContableService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/ObtenerResponse" message="tns:ICuentaContableService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarCuenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/BuscarCuenta" message="tns:ICuentaContableService_BuscarCuenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/BuscarCuentaResponse" message="tns:ICuentaContableService_BuscarCuenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_BuscarCuenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/Filtrar" message="tns:ICuentaContableService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/FiltrarResponse" message="tns:ICuentaContableService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/Insertar" message="tns:ICuentaContableService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/InsertarResponse" message="tns:ICuentaContableService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/Actualizar" message="tns:ICuentaContableService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/ActualizarResponse" message="tns:ICuentaContableService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/Borrar" message="tns:ICuentaContableService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/BorrarResponse" message="tns:ICuentaContableService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMayor">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/InsertarMayor" message="tns:ICuentaContableService_InsertarMayor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/InsertarMayorResponse" message="tns:ICuentaContableService_InsertarMayor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_InsertarMayor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMayor">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/ActualizarMayor" message="tns:ICuentaContableService_ActualizarMayor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/ActualizarMayorResponse" message="tns:ICuentaContableService_ActualizarMayor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_ActualizarMayor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarMayor">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/BorrarMayor" message="tns:ICuentaContableService_BorrarMayor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/BorrarMayorResponse" message="tns:ICuentaContableService_BorrarMayor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_BorrarMayor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarMayor">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/FiltrarMayor" message="tns:ICuentaContableService_FiltrarMayor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/FiltrarMayorResponse" message="tns:ICuentaContableService_FiltrarMayor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_FiltrarMayor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarMayor">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/BuscarMayor" message="tns:ICuentaContableService_BuscarMayor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/BuscarMayorResponse" message="tns:ICuentaContableService_BuscarMayor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_BuscarMayor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMayor">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/ObtenerMayor" message="tns:ICuentaContableService_ObtenerMayor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/ObtenerMayorResponse" message="tns:ICuentaContableService_ObtenerMayor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_ObtenerMayor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarSubCuenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/InsertarSubCuenta" message="tns:ICuentaContableService_InsertarSubCuenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/InsertarSubCuentaResponse" message="tns:ICuentaContableService_InsertarSubCuenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_InsertarSubCuenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarSubCuenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/ActualizarSubCuenta" message="tns:ICuentaContableService_ActualizarSubCuenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/ActualizarSubCuentaResponse" message="tns:ICuentaContableService_ActualizarSubCuenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_ActualizarSubCuenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarSubCuenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/BorrarSubCuenta" message="tns:ICuentaContableService_BorrarSubCuenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/BorrarSubCuentaResponse" message="tns:ICuentaContableService_BorrarSubCuenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_BorrarSubCuenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSubCuenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/MostrarSubCuenta" message="tns:ICuentaContableService_MostrarSubCuenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/MostrarSubCuentaResponse" message="tns:ICuentaContableService_MostrarSubCuenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_MostrarSubCuenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerSubCuenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/ObtenerSubCuenta" message="tns:ICuentaContableService_ObtenerSubCuenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/ObtenerSubCuentaResponse" message="tns:ICuentaContableService_ObtenerSubCuenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_ObtenerSubCuenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarSubCuenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/BuscarSubCuenta" message="tns:ICuentaContableService_BuscarSubCuenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/BuscarSubCuentaResponse" message="tns:ICuentaContableService_BuscarSubCuenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_BuscarSubCuenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCuentas">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/MostrarCuentas" message="tns:ICuentaContableService_MostrarCuentas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/MostrarCuentasResponse" message="tns:ICuentaContableService_MostrarCuentas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_MostrarCuentas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCuentaDestino">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/InsertarCuentaDestino" message="tns:ICuentaContableService_InsertarCuentaDestino_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/InsertarCuentaDestinoResponse" message="tns:ICuentaContableService_InsertarCuentaDestino_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_InsertarCuentaDestino_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCuentaDestino">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/ActualizarCuentaDestino" message="tns:ICuentaContableService_ActualizarCuentaDestino_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/ActualizarCuentaDestinoResponse" message="tns:ICuentaContableService_ActualizarCuentaDestino_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_ActualizarCuentaDestino_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCuentaDestino">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/BorrarCuentaDestino" message="tns:ICuentaContableService_BorrarCuentaDestino_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/BorrarCuentaDestinoResponse" message="tns:ICuentaContableService_BorrarCuentaDestino_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_BorrarCuentaDestino_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarCuentaDestino">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/FiltrarCuentaDestino" message="tns:ICuentaContableService_FiltrarCuentaDestino_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/FiltrarCuentaDestinoResponse" message="tns:ICuentaContableService_FiltrarCuentaDestino_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_FiltrarCuentaDestino_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCuentaDestino">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/ObtenerCuentaDestino" message="tns:ICuentaContableService_ObtenerCuentaDestino_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/ObtenerCuentaDestinoResponse" message="tns:ICuentaContableService_ObtenerCuentaDestino_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_ObtenerCuentaDestino_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarProcesoDifCam">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/MostrarProcesoDifCam" message="tns:ICuentaContableService_MostrarProcesoDifCam_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/MostrarProcesoDifCamResponse" message="tns:ICuentaContableService_MostrarProcesoDifCam_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_MostrarProcesoDifCam_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdCuenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/ObtenerIdCuenta" message="tns:ICuentaContableService_ObtenerIdCuenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/ObtenerIdCuentaResponse" message="tns:ICuentaContableService_ObtenerIdCuenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_ObtenerIdCuenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICuentaContableService/Imprimir" message="tns:ICuentaContableService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICuentaContableService/ImprimirResponse" message="tns:ICuentaContableService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICuentaContableService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ICuentaContableService" type="tns:ICuentaContableService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ICuentaContableService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarCuenta">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/BuscarCuenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMayor">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/InsertarMayor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMayor">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/ActualizarMayor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarMayor">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/BorrarMayor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarMayor">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/FiltrarMayor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarMayor">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/BuscarMayor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMayor">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/ObtenerMayor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarSubCuenta">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/InsertarSubCuenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarSubCuenta">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/ActualizarSubCuenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarSubCuenta">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/BorrarSubCuenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSubCuenta">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/MostrarSubCuenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerSubCuenta">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/ObtenerSubCuenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarSubCuenta">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/BuscarSubCuenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCuentas">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/MostrarCuentas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCuentaDestino">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/InsertarCuentaDestino" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCuentaDestino">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/ActualizarCuentaDestino" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCuentaDestino">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/BorrarCuentaDestino" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarCuentaDestino">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/FiltrarCuentaDestino" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCuentaDestino">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/ObtenerCuentaDestino" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarProcesoDifCam">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/MostrarProcesoDifCam" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdCuenta">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/ObtenerIdCuenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/ICuentaContableService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CuentaContableService">
+    <wsdl:port name="NetTcpBinding_ICuentaContableService" binding="tns:NetTcpBinding_ICuentaContableService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/CuentaContableService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/CuentaContableService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

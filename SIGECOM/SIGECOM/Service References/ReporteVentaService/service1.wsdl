@@ -1,0 +1,525 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReporteVentaService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IReporteVentaService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IReporteVentaService_RegistroVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroVenta" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroResumenVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroResumenVenta" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroResumenVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroResumenVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroResumenVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_VentaDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:VentaDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_VentaDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VentaDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_VentaDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_VentaAcumulada_InputMessage">
+    <wsdl:part name="parameters" element="tns:VentaAcumulada" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_VentaAcumulada_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VentaAcumuladaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_VentaAcumulada_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_VentaGuias_InputMessage">
+    <wsdl:part name="parameters" element="tns:VentaGuias" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_VentaGuias_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VentaGuiasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_VentaGuias_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_MostrarMotivosVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMotivosVenta" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_MostrarMotivosVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMotivosVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_MostrarMotivosVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteGerCuadroVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerCuadroVenta" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteGerCuadroVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerCuadroVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteGerCuadroVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteGerVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerVenta" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteGerVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteGerVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteIndicadores_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteIndicadores" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteIndicadores_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteIndicadoresResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteIndicadores_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteMensualxCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteMensualxCliente" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteMensualxCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteMensualxClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteMensualxCliente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_FiltrarDocumentos_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarDocumentos" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_FiltrarDocumentos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarDocumentosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_FiltrarDocumentos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_MostrarTipoDocumentoVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumentoVenta" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_MostrarTipoDocumentoVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumentoVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_MostrarTipoDocumentoVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_TarjetaCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:TarjetaCliente" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_TarjetaCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TarjetaClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_TarjetaCliente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteIndicadoresComercial_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteIndicadoresComercial" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteIndicadoresComercial_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteIndicadoresComercialResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteIndicadoresComercial_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_FiltrarIndicadoresComercialAnual_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarIndicadoresComercialAnual" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_FiltrarIndicadoresComercialAnual_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarIndicadoresComercialAnualResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_FiltrarIndicadoresComercialAnual_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_FiltrarIndicadoresComercialMensual_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarIndicadoresComercialMensual" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_FiltrarIndicadoresComercialMensual_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarIndicadoresComercialMensualResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_FiltrarIndicadoresComercialMensual_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteRegistroConsignaciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteRegistroConsignaciones" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteRegistroConsignaciones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteRegistroConsignacionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_ReporteRegistroConsignaciones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroAuxiliarVenta" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistroAuxiliarVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReporteVentaService_RegistroAuxiliarVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IReporteVentaService">
+    <wsdl:operation name="RegistroVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroVenta" message="tns:IReporteVentaService_RegistroVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroVentaResponse" message="tns:IReporteVentaService_RegistroVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_RegistroVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistroResumenVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroResumenVenta" message="tns:IReporteVentaService_RegistroResumenVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroResumenVentaResponse" message="tns:IReporteVentaService_RegistroResumenVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_RegistroResumenVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VentaDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/VentaDetalle" message="tns:IReporteVentaService_VentaDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/VentaDetalleResponse" message="tns:IReporteVentaService_VentaDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_VentaDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VentaAcumulada">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/VentaAcumulada" message="tns:IReporteVentaService_VentaAcumulada_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/VentaAcumuladaResponse" message="tns:IReporteVentaService_VentaAcumulada_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_VentaAcumulada_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VentaGuias">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/VentaGuias" message="tns:IReporteVentaService_VentaGuias_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/VentaGuiasResponse" message="tns:IReporteVentaService_VentaGuias_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_VentaGuias_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMotivosVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/MostrarMotivosVenta" message="tns:IReporteVentaService_MostrarMotivosVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/MostrarMotivosVentaResponse" message="tns:IReporteVentaService_MostrarMotivosVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_MostrarMotivosVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerCuadroVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/ReporteGerCuadroVenta" message="tns:IReporteVentaService_ReporteGerCuadroVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/ReporteGerCuadroVentaResponse" message="tns:IReporteVentaService_ReporteGerCuadroVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_ReporteGerCuadroVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/ReporteGerVenta" message="tns:IReporteVentaService_ReporteGerVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/ReporteGerVentaResponse" message="tns:IReporteVentaService_ReporteGerVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_ReporteGerVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteIndicadores">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/ReporteIndicadores" message="tns:IReporteVentaService_ReporteIndicadores_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/ReporteIndicadoresResponse" message="tns:IReporteVentaService_ReporteIndicadores_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_ReporteIndicadores_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteMensualxCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/ReporteMensualxCliente" message="tns:IReporteVentaService_ReporteMensualxCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/ReporteMensualxClienteResponse" message="tns:IReporteVentaService_ReporteMensualxCliente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_ReporteMensualxCliente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarDocumentos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/FiltrarDocumentos" message="tns:IReporteVentaService_FiltrarDocumentos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/FiltrarDocumentosResponse" message="tns:IReporteVentaService_FiltrarDocumentos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_FiltrarDocumentos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDocumentoVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/MostrarTipoDocumentoVenta" message="tns:IReporteVentaService_MostrarTipoDocumentoVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/MostrarTipoDocumentoVentaResponse" message="tns:IReporteVentaService_MostrarTipoDocumentoVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_MostrarTipoDocumentoVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TarjetaCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/TarjetaCliente" message="tns:IReporteVentaService_TarjetaCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/TarjetaClienteResponse" message="tns:IReporteVentaService_TarjetaCliente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_TarjetaCliente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteIndicadoresComercial">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/ReporteIndicadoresComercial" message="tns:IReporteVentaService_ReporteIndicadoresComercial_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/ReporteIndicadoresComercialResponse" message="tns:IReporteVentaService_ReporteIndicadoresComercial_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_ReporteIndicadoresComercial_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarIndicadoresComercialAnual">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/FiltrarIndicadoresComercialAnual" message="tns:IReporteVentaService_FiltrarIndicadoresComercialAnual_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/FiltrarIndicadoresComercialAnualResponse" message="tns:IReporteVentaService_FiltrarIndicadoresComercialAnual_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_FiltrarIndicadoresComercialAnual_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarIndicadoresComercialMensual">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/FiltrarIndicadoresComercialMensual" message="tns:IReporteVentaService_FiltrarIndicadoresComercialMensual_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/FiltrarIndicadoresComercialMensualResponse" message="tns:IReporteVentaService_FiltrarIndicadoresComercialMensual_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_FiltrarIndicadoresComercialMensual_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteRegistroConsignaciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/ReporteRegistroConsignaciones" message="tns:IReporteVentaService_ReporteRegistroConsignaciones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/ReporteRegistroConsignacionesResponse" message="tns:IReporteVentaService_ReporteRegistroConsignaciones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_ReporteRegistroConsignaciones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistroAuxiliarVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVenta" message="tns:IReporteVentaService_RegistroAuxiliarVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVentaResponse" message="tns:IReporteVentaService_RegistroAuxiliarVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReporteVentaService_RegistroAuxiliarVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IReporteVentaService" type="tns:IReporteVentaService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IReporteVentaService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="RegistroVenta">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/RegistroVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RegistroResumenVenta">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/RegistroResumenVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="VentaDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/VentaDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="VentaAcumulada">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/VentaAcumulada" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="VentaGuias">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/VentaGuias" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMotivosVenta">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/MostrarMotivosVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerCuadroVenta">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/ReporteGerCuadroVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerVenta">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/ReporteGerVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteIndicadores">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/ReporteIndicadores" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteMensualxCliente">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/ReporteMensualxCliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarDocumentos">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/FiltrarDocumentos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDocumentoVenta">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/MostrarTipoDocumentoVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="TarjetaCliente">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/TarjetaCliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteIndicadoresComercial">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/ReporteIndicadoresComercial" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarIndicadoresComercialAnual">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/FiltrarIndicadoresComercialAnual" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarIndicadoresComercialMensual">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/FiltrarIndicadoresComercialMensual" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteRegistroConsignaciones">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/ReporteRegistroConsignaciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RegistroAuxiliarVenta">
+      <soap12:operation soapAction="http://tempuri.org/IReporteVentaService/RegistroAuxiliarVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ReporteVentaService">
+    <wsdl:port name="NetTcpBinding_IReporteVentaService" binding="tns:NetTcpBinding_IReporteVentaService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/ReporteVentaService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/ReporteVentaService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

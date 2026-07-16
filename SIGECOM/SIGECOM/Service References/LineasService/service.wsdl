@@ -1,0 +1,708 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="LineasService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ILineasService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ILineasService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_MostrarRegiones_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRegiones" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_MostrarRegiones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRegionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_MostrarRegiones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ObtenerPlan_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPlan" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ObtenerPlan_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPlanResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ObtenerPlan_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_FiltrarPlan_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarPlan" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_FiltrarPlan_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarPlanResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_FiltrarPlan_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_InsertarPlan_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPlan" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_InsertarPlan_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPlanResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_InsertarPlan_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ActualizarPlan_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPlan" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ActualizarPlan_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPlanResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ActualizarPlan_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_BorrarPlan_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPlan" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_BorrarPlan_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPlanResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_BorrarPlan_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_MostrarTipoServicio_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoServicio" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_MostrarTipoServicio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoServicioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_MostrarTipoServicio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_MostrarOperadores_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOperadores" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_MostrarOperadores_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOperadoresResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_MostrarOperadores_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ObtenerEquipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEquipo" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ObtenerEquipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEquipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ObtenerEquipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_FiltrarEquipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarEquipo" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_FiltrarEquipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarEquipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_FiltrarEquipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_InsertarEquipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarEquipo" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_InsertarEquipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarEquipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_InsertarEquipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ActualizarEquipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarEquipo" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ActualizarEquipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarEquipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ActualizarEquipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_BorrarEquipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarEquipo" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_BorrarEquipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarEquipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_BorrarEquipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_MostrarMarcas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMarcas" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_MostrarMarcas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMarcasResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_MostrarMarcas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_MostrarModelos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarModelos" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_MostrarModelos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarModelosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_MostrarModelos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ObtenerModelo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerModelo" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ObtenerModelo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerModeloResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ObtenerModelo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_FiltrarModelo_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarModelo" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_FiltrarModelo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarModeloResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_FiltrarModelo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_InsertarModelo_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarModelo" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_InsertarModelo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarModeloResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_InsertarModelo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ActualizarModelo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarModelo" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ActualizarModelo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarModeloResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_ActualizarModelo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_BorrarModelo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarModelo" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_BorrarModelo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarModeloResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILineasService_BorrarModelo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="ILineasService">
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/Obtener" message="tns:ILineasService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/ObtenerResponse" message="tns:ILineasService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/Filtrar" message="tns:ILineasService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/FiltrarResponse" message="tns:ILineasService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/Insertar" message="tns:ILineasService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/InsertarResponse" message="tns:ILineasService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/Actualizar" message="tns:ILineasService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/ActualizarResponse" message="tns:ILineasService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/Borrar" message="tns:ILineasService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/BorrarResponse" message="tns:ILineasService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRegiones">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/MostrarRegiones" message="tns:ILineasService_MostrarRegiones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/MostrarRegionesResponse" message="tns:ILineasService_MostrarRegiones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_MostrarRegiones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPlan">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/ObtenerPlan" message="tns:ILineasService_ObtenerPlan_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/ObtenerPlanResponse" message="tns:ILineasService_ObtenerPlan_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_ObtenerPlan_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarPlan">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/FiltrarPlan" message="tns:ILineasService_FiltrarPlan_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/FiltrarPlanResponse" message="tns:ILineasService_FiltrarPlan_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_FiltrarPlan_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPlan">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/InsertarPlan" message="tns:ILineasService_InsertarPlan_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/InsertarPlanResponse" message="tns:ILineasService_InsertarPlan_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_InsertarPlan_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPlan">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/ActualizarPlan" message="tns:ILineasService_ActualizarPlan_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/ActualizarPlanResponse" message="tns:ILineasService_ActualizarPlan_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_ActualizarPlan_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPlan">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/BorrarPlan" message="tns:ILineasService_BorrarPlan_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/BorrarPlanResponse" message="tns:ILineasService_BorrarPlan_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_BorrarPlan_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoServicio">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/MostrarTipoServicio" message="tns:ILineasService_MostrarTipoServicio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/MostrarTipoServicioResponse" message="tns:ILineasService_MostrarTipoServicio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_MostrarTipoServicio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOperadores">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/MostrarOperadores" message="tns:ILineasService_MostrarOperadores_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/MostrarOperadoresResponse" message="tns:ILineasService_MostrarOperadores_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_MostrarOperadores_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEquipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/ObtenerEquipo" message="tns:ILineasService_ObtenerEquipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/ObtenerEquipoResponse" message="tns:ILineasService_ObtenerEquipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_ObtenerEquipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarEquipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/FiltrarEquipo" message="tns:ILineasService_FiltrarEquipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/FiltrarEquipoResponse" message="tns:ILineasService_FiltrarEquipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_FiltrarEquipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarEquipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/InsertarEquipo" message="tns:ILineasService_InsertarEquipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/InsertarEquipoResponse" message="tns:ILineasService_InsertarEquipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_InsertarEquipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarEquipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/ActualizarEquipo" message="tns:ILineasService_ActualizarEquipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/ActualizarEquipoResponse" message="tns:ILineasService_ActualizarEquipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_ActualizarEquipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarEquipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/BorrarEquipo" message="tns:ILineasService_BorrarEquipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/BorrarEquipoResponse" message="tns:ILineasService_BorrarEquipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_BorrarEquipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMarcas">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/MostrarMarcas" message="tns:ILineasService_MostrarMarcas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/MostrarMarcasResponse" message="tns:ILineasService_MostrarMarcas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_MostrarMarcas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarModelos">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/MostrarModelos" message="tns:ILineasService_MostrarModelos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/MostrarModelosResponse" message="tns:ILineasService_MostrarModelos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_MostrarModelos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerModelo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/ObtenerModelo" message="tns:ILineasService_ObtenerModelo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/ObtenerModeloResponse" message="tns:ILineasService_ObtenerModelo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_ObtenerModelo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarModelo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/FiltrarModelo" message="tns:ILineasService_FiltrarModelo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/FiltrarModeloResponse" message="tns:ILineasService_FiltrarModelo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_FiltrarModelo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarModelo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/InsertarModelo" message="tns:ILineasService_InsertarModelo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/InsertarModeloResponse" message="tns:ILineasService_InsertarModelo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_InsertarModelo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarModelo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/ActualizarModelo" message="tns:ILineasService_ActualizarModelo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/ActualizarModeloResponse" message="tns:ILineasService_ActualizarModelo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_ActualizarModelo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarModelo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILineasService/BorrarModelo" message="tns:ILineasService_BorrarModelo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILineasService/BorrarModeloResponse" message="tns:ILineasService_BorrarModelo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILineasService_BorrarModelo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ILineasService" type="tns:ILineasService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ILineasService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRegiones">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/MostrarRegiones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPlan">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/ObtenerPlan" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarPlan">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/FiltrarPlan" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPlan">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/InsertarPlan" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPlan">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/ActualizarPlan" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPlan">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/BorrarPlan" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoServicio">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/MostrarTipoServicio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOperadores">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/MostrarOperadores" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEquipo">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/ObtenerEquipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarEquipo">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/FiltrarEquipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarEquipo">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/InsertarEquipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarEquipo">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/ActualizarEquipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarEquipo">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/BorrarEquipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMarcas">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/MostrarMarcas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarModelos">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/MostrarModelos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerModelo">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/ObtenerModelo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarModelo">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/FiltrarModelo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarModelo">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/InsertarModelo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarModelo">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/ActualizarModelo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarModelo">
+      <soap12:operation soapAction="http://tempuri.org/ILineasService/BorrarModelo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LineasService">
+    <wsdl:port name="NetTcpBinding_ILineasService" binding="tns:NetTcpBinding_ILineasService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/LineasService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/LineasService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

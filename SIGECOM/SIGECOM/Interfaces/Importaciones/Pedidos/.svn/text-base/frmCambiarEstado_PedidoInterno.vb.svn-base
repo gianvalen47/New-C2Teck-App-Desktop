@@ -1,0 +1,239 @@
+﻿Imports System.Windows.Forms
+
+Public Class frmCambiarEstado_PedidoInterno
+
+    Public state_button As Boolean              'True: Modificar    False: nuevo
+    Public type_process As String               'update     insert      delete
+    Private oMaestroService As New MaestroService.MaestroClient
+    Private oPedidoService As New PedidoService.PedidoServiceClient
+    Private dtDatos As DataTable
+    '====================================================================================================================
+    '============================================ PARAMETROS LOCALES ====================================================
+    '====================================================================================================================
+    Public IdPedido As String
+    Public estado As String
+    '====================================================================================================================
+    '============================================ CONTROL'S METHOD ======================================================
+    '====================================================================================================================
+    Private Sub SendFocus_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                               txtObservacion.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            SendKeys.Send("{TAB}")
+        End If
+    End Sub
+    Private Sub Initialize_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Me.CancelButton = Me.btnCancelar
+        Me.Size = New System.Drawing.Size(578, 150)
+        ObtenerRegistro()
+        EnabledOptions()
+
+        Dim estilo As New Estilo
+        estilo.cargaEstiloDataDrid(dgvDatos)
+
+        'listamos los estados
+        Me.Size = New System.Drawing.Size(578, 348)
+        Me.btnVerDetalle.Image = Global.SIGECOM.My.Resources.Resources.ImgAccordionClosed
+        btnVerDetalle.Text = "Ocultar Detalle"
+        btnVerDetalle.Size = New System.Drawing.Size(102, 25)
+
+        listaDatos()
+    End Sub
+    Private Sub FinallyObjects_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            If isClosed(oMaestroService) = False Then
+                oMaestroService.Close()
+            End If
+            If isClosed(oPedidoService) = False Then
+                oPedidoService.Close()
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [FINALLY]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub RowPossesion(ByVal lista As DataGridView, ByVal tabla As DataTable, ByVal nombreCampo As String, ByVal codigo As String)
+        Try
+            tabla.DefaultView.Sort = nombreCampo
+            lista.FirstDisplayedScrollingRowIndex = dtDatos.DefaultView.Find(codigo)
+            lista.Rows(dtDatos.DefaultView.Find(codigo)).Selected = True
+            lista.CurrentCell = lista.Rows(dtDatos.DefaultView.Find(codigo)).Cells(1)
+        Catch ex As Exception
+            MsgBox("ERROR [ROW_POSS]: " + ex.Message, MsgBoxStyle.Critical)
+        End Try
+    End Sub
+    Private Sub EnabledOptions()
+        If toBlank(estado) = "PEDIDO" Or toBlank(estado) = "RECHAZADO" Or toBlank(estado) = "VISUALIZADO" Then
+            btnCambiarEstado.Enabled = False
+        Else
+            btnCambiarEstado.Enabled = True
+        End If
+        If toBlank(estado) = "ENVIADO" Or toBlank(estado) = "APROBADO" Or toBlank(estado) = "GERENCIA I" Then
+            btnRechazarPedido.Visible = True
+        Else
+            btnRechazarPedido.Visible = False
+        End If
+    End Sub
+
+    '====================================================================================================================
+    '============================================ TASK'S METHOD =========================================================
+    '====================================================================================================================
+    Private Function ValidaCampos() As Boolean
+        Try
+            If toNumber(IdPedido) = 0 Then
+                MsgBox("Debe Ingresar el número del Pedido", MsgBoxStyle.Information, "Información")
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [CAES-001]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+    Private Sub Insertar()
+        Try
+            Dim estado_process As Boolean
+            estado_process = oPedidoService.CambiarEstado(toNull(IdPedido), toNull(txtObservacion.Text), toNull(Session.sUsuario.cod_usuario))
+            If estado_process = True Then
+                'MsgBox("Se Cambio de estado Correctamente...!", MsgBoxStyle.Information)
+                listaDatos()
+                RowPossesion(dgvDatos, dtDatos, "Estado", txtEstado.Text)
+                estado = getDescripcionEstado(oMaestroService.MostrarDato("SIGECOM.Importaciones.Pedidos", "Estado", "IdPedido", IdPedido))
+                EnabledOptions()
+                ObtenerRegistro()
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [CAES-002]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub Rechazar()
+        Try
+            Dim estado_process As Boolean
+            estado_process = oPedidoService.Rechazar(toNull(IdPedido), toNull(txtObservacion.Text), toNull(Session.sUsuario.cod_usuario))
+            If estado_process = True Then
+                listaDatos()
+                RowPossesion(dgvDatos, dtDatos, "Estado", "RECHAZADO")
+                estado = getDescripcionEstado(oMaestroService.MostrarDato("SIGECOM.Importaciones.Pedidos", "Estado", "IdPedido", IdPedido))
+                EnabledOptions()
+                ObtenerRegistro()
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [CAES-002]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub ObtenerRegistro()
+        Try
+            txtUsuario.Text = Session.sUsuario.cod_usuario
+            If toBlank(estado) = "GENERADO" Then
+                txtEstado.Text = "ENVIADO"
+            ElseIf toBlank(estado) = "ENVIADO" Then
+                txtEstado.Text = "APROBADO"
+            ElseIf toBlank(estado) = "APROBADO" Then
+                txtEstado.Text = "GERENCIA I"
+            ElseIf toBlank(estado) = "GERENCIA I" Then
+                txtEstado.Text = "GERENCIA II"
+            ElseIf toBlank(estado) = "GERENCIA II" Then
+                txtEstado.Text = "VISUALIZADO"
+            ElseIf toBlank(estado) = "VISUALIZADO" Then
+                txtEstado.Text = "PEDIDO"
+            ElseIf toBlank(estado) = "PEDIDO" Then
+                txtEstado.Text = "PEDIDO YA CULMINO SUS PROCESOS"
+            End If
+            txtObservacion.Text = ""
+        Catch ex As Exception
+            MsgBox("ERROR [CAES-003]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub listaDatos()
+        Try
+            dtDatos = oPedidoService.MostrarEstados(toNumber(IdPedido)).Tables(0)
+            dgvDatos.DataSource = dtDatos
+            cEstado.DataPropertyName = dtDatos.Columns("Estado").ColumnName
+            cFecha.DataPropertyName = dtDatos.Columns("Fecha").ColumnName
+            cObservacion.DataPropertyName = dtDatos.Columns("Observacion").ColumnName
+            cCodUsu.DataPropertyName = dtDatos.Columns("CodUsu").ColumnName
+        Catch ex As Exception
+            MsgBox("ERROR [CAES-004]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub actualizar()
+        Try
+            Dim codigo As String = ""
+            If dgvDatos.RowCount > 0 Then
+                codigo = dgvDatos.Item("cEstado", dgvDatos.CurrentRow.Index).Value
+            End If
+            dtDatos = Nothing
+            listaDatos()
+            If dgvDatos.RowCount > 0 And codigo.Trim.Length > 0 Then
+                RowPossesion(dgvDatos, dtDatos, "Estado", codigo)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [CAES-05]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Function getDescripcionEstado(ByVal codigo As String) As String
+        Dim descripcion As String = ""
+        If toBlank(codigo) = "GN" Then
+            descripcion = "GNERADO"
+        ElseIf toBlank(codigo) = "EN" Then
+            descripcion = "ENVIADO"
+        ElseIf toBlank(codigo) = "AP" Then
+            descripcion = "APROBADO"
+        ElseIf toBlank(codigo) = "GEI" Then
+            descripcion = "GERENCIA I"
+        ElseIf toBlank(codigo) = "GEII" Then
+            descripcion = "GERENCIA II"
+        ElseIf toBlank(codigo) = "VS" Then
+            descripcion = "VISUALIZADO"
+        ElseIf toBlank(codigo) = "PE" Then
+            descripcion = "PEDIDO"
+        End If
+        Return descripcion
+    End Function
+    '====================================================================================================================
+    '============================================ INTERFACE'S METHOD ====================================================
+    '====================================================================================================================
+    Private Sub btnCancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancelar.Click
+        Me.DialogResult = Windows.Forms.DialogResult.Cancel
+        Me.Close()
+    End Sub
+    Private Sub btnVerDetalle_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVerDetalle.Click
+        If btnVerDetalle.Text = "Ver Detalle" Then
+            Me.Size = New System.Drawing.Size(578, 348)
+            Me.btnVerDetalle.Image = Global.SIGECOM.My.Resources.Resources.ImgAccordionClosed
+            btnVerDetalle.Text = "Ocultar Detalle"
+            btnVerDetalle.Size = New System.Drawing.Size(102, 25)
+
+            listaDatos()
+        Else
+            Me.Size = New System.Drawing.Size(578, 150)
+            Me.btnVerDetalle.Image = Global.SIGECOM.My.Resources.Resources.derecha
+            btnVerDetalle.Text = "Ver Detalle"
+            btnVerDetalle.Size = New System.Drawing.Size(85, 25)
+
+            dtDatos = Nothing
+            dgvDatos.DataSource = Nothing
+        End If
+    End Sub
+    Private Sub miActualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miActualizar.Click
+        actualizar()
+    End Sub
+    Private Sub setColor_BlankCajaTexto(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+
+    End Sub
+    Private Sub btnCambiarEstado_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCambiarEstado.Click
+        If MsgBox("¿Está seguro cambiar de estado del pedido a " + txtEstado.Text + "?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes _
+                   And ValidaCampos() Then
+            Insertar()
+        End If
+    End Sub
+    Private Sub btnRechazarPedido_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRechazarPedido.Click
+        If MsgBox("¿Está seguro de Rechazar el Pedido ?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes _
+                       And ValidaCampos() Then
+            Rechazar()
+        End If
+    End Sub
+End Class

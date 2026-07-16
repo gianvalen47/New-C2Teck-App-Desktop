@@ -1,0 +1,19 @@
+{
+  "name": "c2teck-desktop",
+  "version": "1.0.0",
+  "description": "C2Teck S.A.C. — Systeck ERP (Aplicación de Escritorio)",
+  "main": "main.cjs",
+  "author": "C2Teck S.A.C.",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "package:win": "electron-packager . C2Teck-Systeck --platform=win32 --arch=x64 --out=dist --overwrite --icon=icon.png --app-version=1.0.0",
+    "package:mac": "electron-packager . C2Teck-Systeck --platform=darwin --arch=x64 --out=dist --overwrite --icon=icon.png",
+    "package:linux": "electron-packager . C2Teck-Systeck --platform=linux --arch=x64 --out=dist --overwrite --icon=icon.png"
+  },
+  "devDependencies": {
+    "@electron/packager": "^18.3.6",
+    "electron": "^43.1.0",
+    "electron-packager": "^17.1.2"
+  }
+}

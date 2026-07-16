@@ -1,0 +1,760 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ProveedorService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IProveedorService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IProveedorService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_BuscarMovimientos_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarMovimientos" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_BuscarMovimientos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarMovimientosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_BuscarMovimientos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_BuscarRuc_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRuc" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_BuscarRuc_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRucResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_BuscarRuc_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_BuscarDni_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarDni" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_BuscarDni_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarDniResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_BuscarDni_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarRubros_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubros" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarRubros_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubrosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarRubros_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarCondicionPago_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCondicionPago" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarCondicionPago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCondicionPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarCondicionPago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ObtenerEmiteFacturaDigital_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEmiteFacturaDigital" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ObtenerEmiteFacturaDigital_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEmiteFacturaDigitalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ObtenerEmiteFacturaDigital_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarTipoProductoBanco_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoProductoBanco" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarTipoProductoBanco_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoProductoBancoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarTipoProductoBanco_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarCuentaBanco_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCuentaBanco" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarCuentaBanco_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCuentaBancoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarCuentaBanco_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ObtenerCuentaBanco_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCuentaBanco" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ObtenerCuentaBanco_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCuentaBancoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ObtenerCuentaBanco_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_InsertarCuentaBanco_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCuentaBanco" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_InsertarCuentaBanco_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCuentaBancoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_InsertarCuentaBanco_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ActualizarCuentaBanco_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCuentaBanco" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ActualizarCuentaBanco_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCuentaBancoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ActualizarCuentaBanco_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_BorrarCuentaBanco_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCuentaBanco" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_BorrarCuentaBanco_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCuentaBancoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_BorrarCuentaBanco_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ObtenerPorRuc_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPorRuc" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ObtenerPorRuc_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPorRucResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ObtenerPorRuc_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarTipoDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarTipoDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarTipoDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_FiltrarPaisProveedor_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarPaisProveedor" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_FiltrarPaisProveedor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarPaisProveedorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_FiltrarPaisProveedor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ObtenerCondicionPago_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCondicionPago" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ObtenerCondicionPago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCondicionPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ObtenerCondicionPago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_SugerirIdCondicionPago_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirIdCondicionPago" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_SugerirIdCondicionPago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirIdCondicionPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_SugerirIdCondicionPago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_FiltrarCondicionPago_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarCondicionPago" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_FiltrarCondicionPago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarCondicionPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_FiltrarCondicionPago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_InsertarCondicionPago_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCondicionPago" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_InsertarCondicionPago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCondicionPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_InsertarCondicionPago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ActualizarCondicionPago_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCondicionPago" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ActualizarCondicionPago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCondicionPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_ActualizarCondicionPago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_BorrarCondicionPago_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCondicionPago" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_BorrarCondicionPago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCondicionPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_BorrarCondicionPago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarTipoContribuyente_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoContribuyente" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarTipoContribuyente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoContribuyenteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProveedorService_MostrarTipoContribuyente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IProveedorService">
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/Filtrar" message="tns:IProveedorService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/FiltrarResponse" message="tns:IProveedorService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/Obtener" message="tns:IProveedorService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/ObtenerResponse" message="tns:IProveedorService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarMovimientos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/BuscarMovimientos" message="tns:IProveedorService_BuscarMovimientos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/BuscarMovimientosResponse" message="tns:IProveedorService_BuscarMovimientos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_BuscarMovimientos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRuc">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/BuscarRuc" message="tns:IProveedorService_BuscarRuc_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/BuscarRucResponse" message="tns:IProveedorService_BuscarRuc_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_BuscarRuc_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarDni">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/BuscarDni" message="tns:IProveedorService_BuscarDni_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/BuscarDniResponse" message="tns:IProveedorService_BuscarDni_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_BuscarDni_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/Insertar" message="tns:IProveedorService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/InsertarResponse" message="tns:IProveedorService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/Actualizar" message="tns:IProveedorService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/ActualizarResponse" message="tns:IProveedorService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/Borrar" message="tns:IProveedorService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/BorrarResponse" message="tns:IProveedorService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubros">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/MostrarRubros" message="tns:IProveedorService_MostrarRubros_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/MostrarRubrosResponse" message="tns:IProveedorService_MostrarRubros_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_MostrarRubros_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCondicionPago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/MostrarCondicionPago" message="tns:IProveedorService_MostrarCondicionPago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/MostrarCondicionPagoResponse" message="tns:IProveedorService_MostrarCondicionPago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_MostrarCondicionPago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEmiteFacturaDigital">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/ObtenerEmiteFacturaDigital" message="tns:IProveedorService_ObtenerEmiteFacturaDigital_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/ObtenerEmiteFacturaDigitalResponse" message="tns:IProveedorService_ObtenerEmiteFacturaDigital_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_ObtenerEmiteFacturaDigital_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoProductoBanco">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/MostrarTipoProductoBanco" message="tns:IProveedorService_MostrarTipoProductoBanco_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/MostrarTipoProductoBancoResponse" message="tns:IProveedorService_MostrarTipoProductoBanco_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_MostrarTipoProductoBanco_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCuentaBanco">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/MostrarCuentaBanco" message="tns:IProveedorService_MostrarCuentaBanco_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/MostrarCuentaBancoResponse" message="tns:IProveedorService_MostrarCuentaBanco_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_MostrarCuentaBanco_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCuentaBanco">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/ObtenerCuentaBanco" message="tns:IProveedorService_ObtenerCuentaBanco_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/ObtenerCuentaBancoResponse" message="tns:IProveedorService_ObtenerCuentaBanco_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_ObtenerCuentaBanco_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCuentaBanco">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/InsertarCuentaBanco" message="tns:IProveedorService_InsertarCuentaBanco_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/InsertarCuentaBancoResponse" message="tns:IProveedorService_InsertarCuentaBanco_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_InsertarCuentaBanco_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCuentaBanco">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/ActualizarCuentaBanco" message="tns:IProveedorService_ActualizarCuentaBanco_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/ActualizarCuentaBancoResponse" message="tns:IProveedorService_ActualizarCuentaBanco_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_ActualizarCuentaBanco_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCuentaBanco">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/BorrarCuentaBanco" message="tns:IProveedorService_BorrarCuentaBanco_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/BorrarCuentaBancoResponse" message="tns:IProveedorService_BorrarCuentaBanco_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_BorrarCuentaBanco_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPorRuc">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/ObtenerPorRuc" message="tns:IProveedorService_ObtenerPorRuc_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/ObtenerPorRucResponse" message="tns:IProveedorService_ObtenerPorRuc_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_ObtenerPorRuc_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/MostrarTipoDocumento" message="tns:IProveedorService_MostrarTipoDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/MostrarTipoDocumentoResponse" message="tns:IProveedorService_MostrarTipoDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_MostrarTipoDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarPaisProveedor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/FiltrarPaisProveedor" message="tns:IProveedorService_FiltrarPaisProveedor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/FiltrarPaisProveedorResponse" message="tns:IProveedorService_FiltrarPaisProveedor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_FiltrarPaisProveedor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCondicionPago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/ObtenerCondicionPago" message="tns:IProveedorService_ObtenerCondicionPago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/ObtenerCondicionPagoResponse" message="tns:IProveedorService_ObtenerCondicionPago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_ObtenerCondicionPago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirIdCondicionPago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/SugerirIdCondicionPago" message="tns:IProveedorService_SugerirIdCondicionPago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/SugerirIdCondicionPagoResponse" message="tns:IProveedorService_SugerirIdCondicionPago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_SugerirIdCondicionPago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarCondicionPago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/FiltrarCondicionPago" message="tns:IProveedorService_FiltrarCondicionPago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/FiltrarCondicionPagoResponse" message="tns:IProveedorService_FiltrarCondicionPago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_FiltrarCondicionPago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCondicionPago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/InsertarCondicionPago" message="tns:IProveedorService_InsertarCondicionPago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/InsertarCondicionPagoResponse" message="tns:IProveedorService_InsertarCondicionPago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_InsertarCondicionPago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCondicionPago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/ActualizarCondicionPago" message="tns:IProveedorService_ActualizarCondicionPago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/ActualizarCondicionPagoResponse" message="tns:IProveedorService_ActualizarCondicionPago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_ActualizarCondicionPago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCondicionPago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/BorrarCondicionPago" message="tns:IProveedorService_BorrarCondicionPago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/BorrarCondicionPagoResponse" message="tns:IProveedorService_BorrarCondicionPago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_BorrarCondicionPago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoContribuyente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProveedorService/MostrarTipoContribuyente" message="tns:IProveedorService_MostrarTipoContribuyente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProveedorService/MostrarTipoContribuyenteResponse" message="tns:IProveedorService_MostrarTipoContribuyente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProveedorService_MostrarTipoContribuyente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IProveedorService" type="tns:IProveedorService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IProveedorService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarMovimientos">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/BuscarMovimientos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRuc">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/BuscarRuc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarDni">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/BuscarDni" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubros">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/MostrarRubros" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCondicionPago">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/MostrarCondicionPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEmiteFacturaDigital">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/ObtenerEmiteFacturaDigital" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoProductoBanco">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/MostrarTipoProductoBanco" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCuentaBanco">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/MostrarCuentaBanco" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCuentaBanco">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/ObtenerCuentaBanco" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCuentaBanco">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/InsertarCuentaBanco" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCuentaBanco">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/ActualizarCuentaBanco" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCuentaBanco">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/BorrarCuentaBanco" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPorRuc">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/ObtenerPorRuc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/MostrarTipoDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarPaisProveedor">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/FiltrarPaisProveedor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCondicionPago">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/ObtenerCondicionPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirIdCondicionPago">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/SugerirIdCondicionPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarCondicionPago">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/FiltrarCondicionPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCondicionPago">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/InsertarCondicionPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCondicionPago">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/ActualizarCondicionPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCondicionPago">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/BorrarCondicionPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoContribuyente">
+      <soap12:operation soapAction="http://tempuri.org/IProveedorService/MostrarTipoContribuyente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ProveedorService">
+    <wsdl:port name="NetTcpBinding_IProveedorService" binding="tns:NetTcpBinding_IProveedorService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/ProveedorService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/ProveedorService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

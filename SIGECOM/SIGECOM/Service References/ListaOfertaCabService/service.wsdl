@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ListaOfertaCabService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IListaOfertaCabService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IListaOfertaCabService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_AprobacionJefe_InputMessage">
+    <wsdl:part name="parameters" element="tns:AprobacionJefe" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_AprobacionJefe_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AprobacionJefeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_AprobacionJefe_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_AprobacionGerencia_InputMessage">
+    <wsdl:part name="parameters" element="tns:AprobacionGerencia" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_AprobacionGerencia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AprobacionGerenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_AprobacionGerencia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Rechazar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Rechazar" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Rechazar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RechazarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Rechazar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Enviar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Enviar" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Enviar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Enviar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_ObtenerEstado_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEstado" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_ObtenerEstado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEstadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_ObtenerEstado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_ConsultarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_ConsultarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_ConsultarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_MostrarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_MostrarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_MostrarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_VencimientoPrecio_InputMessage">
+    <wsdl:part name="parameters" element="tns:VencimientoPrecio" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_VencimientoPrecio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VencimientoPrecioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_VencimientoPrecio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_MostrarPendientes_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPendientes" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_MostrarPendientes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPendientesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_MostrarPendientes_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_BuscarAprobacionPendiente_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAprobacionPendiente" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_BuscarAprobacionPendiente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAprobacionPendienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_BuscarAprobacionPendiente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_ActualizarFechaVencimiento_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarFechaVencimiento" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_ActualizarFechaVencimiento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarFechaVencimientoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IListaOfertaCabService_ActualizarFechaVencimiento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IListaOfertaCabService">
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/Obtener" message="tns:IListaOfertaCabService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/ObtenerResponse" message="tns:IListaOfertaCabService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/Filtrar" message="tns:IListaOfertaCabService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/FiltrarResponse" message="tns:IListaOfertaCabService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/Insertar" message="tns:IListaOfertaCabService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/InsertarResponse" message="tns:IListaOfertaCabService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/Actualizar" message="tns:IListaOfertaCabService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/ActualizarResponse" message="tns:IListaOfertaCabService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/Borrar" message="tns:IListaOfertaCabService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/BorrarResponse" message="tns:IListaOfertaCabService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AprobacionJefe">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/AprobacionJefe" message="tns:IListaOfertaCabService_AprobacionJefe_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/AprobacionJefeResponse" message="tns:IListaOfertaCabService_AprobacionJefe_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_AprobacionJefe_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AprobacionGerencia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/AprobacionGerencia" message="tns:IListaOfertaCabService_AprobacionGerencia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/AprobacionGerenciaResponse" message="tns:IListaOfertaCabService_AprobacionGerencia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_AprobacionGerencia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Rechazar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/Rechazar" message="tns:IListaOfertaCabService_Rechazar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/RechazarResponse" message="tns:IListaOfertaCabService_Rechazar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_Rechazar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Enviar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/Enviar" message="tns:IListaOfertaCabService_Enviar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/EnviarResponse" message="tns:IListaOfertaCabService_Enviar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_Enviar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEstado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/ObtenerEstado" message="tns:IListaOfertaCabService_ObtenerEstado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/ObtenerEstadoResponse" message="tns:IListaOfertaCabService_ObtenerEstado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_ObtenerEstado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/ConsultarEstados" message="tns:IListaOfertaCabService_ConsultarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/ConsultarEstadosResponse" message="tns:IListaOfertaCabService_ConsultarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_ConsultarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/MostrarEstados" message="tns:IListaOfertaCabService_MostrarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/MostrarEstadosResponse" message="tns:IListaOfertaCabService_MostrarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_MostrarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VencimientoPrecio">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/VencimientoPrecio" message="tns:IListaOfertaCabService_VencimientoPrecio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/VencimientoPrecioResponse" message="tns:IListaOfertaCabService_VencimientoPrecio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_VencimientoPrecio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPendientes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/MostrarPendientes" message="tns:IListaOfertaCabService_MostrarPendientes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/MostrarPendientesResponse" message="tns:IListaOfertaCabService_MostrarPendientes_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_MostrarPendientes_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarAprobacionPendiente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/BuscarAprobacionPendiente" message="tns:IListaOfertaCabService_BuscarAprobacionPendiente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/BuscarAprobacionPendienteResponse" message="tns:IListaOfertaCabService_BuscarAprobacionPendiente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_BuscarAprobacionPendiente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/Imprimir" message="tns:IListaOfertaCabService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/ImprimirResponse" message="tns:IListaOfertaCabService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarFechaVencimiento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IListaOfertaCabService/ActualizarFechaVencimiento" message="tns:IListaOfertaCabService_ActualizarFechaVencimiento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IListaOfertaCabService/ActualizarFechaVencimientoResponse" message="tns:IListaOfertaCabService_ActualizarFechaVencimiento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IListaOfertaCabService_ActualizarFechaVencimiento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IListaOfertaCabService" type="tns:IListaOfertaCabService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IListaOfertaCabService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AprobacionJefe">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/AprobacionJefe" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AprobacionGerencia">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/AprobacionGerencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Rechazar">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/Rechazar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Enviar">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/Enviar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEstado">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/ObtenerEstado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/ConsultarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/MostrarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="VencimientoPrecio">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/VencimientoPrecio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPendientes">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/MostrarPendientes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarAprobacionPendiente">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/BuscarAprobacionPendiente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarFechaVencimiento">
+      <soap12:operation soapAction="http://tempuri.org/IListaOfertaCabService/ActualizarFechaVencimiento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ListaOfertaCabService">
+    <wsdl:port name="NetTcpBinding_IListaOfertaCabService" binding="tns:NetTcpBinding_IListaOfertaCabService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/ListaOfertaCabService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/ListaOfertaCabService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

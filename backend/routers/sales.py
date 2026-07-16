@@ -1,0 +1,319 @@
+"""
+API routers for sales/invoices
+"""
+import csv
+import io
+import os
+import smtplib
+import uuid
+from datetime import datetime
+from pathlib import Path
+from typing import Optional
+
+from fastapi import APIRouter, Depends, HTTPException, Response, status
+from pydantic import BaseModel
+from sqlalchemy import or_
+from sqlalchemy.orm import Session
+
+from config import SessionLocal
+from models import ClientModel, SaleModel
+from schemas import SaleCreate, SaleRead, SaleUpdate
+
+router = APIRouter(prefix="/sales", tags=["Sales"])
+
+
+class SendEmailRequest(BaseModel):
+    recipient: Optional[str] = None
+    subject: Optional[str] = None
+    body: Optional[str] = None
+
+
+class LinkPurchaseRequest(BaseModel):
+    purchase_reference: Optional[str] = None
+    supplier: Optional[str] = None
+
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+@router.get("", response_model=list[SaleRead])
+def list_sales(skip: int = 0, limit: int = 100, search: str | None = None, db: Session = Depends(get_db)):
+    """List all sales/invoices"""
+    query = db.query(SaleModel)
+    if search:
+        like = f"%{search}%"
+        query = query.filter(
+            or_(
+                SaleModel.client_id.ilike(like),
+                SaleModel.type.ilike(like),
+                SaleModel.series.ilike(like),
+                SaleModel.status.ilike(like),
+            )
+        )
+    sales = query.offset(skip).limit(limit).all()
+    return sales
+
+
+@router.get("/export")
+def export_sales(format: str = "csv", search: str | None = None, db: Session = Depends(get_db)):
+    """Export sales as CSV."""
+    query = db.query(SaleModel)
+    if search:
+        like = f"%{search}%"
+        query = query.filter(
+            or_(
+                SaleModel.client_id.ilike(like),
+                SaleModel.type.ilike(like),
+                SaleModel.series.ilike(like),
+                SaleModel.status.ilike(like),
+            )
+        )
+    sales = query.all()
+
+    if format != "csv":
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Only csv export is supported")
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["ID", "Type", "Series", "Number", "Date", "Client", "Status", "Subtotal", "Tax", "Total"])
+    for sale in sales:
+        writer.writerow([
+            sale.id,
+            sale.type,
+            sale.series or "",
+            sale.number or "",
+            sale.date.isoformat() if sale.date else "",
+            sale.client_id or "",
+            sale.status,
+            sale.subtotal or 0,
+            sale.tax or 0,
+            sale.total or 0,
+        ])
+
+    return Response(
+        content=output.getvalue(),
+        media_type="text/csv",
+        headers={"Content-Disposition": "attachment; filename=sales_export.csv"},
+    )
+
+
+@router.get("/{sale_id}", response_model=SaleRead)
+def get_sale(sale_id: str, db: Session = Depends(get_db)):
+    """Get a specific sale"""
+    sale = db.query(SaleModel).filter(SaleModel.id == sale_id).first()
+    if not sale:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Sale {sale_id} not found"
+        )
+    return sale
+
+
+@router.post("", response_model=SaleRead)
+def create_sale(sale: SaleCreate, db: Session = Depends(get_db)):
+    """Create a new sale/invoice"""
+    db_sale = SaleModel(
+        id=str(uuid.uuid4()),
+        type=sale.type,
+        series=sale.series,
+        number=sale.number,
+        client_id=sale.client_id,
+        items=sale.items,
+        subtotal=sale.subtotal,
+        tax=sale.tax,
+        total=sale.total,
+        status="draft"
+    )
+    db.add(db_sale)
+    db.commit()
+    db.refresh(db_sale)
+    return db_sale
+
+
+@router.put("/{sale_id}", response_model=SaleRead)
+def update_sale(sale_id: str, sale: SaleUpdate, db: Session = Depends(get_db)):
+    """Update a sale"""
+    db_sale = db.query(SaleModel).filter(SaleModel.id == sale_id).first()
+    if not db_sale:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Sale {sale_id} not found"
+        )
+    
+    update_data = sale.dict(exclude_unset=True)
+    for key, value in update_data.items():
+        setattr(db_sale, key, value)
+    
+    db.add(db_sale)
+    db.commit()
+    db.refresh(db_sale)
+    return db_sale
+
+
+@router.post("/{sale_id}/issue", response_model=SaleRead)
+def issue_sale(sale_id: str, db: Session = Depends(get_db)):
+    """Issue a sale (change status from draft to issued)"""
+    db_sale = db.query(SaleModel).filter(SaleModel.id == sale_id).first()
+    if not db_sale:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Sale {sale_id} not found"
+        )
+    
+    if db_sale.status != "draft":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Sale {sale_id} cannot be issued (current status: {db_sale.status})"
+        )
+    
+    db_sale.status = "issued"
+    db.add(db_sale)
+    db.commit()
+    db.refresh(db_sale)
+    return db_sale
+
+
+def _send_email(recipient: str, subject: str, body: str) -> tuple[bool, str]:
+    """Send an email using SMTP when available, otherwise save it locally."""
+    smtp_host = os.getenv("SMTP_HOST")
+    if not smtp_host:
+        log_dir = Path(__file__).resolve().parent.parent / "email_logs"
+        log_dir.mkdir(exist_ok=True)
+        file_path = log_dir / f"{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{recipient.replace('@', '_at_')}.eml"
+        file_path.write_text(
+            f"To: {recipient}\nSubject: {subject}\n\n{body}\n",
+            encoding="utf-8",
+        )
+        return True, str(file_path)
+
+    smtp_port = int(os.getenv("SMTP_PORT", "587"))
+    smtp_user = os.getenv("SMTP_USERNAME")
+    smtp_password = os.getenv("SMTP_PASSWORD")
+    from_email = os.getenv("SMTP_FROM", "no-reply@c2teck.local")
+
+    message = f"Subject: {subject}\nFrom: {from_email}\nTo: {recipient}\n\n{body}"
+    with smtplib.SMTP(smtp_host, smtp_port, timeout=10) as smtp:
+        if os.getenv("SMTP_TLS", "true").lower() == "true":
+            smtp.starttls()
+        if smtp_user and smtp_password:
+            smtp.login(smtp_user, smtp_password)
+        smtp.sendmail(from_email, [recipient], message)
+
+    return True, ""
+
+
+@router.post("/{sale_id}/send-email", response_model=SaleRead)
+def send_sale_email(
+    sale_id: str,
+    payload: SendEmailRequest | None = None,
+    db: Session = Depends(get_db),
+):
+    """Send a comprobante to the client's email and mark the sale as sent."""
+    db_sale = db.query(SaleModel).filter(SaleModel.id == sale_id).first()
+    if not db_sale:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Sale {sale_id} not found"
+        )
+
+    recipient = payload.recipient if payload and payload.recipient else None
+    if not recipient and db_sale.client_id:
+        client = (
+            db.query(ClientModel)
+            .filter(ClientModel.id == db_sale.client_id)
+            .first()
+        )
+        if not client:
+            client = (
+                db.query(ClientModel)
+                .filter(ClientModel.name == db_sale.client_id)
+                .first()
+            )
+        if client and client.email:
+            recipient = client.email
+        elif "@" in db_sale.client_id:
+            recipient = db_sale.client_id
+
+    if not recipient:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No recipient email was provided for this sale"
+        )
+
+    subject = (payload.subject if payload and payload.subject else None) or f"{db_sale.type.title()} {db_sale.series or ''}-{db_sale.number or ''}"
+    body = (payload.body if payload and payload.body else None) or (
+        f"Estimado cliente,\n\n"
+        f"Se adjunta el comprobante {db_sale.type} {db_sale.series or ''}-{db_sale.number or ''}.\n"
+        f"Gracias por su preferencia."
+    )
+
+    sent, detail = _send_email(recipient, subject, body)
+
+    db_sale.status = "sent"
+    db_sale.extra_data = {
+        **(db_sale.extra_data or {}),
+        "email_sent": sent,
+        "email_recipient": recipient,
+        "email_status": "saved_locally" if detail else "sent",
+        "email_detail": detail,
+        "email_subject": subject,
+    }
+
+    db.add(db_sale)
+    db.commit()
+    db.refresh(db_sale)
+    return db_sale
+
+
+@router.post("/{sale_id}/link-purchase", response_model=SaleRead)
+def link_sale_purchase(
+    sale_id: str,
+    payload: LinkPurchaseRequest,
+    db: Session = Depends(get_db),
+):
+    """Link a sale with a purchase reference and supplier."""
+    db_sale = db.query(SaleModel).filter(SaleModel.id == sale_id).first()
+    if not db_sale:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Sale {sale_id} not found"
+        )
+
+    if not payload.purchase_reference.strip() or not payload.supplier.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="purchase_reference and supplier are required"
+        )
+
+    db_sale.extra_data = {
+        **(db_sale.extra_data or {}),
+        "purchase_reference": payload.purchase_reference,
+        "supplier": payload.supplier,
+        "linked_purchase": True,
+    }
+    db_sale.status = "linked"
+
+    db.add(db_sale)
+    db.commit()
+    db.refresh(db_sale)
+    return db_sale
+
+
+@router.delete("/{sale_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_sale(sale_id: str, db: Session = Depends(get_db)):
+    """Delete a sale (mark as cancelled)"""
+    db_sale = db.query(SaleModel).filter(SaleModel.id == sale_id).first()
+    if not db_sale:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Sale {sale_id} not found"
+        )
+    
+    db_sale.status = "cancelled"
+    db.add(db_sale)
+    db.commit()

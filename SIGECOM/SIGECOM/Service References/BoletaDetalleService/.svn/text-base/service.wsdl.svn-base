@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:tns="http://tempuri.org/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="BoletaDetalleService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IBoletaDetalleService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/BLL" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IBoletaDetalleService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_MostrarPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorId" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_MostrarPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_MostrarPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_SugerirItem_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirItem" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_SugerirItem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_SugerirItem_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBoletaDetalleService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IBoletaDetalleService">
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoletaDetalleService/Mostrar" message="tns:IBoletaDetalleService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoletaDetalleService/MostrarResponse" message="tns:IBoletaDetalleService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IBoletaDetalleService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoletaDetalleService/MostrarPorId" message="tns:IBoletaDetalleService_MostrarPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoletaDetalleService/MostrarPorIdResponse" message="tns:IBoletaDetalleService_MostrarPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IBoletaDetalleService_MostrarPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoletaDetalleService/Buscar" message="tns:IBoletaDetalleService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoletaDetalleService/BuscarResponse" message="tns:IBoletaDetalleService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IBoletaDetalleService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirItem">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoletaDetalleService/SugerirItem" message="tns:IBoletaDetalleService_SugerirItem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoletaDetalleService/SugerirItemResponse" message="tns:IBoletaDetalleService_SugerirItem_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IBoletaDetalleService_SugerirItem_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoletaDetalleService/Insertar" message="tns:IBoletaDetalleService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoletaDetalleService/InsertarResponse" message="tns:IBoletaDetalleService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IBoletaDetalleService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoletaDetalleService/Actualizar" message="tns:IBoletaDetalleService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoletaDetalleService/ActualizarResponse" message="tns:IBoletaDetalleService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IBoletaDetalleService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBoletaDetalleService/Borrar" message="tns:IBoletaDetalleService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBoletaDetalleService/BorrarResponse" message="tns:IBoletaDetalleService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IBoletaDetalleService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IBoletaDetalleService" type="tns:IBoletaDetalleService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IBoletaDetalleService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/IBoletaDetalleService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <soap12:operation soapAction="http://tempuri.org/IBoletaDetalleService/MostrarPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IBoletaDetalleService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirItem">
+      <soap12:operation soapAction="http://tempuri.org/IBoletaDetalleService/SugerirItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IBoletaDetalleService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IBoletaDetalleService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IBoletaDetalleService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BoletaDetalleService">
+    <wsdl:port name="NetTcpBinding_IBoletaDetalleService" binding="tns:NetTcpBinding_IBoletaDetalleService">
+      <soap12:address location="net.tcp://192.168.1.248/ServicioBLL/BoletaDetalleService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.1.248/ServicioBLL/BoletaDetalleService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

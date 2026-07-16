@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/BLL" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/BLL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="CierreMes">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodUsu" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DirIp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Estacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FecCierre" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Fecha" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Mes" type="xs:int" />
+      <xs:element minOccurs="0" name="Periodo" type="xs:int" />
+      <xs:element minOccurs="0" name="Tipo" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CierreMes" nillable="true" type="tns:CierreMes" />
+</xs:schema>

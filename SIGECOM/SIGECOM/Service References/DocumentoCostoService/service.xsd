@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/BLL" />
+  <xs:element name="MostrarTipoDocumentoCosto">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarTipoDocumentoCostoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MostrarTipoDocumentoCostoResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataSet" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:element ref="xs:schema" />
+              <xs:any />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Filtrar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Anio" type="xs:int" />
+        <xs:element minOccurs="0" name="Mes" type="xs:int" />
+        <xs:element minOccurs="0" name="pIdLocacion" type="xs:int" />
+        <xs:element minOccurs="0" name="pIdDocumento" type="xs:int" />
+        <xs:element minOccurs="0" name="pNumDoc" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FiltrarResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FiltrarResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataSet" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:element ref="xs:schema" />
+              <xs:any />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarPorIdAlmacen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdMovimiento" type="xs:int" />
+        <xs:element minOccurs="0" name="pTipDoc" type="xs:short" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarPorIdAlmacenResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/BLL" minOccurs="0" name="MostrarPorIdAlmacenResult" nillable="true" type="q1:DocumentoAlmacen" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarPorIdVenta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdMovimiento" type="xs:int" />
+        <xs:element minOccurs="0" name="pTipDoc" type="xs:short" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarPorIdVentaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/BLL" minOccurs="0" name="MostrarPorIdVentaResult" nillable="true" type="q2:DocumentoVenta" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarDetalles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdMovimiento" type="xs:long" />
+        <xs:element minOccurs="0" name="pTipMov" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pTipDoc" type="xs:short" />
+        <xs:element minOccurs="0" name="pTipo" type="xs:short" />
+        <xs:element minOccurs="0" name="Anio" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarDetallesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MostrarDetallesResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataSet" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:element ref="xs:schema" />
+              <xs:any />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarPorIdAlmacenDet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdAlmacenDet" type="xs:int" />
+        <xs:element minOccurs="0" name="pTipDoc" type="xs:short" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarPorIdAlmacenDetResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/BLL" minOccurs="0" name="MostrarPorIdAlmacenDetResult" nillable="true" type="q3:DocumentoAlmacenDet" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarPorIdVentaDet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdVentaDet" type="xs:int" />
+        <xs:element minOccurs="0" name="pTipDoc" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarPorIdVentaDetResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/BLL" minOccurs="0" name="MostrarPorIdVentaDetResult" nillable="true" type="q4:DocumentoVentaDet" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarCosto">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pIdMovimientoDet" type="xs:long" />
+        <xs:element minOccurs="0" name="pIdMovimiento" type="xs:long" />
+        <xs:element minOccurs="0" name="pCosDol" type="xs:double" />
+        <xs:element minOccurs="0" name="pCosSol" type="xs:double" />
+        <xs:element minOccurs="0" name="pTipDoc" type="xs:short" />
+        <xs:element minOccurs="0" name="pTipo" type="xs:short" />
+        <xs:element minOccurs="0" name="pFecDoc" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarCostoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ActualizarCostoResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

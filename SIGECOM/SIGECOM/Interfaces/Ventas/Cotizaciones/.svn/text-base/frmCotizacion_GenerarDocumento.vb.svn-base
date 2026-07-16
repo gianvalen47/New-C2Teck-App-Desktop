@@ -1,0 +1,182 @@
+﻿Imports System.Windows.Forms
+
+Public Class frmCotizacion_GenerarDocumento
+    Public state_button As Boolean              'True: Modificar    False: nuevo
+    Public type_process As String               'update     insert      delete
+    Private oCotizacionService As New CotizacionService.CotizacionServiceClient
+    Private oLocacionClienteService As New LocacionClienteService.LocacionClienteServiceClient
+    Private oMaestroService As New MaestroService.MaestroClient
+    Private dtDatos As DataTable
+    '====================================================================================================================
+    '============================================ PARAMETROS LOCALES ====================================================
+    '====================================================================================================================
+    Public IdCotizacion As Integer
+    Public IdLocacion As Integer
+    Public IdCliente As Integer
+    '====================================================================================================================
+    '============================================ CONTROL'S METHOD ======================================================
+    '====================================================================================================================
+    Private Sub SendFocus_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                txtNumDoc.KeyPress _
+                , txtFecDoc.KeyPress _
+                , cmbTipo.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            SendKeys.Send("{TAB}")
+        End If
+    End Sub
+    Private Sub Initialize_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Me.CancelButton = Me.btnCancelar
+        llenarCombos()
+        If oCotizacionService.Estado(IdCotizacion) = "PROCESADO" Then
+            btnGuardar.Enabled = False
+        Else
+            btnGuardar.Enabled = True
+        End If
+    End Sub
+    Private Sub FinallyObjects_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            If isClosed(oCotizacionService) = False Then
+                oCotizacionService.Close()
+            End If
+            If isClosed(oMaestroService) = False Then
+                oMaestroService.Close()
+            End If
+            If isClosed(oLocacionClienteService) = False Then
+                oLocacionClienteService.Close()
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [FINALLY]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub setColor_BlankCajaTexto(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles _
+                  txtNumDoc.KeyUp _
+                , txtFecDoc.KeyUp
+        Try
+            Dim campo As New Object
+            If sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.EditBox" Then
+                campo = New Janus.Windows.GridEX.EditControls.EditBox
+            ElseIf sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.NumericEditBox" Then
+                campo = New Janus.Windows.GridEX.EditControls.NumericEditBox
+            ElseIf sender.GetType.ToString = "System.Windows.Forms.TextBox" Then
+                campo = New TextBox
+            End If
+            campo = sender
+            If campo.readonly = False Then
+                If campo.Text.Trim.Length > 0 Then
+                    campo.BackColor = Color.White
+                Else
+                    campo.BackColor = Color.Red
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+    '====================================================================================================================
+    '============================================ TASK'S METHOD =========================================================
+    '====================================================================================================================
+    Private Function ValidaCampos() As Boolean
+        Try
+            If toNumber(IdCotizacion) = 0 Then
+                MsgBox("Debe Ingresrar el código de la Cotización. ", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf toNumber(txtNumDoc.Text) = 0 Then
+                MsgBox("Debe Ingresar número del nuevo documento.", MsgBoxStyle.Information, "Información")
+                txtNumDoc.BackColor = Color.Red
+                txtNumDoc.Focus()
+                Return False
+            ElseIf toBlank(txtFecDoc.Text) = "" Then
+                MsgBox("Debe Ingresar la fecha del nuevo documento", MsgBoxStyle.Information, "Información")
+                txtFecDoc.BackColor = Color.Red
+                txtFecDoc.Focus()
+                Return False
+            ElseIf cmbTipo.Value <> 4 And toNumber(cmbIdLocCli.Value) = 0 Then
+                MsgBox("Debe ingresar la locación del cliente", MsgBoxStyle.Information, "Información")
+                cmbIdLocCli.Focus()
+                Return False
+            ElseIf state_button = True And oCotizacionService.Estado(IdCotizacion) = "PROCESADO" Then
+                MsgBox("No puede generar el documento...!" + vbCr + "Debido que la cotización esta PROCESADO...!!", MsgBoxStyle.Information, "Información")
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [GEN-001]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+    Private Sub GenerarDocumento()
+        Try
+            Dim estado_process As Integer
+            If cmbTipo.Value <> 4 Then
+                estado_process = oCotizacionService.GenerarDocumento(cmbTipo.Value, IdCotizacion, cmbIdLocCli.Value, toNumber(txtNumDoc.Text), txtFecDoc.Text, Session.sUsuario.cod_usuario)
+            Else
+                estado_process = oCotizacionService.GenerarOrden(IdCotizacion, txtFecDoc.Text, toNumber(txtNumDoc.Text), Session.sUsuario.cod_usuario)
+            End If
+
+            type_process = "insert"
+            If estado_process > 0 Then
+                MsgBox("Se generó correctamente la " + cmbTipo.DropDownList.GetRow.Cells(1).Text.ToString + "...!" + vbCr + "Número : " + txtNumDoc.Text.ToString, MsgBoxStyle.Information)
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [GEN-002]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub llenarCombos()
+        Try
+            '======================================= TIPOS  ================================================
+            dtDatos = New DataTable
+            dtDatos.Columns.Add(New DataColumn("codigo", Type.GetType("System.String")))
+            dtDatos.Columns.Add(New DataColumn("nombre", Type.GetType("System.String")))
+            dtDatos.Rows.Add(New Object() {1, "Guía de Remisión"})
+            dtDatos.Rows.Add(New Object() {2, "Factura"})
+            dtDatos.Rows.Add(New Object() {3, "Boleta"})
+            dtDatos.Rows.Add(New Object() {4, "Orden Compra"})
+
+            cmbTipo.DataSource = dtDatos
+            cmbTipo.DropDownList.DataMember = dtDatos.Columns("nombre").ToString
+            cmbTipo.DropDownList.DisplayMember = dtDatos.Columns("nombre").ToString
+            cmbTipo.DropDownList.ValueMember = dtDatos.Columns("codigo").ToString
+            cmbTipo.DropDownList.Columns(0).DataMember = dtDatos.Columns("codigo").ToString
+            cmbTipo.DropDownList.Columns(1).DataMember = dtDatos.Columns("nombre").ToString
+            cmbTipo.SelectedIndex = 0
+            dtDatos = Nothing
+            '======================================= LOCACIONES DEL CLIENTE ================================================
+            dtDatos = oLocacionClienteService.Mostrar(IdCliente).Tables(0)
+            cmbIdLocCli.DataSource = dtDatos
+            cmbIdLocCli.DropDownList.DataMember = dtDatos.Columns("Nombre").ToString
+            cmbIdLocCli.DropDownList.DisplayMember = dtDatos.Columns("Nombre").ToString
+            cmbIdLocCli.DropDownList.ValueMember = dtDatos.Columns("IdLocCli").ToString
+            cmbIdLocCli.DropDownList.Columns(0).DataMember = dtDatos.Columns("IdLocCli").ToString
+            cmbIdLocCli.DropDownList.Columns(1).DataMember = dtDatos.Columns("Nombre").ToString
+            dtDatos = Nothing
+        Catch ex As Exception
+            MsgBox("ERROR [GEN-003]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    '====================================================================================================================
+    '============================================ INTERFACE'S METHOD ====================================================
+    '====================================================================================================================
+    Private Sub btnCancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancelar.Click
+        Me.DialogResult = Windows.Forms.DialogResult.Cancel
+        Me.Close()
+    End Sub
+    Private Sub btnGuardar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGuardar.Click
+        If MsgBox("¿Está seguro que desea generar la " + cmbTipo.DropDownList.GetRow.Cells(1).Text.ToString + "?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes _
+            And ValidaCampos() Then
+            GenerarDocumento()
+        End If
+    End Sub
+    Private Sub cmbTipo_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbTipo.ValueChanged
+        If cmbTipo.Value <> 4 Then
+            txtNumDoc.Text = oCotizacionService.SugerirNumero(cmbTipo.Value, IdLocacion)
+            cmbIdLocCli.Enabled = True
+        Else
+            txtNumDoc.Text = ""
+            cmbIdLocCli.Enabled = False
+        End If
+    End Sub
+End Class

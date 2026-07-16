@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="TransportistaService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ITransportistaService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ITransportistaService_MostrarPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorId" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_MostrarPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_MostrarPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_BuscarGuia_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGuia" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_BuscarGuia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGuiaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_BuscarGuia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_BuscarFactura_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarFactura" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_BuscarFactura_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarFacturaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_BuscarFactura_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_BuscarBoleta_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarBoleta" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_BuscarBoleta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarBoletaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_BuscarBoleta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_MostrarIdTransportistaGuia_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIdTransportistaGuia" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_MostrarIdTransportistaGuia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIdTransportistaGuiaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_MostrarIdTransportistaGuia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_MostrarIdTransportistaFactura_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIdTransportistaFactura" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_MostrarIdTransportistaFactura_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIdTransportistaFacturaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_MostrarIdTransportistaFactura_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_MostrarIdTransportistaBoleta_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIdTransportistaBoleta" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_MostrarIdTransportistaBoleta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIdTransportistaBoletaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_MostrarIdTransportistaBoleta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_MostrarTipoDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumento" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_MostrarTipoDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransportistaService_MostrarTipoDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="ITransportistaService">
+    <wsdl:operation name="MostrarPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransportistaService/MostrarPorId" message="tns:ITransportistaService_MostrarPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransportistaService/MostrarPorIdResponse" message="tns:ITransportistaService_MostrarPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransportistaService_MostrarPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGuia">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransportistaService/BuscarGuia" message="tns:ITransportistaService_BuscarGuia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransportistaService/BuscarGuiaResponse" message="tns:ITransportistaService_BuscarGuia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransportistaService_BuscarGuia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarFactura">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransportistaService/BuscarFactura" message="tns:ITransportistaService_BuscarFactura_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransportistaService/BuscarFacturaResponse" message="tns:ITransportistaService_BuscarFactura_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransportistaService_BuscarFactura_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarBoleta">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransportistaService/BuscarBoleta" message="tns:ITransportistaService_BuscarBoleta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransportistaService/BuscarBoletaResponse" message="tns:ITransportistaService_BuscarBoleta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransportistaService_BuscarBoleta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIdTransportistaGuia">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransportistaService/MostrarIdTransportistaGuia" message="tns:ITransportistaService_MostrarIdTransportistaGuia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransportistaService/MostrarIdTransportistaGuiaResponse" message="tns:ITransportistaService_MostrarIdTransportistaGuia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransportistaService_MostrarIdTransportistaGuia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIdTransportistaFactura">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransportistaService/MostrarIdTransportistaFactura" message="tns:ITransportistaService_MostrarIdTransportistaFactura_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransportistaService/MostrarIdTransportistaFacturaResponse" message="tns:ITransportistaService_MostrarIdTransportistaFactura_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransportistaService_MostrarIdTransportistaFactura_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIdTransportistaBoleta">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransportistaService/MostrarIdTransportistaBoleta" message="tns:ITransportistaService_MostrarIdTransportistaBoleta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransportistaService/MostrarIdTransportistaBoletaResponse" message="tns:ITransportistaService_MostrarIdTransportistaBoleta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransportistaService_MostrarIdTransportistaBoleta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransportistaService/Insertar" message="tns:ITransportistaService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransportistaService/InsertarResponse" message="tns:ITransportistaService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransportistaService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransportistaService/Actualizar" message="tns:ITransportistaService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransportistaService/ActualizarResponse" message="tns:ITransportistaService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransportistaService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransportistaService/MostrarTipoDocumento" message="tns:ITransportistaService_MostrarTipoDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransportistaService/MostrarTipoDocumentoResponse" message="tns:ITransportistaService_MostrarTipoDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransportistaService_MostrarTipoDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ITransportistaService" type="tns:ITransportistaService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ITransportistaService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="MostrarPorId">
+      <soap12:operation soapAction="http://tempuri.org/ITransportistaService/MostrarPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGuia">
+      <soap12:operation soapAction="http://tempuri.org/ITransportistaService/BuscarGuia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarFactura">
+      <soap12:operation soapAction="http://tempuri.org/ITransportistaService/BuscarFactura" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarBoleta">
+      <soap12:operation soapAction="http://tempuri.org/ITransportistaService/BuscarBoleta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIdTransportistaGuia">
+      <soap12:operation soapAction="http://tempuri.org/ITransportistaService/MostrarIdTransportistaGuia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIdTransportistaFactura">
+      <soap12:operation soapAction="http://tempuri.org/ITransportistaService/MostrarIdTransportistaFactura" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIdTransportistaBoleta">
+      <soap12:operation soapAction="http://tempuri.org/ITransportistaService/MostrarIdTransportistaBoleta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/ITransportistaService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/ITransportistaService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDocumento">
+      <soap12:operation soapAction="http://tempuri.org/ITransportistaService/MostrarTipoDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TransportistaService">
+    <wsdl:port name="NetTcpBinding_ITransportistaService" binding="tns:NetTcpBinding_ITransportistaService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/TransportistaService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/TransportistaService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

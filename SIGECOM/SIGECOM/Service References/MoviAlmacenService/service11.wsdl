@@ -1,0 +1,709 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MoviAlmacenService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IMoviAlmacenService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMoviAlmacenService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_MostrarPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorId" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_MostrarPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_MostrarPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_MostrarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_MostrarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_MostrarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Estado_InputMessage">
+    <wsdl:part name="parameters" element="tns:Estado" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Estado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EstadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Estado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_MostrarTipoDocumentoAlmacen_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumentoAlmacen" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_MostrarTipoDocumentoAlmacen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumentoAlmacenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_MostrarTipoDocumentoAlmacen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_FiltrarDocumentos_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarDocumentos" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_FiltrarDocumentos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarDocumentosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_FiltrarDocumentos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_ReporteMoviAlmacen_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteMoviAlmacen" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_ReporteMoviAlmacen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteMoviAlmacenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_ReporteMoviAlmacen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Chequear_InputMessage">
+    <wsdl:part name="parameters" element="tns:Chequear" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Chequear_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChequearResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Chequear_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_ReportePendientes_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReportePendientes" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_ReportePendientes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReportePendientesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_ReportePendientes_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_ImprimirConformidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirConformidad" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_ImprimirConformidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirConformidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_ImprimirConformidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_TransferirCostoMotor_InputMessage">
+    <wsdl:part name="parameters" element="tns:TransferirCostoMotor" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_TransferirCostoMotor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TransferirCostoMotorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_TransferirCostoMotor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_GenerarAtencionJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarAtencionJob" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_GenerarAtencionJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarAtencionJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_GenerarAtencionJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_GenerarVale_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarVale" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_GenerarVale_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarValeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_GenerarVale_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_GenerarSolicitudGasto_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarSolicitudGasto" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_GenerarSolicitudGasto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarSolicitudGastoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_GenerarSolicitudGasto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_GenerarSolicitudGastoDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarSolicitudGastoDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_GenerarSolicitudGastoDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarSolicitudGastoDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_GenerarSolicitudGastoDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Procesar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Procesar" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Procesar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_Procesar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_FiltrarSalidas_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarSalidas" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_FiltrarSalidas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarSalidasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_FiltrarSalidas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_BuscarProveedor_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarProveedor" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_BuscarProveedor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarProveedorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_BuscarProveedor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_ActualizarNumero_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarNumero" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_ActualizarNumero_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarNumeroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMoviAlmacenService_ActualizarNumero_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IMoviAlmacenService">
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/Mostrar" message="tns:IMoviAlmacenService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/MostrarResponse" message="tns:IMoviAlmacenService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMoviAlmacenService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/MostrarPorId" message="tns:IMoviAlmacenService_MostrarPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/MostrarPorIdResponse" message="tns:IMoviAlmacenService_MostrarPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMoviAlmacenService_MostrarPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/Filtrar" message="tns:IMoviAlmacenService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/FiltrarResponse" message="tns:IMoviAlmacenService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMoviAlmacenService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/Buscar" message="tns:IMoviAlmacenService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/BuscarResponse" message="tns:IMoviAlmacenService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMoviAlmacenService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/Insertar" message="tns:IMoviAlmacenService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/InsertarResponse" message="tns:IMoviAlmacenService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMoviAlmacenService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/Actualizar" message="tns:IMoviAlmacenService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/ActualizarResponse" message="tns:IMoviAlmacenService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMoviAlmacenService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/Borrar" message="tns:IMoviAlmacenService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/BorrarResponse" message="tns:IMoviAlmacenService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMoviAlmacenService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/MostrarEstados" message="tns:IMoviAlmacenService_MostrarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/MostrarEstadosResponse" message="tns:IMoviAlmacenService_MostrarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_MostrarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/Estado" message="tns:IMoviAlmacenService_Estado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/EstadoResponse" message="tns:IMoviAlmacenService_Estado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_Estado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDocumentoAlmacen">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/MostrarTipoDocumentoAlmacen" message="tns:IMoviAlmacenService_MostrarTipoDocumentoAlmacen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/MostrarTipoDocumentoAlmacenResponse" message="tns:IMoviAlmacenService_MostrarTipoDocumentoAlmacen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_MostrarTipoDocumentoAlmacen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarDocumentos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/FiltrarDocumentos" message="tns:IMoviAlmacenService_FiltrarDocumentos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/FiltrarDocumentosResponse" message="tns:IMoviAlmacenService_FiltrarDocumentos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_FiltrarDocumentos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteMoviAlmacen">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/ReporteMoviAlmacen" message="tns:IMoviAlmacenService_ReporteMoviAlmacen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/ReporteMoviAlmacenResponse" message="tns:IMoviAlmacenService_ReporteMoviAlmacen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_ReporteMoviAlmacen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/Imprimir" message="tns:IMoviAlmacenService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/ImprimirResponse" message="tns:IMoviAlmacenService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Chequear">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/Chequear" message="tns:IMoviAlmacenService_Chequear_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/ChequearResponse" message="tns:IMoviAlmacenService_Chequear_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_Chequear_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReportePendientes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/ReportePendientes" message="tns:IMoviAlmacenService_ReportePendientes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/ReportePendientesResponse" message="tns:IMoviAlmacenService_ReportePendientes_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_ReportePendientes_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirConformidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/ImprimirConformidad" message="tns:IMoviAlmacenService_ImprimirConformidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/ImprimirConformidadResponse" message="tns:IMoviAlmacenService_ImprimirConformidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_ImprimirConformidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TransferirCostoMotor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/TransferirCostoMotor" message="tns:IMoviAlmacenService_TransferirCostoMotor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/TransferirCostoMotorResponse" message="tns:IMoviAlmacenService_TransferirCostoMotor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_TransferirCostoMotor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarAtencionJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/GenerarAtencionJob" message="tns:IMoviAlmacenService_GenerarAtencionJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/GenerarAtencionJobResponse" message="tns:IMoviAlmacenService_GenerarAtencionJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_GenerarAtencionJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarVale">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/GenerarVale" message="tns:IMoviAlmacenService_GenerarVale_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/GenerarValeResponse" message="tns:IMoviAlmacenService_GenerarVale_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_GenerarVale_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarSolicitudGasto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/GenerarSolicitudGasto" message="tns:IMoviAlmacenService_GenerarSolicitudGasto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/GenerarSolicitudGastoResponse" message="tns:IMoviAlmacenService_GenerarSolicitudGasto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_GenerarSolicitudGasto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarSolicitudGastoDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/GenerarSolicitudGastoDetalle" message="tns:IMoviAlmacenService_GenerarSolicitudGastoDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/GenerarSolicitudGastoDetalleResponse" message="tns:IMoviAlmacenService_GenerarSolicitudGastoDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_GenerarSolicitudGastoDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Procesar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/Procesar" message="tns:IMoviAlmacenService_Procesar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/ProcesarResponse" message="tns:IMoviAlmacenService_Procesar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_Procesar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarSalidas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/FiltrarSalidas" message="tns:IMoviAlmacenService_FiltrarSalidas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/FiltrarSalidasResponse" message="tns:IMoviAlmacenService_FiltrarSalidas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_FiltrarSalidas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarProveedor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/BuscarProveedor" message="tns:IMoviAlmacenService_BuscarProveedor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/BuscarProveedorResponse" message="tns:IMoviAlmacenService_BuscarProveedor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_BuscarProveedor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarNumero">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMoviAlmacenService/ActualizarNumero" message="tns:IMoviAlmacenService_ActualizarNumero_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMoviAlmacenService/ActualizarNumeroResponse" message="tns:IMoviAlmacenService_ActualizarNumero_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMoviAlmacenService_ActualizarNumero_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IMoviAlmacenService" type="tns:IMoviAlmacenService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IMoviAlmacenService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/MostrarPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/MostrarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/Estado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDocumentoAlmacen">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/MostrarTipoDocumentoAlmacen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarDocumentos">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/FiltrarDocumentos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteMoviAlmacen">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/ReporteMoviAlmacen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Chequear">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/Chequear" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReportePendientes">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/ReportePendientes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirConformidad">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/ImprimirConformidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="TransferirCostoMotor">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/TransferirCostoMotor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarAtencionJob">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/GenerarAtencionJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarVale">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/GenerarVale" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarSolicitudGasto">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/GenerarSolicitudGasto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarSolicitudGastoDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/GenerarSolicitudGastoDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Procesar">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/Procesar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarSalidas">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/FiltrarSalidas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarProveedor">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/BuscarProveedor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarNumero">
+      <soap12:operation soapAction="http://tempuri.org/IMoviAlmacenService/ActualizarNumero" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MoviAlmacenService">
+    <wsdl:port name="NetTcpBinding_IMoviAlmacenService" binding="tns:NetTcpBinding_IMoviAlmacenService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/MoviAlmacenService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/MoviAlmacenService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

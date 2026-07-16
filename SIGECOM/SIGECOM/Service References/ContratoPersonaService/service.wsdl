@@ -1,0 +1,1281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ContratoPersonaService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IContratoPersonaService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IContratoPersonaService_InsertarOtroEmpleadorSueldo_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarOtroEmpleadorSueldo" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarOtroEmpleadorSueldo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarOtroEmpleadorSueldoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarOtroEmpleadorSueldo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarOtroEmpleadorSueldo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarOtroEmpleadorSueldo" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarOtroEmpleadorSueldo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarOtroEmpleadorSueldoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarOtroEmpleadorSueldo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarOtroEmpleadorSueldo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarOtroEmpleadorSueldo" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarOtroEmpleadorSueldo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarOtroEmpleadorSueldoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarOtroEmpleadorSueldo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerOtroEmpleadorSueldo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerOtroEmpleadorSueldo" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerOtroEmpleadorSueldo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerOtroEmpleadorSueldoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerOtroEmpleadorSueldo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_FiltrarOtroEmpleadorSueldo_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarOtroEmpleadorSueldo" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_FiltrarOtroEmpleadorSueldo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarOtroEmpleadorSueldoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_FiltrarOtroEmpleadorSueldo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarDH_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDH" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarDH_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDHResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarDH_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerDH_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDH" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerDH_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDHResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerDH_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarTipoVinculosDH_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoVinculosDH" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarTipoVinculosDH_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoVinculosDHResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarTipoVinculosDH_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarDH_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarDH" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarDH_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarDHResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarDH_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarDH_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarDH" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarDH_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarDHResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarDH_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarDH_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarDH" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarDH_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarDHResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarDH_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarModalidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarModalidad" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarModalidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarModalidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarModalidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerRubroIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRubroIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerRubroIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRubroIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerRubroIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BuscarRubroIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRubroIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BuscarRubroIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRubroIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BuscarRubroIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarRubroIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRubroIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarRubroIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRubroIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarRubroIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarRubroIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRubroIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarRubroIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRubroIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarRubroIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarRubroIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRubroIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarRubroIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRubroIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarRubroIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarRubroIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarRubroIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarRubroIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerAfpPersona_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAfpPersona" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerAfpPersona_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAfpPersonaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerAfpPersona_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BuscarAfpPersona_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAfpPersona" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BuscarAfpPersona_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAfpPersonaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BuscarAfpPersona_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarAfpPersona_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarAfpPersona" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarAfpPersona_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarAfpPersonaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarAfpPersona_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarAfpPersona_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarAfpPersona" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarAfpPersona_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarAfpPersonaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarAfpPersona_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarAfpPersona_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarAfpPersona" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarAfpPersona_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarAfpPersonaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarAfpPersona_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q28:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarAfpPersona_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAfpPersona" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarAfpPersona_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAfpPersonaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarAfpPersona_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q29:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarAfp_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAfp" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarAfp_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAfpResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarAfp_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q30:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarRubroIngresoPlanilla_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroIngresoPlanilla" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarRubroIngresoPlanilla_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroIngresoPlanillaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarRubroIngresoPlanilla_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q31:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarPeriodosContrato_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPeriodosContrato" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarPeriodosContrato_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPeriodosContratoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarPeriodosContrato_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q32:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarPeriodosContrato_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPeriodosContrato" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarPeriodosContrato_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPeriodosContratoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarPeriodosContrato_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q33:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarPeriodosContrato_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPeriodosContrato" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarPeriodosContrato_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPeriodosContratoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarPeriodosContrato_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q34:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarPeriodosContrato_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPeriodosContrato" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarPeriodosContrato_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPeriodosContratoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarPeriodosContrato_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q35="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q35:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerPeriodosContrato_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPeriodosContrato" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerPeriodosContrato_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPeriodosContratoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerPeriodosContrato_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q36="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q36:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_FiltrarPeriodosContrato_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarPeriodosContrato" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_FiltrarPeriodosContrato_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarPeriodosContratoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_FiltrarPeriodosContrato_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q37="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q37:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ReporteDinamico_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteDinamico" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ReporteDinamico_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteDinamicoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ReporteDinamico_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q38="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q38:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarAtributos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAtributos" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarAtributos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAtributosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarAtributos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q39="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q39:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Reporte_InputMessage">
+    <wsdl:part name="parameters" element="tns:Reporte" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Reporte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_Reporte_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q40="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q40:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarCodigosNoAportar_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCodigosNoAportar" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarCodigosNoAportar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCodigosNoAportarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarCodigosNoAportar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q41="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q41:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarOtroEmpleador_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOtroEmpleador" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarOtroEmpleador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOtroEmpleadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_MostrarOtroEmpleador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q42="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q42:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarOtroEmpleador_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarOtroEmpleador" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarOtroEmpleador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarOtroEmpleadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_InsertarOtroEmpleador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q43="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q43:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarOtroEmpleador_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarOtroEmpleador" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarOtroEmpleador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarOtroEmpleadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ActualizarOtroEmpleador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q44="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q44:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarOtroEmpleador_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarOtroEmpleador" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarOtroEmpleador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarOtroEmpleadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BorrarOtroEmpleador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q45="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q45:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerOtroEmpleador_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerOtroEmpleador" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerOtroEmpleador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerOtroEmpleadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_ObtenerOtroEmpleador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q46="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q46:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BuscarOtroEmpleador_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarOtroEmpleador" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BuscarOtroEmpleador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarOtroEmpleadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContratoPersonaService_BuscarOtroEmpleador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q47="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q47:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IContratoPersonaService">
+    <wsdl:operation name="InsertarOtroEmpleadorSueldo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/InsertarOtroEmpleadorSueldo" message="tns:IContratoPersonaService_InsertarOtroEmpleadorSueldo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/InsertarOtroEmpleadorSueldoResponse" message="tns:IContratoPersonaService_InsertarOtroEmpleadorSueldo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_InsertarOtroEmpleadorSueldo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarOtroEmpleadorSueldo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/ActualizarOtroEmpleadorSueldo" message="tns:IContratoPersonaService_ActualizarOtroEmpleadorSueldo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/ActualizarOtroEmpleadorSueldoResponse" message="tns:IContratoPersonaService_ActualizarOtroEmpleadorSueldo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_ActualizarOtroEmpleadorSueldo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarOtroEmpleadorSueldo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/BorrarOtroEmpleadorSueldo" message="tns:IContratoPersonaService_BorrarOtroEmpleadorSueldo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/BorrarOtroEmpleadorSueldoResponse" message="tns:IContratoPersonaService_BorrarOtroEmpleadorSueldo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_BorrarOtroEmpleadorSueldo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerOtroEmpleadorSueldo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/ObtenerOtroEmpleadorSueldo" message="tns:IContratoPersonaService_ObtenerOtroEmpleadorSueldo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/ObtenerOtroEmpleadorSueldoResponse" message="tns:IContratoPersonaService_ObtenerOtroEmpleadorSueldo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_ObtenerOtroEmpleadorSueldo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarOtroEmpleadorSueldo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/FiltrarOtroEmpleadorSueldo" message="tns:IContratoPersonaService_FiltrarOtroEmpleadorSueldo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/FiltrarOtroEmpleadorSueldoResponse" message="tns:IContratoPersonaService_FiltrarOtroEmpleadorSueldo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_FiltrarOtroEmpleadorSueldo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDH">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarDH" message="tns:IContratoPersonaService_MostrarDH_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarDHResponse" message="tns:IContratoPersonaService_MostrarDH_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_MostrarDH_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDH">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/ObtenerDH" message="tns:IContratoPersonaService_ObtenerDH_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/ObtenerDHResponse" message="tns:IContratoPersonaService_ObtenerDH_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_ObtenerDH_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoVinculosDH">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarTipoVinculosDH" message="tns:IContratoPersonaService_MostrarTipoVinculosDH_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarTipoVinculosDHResponse" message="tns:IContratoPersonaService_MostrarTipoVinculosDH_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_MostrarTipoVinculosDH_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarDH">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/InsertarDH" message="tns:IContratoPersonaService_InsertarDH_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/InsertarDHResponse" message="tns:IContratoPersonaService_InsertarDH_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_InsertarDH_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarDH">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/ActualizarDH" message="tns:IContratoPersonaService_ActualizarDH_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/ActualizarDHResponse" message="tns:IContratoPersonaService_ActualizarDH_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_ActualizarDH_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarDH">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/BorrarDH" message="tns:IContratoPersonaService_BorrarDH_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/BorrarDHResponse" message="tns:IContratoPersonaService_BorrarDH_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_BorrarDH_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/Obtener" message="tns:IContratoPersonaService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/ObtenerResponse" message="tns:IContratoPersonaService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/Buscar" message="tns:IContratoPersonaService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/BuscarResponse" message="tns:IContratoPersonaService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/Insertar" message="tns:IContratoPersonaService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/InsertarResponse" message="tns:IContratoPersonaService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/Actualizar" message="tns:IContratoPersonaService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/ActualizarResponse" message="tns:IContratoPersonaService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/Borrar" message="tns:IContratoPersonaService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/BorrarResponse" message="tns:IContratoPersonaService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarModalidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarModalidad" message="tns:IContratoPersonaService_MostrarModalidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarModalidadResponse" message="tns:IContratoPersonaService_MostrarModalidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_MostrarModalidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRubroIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/ObtenerRubroIngreso" message="tns:IContratoPersonaService_ObtenerRubroIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/ObtenerRubroIngresoResponse" message="tns:IContratoPersonaService_ObtenerRubroIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_ObtenerRubroIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRubroIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/BuscarRubroIngreso" message="tns:IContratoPersonaService_BuscarRubroIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/BuscarRubroIngresoResponse" message="tns:IContratoPersonaService_BuscarRubroIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_BuscarRubroIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRubroIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/InsertarRubroIngreso" message="tns:IContratoPersonaService_InsertarRubroIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/InsertarRubroIngresoResponse" message="tns:IContratoPersonaService_InsertarRubroIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_InsertarRubroIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRubroIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/ActualizarRubroIngreso" message="tns:IContratoPersonaService_ActualizarRubroIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/ActualizarRubroIngresoResponse" message="tns:IContratoPersonaService_ActualizarRubroIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_ActualizarRubroIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRubroIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/BorrarRubroIngreso" message="tns:IContratoPersonaService_BorrarRubroIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/BorrarRubroIngresoResponse" message="tns:IContratoPersonaService_BorrarRubroIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_BorrarRubroIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarRubroIngreso" message="tns:IContratoPersonaService_MostrarRubroIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarRubroIngresoResponse" message="tns:IContratoPersonaService_MostrarRubroIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_MostrarRubroIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerAfpPersona">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/ObtenerAfpPersona" message="tns:IContratoPersonaService_ObtenerAfpPersona_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/ObtenerAfpPersonaResponse" message="tns:IContratoPersonaService_ObtenerAfpPersona_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_ObtenerAfpPersona_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarAfpPersona">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/BuscarAfpPersona" message="tns:IContratoPersonaService_BuscarAfpPersona_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/BuscarAfpPersonaResponse" message="tns:IContratoPersonaService_BuscarAfpPersona_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_BuscarAfpPersona_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarAfpPersona">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/InsertarAfpPersona" message="tns:IContratoPersonaService_InsertarAfpPersona_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/InsertarAfpPersonaResponse" message="tns:IContratoPersonaService_InsertarAfpPersona_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_InsertarAfpPersona_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarAfpPersona">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/ActualizarAfpPersona" message="tns:IContratoPersonaService_ActualizarAfpPersona_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/ActualizarAfpPersonaResponse" message="tns:IContratoPersonaService_ActualizarAfpPersona_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_ActualizarAfpPersona_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarAfpPersona">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/BorrarAfpPersona" message="tns:IContratoPersonaService_BorrarAfpPersona_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/BorrarAfpPersonaResponse" message="tns:IContratoPersonaService_BorrarAfpPersona_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_BorrarAfpPersona_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAfpPersona">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarAfpPersona" message="tns:IContratoPersonaService_MostrarAfpPersona_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarAfpPersonaResponse" message="tns:IContratoPersonaService_MostrarAfpPersona_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_MostrarAfpPersona_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAfp">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarAfp" message="tns:IContratoPersonaService_MostrarAfp_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarAfpResponse" message="tns:IContratoPersonaService_MostrarAfp_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_MostrarAfp_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroIngresoPlanilla">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarRubroIngresoPlanilla" message="tns:IContratoPersonaService_MostrarRubroIngresoPlanilla_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarRubroIngresoPlanillaResponse" message="tns:IContratoPersonaService_MostrarRubroIngresoPlanilla_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_MostrarRubroIngresoPlanilla_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPeriodosContrato">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarPeriodosContrato" message="tns:IContratoPersonaService_MostrarPeriodosContrato_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarPeriodosContratoResponse" message="tns:IContratoPersonaService_MostrarPeriodosContrato_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_MostrarPeriodosContrato_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPeriodosContrato">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/InsertarPeriodosContrato" message="tns:IContratoPersonaService_InsertarPeriodosContrato_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/InsertarPeriodosContratoResponse" message="tns:IContratoPersonaService_InsertarPeriodosContrato_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_InsertarPeriodosContrato_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPeriodosContrato">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/ActualizarPeriodosContrato" message="tns:IContratoPersonaService_ActualizarPeriodosContrato_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/ActualizarPeriodosContratoResponse" message="tns:IContratoPersonaService_ActualizarPeriodosContrato_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_ActualizarPeriodosContrato_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPeriodosContrato">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/BorrarPeriodosContrato" message="tns:IContratoPersonaService_BorrarPeriodosContrato_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/BorrarPeriodosContratoResponse" message="tns:IContratoPersonaService_BorrarPeriodosContrato_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_BorrarPeriodosContrato_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPeriodosContrato">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/ObtenerPeriodosContrato" message="tns:IContratoPersonaService_ObtenerPeriodosContrato_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/ObtenerPeriodosContratoResponse" message="tns:IContratoPersonaService_ObtenerPeriodosContrato_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_ObtenerPeriodosContrato_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarPeriodosContrato">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/FiltrarPeriodosContrato" message="tns:IContratoPersonaService_FiltrarPeriodosContrato_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/FiltrarPeriodosContratoResponse" message="tns:IContratoPersonaService_FiltrarPeriodosContrato_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_FiltrarPeriodosContrato_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteDinamico">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/ReporteDinamico" message="tns:IContratoPersonaService_ReporteDinamico_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/ReporteDinamicoResponse" message="tns:IContratoPersonaService_ReporteDinamico_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_ReporteDinamico_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAtributos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarAtributos" message="tns:IContratoPersonaService_MostrarAtributos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarAtributosResponse" message="tns:IContratoPersonaService_MostrarAtributos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_MostrarAtributos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Reporte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/Reporte" message="tns:IContratoPersonaService_Reporte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/ReporteResponse" message="tns:IContratoPersonaService_Reporte_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_Reporte_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCodigosNoAportar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarCodigosNoAportar" message="tns:IContratoPersonaService_MostrarCodigosNoAportar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarCodigosNoAportarResponse" message="tns:IContratoPersonaService_MostrarCodigosNoAportar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_MostrarCodigosNoAportar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOtroEmpleador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarOtroEmpleador" message="tns:IContratoPersonaService_MostrarOtroEmpleador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/MostrarOtroEmpleadorResponse" message="tns:IContratoPersonaService_MostrarOtroEmpleador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_MostrarOtroEmpleador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarOtroEmpleador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/InsertarOtroEmpleador" message="tns:IContratoPersonaService_InsertarOtroEmpleador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/InsertarOtroEmpleadorResponse" message="tns:IContratoPersonaService_InsertarOtroEmpleador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_InsertarOtroEmpleador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarOtroEmpleador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/ActualizarOtroEmpleador" message="tns:IContratoPersonaService_ActualizarOtroEmpleador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/ActualizarOtroEmpleadorResponse" message="tns:IContratoPersonaService_ActualizarOtroEmpleador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_ActualizarOtroEmpleador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarOtroEmpleador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/BorrarOtroEmpleador" message="tns:IContratoPersonaService_BorrarOtroEmpleador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/BorrarOtroEmpleadorResponse" message="tns:IContratoPersonaService_BorrarOtroEmpleador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_BorrarOtroEmpleador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerOtroEmpleador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/ObtenerOtroEmpleador" message="tns:IContratoPersonaService_ObtenerOtroEmpleador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/ObtenerOtroEmpleadorResponse" message="tns:IContratoPersonaService_ObtenerOtroEmpleador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_ObtenerOtroEmpleador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarOtroEmpleador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContratoPersonaService/BuscarOtroEmpleador" message="tns:IContratoPersonaService_BuscarOtroEmpleador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContratoPersonaService/BuscarOtroEmpleadorResponse" message="tns:IContratoPersonaService_BuscarOtroEmpleador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContratoPersonaService_BuscarOtroEmpleador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IContratoPersonaService" type="tns:IContratoPersonaService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IContratoPersonaService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="InsertarOtroEmpleadorSueldo">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/InsertarOtroEmpleadorSueldo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarOtroEmpleadorSueldo">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/ActualizarOtroEmpleadorSueldo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarOtroEmpleadorSueldo">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/BorrarOtroEmpleadorSueldo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerOtroEmpleadorSueldo">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/ObtenerOtroEmpleadorSueldo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarOtroEmpleadorSueldo">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/FiltrarOtroEmpleadorSueldo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDH">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/MostrarDH" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDH">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/ObtenerDH" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoVinculosDH">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/MostrarTipoVinculosDH" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarDH">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/InsertarDH" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarDH">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/ActualizarDH" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarDH">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/BorrarDH" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarModalidad">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/MostrarModalidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRubroIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/ObtenerRubroIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRubroIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/BuscarRubroIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRubroIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/InsertarRubroIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRubroIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/ActualizarRubroIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRubroIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/BorrarRubroIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/MostrarRubroIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerAfpPersona">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/ObtenerAfpPersona" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarAfpPersona">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/BuscarAfpPersona" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarAfpPersona">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/InsertarAfpPersona" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarAfpPersona">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/ActualizarAfpPersona" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarAfpPersona">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/BorrarAfpPersona" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAfpPersona">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/MostrarAfpPersona" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAfp">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/MostrarAfp" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroIngresoPlanilla">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/MostrarRubroIngresoPlanilla" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPeriodosContrato">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/MostrarPeriodosContrato" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPeriodosContrato">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/InsertarPeriodosContrato" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPeriodosContrato">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/ActualizarPeriodosContrato" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPeriodosContrato">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/BorrarPeriodosContrato" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPeriodosContrato">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/ObtenerPeriodosContrato" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarPeriodosContrato">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/FiltrarPeriodosContrato" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteDinamico">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/ReporteDinamico" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAtributos">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/MostrarAtributos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Reporte">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/Reporte" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCodigosNoAportar">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/MostrarCodigosNoAportar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOtroEmpleador">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/MostrarOtroEmpleador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarOtroEmpleador">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/InsertarOtroEmpleador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarOtroEmpleador">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/ActualizarOtroEmpleador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarOtroEmpleador">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/BorrarOtroEmpleador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerOtroEmpleador">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/ObtenerOtroEmpleador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarOtroEmpleador">
+      <soap12:operation soapAction="http://tempuri.org/IContratoPersonaService/BuscarOtroEmpleador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ContratoPersonaService">
+    <wsdl:port name="NetTcpBinding_IContratoPersonaService" binding="tns:NetTcpBinding_IContratoPersonaService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/ContratoPersonaService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/ContratoPersonaService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

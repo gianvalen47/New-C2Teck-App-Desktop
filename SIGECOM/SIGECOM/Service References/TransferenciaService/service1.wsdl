@@ -1,0 +1,527 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="TransferenciaService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ITransferenciaService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ITransferenciaService_MostrarPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorId" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_MostrarPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_MostrarPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Estado_InputMessage">
+    <wsdl:part name="parameters" element="tns:Estado" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Estado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EstadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Estado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_ActualizarObservacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarObservacion" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_ActualizarObservacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarObservacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_ActualizarObservacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Transferir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Transferir" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Transferir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TransferirResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_Transferir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_MostrarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstados" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_MostrarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_MostrarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_SugerirNumero_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirNumero" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_SugerirNumero_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirNumeroResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_SugerirNumero_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_ReporteTransferencia_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteTransferencia" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_ReporteTransferencia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteTransferenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_ReporteTransferencia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_MostrarJobPendientes_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarJobPendientes" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_MostrarJobPendientes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarJobPendientesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_MostrarJobPendientes_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_MostrarJobRepPendientes_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarJobRepPendientes" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_MostrarJobRepPendientes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarJobRepPendientesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_MostrarJobRepPendientes_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_GenerarAtencionJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarAtencionJob" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_GenerarAtencionJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarAtencionJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_GenerarAtencionJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_MostrarAtencionJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAtencionJob" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_MostrarAtencionJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAtencionJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_MostrarAtencionJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_ReporteTransferenciaInterna_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteTransferenciaInterna" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_ReporteTransferenciaInterna_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteTransferenciaInternaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_ReporteTransferenciaInterna_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_ActualizarCostosDocumentoOrigen_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCostosDocumentoOrigen" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_ActualizarCostosDocumentoOrigen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCostosDocumentoOrigenResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITransferenciaService_ActualizarCostosDocumentoOrigen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="ITransferenciaService">
+    <wsdl:operation name="MostrarPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/MostrarPorId" message="tns:ITransferenciaService_MostrarPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/MostrarPorIdResponse" message="tns:ITransferenciaService_MostrarPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_MostrarPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/Filtrar" message="tns:ITransferenciaService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/FiltrarResponse" message="tns:ITransferenciaService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/Estado" message="tns:ITransferenciaService_Estado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/EstadoResponse" message="tns:ITransferenciaService_Estado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_Estado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/Buscar" message="tns:ITransferenciaService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/BuscarResponse" message="tns:ITransferenciaService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/Insertar" message="tns:ITransferenciaService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/InsertarResponse" message="tns:ITransferenciaService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/Actualizar" message="tns:ITransferenciaService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/ActualizarResponse" message="tns:ITransferenciaService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/Borrar" message="tns:ITransferenciaService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/BorrarResponse" message="tns:ITransferenciaService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarObservacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/ActualizarObservacion" message="tns:ITransferenciaService_ActualizarObservacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/ActualizarObservacionResponse" message="tns:ITransferenciaService_ActualizarObservacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_ActualizarObservacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Transferir">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/Transferir" message="tns:ITransferenciaService_Transferir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/TransferirResponse" message="tns:ITransferenciaService_Transferir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_Transferir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/MostrarEstados" message="tns:ITransferenciaService_MostrarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/MostrarEstadosResponse" message="tns:ITransferenciaService_MostrarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_MostrarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirNumero">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/SugerirNumero" message="tns:ITransferenciaService_SugerirNumero_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/SugerirNumeroResponse" message="tns:ITransferenciaService_SugerirNumero_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_SugerirNumero_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteTransferencia">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/ReporteTransferencia" message="tns:ITransferenciaService_ReporteTransferencia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/ReporteTransferenciaResponse" message="tns:ITransferenciaService_ReporteTransferencia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_ReporteTransferencia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarJobPendientes">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/MostrarJobPendientes" message="tns:ITransferenciaService_MostrarJobPendientes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/MostrarJobPendientesResponse" message="tns:ITransferenciaService_MostrarJobPendientes_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_MostrarJobPendientes_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarJobRepPendientes">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/MostrarJobRepPendientes" message="tns:ITransferenciaService_MostrarJobRepPendientes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/MostrarJobRepPendientesResponse" message="tns:ITransferenciaService_MostrarJobRepPendientes_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_MostrarJobRepPendientes_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarAtencionJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/GenerarAtencionJob" message="tns:ITransferenciaService_GenerarAtencionJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/GenerarAtencionJobResponse" message="tns:ITransferenciaService_GenerarAtencionJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_GenerarAtencionJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAtencionJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/MostrarAtencionJob" message="tns:ITransferenciaService_MostrarAtencionJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/MostrarAtencionJobResponse" message="tns:ITransferenciaService_MostrarAtencionJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_MostrarAtencionJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteTransferenciaInterna">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/ReporteTransferenciaInterna" message="tns:ITransferenciaService_ReporteTransferenciaInterna_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/ReporteTransferenciaInternaResponse" message="tns:ITransferenciaService_ReporteTransferenciaInterna_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_ReporteTransferenciaInterna_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCostosDocumentoOrigen">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITransferenciaService/ActualizarCostosDocumentoOrigen" message="tns:ITransferenciaService_ActualizarCostosDocumentoOrigen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITransferenciaService/ActualizarCostosDocumentoOrigenResponse" message="tns:ITransferenciaService_ActualizarCostosDocumentoOrigen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITransferenciaService_ActualizarCostosDocumentoOrigen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ITransferenciaService" type="tns:ITransferenciaService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ITransferenciaService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="MostrarPorId">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/MostrarPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/Estado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarObservacion">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/ActualizarObservacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Transferir">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/Transferir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/MostrarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirNumero">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/SugerirNumero" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteTransferencia">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/ReporteTransferencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarJobPendientes">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/MostrarJobPendientes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarJobRepPendientes">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/MostrarJobRepPendientes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarAtencionJob">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/GenerarAtencionJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAtencionJob">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/MostrarAtencionJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteTransferenciaInterna">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/ReporteTransferenciaInterna" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCostosDocumentoOrigen">
+      <soap12:operation soapAction="http://tempuri.org/ITransferenciaService/ActualizarCostosDocumentoOrigen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TransferenciaService">
+    <wsdl:port name="NetTcpBinding_ITransferenciaService" binding="tns:NetTcpBinding_ITransferenciaService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/TransferenciaService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/TransferenciaService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

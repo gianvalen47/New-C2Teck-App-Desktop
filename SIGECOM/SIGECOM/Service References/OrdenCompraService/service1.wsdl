@@ -1,0 +1,969 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="OrdenCompraService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IOrdenCompraService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IOrdenCompraService_MostrarPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorId" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarCotizacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCotizacion" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarCotizacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCotizacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarCotizacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_GenerarDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_GenerarDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_GenerarDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_GenerarRequisicion_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarRequisicion" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_GenerarRequisicion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarRequisicionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_GenerarRequisicion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Aprobar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Aprobar" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Aprobar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AprobarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Aprobar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Estado_InputMessage">
+    <wsdl:part name="parameters" element="tns:Estado" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Estado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EstadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Estado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_SugerirNumero_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirNumero" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_SugerirNumero_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirNumeroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_SugerirNumero_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarPorIdSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdSugerido" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarPorIdSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarPorIdSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_BuscarSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarSugerido" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_BuscarSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_BuscarSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarIdSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIdSugerido" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarIdSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIdSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarIdSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_InsertarSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarSugerido" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_InsertarSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_InsertarSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ActualizarSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarSugerido" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ActualizarSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ActualizarSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_BorrarSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarSugerido" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_BorrarSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_BorrarSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_EnviarCreditos_InputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarCreditos" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_EnviarCreditos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarCreditosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_EnviarCreditos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ConsultarSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarSugerido" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ConsultarSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ConsultarSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ReporteOrdenCompra_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteOrdenCompra" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ReporteOrdenCompra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteOrdenCompraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ReporteOrdenCompra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ActualizarMoneda_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMoneda" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ActualizarMoneda_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMonedaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ActualizarMoneda_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_GenerarPedidoInternoCodigoAntiguo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarPedidoInternoCodigoAntiguo" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_GenerarPedidoInternoCodigoAntiguo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarPedidoInternoCodigoAntiguoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_GenerarPedidoInternoCodigoAntiguo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ConsultarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ConsultarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ConsultarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarArchivos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarArchivos" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarArchivos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarArchivosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarArchivos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ObtenerArchivos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerArchivos" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ObtenerArchivos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerArchivosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ObtenerArchivos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q28:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_InsertarArchivos_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarArchivos" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_InsertarArchivos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarArchivosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_InsertarArchivos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q29:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ActualizarArchivos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarArchivos" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ActualizarArchivos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarArchivosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ActualizarArchivos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q30:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_BorrarArchivos_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarArchivos" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_BorrarArchivos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarArchivosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_BorrarArchivos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q31:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ReporteOrdenesGuiados_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteOrdenesGuiados" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ReporteOrdenesGuiados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteOrdenesGuiadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ReporteOrdenesGuiados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q32:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ActualizarNumeroOrden_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarNumeroOrden" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ActualizarNumeroOrden_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarNumeroOrdenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_ActualizarNumeroOrden_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q33:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarOrdenesPorAprobar_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOrdenesPorAprobar" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarOrdenesPorAprobar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOrdenesPorAprobarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarOrdenesPorAprobar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q34:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarOrdenesAprobadoSeparar_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOrdenesAprobadoSeparar" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarOrdenesAprobadoSeparar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOrdenesAprobadoSepararResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdenCompraService_MostrarOrdenesAprobadoSeparar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q35="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q35:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IOrdenCompraService">
+    <wsdl:operation name="MostrarPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/MostrarPorId" message="tns:IOrdenCompraService_MostrarPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/MostrarPorIdResponse" message="tns:IOrdenCompraService_MostrarPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_MostrarPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCotizacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/MostrarCotizacion" message="tns:IOrdenCompraService_MostrarCotizacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/MostrarCotizacionResponse" message="tns:IOrdenCompraService_MostrarCotizacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_MostrarCotizacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/Filtrar" message="tns:IOrdenCompraService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/FiltrarResponse" message="tns:IOrdenCompraService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/Buscar" message="tns:IOrdenCompraService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/BuscarResponse" message="tns:IOrdenCompraService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/Insertar" message="tns:IOrdenCompraService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/InsertarResponse" message="tns:IOrdenCompraService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/Actualizar" message="tns:IOrdenCompraService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/ActualizarResponse" message="tns:IOrdenCompraService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/Borrar" message="tns:IOrdenCompraService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/BorrarResponse" message="tns:IOrdenCompraService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/GenerarDocumento" message="tns:IOrdenCompraService_GenerarDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/GenerarDocumentoResponse" message="tns:IOrdenCompraService_GenerarDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_GenerarDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarRequisicion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/GenerarRequisicion" message="tns:IOrdenCompraService_GenerarRequisicion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/GenerarRequisicionResponse" message="tns:IOrdenCompraService_GenerarRequisicion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_GenerarRequisicion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/MostrarEstados" message="tns:IOrdenCompraService_MostrarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/MostrarEstadosResponse" message="tns:IOrdenCompraService_MostrarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_MostrarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Aprobar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/Aprobar" message="tns:IOrdenCompraService_Aprobar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/AprobarResponse" message="tns:IOrdenCompraService_Aprobar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_Aprobar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/Estado" message="tns:IOrdenCompraService_Estado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/EstadoResponse" message="tns:IOrdenCompraService_Estado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_Estado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirNumero">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/SugerirNumero" message="tns:IOrdenCompraService_SugerirNumero_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/SugerirNumeroResponse" message="tns:IOrdenCompraService_SugerirNumero_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_SugerirNumero_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorIdSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/MostrarPorIdSugerido" message="tns:IOrdenCompraService_MostrarPorIdSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/MostrarPorIdSugeridoResponse" message="tns:IOrdenCompraService_MostrarPorIdSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_MostrarPorIdSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/BuscarSugerido" message="tns:IOrdenCompraService_BuscarSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/BuscarSugeridoResponse" message="tns:IOrdenCompraService_BuscarSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_BuscarSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIdSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/MostrarIdSugerido" message="tns:IOrdenCompraService_MostrarIdSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/MostrarIdSugeridoResponse" message="tns:IOrdenCompraService_MostrarIdSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_MostrarIdSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/InsertarSugerido" message="tns:IOrdenCompraService_InsertarSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/InsertarSugeridoResponse" message="tns:IOrdenCompraService_InsertarSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_InsertarSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/ActualizarSugerido" message="tns:IOrdenCompraService_ActualizarSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/ActualizarSugeridoResponse" message="tns:IOrdenCompraService_ActualizarSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_ActualizarSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/BorrarSugerido" message="tns:IOrdenCompraService_BorrarSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/BorrarSugeridoResponse" message="tns:IOrdenCompraService_BorrarSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_BorrarSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EnviarCreditos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/EnviarCreditos" message="tns:IOrdenCompraService_EnviarCreditos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/EnviarCreditosResponse" message="tns:IOrdenCompraService_EnviarCreditos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_EnviarCreditos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/ConsultarSugerido" message="tns:IOrdenCompraService_ConsultarSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/ConsultarSugeridoResponse" message="tns:IOrdenCompraService_ConsultarSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_ConsultarSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteOrdenCompra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/ReporteOrdenCompra" message="tns:IOrdenCompraService_ReporteOrdenCompra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/ReporteOrdenCompraResponse" message="tns:IOrdenCompraService_ReporteOrdenCompra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_ReporteOrdenCompra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMoneda">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/ActualizarMoneda" message="tns:IOrdenCompraService_ActualizarMoneda_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/ActualizarMonedaResponse" message="tns:IOrdenCompraService_ActualizarMoneda_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_ActualizarMoneda_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/Imprimir" message="tns:IOrdenCompraService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/ImprimirResponse" message="tns:IOrdenCompraService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarPedidoInternoCodigoAntiguo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/GenerarPedidoInternoCodigoAntiguo" message="tns:IOrdenCompraService_GenerarPedidoInternoCodigoAntiguo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/GenerarPedidoInternoCodigoAntiguoResponse" message="tns:IOrdenCompraService_GenerarPedidoInternoCodigoAntiguo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_GenerarPedidoInternoCodigoAntiguo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/ConsultarEstados" message="tns:IOrdenCompraService_ConsultarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/ConsultarEstadosResponse" message="tns:IOrdenCompraService_ConsultarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_ConsultarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarArchivos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/MostrarArchivos" message="tns:IOrdenCompraService_MostrarArchivos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/MostrarArchivosResponse" message="tns:IOrdenCompraService_MostrarArchivos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_MostrarArchivos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArchivos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/ObtenerArchivos" message="tns:IOrdenCompraService_ObtenerArchivos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/ObtenerArchivosResponse" message="tns:IOrdenCompraService_ObtenerArchivos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_ObtenerArchivos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarArchivos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/InsertarArchivos" message="tns:IOrdenCompraService_InsertarArchivos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/InsertarArchivosResponse" message="tns:IOrdenCompraService_InsertarArchivos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_InsertarArchivos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarArchivos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/ActualizarArchivos" message="tns:IOrdenCompraService_ActualizarArchivos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/ActualizarArchivosResponse" message="tns:IOrdenCompraService_ActualizarArchivos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_ActualizarArchivos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarArchivos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/BorrarArchivos" message="tns:IOrdenCompraService_BorrarArchivos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/BorrarArchivosResponse" message="tns:IOrdenCompraService_BorrarArchivos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_BorrarArchivos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteOrdenesGuiados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/ReporteOrdenesGuiados" message="tns:IOrdenCompraService_ReporteOrdenesGuiados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/ReporteOrdenesGuiadosResponse" message="tns:IOrdenCompraService_ReporteOrdenesGuiados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_ReporteOrdenesGuiados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarNumeroOrden">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/ActualizarNumeroOrden" message="tns:IOrdenCompraService_ActualizarNumeroOrden_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/ActualizarNumeroOrdenResponse" message="tns:IOrdenCompraService_ActualizarNumeroOrden_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_ActualizarNumeroOrden_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOrdenesPorAprobar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/MostrarOrdenesPorAprobar" message="tns:IOrdenCompraService_MostrarOrdenesPorAprobar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/MostrarOrdenesPorAprobarResponse" message="tns:IOrdenCompraService_MostrarOrdenesPorAprobar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_MostrarOrdenesPorAprobar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOrdenesAprobadoSeparar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdenCompraService/MostrarOrdenesAprobadoSeparar" message="tns:IOrdenCompraService_MostrarOrdenesAprobadoSeparar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdenCompraService/MostrarOrdenesAprobadoSepararResponse" message="tns:IOrdenCompraService_MostrarOrdenesAprobadoSeparar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdenCompraService_MostrarOrdenesAprobadoSeparar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IOrdenCompraService" type="tns:IOrdenCompraService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IOrdenCompraService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="MostrarPorId">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/MostrarPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCotizacion">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/MostrarCotizacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/GenerarDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarRequisicion">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/GenerarRequisicion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/MostrarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Aprobar">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/Aprobar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/Estado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirNumero">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/SugerirNumero" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorIdSugerido">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/MostrarPorIdSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarSugerido">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/BuscarSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIdSugerido">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/MostrarIdSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarSugerido">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/InsertarSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarSugerido">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/ActualizarSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarSugerido">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/BorrarSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="EnviarCreditos">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/EnviarCreditos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarSugerido">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/ConsultarSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteOrdenCompra">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/ReporteOrdenCompra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMoneda">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/ActualizarMoneda" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarPedidoInternoCodigoAntiguo">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/GenerarPedidoInternoCodigoAntiguo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/ConsultarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarArchivos">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/MostrarArchivos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArchivos">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/ObtenerArchivos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarArchivos">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/InsertarArchivos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarArchivos">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/ActualizarArchivos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarArchivos">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/BorrarArchivos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteOrdenesGuiados">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/ReporteOrdenesGuiados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarNumeroOrden">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/ActualizarNumeroOrden" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOrdenesPorAprobar">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/MostrarOrdenesPorAprobar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOrdenesAprobadoSeparar">
+      <soap12:operation soapAction="http://tempuri.org/IOrdenCompraService/MostrarOrdenesAprobadoSeparar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OrdenCompraService">
+    <wsdl:port name="NetTcpBinding_IOrdenCompraService" binding="tns:NetTcpBinding_IOrdenCompraService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/OrdenCompraService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/OrdenCompraService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

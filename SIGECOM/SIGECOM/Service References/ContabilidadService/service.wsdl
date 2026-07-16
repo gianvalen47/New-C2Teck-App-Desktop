@@ -1,0 +1,943 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ContabilidadService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IContabilidadService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IContabilidadService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ObtenerRegistro_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRegistro" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ObtenerRegistro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRegistroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ObtenerRegistro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_MostrarTipoLibros_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoLibros" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_MostrarTipoLibros_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoLibrosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_MostrarTipoLibros_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ObtenerIdContabilidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdContabilidad" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ObtenerIdContabilidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdContabilidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ObtenerIdContabilidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ProcesarCuentaDestino_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarCuentaDestino" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ProcesarCuentaDestino_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarCuentaDestinoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ProcesarCuentaDestino_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteLibroDiario_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteLibroDiario" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteLibroDiario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteLibroDiarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteLibroDiario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteLibroMayor_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteLibroMayor" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteLibroMayor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteLibroMayorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteLibroMayor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_BuscarCierreMes_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarCierreMes" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_BuscarCierreMes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarCierreMesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_BuscarCierreMes_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_InsertarCierreMes_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCierreMes" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_InsertarCierreMes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCierreMesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_InsertarCierreMes_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteBalances_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteBalances" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteBalances_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteBalancesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteBalances_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ProcesarDiferenciaCambio_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarDiferenciaCambio" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ProcesarDiferenciaCambio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarDiferenciaCambioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ProcesarDiferenciaCambio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteCtaCtes_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCtaCtes" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteCtaCtes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCtaCtesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteCtaCtes_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteCtaCtesPendientes_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCtaCtesPendientes" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteCtaCtesPendientes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCtaCtesPendientesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteCtaCtesPendientes_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteMayorAuxiliar_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteMayorAuxiliar" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteMayorAuxiliar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteMayorAuxiliarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteMayorAuxiliar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_RevertirCuentaDestino_InputMessage">
+    <wsdl:part name="parameters" element="tns:RevertirCuentaDestino" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_RevertirCuentaDestino_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RevertirCuentaDestinoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_RevertirCuentaDestino_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_RevertirCierreMesContable_InputMessage">
+    <wsdl:part name="parameters" element="tns:RevertirCierreMesContable" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_RevertirCierreMesContable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RevertirCierreMesContableResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_RevertirCierreMesContable_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ConsultarImportaciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarImportaciones" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ConsultarImportaciones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarImportacionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ConsultarImportaciones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ImportarImportaciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportarImportaciones" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ImportarImportaciones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportarImportacionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ImportarImportaciones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteGerencialEstadoFinanciero_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerencialEstadoFinanciero" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteGerencialEstadoFinanciero_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerencialEstadoFinancieroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ReporteGerencialEstadoFinanciero_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ImportarVentas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportarVentas" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ImportarVentas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportarVentasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ImportarVentas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ConsultarVentas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarVentas" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ConsultarVentas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarVentasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ConsultarVentas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ImportarCostos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportarCostos" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ImportarCostos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportarCostosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ImportarCostos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q28:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ConsultarCostos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarCostos" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ConsultarCostos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarCostosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ConsultarCostos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q29:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_LibrosContables_InputMessage">
+    <wsdl:part name="parameters" element="tns:LibrosContables" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_LibrosContables_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LibrosContablesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_LibrosContables_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q30:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ObtenerIdContabilidadVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdContabilidadVenta" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ObtenerIdContabilidadVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdContabilidadVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_ObtenerIdContabilidadVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q31:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_BuscarAsientoVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAsientoVenta" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_BuscarAsientoVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAsientoVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_BuscarAsientoVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q32:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_MostrarDocumentoLibros_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDocumentoLibros" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_MostrarDocumentoLibros_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDocumentoLibrosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_MostrarDocumentoLibros_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q33:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_MostrarDocumentosTesoreria_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDocumentosTesoreria" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_MostrarDocumentosTesoreria_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDocumentosTesoreriaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IContabilidadService_MostrarDocumentosTesoreria_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q34:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IContabilidadService">
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/Obtener" message="tns:IContabilidadService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ObtenerResponse" message="tns:IContabilidadService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/Buscar" message="tns:IContabilidadService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/BuscarResponse" message="tns:IContabilidadService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/Filtrar" message="tns:IContabilidadService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/FiltrarResponse" message="tns:IContabilidadService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/Insertar" message="tns:IContabilidadService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/InsertarResponse" message="tns:IContabilidadService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/Actualizar" message="tns:IContabilidadService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ActualizarResponse" message="tns:IContabilidadService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/Borrar" message="tns:IContabilidadService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/BorrarResponse" message="tns:IContabilidadService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRegistro">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ObtenerRegistro" message="tns:IContabilidadService_ObtenerRegistro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ObtenerRegistroResponse" message="tns:IContabilidadService_ObtenerRegistro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ObtenerRegistro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoLibros">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/MostrarTipoLibros" message="tns:IContabilidadService_MostrarTipoLibros_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/MostrarTipoLibrosResponse" message="tns:IContabilidadService_MostrarTipoLibros_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_MostrarTipoLibros_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdContabilidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ObtenerIdContabilidad" message="tns:IContabilidadService_ObtenerIdContabilidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ObtenerIdContabilidadResponse" message="tns:IContabilidadService_ObtenerIdContabilidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ObtenerIdContabilidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarCuentaDestino">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ProcesarCuentaDestino" message="tns:IContabilidadService_ProcesarCuentaDestino_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ProcesarCuentaDestinoResponse" message="tns:IContabilidadService_ProcesarCuentaDestino_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ProcesarCuentaDestino_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteLibroDiario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ReporteLibroDiario" message="tns:IContabilidadService_ReporteLibroDiario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ReporteLibroDiarioResponse" message="tns:IContabilidadService_ReporteLibroDiario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ReporteLibroDiario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteLibroMayor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ReporteLibroMayor" message="tns:IContabilidadService_ReporteLibroMayor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ReporteLibroMayorResponse" message="tns:IContabilidadService_ReporteLibroMayor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ReporteLibroMayor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarCierreMes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/BuscarCierreMes" message="tns:IContabilidadService_BuscarCierreMes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/BuscarCierreMesResponse" message="tns:IContabilidadService_BuscarCierreMes_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_BuscarCierreMes_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCierreMes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/InsertarCierreMes" message="tns:IContabilidadService_InsertarCierreMes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/InsertarCierreMesResponse" message="tns:IContabilidadService_InsertarCierreMes_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_InsertarCierreMes_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteBalances">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ReporteBalances" message="tns:IContabilidadService_ReporteBalances_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ReporteBalancesResponse" message="tns:IContabilidadService_ReporteBalances_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ReporteBalances_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarDiferenciaCambio">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ProcesarDiferenciaCambio" message="tns:IContabilidadService_ProcesarDiferenciaCambio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ProcesarDiferenciaCambioResponse" message="tns:IContabilidadService_ProcesarDiferenciaCambio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ProcesarDiferenciaCambio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCtaCtes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ReporteCtaCtes" message="tns:IContabilidadService_ReporteCtaCtes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ReporteCtaCtesResponse" message="tns:IContabilidadService_ReporteCtaCtes_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ReporteCtaCtes_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCtaCtesPendientes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ReporteCtaCtesPendientes" message="tns:IContabilidadService_ReporteCtaCtesPendientes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ReporteCtaCtesPendientesResponse" message="tns:IContabilidadService_ReporteCtaCtesPendientes_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ReporteCtaCtesPendientes_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteMayorAuxiliar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ReporteMayorAuxiliar" message="tns:IContabilidadService_ReporteMayorAuxiliar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ReporteMayorAuxiliarResponse" message="tns:IContabilidadService_ReporteMayorAuxiliar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ReporteMayorAuxiliar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RevertirCuentaDestino">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/RevertirCuentaDestino" message="tns:IContabilidadService_RevertirCuentaDestino_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/RevertirCuentaDestinoResponse" message="tns:IContabilidadService_RevertirCuentaDestino_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_RevertirCuentaDestino_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/Imprimir" message="tns:IContabilidadService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ImprimirResponse" message="tns:IContabilidadService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RevertirCierreMesContable">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/RevertirCierreMesContable" message="tns:IContabilidadService_RevertirCierreMesContable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/RevertirCierreMesContableResponse" message="tns:IContabilidadService_RevertirCierreMesContable_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_RevertirCierreMesContable_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarImportaciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ConsultarImportaciones" message="tns:IContabilidadService_ConsultarImportaciones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ConsultarImportacionesResponse" message="tns:IContabilidadService_ConsultarImportaciones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ConsultarImportaciones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportarImportaciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ImportarImportaciones" message="tns:IContabilidadService_ImportarImportaciones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ImportarImportacionesResponse" message="tns:IContabilidadService_ImportarImportaciones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ImportarImportaciones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerencialEstadoFinanciero">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ReporteGerencialEstadoFinanciero" message="tns:IContabilidadService_ReporteGerencialEstadoFinanciero_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ReporteGerencialEstadoFinancieroResponse" message="tns:IContabilidadService_ReporteGerencialEstadoFinanciero_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ReporteGerencialEstadoFinanciero_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportarVentas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ImportarVentas" message="tns:IContabilidadService_ImportarVentas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ImportarVentasResponse" message="tns:IContabilidadService_ImportarVentas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ImportarVentas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarVentas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ConsultarVentas" message="tns:IContabilidadService_ConsultarVentas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ConsultarVentasResponse" message="tns:IContabilidadService_ConsultarVentas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ConsultarVentas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportarCostos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ImportarCostos" message="tns:IContabilidadService_ImportarCostos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ImportarCostosResponse" message="tns:IContabilidadService_ImportarCostos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ImportarCostos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarCostos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ConsultarCostos" message="tns:IContabilidadService_ConsultarCostos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ConsultarCostosResponse" message="tns:IContabilidadService_ConsultarCostos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ConsultarCostos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LibrosContables">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/LibrosContables" message="tns:IContabilidadService_LibrosContables_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/LibrosContablesResponse" message="tns:IContabilidadService_LibrosContables_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_LibrosContables_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdContabilidadVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/ObtenerIdContabilidadVenta" message="tns:IContabilidadService_ObtenerIdContabilidadVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/ObtenerIdContabilidadVentaResponse" message="tns:IContabilidadService_ObtenerIdContabilidadVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_ObtenerIdContabilidadVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarAsientoVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/BuscarAsientoVenta" message="tns:IContabilidadService_BuscarAsientoVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/BuscarAsientoVentaResponse" message="tns:IContabilidadService_BuscarAsientoVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_BuscarAsientoVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDocumentoLibros">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/MostrarDocumentoLibros" message="tns:IContabilidadService_MostrarDocumentoLibros_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/MostrarDocumentoLibrosResponse" message="tns:IContabilidadService_MostrarDocumentoLibros_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_MostrarDocumentoLibros_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDocumentosTesoreria">
+      <wsdl:input wsaw:Action="http://tempuri.org/IContabilidadService/MostrarDocumentosTesoreria" message="tns:IContabilidadService_MostrarDocumentosTesoreria_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IContabilidadService/MostrarDocumentosTesoreriaResponse" message="tns:IContabilidadService_MostrarDocumentosTesoreria_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IContabilidadService_MostrarDocumentosTesoreria_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IContabilidadService" type="tns:IContabilidadService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IContabilidadService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRegistro">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ObtenerRegistro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoLibros">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/MostrarTipoLibros" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdContabilidad">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ObtenerIdContabilidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarCuentaDestino">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ProcesarCuentaDestino" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteLibroDiario">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ReporteLibroDiario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteLibroMayor">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ReporteLibroMayor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarCierreMes">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/BuscarCierreMes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCierreMes">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/InsertarCierreMes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteBalances">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ReporteBalances" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarDiferenciaCambio">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ProcesarDiferenciaCambio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCtaCtes">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ReporteCtaCtes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCtaCtesPendientes">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ReporteCtaCtesPendientes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteMayorAuxiliar">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ReporteMayorAuxiliar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RevertirCuentaDestino">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/RevertirCuentaDestino" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RevertirCierreMesContable">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/RevertirCierreMesContable" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarImportaciones">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ConsultarImportaciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImportarImportaciones">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ImportarImportaciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerencialEstadoFinanciero">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ReporteGerencialEstadoFinanciero" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImportarVentas">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ImportarVentas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarVentas">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ConsultarVentas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImportarCostos">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ImportarCostos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarCostos">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ConsultarCostos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="LibrosContables">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/LibrosContables" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdContabilidadVenta">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/ObtenerIdContabilidadVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarAsientoVenta">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/BuscarAsientoVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDocumentoLibros">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/MostrarDocumentoLibros" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDocumentosTesoreria">
+      <soap12:operation soapAction="http://tempuri.org/IContabilidadService/MostrarDocumentosTesoreria" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ContabilidadService">
+    <wsdl:port name="NetTcpBinding_IContabilidadService" binding="tns:NetTcpBinding_IContabilidadService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/ContabilidadService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/ContabilidadService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

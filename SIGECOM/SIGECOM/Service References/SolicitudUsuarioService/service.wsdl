@@ -1,0 +1,683 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SolicitudUsuarioService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ISolicitudUsuarioService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISolicitudUsuarioService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstados" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Conformidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:Conformidad" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Conformidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConformidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Conformidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarTipoTrabajo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoTrabajo" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarTipoTrabajo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoTrabajoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarTipoTrabajo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_CambiarEstado_InputMessage">
+    <wsdl:part name="parameters" element="tns:CambiarEstado" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_CambiarEstado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CambiarEstadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_CambiarEstado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_AsignarPersonal_InputMessage">
+    <wsdl:part name="parameters" element="tns:AsignarPersonal" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_AsignarPersonal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AsignarPersonalResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_AsignarPersonal_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_BuscarAsignacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAsignacion" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_BuscarAsignacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAsignacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_BuscarAsignacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ListarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListarEstados" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ListarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ListarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ObtenerEstado_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEstado" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ObtenerEstado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEstadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ObtenerEstado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarTipoProblema_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoProblema" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarTipoProblema_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoProblemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarTipoProblema_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ObtenerAtencion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAtencion" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ObtenerAtencion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAtencionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ObtenerAtencion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarPrioridad_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPrioridad" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarPrioridad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPrioridadResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarPrioridad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarAplicacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAplicacion" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarAplicacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAplicacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarAplicacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarMedio_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMedio" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarMedio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMedioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarMedio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarPersonalAsignado_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPersonalAsignado" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarPersonalAsignado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPersonalAsignadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarPersonalAsignado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ReporteAgrupadoPorOpcion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteAgrupadoPorOpcion" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ReporteAgrupadoPorOpcion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteAgrupadoPorOpcionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ReporteAgrupadoPorOpcion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ReporteAgrupadoPorUnidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteAgrupadoPorUnidad" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ReporteAgrupadoPorUnidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteAgrupadoPorUnidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ReporteAgrupadoPorUnidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ReporteAgrupadoPorPersonal_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteAgrupadoPorPersonal" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ReporteAgrupadoPorPersonal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteAgrupadoPorPersonalResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_ReporteAgrupadoPorPersonal_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarMotivoProblema_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMotivoProblema" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarMotivoProblema_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMotivoProblemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarMotivoProblema_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarPersonal_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPersonal" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarPersonal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPersonalResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudUsuarioService_MostrarPersonal_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="ISolicitudUsuarioService">
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/Mostrar" message="tns:ISolicitudUsuarioService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarResponse" message="tns:ISolicitudUsuarioService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarEstados" message="tns:ISolicitudUsuarioService_MostrarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarEstadosResponse" message="tns:ISolicitudUsuarioService_MostrarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_MostrarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/Obtener" message="tns:ISolicitudUsuarioService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/ObtenerResponse" message="tns:ISolicitudUsuarioService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/Insertar" message="tns:ISolicitudUsuarioService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/InsertarResponse" message="tns:ISolicitudUsuarioService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/Actualizar" message="tns:ISolicitudUsuarioService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/ActualizarResponse" message="tns:ISolicitudUsuarioService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Conformidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/Conformidad" message="tns:ISolicitudUsuarioService_Conformidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/ConformidadResponse" message="tns:ISolicitudUsuarioService_Conformidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_Conformidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoTrabajo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarTipoTrabajo" message="tns:ISolicitudUsuarioService_MostrarTipoTrabajo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarTipoTrabajoResponse" message="tns:ISolicitudUsuarioService_MostrarTipoTrabajo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_MostrarTipoTrabajo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/Filtrar" message="tns:ISolicitudUsuarioService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/FiltrarResponse" message="tns:ISolicitudUsuarioService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CambiarEstado">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/CambiarEstado" message="tns:ISolicitudUsuarioService_CambiarEstado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/CambiarEstadoResponse" message="tns:ISolicitudUsuarioService_CambiarEstado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_CambiarEstado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AsignarPersonal">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/AsignarPersonal" message="tns:ISolicitudUsuarioService_AsignarPersonal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/AsignarPersonalResponse" message="tns:ISolicitudUsuarioService_AsignarPersonal_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_AsignarPersonal_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarAsignacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/BuscarAsignacion" message="tns:ISolicitudUsuarioService_BuscarAsignacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/BuscarAsignacionResponse" message="tns:ISolicitudUsuarioService_BuscarAsignacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_BuscarAsignacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/ListarEstados" message="tns:ISolicitudUsuarioService_ListarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/ListarEstadosResponse" message="tns:ISolicitudUsuarioService_ListarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_ListarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEstado">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/ObtenerEstado" message="tns:ISolicitudUsuarioService_ObtenerEstado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/ObtenerEstadoResponse" message="tns:ISolicitudUsuarioService_ObtenerEstado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_ObtenerEstado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoProblema">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarTipoProblema" message="tns:ISolicitudUsuarioService_MostrarTipoProblema_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarTipoProblemaResponse" message="tns:ISolicitudUsuarioService_MostrarTipoProblema_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_MostrarTipoProblema_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerAtencion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/ObtenerAtencion" message="tns:ISolicitudUsuarioService_ObtenerAtencion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/ObtenerAtencionResponse" message="tns:ISolicitudUsuarioService_ObtenerAtencion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_ObtenerAtencion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPrioridad">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarPrioridad" message="tns:ISolicitudUsuarioService_MostrarPrioridad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarPrioridadResponse" message="tns:ISolicitudUsuarioService_MostrarPrioridad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_MostrarPrioridad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAplicacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarAplicacion" message="tns:ISolicitudUsuarioService_MostrarAplicacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarAplicacionResponse" message="tns:ISolicitudUsuarioService_MostrarAplicacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_MostrarAplicacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMedio">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarMedio" message="tns:ISolicitudUsuarioService_MostrarMedio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarMedioResponse" message="tns:ISolicitudUsuarioService_MostrarMedio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_MostrarMedio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPersonalAsignado">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarPersonalAsignado" message="tns:ISolicitudUsuarioService_MostrarPersonalAsignado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarPersonalAsignadoResponse" message="tns:ISolicitudUsuarioService_MostrarPersonalAsignado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_MostrarPersonalAsignado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteAgrupadoPorOpcion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/ReporteAgrupadoPorOpcion" message="tns:ISolicitudUsuarioService_ReporteAgrupadoPorOpcion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/ReporteAgrupadoPorOpcionResponse" message="tns:ISolicitudUsuarioService_ReporteAgrupadoPorOpcion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_ReporteAgrupadoPorOpcion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteAgrupadoPorUnidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/ReporteAgrupadoPorUnidad" message="tns:ISolicitudUsuarioService_ReporteAgrupadoPorUnidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/ReporteAgrupadoPorUnidadResponse" message="tns:ISolicitudUsuarioService_ReporteAgrupadoPorUnidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_ReporteAgrupadoPorUnidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteAgrupadoPorPersonal">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/ReporteAgrupadoPorPersonal" message="tns:ISolicitudUsuarioService_ReporteAgrupadoPorPersonal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/ReporteAgrupadoPorPersonalResponse" message="tns:ISolicitudUsuarioService_ReporteAgrupadoPorPersonal_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_ReporteAgrupadoPorPersonal_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMotivoProblema">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarMotivoProblema" message="tns:ISolicitudUsuarioService_MostrarMotivoProblema_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarMotivoProblemaResponse" message="tns:ISolicitudUsuarioService_MostrarMotivoProblema_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_MostrarMotivoProblema_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPersonal">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarPersonal" message="tns:ISolicitudUsuarioService_MostrarPersonal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudUsuarioService/MostrarPersonalResponse" message="tns:ISolicitudUsuarioService_MostrarPersonal_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudUsuarioService_MostrarPersonal_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ISolicitudUsuarioService" type="tns:ISolicitudUsuarioService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ISolicitudUsuarioService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/MostrarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Conformidad">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/Conformidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoTrabajo">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/MostrarTipoTrabajo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CambiarEstado">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/CambiarEstado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AsignarPersonal">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/AsignarPersonal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarAsignacion">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/BuscarAsignacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ListarEstados">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/ListarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEstado">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/ObtenerEstado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoProblema">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/MostrarTipoProblema" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerAtencion">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/ObtenerAtencion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPrioridad">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/MostrarPrioridad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAplicacion">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/MostrarAplicacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMedio">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/MostrarMedio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPersonalAsignado">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/MostrarPersonalAsignado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteAgrupadoPorOpcion">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/ReporteAgrupadoPorOpcion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteAgrupadoPorUnidad">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/ReporteAgrupadoPorUnidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteAgrupadoPorPersonal">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/ReporteAgrupadoPorPersonal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMotivoProblema">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/MostrarMotivoProblema" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPersonal">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudUsuarioService/MostrarPersonal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SolicitudUsuarioService">
+    <wsdl:port name="NetTcpBinding_ISolicitudUsuarioService" binding="tns:NetTcpBinding_ISolicitudUsuarioService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/SolicitudUsuarioService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/SolicitudUsuarioService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

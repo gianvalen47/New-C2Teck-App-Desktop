@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Models" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Models" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ResumenBoletasDigital">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CDRxml" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodUsu" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DirIp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DocumentoXml" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Empresa" nillable="true" type="tns:Empresa" />
+      <xs:element minOccurs="0" name="Estado" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FecReg" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Fecha" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IdResumen" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NomPc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NombreXml" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Notas" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NumTicket" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Observacion" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResumenBoletasDigital" nillable="true" type="tns:ResumenBoletasDigital" />
+  <xs:complexType name="Empresa">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbrEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CorEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DesEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DirEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FaxEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Igv" type="xs:int" />
+      <xs:element minOccurs="0" name="RucEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TelEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WebEmp" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Empresa" nillable="true" type="tns:Empresa" />
+</xs:schema>

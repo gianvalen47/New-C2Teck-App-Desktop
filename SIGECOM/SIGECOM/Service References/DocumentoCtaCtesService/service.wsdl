@@ -1,0 +1,943 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="DocumentoCtaCtesService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IDocumentoCtaCtesService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IDocumentoCtaCtesService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorId" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarPorCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorCliente" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarPorCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarPorCliente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarPagos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPagos" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarPagos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPagosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarPagos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_FiltrarVencimientos_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarVencimientos" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_FiltrarVencimientos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarVencimientosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_FiltrarVencimientos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_CalcularFecVen_InputMessage">
+    <wsdl:part name="parameters" element="tns:CalcularFecVen" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_CalcularFecVen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CalcularFecVenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_CalcularFecVen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_ObtenerPago_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPago" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_ObtenerPago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_ObtenerPago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarTipoPago_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoPago" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarTipoPago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarTipoPago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_InsertarPago_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPago" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_InsertarPago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_InsertarPago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarSerieDocumentoCtaCtePago_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieDocumentoCtaCtePago" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarSerieDocumentoCtaCtePago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieDocumentoCtaCtePagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarSerieDocumentoCtaCtePago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_BuscarDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_BuscarDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_BuscarDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarPorDoc_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorDoc" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarPorDoc_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorDocResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarPorDoc_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_DiarioPagos_InputMessage">
+    <wsdl:part name="parameters" element="tns:DiarioPagos" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_DiarioPagos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DiarioPagosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_DiarioPagos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RepDocumentosEmitidos_InputMessage">
+    <wsdl:part name="parameters" element="tns:RepDocumentosEmitidos" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RepDocumentosEmitidos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RepDocumentosEmitidosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RepDocumentosEmitidos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RepDocumentoCtaCte_InputMessage">
+    <wsdl:part name="parameters" element="tns:RepDocumentoCtaCte" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RepDocumentoCtaCte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RepDocumentoCtaCteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RepDocumentoCtaCte_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RepVencimientos_InputMessage">
+    <wsdl:part name="parameters" element="tns:RepVencimientos" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RepVencimientos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RepVencimientosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RepVencimientos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RenovarLetra_InputMessage">
+    <wsdl:part name="parameters" element="tns:RenovarLetra" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RenovarLetra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RenovarLetraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RenovarLetra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarDeudas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDeudas" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarDeudas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDeudasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarDeudas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_ObtenerDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_ObtenerDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_ObtenerDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_BorrarPago_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPago" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_BorrarPago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_BorrarPago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarTipoPagoGen_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoPagoGen" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarTipoPagoGen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoPagoGenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarTipoPagoGen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RecalcularDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecalcularDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RecalcularDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecalcularDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RecalcularDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_ReporteGerencial_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerencial" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_ReporteGerencial_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerencialResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_ReporteGerencial_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_FiltrarFeriados_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarFeriados" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_FiltrarFeriados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarFeriadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_FiltrarFeriados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q28:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_InsertarFeriado_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarFeriado" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_InsertarFeriado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarFeriadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_InsertarFeriado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q29:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_ActualizarFeriado_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarFeriado" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_ActualizarFeriado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarFeriadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_ActualizarFeriado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q30:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_BorrarFeriado_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarFeriado" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_BorrarFeriado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarFeriadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_BorrarFeriado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q31:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RenuevaTipCam_InputMessage">
+    <wsdl:part name="parameters" element="tns:RenuevaTipCam" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RenuevaTipCam_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RenuevaTipCamResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_RenuevaTipCam_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q32:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarSerieDocumentoCtaCtePagoEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieDocumentoCtaCtePagoEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarSerieDocumentoCtaCtePagoEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieDocumentoCtaCtePagoEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_MostrarSerieDocumentoCtaCtePagoEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q33:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCtaCtesService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q34:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IDocumentoCtaCtesService">
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/Filtrar" message="tns:IDocumentoCtaCtesService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/FiltrarResponse" message="tns:IDocumentoCtaCtesService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarPorId" message="tns:IDocumentoCtaCtesService_MostrarPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarPorIdResponse" message="tns:IDocumentoCtaCtesService_MostrarPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_MostrarPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarPorCliente" message="tns:IDocumentoCtaCtesService_MostrarPorCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarPorClienteResponse" message="tns:IDocumentoCtaCtesService_MostrarPorCliente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_MostrarPorCliente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPagos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarPagos" message="tns:IDocumentoCtaCtesService_MostrarPagos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarPagosResponse" message="tns:IDocumentoCtaCtesService_MostrarPagos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_MostrarPagos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarVencimientos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/FiltrarVencimientos" message="tns:IDocumentoCtaCtesService_FiltrarVencimientos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/FiltrarVencimientosResponse" message="tns:IDocumentoCtaCtesService_FiltrarVencimientos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_FiltrarVencimientos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/Insertar" message="tns:IDocumentoCtaCtesService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/InsertarResponse" message="tns:IDocumentoCtaCtesService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/Actualizar" message="tns:IDocumentoCtaCtesService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/ActualizarResponse" message="tns:IDocumentoCtaCtesService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CalcularFecVen">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/CalcularFecVen" message="tns:IDocumentoCtaCtesService_CalcularFecVen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/CalcularFecVenResponse" message="tns:IDocumentoCtaCtesService_CalcularFecVen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_CalcularFecVen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarEstados" message="tns:IDocumentoCtaCtesService_MostrarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarEstadosResponse" message="tns:IDocumentoCtaCtesService_MostrarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_MostrarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/ObtenerPago" message="tns:IDocumentoCtaCtesService_ObtenerPago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/ObtenerPagoResponse" message="tns:IDocumentoCtaCtesService_ObtenerPago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_ObtenerPago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoPago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarTipoPago" message="tns:IDocumentoCtaCtesService_MostrarTipoPago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarTipoPagoResponse" message="tns:IDocumentoCtaCtesService_MostrarTipoPago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_MostrarTipoPago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/InsertarPago" message="tns:IDocumentoCtaCtesService_InsertarPago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/InsertarPagoResponse" message="tns:IDocumentoCtaCtesService_InsertarPago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_InsertarPago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieDocumentoCtaCtePago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarSerieDocumentoCtaCtePago" message="tns:IDocumentoCtaCtesService_MostrarSerieDocumentoCtaCtePago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarSerieDocumentoCtaCtePagoResponse" message="tns:IDocumentoCtaCtesService_MostrarSerieDocumentoCtaCtePago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_MostrarSerieDocumentoCtaCtePago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/Buscar" message="tns:IDocumentoCtaCtesService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/BuscarResponse" message="tns:IDocumentoCtaCtesService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/BuscarDocumento" message="tns:IDocumentoCtaCtesService_BuscarDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/BuscarDocumentoResponse" message="tns:IDocumentoCtaCtesService_BuscarDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_BuscarDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorDoc">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarPorDoc" message="tns:IDocumentoCtaCtesService_MostrarPorDoc_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarPorDocResponse" message="tns:IDocumentoCtaCtesService_MostrarPorDoc_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_MostrarPorDoc_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DiarioPagos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/DiarioPagos" message="tns:IDocumentoCtaCtesService_DiarioPagos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/DiarioPagosResponse" message="tns:IDocumentoCtaCtesService_DiarioPagos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_DiarioPagos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RepDocumentosEmitidos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/RepDocumentosEmitidos" message="tns:IDocumentoCtaCtesService_RepDocumentosEmitidos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/RepDocumentosEmitidosResponse" message="tns:IDocumentoCtaCtesService_RepDocumentosEmitidos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_RepDocumentosEmitidos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RepDocumentoCtaCte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/RepDocumentoCtaCte" message="tns:IDocumentoCtaCtesService_RepDocumentoCtaCte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/RepDocumentoCtaCteResponse" message="tns:IDocumentoCtaCtesService_RepDocumentoCtaCte_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_RepDocumentoCtaCte_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RepVencimientos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/RepVencimientos" message="tns:IDocumentoCtaCtesService_RepVencimientos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/RepVencimientosResponse" message="tns:IDocumentoCtaCtesService_RepVencimientos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_RepVencimientos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RenovarLetra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/RenovarLetra" message="tns:IDocumentoCtaCtesService_RenovarLetra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/RenovarLetraResponse" message="tns:IDocumentoCtaCtesService_RenovarLetra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_RenovarLetra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDeudas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarDeudas" message="tns:IDocumentoCtaCtesService_MostrarDeudas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarDeudasResponse" message="tns:IDocumentoCtaCtesService_MostrarDeudas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_MostrarDeudas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/ObtenerDocumento" message="tns:IDocumentoCtaCtesService_ObtenerDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/ObtenerDocumentoResponse" message="tns:IDocumentoCtaCtesService_ObtenerDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_ObtenerDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/BorrarPago" message="tns:IDocumentoCtaCtesService_BorrarPago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/BorrarPagoResponse" message="tns:IDocumentoCtaCtesService_BorrarPago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_BorrarPago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoPagoGen">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarTipoPagoGen" message="tns:IDocumentoCtaCtesService_MostrarTipoPagoGen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarTipoPagoGenResponse" message="tns:IDocumentoCtaCtesService_MostrarTipoPagoGen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_MostrarTipoPagoGen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecalcularDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/RecalcularDocumento" message="tns:IDocumentoCtaCtesService_RecalcularDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/RecalcularDocumentoResponse" message="tns:IDocumentoCtaCtesService_RecalcularDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_RecalcularDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerencial">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/ReporteGerencial" message="tns:IDocumentoCtaCtesService_ReporteGerencial_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/ReporteGerencialResponse" message="tns:IDocumentoCtaCtesService_ReporteGerencial_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_ReporteGerencial_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarFeriados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/FiltrarFeriados" message="tns:IDocumentoCtaCtesService_FiltrarFeriados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/FiltrarFeriadosResponse" message="tns:IDocumentoCtaCtesService_FiltrarFeriados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_FiltrarFeriados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarFeriado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/InsertarFeriado" message="tns:IDocumentoCtaCtesService_InsertarFeriado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/InsertarFeriadoResponse" message="tns:IDocumentoCtaCtesService_InsertarFeriado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_InsertarFeriado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarFeriado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/ActualizarFeriado" message="tns:IDocumentoCtaCtesService_ActualizarFeriado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/ActualizarFeriadoResponse" message="tns:IDocumentoCtaCtesService_ActualizarFeriado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_ActualizarFeriado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarFeriado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/BorrarFeriado" message="tns:IDocumentoCtaCtesService_BorrarFeriado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/BorrarFeriadoResponse" message="tns:IDocumentoCtaCtesService_BorrarFeriado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_BorrarFeriado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RenuevaTipCam">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/RenuevaTipCam" message="tns:IDocumentoCtaCtesService_RenuevaTipCam_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/RenuevaTipCamResponse" message="tns:IDocumentoCtaCtesService_RenuevaTipCam_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_RenuevaTipCam_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieDocumentoCtaCtePagoEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarSerieDocumentoCtaCtePagoEmpresa" message="tns:IDocumentoCtaCtesService_MostrarSerieDocumentoCtaCtePagoEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/MostrarSerieDocumentoCtaCtePagoEmpresaResponse" message="tns:IDocumentoCtaCtesService_MostrarSerieDocumentoCtaCtePagoEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_MostrarSerieDocumentoCtaCtePagoEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/Borrar" message="tns:IDocumentoCtaCtesService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCtaCtesService/BorrarResponse" message="tns:IDocumentoCtaCtesService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCtaCtesService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IDocumentoCtaCtesService" type="tns:IDocumentoCtaCtesService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IDocumentoCtaCtesService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/MostrarPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorCliente">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/MostrarPorCliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPagos">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/MostrarPagos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarVencimientos">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/FiltrarVencimientos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CalcularFecVen">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/CalcularFecVen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/MostrarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPago">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/ObtenerPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoPago">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/MostrarTipoPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPago">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/InsertarPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieDocumentoCtaCtePago">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/MostrarSerieDocumentoCtaCtePago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/BuscarDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorDoc">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/MostrarPorDoc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DiarioPagos">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/DiarioPagos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RepDocumentosEmitidos">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/RepDocumentosEmitidos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RepDocumentoCtaCte">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/RepDocumentoCtaCte" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RepVencimientos">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/RepVencimientos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RenovarLetra">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/RenovarLetra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDeudas">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/MostrarDeudas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/ObtenerDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPago">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/BorrarPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoPagoGen">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/MostrarTipoPagoGen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RecalcularDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/RecalcularDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerencial">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/ReporteGerencial" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarFeriados">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/FiltrarFeriados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarFeriado">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/InsertarFeriado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarFeriado">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/ActualizarFeriado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarFeriado">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/BorrarFeriado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RenuevaTipCam">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/RenuevaTipCam" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieDocumentoCtaCtePagoEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/MostrarSerieDocumentoCtaCtePagoEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCtaCtesService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DocumentoCtaCtesService">
+    <wsdl:port name="NetTcpBinding_IDocumentoCtaCtesService" binding="tns:NetTcpBinding_IDocumentoCtaCtesService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/DocumentoCtaCtesService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/DocumentoCtaCtesService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

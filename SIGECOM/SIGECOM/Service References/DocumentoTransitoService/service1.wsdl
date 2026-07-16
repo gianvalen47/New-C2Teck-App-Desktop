@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="DocumentoTransitoService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IDocumentoTransitoService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IDocumentoTransitoService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_MostrarPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorId" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_MostrarPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_MostrarPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_TrasladarDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:TrasladarDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_TrasladarDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TrasladarDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_TrasladarDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_ValidarIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_ValidarIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_ValidarIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_MostrarAnulacionConsulta_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAnulacionConsulta" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_MostrarAnulacionConsulta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAnulacionConsultaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_MostrarAnulacionConsulta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_AnularDocumentoConsulta_InputMessage">
+    <wsdl:part name="parameters" element="tns:AnularDocumentoConsulta" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_AnularDocumentoConsulta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AnularDocumentoConsultaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_AnularDocumentoConsulta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_RechazarAnulacionConsulta_InputMessage">
+    <wsdl:part name="parameters" element="tns:RechazarAnulacionConsulta" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_RechazarAnulacionConsulta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RechazarAnulacionConsultaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoTransitoService_RechazarAnulacionConsulta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IDocumentoTransitoService">
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoTransitoService/Mostrar" message="tns:IDocumentoTransitoService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoTransitoService/MostrarResponse" message="tns:IDocumentoTransitoService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoTransitoService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoTransitoService/Filtrar" message="tns:IDocumentoTransitoService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoTransitoService/FiltrarResponse" message="tns:IDocumentoTransitoService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoTransitoService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoTransitoService/MostrarPorId" message="tns:IDocumentoTransitoService_MostrarPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoTransitoService/MostrarPorIdResponse" message="tns:IDocumentoTransitoService_MostrarPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoTransitoService_MostrarPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoTransitoService/Actualizar" message="tns:IDocumentoTransitoService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoTransitoService/ActualizarResponse" message="tns:IDocumentoTransitoService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoTransitoService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoTransitoService/Borrar" message="tns:IDocumentoTransitoService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoTransitoService/BorrarResponse" message="tns:IDocumentoTransitoService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoTransitoService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TrasladarDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoTransitoService/TrasladarDocumento" message="tns:IDocumentoTransitoService_TrasladarDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoTransitoService/TrasladarDocumentoResponse" message="tns:IDocumentoTransitoService_TrasladarDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoTransitoService_TrasladarDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidarIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoTransitoService/ValidarIngreso" message="tns:IDocumentoTransitoService_ValidarIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoTransitoService/ValidarIngresoResponse" message="tns:IDocumentoTransitoService_ValidarIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoTransitoService_ValidarIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAnulacionConsulta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoTransitoService/MostrarAnulacionConsulta" message="tns:IDocumentoTransitoService_MostrarAnulacionConsulta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoTransitoService/MostrarAnulacionConsultaResponse" message="tns:IDocumentoTransitoService_MostrarAnulacionConsulta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoTransitoService_MostrarAnulacionConsulta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AnularDocumentoConsulta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoTransitoService/AnularDocumentoConsulta" message="tns:IDocumentoTransitoService_AnularDocumentoConsulta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoTransitoService/AnularDocumentoConsultaResponse" message="tns:IDocumentoTransitoService_AnularDocumentoConsulta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoTransitoService_AnularDocumentoConsulta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RechazarAnulacionConsulta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoTransitoService/RechazarAnulacionConsulta" message="tns:IDocumentoTransitoService_RechazarAnulacionConsulta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoTransitoService/RechazarAnulacionConsultaResponse" message="tns:IDocumentoTransitoService_RechazarAnulacionConsulta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoTransitoService_RechazarAnulacionConsulta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IDocumentoTransitoService" type="tns:IDocumentoTransitoService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IDocumentoTransitoService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoTransitoService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoTransitoService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoTransitoService/MostrarPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoTransitoService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoTransitoService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="TrasladarDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoTransitoService/TrasladarDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ValidarIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoTransitoService/ValidarIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAnulacionConsulta">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoTransitoService/MostrarAnulacionConsulta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AnularDocumentoConsulta">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoTransitoService/AnularDocumentoConsulta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RechazarAnulacionConsulta">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoTransitoService/RechazarAnulacionConsulta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DocumentoTransitoService">
+    <wsdl:port name="NetTcpBinding_IDocumentoTransitoService" binding="tns:NetTcpBinding_IDocumentoTransitoService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/DocumentoTransitoService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/DocumentoTransitoService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

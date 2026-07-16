@@ -1,0 +1,734 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="OportunidadNegocioService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IOportunidadNegocioService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IOportunidadNegocioService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_MostrarCotizaciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCotizaciones" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_MostrarCotizaciones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCotizacionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_MostrarCotizaciones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ConsultarEtapas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarEtapas" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ConsultarEtapas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarEtapasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ConsultarEtapas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Etapa_InputMessage">
+    <wsdl:part name="parameters" element="tns:Etapa" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Etapa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EtapaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Etapa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ActualizarVendedor_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarVendedor" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ActualizarVendedor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarVendedorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ActualizarVendedor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ActualizarEtapa_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarEtapa" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ActualizarEtapa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarEtapaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ActualizarEtapa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_MostrarEtapasPendientes_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEtapasPendientes" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_MostrarEtapasPendientes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEtapasPendientesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_MostrarEtapasPendientes_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_VincularCotizacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:VincularCotizacion" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_VincularCotizacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VincularCotizacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_VincularCotizacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_MostrarEtapasNegocio_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEtapasNegocio" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_MostrarEtapasNegocio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEtapasNegocioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_MostrarEtapasNegocio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ReporteOportunidadNegocio_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteOportunidadNegocio" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ReporteOportunidadNegocio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteOportunidadNegocioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ReporteOportunidadNegocio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ReporteOportunidadNegocioDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteOportunidadNegocioDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ReporteOportunidadNegocioDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteOportunidadNegocioDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ReporteOportunidadNegocioDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ObtenerArchivo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerArchivo" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ObtenerArchivo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerArchivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ObtenerArchivo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_InsertarArchivo_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarArchivo" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_InsertarArchivo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarArchivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_InsertarArchivo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_MostrarArchivo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarArchivo" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_MostrarArchivo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarArchivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_MostrarArchivo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_BorrarArchivo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarArchivo" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_BorrarArchivo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarArchivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_BorrarArchivo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_DesvincularCotizacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:DesvincularCotizacion" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_DesvincularCotizacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DesvincularCotizacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_DesvincularCotizacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ObtenerGastos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerGastos" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ObtenerGastos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerGastosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ObtenerGastos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_MostrarGastos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarGastos" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_MostrarGastos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarGastosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_MostrarGastos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_InsertarGastos_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarGastos" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_InsertarGastos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarGastosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_InsertarGastos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ActualizarGastos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarGastos" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ActualizarGastos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarGastosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_ActualizarGastos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_BorrarGastos_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarGastos" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_BorrarGastos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarGastosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOportunidadNegocioService_BorrarGastos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IOportunidadNegocioService">
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/Obtener" message="tns:IOportunidadNegocioService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ObtenerResponse" message="tns:IOportunidadNegocioService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCotizaciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/MostrarCotizaciones" message="tns:IOportunidadNegocioService_MostrarCotizaciones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/MostrarCotizacionesResponse" message="tns:IOportunidadNegocioService_MostrarCotizaciones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_MostrarCotizaciones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEtapas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ConsultarEtapas" message="tns:IOportunidadNegocioService_ConsultarEtapas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ConsultarEtapasResponse" message="tns:IOportunidadNegocioService_ConsultarEtapas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_ConsultarEtapas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Etapa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/Etapa" message="tns:IOportunidadNegocioService_Etapa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/EtapaResponse" message="tns:IOportunidadNegocioService_Etapa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_Etapa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/Filtrar" message="tns:IOportunidadNegocioService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/FiltrarResponse" message="tns:IOportunidadNegocioService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/Insertar" message="tns:IOportunidadNegocioService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/InsertarResponse" message="tns:IOportunidadNegocioService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/Actualizar" message="tns:IOportunidadNegocioService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ActualizarResponse" message="tns:IOportunidadNegocioService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/Borrar" message="tns:IOportunidadNegocioService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/BorrarResponse" message="tns:IOportunidadNegocioService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarVendedor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ActualizarVendedor" message="tns:IOportunidadNegocioService_ActualizarVendedor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ActualizarVendedorResponse" message="tns:IOportunidadNegocioService_ActualizarVendedor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_ActualizarVendedor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarEtapa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ActualizarEtapa" message="tns:IOportunidadNegocioService_ActualizarEtapa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ActualizarEtapaResponse" message="tns:IOportunidadNegocioService_ActualizarEtapa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_ActualizarEtapa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEtapasPendientes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/MostrarEtapasPendientes" message="tns:IOportunidadNegocioService_MostrarEtapasPendientes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/MostrarEtapasPendientesResponse" message="tns:IOportunidadNegocioService_MostrarEtapasPendientes_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_MostrarEtapasPendientes_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VincularCotizacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/VincularCotizacion" message="tns:IOportunidadNegocioService_VincularCotizacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/VincularCotizacionResponse" message="tns:IOportunidadNegocioService_VincularCotizacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_VincularCotizacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEtapasNegocio">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/MostrarEtapasNegocio" message="tns:IOportunidadNegocioService_MostrarEtapasNegocio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/MostrarEtapasNegocioResponse" message="tns:IOportunidadNegocioService_MostrarEtapasNegocio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_MostrarEtapasNegocio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/Imprimir" message="tns:IOportunidadNegocioService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ImprimirResponse" message="tns:IOportunidadNegocioService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteOportunidadNegocio">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ReporteOportunidadNegocio" message="tns:IOportunidadNegocioService_ReporteOportunidadNegocio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ReporteOportunidadNegocioResponse" message="tns:IOportunidadNegocioService_ReporteOportunidadNegocio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_ReporteOportunidadNegocio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteOportunidadNegocioDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ReporteOportunidadNegocioDetalle" message="tns:IOportunidadNegocioService_ReporteOportunidadNegocioDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ReporteOportunidadNegocioDetalleResponse" message="tns:IOportunidadNegocioService_ReporteOportunidadNegocioDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_ReporteOportunidadNegocioDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArchivo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ObtenerArchivo" message="tns:IOportunidadNegocioService_ObtenerArchivo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ObtenerArchivoResponse" message="tns:IOportunidadNegocioService_ObtenerArchivo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_ObtenerArchivo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarArchivo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/InsertarArchivo" message="tns:IOportunidadNegocioService_InsertarArchivo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/InsertarArchivoResponse" message="tns:IOportunidadNegocioService_InsertarArchivo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_InsertarArchivo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarArchivo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/MostrarArchivo" message="tns:IOportunidadNegocioService_MostrarArchivo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/MostrarArchivoResponse" message="tns:IOportunidadNegocioService_MostrarArchivo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_MostrarArchivo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarArchivo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/BorrarArchivo" message="tns:IOportunidadNegocioService_BorrarArchivo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/BorrarArchivoResponse" message="tns:IOportunidadNegocioService_BorrarArchivo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_BorrarArchivo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DesvincularCotizacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/DesvincularCotizacion" message="tns:IOportunidadNegocioService_DesvincularCotizacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/DesvincularCotizacionResponse" message="tns:IOportunidadNegocioService_DesvincularCotizacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_DesvincularCotizacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerGastos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ObtenerGastos" message="tns:IOportunidadNegocioService_ObtenerGastos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ObtenerGastosResponse" message="tns:IOportunidadNegocioService_ObtenerGastos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_ObtenerGastos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarGastos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/MostrarGastos" message="tns:IOportunidadNegocioService_MostrarGastos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/MostrarGastosResponse" message="tns:IOportunidadNegocioService_MostrarGastos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_MostrarGastos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarGastos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/InsertarGastos" message="tns:IOportunidadNegocioService_InsertarGastos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/InsertarGastosResponse" message="tns:IOportunidadNegocioService_InsertarGastos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_InsertarGastos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarGastos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ActualizarGastos" message="tns:IOportunidadNegocioService_ActualizarGastos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/ActualizarGastosResponse" message="tns:IOportunidadNegocioService_ActualizarGastos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_ActualizarGastos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarGastos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOportunidadNegocioService/BorrarGastos" message="tns:IOportunidadNegocioService_BorrarGastos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOportunidadNegocioService/BorrarGastosResponse" message="tns:IOportunidadNegocioService_BorrarGastos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOportunidadNegocioService_BorrarGastos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IOportunidadNegocioService" type="tns:IOportunidadNegocioService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IOportunidadNegocioService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCotizaciones">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/MostrarCotizaciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEtapas">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/ConsultarEtapas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Etapa">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/Etapa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarVendedor">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/ActualizarVendedor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarEtapa">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/ActualizarEtapa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEtapasPendientes">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/MostrarEtapasPendientes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="VincularCotizacion">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/VincularCotizacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEtapasNegocio">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/MostrarEtapasNegocio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteOportunidadNegocio">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/ReporteOportunidadNegocio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteOportunidadNegocioDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/ReporteOportunidadNegocioDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArchivo">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/ObtenerArchivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarArchivo">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/InsertarArchivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarArchivo">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/MostrarArchivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarArchivo">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/BorrarArchivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DesvincularCotizacion">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/DesvincularCotizacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerGastos">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/ObtenerGastos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarGastos">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/MostrarGastos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarGastos">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/InsertarGastos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarGastos">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/ActualizarGastos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarGastos">
+      <soap12:operation soapAction="http://tempuri.org/IOportunidadNegocioService/BorrarGastos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OportunidadNegocioService">
+    <wsdl:port name="NetTcpBinding_IOportunidadNegocioService" binding="tns:NetTcpBinding_IOportunidadNegocioService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/OportunidadNegocioService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/OportunidadNegocioService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Models" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Models" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="RepuestoServicio">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CanMer" type="xs:int" />
+      <xs:element minOccurs="0" name="CodMer" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodServicio" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DesMer" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Empresa" nillable="true" type="tns:Empresa" />
+      <xs:element minOccurs="0" name="Item" type="xs:int" />
+      <xs:element minOccurs="0" name="Modelo" nillable="true" type="tns:Modelo" />
+      <xs:element minOccurs="0" name="TipoMotor" nillable="true" type="tns:TipoMotor" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RepuestoServicio" nillable="true" type="tns:RepuestoServicio" />
+  <xs:complexType name="Empresa">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbrEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AplicaOSE" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ClaveCertificado" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClaveCorreoEmisor" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClaveOSE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClaveSOL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CorEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CorreoEmisor" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DesEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DirEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FaxEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Igv" type="xs:int" />
+      <xs:element minOccurs="0" name="Logo" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="MailHost" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NombreCertificado" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RucEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TelEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Ubigeo" nillable="true" type="tns:Ubigeo" />
+      <xs:element minOccurs="0" name="UsuarioOSE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UsuarioSOL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WebEmp" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Empresa" nillable="true" type="tns:Empresa" />
+  <xs:complexType name="Ubigeo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodUbigeo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Departamento" nillable="true" type="tns:Departamento" />
+      <xs:element minOccurs="0" name="Distrito" nillable="true" type="tns:Distrito" />
+      <xs:element minOccurs="0" name="Provincia" nillable="true" type="tns:Provincia" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Ubigeo" nillable="true" type="tns:Ubigeo" />
+  <xs:complexType name="Departamento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodDpto" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NomDpto" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Departamento" nillable="true" type="tns:Departamento" />
+  <xs:complexType name="Distrito">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodDist" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NomDist" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Provincia" nillable="true" type="tns:Provincia" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Distrito" nillable="true" type="tns:Distrito" />
+  <xs:complexType name="Provincia">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodProv" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Departamento" nillable="true" type="tns:Departamento" />
+      <xs:element minOccurs="0" name="NomProv" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Provincia" nillable="true" type="tns:Provincia" />
+  <xs:complexType name="Modelo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Estado" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ModMer" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Serie" nillable="true" type="tns:Serie" />
+      <xs:element minOccurs="0" name="TipoMotor" nillable="true" type="tns:TipoMotor" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Modelo" nillable="true" type="tns:Modelo" />
+  <xs:complexType name="Serie">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodSerie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Estado" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Serie" nillable="true" type="tns:Serie" />
+  <xs:complexType name="TipoMotor">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipMot" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TipoMotor" nillable="true" type="tns:TipoMotor" />
+</xs:schema>

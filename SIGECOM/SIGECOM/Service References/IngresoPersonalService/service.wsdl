@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="IngresoPersonalService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IIngresoPersonalService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IIngresoPersonalService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_BuscarPagado_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPagado" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_BuscarPagado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPagadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_BuscarPagado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Reporte_InputMessage">
+    <wsdl:part name="parameters" element="tns:Reporte" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Reporte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_Reporte_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_MostrarRubros_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubros" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_MostrarRubros_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubrosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_MostrarRubros_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_ProcesarBonosMina_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarBonosMina" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_ProcesarBonosMina_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarBonosMinaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_ProcesarBonosMina_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_ProcesarValeAlimentosMina_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarValeAlimentosMina" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_ProcesarValeAlimentosMina_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarValeAlimentosMinaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_ProcesarValeAlimentosMina_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_InsertarCuotas_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCuotas" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_InsertarCuotas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCuotasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_InsertarCuotas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_InsertarDescansoMedico_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarDescansoMedico" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_InsertarDescansoMedico_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarDescansoMedicoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_InsertarDescansoMedico_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_InsertarSubsidio_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarSubsidio" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_InsertarSubsidio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarSubsidioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIngresoPersonalService_InsertarSubsidio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IIngresoPersonalService">
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIngresoPersonalService/Obtener" message="tns:IIngresoPersonalService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIngresoPersonalService/ObtenerResponse" message="tns:IIngresoPersonalService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IIngresoPersonalService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIngresoPersonalService/Filtrar" message="tns:IIngresoPersonalService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIngresoPersonalService/FiltrarResponse" message="tns:IIngresoPersonalService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IIngresoPersonalService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIngresoPersonalService/Insertar" message="tns:IIngresoPersonalService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIngresoPersonalService/InsertarResponse" message="tns:IIngresoPersonalService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IIngresoPersonalService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIngresoPersonalService/Actualizar" message="tns:IIngresoPersonalService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIngresoPersonalService/ActualizarResponse" message="tns:IIngresoPersonalService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IIngresoPersonalService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIngresoPersonalService/Borrar" message="tns:IIngresoPersonalService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIngresoPersonalService/BorrarResponse" message="tns:IIngresoPersonalService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IIngresoPersonalService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPagado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIngresoPersonalService/BuscarPagado" message="tns:IIngresoPersonalService_BuscarPagado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIngresoPersonalService/BuscarPagadoResponse" message="tns:IIngresoPersonalService_BuscarPagado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IIngresoPersonalService_BuscarPagado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Reporte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIngresoPersonalService/Reporte" message="tns:IIngresoPersonalService_Reporte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIngresoPersonalService/ReporteResponse" message="tns:IIngresoPersonalService_Reporte_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IIngresoPersonalService_Reporte_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubros">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIngresoPersonalService/MostrarRubros" message="tns:IIngresoPersonalService_MostrarRubros_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIngresoPersonalService/MostrarRubrosResponse" message="tns:IIngresoPersonalService_MostrarRubros_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IIngresoPersonalService_MostrarRubros_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarBonosMina">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIngresoPersonalService/ProcesarBonosMina" message="tns:IIngresoPersonalService_ProcesarBonosMina_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIngresoPersonalService/ProcesarBonosMinaResponse" message="tns:IIngresoPersonalService_ProcesarBonosMina_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IIngresoPersonalService_ProcesarBonosMina_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarValeAlimentosMina">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIngresoPersonalService/ProcesarValeAlimentosMina" message="tns:IIngresoPersonalService_ProcesarValeAlimentosMina_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIngresoPersonalService/ProcesarValeAlimentosMinaResponse" message="tns:IIngresoPersonalService_ProcesarValeAlimentosMina_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IIngresoPersonalService_ProcesarValeAlimentosMina_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCuotas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIngresoPersonalService/InsertarCuotas" message="tns:IIngresoPersonalService_InsertarCuotas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIngresoPersonalService/InsertarCuotasResponse" message="tns:IIngresoPersonalService_InsertarCuotas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IIngresoPersonalService_InsertarCuotas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarDescansoMedico">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIngresoPersonalService/InsertarDescansoMedico" message="tns:IIngresoPersonalService_InsertarDescansoMedico_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIngresoPersonalService/InsertarDescansoMedicoResponse" message="tns:IIngresoPersonalService_InsertarDescansoMedico_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IIngresoPersonalService_InsertarDescansoMedico_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarSubsidio">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIngresoPersonalService/InsertarSubsidio" message="tns:IIngresoPersonalService_InsertarSubsidio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIngresoPersonalService/InsertarSubsidioResponse" message="tns:IIngresoPersonalService_InsertarSubsidio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IIngresoPersonalService_InsertarSubsidio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IIngresoPersonalService" type="tns:IIngresoPersonalService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IIngresoPersonalService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IIngresoPersonalService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IIngresoPersonalService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IIngresoPersonalService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IIngresoPersonalService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IIngresoPersonalService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPagado">
+      <soap12:operation soapAction="http://tempuri.org/IIngresoPersonalService/BuscarPagado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Reporte">
+      <soap12:operation soapAction="http://tempuri.org/IIngresoPersonalService/Reporte" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubros">
+      <soap12:operation soapAction="http://tempuri.org/IIngresoPersonalService/MostrarRubros" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarBonosMina">
+      <soap12:operation soapAction="http://tempuri.org/IIngresoPersonalService/ProcesarBonosMina" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarValeAlimentosMina">
+      <soap12:operation soapAction="http://tempuri.org/IIngresoPersonalService/ProcesarValeAlimentosMina" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCuotas">
+      <soap12:operation soapAction="http://tempuri.org/IIngresoPersonalService/InsertarCuotas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarDescansoMedico">
+      <soap12:operation soapAction="http://tempuri.org/IIngresoPersonalService/InsertarDescansoMedico" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarSubsidio">
+      <soap12:operation soapAction="http://tempuri.org/IIngresoPersonalService/InsertarSubsidio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IngresoPersonalService">
+    <wsdl:port name="NetTcpBinding_IIngresoPersonalService" binding="tns:NetTcpBinding_IIngresoPersonalService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/IngresoPersonalService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/IngresoPersonalService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

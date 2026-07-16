@@ -1,0 +1,1504 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class frmMovimientoAlmacen_IngresarMercaderia
+    Inherits System.Windows.Forms.Form
+
+    'Form reemplaza a Dispose para limpiar la lista de componentes.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Requerido por el Diseñador de Windows Forms
+    Private components As System.ComponentModel.IContainer
+
+    'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
+    'Se puede modificar usando el Diseñador de Windows Forms.  
+    'No lo modifique con el editor de código.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
+        Dim dgvCodBarra_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
+        Dim cmbListaPrecio_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
+        Dim cmbModMer_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
+        Dim cmbCodMov_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
+        Dim cmbCodRubMot_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
+        Dim cmbCodRub_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
+        Dim cmbCodUniMed_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
+        Dim cmbTipMot_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
+        Dim cmbUnidMedPeso_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMovimientoAlmacen_IngresarMercaderia))
+        Me.ToolStrip = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripSeparator13 = New System.Windows.Forms.ToolStripSeparator()
+        Me.biGuardar = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator14 = New System.Windows.Forms.ToolStripSeparator()
+        Me.btnEliminar = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.btnCancelar = New System.Windows.Forms.ToolStripButton()
+        Me.Label42 = New System.Windows.Forms.Label()
+        Me.Label41 = New System.Windows.Forms.Label()
+        Me.txtFecVctoPreserv = New Janus.Windows.CalendarCombo.CalendarCombo()
+        Me.txtFecPreserv = New Janus.Windows.CalendarCombo.CalendarCombo()
+        Me.tabVentanas = New Janus.Windows.UI.Tab.UITab()
+        Me.tabpBarras = New Janus.Windows.UI.Tab.UITabPage()
+        Me.dgvCodBarra = New Janus.Windows.GridEX.GridEX()
+        Me.Label34 = New System.Windows.Forms.Label()
+        Me.biGuardarCodBarra = New System.Windows.Forms.Button()
+        Me.txtCodBar = New System.Windows.Forms.TextBox()
+        Me.btnEliminarCodBar = New System.Windows.Forms.Button()
+        Me.btnAgregarCodBar = New System.Windows.Forms.Button()
+        Me.gbDatos = New System.Windows.Forms.GroupBox()
+        Me.lblTipoMotor = New System.Windows.Forms.Label()
+        Me.Label30 = New System.Windows.Forms.Label()
+        Me.cmbListaPrecio = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
+        Me.Label40 = New System.Windows.Forms.Label()
+        Me.lbllista = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.chkActivo = New System.Windows.Forms.CheckBox()
+        Me.Label39 = New System.Windows.Forms.Label()
+        Me.Label36 = New System.Windows.Forms.Label()
+        Me.txtProveedor = New System.Windows.Forms.TextBox()
+        Me.btnBuscarProveedor = New System.Windows.Forms.Button()
+        Me.lblAstRubMot = New System.Windows.Forms.Label()
+        Me.Label35 = New System.Windows.Forms.Label()
+        Me.lblAstMod = New System.Windows.Forms.Label()
+        Me.Label33 = New System.Windows.Forms.Label()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.Label32 = New System.Windows.Forms.Label()
+        Me.Label31 = New System.Windows.Forms.Label()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.cmbModMer = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.lblAstRuc = New System.Windows.Forms.Label()
+        Me.txtObsMer = New System.Windows.Forms.TextBox()
+        Me.cmbCodMov = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
+        Me.txtAplicacion = New System.Windows.Forms.TextBox()
+        Me.btnBuscarAplicacion = New System.Windows.Forms.Button()
+        Me.txtMarca = New System.Windows.Forms.TextBox()
+        Me.btnBuscarMarca = New System.Windows.Forms.Button()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.txtPartida = New System.Windows.Forms.TextBox()
+        Me.btnBuscarPartida = New System.Windows.Forms.Button()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.txtPais = New System.Windows.Forms.TextBox()
+        Me.btnBuscarPais = New System.Windows.Forms.Button()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.cmbCodRubMot = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.cmbCodRub = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
+        Me.txtGrupo = New System.Windows.Forms.TextBox()
+        Me.btnBuscarGrupo = New System.Windows.Forms.Button()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.cmbCodUniMed = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.cmbTipMot = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
+        Me.txtClase = New System.Windows.Forms.TextBox()
+        Me.btnBuscarClase = New System.Windows.Forms.Button()
+        Me.txtDesMer2 = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.txtDesMer1 = New System.Windows.Forms.TextBox()
+        Me.txtCodMer = New System.Windows.Forms.TextBox()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.gbPeso = New System.Windows.Forms.GroupBox()
+        Me.Label37 = New System.Windows.Forms.Label()
+        Me.Label38 = New System.Windows.Forms.Label()
+        Me.cmbUnidMedPeso = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.txtPesMer = New Janus.Windows.GridEX.EditControls.NumericEditBox()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.gbNuevocodigo = New System.Windows.Forms.GroupBox()
+        Me.txtAntMer = New System.Windows.Forms.TextBox()
+        Me.txtNueMer = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.gbPrecios = New System.Windows.Forms.GroupBox()
+        Me.lblFleteMer = New System.Windows.Forms.Label()
+        Me.txtFleteMer = New Janus.Windows.GridEX.EditControls.NumericEditBox()
+        Me.lblFOB = New System.Windows.Forms.Label()
+        Me.txtCorMer = New Janus.Windows.GridEX.EditControls.NumericEditBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.txtDeaMer = New Janus.Windows.GridEX.EditControls.NumericEditBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.ofEstiloForm = New Janus.Windows.Ribbon.OfficeFormAdorner(Me.components)
+        Me.cmOpciones = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.miAgregarBarra = New System.Windows.Forms.ToolStripMenuItem()
+        Me.miEliminarBarra = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStrip.SuspendLayout()
+        CType(Me.tabVentanas, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tabVentanas.SuspendLayout()
+        Me.tabpBarras.SuspendLayout()
+        CType(Me.dgvCodBarra, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.gbDatos.SuspendLayout()
+        CType(Me.cmbListaPrecio, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cmbModMer, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cmbCodMov, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cmbCodRubMot, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cmbCodRub, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cmbCodUniMed, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cmbTipMot, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.gbPeso.SuspendLayout()
+        CType(Me.cmbUnidMedPeso, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.gbNuevocodigo.SuspendLayout()
+        Me.gbPrecios.SuspendLayout()
+        CType(Me.ofEstiloForm, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.cmOpciones.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'ToolStrip
+        '
+        Me.ToolStrip.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.ToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.ToolStrip.ImageScalingSize = New System.Drawing.Size(24, 24)
+        Me.ToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripSeparator13, Me.biGuardar, Me.ToolStripSeparator14, Me.btnEliminar, Me.ToolStripSeparator1, Me.btnCancelar})
+        Me.ToolStrip.Location = New System.Drawing.Point(0, 0)
+        Me.ToolStrip.Name = "ToolStrip"
+        Me.ToolStrip.Size = New System.Drawing.Size(705, 31)
+        Me.ToolStrip.TabIndex = 47
+        Me.ToolStrip.Text = "ToolStrip"
+        '
+        'ToolStripSeparator13
+        '
+        Me.ToolStripSeparator13.Name = "ToolStripSeparator13"
+        Me.ToolStripSeparator13.Size = New System.Drawing.Size(6, 31)
+        '
+        'biGuardar
+        '
+        Me.biGuardar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.biGuardar.Image = Global.SIGECOM.My.Resources.Resources.Grabar
+        Me.biGuardar.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.biGuardar.Name = "biGuardar"
+        Me.biGuardar.Size = New System.Drawing.Size(28, 28)
+        Me.biGuardar.Text = "Grabar Cambios"
+        '
+        'ToolStripSeparator14
+        '
+        Me.ToolStripSeparator14.Name = "ToolStripSeparator14"
+        Me.ToolStripSeparator14.Size = New System.Drawing.Size(6, 31)
+        '
+        'btnEliminar
+        '
+        Me.btnEliminar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.btnEliminar.Image = Global.SIGECOM.My.Resources.Resources.Eliminar
+        Me.btnEliminar.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnEliminar.Name = "btnEliminar"
+        Me.btnEliminar.Size = New System.Drawing.Size(28, 28)
+        Me.btnEliminar.Text = "Eliminar"
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 31)
+        '
+        'btnCancelar
+        '
+        Me.btnCancelar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.btnCancelar.Image = Global.SIGECOM.My.Resources.Resources.Cerrar
+        Me.btnCancelar.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnCancelar.Name = "btnCancelar"
+        Me.btnCancelar.Size = New System.Drawing.Size(28, 28)
+        Me.btnCancelar.Text = "Cerrar el Formulario"
+        '
+        'Label42
+        '
+        Me.Label42.AutoSize = True
+        Me.Label42.Location = New System.Drawing.Point(383, 362)
+        Me.Label42.Name = "Label42"
+        Me.Label42.Size = New System.Drawing.Size(136, 13)
+        Me.Label42.TabIndex = 56
+        Me.Label42.Text = "Fecha Vcto. Preservación :"
+        '
+        'Label41
+        '
+        Me.Label41.AutoSize = True
+        Me.Label41.Location = New System.Drawing.Point(140, 362)
+        Me.Label41.Name = "Label41"
+        Me.Label41.Size = New System.Drawing.Size(108, 13)
+        Me.Label41.TabIndex = 55
+        Me.Label41.Text = "Fecha Preservación :"
+        '
+        'txtFecVctoPreserv
+        '
+        '
+        '
+        '
+        Me.txtFecVctoPreserv.DropDownCalendar.Name = ""
+        Me.txtFecVctoPreserv.DropDownCalendar.VisualStyle = Janus.Windows.CalendarCombo.VisualStyle.Office2007
+        Me.txtFecVctoPreserv.IsNullDate = True
+        Me.txtFecVctoPreserv.Location = New System.Drawing.Point(520, 358)
+        Me.txtFecVctoPreserv.Name = "txtFecVctoPreserv"
+        Me.txtFecVctoPreserv.NullButtonText = "Ninguno"
+        Me.txtFecVctoPreserv.ShowNullButton = True
+        Me.txtFecVctoPreserv.Size = New System.Drawing.Size(92, 20)
+        Me.txtFecVctoPreserv.TabIndex = 54
+        Me.txtFecVctoPreserv.TodayButtonText = "Hoy"
+        Me.txtFecVctoPreserv.VisualStyle = Janus.Windows.CalendarCombo.VisualStyle.Office2007
+        '
+        'txtFecPreserv
+        '
+        '
+        '
+        '
+        Me.txtFecPreserv.DropDownCalendar.Name = ""
+        Me.txtFecPreserv.DropDownCalendar.VisualStyle = Janus.Windows.CalendarCombo.VisualStyle.Office2007
+        Me.txtFecPreserv.IsNullDate = True
+        Me.txtFecPreserv.Location = New System.Drawing.Point(248, 358)
+        Me.txtFecPreserv.Name = "txtFecPreserv"
+        Me.txtFecPreserv.NullButtonText = "Ninguno"
+        Me.txtFecPreserv.ShowNullButton = True
+        Me.txtFecPreserv.Size = New System.Drawing.Size(92, 20)
+        Me.txtFecPreserv.TabIndex = 53
+        Me.txtFecPreserv.TodayButtonText = "Hoy"
+        Me.txtFecPreserv.VisualStyle = Janus.Windows.CalendarCombo.VisualStyle.Office2007
+        '
+        'tabVentanas
+        '
+        Me.tabVentanas.Location = New System.Drawing.Point(14, 386)
+        Me.tabVentanas.Name = "tabVentanas"
+        Me.tabVentanas.Size = New System.Drawing.Size(666, 166)
+        Me.tabVentanas.TabIndex = 52
+        Me.tabVentanas.TabPages.AddRange(New Janus.Windows.UI.Tab.UITabPage() {Me.tabpBarras})
+        Me.tabVentanas.TabStop = False
+        '
+        'tabpBarras
+        '
+        Me.tabpBarras.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.tabpBarras.Controls.Add(Me.dgvCodBarra)
+        Me.tabpBarras.Controls.Add(Me.Label34)
+        Me.tabpBarras.Controls.Add(Me.biGuardarCodBarra)
+        Me.tabpBarras.Controls.Add(Me.txtCodBar)
+        Me.tabpBarras.Controls.Add(Me.btnEliminarCodBar)
+        Me.tabpBarras.Controls.Add(Me.btnAgregarCodBar)
+        Me.tabpBarras.Location = New System.Drawing.Point(1, 21)
+        Me.tabpBarras.Name = "tabpBarras"
+        Me.tabpBarras.Size = New System.Drawing.Size(662, 142)
+        Me.tabpBarras.TabStop = True
+        Me.tabpBarras.Text = "Código de Barras"
+        '
+        'dgvCodBarra
+        '
+        Me.dgvCodBarra.AllowEdit = Janus.Windows.GridEX.InheritableBoolean.[False]
+        Me.dgvCodBarra.ContextMenuStrip = Me.cmOpciones
+        dgvCodBarra_DesignTimeLayout.LayoutString = resources.GetString("dgvCodBarra_DesignTimeLayout.LayoutString")
+        Me.dgvCodBarra.DesignTimeLayout = dgvCodBarra_DesignTimeLayout
+        Me.dgvCodBarra.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.dgvCodBarra.GroupByBoxVisible = False
+        Me.dgvCodBarra.Location = New System.Drawing.Point(5, 42)
+        Me.dgvCodBarra.Name = "dgvCodBarra"
+        Me.dgvCodBarra.RowFormatStyle.ForeColor = System.Drawing.Color.MidnightBlue
+        Me.dgvCodBarra.RowHeaders = Janus.Windows.GridEX.InheritableBoolean.[True]
+        Me.dgvCodBarra.ScrollBars = Janus.Windows.GridEX.ScrollBars.Vertical
+        Me.dgvCodBarra.Size = New System.Drawing.Size(653, 95)
+        Me.dgvCodBarra.TabIndex = 137
+        Me.dgvCodBarra.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2003
+        '
+        'Label34
+        '
+        Me.Label34.AutoSize = True
+        Me.Label34.Location = New System.Drawing.Point(16, 17)
+        Me.Label34.Name = "Label34"
+        Me.Label34.Size = New System.Drawing.Size(66, 13)
+        Me.Label34.TabIndex = 136
+        Me.Label34.Text = "Cod. Barra : "
+        '
+        'biGuardarCodBarra
+        '
+        Me.biGuardarCodBarra.Enabled = False
+        Me.biGuardarCodBarra.Image = Global.SIGECOM.My.Resources.Resources.Grabar
+        Me.biGuardarCodBarra.Location = New System.Drawing.Point(225, 9)
+        Me.biGuardarCodBarra.Name = "biGuardarCodBarra"
+        Me.biGuardarCodBarra.Size = New System.Drawing.Size(27, 27)
+        Me.biGuardarCodBarra.TabIndex = 135
+        Me.biGuardarCodBarra.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.biGuardarCodBarra.UseVisualStyleBackColor = True
+        '
+        'txtCodBar
+        '
+        Me.txtCodBar.Enabled = False
+        Me.txtCodBar.Location = New System.Drawing.Point(82, 12)
+        Me.txtCodBar.Name = "txtCodBar"
+        Me.txtCodBar.Size = New System.Drawing.Size(140, 20)
+        Me.txtCodBar.TabIndex = 4
+        '
+        'btnEliminarCodBar
+        '
+        Me.btnEliminarCodBar.Image = CType(resources.GetObject("btnEliminarCodBar.Image"), System.Drawing.Image)
+        Me.btnEliminarCodBar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnEliminarCodBar.Location = New System.Drawing.Point(553, 11)
+        Me.btnEliminarCodBar.Name = "btnEliminarCodBar"
+        Me.btnEliminarCodBar.Size = New System.Drawing.Size(98, 23)
+        Me.btnEliminarCodBar.TabIndex = 3
+        Me.btnEliminarCodBar.Text = "Eliminar Barra"
+        Me.btnEliminarCodBar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnEliminarCodBar.UseVisualStyleBackColor = True
+        '
+        'btnAgregarCodBar
+        '
+        Me.btnAgregarCodBar.Image = CType(resources.GetObject("btnAgregarCodBar.Image"), System.Drawing.Image)
+        Me.btnAgregarCodBar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnAgregarCodBar.Location = New System.Drawing.Point(447, 11)
+        Me.btnAgregarCodBar.Name = "btnAgregarCodBar"
+        Me.btnAgregarCodBar.Size = New System.Drawing.Size(98, 23)
+        Me.btnAgregarCodBar.TabIndex = 2
+        Me.btnAgregarCodBar.Text = "Agregar Barra"
+        Me.btnAgregarCodBar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnAgregarCodBar.UseVisualStyleBackColor = True
+        '
+        'gbDatos
+        '
+        Me.gbDatos.Controls.Add(Me.lblTipoMotor)
+        Me.gbDatos.Controls.Add(Me.Label30)
+        Me.gbDatos.Controls.Add(Me.cmbListaPrecio)
+        Me.gbDatos.Controls.Add(Me.Label40)
+        Me.gbDatos.Controls.Add(Me.lbllista)
+        Me.gbDatos.Controls.Add(Me.Label20)
+        Me.gbDatos.Controls.Add(Me.chkActivo)
+        Me.gbDatos.Controls.Add(Me.Label39)
+        Me.gbDatos.Controls.Add(Me.Label36)
+        Me.gbDatos.Controls.Add(Me.txtProveedor)
+        Me.gbDatos.Controls.Add(Me.btnBuscarProveedor)
+        Me.gbDatos.Controls.Add(Me.lblAstRubMot)
+        Me.gbDatos.Controls.Add(Me.Label35)
+        Me.gbDatos.Controls.Add(Me.lblAstMod)
+        Me.gbDatos.Controls.Add(Me.Label33)
+        Me.gbDatos.Controls.Add(Me.Label26)
+        Me.gbDatos.Controls.Add(Me.Label32)
+        Me.gbDatos.Controls.Add(Me.Label31)
+        Me.gbDatos.Controls.Add(Me.Label29)
+        Me.gbDatos.Controls.Add(Me.Label28)
+        Me.gbDatos.Controls.Add(Me.cmbModMer)
+        Me.gbDatos.Controls.Add(Me.Label7)
+        Me.gbDatos.Controls.Add(Me.Label27)
+        Me.gbDatos.Controls.Add(Me.lblAstRuc)
+        Me.gbDatos.Controls.Add(Me.txtObsMer)
+        Me.gbDatos.Controls.Add(Me.cmbCodMov)
+        Me.gbDatos.Controls.Add(Me.txtAplicacion)
+        Me.gbDatos.Controls.Add(Me.btnBuscarAplicacion)
+        Me.gbDatos.Controls.Add(Me.txtMarca)
+        Me.gbDatos.Controls.Add(Me.btnBuscarMarca)
+        Me.gbDatos.Controls.Add(Me.Label17)
+        Me.gbDatos.Controls.Add(Me.txtPartida)
+        Me.gbDatos.Controls.Add(Me.btnBuscarPartida)
+        Me.gbDatos.Controls.Add(Me.Label16)
+        Me.gbDatos.Controls.Add(Me.txtPais)
+        Me.gbDatos.Controls.Add(Me.btnBuscarPais)
+        Me.gbDatos.Controls.Add(Me.Label14)
+        Me.gbDatos.Controls.Add(Me.cmbCodRubMot)
+        Me.gbDatos.Controls.Add(Me.Label13)
+        Me.gbDatos.Controls.Add(Me.cmbCodRub)
+        Me.gbDatos.Controls.Add(Me.txtGrupo)
+        Me.gbDatos.Controls.Add(Me.btnBuscarGrupo)
+        Me.gbDatos.Controls.Add(Me.Label11)
+        Me.gbDatos.Controls.Add(Me.cmbCodUniMed)
+        Me.gbDatos.Controls.Add(Me.Label10)
+        Me.gbDatos.Controls.Add(Me.cmbTipMot)
+        Me.gbDatos.Controls.Add(Me.txtClase)
+        Me.gbDatos.Controls.Add(Me.btnBuscarClase)
+        Me.gbDatos.Controls.Add(Me.txtDesMer2)
+        Me.gbDatos.Controls.Add(Me.Label3)
+        Me.gbDatos.Controls.Add(Me.txtDesMer1)
+        Me.gbDatos.Controls.Add(Me.txtCodMer)
+        Me.gbDatos.Controls.Add(Me.Label19)
+        Me.gbDatos.Controls.Add(Me.gbPeso)
+        Me.gbDatos.Controls.Add(Me.gbNuevocodigo)
+        Me.gbDatos.Controls.Add(Me.gbPrecios)
+        Me.gbDatos.Controls.Add(Me.Label21)
+        Me.gbDatos.Controls.Add(Me.Label18)
+        Me.gbDatos.Controls.Add(Me.Label15)
+        Me.gbDatos.Controls.Add(Me.Label12)
+        Me.gbDatos.Controls.Add(Me.Label4)
+        Me.gbDatos.Controls.Add(Me.Label2)
+        Me.gbDatos.Controls.Add(Me.Label1)
+        Me.gbDatos.Location = New System.Drawing.Point(10, 37)
+        Me.gbDatos.Name = "gbDatos"
+        Me.gbDatos.Size = New System.Drawing.Size(676, 315)
+        Me.gbDatos.TabIndex = 51
+        Me.gbDatos.TabStop = False
+        Me.gbDatos.Text = "Datos de la Mercadería"
+        '
+        'lblTipoMotor
+        '
+        Me.lblTipoMotor.AutoSize = True
+        Me.lblTipoMotor.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTipoMotor.ForeColor = System.Drawing.Color.Red
+        Me.lblTipoMotor.Location = New System.Drawing.Point(518, 41)
+        Me.lblTipoMotor.Name = "lblTipoMotor"
+        Me.lblTipoMotor.Size = New System.Drawing.Size(12, 13)
+        Me.lblTipoMotor.TabIndex = 60
+        Me.lblTipoMotor.Text = "*"
+        '
+        'Label30
+        '
+        Me.Label30.AutoSize = True
+        Me.Label30.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label30.ForeColor = System.Drawing.Color.Red
+        Me.Label30.Location = New System.Drawing.Point(281, 134)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(12, 13)
+        Me.Label30.TabIndex = 59
+        Me.Label30.Text = "*"
+        '
+        'cmbListaPrecio
+        '
+        Me.cmbListaPrecio.ComboStyle = Janus.Windows.GridEX.ComboStyle.DropDownList
+        cmbListaPrecio_DesignTimeLayout.LayoutString = resources.GetString("cmbListaPrecio_DesignTimeLayout.LayoutString")
+        Me.cmbListaPrecio.DesignTimeLayout = cmbListaPrecio_DesignTimeLayout
+        Me.cmbListaPrecio.Location = New System.Drawing.Point(531, 129)
+        Me.cmbListaPrecio.Name = "cmbListaPrecio"
+        Me.cmbListaPrecio.SelectedIndex = -1
+        Me.cmbListaPrecio.SelectedItem = Nothing
+        Me.cmbListaPrecio.Size = New System.Drawing.Size(140, 20)
+        Me.cmbListaPrecio.TabIndex = 58
+        Me.cmbListaPrecio.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'Label40
+        '
+        Me.Label40.AutoSize = True
+        Me.Label40.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label40.ForeColor = System.Drawing.Color.Red
+        Me.Label40.Location = New System.Drawing.Point(72, 133)
+        Me.Label40.Name = "Label40"
+        Me.Label40.Size = New System.Drawing.Size(12, 13)
+        Me.Label40.TabIndex = 57
+        Me.Label40.Text = "*"
+        Me.Label40.Visible = False
+        '
+        'lbllista
+        '
+        Me.lbllista.AutoSize = True
+        Me.lbllista.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbllista.ForeColor = System.Drawing.Color.Red
+        Me.lbllista.Location = New System.Drawing.Point(517, 133)
+        Me.lbllista.Name = "lbllista"
+        Me.lbllista.Size = New System.Drawing.Size(12, 13)
+        Me.lbllista.TabIndex = 56
+        Me.lbllista.Text = "*"
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Location = New System.Drawing.Point(440, 133)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(62, 13)
+        Me.Label20.TabIndex = 55
+        Me.Label20.Text = "Lista Precio"
+        '
+        'chkActivo
+        '
+        Me.chkActivo.AutoSize = True
+        Me.chkActivo.Location = New System.Drawing.Point(531, 156)
+        Me.chkActivo.Name = "chkActivo"
+        Me.chkActivo.Size = New System.Drawing.Size(56, 17)
+        Me.chkActivo.TabIndex = 54
+        Me.chkActivo.Text = "Activo"
+        Me.chkActivo.UseVisualStyleBackColor = True
+        '
+        'Label39
+        '
+        Me.Label39.AutoSize = True
+        Me.Label39.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label39.ForeColor = System.Drawing.Color.Red
+        Me.Label39.Location = New System.Drawing.Point(72, 156)
+        Me.Label39.Name = "Label39"
+        Me.Label39.Size = New System.Drawing.Size(12, 13)
+        Me.Label39.TabIndex = 53
+        Me.Label39.Text = "*"
+        '
+        'Label36
+        '
+        Me.Label36.AutoSize = True
+        Me.Label36.Location = New System.Drawing.Point(2, 156)
+        Me.Label36.Name = "Label36"
+        Me.Label36.Size = New System.Drawing.Size(56, 13)
+        Me.Label36.TabIndex = 52
+        Me.Label36.Text = "Proveedor"
+        '
+        'txtProveedor
+        '
+        Me.txtProveedor.BackColor = System.Drawing.SystemColors.Control
+        Me.txtProveedor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtProveedor.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtProveedor.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtProveedor.Location = New System.Drawing.Point(87, 153)
+        Me.txtProveedor.MaxLength = 3
+        Me.txtProveedor.Name = "txtProveedor"
+        Me.txtProveedor.ReadOnly = True
+        Me.txtProveedor.Size = New System.Drawing.Size(319, 20)
+        Me.txtProveedor.TabIndex = 22
+        '
+        'btnBuscarProveedor
+        '
+        Me.btnBuscarProveedor.Image = Global.SIGECOM.My.Resources.Resources.Buscar
+        Me.btnBuscarProveedor.Location = New System.Drawing.Point(408, 152)
+        Me.btnBuscarProveedor.Name = "btnBuscarProveedor"
+        Me.btnBuscarProveedor.Size = New System.Drawing.Size(25, 22)
+        Me.btnBuscarProveedor.TabIndex = 23
+        Me.btnBuscarProveedor.TabStop = False
+        Me.btnBuscarProveedor.UseVisualStyleBackColor = True
+        '
+        'lblAstRubMot
+        '
+        Me.lblAstRubMot.AutoSize = True
+        Me.lblAstRubMot.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAstRubMot.ForeColor = System.Drawing.Color.Red
+        Me.lblAstRubMot.Location = New System.Drawing.Point(517, 89)
+        Me.lblAstRubMot.Name = "lblAstRubMot"
+        Me.lblAstRubMot.Size = New System.Drawing.Size(12, 13)
+        Me.lblAstRubMot.TabIndex = 51
+        Me.lblAstRubMot.Text = "*"
+        '
+        'Label35
+        '
+        Me.Label35.AutoSize = True
+        Me.Label35.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label35.ForeColor = System.Drawing.Color.Red
+        Me.Label35.Location = New System.Drawing.Point(15, 264)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(62, 13)
+        Me.Label35.TabIndex = 50
+        Me.Label35.Text = "Obligatorios"
+        '
+        'lblAstMod
+        '
+        Me.lblAstMod.AutoSize = True
+        Me.lblAstMod.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAstMod.ForeColor = System.Drawing.Color.Red
+        Me.lblAstMod.Location = New System.Drawing.Point(281, 89)
+        Me.lblAstMod.Name = "lblAstMod"
+        Me.lblAstMod.Size = New System.Drawing.Size(12, 13)
+        Me.lblAstMod.TabIndex = 47
+        Me.lblAstMod.Text = "*"
+        Me.lblAstMod.Visible = False
+        '
+        'Label33
+        '
+        Me.Label33.AutoSize = True
+        Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label33.ForeColor = System.Drawing.Color.Red
+        Me.Label33.Location = New System.Drawing.Point(74, 19)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(12, 13)
+        Me.Label33.TabIndex = 49
+        Me.Label33.Text = "*"
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label26.ForeColor = System.Drawing.Color.Red
+        Me.Label26.Location = New System.Drawing.Point(8, 247)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(52, 13)
+        Me.Label26.TabIndex = 44
+        Me.Label26.Text = "* Campos"
+        '
+        'Label32
+        '
+        Me.Label32.AutoSize = True
+        Me.Label32.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label32.ForeColor = System.Drawing.Color.Red
+        Me.Label32.Location = New System.Drawing.Point(74, 41)
+        Me.Label32.Name = "Label32"
+        Me.Label32.Size = New System.Drawing.Size(12, 13)
+        Me.Label32.TabIndex = 48
+        Me.Label32.Text = "*"
+        '
+        'Label31
+        '
+        Me.Label31.AutoSize = True
+        Me.Label31.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label31.ForeColor = System.Drawing.Color.Red
+        Me.Label31.Location = New System.Drawing.Point(517, 64)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(12, 13)
+        Me.Label31.TabIndex = 47
+        Me.Label31.Text = "*"
+        '
+        'Label29
+        '
+        Me.Label29.AutoSize = True
+        Me.Label29.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label29.ForeColor = System.Drawing.Color.Red
+        Me.Label29.Location = New System.Drawing.Point(281, 111)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(12, 13)
+        Me.Label29.TabIndex = 46
+        Me.Label29.Text = "*"
+        '
+        'Label28
+        '
+        Me.Label28.AutoSize = True
+        Me.Label28.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label28.ForeColor = System.Drawing.Color.Red
+        Me.Label28.Location = New System.Drawing.Point(518, 19)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(12, 13)
+        Me.Label28.TabIndex = 45
+        Me.Label28.Text = "*"
+        '
+        'cmbModMer
+        '
+        Me.cmbModMer.ComboStyle = Janus.Windows.GridEX.ComboStyle.DropDownList
+        cmbModMer_DesignTimeLayout.LayoutString = resources.GetString("cmbModMer_DesignTimeLayout.LayoutString")
+        Me.cmbModMer.DesignTimeLayout = cmbModMer_DesignTimeLayout
+        Me.cmbModMer.Location = New System.Drawing.Point(294, 85)
+        Me.cmbModMer.Name = "cmbModMer"
+        Me.cmbModMer.SelectedIndex = -1
+        Me.cmbModMer.SelectedItem = Nothing
+        Me.cmbModMer.Size = New System.Drawing.Size(140, 20)
+        Me.cmbModMer.TabIndex = 10
+        Me.cmbModMer.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(239, 87)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(42, 13)
+        Me.Label7.TabIndex = 37
+        Me.Label7.Text = "Modelo"
+        '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label27.ForeColor = System.Drawing.Color.Red
+        Me.Label27.Location = New System.Drawing.Point(517, 111)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(12, 13)
+        Me.Label27.TabIndex = 45
+        Me.Label27.Text = "*"
+        '
+        'lblAstRuc
+        '
+        Me.lblAstRuc.AutoSize = True
+        Me.lblAstRuc.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAstRuc.ForeColor = System.Drawing.Color.Red
+        Me.lblAstRuc.Location = New System.Drawing.Point(281, 19)
+        Me.lblAstRuc.Name = "lblAstRuc"
+        Me.lblAstRuc.Size = New System.Drawing.Size(12, 13)
+        Me.lblAstRuc.TabIndex = 45
+        Me.lblAstRuc.Text = "*"
+        '
+        'txtObsMer
+        '
+        Me.txtObsMer.Location = New System.Drawing.Point(87, 176)
+        Me.txtObsMer.Multiline = True
+        Me.txtObsMer.Name = "txtObsMer"
+        Me.txtObsMer.ScrollBars = System.Windows.Forms.ScrollBars.Both
+        Me.txtObsMer.Size = New System.Drawing.Size(583, 44)
+        Me.txtObsMer.TabIndex = 24
+        '
+        'cmbCodMov
+        '
+        Me.cmbCodMov.ComboStyle = Janus.Windows.GridEX.ComboStyle.DropDownList
+        cmbCodMov_DesignTimeLayout.LayoutString = resources.GetString("cmbCodMov_DesignTimeLayout.LayoutString")
+        Me.cmbCodMov.DesignTimeLayout = cmbCodMov_DesignTimeLayout
+        Me.cmbCodMov.Location = New System.Drawing.Point(294, 130)
+        Me.cmbCodMov.Name = "cmbCodMov"
+        Me.cmbCodMov.SelectedIndex = -1
+        Me.cmbCodMov.SelectedItem = Nothing
+        Me.cmbCodMov.Size = New System.Drawing.Size(139, 20)
+        Me.cmbCodMov.TabIndex = 20
+        Me.cmbCodMov.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'txtAplicacion
+        '
+        Me.txtAplicacion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtAplicacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtAplicacion.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtAplicacion.Location = New System.Drawing.Point(87, 130)
+        Me.txtAplicacion.MaxLength = 3
+        Me.txtAplicacion.Name = "txtAplicacion"
+        Me.txtAplicacion.ReadOnly = True
+        Me.txtAplicacion.Size = New System.Drawing.Size(110, 20)
+        Me.txtAplicacion.TabIndex = 18
+        Me.txtAplicacion.TabStop = False
+        '
+        'btnBuscarAplicacion
+        '
+        Me.btnBuscarAplicacion.Image = Global.SIGECOM.My.Resources.Resources.Buscar
+        Me.btnBuscarAplicacion.Location = New System.Drawing.Point(197, 129)
+        Me.btnBuscarAplicacion.Name = "btnBuscarAplicacion"
+        Me.btnBuscarAplicacion.Size = New System.Drawing.Size(25, 22)
+        Me.btnBuscarAplicacion.TabIndex = 19
+        Me.btnBuscarAplicacion.UseVisualStyleBackColor = True
+        '
+        'txtMarca
+        '
+        Me.txtMarca.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtMarca.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtMarca.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtMarca.Location = New System.Drawing.Point(531, 107)
+        Me.txtMarca.MaxLength = 3
+        Me.txtMarca.Name = "txtMarca"
+        Me.txtMarca.ReadOnly = True
+        Me.txtMarca.Size = New System.Drawing.Size(115, 20)
+        Me.txtMarca.TabIndex = 16
+        Me.txtMarca.TabStop = False
+        '
+        'btnBuscarMarca
+        '
+        Me.btnBuscarMarca.Image = Global.SIGECOM.My.Resources.Resources.Buscar
+        Me.btnBuscarMarca.Location = New System.Drawing.Point(646, 106)
+        Me.btnBuscarMarca.Name = "btnBuscarMarca"
+        Me.btnBuscarMarca.Size = New System.Drawing.Size(25, 22)
+        Me.btnBuscarMarca.TabIndex = 17
+        Me.btnBuscarMarca.UseVisualStyleBackColor = True
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(440, 110)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(37, 13)
+        Me.Label17.TabIndex = 41
+        Me.Label17.Text = "Marca"
+        '
+        'txtPartida
+        '
+        Me.txtPartida.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtPartida.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPartida.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtPartida.Location = New System.Drawing.Point(294, 107)
+        Me.txtPartida.MaxLength = 3
+        Me.txtPartida.Name = "txtPartida"
+        Me.txtPartida.ReadOnly = True
+        Me.txtPartida.Size = New System.Drawing.Size(115, 20)
+        Me.txtPartida.TabIndex = 14
+        Me.txtPartida.TabStop = False
+        '
+        'btnBuscarPartida
+        '
+        Me.btnBuscarPartida.Image = Global.SIGECOM.My.Resources.Resources.Buscar
+        Me.btnBuscarPartida.Location = New System.Drawing.Point(409, 106)
+        Me.btnBuscarPartida.Name = "btnBuscarPartida"
+        Me.btnBuscarPartida.Size = New System.Drawing.Size(25, 22)
+        Me.btnBuscarPartida.TabIndex = 15
+        Me.btnBuscarPartida.UseVisualStyleBackColor = True
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(239, 110)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(40, 13)
+        Me.Label16.TabIndex = 35
+        Me.Label16.Text = "Partida"
+        '
+        'txtPais
+        '
+        Me.txtPais.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtPais.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPais.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtPais.Location = New System.Drawing.Point(87, 107)
+        Me.txtPais.MaxLength = 3
+        Me.txtPais.Name = "txtPais"
+        Me.txtPais.ReadOnly = True
+        Me.txtPais.Size = New System.Drawing.Size(110, 20)
+        Me.txtPais.TabIndex = 12
+        Me.txtPais.TabStop = False
+        '
+        'btnBuscarPais
+        '
+        Me.btnBuscarPais.Image = Global.SIGECOM.My.Resources.Resources.Buscar
+        Me.btnBuscarPais.Location = New System.Drawing.Point(197, 106)
+        Me.btnBuscarPais.Name = "btnBuscarPais"
+        Me.btnBuscarPais.Size = New System.Drawing.Size(25, 22)
+        Me.btnBuscarPais.TabIndex = 13
+        Me.btnBuscarPais.UseVisualStyleBackColor = True
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Location = New System.Drawing.Point(440, 87)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(66, 13)
+        Me.Label14.TabIndex = 40
+        Me.Label14.Text = "Rubro Motor"
+        '
+        'cmbCodRubMot
+        '
+        Me.cmbCodRubMot.ComboStyle = Janus.Windows.GridEX.ComboStyle.DropDownList
+        cmbCodRubMot_DesignTimeLayout.LayoutString = resources.GetString("cmbCodRubMot_DesignTimeLayout.LayoutString")
+        Me.cmbCodRubMot.DesignTimeLayout = cmbCodRubMot_DesignTimeLayout
+        Me.cmbCodRubMot.Location = New System.Drawing.Point(531, 84)
+        Me.cmbCodRubMot.Name = "cmbCodRubMot"
+        Me.cmbCodRubMot.SelectedIndex = -1
+        Me.cmbCodRubMot.SelectedItem = Nothing
+        Me.cmbCodRubMot.Size = New System.Drawing.Size(140, 20)
+        Me.cmbCodRubMot.TabIndex = 11
+        Me.cmbCodRubMot.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Location = New System.Drawing.Point(450, 18)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(36, 13)
+        Me.Label13.TabIndex = 34
+        Me.Label13.Text = "Rubro"
+        '
+        'cmbCodRub
+        '
+        Me.cmbCodRub.ComboStyle = Janus.Windows.GridEX.ComboStyle.DropDownList
+        cmbCodRub_DesignTimeLayout.LayoutString = resources.GetString("cmbCodRub_DesignTimeLayout.LayoutString")
+        Me.cmbCodRub.DesignTimeLayout = cmbCodRub_DesignTimeLayout
+        Me.cmbCodRub.Location = New System.Drawing.Point(531, 16)
+        Me.cmbCodRub.Name = "cmbCodRub"
+        Me.cmbCodRub.SelectedIndex = -1
+        Me.cmbCodRub.SelectedItem = Nothing
+        Me.cmbCodRub.Size = New System.Drawing.Size(140, 20)
+        Me.cmbCodRub.TabIndex = 3
+        Me.cmbCodRub.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'txtGrupo
+        '
+        Me.txtGrupo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtGrupo.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtGrupo.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtGrupo.Location = New System.Drawing.Point(87, 84)
+        Me.txtGrupo.MaxLength = 3
+        Me.txtGrupo.Name = "txtGrupo"
+        Me.txtGrupo.ReadOnly = True
+        Me.txtGrupo.Size = New System.Drawing.Size(110, 20)
+        Me.txtGrupo.TabIndex = 8
+        Me.txtGrupo.TabStop = False
+        Me.txtGrupo.Visible = False
+        '
+        'btnBuscarGrupo
+        '
+        Me.btnBuscarGrupo.Image = Global.SIGECOM.My.Resources.Resources.Buscar
+        Me.btnBuscarGrupo.Location = New System.Drawing.Point(197, 83)
+        Me.btnBuscarGrupo.Name = "btnBuscarGrupo"
+        Me.btnBuscarGrupo.Size = New System.Drawing.Size(25, 22)
+        Me.btnBuscarGrupo.TabIndex = 9
+        Me.btnBuscarGrupo.UseVisualStyleBackColor = True
+        Me.btnBuscarGrupo.Visible = False
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(440, 64)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(79, 13)
+        Me.Label11.TabIndex = 39
+        Me.Label11.Text = "Unidad Medida"
+        '
+        'cmbCodUniMed
+        '
+        Me.cmbCodUniMed.ComboStyle = Janus.Windows.GridEX.ComboStyle.DropDownList
+        cmbCodUniMed_DesignTimeLayout.LayoutString = resources.GetString("cmbCodUniMed_DesignTimeLayout.LayoutString")
+        Me.cmbCodUniMed.DesignTimeLayout = cmbCodUniMed_DesignTimeLayout
+        Me.cmbCodUniMed.Location = New System.Drawing.Point(531, 61)
+        Me.cmbCodUniMed.Name = "cmbCodUniMed"
+        Me.cmbCodUniMed.SelectedIndex = -1
+        Me.cmbCodUniMed.SelectedItem = Nothing
+        Me.cmbCodUniMed.Size = New System.Drawing.Size(140, 20)
+        Me.cmbCodUniMed.TabIndex = 7
+        Me.cmbCodUniMed.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(440, 41)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(58, 13)
+        Me.Label10.TabIndex = 38
+        Me.Label10.Text = "Tipo Motor"
+        '
+        'cmbTipMot
+        '
+        Me.cmbTipMot.ComboStyle = Janus.Windows.GridEX.ComboStyle.DropDownList
+        cmbTipMot_DesignTimeLayout.LayoutString = resources.GetString("cmbTipMot_DesignTimeLayout.LayoutString")
+        Me.cmbTipMot.DesignTimeLayout = cmbTipMot_DesignTimeLayout
+        Me.cmbTipMot.Location = New System.Drawing.Point(531, 38)
+        Me.cmbTipMot.Name = "cmbTipMot"
+        Me.cmbTipMot.SelectedIndex = -1
+        Me.cmbTipMot.SelectedItem = Nothing
+        Me.cmbTipMot.Size = New System.Drawing.Size(140, 20)
+        Me.cmbTipMot.TabIndex = 5
+        Me.cmbTipMot.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'txtClase
+        '
+        Me.txtClase.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtClase.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtClase.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtClase.Location = New System.Drawing.Point(294, 15)
+        Me.txtClase.MaxLength = 3
+        Me.txtClase.Name = "txtClase"
+        Me.txtClase.ReadOnly = True
+        Me.txtClase.Size = New System.Drawing.Size(115, 20)
+        Me.txtClase.TabIndex = 1
+        Me.txtClase.TabStop = False
+        '
+        'btnBuscarClase
+        '
+        Me.btnBuscarClase.Image = Global.SIGECOM.My.Resources.Resources.Buscar
+        Me.btnBuscarClase.Location = New System.Drawing.Point(409, 14)
+        Me.btnBuscarClase.Name = "btnBuscarClase"
+        Me.btnBuscarClase.Size = New System.Drawing.Size(25, 22)
+        Me.btnBuscarClase.TabIndex = 2
+        Me.btnBuscarClase.UseVisualStyleBackColor = True
+        '
+        'txtDesMer2
+        '
+        Me.txtDesMer2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtDesMer2.Location = New System.Drawing.Point(87, 61)
+        Me.txtDesMer2.MaxLength = 50
+        Me.txtDesMer2.Name = "txtDesMer2"
+        Me.txtDesMer2.Size = New System.Drawing.Size(347, 20)
+        Me.txtDesMer2.TabIndex = 6
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(233, 18)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(52, 13)
+        Me.Label3.TabIndex = 33
+        Me.Label3.Text = "Categoria"
+        '
+        'txtDesMer1
+        '
+        Me.txtDesMer1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtDesMer1.Location = New System.Drawing.Point(87, 38)
+        Me.txtDesMer1.MaxLength = 50
+        Me.txtDesMer1.Name = "txtDesMer1"
+        Me.txtDesMer1.Size = New System.Drawing.Size(347, 20)
+        Me.txtDesMer1.TabIndex = 4
+        '
+        'txtCodMer
+        '
+        Me.txtCodMer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCodMer.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtCodMer.ForeColor = System.Drawing.SystemColors.Desktop
+        Me.txtCodMer.Location = New System.Drawing.Point(87, 15)
+        Me.txtCodMer.MaxLength = 30
+        Me.txtCodMer.Name = "txtCodMer"
+        Me.txtCodMer.ReadOnly = True
+        Me.txtCodMer.Size = New System.Drawing.Size(140, 20)
+        Me.txtCodMer.TabIndex = 0
+        Me.txtCodMer.TabStop = False
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Location = New System.Drawing.Point(224, 133)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(61, 13)
+        Me.Label19.TabIndex = 36
+        Me.Label19.Text = "Movimiento"
+        '
+        'gbPeso
+        '
+        Me.gbPeso.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.gbPeso.Controls.Add(Me.Label37)
+        Me.gbPeso.Controls.Add(Me.Label38)
+        Me.gbPeso.Controls.Add(Me.cmbUnidMedPeso)
+        Me.gbPeso.Controls.Add(Me.Label24)
+        Me.gbPeso.Controls.Add(Me.Label25)
+        Me.gbPeso.Controls.Add(Me.Label23)
+        Me.gbPeso.Controls.Add(Me.txtPesMer)
+        Me.gbPeso.Controls.Add(Me.Label22)
+        Me.gbPeso.Location = New System.Drawing.Point(479, 224)
+        Me.gbPeso.Name = "gbPeso"
+        Me.gbPeso.Size = New System.Drawing.Size(177, 85)
+        Me.gbPeso.TabIndex = 27
+        Me.gbPeso.TabStop = False
+        Me.gbPeso.Text = "Peso de la Mercadería"
+        '
+        'Label37
+        '
+        Me.Label37.AutoSize = True
+        Me.Label37.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label37.ForeColor = System.Drawing.Color.Red
+        Me.Label37.Location = New System.Drawing.Point(63, 29)
+        Me.Label37.Name = "Label37"
+        Me.Label37.Size = New System.Drawing.Size(12, 13)
+        Me.Label37.TabIndex = 54
+        Me.Label37.Text = "*"
+        Me.Label37.Visible = False
+        '
+        'Label38
+        '
+        Me.Label38.AutoSize = True
+        Me.Label38.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label38.ForeColor = System.Drawing.Color.Red
+        Me.Label38.Location = New System.Drawing.Point(63, 51)
+        Me.Label38.Name = "Label38"
+        Me.Label38.Size = New System.Drawing.Size(12, 13)
+        Me.Label38.TabIndex = 53
+        Me.Label38.Text = "*"
+        Me.Label38.Visible = False
+        '
+        'cmbUnidMedPeso
+        '
+        Me.cmbUnidMedPeso.ComboStyle = Janus.Windows.GridEX.ComboStyle.DropDownList
+        cmbUnidMedPeso_DesignTimeLayout.LayoutString = resources.GetString("cmbUnidMedPeso_DesignTimeLayout.LayoutString")
+        Me.cmbUnidMedPeso.DesignTimeLayout = cmbUnidMedPeso_DesignTimeLayout
+        Me.cmbUnidMedPeso.Location = New System.Drawing.Point(78, 47)
+        Me.cmbUnidMedPeso.Name = "cmbUnidMedPeso"
+        Me.cmbUnidMedPeso.SelectedIndex = -1
+        Me.cmbUnidMedPeso.SelectedItem = Nothing
+        Me.cmbUnidMedPeso.Size = New System.Drawing.Size(68, 20)
+        Me.cmbUnidMedPeso.TabIndex = 52
+        Me.cmbUnidMedPeso.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'Label24
+        '
+        Me.Label24.AutoSize = True
+        Me.Label24.Location = New System.Drawing.Point(149, 29)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(22, 13)
+        Me.Label24.TabIndex = 5
+        Me.Label24.Text = "Lb."
+        Me.Label24.Visible = False
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Location = New System.Drawing.Point(8, 51)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(56, 13)
+        Me.Label25.TabIndex = 4
+        Me.Label25.Text = "Unid. Med"
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Location = New System.Drawing.Point(148, 51)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(23, 13)
+        Me.Label23.TabIndex = 2
+        Me.Label23.Text = "Kg."
+        Me.Label23.Visible = False
+        '
+        'txtPesMer
+        '
+        Me.txtPesMer.FormatString = "n4"
+        Me.txtPesMer.Location = New System.Drawing.Point(78, 25)
+        Me.txtPesMer.MaxLength = 0
+        Me.txtPesMer.Name = "txtPesMer"
+        Me.txtPesMer.Size = New System.Drawing.Size(68, 20)
+        Me.txtPesMer.TabIndex = 0
+        Me.txtPesMer.Text = "0.0000"
+        Me.txtPesMer.Value = New Decimal(New Integer() {0, 0, 0, 262144})
+        Me.txtPesMer.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(8, 29)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(31, 13)
+        Me.Label22.TabIndex = 1
+        Me.Label22.Text = "Peso"
+        '
+        'gbNuevocodigo
+        '
+        Me.gbNuevocodigo.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.gbNuevocodigo.Controls.Add(Me.txtAntMer)
+        Me.gbNuevocodigo.Controls.Add(Me.txtNueMer)
+        Me.gbNuevocodigo.Controls.Add(Me.Label8)
+        Me.gbNuevocodigo.Controls.Add(Me.Label9)
+        Me.gbNuevocodigo.Location = New System.Drawing.Point(87, 224)
+        Me.gbNuevocodigo.Name = "gbNuevocodigo"
+        Me.gbNuevocodigo.Size = New System.Drawing.Size(197, 85)
+        Me.gbNuevocodigo.TabIndex = 25
+        Me.gbNuevocodigo.TabStop = False
+        Me.gbNuevocodigo.Text = "Nueva Código"
+        '
+        'txtAntMer
+        '
+        Me.txtAntMer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtAntMer.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtAntMer.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtAntMer.Location = New System.Drawing.Point(68, 47)
+        Me.txtAntMer.MaxLength = 30
+        Me.txtAntMer.Name = "txtAntMer"
+        Me.txtAntMer.Size = New System.Drawing.Size(114, 20)
+        Me.txtAntMer.TabIndex = 1
+        '
+        'txtNueMer
+        '
+        Me.txtNueMer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtNueMer.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtNueMer.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtNueMer.Location = New System.Drawing.Point(68, 25)
+        Me.txtNueMer.MaxLength = 20
+        Me.txtNueMer.Name = "txtNueMer"
+        Me.txtNueMer.Size = New System.Drawing.Size(114, 20)
+        Me.txtNueMer.TabIndex = 0
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(19, 50)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(43, 13)
+        Me.Label8.TabIndex = 3
+        Me.Label8.Text = "Antiguo"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(19, 28)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(39, 13)
+        Me.Label9.TabIndex = 2
+        Me.Label9.Text = "Nuevo"
+        '
+        'gbPrecios
+        '
+        Me.gbPrecios.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.gbPrecios.Controls.Add(Me.lblFleteMer)
+        Me.gbPrecios.Controls.Add(Me.txtFleteMer)
+        Me.gbPrecios.Controls.Add(Me.lblFOB)
+        Me.gbPrecios.Controls.Add(Me.txtCorMer)
+        Me.gbPrecios.Controls.Add(Me.Label6)
+        Me.gbPrecios.Controls.Add(Me.txtDeaMer)
+        Me.gbPrecios.Controls.Add(Me.Label5)
+        Me.gbPrecios.Location = New System.Drawing.Point(289, 224)
+        Me.gbPrecios.Name = "gbPrecios"
+        Me.gbPrecios.Size = New System.Drawing.Size(185, 85)
+        Me.gbPrecios.TabIndex = 26
+        Me.gbPrecios.TabStop = False
+        Me.gbPrecios.Text = "Precios"
+        '
+        'lblFleteMer
+        '
+        Me.lblFleteMer.AutoSize = True
+        Me.lblFleteMer.Location = New System.Drawing.Point(26, 62)
+        Me.lblFleteMer.Name = "lblFleteMer"
+        Me.lblFleteMer.Size = New System.Drawing.Size(30, 13)
+        Me.lblFleteMer.TabIndex = 61
+        Me.lblFleteMer.Text = "Flete"
+        '
+        'txtFleteMer
+        '
+        Me.txtFleteMer.Location = New System.Drawing.Point(65, 58)
+        Me.txtFleteMer.MaxLength = 10
+        Me.txtFleteMer.Name = "txtFleteMer"
+        Me.txtFleteMer.Size = New System.Drawing.Size(79, 20)
+        Me.txtFleteMer.TabIndex = 2
+        Me.txtFleteMer.TabStop = False
+        Me.txtFleteMer.Text = "0.00"
+        Me.txtFleteMer.Value = New Decimal(New Integer() {0, 0, 0, 131072})
+        Me.txtFleteMer.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'lblFOB
+        '
+        Me.lblFOB.AutoSize = True
+        Me.lblFOB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFOB.ForeColor = System.Drawing.Color.Red
+        Me.lblFOB.Location = New System.Drawing.Point(52, 18)
+        Me.lblFOB.Name = "lblFOB"
+        Me.lblFOB.Size = New System.Drawing.Size(12, 13)
+        Me.lblFOB.TabIndex = 47
+        Me.lblFOB.Text = "*"
+        '
+        'txtCorMer
+        '
+        Me.txtCorMer.Location = New System.Drawing.Point(65, 36)
+        Me.txtCorMer.MaxLength = 10
+        Me.txtCorMer.Name = "txtCorMer"
+        Me.txtCorMer.Size = New System.Drawing.Size(79, 20)
+        Me.txtCorMer.TabIndex = 1
+        Me.txtCorMer.TabStop = False
+        Me.txtCorMer.Text = "0.00"
+        Me.txtCorMer.Value = New Decimal(New Integer() {0, 0, 0, 131072})
+        Me.txtCorMer.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(26, 39)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(29, 13)
+        Me.Label6.TabIndex = 3
+        Me.Label6.Text = "Core"
+        '
+        'txtDeaMer
+        '
+        Me.txtDeaMer.Location = New System.Drawing.Point(65, 14)
+        Me.txtDeaMer.MaxLength = 10
+        Me.txtDeaMer.Name = "txtDeaMer"
+        Me.txtDeaMer.Size = New System.Drawing.Size(79, 20)
+        Me.txtDeaMer.TabIndex = 0
+        Me.txtDeaMer.Text = "0.00"
+        Me.txtDeaMer.Value = New Decimal(New Integer() {0, 0, 0, 131072})
+        Me.txtDeaMer.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(26, 17)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(28, 13)
+        Me.Label5.TabIndex = 2
+        Me.Label5.Text = "FOB"
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Location = New System.Drawing.Point(2, 179)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(67, 13)
+        Me.Label21.TabIndex = 32
+        Me.Label21.Text = "Observación"
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(2, 133)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(56, 13)
+        Me.Label18.TabIndex = 31
+        Me.Label18.Text = "Aplicación"
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(2, 110)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(29, 13)
+        Me.Label15.TabIndex = 30
+        Me.Label15.Text = "País"
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(2, 87)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(36, 13)
+        Me.Label12.TabIndex = 29
+        Me.Label12.Text = "Grupo"
+        Me.Label12.Visible = False
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(2, 64)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(72, 13)
+        Me.Label4.TabIndex = 28
+        Me.Label4.Text = "Descripción 2"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(2, 41)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(72, 13)
+        Me.Label2.TabIndex = 27
+        Me.Label2.Text = "Descripción 1"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(2, 18)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(40, 13)
+        Me.Label1.TabIndex = 26
+        Me.Label1.Text = "Código"
+        '
+        'ofEstiloForm
+        '
+        Me.ofEstiloForm.Form = Me
+        Me.ofEstiloForm.Office2007CustomColor = System.Drawing.Color.Empty
+        '
+        'cmOpciones
+        '
+        Me.cmOpciones.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.miAgregarBarra, Me.miEliminarBarra})
+        Me.cmOpciones.Name = "cmOpciones"
+        Me.cmOpciones.Size = New System.Drawing.Size(153, 70)
+        '
+        'miAgregarBarra
+        '
+        Me.miAgregarBarra.Image = CType(resources.GetObject("miAgregarBarra.Image"), System.Drawing.Image)
+        Me.miAgregarBarra.Name = "miAgregarBarra"
+        Me.miAgregarBarra.Size = New System.Drawing.Size(152, 22)
+        Me.miAgregarBarra.Text = "Agregar Barra"
+        Me.miAgregarBarra.ToolTipText = "Agregar Barra"
+        '
+        'miEliminarBarra
+        '
+        Me.miEliminarBarra.Image = CType(resources.GetObject("miEliminarBarra.Image"), System.Drawing.Image)
+        Me.miEliminarBarra.Name = "miEliminarBarra"
+        Me.miEliminarBarra.Size = New System.Drawing.Size(152, 22)
+        Me.miEliminarBarra.Text = "Eliminar Barra"
+        Me.miEliminarBarra.ToolTipText = "Eliminar Barra"
+        '
+        'frmMovimientoAlmacen_IngresarMercaderia
+        '
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
+        Me.ClientSize = New System.Drawing.Size(705, 573)
+        Me.Controls.Add(Me.Label42)
+        Me.Controls.Add(Me.Label41)
+        Me.Controls.Add(Me.txtFecVctoPreserv)
+        Me.Controls.Add(Me.txtFecPreserv)
+        Me.Controls.Add(Me.tabVentanas)
+        Me.Controls.Add(Me.gbDatos)
+        Me.Controls.Add(Me.ToolStrip)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.KeyPreview = True
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
+        Me.Name = "frmMovimientoAlmacen_IngresarMercaderia"
+        Me.ShowInTaskbar = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "Ingresar Producto"
+        Me.ToolStrip.ResumeLayout(False)
+        Me.ToolStrip.PerformLayout()
+        CType(Me.tabVentanas, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.tabVentanas.ResumeLayout(False)
+        Me.tabpBarras.ResumeLayout(False)
+        Me.tabpBarras.PerformLayout()
+        CType(Me.dgvCodBarra, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.gbDatos.ResumeLayout(False)
+        Me.gbDatos.PerformLayout()
+        CType(Me.cmbListaPrecio, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cmbModMer, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cmbCodMov, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cmbCodRubMot, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cmbCodRub, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cmbCodUniMed, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cmbTipMot, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.gbPeso.ResumeLayout(False)
+        Me.gbPeso.PerformLayout()
+        CType(Me.cmbUnidMedPeso, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.gbNuevocodigo.ResumeLayout(False)
+        Me.gbNuevocodigo.PerformLayout()
+        Me.gbPrecios.ResumeLayout(False)
+        Me.gbPrecios.PerformLayout()
+        CType(Me.ofEstiloForm, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.cmOpciones.ResumeLayout(False)
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+
+    Friend WithEvents ToolStrip As ToolStrip
+    Friend WithEvents ToolStripSeparator13 As ToolStripSeparator
+    Friend WithEvents biGuardar As ToolStripButton
+    Friend WithEvents ToolStripSeparator14 As ToolStripSeparator
+    Friend WithEvents btnEliminar As ToolStripButton
+    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+    Friend WithEvents btnCancelar As ToolStripButton
+    Friend WithEvents Label42 As Label
+    Friend WithEvents Label41 As Label
+    Friend WithEvents txtFecVctoPreserv As Janus.Windows.CalendarCombo.CalendarCombo
+    Friend WithEvents txtFecPreserv As Janus.Windows.CalendarCombo.CalendarCombo
+    Friend WithEvents tabVentanas As Janus.Windows.UI.Tab.UITab
+    Friend WithEvents tabpBarras As Janus.Windows.UI.Tab.UITabPage
+    Friend WithEvents dgvCodBarra As Janus.Windows.GridEX.GridEX
+    Friend WithEvents Label34 As Label
+    Friend WithEvents biGuardarCodBarra As Button
+    Friend WithEvents txtCodBar As TextBox
+    Friend WithEvents btnEliminarCodBar As Button
+    Friend WithEvents btnAgregarCodBar As Button
+    Friend WithEvents gbDatos As GroupBox
+    Friend WithEvents lblTipoMotor As Label
+    Friend WithEvents Label30 As Label
+    Friend WithEvents cmbListaPrecio As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents Label40 As Label
+    Friend WithEvents lbllista As Label
+    Friend WithEvents Label20 As Label
+    Friend WithEvents chkActivo As CheckBox
+    Friend WithEvents Label39 As Label
+    Friend WithEvents Label36 As Label
+    Friend WithEvents txtProveedor As TextBox
+    Friend WithEvents btnBuscarProveedor As Button
+    Friend WithEvents lblAstRubMot As Label
+    Friend WithEvents Label35 As Label
+    Friend WithEvents lblAstMod As Label
+    Friend WithEvents Label33 As Label
+    Friend WithEvents Label26 As Label
+    Friend WithEvents Label32 As Label
+    Friend WithEvents Label31 As Label
+    Friend WithEvents Label29 As Label
+    Friend WithEvents Label28 As Label
+    Friend WithEvents cmbModMer As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Label27 As Label
+    Friend WithEvents lblAstRuc As Label
+    Friend WithEvents txtObsMer As TextBox
+    Friend WithEvents cmbCodMov As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents txtAplicacion As TextBox
+    Friend WithEvents btnBuscarAplicacion As Button
+    Friend WithEvents txtMarca As TextBox
+    Friend WithEvents btnBuscarMarca As Button
+    Friend WithEvents Label17 As Label
+    Friend WithEvents txtPartida As TextBox
+    Friend WithEvents btnBuscarPartida As Button
+    Friend WithEvents Label16 As Label
+    Friend WithEvents txtPais As TextBox
+    Friend WithEvents btnBuscarPais As Button
+    Friend WithEvents Label14 As Label
+    Friend WithEvents cmbCodRubMot As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents Label13 As Label
+    Friend WithEvents cmbCodRub As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents txtGrupo As TextBox
+    Friend WithEvents btnBuscarGrupo As Button
+    Friend WithEvents Label11 As Label
+    Friend WithEvents cmbCodUniMed As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents Label10 As Label
+    Friend WithEvents cmbTipMot As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents txtClase As TextBox
+    Friend WithEvents btnBuscarClase As Button
+    Friend WithEvents txtDesMer2 As TextBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents txtDesMer1 As TextBox
+    Friend WithEvents txtCodMer As TextBox
+    Friend WithEvents Label19 As Label
+    Friend WithEvents gbPeso As GroupBox
+    Friend WithEvents Label37 As Label
+    Friend WithEvents Label38 As Label
+    Friend WithEvents cmbUnidMedPeso As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents Label24 As Label
+    Friend WithEvents Label25 As Label
+    Friend WithEvents Label23 As Label
+    Friend WithEvents txtPesMer As Janus.Windows.GridEX.EditControls.NumericEditBox
+    Friend WithEvents Label22 As Label
+    Friend WithEvents gbNuevocodigo As GroupBox
+    Friend WithEvents txtAntMer As TextBox
+    Friend WithEvents txtNueMer As TextBox
+    Friend WithEvents Label8 As Label
+    Friend WithEvents Label9 As Label
+    Friend WithEvents gbPrecios As GroupBox
+    Friend WithEvents lblFleteMer As Label
+    Friend WithEvents txtFleteMer As Janus.Windows.GridEX.EditControls.NumericEditBox
+    Friend WithEvents lblFOB As Label
+    Friend WithEvents txtCorMer As Janus.Windows.GridEX.EditControls.NumericEditBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents txtDeaMer As Janus.Windows.GridEX.EditControls.NumericEditBox
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label21 As Label
+    Friend WithEvents Label18 As Label
+    Friend WithEvents Label15 As Label
+    Friend WithEvents Label12 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label1 As Label
+    Friend WithEvents ofEstiloForm As Janus.Windows.Ribbon.OfficeFormAdorner
+    Friend WithEvents cmOpciones As ContextMenuStrip
+    Friend WithEvents miAgregarBarra As ToolStripMenuItem
+    Friend WithEvents miEliminarBarra As ToolStripMenuItem
+End Class

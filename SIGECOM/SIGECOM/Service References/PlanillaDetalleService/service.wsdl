@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:tns="http://tempuri.org/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="PlanillaDetalleService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IPlanillaDetalleService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IPlanillaDetalleService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_MostrarPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorId" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_MostrarPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_MostrarPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_MostrarSerieDocumentoCtaCte_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieDocumentoCtaCte" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_MostrarSerieDocumentoCtaCte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieDocumentoCtaCteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_MostrarSerieDocumentoCtaCte_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_MostrarMotivoPago_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMotivoPago" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_MostrarMotivoPago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMotivoPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_MostrarMotivoPago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_MostrarPorDoc_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorDoc" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_MostrarPorDoc_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorDocResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_MostrarPorDoc_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_BuscarDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_BuscarDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_BuscarDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_ObtenerDocCtaCte_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDocCtaCte" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_ObtenerDocCtaCte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDocCtaCteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_ObtenerDocCtaCte_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_BuscarDocCtaCte_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarDocCtaCte" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_BuscarDocCtaCte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarDocCtaCteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaDetalleService_BuscarDocCtaCte_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IPlanillaDetalleService">
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaDetalleService/Mostrar" message="tns:IPlanillaDetalleService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaDetalleService/MostrarResponse" message="tns:IPlanillaDetalleService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaDetalleService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaDetalleService/MostrarPorId" message="tns:IPlanillaDetalleService_MostrarPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaDetalleService/MostrarPorIdResponse" message="tns:IPlanillaDetalleService_MostrarPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaDetalleService_MostrarPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaDetalleService/Insertar" message="tns:IPlanillaDetalleService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaDetalleService/InsertarResponse" message="tns:IPlanillaDetalleService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaDetalleService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaDetalleService/Actualizar" message="tns:IPlanillaDetalleService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaDetalleService/ActualizarResponse" message="tns:IPlanillaDetalleService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaDetalleService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaDetalleService/Borrar" message="tns:IPlanillaDetalleService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaDetalleService/BorrarResponse" message="tns:IPlanillaDetalleService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaDetalleService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieDocumentoCtaCte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaDetalleService/MostrarSerieDocumentoCtaCte" message="tns:IPlanillaDetalleService_MostrarSerieDocumentoCtaCte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaDetalleService/MostrarSerieDocumentoCtaCteResponse" message="tns:IPlanillaDetalleService_MostrarSerieDocumentoCtaCte_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaDetalleService_MostrarSerieDocumentoCtaCte_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMotivoPago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaDetalleService/MostrarMotivoPago" message="tns:IPlanillaDetalleService_MostrarMotivoPago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaDetalleService/MostrarMotivoPagoResponse" message="tns:IPlanillaDetalleService_MostrarMotivoPago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaDetalleService_MostrarMotivoPago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorDoc">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaDetalleService/MostrarPorDoc" message="tns:IPlanillaDetalleService_MostrarPorDoc_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaDetalleService/MostrarPorDocResponse" message="tns:IPlanillaDetalleService_MostrarPorDoc_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaDetalleService_MostrarPorDoc_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaDetalleService/BuscarDocumento" message="tns:IPlanillaDetalleService_BuscarDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaDetalleService/BuscarDocumentoResponse" message="tns:IPlanillaDetalleService_BuscarDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaDetalleService_BuscarDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDocCtaCte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaDetalleService/ObtenerDocCtaCte" message="tns:IPlanillaDetalleService_ObtenerDocCtaCte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaDetalleService/ObtenerDocCtaCteResponse" message="tns:IPlanillaDetalleService_ObtenerDocCtaCte_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaDetalleService_ObtenerDocCtaCte_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarDocCtaCte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaDetalleService/BuscarDocCtaCte" message="tns:IPlanillaDetalleService_BuscarDocCtaCte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaDetalleService/BuscarDocCtaCteResponse" message="tns:IPlanillaDetalleService_BuscarDocCtaCte_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaDetalleService_BuscarDocCtaCte_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IPlanillaDetalleService" type="tns:IPlanillaDetalleService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IPlanillaDetalleService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaDetalleService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaDetalleService/MostrarPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaDetalleService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaDetalleService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaDetalleService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieDocumentoCtaCte">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaDetalleService/MostrarSerieDocumentoCtaCte" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMotivoPago">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaDetalleService/MostrarMotivoPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorDoc">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaDetalleService/MostrarPorDoc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaDetalleService/BuscarDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDocCtaCte">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaDetalleService/ObtenerDocCtaCte" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarDocCtaCte">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaDetalleService/BuscarDocCtaCte" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PlanillaDetalleService">
+    <wsdl:port name="NetTcpBinding_IPlanillaDetalleService" binding="tns:NetTcpBinding_IPlanillaDetalleService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/PlanillaDetalleService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/PlanillaDetalleService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

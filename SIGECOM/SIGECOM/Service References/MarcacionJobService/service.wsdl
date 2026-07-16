@@ -1,0 +1,579 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MarcacionJobService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IMarcacionJobService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMarcacionJobService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MostrarJobMarcables_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarJobMarcables" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MostrarJobMarcables_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarJobMarcablesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MostrarJobMarcables_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MarcarAsistencia_InputMessage">
+    <wsdl:part name="parameters" element="tns:MarcarAsistencia" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MarcarAsistencia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MarcarAsistenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MarcarAsistencia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_BuscarPendiente_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPendiente" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_BuscarPendiente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPendienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_BuscarPendiente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_ObtenerJobPendiente_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerJobPendiente" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_ObtenerJobPendiente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerJobPendienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_ObtenerJobPendiente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_ActualizarHoraViaje_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarHoraViaje" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_ActualizarHoraViaje_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarHoraViajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_ActualizarHoraViaje_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MostrarHorasJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarHorasJob" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MostrarHorasJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarHorasJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MostrarHorasJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_ReporteHorasEscalon_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteHorasEscalon" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_ReporteHorasEscalon_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteHorasEscalonResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_ReporteHorasEscalon_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Reporte_InputMessage">
+    <wsdl:part name="parameters" element="tns:Reporte" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Reporte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_Reporte_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MostrarHorasPorPersona_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarHorasPorPersona" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MostrarHorasPorPersona_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarHorasPorPersonaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MostrarHorasPorPersona_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MostrarLectores_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLectores" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MostrarLectores_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLectoresResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MostrarLectores_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MostrarMarcasLector_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMarcasLector" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MostrarMarcasLector_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMarcasLectorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_MostrarMarcasLector_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_InsertarMarcasAlJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMarcasAlJob" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_InsertarMarcasAlJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMarcasAlJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_InsertarMarcasAlJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_BorrarHoraViaje_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarHoraViaje" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_BorrarHoraViaje_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarHoraViajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_BorrarHoraViaje_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_ReporteHoraMuerta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteHoraMuerta" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_ReporteHoraMuerta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteHoraMuertaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMarcacionJobService_ReporteHoraMuerta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IMarcacionJobService">
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/Insertar" message="tns:IMarcacionJobService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/InsertarResponse" message="tns:IMarcacionJobService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/Actualizar" message="tns:IMarcacionJobService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/ActualizarResponse" message="tns:IMarcacionJobService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/Filtrar" message="tns:IMarcacionJobService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/FiltrarResponse" message="tns:IMarcacionJobService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/Borrar" message="tns:IMarcacionJobService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/BorrarResponse" message="tns:IMarcacionJobService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/Obtener" message="tns:IMarcacionJobService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/ObtenerResponse" message="tns:IMarcacionJobService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/Buscar" message="tns:IMarcacionJobService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/BuscarResponse" message="tns:IMarcacionJobService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarJobMarcables">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/MostrarJobMarcables" message="tns:IMarcacionJobService_MostrarJobMarcables_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/MostrarJobMarcablesResponse" message="tns:IMarcacionJobService_MostrarJobMarcables_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_MostrarJobMarcables_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MarcarAsistencia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/MarcarAsistencia" message="tns:IMarcacionJobService_MarcarAsistencia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/MarcarAsistenciaResponse" message="tns:IMarcacionJobService_MarcarAsistencia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_MarcarAsistencia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPendiente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/BuscarPendiente" message="tns:IMarcacionJobService_BuscarPendiente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/BuscarPendienteResponse" message="tns:IMarcacionJobService_BuscarPendiente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_BuscarPendiente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerJobPendiente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/ObtenerJobPendiente" message="tns:IMarcacionJobService_ObtenerJobPendiente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/ObtenerJobPendienteResponse" message="tns:IMarcacionJobService_ObtenerJobPendiente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_ObtenerJobPendiente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarHoraViaje">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/ActualizarHoraViaje" message="tns:IMarcacionJobService_ActualizarHoraViaje_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/ActualizarHoraViajeResponse" message="tns:IMarcacionJobService_ActualizarHoraViaje_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_ActualizarHoraViaje_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarHorasJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/MostrarHorasJob" message="tns:IMarcacionJobService_MostrarHorasJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/MostrarHorasJobResponse" message="tns:IMarcacionJobService_MostrarHorasJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_MostrarHorasJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteHorasEscalon">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/ReporteHorasEscalon" message="tns:IMarcacionJobService_ReporteHorasEscalon_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/ReporteHorasEscalonResponse" message="tns:IMarcacionJobService_ReporteHorasEscalon_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_ReporteHorasEscalon_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Reporte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/Reporte" message="tns:IMarcacionJobService_Reporte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/ReporteResponse" message="tns:IMarcacionJobService_Reporte_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_Reporte_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarHorasPorPersona">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/MostrarHorasPorPersona" message="tns:IMarcacionJobService_MostrarHorasPorPersona_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/MostrarHorasPorPersonaResponse" message="tns:IMarcacionJobService_MostrarHorasPorPersona_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_MostrarHorasPorPersona_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLectores">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/MostrarLectores" message="tns:IMarcacionJobService_MostrarLectores_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/MostrarLectoresResponse" message="tns:IMarcacionJobService_MostrarLectores_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_MostrarLectores_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMarcasLector">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/MostrarMarcasLector" message="tns:IMarcacionJobService_MostrarMarcasLector_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/MostrarMarcasLectorResponse" message="tns:IMarcacionJobService_MostrarMarcasLector_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_MostrarMarcasLector_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMarcasAlJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/InsertarMarcasAlJob" message="tns:IMarcacionJobService_InsertarMarcasAlJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/InsertarMarcasAlJobResponse" message="tns:IMarcacionJobService_InsertarMarcasAlJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_InsertarMarcasAlJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarHoraViaje">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/BorrarHoraViaje" message="tns:IMarcacionJobService_BorrarHoraViaje_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/BorrarHoraViajeResponse" message="tns:IMarcacionJobService_BorrarHoraViaje_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_BorrarHoraViaje_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteHoraMuerta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMarcacionJobService/ReporteHoraMuerta" message="tns:IMarcacionJobService_ReporteHoraMuerta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMarcacionJobService/ReporteHoraMuertaResponse" message="tns:IMarcacionJobService_ReporteHoraMuerta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMarcacionJobService_ReporteHoraMuerta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IMarcacionJobService" type="tns:IMarcacionJobService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IMarcacionJobService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarJobMarcables">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/MostrarJobMarcables" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MarcarAsistencia">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/MarcarAsistencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPendiente">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/BuscarPendiente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerJobPendiente">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/ObtenerJobPendiente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarHoraViaje">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/ActualizarHoraViaje" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarHorasJob">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/MostrarHorasJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteHorasEscalon">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/ReporteHorasEscalon" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Reporte">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/Reporte" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarHorasPorPersona">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/MostrarHorasPorPersona" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLectores">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/MostrarLectores" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMarcasLector">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/MostrarMarcasLector" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMarcasAlJob">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/InsertarMarcasAlJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarHoraViaje">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/BorrarHoraViaje" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteHoraMuerta">
+      <soap12:operation soapAction="http://tempuri.org/IMarcacionJobService/ReporteHoraMuerta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MarcacionJobService">
+    <wsdl:port name="NetTcpBinding_IMarcacionJobService" binding="tns:NetTcpBinding_IMarcacionJobService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/MarcacionJobService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/MarcacionJobService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

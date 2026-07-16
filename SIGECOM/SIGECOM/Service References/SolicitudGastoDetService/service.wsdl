@@ -1,0 +1,1463 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SolicitudGastoDetService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ISolicitudGastoDetService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerCentroCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCentroCosto" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerCentroCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCentroCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerCentroCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarCentro_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCentro" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarCentro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCentroResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarCentro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_InsertarCentroCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCentroCosto" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_InsertarCentroCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCentroCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_InsertarCentroCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarServicios_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarServicios" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarServicios_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarServiciosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarServicios_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerJob" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarJob" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarJob" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_InsertarJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarJob" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_InsertarJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_InsertarJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BorrarJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarJob" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BorrarJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BorrarJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarAplicaIgv_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAplicaIgv" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarAplicaIgv_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAplicaIgvResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarAplicaIgv_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarXml_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarXml" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarXml_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarXmlResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarXml_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_DescargarXml_InputMessage">
+    <wsdl:part name="parameters" element="tns:DescargarXml" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_DescargarXml_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DescargarXmlResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_DescargarXml_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_DescargarPdf_InputMessage">
+    <wsdl:part name="parameters" element="tns:DescargarPdf" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_DescargarPdf_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DescargarPdfResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_DescargarPdf_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerNombre_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerNombre" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerNombre_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerNombreResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerNombre_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarXmlxDoc_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarXmlxDoc" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarXmlxDoc_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarXmlxDocResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarXmlxDoc_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarRubros_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubros" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarRubros_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubrosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarRubros_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerIdDocumentoSunat_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdDocumentoSunat" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerIdDocumentoSunat_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdDocumentoSunatResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerIdDocumentoSunat_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarTipoDetraccion_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDetraccion" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarTipoDetraccion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDetraccionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarTipoDetraccion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ProcesarJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarJob" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ProcesarJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ProcesarJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ActualizarNumeroCuenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarNumeroCuenta" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ActualizarNumeroCuenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarNumeroCuentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ActualizarNumeroCuenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarCuentasVacias_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarCuentasVacias" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarCuentasVacias_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarCuentasVaciasResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarCuentasVacias_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarPorProveedor_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorProveedor" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarPorProveedor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorProveedorResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarPorProveedor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ProcesarPlanilla_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarPlanilla" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ProcesarPlanilla_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarPlanillaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ProcesarPlanilla_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q28:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerItem_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerItem" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerItem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerItem_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q29:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarCompraJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCompraJob" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarCompraJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCompraJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarCompraJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q30:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarDestinos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDestinos" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarDestinos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDestinosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarDestinos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q31:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarRubroViaje_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroViaje" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarRubroViaje_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroViajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarRubroViaje_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q32:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarSubRubroViaje_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSubRubroViaje" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarSubRubroViaje_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSubRubroViajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarSubRubroViaje_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q33:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarTarifaGastoViaje_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTarifaGastoViaje" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarTarifaGastoViaje_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTarifaGastoViajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarTarifaGastoViaje_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q34:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerTarifaGastoViaje_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTarifaGastoViaje" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerTarifaGastoViaje_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTarifaGastoViajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerTarifaGastoViaje_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q35="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q35:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_FiltrarTarifaGastoViaje_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarTarifaGastoViaje" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_FiltrarTarifaGastoViaje_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarTarifaGastoViajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_FiltrarTarifaGastoViaje_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q36="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q36:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_InsertarTarifaGastoViaje_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTarifaGastoViaje" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_InsertarTarifaGastoViaje_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTarifaGastoViajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_InsertarTarifaGastoViaje_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q37="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q37:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ActualizarTarifaGastoViaje_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTarifaGastoViaje" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ActualizarTarifaGastoViaje_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTarifaGastoViajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ActualizarTarifaGastoViaje_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q38="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q38:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BorrarTarifaGastoViaje_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarTarifaGastoViaje" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BorrarTarifaGastoViaje_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarTarifaGastoViajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BorrarTarifaGastoViaje_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q39="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q39:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarJefe_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarJefe" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarJefe_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarJefeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarJefe_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q40="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q40:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerObservacionSubRubro_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerObservacionSubRubro" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerObservacionSubRubro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerObservacionSubRubroResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerObservacionSubRubro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q41="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q41:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerTarifaCasaAeropuerto_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTarifaCasaAeropuerto" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerTarifaCasaAeropuerto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTarifaCasaAeropuertoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ObtenerTarifaCasaAeropuerto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q42="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q42:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_FiltrarTarifaCasaAeropuerto_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarTarifaCasaAeropuerto" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_FiltrarTarifaCasaAeropuerto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarTarifaCasaAeropuertoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_FiltrarTarifaCasaAeropuerto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q43="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q43:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_InsertarTarifaCasaAeropuerto_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTarifaCasaAeropuerto" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_InsertarTarifaCasaAeropuerto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTarifaCasaAeropuertoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_InsertarTarifaCasaAeropuerto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q44="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q44:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ActualizarTarifaCasaAeropuerto_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTarifaCasaAeropuerto" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ActualizarTarifaCasaAeropuerto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTarifaCasaAeropuertoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ActualizarTarifaCasaAeropuerto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q45="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q45:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BorrarTarifaCasaAeropuerto_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarTarifaCasaAeropuerto" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BorrarTarifaCasaAeropuerto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarTarifaCasaAeropuertoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BorrarTarifaCasaAeropuerto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q46="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q46:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarTarifaCasaAeropuerto_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarTarifaCasaAeropuerto" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarTarifaCasaAeropuerto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarTarifaCasaAeropuertoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarTarifaCasaAeropuerto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q47="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q47:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarNoAplicaTarifa_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarNoAplicaTarifa" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarNoAplicaTarifa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarNoAplicaTarifaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarNoAplicaTarifa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q48="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q48:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarNoContabilizado_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarNoContabilizado" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarNoContabilizado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarNoContabilizadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarNoContabilizado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q49="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q49:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarPlanillas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPlanillas" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarPlanillas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPlanillasResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_MostrarPlanillas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q50="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q50:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_InsertarPlanilla_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPlanilla" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_InsertarPlanilla_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPlanillaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_InsertarPlanilla_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q51="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q51:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarPlanilla_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPlanilla" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarPlanilla_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPlanillaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_BuscarPlanilla_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q52="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q52:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ActualizarJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarJob" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ActualizarJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_ActualizarJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q53="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q53:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_FiltrarGastosPlaca_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarGastosPlaca" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_FiltrarGastosPlaca_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarGastosPlacaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGastoDetService_FiltrarGastosPlaca_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q54="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q54:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="ISolicitudGastoDetService">
+    <wsdl:operation name="ObtenerCentroCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerCentroCosto" message="tns:ISolicitudGastoDetService_ObtenerCentroCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerCentroCostoResponse" message="tns:ISolicitudGastoDetService_ObtenerCentroCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_ObtenerCentroCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCentro">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarCentro" message="tns:ISolicitudGastoDetService_MostrarCentro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarCentroResponse" message="tns:ISolicitudGastoDetService_MostrarCentro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_MostrarCentro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCentroCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/InsertarCentroCosto" message="tns:ISolicitudGastoDetService_InsertarCentroCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/InsertarCentroCostoResponse" message="tns:ISolicitudGastoDetService_InsertarCentroCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_InsertarCentroCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarServicios">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarServicios" message="tns:ISolicitudGastoDetService_BuscarServicios_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarServiciosResponse" message="tns:ISolicitudGastoDetService_BuscarServicios_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_BuscarServicios_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerJob" message="tns:ISolicitudGastoDetService_ObtenerJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerJobResponse" message="tns:ISolicitudGastoDetService_ObtenerJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_ObtenerJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarJob" message="tns:ISolicitudGastoDetService_MostrarJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarJobResponse" message="tns:ISolicitudGastoDetService_MostrarJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_MostrarJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarJob" message="tns:ISolicitudGastoDetService_BuscarJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarJobResponse" message="tns:ISolicitudGastoDetService_BuscarJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_BuscarJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/InsertarJob" message="tns:ISolicitudGastoDetService_InsertarJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/InsertarJobResponse" message="tns:ISolicitudGastoDetService_InsertarJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_InsertarJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BorrarJob" message="tns:ISolicitudGastoDetService_BorrarJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BorrarJobResponse" message="tns:ISolicitudGastoDetService_BorrarJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_BorrarJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarAplicaIgv">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarAplicaIgv" message="tns:ISolicitudGastoDetService_BuscarAplicaIgv_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarAplicaIgvResponse" message="tns:ISolicitudGastoDetService_BuscarAplicaIgv_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_BuscarAplicaIgv_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarXml">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarXml" message="tns:ISolicitudGastoDetService_BuscarXml_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarXmlResponse" message="tns:ISolicitudGastoDetService_BuscarXml_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_BuscarXml_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DescargarXml">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/DescargarXml" message="tns:ISolicitudGastoDetService_DescargarXml_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/DescargarXmlResponse" message="tns:ISolicitudGastoDetService_DescargarXml_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_DescargarXml_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DescargarPdf">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/DescargarPdf" message="tns:ISolicitudGastoDetService_DescargarPdf_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/DescargarPdfResponse" message="tns:ISolicitudGastoDetService_DescargarPdf_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_DescargarPdf_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerNombre">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerNombre" message="tns:ISolicitudGastoDetService_ObtenerNombre_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerNombreResponse" message="tns:ISolicitudGastoDetService_ObtenerNombre_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_ObtenerNombre_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarXmlxDoc">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarXmlxDoc" message="tns:ISolicitudGastoDetService_BuscarXmlxDoc_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarXmlxDocResponse" message="tns:ISolicitudGastoDetService_BuscarXmlxDoc_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_BuscarXmlxDoc_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubros">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarRubros" message="tns:ISolicitudGastoDetService_MostrarRubros_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarRubrosResponse" message="tns:ISolicitudGastoDetService_MostrarRubros_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_MostrarRubros_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdDocumentoSunat">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerIdDocumentoSunat" message="tns:ISolicitudGastoDetService_ObtenerIdDocumentoSunat_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerIdDocumentoSunatResponse" message="tns:ISolicitudGastoDetService_ObtenerIdDocumentoSunat_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_ObtenerIdDocumentoSunat_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDetraccion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarTipoDetraccion" message="tns:ISolicitudGastoDetService_MostrarTipoDetraccion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarTipoDetraccionResponse" message="tns:ISolicitudGastoDetService_MostrarTipoDetraccion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_MostrarTipoDetraccion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/Obtener" message="tns:ISolicitudGastoDetService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerResponse" message="tns:ISolicitudGastoDetService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/Mostrar" message="tns:ISolicitudGastoDetService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarResponse" message="tns:ISolicitudGastoDetService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/Insertar" message="tns:ISolicitudGastoDetService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/InsertarResponse" message="tns:ISolicitudGastoDetService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/Actualizar" message="tns:ISolicitudGastoDetService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ActualizarResponse" message="tns:ISolicitudGastoDetService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/Borrar" message="tns:ISolicitudGastoDetService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BorrarResponse" message="tns:ISolicitudGastoDetService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ProcesarJob" message="tns:ISolicitudGastoDetService_ProcesarJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ProcesarJobResponse" message="tns:ISolicitudGastoDetService_ProcesarJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_ProcesarJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarNumeroCuenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ActualizarNumeroCuenta" message="tns:ISolicitudGastoDetService_ActualizarNumeroCuenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ActualizarNumeroCuentaResponse" message="tns:ISolicitudGastoDetService_ActualizarNumeroCuenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_ActualizarNumeroCuenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarCuentasVacias">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarCuentasVacias" message="tns:ISolicitudGastoDetService_BuscarCuentasVacias_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarCuentasVaciasResponse" message="tns:ISolicitudGastoDetService_BuscarCuentasVacias_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_BuscarCuentasVacias_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorProveedor">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarPorProveedor" message="tns:ISolicitudGastoDetService_MostrarPorProveedor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarPorProveedorResponse" message="tns:ISolicitudGastoDetService_MostrarPorProveedor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_MostrarPorProveedor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarPlanilla">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ProcesarPlanilla" message="tns:ISolicitudGastoDetService_ProcesarPlanilla_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ProcesarPlanillaResponse" message="tns:ISolicitudGastoDetService_ProcesarPlanilla_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_ProcesarPlanilla_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerItem">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerItem" message="tns:ISolicitudGastoDetService_ObtenerItem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerItemResponse" message="tns:ISolicitudGastoDetService_ObtenerItem_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_ObtenerItem_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCompraJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarCompraJob" message="tns:ISolicitudGastoDetService_MostrarCompraJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarCompraJobResponse" message="tns:ISolicitudGastoDetService_MostrarCompraJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_MostrarCompraJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDestinos">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarDestinos" message="tns:ISolicitudGastoDetService_MostrarDestinos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarDestinosResponse" message="tns:ISolicitudGastoDetService_MostrarDestinos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_MostrarDestinos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroViaje">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarRubroViaje" message="tns:ISolicitudGastoDetService_MostrarRubroViaje_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarRubroViajeResponse" message="tns:ISolicitudGastoDetService_MostrarRubroViaje_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_MostrarRubroViaje_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSubRubroViaje">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarSubRubroViaje" message="tns:ISolicitudGastoDetService_MostrarSubRubroViaje_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarSubRubroViajeResponse" message="tns:ISolicitudGastoDetService_MostrarSubRubroViaje_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_MostrarSubRubroViaje_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTarifaGastoViaje">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarTarifaGastoViaje" message="tns:ISolicitudGastoDetService_MostrarTarifaGastoViaje_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarTarifaGastoViajeResponse" message="tns:ISolicitudGastoDetService_MostrarTarifaGastoViaje_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_MostrarTarifaGastoViaje_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTarifaGastoViaje">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerTarifaGastoViaje" message="tns:ISolicitudGastoDetService_ObtenerTarifaGastoViaje_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerTarifaGastoViajeResponse" message="tns:ISolicitudGastoDetService_ObtenerTarifaGastoViaje_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_ObtenerTarifaGastoViaje_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarTarifaGastoViaje">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/FiltrarTarifaGastoViaje" message="tns:ISolicitudGastoDetService_FiltrarTarifaGastoViaje_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/FiltrarTarifaGastoViajeResponse" message="tns:ISolicitudGastoDetService_FiltrarTarifaGastoViaje_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_FiltrarTarifaGastoViaje_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTarifaGastoViaje">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/InsertarTarifaGastoViaje" message="tns:ISolicitudGastoDetService_InsertarTarifaGastoViaje_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/InsertarTarifaGastoViajeResponse" message="tns:ISolicitudGastoDetService_InsertarTarifaGastoViaje_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_InsertarTarifaGastoViaje_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTarifaGastoViaje">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ActualizarTarifaGastoViaje" message="tns:ISolicitudGastoDetService_ActualizarTarifaGastoViaje_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ActualizarTarifaGastoViajeResponse" message="tns:ISolicitudGastoDetService_ActualizarTarifaGastoViaje_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_ActualizarTarifaGastoViaje_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarTarifaGastoViaje">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BorrarTarifaGastoViaje" message="tns:ISolicitudGastoDetService_BorrarTarifaGastoViaje_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BorrarTarifaGastoViajeResponse" message="tns:ISolicitudGastoDetService_BorrarTarifaGastoViaje_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_BorrarTarifaGastoViaje_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarJefe">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarJefe" message="tns:ISolicitudGastoDetService_BuscarJefe_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarJefeResponse" message="tns:ISolicitudGastoDetService_BuscarJefe_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_BuscarJefe_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerObservacionSubRubro">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerObservacionSubRubro" message="tns:ISolicitudGastoDetService_ObtenerObservacionSubRubro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerObservacionSubRubroResponse" message="tns:ISolicitudGastoDetService_ObtenerObservacionSubRubro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_ObtenerObservacionSubRubro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTarifaCasaAeropuerto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerTarifaCasaAeropuerto" message="tns:ISolicitudGastoDetService_ObtenerTarifaCasaAeropuerto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ObtenerTarifaCasaAeropuertoResponse" message="tns:ISolicitudGastoDetService_ObtenerTarifaCasaAeropuerto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_ObtenerTarifaCasaAeropuerto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarTarifaCasaAeropuerto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/FiltrarTarifaCasaAeropuerto" message="tns:ISolicitudGastoDetService_FiltrarTarifaCasaAeropuerto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/FiltrarTarifaCasaAeropuertoResponse" message="tns:ISolicitudGastoDetService_FiltrarTarifaCasaAeropuerto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_FiltrarTarifaCasaAeropuerto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTarifaCasaAeropuerto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/InsertarTarifaCasaAeropuerto" message="tns:ISolicitudGastoDetService_InsertarTarifaCasaAeropuerto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/InsertarTarifaCasaAeropuertoResponse" message="tns:ISolicitudGastoDetService_InsertarTarifaCasaAeropuerto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_InsertarTarifaCasaAeropuerto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTarifaCasaAeropuerto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ActualizarTarifaCasaAeropuerto" message="tns:ISolicitudGastoDetService_ActualizarTarifaCasaAeropuerto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ActualizarTarifaCasaAeropuertoResponse" message="tns:ISolicitudGastoDetService_ActualizarTarifaCasaAeropuerto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_ActualizarTarifaCasaAeropuerto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarTarifaCasaAeropuerto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BorrarTarifaCasaAeropuerto" message="tns:ISolicitudGastoDetService_BorrarTarifaCasaAeropuerto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BorrarTarifaCasaAeropuertoResponse" message="tns:ISolicitudGastoDetService_BorrarTarifaCasaAeropuerto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_BorrarTarifaCasaAeropuerto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarTarifaCasaAeropuerto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarTarifaCasaAeropuerto" message="tns:ISolicitudGastoDetService_BuscarTarifaCasaAeropuerto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarTarifaCasaAeropuertoResponse" message="tns:ISolicitudGastoDetService_BuscarTarifaCasaAeropuerto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_BuscarTarifaCasaAeropuerto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarNoAplicaTarifa">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarNoAplicaTarifa" message="tns:ISolicitudGastoDetService_BuscarNoAplicaTarifa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarNoAplicaTarifaResponse" message="tns:ISolicitudGastoDetService_BuscarNoAplicaTarifa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_BuscarNoAplicaTarifa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarNoContabilizado">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarNoContabilizado" message="tns:ISolicitudGastoDetService_MostrarNoContabilizado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarNoContabilizadoResponse" message="tns:ISolicitudGastoDetService_MostrarNoContabilizado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_MostrarNoContabilizado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPlanillas">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarPlanillas" message="tns:ISolicitudGastoDetService_MostrarPlanillas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/MostrarPlanillasResponse" message="tns:ISolicitudGastoDetService_MostrarPlanillas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_MostrarPlanillas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPlanilla">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/InsertarPlanilla" message="tns:ISolicitudGastoDetService_InsertarPlanilla_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/InsertarPlanillaResponse" message="tns:ISolicitudGastoDetService_InsertarPlanilla_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_InsertarPlanilla_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPlanilla">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarPlanilla" message="tns:ISolicitudGastoDetService_BuscarPlanilla_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/BuscarPlanillaResponse" message="tns:ISolicitudGastoDetService_BuscarPlanilla_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_BuscarPlanilla_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ActualizarJob" message="tns:ISolicitudGastoDetService_ActualizarJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/ActualizarJobResponse" message="tns:ISolicitudGastoDetService_ActualizarJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_ActualizarJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarGastosPlaca">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/FiltrarGastosPlaca" message="tns:ISolicitudGastoDetService_FiltrarGastosPlaca_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGastoDetService/FiltrarGastosPlacaResponse" message="tns:ISolicitudGastoDetService_FiltrarGastosPlaca_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGastoDetService_FiltrarGastosPlaca_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ISolicitudGastoDetService" type="tns:ISolicitudGastoDetService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ISolicitudGastoDetService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="ObtenerCentroCosto">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/ObtenerCentroCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCentro">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/MostrarCentro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCentroCosto">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/InsertarCentroCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarServicios">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/BuscarServicios" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerJob">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/ObtenerJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarJob">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/MostrarJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarJob">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/BuscarJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarJob">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/InsertarJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarJob">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/BorrarJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarAplicaIgv">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/BuscarAplicaIgv" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarXml">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/BuscarXml" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DescargarXml">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/DescargarXml" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DescargarPdf">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/DescargarPdf" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerNombre">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/ObtenerNombre" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarXmlxDoc">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/BuscarXmlxDoc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubros">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/MostrarRubros" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdDocumentoSunat">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/ObtenerIdDocumentoSunat" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDetraccion">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/MostrarTipoDetraccion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarJob">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/ProcesarJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarNumeroCuenta">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/ActualizarNumeroCuenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarCuentasVacias">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/BuscarCuentasVacias" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorProveedor">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/MostrarPorProveedor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarPlanilla">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/ProcesarPlanilla" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerItem">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/ObtenerItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCompraJob">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/MostrarCompraJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDestinos">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/MostrarDestinos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroViaje">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/MostrarRubroViaje" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSubRubroViaje">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/MostrarSubRubroViaje" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTarifaGastoViaje">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/MostrarTarifaGastoViaje" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTarifaGastoViaje">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/ObtenerTarifaGastoViaje" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarTarifaGastoViaje">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/FiltrarTarifaGastoViaje" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTarifaGastoViaje">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/InsertarTarifaGastoViaje" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTarifaGastoViaje">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/ActualizarTarifaGastoViaje" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarTarifaGastoViaje">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/BorrarTarifaGastoViaje" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarJefe">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/BuscarJefe" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerObservacionSubRubro">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/ObtenerObservacionSubRubro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTarifaCasaAeropuerto">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/ObtenerTarifaCasaAeropuerto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarTarifaCasaAeropuerto">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/FiltrarTarifaCasaAeropuerto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTarifaCasaAeropuerto">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/InsertarTarifaCasaAeropuerto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTarifaCasaAeropuerto">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/ActualizarTarifaCasaAeropuerto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarTarifaCasaAeropuerto">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/BorrarTarifaCasaAeropuerto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarTarifaCasaAeropuerto">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/BuscarTarifaCasaAeropuerto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarNoAplicaTarifa">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/BuscarNoAplicaTarifa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarNoContabilizado">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/MostrarNoContabilizado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPlanillas">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/MostrarPlanillas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPlanilla">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/InsertarPlanilla" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPlanilla">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/BuscarPlanilla" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarJob">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/ActualizarJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarGastosPlaca">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGastoDetService/FiltrarGastosPlaca" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SolicitudGastoDetService">
+    <wsdl:port name="NetTcpBinding_ISolicitudGastoDetService" binding="tns:NetTcpBinding_ISolicitudGastoDetService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/SolicitudGastoDetService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/SolicitudGastoDetService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

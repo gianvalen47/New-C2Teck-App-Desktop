@@ -1,0 +1,196 @@
+﻿Imports System.Windows.Forms
+Imports System.ServiceModel
+
+Public Class frmOrdenCompra_SepararCabAprobacion
+
+    Public state_button As Boolean              'True: Modificar    False: nuevo
+    Public type_process As String               'update     insert      delete
+    Private oOrdenCompraDetService As New OrdenCompraDetService.OrdenCompraDetServiceClient
+    Private oOrdenCompraService As New OrdenCompraService.OrdenCompraServiceClient
+    Private oMaestroService As New MaestroService.MaestroClient
+    Private dtDatos As DataTable
+    '====================================================================================================================
+    '============================================ PARAMETROS LOCALES ====================================================
+    '====================================================================================================================
+    Public IdOrdenDet As Integer
+    Public IdOrden As Integer
+    Public AprOrden As Boolean
+
+    '====================================================================================================================
+    '============================================ CONTROL'S METHOD ======================================================
+    '====================================================================================================================
+    Private Sub SendFocus_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                      txtFecIniSep.KeyPress _
+                    , txtFecFinSep.KeyPress _
+                    , txtObservacion.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            SendKeys.Send("{TAB}")
+        End If
+    End Sub
+
+    Private Sub frmOrdenCompra_SepararCabAprobacion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.CancelButton = Me.btnCancelar
+
+        listaDatos
+
+    End Sub
+
+    Private Sub ListaDatos()
+        Try
+            dtDatos = oOrdenCompraDetService.Mostrar(toNumber(IdOrden)).Tables(0)
+            dgvPrueba.DataSource = dtDatos
+
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-007]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+
+    Private Sub frmOrdenCompra_SepararCabAprobacion_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+        If e.KeyCode = Keys.Escape Then
+            Me.DialogResult = System.Windows.Forms.DialogResult.OK
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub frmOrdenCompra_SepararCabAprobacion_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            oOrdenCompraDetService.Close()
+            oOrdenCompraService.Close()
+            oMaestroService.Close()
+        Catch ex As TimeoutException
+            oOrdenCompraDetService.Abort()
+            oOrdenCompraService.Abort()
+            oMaestroService.Abort()
+        Catch ex As CommunicationException
+            oOrdenCompraDetService.Abort()
+            oOrdenCompraService.Abort()
+            oMaestroService.Abort()
+        End Try
+    End Sub
+
+    Private Sub setColor_BlankCajaTexto(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles _
+                  txtFecIniSep.KeyUp _
+                , txtFecFinSep.KeyUp _
+                , txtObservacion.KeyUp
+
+        Try
+            Dim campo As New Object
+            If sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.EditBox" Then
+                campo = New Janus.Windows.GridEX.EditControls.EditBox
+            ElseIf sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.NumericEditBox" Then
+                campo = New Janus.Windows.GridEX.EditControls.NumericEditBox
+            ElseIf sender.GetType.ToString = "System.Windows.Forms.TextBox" Then
+                campo = New TextBox
+            End If
+            campo = sender
+            If campo.readonly = False Then
+                If campo.Text.Trim.Length > 0 Then
+                    campo.BackColor = Color.White
+                Else
+                    campo.BackColor = Color.Red
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
+    Private Function ValidaCampos() As Boolean
+        Try
+            Dim estado As String = oOrdenCompraService.Estado(IdOrden)
+            If toNumber(IdOrden) = 0 Then
+                MsgBox("Debe Ingresar el código de la orden. ", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf toBlank(txtFecIniSep.Text) = "" Then
+                MsgBox("Debe ingresar la fecha de inicio.", MsgBoxStyle.Information, "Información")
+                txtFecIniSep.BackColor = Color.Red
+                txtFecIniSep.Focus()
+                Return False
+            ElseIf toBlank(txtFecFinSep.Text) = "" Then
+                MsgBox("Debe ingresar la fecha final", MsgBoxStyle.Information, "Información")
+                txtFecFinSep.BackColor = Color.Red
+                txtFecFinSep.Focus()
+                Return False
+            ElseIf txtFecIniSep.Text > txtFecFinSep.Text Then
+                MsgBox("Fecha INICIAL no puede ser mayor que la fecha FINAL", MsgBoxStyle.Information, "Información")
+                txtFecIniSep.Focus()
+                Return False
+                'ElseIf Session.CodPerfil <> "02" And Session.CodPerfil <> "14" Then
+                '    MsgBox("Su perfil no es de SUPERVISOR y no puede aprobar esta orden.", MsgBoxStyle.Information, "Información")
+                '    Return False
+                'ElseIf (estado = "GENERADO") Then
+                '    MsgBox("No puede Separar ningún repuesto, debido a que la orden no esta en GENERADO.", MsgBoxStyle.Information, "Información")
+                '    Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [AGRE-001]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+
+    Private Sub Aprobar()
+        Try
+
+            Dim estado_process As Boolean
+
+            For i As Integer = 0 To dtDatos.Rows.Count - 1
+                'If dgvPrueba.Rows(i).Cells("Despacho").Value > "0" Then
+
+                Dim registro As New OrdenCompraDetService.OrdenCompraSeparadoTemp
+                Dim ordendet As New OrdenCompraDetService.OrdenCompraDet
+                Dim orden As New OrdenCompraDetService.OrdenCompra
+
+                orden.IdOrden = IdOrden
+                ordendet.IdOrdenDet = toNumber(dgvPrueba.Rows(i).Cells("IdOrdenDet1").Value)
+                ordendet.OrdenCompra = orden
+                registro.OrdenCompraDet = ordendet
+                registro.CanSep = dgvPrueba.Rows(i).Cells("CanPen").Value
+                registro.FecIniSep = txtFecIniSep.Value
+                registro.FecFinSep = txtFecFinSep.Value
+                registro.CodUsu = Session.sCodUsu
+                registro.NomPc = Session.sNomPc
+                registro.DirIp = Session.sDirIp
+                registro.Observacion = txtObservacion.Text
+
+                Dim buscarseparacion As Boolean
+                buscarseparacion = oOrdenCompraDetService.BuscarSeparado(toNumber(IdOrden), toNumber(dgvPrueba.Rows(i).Cells("IdOrdenDet1").Value))
+
+                If buscarseparacion Then
+                    'frm.Nuevo = False
+                    estado_process = oOrdenCompraDetService.ActualizarSeparar(registro)
+                Else
+                    estado_process = oOrdenCompraDetService.InsertarSeparar(registro)
+                    'frm.Nuevo = True
+                End If
+
+            Next
+
+            If estado_process = True Then
+                MsgBox("Se Separo la Orden de Compra Corretamente.", MsgBoxStyle.Information)
+                Me.DialogResult = System.Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de TI...!", MsgBoxStyle.Critical)
+            End If
+
+        Catch ex As Exception
+            MsgBox("ERROR [AGRE-006]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+
+    Private Sub btnCancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancelar.Click
+        Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.Close()
+    End Sub
+
+    Private Sub btnGuardar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGuardar.Click
+        If ValidaCampos() Then
+            If MsgBox("¿Está seguro de GUARDAR la Separacion de la Orden de Compra?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes Then
+
+                Aprobar()
+            End If
+        End If
+    End Sub
+
+End Class

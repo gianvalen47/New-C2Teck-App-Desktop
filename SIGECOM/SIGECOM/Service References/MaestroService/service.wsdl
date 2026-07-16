@@ -1,0 +1,1541 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:tns="http://tempuri.org/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="Maestro" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IMaestro_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/BLL" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMaestro_MostrarGrupoAlmacen_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarGrupoAlmacen" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarGrupoAlmacen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarGrupoAlmacenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarGrupoAlmacen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarDesLoc_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDesLoc" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarDesLoc_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDesLocResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarDesLoc_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarLocacionPorAlmacen_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLocacionPorAlmacen" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarLocacionPorAlmacen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLocacionPorAlmacenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarLocacionPorAlmacen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoLocacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoLocacion" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoLocacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoLocacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoLocacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarConceptoLiqMotor_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarConceptoLiqMotor" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarConceptoLiqMotor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarConceptoLiqMotorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarConceptoLiqMotor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarMotivoLiqMotor_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMotivoLiqMotor" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarMotivoLiqMotor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMotivoLiqMotorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarMotivoLiqMotor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoContacto_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoContacto" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoContacto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoContactoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoContacto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarCondicionPago_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCondicionPago" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarCondicionPago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCondicionPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarCondicionPago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarMotivos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMotivos" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarMotivos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMotivosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarMotivos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoContribuyente_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoContribuyente" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoContribuyente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoContribuyenteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoContribuyente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoCliente" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoCliente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSectorCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSectorCliente" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSectorCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSectorClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSectorCliente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSupervisores_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSupervisores" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSupervisores_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSupervisoresResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSupervisores_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarJob" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarLocacionJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLocacionJob" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarLocacionJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLocacionJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarLocacionJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoJob" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarAniosJobs_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAniosJobs" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarAniosJobs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAniosJobsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarAniosJobs_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoCambio_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoCambio" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoCambio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoCambioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoCambio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarPersona_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarPersona" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarPersona_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarPersonaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarPersona_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarAreas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAreas" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarAreas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAreasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarAreas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarNombrePersona_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarNombrePersona" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarNombrePersona_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarNombrePersonaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarNombrePersona_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarMeses_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMeses" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarMeses_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMesesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarMeses_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarBancos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarBancos" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarBancos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarBancosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarBancos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarCobradores_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCobradores" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarCobradores_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCobradoresResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarCobradores_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_ConvierteNumLetra_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConvierteNumLetra" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_ConvierteNumLetra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConvierteNumLetraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_ConvierteNumLetra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarGrupoMerca_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarGrupoMerca" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarGrupoMerca_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarGrupoMercaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarGrupoMerca_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarKits_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarKits" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarKits_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarKitsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarKits_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarCiclos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCiclos" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarCiclos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCiclosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarCiclos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q28:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarAplicacionMerca_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAplicacionMerca" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarAplicacionMerca_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAplicacionMercaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarAplicacionMerca_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q29:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarClaseMerca_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarClaseMerca" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarClaseMerca_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarClaseMercaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarClaseMerca_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q30:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarDato_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDato" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarDato_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDatoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarDato_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q31:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarAplicacionMerca_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarAplicacionMerca" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarAplicacionMerca_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarAplicacionMercaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarAplicacionMerca_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q32:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarCiclos_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarCiclos" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarCiclos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarCiclosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarCiclos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q33:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarClaseMerca_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarClaseMerca" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarClaseMerca_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarClaseMercaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarClaseMerca_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q34:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarGrupoMerca_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarGrupoMerca" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarGrupoMerca_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarGrupoMercaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarGrupoMerca_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q35="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q35:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarKits_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarKits" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarKits_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarKitsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarKits_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q36="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q36:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_BuscarMercaderia_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarMercaderia" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_BuscarMercaderia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarMercaderiaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_BuscarMercaderia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q37="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q37:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarRubroPartidas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroPartidas" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarRubroPartidas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroPartidasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarRubroPartidas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q38="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q38:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarVendedores_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarVendedores" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarVendedores_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarVendedoresResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarVendedores_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q39="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q39:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarUnidadMedida_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUnidadMedida" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarUnidadMedida_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUnidadMedidaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarUnidadMedida_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q40="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q40:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarRubroMotor_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroMotor" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarRubroMotor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroMotorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarRubroMotor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q41="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q41:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipoDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q42="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q42:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSerieDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSerieDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSerieDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q43="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q43:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSerieImportacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieImportacion" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSerieImportacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieImportacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSerieImportacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q44="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q44:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipDocCtaCte_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipDocCtaCte" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipDocCtaCte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipDocCtaCteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarTipDocCtaCte_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q45="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q45:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarRubros_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubros" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarRubros_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubrosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarRubros_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q46="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q46:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarPaises_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPaises" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarPaises_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPaisesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarPaises_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q47="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q47:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarPaises_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarPaises" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarPaises_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarPaisesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_FiltrarPaises_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q48="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q48:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarMovimiento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMovimiento" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarMovimiento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMovimientoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarMovimiento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q49="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q49:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSubMovimiento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSubMovimiento" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSubMovimiento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSubMovimientoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSubMovimiento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q50="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q50:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarMonedas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMonedas" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarMonedas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMonedasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarMonedas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q51="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q51:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSeries_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSeries" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSeries_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSeriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarSeries_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q52="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q52:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarLocaciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLocaciones" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarLocaciones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLocacionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarLocaciones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q53="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q53:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarEmpresas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEmpresas" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarEmpresas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEmpresasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarEmpresas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q54="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q54:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarOficinas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOficinas" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarOficinas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOficinasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarOficinas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q55="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q55:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarAlmacenes_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAlmacenes" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarAlmacenes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAlmacenesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarAlmacenes_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q56="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q56:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarGrupoVentas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarGrupoVentas" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarGrupoVentas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarGrupoVentasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaestro_MostrarGrupoVentas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q57="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q57:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IMaestro">
+    <wsdl:operation name="MostrarGrupoAlmacen">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarGrupoAlmacen" message="tns:IMaestro_MostrarGrupoAlmacen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarGrupoAlmacenResponse" message="tns:IMaestro_MostrarGrupoAlmacen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarGrupoAlmacen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDesLoc">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarDesLoc" message="tns:IMaestro_MostrarDesLoc_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarDesLocResponse" message="tns:IMaestro_MostrarDesLoc_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarDesLoc_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLocacionPorAlmacen">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarLocacionPorAlmacen" message="tns:IMaestro_MostrarLocacionPorAlmacen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarLocacionPorAlmacenResponse" message="tns:IMaestro_MostrarLocacionPorAlmacen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarLocacionPorAlmacen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoLocacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarTipoLocacion" message="tns:IMaestro_MostrarTipoLocacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarTipoLocacionResponse" message="tns:IMaestro_MostrarTipoLocacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarTipoLocacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarConceptoLiqMotor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarConceptoLiqMotor" message="tns:IMaestro_MostrarConceptoLiqMotor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarConceptoLiqMotorResponse" message="tns:IMaestro_MostrarConceptoLiqMotor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarConceptoLiqMotor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMotivoLiqMotor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarMotivoLiqMotor" message="tns:IMaestro_MostrarMotivoLiqMotor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarMotivoLiqMotorResponse" message="tns:IMaestro_MostrarMotivoLiqMotor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarMotivoLiqMotor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoContacto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarTipoContacto" message="tns:IMaestro_MostrarTipoContacto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarTipoContactoResponse" message="tns:IMaestro_MostrarTipoContacto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarTipoContacto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCondicionPago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarCondicionPago" message="tns:IMaestro_MostrarCondicionPago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarCondicionPagoResponse" message="tns:IMaestro_MostrarCondicionPago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarCondicionPago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMotivos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarMotivos" message="tns:IMaestro_MostrarMotivos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarMotivosResponse" message="tns:IMaestro_MostrarMotivos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarMotivos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoContribuyente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarTipoContribuyente" message="tns:IMaestro_MostrarTipoContribuyente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarTipoContribuyenteResponse" message="tns:IMaestro_MostrarTipoContribuyente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarTipoContribuyente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarTipoCliente" message="tns:IMaestro_MostrarTipoCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarTipoClienteResponse" message="tns:IMaestro_MostrarTipoCliente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarTipoCliente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSectorCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarSectorCliente" message="tns:IMaestro_MostrarSectorCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarSectorClienteResponse" message="tns:IMaestro_MostrarSectorCliente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarSectorCliente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSupervisores">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarSupervisores" message="tns:IMaestro_MostrarSupervisores_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarSupervisoresResponse" message="tns:IMaestro_MostrarSupervisores_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMaestro_MostrarSupervisores_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/FiltrarJob" message="tns:IMaestro_FiltrarJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/FiltrarJobResponse" message="tns:IMaestro_FiltrarJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMaestro_FiltrarJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLocacionJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarLocacionJob" message="tns:IMaestro_MostrarLocacionJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarLocacionJobResponse" message="tns:IMaestro_MostrarLocacionJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMaestro_MostrarLocacionJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarTipoJob" message="tns:IMaestro_MostrarTipoJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarTipoJobResponse" message="tns:IMaestro_MostrarTipoJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMaestro_MostrarTipoJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAniosJobs">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarAniosJobs" message="tns:IMaestro_MostrarAniosJobs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarAniosJobsResponse" message="tns:IMaestro_MostrarAniosJobs_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMaestro_MostrarAniosJobs_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoCambio">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarTipoCambio" message="tns:IMaestro_MostrarTipoCambio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarTipoCambioResponse" message="tns:IMaestro_MostrarTipoCambio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMaestro_MostrarTipoCambio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarPersona">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/FiltrarPersona" message="tns:IMaestro_FiltrarPersona_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/FiltrarPersonaResponse" message="tns:IMaestro_FiltrarPersona_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMaestro_FiltrarPersona_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAreas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarAreas" message="tns:IMaestro_MostrarAreas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarAreasResponse" message="tns:IMaestro_MostrarAreas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMaestro_MostrarAreas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarNombrePersona">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarNombrePersona" message="tns:IMaestro_MostrarNombrePersona_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarNombrePersonaResponse" message="tns:IMaestro_MostrarNombrePersona_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMaestro_MostrarNombrePersona_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMeses">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarMeses" message="tns:IMaestro_MostrarMeses_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarMesesResponse" message="tns:IMaestro_MostrarMeses_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMaestro_MostrarMeses_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarBancos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarBancos" message="tns:IMaestro_MostrarBancos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarBancosResponse" message="tns:IMaestro_MostrarBancos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMaestro_MostrarBancos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCobradores">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarCobradores" message="tns:IMaestro_MostrarCobradores_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarCobradoresResponse" message="tns:IMaestro_MostrarCobradores_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMaestro_MostrarCobradores_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConvierteNumLetra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/ConvierteNumLetra" message="tns:IMaestro_ConvierteNumLetra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/ConvierteNumLetraResponse" message="tns:IMaestro_ConvierteNumLetra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMaestro_ConvierteNumLetra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarGrupoMerca">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarGrupoMerca" message="tns:IMaestro_MostrarGrupoMerca_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarGrupoMercaResponse" message="tns:IMaestro_MostrarGrupoMerca_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarGrupoMerca_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarKits">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarKits" message="tns:IMaestro_MostrarKits_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarKitsResponse" message="tns:IMaestro_MostrarKits_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarKits_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCiclos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarCiclos" message="tns:IMaestro_MostrarCiclos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarCiclosResponse" message="tns:IMaestro_MostrarCiclos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarCiclos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAplicacionMerca">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarAplicacionMerca" message="tns:IMaestro_MostrarAplicacionMerca_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarAplicacionMercaResponse" message="tns:IMaestro_MostrarAplicacionMerca_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarAplicacionMerca_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarClaseMerca">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarClaseMerca" message="tns:IMaestro_MostrarClaseMerca_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarClaseMercaResponse" message="tns:IMaestro_MostrarClaseMerca_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarClaseMerca_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDato">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarDato" message="tns:IMaestro_MostrarDato_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarDatoResponse" message="tns:IMaestro_MostrarDato_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarDato_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarAplicacionMerca">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/FiltrarAplicacionMerca" message="tns:IMaestro_FiltrarAplicacionMerca_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/FiltrarAplicacionMercaResponse" message="tns:IMaestro_FiltrarAplicacionMerca_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_FiltrarAplicacionMerca_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarCiclos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/FiltrarCiclos" message="tns:IMaestro_FiltrarCiclos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/FiltrarCiclosResponse" message="tns:IMaestro_FiltrarCiclos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_FiltrarCiclos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarClaseMerca">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/FiltrarClaseMerca" message="tns:IMaestro_FiltrarClaseMerca_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/FiltrarClaseMercaResponse" message="tns:IMaestro_FiltrarClaseMerca_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_FiltrarClaseMerca_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarGrupoMerca">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/FiltrarGrupoMerca" message="tns:IMaestro_FiltrarGrupoMerca_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/FiltrarGrupoMercaResponse" message="tns:IMaestro_FiltrarGrupoMerca_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_FiltrarGrupoMerca_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarKits">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/FiltrarKits" message="tns:IMaestro_FiltrarKits_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/FiltrarKitsResponse" message="tns:IMaestro_FiltrarKits_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_FiltrarKits_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarMercaderia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/BuscarMercaderia" message="tns:IMaestro_BuscarMercaderia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/BuscarMercaderiaResponse" message="tns:IMaestro_BuscarMercaderia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_BuscarMercaderia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroPartidas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarRubroPartidas" message="tns:IMaestro_MostrarRubroPartidas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarRubroPartidasResponse" message="tns:IMaestro_MostrarRubroPartidas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarRubroPartidas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarVendedores">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarVendedores" message="tns:IMaestro_MostrarVendedores_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarVendedoresResponse" message="tns:IMaestro_MostrarVendedores_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarVendedores_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUnidadMedida">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarUnidadMedida" message="tns:IMaestro_MostrarUnidadMedida_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarUnidadMedidaResponse" message="tns:IMaestro_MostrarUnidadMedida_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarUnidadMedida_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroMotor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarRubroMotor" message="tns:IMaestro_MostrarRubroMotor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarRubroMotorResponse" message="tns:IMaestro_MostrarRubroMotor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarRubroMotor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarTipoDocumento" message="tns:IMaestro_MostrarTipoDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarTipoDocumentoResponse" message="tns:IMaestro_MostrarTipoDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarTipoDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarSerieDocumento" message="tns:IMaestro_MostrarSerieDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarSerieDocumentoResponse" message="tns:IMaestro_MostrarSerieDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarSerieDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieImportacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarSerieImportacion" message="tns:IMaestro_MostrarSerieImportacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarSerieImportacionResponse" message="tns:IMaestro_MostrarSerieImportacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarSerieImportacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipDocCtaCte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarTipDocCtaCte" message="tns:IMaestro_MostrarTipDocCtaCte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarTipDocCtaCteResponse" message="tns:IMaestro_MostrarTipDocCtaCte_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarTipDocCtaCte_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubros">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarRubros" message="tns:IMaestro_MostrarRubros_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarRubrosResponse" message="tns:IMaestro_MostrarRubros_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarRubros_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPaises">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarPaises" message="tns:IMaestro_MostrarPaises_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarPaisesResponse" message="tns:IMaestro_MostrarPaises_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarPaises_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarPaises">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/FiltrarPaises" message="tns:IMaestro_FiltrarPaises_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/FiltrarPaisesResponse" message="tns:IMaestro_FiltrarPaises_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_FiltrarPaises_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMovimiento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarMovimiento" message="tns:IMaestro_MostrarMovimiento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarMovimientoResponse" message="tns:IMaestro_MostrarMovimiento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarMovimiento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSubMovimiento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarSubMovimiento" message="tns:IMaestro_MostrarSubMovimiento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarSubMovimientoResponse" message="tns:IMaestro_MostrarSubMovimiento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarSubMovimiento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMonedas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarMonedas" message="tns:IMaestro_MostrarMonedas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarMonedasResponse" message="tns:IMaestro_MostrarMonedas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarMonedas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSeries">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarSeries" message="tns:IMaestro_MostrarSeries_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarSeriesResponse" message="tns:IMaestro_MostrarSeries_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarSeries_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLocaciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarLocaciones" message="tns:IMaestro_MostrarLocaciones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarLocacionesResponse" message="tns:IMaestro_MostrarLocaciones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarLocaciones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEmpresas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarEmpresas" message="tns:IMaestro_MostrarEmpresas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarEmpresasResponse" message="tns:IMaestro_MostrarEmpresas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarEmpresas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOficinas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarOficinas" message="tns:IMaestro_MostrarOficinas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarOficinasResponse" message="tns:IMaestro_MostrarOficinas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarOficinas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAlmacenes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarAlmacenes" message="tns:IMaestro_MostrarAlmacenes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarAlmacenesResponse" message="tns:IMaestro_MostrarAlmacenes_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarAlmacenes_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarGrupoVentas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaestro/MostrarGrupoVentas" message="tns:IMaestro_MostrarGrupoVentas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaestro/MostrarGrupoVentasResponse" message="tns:IMaestro_MostrarGrupoVentas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMaestro_MostrarGrupoVentas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IMaestro" type="tns:IMaestro">
+    <wsp:PolicyReference URI="#NetTcpBinding_IMaestro_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="MostrarGrupoAlmacen">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarGrupoAlmacen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDesLoc">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarDesLoc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLocacionPorAlmacen">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarLocacionPorAlmacen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoLocacion">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarTipoLocacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarConceptoLiqMotor">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarConceptoLiqMotor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMotivoLiqMotor">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarMotivoLiqMotor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoContacto">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarTipoContacto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCondicionPago">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarCondicionPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMotivos">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarMotivos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoContribuyente">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarTipoContribuyente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoCliente">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarTipoCliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSectorCliente">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarSectorCliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSupervisores">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarSupervisores" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarJob">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/FiltrarJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLocacionJob">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarLocacionJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoJob">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarTipoJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAniosJobs">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarAniosJobs" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoCambio">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarTipoCambio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarPersona">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/FiltrarPersona" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAreas">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarAreas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarNombrePersona">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarNombrePersona" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMeses">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarMeses" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarBancos">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarBancos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCobradores">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarCobradores" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConvierteNumLetra">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/ConvierteNumLetra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarGrupoMerca">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarGrupoMerca" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarKits">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarKits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCiclos">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarCiclos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAplicacionMerca">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarAplicacionMerca" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarClaseMerca">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarClaseMerca" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDato">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarDato" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarAplicacionMerca">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/FiltrarAplicacionMerca" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarCiclos">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/FiltrarCiclos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarClaseMerca">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/FiltrarClaseMerca" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarGrupoMerca">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/FiltrarGrupoMerca" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarKits">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/FiltrarKits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarMercaderia">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/BuscarMercaderia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroPartidas">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarRubroPartidas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarVendedores">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarVendedores" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUnidadMedida">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarUnidadMedida" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroMotor">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarRubroMotor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarTipoDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarSerieDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieImportacion">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarSerieImportacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipDocCtaCte">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarTipDocCtaCte" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubros">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarRubros" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPaises">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarPaises" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarPaises">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/FiltrarPaises" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMovimiento">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarMovimiento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSubMovimiento">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarSubMovimiento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMonedas">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarMonedas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSeries">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarSeries" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLocaciones">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarLocaciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEmpresas">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarEmpresas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOficinas">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarOficinas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAlmacenes">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarAlmacenes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarGrupoVentas">
+      <soap12:operation soapAction="http://tempuri.org/IMaestro/MostrarGrupoVentas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Maestro">
+    <wsdl:port name="NetTcpBinding_IMaestro" binding="tns:NetTcpBinding_IMaestro">
+      <soap12:address location="net.tcp://192.168.1.79/ServicioBLL/Maestro/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.1.79/ServicioBLL/Maestro/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

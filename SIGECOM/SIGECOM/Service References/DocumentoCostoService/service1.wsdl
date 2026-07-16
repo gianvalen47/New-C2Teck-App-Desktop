@@ -1,0 +1,656 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="DocumentoCostoService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IDocumentoCostoService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IDocumentoCostoService_MostrarTipoDocumentoCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumentoCosto" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarTipoDocumentoCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumentoCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarTipoDocumentoCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarPorIdAlmacen_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdAlmacen" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarPorIdAlmacen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdAlmacenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarPorIdAlmacen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarPorIdVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdVenta" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarPorIdVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarPorIdVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarDetalles_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDetalles" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarDetalles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDetallesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarDetalles_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarPorIdAlmacenDet_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdAlmacenDet" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarPorIdAlmacenDet_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdAlmacenDetResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarPorIdAlmacenDet_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarPorIdVentaDet_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdVentaDet" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarPorIdVentaDet_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdVentaDetResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarPorIdVentaDet_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ActualizarCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCosto" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ActualizarCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ActualizarCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_TrasladarCostos_InputMessage">
+    <wsdl:part name="parameters" element="tns:TrasladarCostos" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_TrasladarCostos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TrasladarCostosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_TrasladarCostos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ProrratearMemos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProrratearMemos" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ProrratearMemos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProrratearMemosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ProrratearMemos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteMotoresVendidos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteMotoresVendidos" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteMotoresVendidos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteMotoresVendidosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteMotoresVendidos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteAccesorioMotorVendido_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteAccesorioMotorVendido" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteAccesorioMotorVendido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteAccesorioMotorVendidoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteAccesorioMotorVendido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteCostoAdicionalMotor_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCostoAdicionalMotor" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteCostoAdicionalMotor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCostoAdicionalMotorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteCostoAdicionalMotor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteCostoVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCostoVenta" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteCostoVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCostoVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteCostoVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_FiltrarDocumentos_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarDocumentos" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_FiltrarDocumentos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarDocumentosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_FiltrarDocumentos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ImprimirDocVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirDocVenta" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ImprimirDocVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirDocVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ImprimirDocVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ImprimirDocAlmacen_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirDocAlmacen" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ImprimirDocAlmacen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirDocAlmacenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ImprimirDocAlmacen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarSerieDocumentoCostos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieDocumentoCostos" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarSerieDocumentoCostos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieDocumentoCostosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_MostrarSerieDocumentoCostos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteCondensado_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCondensado" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteCondensado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCondensadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteCondensado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteSobregiro_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteSobregiro" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteSobregiro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteSobregiroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteSobregiro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteGerenciaCostos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerenciaCostos" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteGerenciaCostos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerenciaCostosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteGerenciaCostos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteCostoVentaGerencial_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCostoVentaGerencial" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteCostoVentaGerencial_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCostoVentaGerencialResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ReporteCostoVentaGerencial_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ActualizarCostoMTI_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCostoMTI" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ActualizarCostoMTI_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCostoMTIResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDocumentoCostoService_ActualizarCostoMTI_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IDocumentoCostoService">
+    <wsdl:operation name="MostrarTipoDocumentoCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/MostrarTipoDocumentoCosto" message="tns:IDocumentoCostoService_MostrarTipoDocumentoCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/MostrarTipoDocumentoCostoResponse" message="tns:IDocumentoCostoService_MostrarTipoDocumentoCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_MostrarTipoDocumentoCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/Filtrar" message="tns:IDocumentoCostoService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/FiltrarResponse" message="tns:IDocumentoCostoService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorIdAlmacen">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/MostrarPorIdAlmacen" message="tns:IDocumentoCostoService_MostrarPorIdAlmacen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/MostrarPorIdAlmacenResponse" message="tns:IDocumentoCostoService_MostrarPorIdAlmacen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_MostrarPorIdAlmacen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorIdVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/MostrarPorIdVenta" message="tns:IDocumentoCostoService_MostrarPorIdVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/MostrarPorIdVentaResponse" message="tns:IDocumentoCostoService_MostrarPorIdVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_MostrarPorIdVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDetalles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/MostrarDetalles" message="tns:IDocumentoCostoService_MostrarDetalles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/MostrarDetallesResponse" message="tns:IDocumentoCostoService_MostrarDetalles_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_MostrarDetalles_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorIdAlmacenDet">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/MostrarPorIdAlmacenDet" message="tns:IDocumentoCostoService_MostrarPorIdAlmacenDet_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/MostrarPorIdAlmacenDetResponse" message="tns:IDocumentoCostoService_MostrarPorIdAlmacenDet_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_MostrarPorIdAlmacenDet_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorIdVentaDet">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/MostrarPorIdVentaDet" message="tns:IDocumentoCostoService_MostrarPorIdVentaDet_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/MostrarPorIdVentaDetResponse" message="tns:IDocumentoCostoService_MostrarPorIdVentaDet_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_MostrarPorIdVentaDet_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/ActualizarCosto" message="tns:IDocumentoCostoService_ActualizarCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/ActualizarCostoResponse" message="tns:IDocumentoCostoService_ActualizarCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_ActualizarCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TrasladarCostos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/TrasladarCostos" message="tns:IDocumentoCostoService_TrasladarCostos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/TrasladarCostosResponse" message="tns:IDocumentoCostoService_TrasladarCostos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_TrasladarCostos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProrratearMemos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/ProrratearMemos" message="tns:IDocumentoCostoService_ProrratearMemos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/ProrratearMemosResponse" message="tns:IDocumentoCostoService_ProrratearMemos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_ProrratearMemos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteMotoresVendidos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/ReporteMotoresVendidos" message="tns:IDocumentoCostoService_ReporteMotoresVendidos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/ReporteMotoresVendidosResponse" message="tns:IDocumentoCostoService_ReporteMotoresVendidos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_ReporteMotoresVendidos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteAccesorioMotorVendido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/ReporteAccesorioMotorVendido" message="tns:IDocumentoCostoService_ReporteAccesorioMotorVendido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/ReporteAccesorioMotorVendidoResponse" message="tns:IDocumentoCostoService_ReporteAccesorioMotorVendido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_ReporteAccesorioMotorVendido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCostoAdicionalMotor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/ReporteCostoAdicionalMotor" message="tns:IDocumentoCostoService_ReporteCostoAdicionalMotor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/ReporteCostoAdicionalMotorResponse" message="tns:IDocumentoCostoService_ReporteCostoAdicionalMotor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_ReporteCostoAdicionalMotor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCostoVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/ReporteCostoVenta" message="tns:IDocumentoCostoService_ReporteCostoVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/ReporteCostoVentaResponse" message="tns:IDocumentoCostoService_ReporteCostoVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_ReporteCostoVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarDocumentos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/FiltrarDocumentos" message="tns:IDocumentoCostoService_FiltrarDocumentos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/FiltrarDocumentosResponse" message="tns:IDocumentoCostoService_FiltrarDocumentos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_FiltrarDocumentos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirDocVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/ImprimirDocVenta" message="tns:IDocumentoCostoService_ImprimirDocVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/ImprimirDocVentaResponse" message="tns:IDocumentoCostoService_ImprimirDocVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_ImprimirDocVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirDocAlmacen">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/ImprimirDocAlmacen" message="tns:IDocumentoCostoService_ImprimirDocAlmacen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/ImprimirDocAlmacenResponse" message="tns:IDocumentoCostoService_ImprimirDocAlmacen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_ImprimirDocAlmacen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieDocumentoCostos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/MostrarSerieDocumentoCostos" message="tns:IDocumentoCostoService_MostrarSerieDocumentoCostos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/MostrarSerieDocumentoCostosResponse" message="tns:IDocumentoCostoService_MostrarSerieDocumentoCostos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_MostrarSerieDocumentoCostos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCondensado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/ReporteCondensado" message="tns:IDocumentoCostoService_ReporteCondensado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/ReporteCondensadoResponse" message="tns:IDocumentoCostoService_ReporteCondensado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_ReporteCondensado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteSobregiro">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/ReporteSobregiro" message="tns:IDocumentoCostoService_ReporteSobregiro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/ReporteSobregiroResponse" message="tns:IDocumentoCostoService_ReporteSobregiro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_ReporteSobregiro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerenciaCostos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/ReporteGerenciaCostos" message="tns:IDocumentoCostoService_ReporteGerenciaCostos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/ReporteGerenciaCostosResponse" message="tns:IDocumentoCostoService_ReporteGerenciaCostos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_ReporteGerenciaCostos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCostoVentaGerencial">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/ReporteCostoVentaGerencial" message="tns:IDocumentoCostoService_ReporteCostoVentaGerencial_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/ReporteCostoVentaGerencialResponse" message="tns:IDocumentoCostoService_ReporteCostoVentaGerencial_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_ReporteCostoVentaGerencial_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCostoMTI">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDocumentoCostoService/ActualizarCostoMTI" message="tns:IDocumentoCostoService_ActualizarCostoMTI_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDocumentoCostoService/ActualizarCostoMTIResponse" message="tns:IDocumentoCostoService_ActualizarCostoMTI_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IDocumentoCostoService_ActualizarCostoMTI_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IDocumentoCostoService" type="tns:IDocumentoCostoService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IDocumentoCostoService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="MostrarTipoDocumentoCosto">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/MostrarTipoDocumentoCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorIdAlmacen">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/MostrarPorIdAlmacen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorIdVenta">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/MostrarPorIdVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDetalles">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/MostrarDetalles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorIdAlmacenDet">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/MostrarPorIdAlmacenDet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorIdVentaDet">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/MostrarPorIdVentaDet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCosto">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/ActualizarCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="TrasladarCostos">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/TrasladarCostos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ProrratearMemos">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/ProrratearMemos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteMotoresVendidos">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/ReporteMotoresVendidos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteAccesorioMotorVendido">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/ReporteAccesorioMotorVendido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCostoAdicionalMotor">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/ReporteCostoAdicionalMotor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCostoVenta">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/ReporteCostoVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarDocumentos">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/FiltrarDocumentos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirDocVenta">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/ImprimirDocVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirDocAlmacen">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/ImprimirDocAlmacen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieDocumentoCostos">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/MostrarSerieDocumentoCostos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCondensado">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/ReporteCondensado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteSobregiro">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/ReporteSobregiro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerenciaCostos">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/ReporteGerenciaCostos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCostoVentaGerencial">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/ReporteCostoVentaGerencial" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCostoMTI">
+      <soap12:operation soapAction="http://tempuri.org/IDocumentoCostoService/ActualizarCostoMTI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DocumentoCostoService">
+    <wsdl:port name="NetTcpBinding_IDocumentoCostoService" binding="tns:NetTcpBinding_IDocumentoCostoService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/DocumentoCostoService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/DocumentoCostoService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,1436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ProvisionalService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IProvisionalService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IProvisionalService_FiltrarDatos_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarDatos" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_FiltrarDatos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarDatosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_FiltrarDatos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ImprimirDatos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirDatos" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ImprimirDatos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirDatosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ImprimirDatos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ConsultarListaEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarListaEstados" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ConsultarListaEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarListaEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ConsultarListaEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ListarUbicacionCaja_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListarUbicacionCaja" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ListarUbicacionCaja_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListarUbicacionCajaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ListarUbicacionCaja_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ListarViaticoAprobado_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListarViaticoAprobado" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ListarViaticoAprobado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListarViaticoAprobadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ListarViaticoAprobado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ListarProvisionalAtendido_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListarProvisionalAtendido" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ListarProvisionalAtendido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListarProvisionalAtendidoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ListarProvisionalAtendido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ActualizarCodJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCodJob" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ActualizarCodJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCodJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ActualizarCodJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarExtensionFecha_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarExtensionFecha" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarExtensionFecha_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarExtensionFechaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarExtensionFecha_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerExtensionFecha_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerExtensionFecha" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerExtensionFecha_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerExtensionFechaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerExtensionFecha_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_InsertarExtensionFecha_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarExtensionFecha" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_InsertarExtensionFecha_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarExtensionFechaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_InsertarExtensionFecha_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ActualizarExtensionFecha_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarExtensionFecha" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ActualizarExtensionFecha_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarExtensionFechaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ActualizarExtensionFecha_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BorrarExtensionFecha_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarExtensionFecha" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BorrarExtensionFecha_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarExtensionFechaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BorrarExtensionFecha_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_EnviarExtensionFecha_InputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarExtensionFecha" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_EnviarExtensionFecha_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarExtensionFechaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_EnviarExtensionFecha_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_AprobarExtensionFecha_InputMessage">
+    <wsdl:part name="parameters" element="tns:AprobarExtensionFecha" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_AprobarExtensionFecha_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AprobarExtensionFechaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_AprobarExtensionFecha_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_RechazarExtensionFecha_InputMessage">
+    <wsdl:part name="parameters" element="tns:RechazarExtensionFecha" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_RechazarExtensionFecha_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RechazarExtensionFechaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_RechazarExtensionFecha_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerEnviadoExtensionFecha_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEnviadoExtensionFecha" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerEnviadoExtensionFecha_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEnviadoExtensionFechaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerEnviadoExtensionFecha_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BuscarEnviadoExtensionFecha_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarEnviadoExtensionFecha" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BuscarEnviadoExtensionFecha_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarEnviadoExtensionFechaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BuscarEnviadoExtensionFecha_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerEstado_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEstado" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerEstado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEstadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerEstado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Enviar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Enviar" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Enviar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Enviar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Aprobar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Aprobar" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Aprobar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AprobarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Aprobar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Rechazar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Rechazar" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Rechazar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RechazarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Rechazar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q28:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ConsultarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ConsultarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ConsultarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q29:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Atender_InputMessage">
+    <wsdl:part name="parameters" element="tns:Atender" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Atender_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AtenderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Atender_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q30:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Cerrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Cerrar" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Cerrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CerrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Cerrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q31:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarUbicacionCaja_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUbicacionCaja" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarUbicacionCaja_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUbicacionCajaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarUbicacionCaja_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q32:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_RechazarCajero_InputMessage">
+    <wsdl:part name="parameters" element="tns:RechazarCajero" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_RechazarCajero_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RechazarCajeroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_RechazarCajero_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q33:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BuscarUsuarioCaja_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUsuarioCaja" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BuscarUsuarioCaja_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUsuarioCajaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BuscarUsuarioCaja_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q34:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerIdUbicacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdUbicacion" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerIdUbicacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdUbicacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerIdUbicacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q35="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q35:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarViaticoAprobado_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarViaticoAprobado" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarViaticoAprobado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarViaticoAprobadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarViaticoAprobado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q36="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q36:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BuscarGasto_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGasto" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BuscarGasto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGastoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BuscarGasto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q37="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q37:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarProvisionalAtendido_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarProvisionalAtendido" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarProvisionalAtendido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarProvisionalAtendidoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarProvisionalAtendido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q38="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q38:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_GenerarArchivoViatico_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarArchivoViatico" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_GenerarArchivoViatico_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarArchivoViaticoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_GenerarArchivoViatico_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q39="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q39:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BuscarAtencionViatico_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAtencionViatico" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BuscarAtencionViatico_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAtencionViaticoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BuscarAtencionViatico_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q40="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q40:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q41="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q41:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerEstadoDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEstadoDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerEstadoDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEstadoDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerEstadoDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q42="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q42:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q43="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q43:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_InsertarDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_InsertarDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_InsertarDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q44="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q44:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ActualizarDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ActualizarDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ActualizarDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q45="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q45:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BorrarDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BorrarDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BorrarDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q46="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q46:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BuscarPendienteDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPendienteDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BuscarPendienteDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPendienteDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_BuscarPendienteDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q47="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q47:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerMontoPendienteAprobacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerMontoPendienteAprobacion" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerMontoPendienteAprobacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerMontoPendienteAprobacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ObtenerMontoPendienteAprobacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q48="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q48:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Tramitar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Tramitar" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Tramitar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TramitarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_Tramitar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q49="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q49:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarCuentas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCuentas" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarCuentas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCuentasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarCuentas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q50="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q50:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarTipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipo" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarTipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_MostrarTipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q51="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q51:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ReporteResumenAtencionViaticos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteResumenAtencionViaticos" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ReporteResumenAtencionViaticos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteResumenAtencionViaticosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ReporteResumenAtencionViaticos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q52="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q52:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ActualizarFecFinal_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarFecFinal" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ActualizarFecFinal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarFecFinalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProvisionalService_ActualizarFecFinal_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q53="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q53:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IProvisionalService">
+    <wsdl:operation name="FiltrarDatos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/FiltrarDatos" message="tns:IProvisionalService_FiltrarDatos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/FiltrarDatosResponse" message="tns:IProvisionalService_FiltrarDatos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_FiltrarDatos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirDatos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ImprimirDatos" message="tns:IProvisionalService_ImprimirDatos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ImprimirDatosResponse" message="tns:IProvisionalService_ImprimirDatos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ImprimirDatos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarListaEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ConsultarListaEstados" message="tns:IProvisionalService_ConsultarListaEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ConsultarListaEstadosResponse" message="tns:IProvisionalService_ConsultarListaEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ConsultarListaEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarUbicacionCaja">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ListarUbicacionCaja" message="tns:IProvisionalService_ListarUbicacionCaja_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ListarUbicacionCajaResponse" message="tns:IProvisionalService_ListarUbicacionCaja_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ListarUbicacionCaja_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarViaticoAprobado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ListarViaticoAprobado" message="tns:IProvisionalService_ListarViaticoAprobado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ListarViaticoAprobadoResponse" message="tns:IProvisionalService_ListarViaticoAprobado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ListarViaticoAprobado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarProvisionalAtendido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ListarProvisionalAtendido" message="tns:IProvisionalService_ListarProvisionalAtendido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ListarProvisionalAtendidoResponse" message="tns:IProvisionalService_ListarProvisionalAtendido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ListarProvisionalAtendido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCodJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ActualizarCodJob" message="tns:IProvisionalService_ActualizarCodJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ActualizarCodJobResponse" message="tns:IProvisionalService_ActualizarCodJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ActualizarCodJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarExtensionFecha">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/MostrarExtensionFecha" message="tns:IProvisionalService_MostrarExtensionFecha_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/MostrarExtensionFechaResponse" message="tns:IProvisionalService_MostrarExtensionFecha_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_MostrarExtensionFecha_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerExtensionFecha">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ObtenerExtensionFecha" message="tns:IProvisionalService_ObtenerExtensionFecha_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ObtenerExtensionFechaResponse" message="tns:IProvisionalService_ObtenerExtensionFecha_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ObtenerExtensionFecha_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarExtensionFecha">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/InsertarExtensionFecha" message="tns:IProvisionalService_InsertarExtensionFecha_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/InsertarExtensionFechaResponse" message="tns:IProvisionalService_InsertarExtensionFecha_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_InsertarExtensionFecha_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarExtensionFecha">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ActualizarExtensionFecha" message="tns:IProvisionalService_ActualizarExtensionFecha_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ActualizarExtensionFechaResponse" message="tns:IProvisionalService_ActualizarExtensionFecha_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ActualizarExtensionFecha_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarExtensionFecha">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/BorrarExtensionFecha" message="tns:IProvisionalService_BorrarExtensionFecha_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/BorrarExtensionFechaResponse" message="tns:IProvisionalService_BorrarExtensionFecha_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_BorrarExtensionFecha_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EnviarExtensionFecha">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/EnviarExtensionFecha" message="tns:IProvisionalService_EnviarExtensionFecha_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/EnviarExtensionFechaResponse" message="tns:IProvisionalService_EnviarExtensionFecha_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_EnviarExtensionFecha_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AprobarExtensionFecha">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/AprobarExtensionFecha" message="tns:IProvisionalService_AprobarExtensionFecha_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/AprobarExtensionFechaResponse" message="tns:IProvisionalService_AprobarExtensionFecha_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_AprobarExtensionFecha_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RechazarExtensionFecha">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/RechazarExtensionFecha" message="tns:IProvisionalService_RechazarExtensionFecha_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/RechazarExtensionFechaResponse" message="tns:IProvisionalService_RechazarExtensionFecha_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_RechazarExtensionFecha_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEnviadoExtensionFecha">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ObtenerEnviadoExtensionFecha" message="tns:IProvisionalService_ObtenerEnviadoExtensionFecha_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ObtenerEnviadoExtensionFechaResponse" message="tns:IProvisionalService_ObtenerEnviadoExtensionFecha_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ObtenerEnviadoExtensionFecha_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarEnviadoExtensionFecha">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/BuscarEnviadoExtensionFecha" message="tns:IProvisionalService_BuscarEnviadoExtensionFecha_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/BuscarEnviadoExtensionFechaResponse" message="tns:IProvisionalService_BuscarEnviadoExtensionFecha_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_BuscarEnviadoExtensionFecha_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/Obtener" message="tns:IProvisionalService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ObtenerResponse" message="tns:IProvisionalService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEstado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ObtenerEstado" message="tns:IProvisionalService_ObtenerEstado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ObtenerEstadoResponse" message="tns:IProvisionalService_ObtenerEstado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ObtenerEstado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/Filtrar" message="tns:IProvisionalService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/FiltrarResponse" message="tns:IProvisionalService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/Insertar" message="tns:IProvisionalService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/InsertarResponse" message="tns:IProvisionalService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/Actualizar" message="tns:IProvisionalService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ActualizarResponse" message="tns:IProvisionalService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/Borrar" message="tns:IProvisionalService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/BorrarResponse" message="tns:IProvisionalService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/Imprimir" message="tns:IProvisionalService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ImprimirResponse" message="tns:IProvisionalService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Enviar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/Enviar" message="tns:IProvisionalService_Enviar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/EnviarResponse" message="tns:IProvisionalService_Enviar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_Enviar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Aprobar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/Aprobar" message="tns:IProvisionalService_Aprobar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/AprobarResponse" message="tns:IProvisionalService_Aprobar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_Aprobar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Rechazar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/Rechazar" message="tns:IProvisionalService_Rechazar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/RechazarResponse" message="tns:IProvisionalService_Rechazar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_Rechazar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/MostrarEstados" message="tns:IProvisionalService_MostrarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/MostrarEstadosResponse" message="tns:IProvisionalService_MostrarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_MostrarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ConsultarEstados" message="tns:IProvisionalService_ConsultarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ConsultarEstadosResponse" message="tns:IProvisionalService_ConsultarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ConsultarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Atender">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/Atender" message="tns:IProvisionalService_Atender_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/AtenderResponse" message="tns:IProvisionalService_Atender_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_Atender_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Cerrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/Cerrar" message="tns:IProvisionalService_Cerrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/CerrarResponse" message="tns:IProvisionalService_Cerrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_Cerrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUbicacionCaja">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/MostrarUbicacionCaja" message="tns:IProvisionalService_MostrarUbicacionCaja_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/MostrarUbicacionCajaResponse" message="tns:IProvisionalService_MostrarUbicacionCaja_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_MostrarUbicacionCaja_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RechazarCajero">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/RechazarCajero" message="tns:IProvisionalService_RechazarCajero_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/RechazarCajeroResponse" message="tns:IProvisionalService_RechazarCajero_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_RechazarCajero_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUsuarioCaja">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/BuscarUsuarioCaja" message="tns:IProvisionalService_BuscarUsuarioCaja_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/BuscarUsuarioCajaResponse" message="tns:IProvisionalService_BuscarUsuarioCaja_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_BuscarUsuarioCaja_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdUbicacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ObtenerIdUbicacion" message="tns:IProvisionalService_ObtenerIdUbicacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ObtenerIdUbicacionResponse" message="tns:IProvisionalService_ObtenerIdUbicacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ObtenerIdUbicacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarViaticoAprobado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/MostrarViaticoAprobado" message="tns:IProvisionalService_MostrarViaticoAprobado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/MostrarViaticoAprobadoResponse" message="tns:IProvisionalService_MostrarViaticoAprobado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_MostrarViaticoAprobado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGasto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/BuscarGasto" message="tns:IProvisionalService_BuscarGasto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/BuscarGastoResponse" message="tns:IProvisionalService_BuscarGasto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_BuscarGasto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarProvisionalAtendido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/MostrarProvisionalAtendido" message="tns:IProvisionalService_MostrarProvisionalAtendido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/MostrarProvisionalAtendidoResponse" message="tns:IProvisionalService_MostrarProvisionalAtendido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_MostrarProvisionalAtendido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarArchivoViatico">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/GenerarArchivoViatico" message="tns:IProvisionalService_GenerarArchivoViatico_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/GenerarArchivoViaticoResponse" message="tns:IProvisionalService_GenerarArchivoViatico_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_GenerarArchivoViatico_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarAtencionViatico">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/BuscarAtencionViatico" message="tns:IProvisionalService_BuscarAtencionViatico_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/BuscarAtencionViaticoResponse" message="tns:IProvisionalService_BuscarAtencionViatico_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_BuscarAtencionViatico_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ObtenerDetalle" message="tns:IProvisionalService_ObtenerDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ObtenerDetalleResponse" message="tns:IProvisionalService_ObtenerDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ObtenerDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEstadoDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ObtenerEstadoDetalle" message="tns:IProvisionalService_ObtenerEstadoDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ObtenerEstadoDetalleResponse" message="tns:IProvisionalService_ObtenerEstadoDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ObtenerEstadoDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/MostrarDetalle" message="tns:IProvisionalService_MostrarDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/MostrarDetalleResponse" message="tns:IProvisionalService_MostrarDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_MostrarDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/InsertarDetalle" message="tns:IProvisionalService_InsertarDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/InsertarDetalleResponse" message="tns:IProvisionalService_InsertarDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_InsertarDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ActualizarDetalle" message="tns:IProvisionalService_ActualizarDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ActualizarDetalleResponse" message="tns:IProvisionalService_ActualizarDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ActualizarDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/BorrarDetalle" message="tns:IProvisionalService_BorrarDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/BorrarDetalleResponse" message="tns:IProvisionalService_BorrarDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_BorrarDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPendienteDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/BuscarPendienteDetalle" message="tns:IProvisionalService_BuscarPendienteDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/BuscarPendienteDetalleResponse" message="tns:IProvisionalService_BuscarPendienteDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_BuscarPendienteDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMontoPendienteAprobacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ObtenerMontoPendienteAprobacion" message="tns:IProvisionalService_ObtenerMontoPendienteAprobacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ObtenerMontoPendienteAprobacionResponse" message="tns:IProvisionalService_ObtenerMontoPendienteAprobacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ObtenerMontoPendienteAprobacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Tramitar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/Tramitar" message="tns:IProvisionalService_Tramitar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/TramitarResponse" message="tns:IProvisionalService_Tramitar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_Tramitar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCuentas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/MostrarCuentas" message="tns:IProvisionalService_MostrarCuentas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/MostrarCuentasResponse" message="tns:IProvisionalService_MostrarCuentas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_MostrarCuentas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/MostrarTipo" message="tns:IProvisionalService_MostrarTipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/MostrarTipoResponse" message="tns:IProvisionalService_MostrarTipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_MostrarTipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteResumenAtencionViaticos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ReporteResumenAtencionViaticos" message="tns:IProvisionalService_ReporteResumenAtencionViaticos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ReporteResumenAtencionViaticosResponse" message="tns:IProvisionalService_ReporteResumenAtencionViaticos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ReporteResumenAtencionViaticos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarFecFinal">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProvisionalService/ActualizarFecFinal" message="tns:IProvisionalService_ActualizarFecFinal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProvisionalService/ActualizarFecFinalResponse" message="tns:IProvisionalService_ActualizarFecFinal_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IProvisionalService_ActualizarFecFinal_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IProvisionalService" type="tns:IProvisionalService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IProvisionalService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="FiltrarDatos">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/FiltrarDatos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirDatos">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ImprimirDatos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarListaEstados">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ConsultarListaEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ListarUbicacionCaja">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ListarUbicacionCaja" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ListarViaticoAprobado">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ListarViaticoAprobado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ListarProvisionalAtendido">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ListarProvisionalAtendido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCodJob">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ActualizarCodJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarExtensionFecha">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/MostrarExtensionFecha" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerExtensionFecha">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ObtenerExtensionFecha" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarExtensionFecha">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/InsertarExtensionFecha" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarExtensionFecha">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ActualizarExtensionFecha" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarExtensionFecha">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/BorrarExtensionFecha" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="EnviarExtensionFecha">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/EnviarExtensionFecha" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AprobarExtensionFecha">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/AprobarExtensionFecha" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RechazarExtensionFecha">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/RechazarExtensionFecha" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEnviadoExtensionFecha">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ObtenerEnviadoExtensionFecha" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarEnviadoExtensionFecha">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/BuscarEnviadoExtensionFecha" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEstado">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ObtenerEstado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Enviar">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/Enviar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Aprobar">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/Aprobar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Rechazar">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/Rechazar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/MostrarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ConsultarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Atender">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/Atender" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Cerrar">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/Cerrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUbicacionCaja">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/MostrarUbicacionCaja" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RechazarCajero">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/RechazarCajero" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUsuarioCaja">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/BuscarUsuarioCaja" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdUbicacion">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ObtenerIdUbicacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarViaticoAprobado">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/MostrarViaticoAprobado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGasto">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/BuscarGasto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarProvisionalAtendido">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/MostrarProvisionalAtendido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarArchivoViatico">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/GenerarArchivoViatico" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarAtencionViatico">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/BuscarAtencionViatico" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ObtenerDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEstadoDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ObtenerEstadoDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/MostrarDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/InsertarDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ActualizarDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/BorrarDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPendienteDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/BuscarPendienteDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMontoPendienteAprobacion">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ObtenerMontoPendienteAprobacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Tramitar">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/Tramitar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCuentas">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/MostrarCuentas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipo">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/MostrarTipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteResumenAtencionViaticos">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ReporteResumenAtencionViaticos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarFecFinal">
+      <soap12:operation soapAction="http://tempuri.org/IProvisionalService/ActualizarFecFinal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ProvisionalService">
+    <wsdl:port name="NetTcpBinding_IProvisionalService" binding="tns:NetTcpBinding_IProvisionalService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/ProvisionalService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/ProvisionalService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

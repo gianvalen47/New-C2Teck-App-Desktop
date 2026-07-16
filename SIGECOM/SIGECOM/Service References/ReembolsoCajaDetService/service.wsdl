@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReembolsoCajaDetService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IReembolsoCajaDetService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IReembolsoCajaDetService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_BuscarTipoVehiculo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarTipoVehiculo" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_BuscarTipoVehiculo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarTipoVehiculoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_BuscarTipoVehiculo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_MostrarTipoGasto_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoGasto" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_MostrarTipoGasto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoGastoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_MostrarTipoGasto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_IngresarSolicitudGasto_InputMessage">
+    <wsdl:part name="parameters" element="tns:IngresarSolicitudGasto" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_IngresarSolicitudGasto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IngresarSolicitudGastoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_IngresarSolicitudGasto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_BuscarGasto_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGasto" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_BuscarGasto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGastoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_BuscarGasto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_RecalcularItem_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecalcularItem" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_RecalcularItem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecalcularItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReembolsoCajaDetService_RecalcularItem_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IReembolsoCajaDetService">
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/Obtener" message="tns:IReembolsoCajaDetService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/ObtenerResponse" message="tns:IReembolsoCajaDetService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReembolsoCajaDetService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/Mostrar" message="tns:IReembolsoCajaDetService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/MostrarResponse" message="tns:IReembolsoCajaDetService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReembolsoCajaDetService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/Insertar" message="tns:IReembolsoCajaDetService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/InsertarResponse" message="tns:IReembolsoCajaDetService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReembolsoCajaDetService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/Actualizar" message="tns:IReembolsoCajaDetService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/ActualizarResponse" message="tns:IReembolsoCajaDetService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReembolsoCajaDetService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/Borrar" message="tns:IReembolsoCajaDetService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/BorrarResponse" message="tns:IReembolsoCajaDetService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReembolsoCajaDetService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarTipoVehiculo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/BuscarTipoVehiculo" message="tns:IReembolsoCajaDetService_BuscarTipoVehiculo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/BuscarTipoVehiculoResponse" message="tns:IReembolsoCajaDetService_BuscarTipoVehiculo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReembolsoCajaDetService_BuscarTipoVehiculo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoGasto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/MostrarTipoGasto" message="tns:IReembolsoCajaDetService_MostrarTipoGasto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/MostrarTipoGastoResponse" message="tns:IReembolsoCajaDetService_MostrarTipoGasto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReembolsoCajaDetService_MostrarTipoGasto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IngresarSolicitudGasto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/IngresarSolicitudGasto" message="tns:IReembolsoCajaDetService_IngresarSolicitudGasto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/IngresarSolicitudGastoResponse" message="tns:IReembolsoCajaDetService_IngresarSolicitudGasto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReembolsoCajaDetService_IngresarSolicitudGasto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGasto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/BuscarGasto" message="tns:IReembolsoCajaDetService_BuscarGasto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/BuscarGastoResponse" message="tns:IReembolsoCajaDetService_BuscarGasto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReembolsoCajaDetService_BuscarGasto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecalcularItem">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/RecalcularItem" message="tns:IReembolsoCajaDetService_RecalcularItem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReembolsoCajaDetService/RecalcularItemResponse" message="tns:IReembolsoCajaDetService_RecalcularItem_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReembolsoCajaDetService_RecalcularItem_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IReembolsoCajaDetService" type="tns:IReembolsoCajaDetService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IReembolsoCajaDetService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IReembolsoCajaDetService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/IReembolsoCajaDetService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IReembolsoCajaDetService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IReembolsoCajaDetService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IReembolsoCajaDetService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarTipoVehiculo">
+      <soap12:operation soapAction="http://tempuri.org/IReembolsoCajaDetService/BuscarTipoVehiculo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoGasto">
+      <soap12:operation soapAction="http://tempuri.org/IReembolsoCajaDetService/MostrarTipoGasto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="IngresarSolicitudGasto">
+      <soap12:operation soapAction="http://tempuri.org/IReembolsoCajaDetService/IngresarSolicitudGasto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGasto">
+      <soap12:operation soapAction="http://tempuri.org/IReembolsoCajaDetService/BuscarGasto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RecalcularItem">
+      <soap12:operation soapAction="http://tempuri.org/IReembolsoCajaDetService/RecalcularItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ReembolsoCajaDetService">
+    <wsdl:port name="NetTcpBinding_IReembolsoCajaDetService" binding="tns:NetTcpBinding_IReembolsoCajaDetService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/ReembolsoCajaDetService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/ReembolsoCajaDetService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

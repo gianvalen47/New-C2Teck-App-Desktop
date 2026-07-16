@@ -1,0 +1,604 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:tns="http://tempuri.org/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="MovimientoBancosService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IMovimientoBancosService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMovimientoBancosService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_ObtenerDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_ObtenerDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_ObtenerDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_MostrarDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_MostrarDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_MostrarDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_InsertarDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_InsertarDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_InsertarDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_ActualizarDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_ActualizarDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_ActualizarDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_BorrarDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_BorrarDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_BorrarDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_MostrarTipoMovBanco_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoMovBanco" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_MostrarTipoMovBanco_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoMovBancoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_MostrarTipoMovBanco_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_MostrarBancos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarBancos" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_MostrarBancos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarBancosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_MostrarBancos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_MostrarConciliar_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarConciliar" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_MostrarConciliar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarConciliarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_MostrarConciliar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_ObtenerConciliacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerConciliacion" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_ObtenerConciliacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerConciliacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_ObtenerConciliacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_MostrarConciliacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarConciliacion" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_MostrarConciliacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarConciliacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_MostrarConciliacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_InsertarConciliacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarConciliacion" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_InsertarConciliacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarConciliacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_InsertarConciliacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_ActualizarConciliacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarConciliacion" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_ActualizarConciliacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarConciliacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_ActualizarConciliacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_BorrarConciliacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarConciliacion" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_BorrarConciliacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarConciliacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_BorrarConciliacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_ImprimirConciliacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirConciliacion" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_ImprimirConciliacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirConciliacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMovimientoBancosService_ImprimirConciliacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IMovimientoBancosService">
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/Obtener" message="tns:IMovimientoBancosService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/ObtenerResponse" message="tns:IMovimientoBancosService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/Buscar" message="tns:IMovimientoBancosService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/BuscarResponse" message="tns:IMovimientoBancosService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/Filtrar" message="tns:IMovimientoBancosService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/FiltrarResponse" message="tns:IMovimientoBancosService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/Insertar" message="tns:IMovimientoBancosService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/InsertarResponse" message="tns:IMovimientoBancosService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/Actualizar" message="tns:IMovimientoBancosService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/ActualizarResponse" message="tns:IMovimientoBancosService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/Borrar" message="tns:IMovimientoBancosService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/BorrarResponse" message="tns:IMovimientoBancosService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/ObtenerDetalle" message="tns:IMovimientoBancosService_ObtenerDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/ObtenerDetalleResponse" message="tns:IMovimientoBancosService_ObtenerDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_ObtenerDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/MostrarDetalle" message="tns:IMovimientoBancosService_MostrarDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/MostrarDetalleResponse" message="tns:IMovimientoBancosService_MostrarDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_MostrarDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/InsertarDetalle" message="tns:IMovimientoBancosService_InsertarDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/InsertarDetalleResponse" message="tns:IMovimientoBancosService_InsertarDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_InsertarDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/ActualizarDetalle" message="tns:IMovimientoBancosService_ActualizarDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/ActualizarDetalleResponse" message="tns:IMovimientoBancosService_ActualizarDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_ActualizarDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/BorrarDetalle" message="tns:IMovimientoBancosService_BorrarDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/BorrarDetalleResponse" message="tns:IMovimientoBancosService_BorrarDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_BorrarDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoMovBanco">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/MostrarTipoMovBanco" message="tns:IMovimientoBancosService_MostrarTipoMovBanco_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/MostrarTipoMovBancoResponse" message="tns:IMovimientoBancosService_MostrarTipoMovBanco_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_MostrarTipoMovBanco_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/Imprimir" message="tns:IMovimientoBancosService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/ImprimirResponse" message="tns:IMovimientoBancosService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarBancos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/MostrarBancos" message="tns:IMovimientoBancosService_MostrarBancos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/MostrarBancosResponse" message="tns:IMovimientoBancosService_MostrarBancos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_MostrarBancos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarConciliar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/MostrarConciliar" message="tns:IMovimientoBancosService_MostrarConciliar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/MostrarConciliarResponse" message="tns:IMovimientoBancosService_MostrarConciliar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_MostrarConciliar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerConciliacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/ObtenerConciliacion" message="tns:IMovimientoBancosService_ObtenerConciliacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/ObtenerConciliacionResponse" message="tns:IMovimientoBancosService_ObtenerConciliacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_ObtenerConciliacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarConciliacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/MostrarConciliacion" message="tns:IMovimientoBancosService_MostrarConciliacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/MostrarConciliacionResponse" message="tns:IMovimientoBancosService_MostrarConciliacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_MostrarConciliacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarConciliacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/InsertarConciliacion" message="tns:IMovimientoBancosService_InsertarConciliacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/InsertarConciliacionResponse" message="tns:IMovimientoBancosService_InsertarConciliacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_InsertarConciliacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarConciliacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/ActualizarConciliacion" message="tns:IMovimientoBancosService_ActualizarConciliacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/ActualizarConciliacionResponse" message="tns:IMovimientoBancosService_ActualizarConciliacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_ActualizarConciliacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarConciliacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/BorrarConciliacion" message="tns:IMovimientoBancosService_BorrarConciliacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/BorrarConciliacionResponse" message="tns:IMovimientoBancosService_BorrarConciliacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_BorrarConciliacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirConciliacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMovimientoBancosService/ImprimirConciliacion" message="tns:IMovimientoBancosService_ImprimirConciliacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMovimientoBancosService/ImprimirConciliacionResponse" message="tns:IMovimientoBancosService_ImprimirConciliacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IMovimientoBancosService_ImprimirConciliacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IMovimientoBancosService" type="tns:IMovimientoBancosService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IMovimientoBancosService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/ObtenerDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/MostrarDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/InsertarDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/ActualizarDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/BorrarDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoMovBanco">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/MostrarTipoMovBanco" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarBancos">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/MostrarBancos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarConciliar">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/MostrarConciliar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerConciliacion">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/ObtenerConciliacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarConciliacion">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/MostrarConciliacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarConciliacion">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/InsertarConciliacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarConciliacion">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/ActualizarConciliacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarConciliacion">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/BorrarConciliacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirConciliacion">
+      <soap12:operation soapAction="http://tempuri.org/IMovimientoBancosService/ImprimirConciliacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MovimientoBancosService">
+    <wsdl:port name="NetTcpBinding_IMovimientoBancosService" binding="tns:NetTcpBinding_IMovimientoBancosService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/MovimientoBancosService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/MovimientoBancosService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

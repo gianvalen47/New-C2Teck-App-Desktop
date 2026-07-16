@@ -1,0 +1,578 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="HorarioService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IHorarioService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IHorarioService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_InsertarTipoHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTipoHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_InsertarTipoHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTipoHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_InsertarTipoHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_ActualizarTipoHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTipoHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_ActualizarTipoHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTipoHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_ActualizarTipoHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_BorrarTipoHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarTipoHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_BorrarTipoHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarTipoHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_BorrarTipoHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_ObtenerTipoHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTipoHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_ObtenerTipoHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTipoHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_ObtenerTipoHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_MostrarTipoHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_MostrarTipoHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_MostrarTipoHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_BuscarTipoHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarTipoHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_BuscarTipoHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarTipoHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_BuscarTipoHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_BuscarFeriado_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarFeriado" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_BuscarFeriado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarFeriadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_BuscarFeriado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_InsertarFeriado_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarFeriado" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_InsertarFeriado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarFeriadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_InsertarFeriado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_ActualizarFeriado_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarFeriado" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_ActualizarFeriado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarFeriadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_ActualizarFeriado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_BorrarFeriado_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarFeriado" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_BorrarFeriado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarFeriadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_BorrarFeriado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_FiltrarFeriado_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarFeriado" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_FiltrarFeriado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarFeriadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_FiltrarFeriado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_ObtenerFeriado_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerFeriado" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_ObtenerFeriado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerFeriadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_ObtenerFeriado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_MostrarTurnos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTurnos" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_MostrarTurnos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTurnosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorarioService_MostrarTurnos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IHorarioService">
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/Obtener" message="tns:IHorarioService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/ObtenerResponse" message="tns:IHorarioService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/Filtrar" message="tns:IHorarioService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/FiltrarResponse" message="tns:IHorarioService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/Buscar" message="tns:IHorarioService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/BuscarResponse" message="tns:IHorarioService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/Insertar" message="tns:IHorarioService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/InsertarResponse" message="tns:IHorarioService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/Actualizar" message="tns:IHorarioService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/ActualizarResponse" message="tns:IHorarioService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/Borrar" message="tns:IHorarioService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/BorrarResponse" message="tns:IHorarioService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/Mostrar" message="tns:IHorarioService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/MostrarResponse" message="tns:IHorarioService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTipoHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/InsertarTipoHoraExtra" message="tns:IHorarioService_InsertarTipoHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/InsertarTipoHoraExtraResponse" message="tns:IHorarioService_InsertarTipoHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_InsertarTipoHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTipoHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/ActualizarTipoHoraExtra" message="tns:IHorarioService_ActualizarTipoHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/ActualizarTipoHoraExtraResponse" message="tns:IHorarioService_ActualizarTipoHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_ActualizarTipoHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarTipoHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/BorrarTipoHoraExtra" message="tns:IHorarioService_BorrarTipoHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/BorrarTipoHoraExtraResponse" message="tns:IHorarioService_BorrarTipoHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_BorrarTipoHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTipoHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/ObtenerTipoHoraExtra" message="tns:IHorarioService_ObtenerTipoHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/ObtenerTipoHoraExtraResponse" message="tns:IHorarioService_ObtenerTipoHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_ObtenerTipoHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/MostrarTipoHoraExtra" message="tns:IHorarioService_MostrarTipoHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/MostrarTipoHoraExtraResponse" message="tns:IHorarioService_MostrarTipoHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_MostrarTipoHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarTipoHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/BuscarTipoHoraExtra" message="tns:IHorarioService_BuscarTipoHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/BuscarTipoHoraExtraResponse" message="tns:IHorarioService_BuscarTipoHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_BuscarTipoHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarFeriado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/BuscarFeriado" message="tns:IHorarioService_BuscarFeriado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/BuscarFeriadoResponse" message="tns:IHorarioService_BuscarFeriado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_BuscarFeriado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarFeriado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/InsertarFeriado" message="tns:IHorarioService_InsertarFeriado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/InsertarFeriadoResponse" message="tns:IHorarioService_InsertarFeriado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_InsertarFeriado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarFeriado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/ActualizarFeriado" message="tns:IHorarioService_ActualizarFeriado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/ActualizarFeriadoResponse" message="tns:IHorarioService_ActualizarFeriado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_ActualizarFeriado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarFeriado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/BorrarFeriado" message="tns:IHorarioService_BorrarFeriado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/BorrarFeriadoResponse" message="tns:IHorarioService_BorrarFeriado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_BorrarFeriado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarFeriado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/FiltrarFeriado" message="tns:IHorarioService_FiltrarFeriado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/FiltrarFeriadoResponse" message="tns:IHorarioService_FiltrarFeriado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_FiltrarFeriado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerFeriado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/ObtenerFeriado" message="tns:IHorarioService_ObtenerFeriado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/ObtenerFeriadoResponse" message="tns:IHorarioService_ObtenerFeriado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_ObtenerFeriado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTurnos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorarioService/MostrarTurnos" message="tns:IHorarioService_MostrarTurnos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorarioService/MostrarTurnosResponse" message="tns:IHorarioService_MostrarTurnos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorarioService_MostrarTurnos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IHorarioService" type="tns:IHorarioService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IHorarioService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTipoHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/InsertarTipoHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTipoHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/ActualizarTipoHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarTipoHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/BorrarTipoHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTipoHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/ObtenerTipoHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/MostrarTipoHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarTipoHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/BuscarTipoHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarFeriado">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/BuscarFeriado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarFeriado">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/InsertarFeriado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarFeriado">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/ActualizarFeriado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarFeriado">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/BorrarFeriado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarFeriado">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/FiltrarFeriado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerFeriado">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/ObtenerFeriado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTurnos">
+      <soap12:operation soapAction="http://tempuri.org/IHorarioService/MostrarTurnos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HorarioService">
+    <wsdl:port name="NetTcpBinding_IHorarioService" binding="tns:NetTcpBinding_IHorarioService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/HorarioService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/HorarioService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

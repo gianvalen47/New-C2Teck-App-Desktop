@@ -1,0 +1,813 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="HorasMotorService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IHorasMotorService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IHorasMotorService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_MostrarTipoPlanMantenimiento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoPlanMantenimiento" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_MostrarTipoPlanMantenimiento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoPlanMantenimientoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_MostrarTipoPlanMantenimiento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_MostrarPlanMantenimiento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPlanMantenimiento" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_MostrarPlanMantenimiento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPlanMantenimientoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_MostrarPlanMantenimiento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_BuscarMantenimiento_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarMantenimiento" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_BuscarMantenimiento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarMantenimientoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_BuscarMantenimiento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_InsertarMantenimiento_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMantenimiento" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_InsertarMantenimiento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMantenimientoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_InsertarMantenimiento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ActualizarMantenimiento_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMantenimiento" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ActualizarMantenimiento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMantenimientoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ActualizarMantenimiento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_BorrarMantenimiento_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarMantenimiento" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_BorrarMantenimiento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarMantenimientoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_BorrarMantenimiento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_MostrarMantenimiento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMantenimiento" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_MostrarMantenimiento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMantenimientoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_MostrarMantenimiento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ObtenerMantenimiento_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerMantenimiento" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ObtenerMantenimiento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerMantenimientoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ObtenerMantenimiento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteHorasMotor_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteHorasMotor" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteHorasMotor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteHorasMotorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteHorasMotor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_SugerirHoraParcial_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirHoraParcial" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_SugerirHoraParcial_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirHoraParcialResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_SugerirHoraParcial_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteMotoresDarBaja_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteMotoresDarBaja" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteMotoresDarBaja_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteMotoresDarBajaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteMotoresDarBaja_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteRepuestosConsumir_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteRepuestosConsumir" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteRepuestosConsumir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteRepuestosConsumirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteRepuestosConsumir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteProyectarVentas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteProyectarVentas" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteProyectarVentas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteProyectarVentasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteProyectarVentas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ActualizarHorasMasivas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarHorasMasivas" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ActualizarHorasMasivas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarHorasMasivasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ActualizarHorasMasivas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_BuscarTipoReparacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarTipoReparacion" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_BuscarTipoReparacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarTipoReparacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_BuscarTipoReparacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ObtenerTotalHoras_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTotalHoras" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ObtenerTotalHoras_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTotalHorasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ObtenerTotalHoras_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_MostrarHistorial_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarHistorial" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_MostrarHistorial_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarHistorialResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_MostrarHistorial_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteDisponibilidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteDisponibilidad" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteDisponibilidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteDisponibilidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteDisponibilidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteProyeccionReparacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteProyeccionReparacion" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteProyeccionReparacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteProyeccionReparacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteProyeccionReparacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteProyeccionReparacionResumen_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteProyeccionReparacionResumen" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteProyeccionReparacionResumen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteProyeccionReparacionResumenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ReporteProyeccionReparacionResumen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ActualizarHistorial_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarHistorial" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ActualizarHistorial_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarHistorialResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_ActualizarHistorial_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q28:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_GenerarPedidoRepuestosImportar_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarPedidoRepuestosImportar" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_GenerarPedidoRepuestosImportar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarPedidoRepuestosImportarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IHorasMotorService_GenerarPedidoRepuestosImportar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q29:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IHorasMotorService">
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/Buscar" message="tns:IHorasMotorService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/BuscarResponse" message="tns:IHorasMotorService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/Insertar" message="tns:IHorasMotorService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/InsertarResponse" message="tns:IHorasMotorService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/Actualizar" message="tns:IHorasMotorService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/ActualizarResponse" message="tns:IHorasMotorService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/Borrar" message="tns:IHorasMotorService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/BorrarResponse" message="tns:IHorasMotorService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/Filtrar" message="tns:IHorasMotorService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/FiltrarResponse" message="tns:IHorasMotorService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/Obtener" message="tns:IHorasMotorService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/ObtenerResponse" message="tns:IHorasMotorService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoPlanMantenimiento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/MostrarTipoPlanMantenimiento" message="tns:IHorasMotorService_MostrarTipoPlanMantenimiento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/MostrarTipoPlanMantenimientoResponse" message="tns:IHorasMotorService_MostrarTipoPlanMantenimiento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_MostrarTipoPlanMantenimiento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPlanMantenimiento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/MostrarPlanMantenimiento" message="tns:IHorasMotorService_MostrarPlanMantenimiento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/MostrarPlanMantenimientoResponse" message="tns:IHorasMotorService_MostrarPlanMantenimiento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_MostrarPlanMantenimiento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarMantenimiento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/BuscarMantenimiento" message="tns:IHorasMotorService_BuscarMantenimiento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/BuscarMantenimientoResponse" message="tns:IHorasMotorService_BuscarMantenimiento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_BuscarMantenimiento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMantenimiento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/InsertarMantenimiento" message="tns:IHorasMotorService_InsertarMantenimiento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/InsertarMantenimientoResponse" message="tns:IHorasMotorService_InsertarMantenimiento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_InsertarMantenimiento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMantenimiento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/ActualizarMantenimiento" message="tns:IHorasMotorService_ActualizarMantenimiento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/ActualizarMantenimientoResponse" message="tns:IHorasMotorService_ActualizarMantenimiento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_ActualizarMantenimiento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarMantenimiento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/BorrarMantenimiento" message="tns:IHorasMotorService_BorrarMantenimiento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/BorrarMantenimientoResponse" message="tns:IHorasMotorService_BorrarMantenimiento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_BorrarMantenimiento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMantenimiento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/MostrarMantenimiento" message="tns:IHorasMotorService_MostrarMantenimiento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/MostrarMantenimientoResponse" message="tns:IHorasMotorService_MostrarMantenimiento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_MostrarMantenimiento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMantenimiento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/ObtenerMantenimiento" message="tns:IHorasMotorService_ObtenerMantenimiento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/ObtenerMantenimientoResponse" message="tns:IHorasMotorService_ObtenerMantenimiento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_ObtenerMantenimiento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteHorasMotor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/ReporteHorasMotor" message="tns:IHorasMotorService_ReporteHorasMotor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/ReporteHorasMotorResponse" message="tns:IHorasMotorService_ReporteHorasMotor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_ReporteHorasMotor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirHoraParcial">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/SugerirHoraParcial" message="tns:IHorasMotorService_SugerirHoraParcial_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/SugerirHoraParcialResponse" message="tns:IHorasMotorService_SugerirHoraParcial_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_SugerirHoraParcial_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteMotoresDarBaja">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/ReporteMotoresDarBaja" message="tns:IHorasMotorService_ReporteMotoresDarBaja_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/ReporteMotoresDarBajaResponse" message="tns:IHorasMotorService_ReporteMotoresDarBaja_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_ReporteMotoresDarBaja_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteRepuestosConsumir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/ReporteRepuestosConsumir" message="tns:IHorasMotorService_ReporteRepuestosConsumir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/ReporteRepuestosConsumirResponse" message="tns:IHorasMotorService_ReporteRepuestosConsumir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_ReporteRepuestosConsumir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteProyectarVentas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/ReporteProyectarVentas" message="tns:IHorasMotorService_ReporteProyectarVentas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/ReporteProyectarVentasResponse" message="tns:IHorasMotorService_ReporteProyectarVentas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_ReporteProyectarVentas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarHorasMasivas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/ActualizarHorasMasivas" message="tns:IHorasMotorService_ActualizarHorasMasivas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/ActualizarHorasMasivasResponse" message="tns:IHorasMotorService_ActualizarHorasMasivas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_ActualizarHorasMasivas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarTipoReparacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/BuscarTipoReparacion" message="tns:IHorasMotorService_BuscarTipoReparacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/BuscarTipoReparacionResponse" message="tns:IHorasMotorService_BuscarTipoReparacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_BuscarTipoReparacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTotalHoras">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/ObtenerTotalHoras" message="tns:IHorasMotorService_ObtenerTotalHoras_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/ObtenerTotalHorasResponse" message="tns:IHorasMotorService_ObtenerTotalHoras_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_ObtenerTotalHoras_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarHistorial">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/MostrarHistorial" message="tns:IHorasMotorService_MostrarHistorial_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/MostrarHistorialResponse" message="tns:IHorasMotorService_MostrarHistorial_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_MostrarHistorial_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/Imprimir" message="tns:IHorasMotorService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/ImprimirResponse" message="tns:IHorasMotorService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteDisponibilidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/ReporteDisponibilidad" message="tns:IHorasMotorService_ReporteDisponibilidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/ReporteDisponibilidadResponse" message="tns:IHorasMotorService_ReporteDisponibilidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_ReporteDisponibilidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteProyeccionReparacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/ReporteProyeccionReparacion" message="tns:IHorasMotorService_ReporteProyeccionReparacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/ReporteProyeccionReparacionResponse" message="tns:IHorasMotorService_ReporteProyeccionReparacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_ReporteProyeccionReparacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteProyeccionReparacionResumen">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/ReporteProyeccionReparacionResumen" message="tns:IHorasMotorService_ReporteProyeccionReparacionResumen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/ReporteProyeccionReparacionResumenResponse" message="tns:IHorasMotorService_ReporteProyeccionReparacionResumen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_ReporteProyeccionReparacionResumen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarHistorial">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/ActualizarHistorial" message="tns:IHorasMotorService_ActualizarHistorial_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/ActualizarHistorialResponse" message="tns:IHorasMotorService_ActualizarHistorial_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_ActualizarHistorial_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarPedidoRepuestosImportar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IHorasMotorService/GenerarPedidoRepuestosImportar" message="tns:IHorasMotorService_GenerarPedidoRepuestosImportar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IHorasMotorService/GenerarPedidoRepuestosImportarResponse" message="tns:IHorasMotorService_GenerarPedidoRepuestosImportar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IHorasMotorService_GenerarPedidoRepuestosImportar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IHorasMotorService" type="tns:IHorasMotorService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IHorasMotorService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoPlanMantenimiento">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/MostrarTipoPlanMantenimiento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPlanMantenimiento">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/MostrarPlanMantenimiento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarMantenimiento">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/BuscarMantenimiento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMantenimiento">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/InsertarMantenimiento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMantenimiento">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/ActualizarMantenimiento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarMantenimiento">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/BorrarMantenimiento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMantenimiento">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/MostrarMantenimiento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMantenimiento">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/ObtenerMantenimiento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteHorasMotor">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/ReporteHorasMotor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirHoraParcial">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/SugerirHoraParcial" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteMotoresDarBaja">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/ReporteMotoresDarBaja" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteRepuestosConsumir">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/ReporteRepuestosConsumir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteProyectarVentas">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/ReporteProyectarVentas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarHorasMasivas">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/ActualizarHorasMasivas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarTipoReparacion">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/BuscarTipoReparacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTotalHoras">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/ObtenerTotalHoras" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarHistorial">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/MostrarHistorial" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteDisponibilidad">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/ReporteDisponibilidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteProyeccionReparacion">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/ReporteProyeccionReparacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteProyeccionReparacionResumen">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/ReporteProyeccionReparacionResumen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarHistorial">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/ActualizarHistorial" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarPedidoRepuestosImportar">
+      <soap12:operation soapAction="http://tempuri.org/IHorasMotorService/GenerarPedidoRepuestosImportar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HorasMotorService">
+    <wsdl:port name="NetTcpBinding_IHorasMotorService" binding="tns:NetTcpBinding_IHorasMotorService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/HorasMotorService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/HorasMotorService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,2112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Seguridad" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ISeguridad_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISeguridad_BuscarEquipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarEquipo" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarEquipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarEquipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarEquipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_LibreLicencia_InputMessage">
+    <wsdl:part name="parameters" element="tns:LibreLicencia" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_LibreLicencia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LibreLicenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_LibreLicencia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarUsuarioPC_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUsuarioPC" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarUsuarioPC_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUsuarioPCResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarUsuarioPC_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarOnomasticosEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOnomasticosEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarOnomasticosEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOnomasticosEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarOnomasticosEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarVigenciaEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarVigenciaEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarVigenciaEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarVigenciaEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarVigenciaEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_RecuperarClave_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecuperarClave" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_RecuperarClave_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecuperarClaveResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_RecuperarClave_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerCorreo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCorreo" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerCorreo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCorreoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerCorreo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarVigencia_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarVigencia" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarVigencia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarVigenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarVigencia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUsuario" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarUsuario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarPermisoTipCam_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPermisoTipCam" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarPermisoTipCam_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPermisoTipCamResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarPermisoTipCam_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarTipoCambioCompra_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoCambioCompra" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarTipoCambioCompra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoCambioCompraResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarTipoCambioCompra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarPerfilOpciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPerfilOpciones" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarPerfilOpciones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPerfilOpcionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarPerfilOpciones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerPerfilOpciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPerfilOpciones" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerPerfilOpciones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPerfilOpcionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerPerfilOpciones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarCentroCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCentroCosto" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarCentroCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCentroCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarCentroCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarCentroCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCentroCosto" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarCentroCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCentroCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarCentroCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarCentroCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCentroCosto" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarCentroCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCentroCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarCentroCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarCentroCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarCentroCosto" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarCentroCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarCentroCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarCentroCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarRubroRecurso_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroRecurso" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarRubroRecurso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroRecursoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarRubroRecurso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarRubroRecurso_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRubroRecurso" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarRubroRecurso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRubroRecursoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarRubroRecurso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarRubroRecurso_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRubroRecurso" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarRubroRecurso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRubroRecursoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarRubroRecurso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarRubroRecurso_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRubroRecurso" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarRubroRecurso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRubroRecursoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarRubroRecurso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_AlertaSistema_InputMessage">
+    <wsdl:part name="parameters" element="tns:AlertaSistema" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_AlertaSistema_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AlertaSistemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_AlertaSistema_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerCodCentro_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCodCentro" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerCodCentro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCodCentroResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerCodCentro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerCodOfi_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCodOfi" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerCodOfi_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCodOfiResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerCodOfi_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarOnomasticos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOnomasticos" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarOnomasticos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOnomasticosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarOnomasticos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_RecibirAlerta_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecibirAlerta" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_RecibirAlerta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecibirAlertaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_RecibirAlerta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_RegistrarVisitaOpciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistrarVisitaOpciones" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_RegistrarVisitaOpciones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistrarVisitaOpcionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_RegistrarVisitaOpciones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarSesion_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSesion" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarSesion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSesionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarSesion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q28:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarSesion_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarSesion" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarSesion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarSesionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarSesion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q29:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_CerrarSesion_InputMessage">
+    <wsdl:part name="parameters" element="tns:CerrarSesion" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_CerrarSesion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CerrarSesionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_CerrarSesion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q30:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarVersion_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarVersion" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarVersion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarVersion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q31:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarSesionOpciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSesionOpciones" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarSesionOpciones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSesionOpcionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarSesionOpciones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q32:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarSesionOpciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarSesionOpciones" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarSesionOpciones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarSesionOpcionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarSesionOpciones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q33:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q34:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarMultiEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMultiEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarMultiEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMultiEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarMultiEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q35="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q35:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerExpDatos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerExpDatos" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerExpDatos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerExpDatosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerExpDatos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q36="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q36:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_AprobacionUnica_InputMessage">
+    <wsdl:part name="parameters" element="tns:AprobacionUnica" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_AprobacionUnica_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AprobacionUnicaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_AprobacionUnica_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q37="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q37:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarMonedasParaTipoCambio_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMonedasParaTipoCambio" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarMonedasParaTipoCambio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMonedasParaTipoCambioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarMonedasParaTipoCambio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q38="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q38:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarTipoCambio_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTipoCambio" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarTipoCambio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTipoCambioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarTipoCambio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q39="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q39:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_FiltrarTipoCambio_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarTipoCambio" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_FiltrarTipoCambio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarTipoCambioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_FiltrarTipoCambio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q40="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q40:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarEquipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEquipo" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarEquipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEquipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarEquipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q41="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q41:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarEquipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarEquipo" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarEquipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarEquipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarEquipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q42="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q42:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarEquipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarEquipo" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarEquipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarEquipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarEquipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q43="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q43:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarUsuarioPorCodigo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUsuarioPorCodigo" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarUsuarioPorCodigo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUsuarioPorCodigoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarUsuarioPorCodigo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q44="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q44:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ValidarAccesoUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarAccesoUsuario" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ValidarAccesoUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarAccesoUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ValidarAccesoUsuario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q45="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q45:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPermisos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPermisos" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPermisos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPermisosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPermisos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q46="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q46:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarTipoCambio_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoCambio" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarTipoCambio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoCambioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarTipoCambio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q47="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q47:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarTipoCambio_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTipoCambio" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarTipoCambio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTipoCambioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarTipoCambio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q48="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q48:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPerfiles_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPerfiles" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPerfiles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPerfilesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPerfiles_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q49="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q49:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPerfilPorCodigo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPerfilPorCodigo" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPerfilPorCodigo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPerfilPorCodigoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPerfilPorCodigo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q50="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q50:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarPerfil_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPerfil" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarPerfil_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPerfilResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarPerfil_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q51="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q51:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarPerfil_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPerfil" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarPerfil_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPerfilResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarPerfil_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q52="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q52:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarPerfil_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPerfil" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarPerfil_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPerfilResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarPerfil_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q53="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q53:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarMenuSistema_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMenuSistema" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarMenuSistema_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMenuSistemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarMenuSistema_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q54="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q54:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarMenuOpciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMenuOpciones" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarMenuOpciones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMenuOpcionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarMenuOpciones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q55="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q55:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPerfilOpciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPerfilOpciones" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPerfilOpciones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPerfilOpcionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPerfilOpciones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q56="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q56:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_HabilitarPermiso_InputMessage">
+    <wsdl:part name="parameters" element="tns:HabilitarPermiso" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_HabilitarPermiso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HabilitarPermisoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_HabilitarPermiso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q57="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q57:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_FiltrarUsuarios_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarUsuarios" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_FiltrarUsuarios_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarUsuariosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_FiltrarUsuarios_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q58="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q58:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarUsuarioSistema_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUsuarioSistema" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarUsuarioSistema_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUsuarioSistemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarUsuarioSistema_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q59="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q59:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarLocacionUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLocacionUsuario" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarLocacionUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLocacionUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarLocacionUsuario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q60="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q60:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarClave_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarClave" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarClave_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarClaveResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarClave_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q61="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q61:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarUsuario" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarUsuario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q62="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q62:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarUsuario" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarUsuario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q63="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q63:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarLocacionUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarLocacionUsuario" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarLocacionUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarLocacionUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarLocacionUsuario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q64="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q64:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarLocacionUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarLocacionUsuario" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarLocacionUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarLocacionUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarLocacionUsuario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q65="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q65:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarLocacionUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarLocacionUsuario" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarLocacionUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarLocacionUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarLocacionUsuario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q66="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q66:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarUsuarioSistema_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarUsuarioSistema" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarUsuarioSistema_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarUsuarioSistemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarUsuarioSistema_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q67="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q67:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarUsuarioSistema_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarUsuarioSistema" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarUsuarioSistema_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarUsuarioSistemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarUsuarioSistema_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q68="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q68:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarUsuarioSistema_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUsuarioSistema" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarUsuarioSistema_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUsuarioSistemaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarUsuarioSistema_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q69="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q69:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarPerfilOpciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPerfilOpciones" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarPerfilOpciones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPerfilOpcionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarPerfilOpciones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q70="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q70:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarPerfilOpciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPerfilOpciones" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarPerfilOpciones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPerfilOpcionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BorrarPerfilOpciones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q71="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q71:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarPermisoUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPermisoUsuario" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarPermisoUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPermisoUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarPermisoUsuario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q72="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q72:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarPermisoUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPermisoUsuario" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarPermisoUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPermisoUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarPermisoUsuario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q73="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q73:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarSistemas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSistemas" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarSistemas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSistemasResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarSistemas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q74="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q74:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarPermiso_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPermiso" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarPermiso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPermisoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_BuscarPermiso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q75="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q75:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_AccesoMultiEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:AccesoMultiEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_AccesoMultiEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AccesoMultiEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_AccesoMultiEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q76="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q76:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerCodEmp_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCodEmp" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerCodEmp_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCodEmpResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ObtenerCodEmp_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q77="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q77:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarOficina_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarOficina" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarOficina_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarOficinaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ActualizarOficina_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q78="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q78:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_DesactivarUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:DesactivarUsuario" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_DesactivarUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DesactivarUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_DesactivarUsuario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q79="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q79:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="ISeguridad">
+    <wsdl:operation name="BuscarEquipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BuscarEquipo" message="tns:ISeguridad_BuscarEquipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BuscarEquipoResponse" message="tns:ISeguridad_BuscarEquipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_BuscarEquipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LibreLicencia">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/LibreLicencia" message="tns:ISeguridad_LibreLicencia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/LibreLicenciaResponse" message="tns:ISeguridad_LibreLicencia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_LibreLicencia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUsuarioPC">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BuscarUsuarioPC" message="tns:ISeguridad_BuscarUsuarioPC_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BuscarUsuarioPCResponse" message="tns:ISeguridad_BuscarUsuarioPC_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_BuscarUsuarioPC_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOnomasticosEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarOnomasticosEmpresa" message="tns:ISeguridad_MostrarOnomasticosEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarOnomasticosEmpresaResponse" message="tns:ISeguridad_MostrarOnomasticosEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_MostrarOnomasticosEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarVigenciaEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BuscarVigenciaEmpresa" message="tns:ISeguridad_BuscarVigenciaEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BuscarVigenciaEmpresaResponse" message="tns:ISeguridad_BuscarVigenciaEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_BuscarVigenciaEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecuperarClave">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/RecuperarClave" message="tns:ISeguridad_RecuperarClave_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/RecuperarClaveResponse" message="tns:ISeguridad_RecuperarClave_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_RecuperarClave_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCorreo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/ObtenerCorreo" message="tns:ISeguridad_ObtenerCorreo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/ObtenerCorreoResponse" message="tns:ISeguridad_ObtenerCorreo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_ObtenerCorreo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarVigencia">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BuscarVigencia" message="tns:ISeguridad_BuscarVigencia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BuscarVigenciaResponse" message="tns:ISeguridad_BuscarVigencia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_BuscarVigencia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BuscarUsuario" message="tns:ISeguridad_BuscarUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BuscarUsuarioResponse" message="tns:ISeguridad_BuscarUsuario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_BuscarUsuario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPermisoTipCam">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BuscarPermisoTipCam" message="tns:ISeguridad_BuscarPermisoTipCam_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BuscarPermisoTipCamResponse" message="tns:ISeguridad_BuscarPermisoTipCam_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_BuscarPermisoTipCam_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoCambioCompra">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarTipoCambioCompra" message="tns:ISeguridad_MostrarTipoCambioCompra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarTipoCambioCompraResponse" message="tns:ISeguridad_MostrarTipoCambioCompra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarTipoCambioCompra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPerfilOpciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/ActualizarPerfilOpciones" message="tns:ISeguridad_ActualizarPerfilOpciones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/ActualizarPerfilOpcionesResponse" message="tns:ISeguridad_ActualizarPerfilOpciones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_ActualizarPerfilOpciones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPerfilOpciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/ObtenerPerfilOpciones" message="tns:ISeguridad_ObtenerPerfilOpciones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/ObtenerPerfilOpcionesResponse" message="tns:ISeguridad_ObtenerPerfilOpciones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_ObtenerPerfilOpciones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCentroCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarCentroCosto" message="tns:ISeguridad_MostrarCentroCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarCentroCostoResponse" message="tns:ISeguridad_MostrarCentroCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarCentroCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCentroCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/InsertarCentroCosto" message="tns:ISeguridad_InsertarCentroCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/InsertarCentroCostoResponse" message="tns:ISeguridad_InsertarCentroCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_InsertarCentroCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCentroCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BorrarCentroCosto" message="tns:ISeguridad_BorrarCentroCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BorrarCentroCostoResponse" message="tns:ISeguridad_BorrarCentroCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_BorrarCentroCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarCentroCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BuscarCentroCosto" message="tns:ISeguridad_BuscarCentroCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BuscarCentroCostoResponse" message="tns:ISeguridad_BuscarCentroCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_BuscarCentroCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroRecurso">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarRubroRecurso" message="tns:ISeguridad_MostrarRubroRecurso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarRubroRecursoResponse" message="tns:ISeguridad_MostrarRubroRecurso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarRubroRecurso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRubroRecurso">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/InsertarRubroRecurso" message="tns:ISeguridad_InsertarRubroRecurso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/InsertarRubroRecursoResponse" message="tns:ISeguridad_InsertarRubroRecurso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_InsertarRubroRecurso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRubroRecurso">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BorrarRubroRecurso" message="tns:ISeguridad_BorrarRubroRecurso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BorrarRubroRecursoResponse" message="tns:ISeguridad_BorrarRubroRecurso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_BorrarRubroRecurso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRubroRecurso">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BuscarRubroRecurso" message="tns:ISeguridad_BuscarRubroRecurso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BuscarRubroRecursoResponse" message="tns:ISeguridad_BuscarRubroRecurso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_BuscarRubroRecurso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AlertaSistema">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/AlertaSistema" message="tns:ISeguridad_AlertaSistema_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/AlertaSistemaResponse" message="tns:ISeguridad_AlertaSistema_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_AlertaSistema_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCodCentro">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/ObtenerCodCentro" message="tns:ISeguridad_ObtenerCodCentro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/ObtenerCodCentroResponse" message="tns:ISeguridad_ObtenerCodCentro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_ObtenerCodCentro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCodOfi">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/ObtenerCodOfi" message="tns:ISeguridad_ObtenerCodOfi_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/ObtenerCodOfiResponse" message="tns:ISeguridad_ObtenerCodOfi_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_ObtenerCodOfi_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOnomasticos">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarOnomasticos" message="tns:ISeguridad_MostrarOnomasticos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarOnomasticosResponse" message="tns:ISeguridad_MostrarOnomasticos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_MostrarOnomasticos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecibirAlerta">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/RecibirAlerta" message="tns:ISeguridad_RecibirAlerta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/RecibirAlertaResponse" message="tns:ISeguridad_RecibirAlerta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_RecibirAlerta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistrarVisitaOpciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/RegistrarVisitaOpciones" message="tns:ISeguridad_RegistrarVisitaOpciones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/RegistrarVisitaOpcionesResponse" message="tns:ISeguridad_RegistrarVisitaOpciones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_RegistrarVisitaOpciones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSesion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarSesion" message="tns:ISeguridad_MostrarSesion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarSesionResponse" message="tns:ISeguridad_MostrarSesion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_MostrarSesion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarSesion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/InsertarSesion" message="tns:ISeguridad_InsertarSesion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/InsertarSesionResponse" message="tns:ISeguridad_InsertarSesion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_InsertarSesion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CerrarSesion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/CerrarSesion" message="tns:ISeguridad_CerrarSesion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/CerrarSesionResponse" message="tns:ISeguridad_CerrarSesion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_CerrarSesion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarVersion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BuscarVersion" message="tns:ISeguridad_BuscarVersion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BuscarVersionResponse" message="tns:ISeguridad_BuscarVersion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_BuscarVersion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSesionOpciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarSesionOpciones" message="tns:ISeguridad_MostrarSesionOpciones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarSesionOpcionesResponse" message="tns:ISeguridad_MostrarSesionOpciones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_MostrarSesionOpciones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarSesionOpciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/InsertarSesionOpciones" message="tns:ISeguridad_InsertarSesionOpciones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/InsertarSesionOpcionesResponse" message="tns:ISeguridad_InsertarSesionOpciones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_InsertarSesionOpciones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/ObtenerEmpresa" message="tns:ISeguridad_ObtenerEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/ObtenerEmpresaResponse" message="tns:ISeguridad_ObtenerEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_ObtenerEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMultiEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarMultiEmpresa" message="tns:ISeguridad_MostrarMultiEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarMultiEmpresaResponse" message="tns:ISeguridad_MostrarMultiEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_MostrarMultiEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerExpDatos">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/ObtenerExpDatos" message="tns:ISeguridad_ObtenerExpDatos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/ObtenerExpDatosResponse" message="tns:ISeguridad_ObtenerExpDatos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_ObtenerExpDatos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AprobacionUnica">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/AprobacionUnica" message="tns:ISeguridad_AprobacionUnica_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/AprobacionUnicaResponse" message="tns:ISeguridad_AprobacionUnica_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_AprobacionUnica_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMonedasParaTipoCambio">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarMonedasParaTipoCambio" message="tns:ISeguridad_MostrarMonedasParaTipoCambio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarMonedasParaTipoCambioResponse" message="tns:ISeguridad_MostrarMonedasParaTipoCambio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_MostrarMonedasParaTipoCambio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTipoCambio">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/ActualizarTipoCambio" message="tns:ISeguridad_ActualizarTipoCambio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/ActualizarTipoCambioResponse" message="tns:ISeguridad_ActualizarTipoCambio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_ActualizarTipoCambio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarTipoCambio">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/FiltrarTipoCambio" message="tns:ISeguridad_FiltrarTipoCambio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/FiltrarTipoCambioResponse" message="tns:ISeguridad_FiltrarTipoCambio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_FiltrarTipoCambio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEquipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarEquipo" message="tns:ISeguridad_MostrarEquipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarEquipoResponse" message="tns:ISeguridad_MostrarEquipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_MostrarEquipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarEquipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/InsertarEquipo" message="tns:ISeguridad_InsertarEquipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/InsertarEquipoResponse" message="tns:ISeguridad_InsertarEquipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_InsertarEquipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarEquipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BorrarEquipo" message="tns:ISeguridad_BorrarEquipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BorrarEquipoResponse" message="tns:ISeguridad_BorrarEquipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ISeguridad_BorrarEquipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUsuarioPorCodigo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarUsuarioPorCodigo" message="tns:ISeguridad_MostrarUsuarioPorCodigo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarUsuarioPorCodigoResponse" message="tns:ISeguridad_MostrarUsuarioPorCodigo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarUsuarioPorCodigo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidarAccesoUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/ValidarAccesoUsuario" message="tns:ISeguridad_ValidarAccesoUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/ValidarAccesoUsuarioResponse" message="tns:ISeguridad_ValidarAccesoUsuario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_ValidarAccesoUsuario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPermisos">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarPermisos" message="tns:ISeguridad_MostrarPermisos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarPermisosResponse" message="tns:ISeguridad_MostrarPermisos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarPermisos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoCambio">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarTipoCambio" message="tns:ISeguridad_MostrarTipoCambio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarTipoCambioResponse" message="tns:ISeguridad_MostrarTipoCambio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarTipoCambio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTipoCambio">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/InsertarTipoCambio" message="tns:ISeguridad_InsertarTipoCambio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/InsertarTipoCambioResponse" message="tns:ISeguridad_InsertarTipoCambio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_InsertarTipoCambio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPerfiles">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarPerfiles" message="tns:ISeguridad_MostrarPerfiles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarPerfilesResponse" message="tns:ISeguridad_MostrarPerfiles_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarPerfiles_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPerfilPorCodigo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarPerfilPorCodigo" message="tns:ISeguridad_MostrarPerfilPorCodigo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarPerfilPorCodigoResponse" message="tns:ISeguridad_MostrarPerfilPorCodigo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarPerfilPorCodigo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPerfil">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/InsertarPerfil" message="tns:ISeguridad_InsertarPerfil_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/InsertarPerfilResponse" message="tns:ISeguridad_InsertarPerfil_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_InsertarPerfil_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPerfil">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/ActualizarPerfil" message="tns:ISeguridad_ActualizarPerfil_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/ActualizarPerfilResponse" message="tns:ISeguridad_ActualizarPerfil_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_ActualizarPerfil_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPerfil">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BorrarPerfil" message="tns:ISeguridad_BorrarPerfil_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BorrarPerfilResponse" message="tns:ISeguridad_BorrarPerfil_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_BorrarPerfil_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMenuSistema">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarMenuSistema" message="tns:ISeguridad_MostrarMenuSistema_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarMenuSistemaResponse" message="tns:ISeguridad_MostrarMenuSistema_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarMenuSistema_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMenuOpciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarMenuOpciones" message="tns:ISeguridad_MostrarMenuOpciones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarMenuOpcionesResponse" message="tns:ISeguridad_MostrarMenuOpciones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarMenuOpciones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPerfilOpciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarPerfilOpciones" message="tns:ISeguridad_MostrarPerfilOpciones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarPerfilOpcionesResponse" message="tns:ISeguridad_MostrarPerfilOpciones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarPerfilOpciones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="HabilitarPermiso">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/HabilitarPermiso" message="tns:ISeguridad_HabilitarPermiso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/HabilitarPermisoResponse" message="tns:ISeguridad_HabilitarPermiso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_HabilitarPermiso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarUsuarios">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/FiltrarUsuarios" message="tns:ISeguridad_FiltrarUsuarios_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/FiltrarUsuariosResponse" message="tns:ISeguridad_FiltrarUsuarios_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_FiltrarUsuarios_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUsuarioSistema">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarUsuarioSistema" message="tns:ISeguridad_MostrarUsuarioSistema_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarUsuarioSistemaResponse" message="tns:ISeguridad_MostrarUsuarioSistema_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarUsuarioSistema_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLocacionUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarLocacionUsuario" message="tns:ISeguridad_MostrarLocacionUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarLocacionUsuarioResponse" message="tns:ISeguridad_MostrarLocacionUsuario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarLocacionUsuario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarClave">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/ActualizarClave" message="tns:ISeguridad_ActualizarClave_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/ActualizarClaveResponse" message="tns:ISeguridad_ActualizarClave_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_ActualizarClave_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/InsertarUsuario" message="tns:ISeguridad_InsertarUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/InsertarUsuarioResponse" message="tns:ISeguridad_InsertarUsuario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_InsertarUsuario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/ActualizarUsuario" message="tns:ISeguridad_ActualizarUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/ActualizarUsuarioResponse" message="tns:ISeguridad_ActualizarUsuario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_ActualizarUsuario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarLocacionUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/InsertarLocacionUsuario" message="tns:ISeguridad_InsertarLocacionUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/InsertarLocacionUsuarioResponse" message="tns:ISeguridad_InsertarLocacionUsuario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_InsertarLocacionUsuario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarLocacionUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BorrarLocacionUsuario" message="tns:ISeguridad_BorrarLocacionUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BorrarLocacionUsuarioResponse" message="tns:ISeguridad_BorrarLocacionUsuario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_BorrarLocacionUsuario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarLocacionUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BuscarLocacionUsuario" message="tns:ISeguridad_BuscarLocacionUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BuscarLocacionUsuarioResponse" message="tns:ISeguridad_BuscarLocacionUsuario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_BuscarLocacionUsuario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarUsuarioSistema">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/InsertarUsuarioSistema" message="tns:ISeguridad_InsertarUsuarioSistema_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/InsertarUsuarioSistemaResponse" message="tns:ISeguridad_InsertarUsuarioSistema_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_InsertarUsuarioSistema_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarUsuarioSistema">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BorrarUsuarioSistema" message="tns:ISeguridad_BorrarUsuarioSistema_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BorrarUsuarioSistemaResponse" message="tns:ISeguridad_BorrarUsuarioSistema_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_BorrarUsuarioSistema_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUsuarioSistema">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BuscarUsuarioSistema" message="tns:ISeguridad_BuscarUsuarioSistema_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BuscarUsuarioSistemaResponse" message="tns:ISeguridad_BuscarUsuarioSistema_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_BuscarUsuarioSistema_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPerfilOpciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/InsertarPerfilOpciones" message="tns:ISeguridad_InsertarPerfilOpciones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/InsertarPerfilOpcionesResponse" message="tns:ISeguridad_InsertarPerfilOpciones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_InsertarPerfilOpciones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPerfilOpciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BorrarPerfilOpciones" message="tns:ISeguridad_BorrarPerfilOpciones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BorrarPerfilOpcionesResponse" message="tns:ISeguridad_BorrarPerfilOpciones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_BorrarPerfilOpciones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPermisoUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/InsertarPermisoUsuario" message="tns:ISeguridad_InsertarPermisoUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/InsertarPermisoUsuarioResponse" message="tns:ISeguridad_InsertarPermisoUsuario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_InsertarPermisoUsuario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPermisoUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/ActualizarPermisoUsuario" message="tns:ISeguridad_ActualizarPermisoUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/ActualizarPermisoUsuarioResponse" message="tns:ISeguridad_ActualizarPermisoUsuario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_ActualizarPermisoUsuario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSistemas">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarSistemas" message="tns:ISeguridad_MostrarSistemas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarSistemasResponse" message="tns:ISeguridad_MostrarSistemas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarSistemas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPermiso">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/BuscarPermiso" message="tns:ISeguridad_BuscarPermiso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/BuscarPermisoResponse" message="tns:ISeguridad_BuscarPermiso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_BuscarPermiso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AccesoMultiEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/AccesoMultiEmpresa" message="tns:ISeguridad_AccesoMultiEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/AccesoMultiEmpresaResponse" message="tns:ISeguridad_AccesoMultiEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_AccesoMultiEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCodEmp">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/ObtenerCodEmp" message="tns:ISeguridad_ObtenerCodEmp_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/ObtenerCodEmpResponse" message="tns:ISeguridad_ObtenerCodEmp_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_ObtenerCodEmp_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarOficina">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/ActualizarOficina" message="tns:ISeguridad_ActualizarOficina_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/ActualizarOficinaResponse" message="tns:ISeguridad_ActualizarOficina_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_ActualizarOficina_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DesactivarUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/DesactivarUsuario" message="tns:ISeguridad_DesactivarUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/DesactivarUsuarioResponse" message="tns:ISeguridad_DesactivarUsuario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_DesactivarUsuario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ISeguridad" type="tns:ISeguridad">
+    <wsp:PolicyReference URI="#NetTcpBinding_ISeguridad_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="BuscarEquipo">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BuscarEquipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="LibreLicencia">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/LibreLicencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUsuarioPC">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BuscarUsuarioPC" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOnomasticosEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarOnomasticosEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarVigenciaEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BuscarVigenciaEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RecuperarClave">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/RecuperarClave" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCorreo">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/ObtenerCorreo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarVigencia">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BuscarVigencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUsuario">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BuscarUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPermisoTipCam">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BuscarPermisoTipCam" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoCambioCompra">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarTipoCambioCompra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPerfilOpciones">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/ActualizarPerfilOpciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPerfilOpciones">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/ObtenerPerfilOpciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCentroCosto">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarCentroCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCentroCosto">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/InsertarCentroCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCentroCosto">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BorrarCentroCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarCentroCosto">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BuscarCentroCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroRecurso">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarRubroRecurso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRubroRecurso">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/InsertarRubroRecurso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRubroRecurso">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BorrarRubroRecurso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRubroRecurso">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BuscarRubroRecurso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AlertaSistema">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/AlertaSistema" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCodCentro">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/ObtenerCodCentro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCodOfi">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/ObtenerCodOfi" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOnomasticos">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarOnomasticos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RecibirAlerta">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/RecibirAlerta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RegistrarVisitaOpciones">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/RegistrarVisitaOpciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSesion">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarSesion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarSesion">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/InsertarSesion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CerrarSesion">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/CerrarSesion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarVersion">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BuscarVersion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSesionOpciones">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarSesionOpciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarSesionOpciones">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/InsertarSesionOpciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/ObtenerEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMultiEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarMultiEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerExpDatos">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/ObtenerExpDatos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AprobacionUnica">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/AprobacionUnica" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMonedasParaTipoCambio">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarMonedasParaTipoCambio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTipoCambio">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/ActualizarTipoCambio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarTipoCambio">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/FiltrarTipoCambio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEquipo">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarEquipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarEquipo">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/InsertarEquipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarEquipo">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BorrarEquipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUsuarioPorCodigo">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarUsuarioPorCodigo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ValidarAccesoUsuario">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/ValidarAccesoUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPermisos">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarPermisos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoCambio">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarTipoCambio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTipoCambio">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/InsertarTipoCambio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPerfiles">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarPerfiles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPerfilPorCodigo">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarPerfilPorCodigo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPerfil">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/InsertarPerfil" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPerfil">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/ActualizarPerfil" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPerfil">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BorrarPerfil" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMenuSistema">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarMenuSistema" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMenuOpciones">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarMenuOpciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPerfilOpciones">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarPerfilOpciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="HabilitarPermiso">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/HabilitarPermiso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarUsuarios">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/FiltrarUsuarios" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUsuarioSistema">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarUsuarioSistema" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLocacionUsuario">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarLocacionUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarClave">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/ActualizarClave" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarUsuario">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/InsertarUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarUsuario">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/ActualizarUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarLocacionUsuario">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/InsertarLocacionUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarLocacionUsuario">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BorrarLocacionUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarLocacionUsuario">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BuscarLocacionUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarUsuarioSistema">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/InsertarUsuarioSistema" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarUsuarioSistema">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BorrarUsuarioSistema" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUsuarioSistema">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BuscarUsuarioSistema" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPerfilOpciones">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/InsertarPerfilOpciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPerfilOpciones">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BorrarPerfilOpciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPermisoUsuario">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/InsertarPermisoUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPermisoUsuario">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/ActualizarPermisoUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSistemas">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarSistemas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPermiso">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/BuscarPermiso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AccesoMultiEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/AccesoMultiEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCodEmp">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/ObtenerCodEmp" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarOficina">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/ActualizarOficina" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DesactivarUsuario">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/DesactivarUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Seguridad">
+    <wsdl:port name="NetTcpBinding_ISeguridad" binding="tns:NetTcpBinding_ISeguridad">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/Seguridad/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/Seguridad/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

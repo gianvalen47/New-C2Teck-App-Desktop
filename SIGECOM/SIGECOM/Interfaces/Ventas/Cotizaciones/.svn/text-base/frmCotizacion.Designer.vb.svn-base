@@ -1,0 +1,1077 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class frmCotizacion
+    Inherits System.Windows.Forms.Form
+
+    'Form overrides dispose to clean up the component list.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container
+        Dim dgvDatos_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout
+        Dim cmbCodPag_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout
+        Dim cmbCodMon_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout
+        Dim cmbIdContacto_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmCotizacion))
+        Me.txtObsCab = New System.Windows.Forms.TextBox
+        Me.ofEstiloForm = New Janus.Windows.Ribbon.OfficeFormAdorner(Me.components)
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox
+        Me.btnAgregarDetalle = New System.Windows.Forms.Button
+        Me.dgvDatos = New Janus.Windows.GridEX.GridEX
+        Me.cmOpciones = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.miNuevo = New System.Windows.Forms.ToolStripMenuItem
+        Me.miMostrar = New System.Windows.Forms.ToolStripMenuItem
+        Me.miEliminar = New System.Windows.Forms.ToolStripMenuItem
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator
+        Me.miActualizar = New System.Windows.Forms.ToolStripMenuItem
+        Me.UiGroupBox1 = New Janus.Windows.EditControls.UIGroupBox
+        Me.lblTotalNeto = New System.Windows.Forms.TextBox
+        Me.lbltotalIGV = New System.Windows.Forms.TextBox
+        Me.lblTotal = New System.Windows.Forms.TextBox
+        Me.txtTotalNeto = New Janus.Windows.GridEX.EditControls.NumericEditBox
+        Me.txtTotalIGV = New Janus.Windows.GridEX.EditControls.NumericEditBox
+        Me.txtTotalPrecio = New Janus.Windows.GridEX.EditControls.NumericEditBox
+        Me.txtTotalDescuento = New Janus.Windows.GridEX.EditControls.NumericEditBox
+        Me.txtTotal = New Janus.Windows.GridEX.EditControls.NumericEditBox
+        Me.cmbCodPag = New Janus.Windows.GridEX.EditControls.MultiColumnCombo
+        Me.txtIgv = New Janus.Windows.GridEX.EditControls.NumericEditBox
+        Me.Label10 = New System.Windows.Forms.Label
+        Me.cmbCodMon = New Janus.Windows.GridEX.EditControls.MultiColumnCombo
+        Me.txtTipoCambio = New System.Windows.Forms.TextBox
+        Me.txtCliente = New System.Windows.Forms.TextBox
+        Me.txtalmacen = New System.Windows.Forms.TextBox
+        Me.Label3 = New System.Windows.Forms.Label
+        Me.txtNumCot = New System.Windows.Forms.TextBox
+        Me.gbEstado = New System.Windows.Forms.GroupBox
+        Me.lblEstado = New System.Windows.Forms.Label
+        Me.Label21 = New System.Windows.Forms.Label
+        Me.gbDatos = New System.Windows.Forms.GroupBox
+        Me.txtFacCli = New Janus.Windows.GridEX.EditControls.NumericEditBox
+        Me.txtDscCli = New Janus.Windows.GridEX.EditControls.NumericEditBox
+        Me.Label15 = New System.Windows.Forms.Label
+        Me.Label6 = New System.Windows.Forms.Label
+        Me.lblFecha = New System.Windows.Forms.Label
+        Me.txtFecha = New Janus.Windows.CalendarCombo.CalendarCombo
+        Me.cmbIdContacto = New Janus.Windows.GridEX.EditControls.MultiColumnCombo
+        Me.Label7 = New System.Windows.Forms.Label
+        Me.btnBuscarCliente = New System.Windows.Forms.Button
+        Me.btnBuscarAlmacen = New System.Windows.Forms.Button
+        Me.Label2 = New System.Windows.Forms.Label
+        Me.Label12 = New System.Windows.Forms.Label
+        Me.Label1 = New System.Windows.Forms.Label
+        Me.Label9 = New System.Windows.Forms.Label
+        Me.Label13 = New System.Windows.Forms.Label
+        Me.UiGroupBox2 = New Janus.Windows.EditControls.UIGroupBox
+        Me.txtReferencia = New System.Windows.Forms.TextBox
+        Me.Label16 = New System.Windows.Forms.Label
+        Me.txtGarantia = New System.Windows.Forms.TextBox
+        Me.txtProyecto = New System.Windows.Forms.TextBox
+        Me.txtEntrega = New System.Windows.Forms.TextBox
+        Me.Label18 = New System.Windows.Forms.Label
+        Me.txtValidez = New System.Windows.Forms.TextBox
+        Me.txtPlazo = New System.Windows.Forms.TextBox
+        Me.Label8 = New System.Windows.Forms.Label
+        Me.Label20 = New System.Windows.Forms.Label
+        Me.Label11 = New System.Windows.Forms.Label
+        Me.Label17 = New System.Windows.Forms.Label
+        Me.UiGroupBox3 = New Janus.Windows.EditControls.UIGroupBox
+        Me.btnModificarDetalle = New System.Windows.Forms.Button
+        Me.btnModificarCabecera = New System.Windows.Forms.Button
+        Me.Label19 = New System.Windows.Forms.Label
+        Me.txtObsDet = New System.Windows.Forms.TextBox
+        Me.cmOpcionesAtender = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.miSeleccionarTodo = New System.Windows.Forms.ToolStripMenuItem
+        Me.miSeterCEROTodos = New System.Windows.Forms.ToolStripMenuItem
+        Me.btnVerDetalle = New System.Windows.Forms.Button
+        Me.btnEliminar = New System.Windows.Forms.Button
+        Me.btnGuardar = New System.Windows.Forms.Button
+        Me.btnCancelar = New System.Windows.Forms.Button
+        Me.btnGenerarDocumento = New System.Windows.Forms.Button
+        CType(Me.ofEstiloForm, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox1.SuspendLayout()
+        CType(Me.dgvDatos, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.cmOpciones.SuspendLayout()
+        CType(Me.UiGroupBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.UiGroupBox1.SuspendLayout()
+        CType(Me.cmbCodPag, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cmbCodMon, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.gbEstado.SuspendLayout()
+        Me.gbDatos.SuspendLayout()
+        CType(Me.cmbIdContacto, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.UiGroupBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.UiGroupBox2.SuspendLayout()
+        CType(Me.UiGroupBox3, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.UiGroupBox3.SuspendLayout()
+        Me.cmOpcionesAtender.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'txtObsCab
+        '
+        Me.txtObsCab.Location = New System.Drawing.Point(59, 9)
+        Me.txtObsCab.Multiline = True
+        Me.txtObsCab.Name = "txtObsCab"
+        Me.txtObsCab.Size = New System.Drawing.Size(307, 30)
+        Me.txtObsCab.TabIndex = 18
+        '
+        'ofEstiloForm
+        '
+        Me.ofEstiloForm.Form = Me
+        Me.ofEstiloForm.Office2007CustomColor = System.Drawing.Color.Empty
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.btnAgregarDetalle)
+        Me.GroupBox1.Controls.Add(Me.dgvDatos)
+        Me.GroupBox1.Controls.Add(Me.UiGroupBox1)
+        Me.GroupBox1.Location = New System.Drawing.Point(6, 228)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(787, 315)
+        Me.GroupBox1.TabIndex = 15
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Lista de Detalle"
+        '
+        'btnAgregarDetalle
+        '
+        Me.btnAgregarDetalle.Image = CType(resources.GetObject("btnAgregarDetalle.Image"), System.Drawing.Image)
+        Me.btnAgregarDetalle.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnAgregarDetalle.Location = New System.Drawing.Point(662, 8)
+        Me.btnAgregarDetalle.Name = "btnAgregarDetalle"
+        Me.btnAgregarDetalle.Size = New System.Drawing.Size(119, 25)
+        Me.btnAgregarDetalle.TabIndex = 0
+        Me.btnAgregarDetalle.Text = "Agregar Detalle"
+        Me.btnAgregarDetalle.UseVisualStyleBackColor = True
+        '
+        'dgvDatos
+        '
+        Me.dgvDatos.ContextMenuStrip = Me.cmOpciones
+        dgvDatos_DesignTimeLayout.LayoutString = resources.GetString("dgvDatos_DesignTimeLayout.LayoutString")
+        Me.dgvDatos.DesignTimeLayout = dgvDatos_DesignTimeLayout
+        Me.dgvDatos.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.dgvDatos.GroupByBoxVisible = False
+        Me.dgvDatos.Location = New System.Drawing.Point(4, 33)
+        Me.dgvDatos.Name = "dgvDatos"
+        Me.dgvDatos.RowFormatStyle.ForeColor = System.Drawing.Color.MidnightBlue
+        Me.dgvDatos.RowHeaders = Janus.Windows.GridEX.InheritableBoolean.[True]
+        Me.dgvDatos.ScrollBars = Janus.Windows.GridEX.ScrollBars.Vertical
+        Me.dgvDatos.Size = New System.Drawing.Size(777, 219)
+        Me.dgvDatos.TabIndex = 19
+        Me.dgvDatos.TabStop = False
+        Me.dgvDatos.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2003
+        '
+        'cmOpciones
+        '
+        Me.cmOpciones.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.miNuevo, Me.miMostrar, Me.miEliminar, Me.ToolStripMenuItem1, Me.miActualizar})
+        Me.cmOpciones.Name = "cmOpciones"
+        Me.cmOpciones.Size = New System.Drawing.Size(133, 98)
+        '
+        'miNuevo
+        '
+        Me.miNuevo.Image = CType(resources.GetObject("miNuevo.Image"), System.Drawing.Image)
+        Me.miNuevo.Name = "miNuevo"
+        Me.miNuevo.Size = New System.Drawing.Size(132, 22)
+        Me.miNuevo.Text = "Nuevo"
+        '
+        'miMostrar
+        '
+        Me.miMostrar.Image = CType(resources.GetObject("miMostrar.Image"), System.Drawing.Image)
+        Me.miMostrar.Name = "miMostrar"
+        Me.miMostrar.Size = New System.Drawing.Size(132, 22)
+        Me.miMostrar.Text = "Mostrar"
+        '
+        'miEliminar
+        '
+        Me.miEliminar.Image = CType(resources.GetObject("miEliminar.Image"), System.Drawing.Image)
+        Me.miEliminar.Name = "miEliminar"
+        Me.miEliminar.Size = New System.Drawing.Size(132, 22)
+        Me.miEliminar.Text = "Eliminar"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(129, 6)
+        '
+        'miActualizar
+        '
+        Me.miActualizar.Image = CType(resources.GetObject("miActualizar.Image"), System.Drawing.Image)
+        Me.miActualizar.Name = "miActualizar"
+        Me.miActualizar.Size = New System.Drawing.Size(132, 22)
+        Me.miActualizar.Text = "Actualizar"
+        '
+        'UiGroupBox1
+        '
+        Me.UiGroupBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(246, Byte), Integer))
+        Me.UiGroupBox1.Controls.Add(Me.lblTotalNeto)
+        Me.UiGroupBox1.Controls.Add(Me.lbltotalIGV)
+        Me.UiGroupBox1.Controls.Add(Me.lblTotal)
+        Me.UiGroupBox1.Controls.Add(Me.txtTotalNeto)
+        Me.UiGroupBox1.Controls.Add(Me.txtTotalIGV)
+        Me.UiGroupBox1.Controls.Add(Me.txtTotalPrecio)
+        Me.UiGroupBox1.Controls.Add(Me.txtTotalDescuento)
+        Me.UiGroupBox1.Controls.Add(Me.txtTotal)
+        Me.UiGroupBox1.Location = New System.Drawing.Point(4, 243)
+        Me.UiGroupBox1.Name = "UiGroupBox1"
+        Me.UiGroupBox1.Size = New System.Drawing.Size(777, 66)
+        Me.UiGroupBox1.TabIndex = 20
+        Me.UiGroupBox1.VisualStyle = Janus.Windows.UI.Dock.PanelVisualStyle.Office2007
+        '
+        'lblTotalNeto
+        '
+        Me.lblTotalNeto.BackColor = System.Drawing.Color.FromArgb(CType(CType(251, Byte), Integer), CType(CType(251, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.lblTotalNeto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.lblTotalNeto.Cursor = System.Windows.Forms.Cursors.Default
+        Me.lblTotalNeto.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTotalNeto.ForeColor = System.Drawing.SystemColors.Desktop
+        Me.lblTotalNeto.Location = New System.Drawing.Point(0, 46)
+        Me.lblTotalNeto.MaxLength = 20
+        Me.lblTotalNeto.Name = "lblTotalNeto"
+        Me.lblTotalNeto.ReadOnly = True
+        Me.lblTotalNeto.Size = New System.Drawing.Size(637, 20)
+        Me.lblTotalNeto.TabIndex = 13
+        Me.lblTotalNeto.TabStop = False
+        Me.lblTotalNeto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'lbltotalIGV
+        '
+        Me.lbltotalIGV.BackColor = System.Drawing.Color.FromArgb(CType(CType(251, Byte), Integer), CType(CType(251, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.lbltotalIGV.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.lbltotalIGV.Cursor = System.Windows.Forms.Cursors.Default
+        Me.lbltotalIGV.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbltotalIGV.ForeColor = System.Drawing.SystemColors.Desktop
+        Me.lbltotalIGV.Location = New System.Drawing.Point(0, 27)
+        Me.lbltotalIGV.MaxLength = 20
+        Me.lbltotalIGV.Name = "lbltotalIGV"
+        Me.lbltotalIGV.ReadOnly = True
+        Me.lbltotalIGV.Size = New System.Drawing.Size(637, 20)
+        Me.lbltotalIGV.TabIndex = 12
+        Me.lbltotalIGV.TabStop = False
+        Me.lbltotalIGV.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'lblTotal
+        '
+        Me.lblTotal.BackColor = System.Drawing.Color.FromArgb(CType(CType(251, Byte), Integer), CType(CType(251, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.lblTotal.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.lblTotal.Cursor = System.Windows.Forms.Cursors.Default
+        Me.lblTotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTotal.ForeColor = System.Drawing.SystemColors.Desktop
+        Me.lblTotal.Location = New System.Drawing.Point(0, 8)
+        Me.lblTotal.MaxLength = 20
+        Me.lblTotal.Name = "lblTotal"
+        Me.lblTotal.ReadOnly = True
+        Me.lblTotal.Size = New System.Drawing.Size(469, 20)
+        Me.lblTotal.TabIndex = 11
+        Me.lblTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'txtTotalNeto
+        '
+        Me.txtTotalNeto.BackColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(248, Byte), Integer), CType(CType(254, Byte), Integer))
+        Me.txtTotalNeto.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotalNeto.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.txtTotalNeto.Location = New System.Drawing.Point(636, 46)
+        Me.txtTotalNeto.MaxLength = 5
+        Me.txtTotalNeto.Name = "txtTotalNeto"
+        Me.txtTotalNeto.ReadOnly = True
+        Me.txtTotalNeto.Size = New System.Drawing.Size(121, 20)
+        Me.txtTotalNeto.TabIndex = 6
+        Me.txtTotalNeto.TabStop = False
+        Me.txtTotalNeto.Text = "0.00"
+        Me.txtTotalNeto.TextAlignment = Janus.Windows.GridEX.TextAlignment.Center
+        Me.txtTotalNeto.Value = New Decimal(New Integer() {0, 0, 0, 131072})
+        Me.txtTotalNeto.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'txtTotalIGV
+        '
+        Me.txtTotalIGV.BackColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(248, Byte), Integer), CType(CType(254, Byte), Integer))
+        Me.txtTotalIGV.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotalIGV.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.txtTotalIGV.Location = New System.Drawing.Point(636, 27)
+        Me.txtTotalIGV.MaxLength = 5
+        Me.txtTotalIGV.Name = "txtTotalIGV"
+        Me.txtTotalIGV.ReadOnly = True
+        Me.txtTotalIGV.Size = New System.Drawing.Size(121, 20)
+        Me.txtTotalIGV.TabIndex = 5
+        Me.txtTotalIGV.TabStop = False
+        Me.txtTotalIGV.Text = "0.00"
+        Me.txtTotalIGV.TextAlignment = Janus.Windows.GridEX.TextAlignment.Center
+        Me.txtTotalIGV.Value = New Decimal(New Integer() {0, 0, 0, 131072})
+        Me.txtTotalIGV.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'txtTotalPrecio
+        '
+        Me.txtTotalPrecio.BackColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(248, Byte), Integer), CType(CType(254, Byte), Integer))
+        Me.txtTotalPrecio.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotalPrecio.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.txtTotalPrecio.Location = New System.Drawing.Point(467, 8)
+        Me.txtTotalPrecio.MaxLength = 5
+        Me.txtTotalPrecio.Name = "txtTotalPrecio"
+        Me.txtTotalPrecio.ReadOnly = True
+        Me.txtTotalPrecio.Size = New System.Drawing.Size(92, 20)
+        Me.txtTotalPrecio.TabIndex = 1
+        Me.txtTotalPrecio.TabStop = False
+        Me.txtTotalPrecio.Text = "0.00"
+        Me.txtTotalPrecio.TextAlignment = Janus.Windows.GridEX.TextAlignment.Center
+        Me.txtTotalPrecio.Value = New Decimal(New Integer() {0, 0, 0, 131072})
+        Me.txtTotalPrecio.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'txtTotalDescuento
+        '
+        Me.txtTotalDescuento.BackColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(248, Byte), Integer), CType(CType(254, Byte), Integer))
+        Me.txtTotalDescuento.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotalDescuento.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.txtTotalDescuento.Location = New System.Drawing.Point(557, 8)
+        Me.txtTotalDescuento.MaxLength = 5
+        Me.txtTotalDescuento.Name = "txtTotalDescuento"
+        Me.txtTotalDescuento.ReadOnly = True
+        Me.txtTotalDescuento.Size = New System.Drawing.Size(80, 20)
+        Me.txtTotalDescuento.TabIndex = 2
+        Me.txtTotalDescuento.TabStop = False
+        Me.txtTotalDescuento.Text = "0.00"
+        Me.txtTotalDescuento.TextAlignment = Janus.Windows.GridEX.TextAlignment.Center
+        Me.txtTotalDescuento.Value = New Decimal(New Integer() {0, 0, 0, 131072})
+        Me.txtTotalDescuento.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'txtTotal
+        '
+        Me.txtTotal.BackColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(248, Byte), Integer), CType(CType(254, Byte), Integer))
+        Me.txtTotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotal.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.txtTotal.Location = New System.Drawing.Point(636, 8)
+        Me.txtTotal.MaxLength = 5
+        Me.txtTotal.Name = "txtTotal"
+        Me.txtTotal.ReadOnly = True
+        Me.txtTotal.Size = New System.Drawing.Size(121, 20)
+        Me.txtTotal.TabIndex = 3
+        Me.txtTotal.TabStop = False
+        Me.txtTotal.Text = "0.00"
+        Me.txtTotal.TextAlignment = Janus.Windows.GridEX.TextAlignment.Center
+        Me.txtTotal.Value = New Decimal(New Integer() {0, 0, 0, 131072})
+        Me.txtTotal.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'cmbCodPag
+        '
+        Me.cmbCodPag.ComboStyle = Janus.Windows.GridEX.ComboStyle.DropDownList
+        cmbCodPag_DesignTimeLayout.LayoutString = resources.GetString("cmbCodPag_DesignTimeLayout.LayoutString")
+        Me.cmbCodPag.DesignTimeLayout = cmbCodPag_DesignTimeLayout
+        Me.cmbCodPag.Location = New System.Drawing.Point(542, 15)
+        Me.cmbCodPag.Name = "cmbCodPag"
+        Me.cmbCodPag.SelectedIndex = -1
+        Me.cmbCodPag.SelectedItem = Nothing
+        Me.cmbCodPag.Size = New System.Drawing.Size(106, 20)
+        Me.cmbCodPag.TabIndex = 12
+        Me.cmbCodPag.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'txtIgv
+        '
+        Me.txtIgv.BackColor = System.Drawing.SystemColors.Control
+        Me.txtIgv.Location = New System.Drawing.Point(172, 59)
+        Me.txtIgv.MaxLength = 12
+        Me.txtIgv.Name = "txtIgv"
+        Me.txtIgv.ReadOnly = True
+        Me.txtIgv.Size = New System.Drawing.Size(42, 20)
+        Me.txtIgv.TabIndex = 14
+        Me.txtIgv.TabStop = False
+        Me.txtIgv.Text = "0.00"
+        Me.txtIgv.Value = New Decimal(New Integer() {0, 0, 0, 131072})
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(134, 63)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(34, 13)
+        Me.Label10.TabIndex = 33
+        Me.Label10.Text = "I.G.V."
+        '
+        'cmbCodMon
+        '
+        Me.cmbCodMon.ComboStyle = Janus.Windows.GridEX.ComboStyle.DropDownList
+        cmbCodMon_DesignTimeLayout.LayoutString = resources.GetString("cmbCodMon_DesignTimeLayout.LayoutString")
+        Me.cmbCodMon.DesignTimeLayout = cmbCodMon_DesignTimeLayout
+        Me.cmbCodMon.Location = New System.Drawing.Point(56, 59)
+        Me.cmbCodMon.Name = "cmbCodMon"
+        Me.cmbCodMon.SelectedIndex = -1
+        Me.cmbCodMon.SelectedItem = Nothing
+        Me.cmbCodMon.Size = New System.Drawing.Size(62, 20)
+        Me.cmbCodMon.TabIndex = 13
+        Me.cmbCodMon.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'txtTipoCambio
+        '
+        Me.txtTipoCambio.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtTipoCambio.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTipoCambio.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtTipoCambio.Location = New System.Drawing.Point(290, 59)
+        Me.txtTipoCambio.MaxLength = 20
+        Me.txtTipoCambio.Name = "txtTipoCambio"
+        Me.txtTipoCambio.ReadOnly = True
+        Me.txtTipoCambio.Size = New System.Drawing.Size(54, 20)
+        Me.txtTipoCambio.TabIndex = 15
+        Me.txtTipoCambio.TabStop = False
+        '
+        'txtCliente
+        '
+        Me.txtCliente.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCliente.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtCliente.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtCliente.Location = New System.Drawing.Point(56, 37)
+        Me.txtCliente.MaxLength = 3
+        Me.txtCliente.Name = "txtCliente"
+        Me.txtCliente.ReadOnly = True
+        Me.txtCliente.Size = New System.Drawing.Size(265, 20)
+        Me.txtCliente.TabIndex = 4
+        Me.txtCliente.TabStop = False
+        '
+        'txtalmacen
+        '
+        Me.txtalmacen.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtalmacen.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtalmacen.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtalmacen.Location = New System.Drawing.Point(172, 15)
+        Me.txtalmacen.MaxLength = 3
+        Me.txtalmacen.Name = "txtalmacen"
+        Me.txtalmacen.ReadOnly = True
+        Me.txtalmacen.Size = New System.Drawing.Size(149, 20)
+        Me.txtalmacen.TabIndex = 1
+        Me.txtalmacen.TabStop = False
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(126, 19)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(48, 13)
+        Me.Label3.TabIndex = 24
+        Me.Label3.Text = "Almacén"
+        '
+        'txtNumCot
+        '
+        Me.txtNumCot.BackColor = System.Drawing.Color.Beige
+        Me.txtNumCot.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtNumCot.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtNumCot.ForeColor = System.Drawing.SystemColors.Desktop
+        Me.txtNumCot.Location = New System.Drawing.Point(56, 15)
+        Me.txtNumCot.MaxLength = 200
+        Me.txtNumCot.Name = "txtNumCot"
+        Me.txtNumCot.Size = New System.Drawing.Size(67, 20)
+        Me.txtNumCot.TabIndex = 0
+        Me.txtNumCot.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'gbEstado
+        '
+        Me.gbEstado.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.gbEstado.Controls.Add(Me.lblEstado)
+        Me.gbEstado.Location = New System.Drawing.Point(654, 7)
+        Me.gbEstado.Name = "gbEstado"
+        Me.gbEstado.Size = New System.Drawing.Size(128, 51)
+        Me.gbEstado.TabIndex = 28
+        Me.gbEstado.TabStop = False
+        '
+        'lblEstado
+        '
+        Me.lblEstado.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEstado.ForeColor = System.Drawing.SystemColors.Desktop
+        Me.lblEstado.Location = New System.Drawing.Point(6, 14)
+        Me.lblEstado.Name = "lblEstado"
+        Me.lblEstado.Size = New System.Drawing.Size(116, 28)
+        Me.lblEstado.TabIndex = 0
+        Me.lblEstado.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Location = New System.Drawing.Point(5, 13)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(56, 13)
+        Me.Label21.TabIndex = 19
+        Me.Label21.Text = "Cabecera "
+        '
+        'gbDatos
+        '
+        Me.gbDatos.Controls.Add(Me.txtFacCli)
+        Me.gbDatos.Controls.Add(Me.txtDscCli)
+        Me.gbDatos.Controls.Add(Me.Label15)
+        Me.gbDatos.Controls.Add(Me.Label6)
+        Me.gbDatos.Controls.Add(Me.lblFecha)
+        Me.gbDatos.Controls.Add(Me.txtFecha)
+        Me.gbDatos.Controls.Add(Me.cmbIdContacto)
+        Me.gbDatos.Controls.Add(Me.Label7)
+        Me.gbDatos.Controls.Add(Me.cmbCodPag)
+        Me.gbDatos.Controls.Add(Me.txtIgv)
+        Me.gbDatos.Controls.Add(Me.Label10)
+        Me.gbDatos.Controls.Add(Me.cmbCodMon)
+        Me.gbDatos.Controls.Add(Me.txtTipoCambio)
+        Me.gbDatos.Controls.Add(Me.txtCliente)
+        Me.gbDatos.Controls.Add(Me.btnBuscarCliente)
+        Me.gbDatos.Controls.Add(Me.txtalmacen)
+        Me.gbDatos.Controls.Add(Me.btnBuscarAlmacen)
+        Me.gbDatos.Controls.Add(Me.Label3)
+        Me.gbDatos.Controls.Add(Me.txtNumCot)
+        Me.gbDatos.Controls.Add(Me.gbEstado)
+        Me.gbDatos.Controls.Add(Me.Label2)
+        Me.gbDatos.Controls.Add(Me.Label12)
+        Me.gbDatos.Controls.Add(Me.Label1)
+        Me.gbDatos.Controls.Add(Me.Label9)
+        Me.gbDatos.Controls.Add(Me.Label13)
+        Me.gbDatos.Controls.Add(Me.UiGroupBox2)
+        Me.gbDatos.Controls.Add(Me.UiGroupBox3)
+        Me.gbDatos.Location = New System.Drawing.Point(6, 3)
+        Me.gbDatos.Name = "gbDatos"
+        Me.gbDatos.Size = New System.Drawing.Size(787, 197)
+        Me.gbDatos.TabIndex = 10
+        Me.gbDatos.TabStop = False
+        Me.gbDatos.Text = "Datos Generales"
+        '
+        'txtFacCli
+        '
+        Me.txtFacCli.BackColor = System.Drawing.SystemColors.Control
+        Me.txtFacCli.Location = New System.Drawing.Point(400, 59)
+        Me.txtFacCli.MaxLength = 12
+        Me.txtFacCli.Name = "txtFacCli"
+        Me.txtFacCli.ReadOnly = True
+        Me.txtFacCli.Size = New System.Drawing.Size(57, 20)
+        Me.txtFacCli.TabIndex = 59
+        Me.txtFacCli.TabStop = False
+        Me.txtFacCli.Text = "0.00"
+        Me.txtFacCli.Value = New Decimal(New Integer() {0, 0, 0, 131072})
+        '
+        'txtDscCli
+        '
+        Me.txtDscCli.BackColor = System.Drawing.SystemColors.Control
+        Me.txtDscCli.Location = New System.Drawing.Point(557, 59)
+        Me.txtDscCli.MaxLength = 12
+        Me.txtDscCli.Name = "txtDscCli"
+        Me.txtDscCli.ReadOnly = True
+        Me.txtDscCli.Size = New System.Drawing.Size(57, 20)
+        Me.txtDscCli.TabIndex = 58
+        Me.txtDscCli.TabStop = False
+        Me.txtDscCli.Text = "0.00"
+        Me.txtDscCli.Value = New Decimal(New Integer() {0, 0, 0, 131072})
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(492, 63)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(59, 13)
+        Me.Label15.TabIndex = 46
+        Me.Label15.Text = "Descuento"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.BackColor = System.Drawing.SystemColors.Control
+        Me.Label6.Location = New System.Drawing.Point(351, 63)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(37, 13)
+        Me.Label6.TabIndex = 44
+        Me.Label6.Text = "Factor"
+        '
+        'lblFecha
+        '
+        Me.lblFecha.AutoSize = True
+        Me.lblFecha.Location = New System.Drawing.Point(351, 19)
+        Me.lblFecha.Name = "lblFecha"
+        Me.lblFecha.Size = New System.Drawing.Size(37, 13)
+        Me.lblFecha.TabIndex = 42
+        Me.lblFecha.Text = "Fecha"
+        '
+        'txtFecha
+        '
+        '
+        '
+        '
+        Me.txtFecha.DropDownCalendar.Name = ""
+        Me.txtFecha.DropDownCalendar.VisualStyle = Janus.Windows.CalendarCombo.VisualStyle.Office2007
+        Me.txtFecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.txtFecha.Location = New System.Drawing.Point(400, 15)
+        Me.txtFecha.Name = "txtFecha"
+        Me.txtFecha.NullButtonText = "Ninguno"
+        Me.txtFecha.Size = New System.Drawing.Size(85, 20)
+        Me.txtFecha.TabIndex = 41
+        Me.txtFecha.TodayButtonText = "Hoy"
+        Me.txtFecha.VisualStyle = Janus.Windows.CalendarCombo.VisualStyle.Office2007
+        '
+        'cmbIdContacto
+        '
+        Me.cmbIdContacto.ComboStyle = Janus.Windows.GridEX.ComboStyle.DropDownList
+        cmbIdContacto_DesignTimeLayout.LayoutString = resources.GetString("cmbIdContacto_DesignTimeLayout.LayoutString")
+        Me.cmbIdContacto.DesignTimeLayout = cmbIdContacto_DesignTimeLayout
+        Me.cmbIdContacto.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.cmbIdContacto.Location = New System.Drawing.Point(400, 37)
+        Me.cmbIdContacto.Name = "cmbIdContacto"
+        Me.cmbIdContacto.SelectedIndex = -1
+        Me.cmbIdContacto.SelectedItem = Nothing
+        Me.cmbIdContacto.Size = New System.Drawing.Size(247, 20)
+        Me.cmbIdContacto.TabIndex = 37
+        Me.cmbIdContacto.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(351, 41)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(50, 13)
+        Me.Label7.TabIndex = 38
+        Me.Label7.Text = "Contacto"
+        '
+        'btnBuscarCliente
+        '
+        Me.btnBuscarCliente.Image = CType(resources.GetObject("btnBuscarCliente.Image"), System.Drawing.Image)
+        Me.btnBuscarCliente.Location = New System.Drawing.Point(321, 36)
+        Me.btnBuscarCliente.Name = "btnBuscarCliente"
+        Me.btnBuscarCliente.Size = New System.Drawing.Size(25, 22)
+        Me.btnBuscarCliente.TabIndex = 5
+        Me.btnBuscarCliente.UseVisualStyleBackColor = True
+        '
+        'btnBuscarAlmacen
+        '
+        Me.btnBuscarAlmacen.Image = CType(resources.GetObject("btnBuscarAlmacen.Image"), System.Drawing.Image)
+        Me.btnBuscarAlmacen.Location = New System.Drawing.Point(321, 14)
+        Me.btnBuscarAlmacen.Name = "btnBuscarAlmacen"
+        Me.btnBuscarAlmacen.Size = New System.Drawing.Size(25, 22)
+        Me.btnBuscarAlmacen.TabIndex = 2
+        Me.btnBuscarAlmacen.Text = "0"
+        Me.btnBuscarAlmacen.UseVisualStyleBackColor = True
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(4, 63)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(46, 13)
+        Me.Label2.TabIndex = 20
+        Me.Label2.Text = "Moneda"
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(4, 41)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(39, 13)
+        Me.Label12.TabIndex = 22
+        Me.Label12.Text = "Cliente"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(4, 19)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(44, 13)
+        Me.Label1.TabIndex = 23
+        Me.Label1.Text = "Número"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(239, 63)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(52, 13)
+        Me.Label9.TabIndex = 32
+        Me.Label9.Text = "T.Cambio"
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Location = New System.Drawing.Point(492, 19)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(51, 13)
+        Me.Label13.TabIndex = 30
+        Me.Label13.Text = "Cd. Pago"
+        '
+        'UiGroupBox2
+        '
+        Me.UiGroupBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.UiGroupBox2.Controls.Add(Me.txtReferencia)
+        Me.UiGroupBox2.Controls.Add(Me.Label16)
+        Me.UiGroupBox2.Controls.Add(Me.txtGarantia)
+        Me.UiGroupBox2.Controls.Add(Me.txtProyecto)
+        Me.UiGroupBox2.Controls.Add(Me.txtEntrega)
+        Me.UiGroupBox2.Controls.Add(Me.Label18)
+        Me.UiGroupBox2.Controls.Add(Me.txtValidez)
+        Me.UiGroupBox2.Controls.Add(Me.txtPlazo)
+        Me.UiGroupBox2.Controls.Add(Me.Label8)
+        Me.UiGroupBox2.Controls.Add(Me.Label20)
+        Me.UiGroupBox2.Controls.Add(Me.Label11)
+        Me.UiGroupBox2.Controls.Add(Me.Label17)
+        Me.UiGroupBox2.Location = New System.Drawing.Point(6, 77)
+        Me.UiGroupBox2.Name = "UiGroupBox2"
+        Me.UiGroupBox2.Size = New System.Drawing.Size(775, 77)
+        Me.UiGroupBox2.TabIndex = 60
+        Me.UiGroupBox2.VisualStyle = Janus.Windows.UI.Dock.PanelVisualStyle.VS2005
+        '
+        'txtReferencia
+        '
+        Me.txtReferencia.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtReferencia.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtReferencia.Location = New System.Drawing.Point(59, 9)
+        Me.txtReferencia.MaxLength = 50
+        Me.txtReferencia.Name = "txtReferencia"
+        Me.txtReferencia.Size = New System.Drawing.Size(332, 20)
+        Me.txtReferencia.TabIndex = 44
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(2, 35)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(52, 13)
+        Me.Label16.TabIndex = 49
+        Me.Label16.Text = "Garantía "
+        '
+        'txtGarantia
+        '
+        Me.txtGarantia.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtGarantia.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtGarantia.Location = New System.Drawing.Point(59, 31)
+        Me.txtGarantia.MaxLength = 50
+        Me.txtGarantia.Name = "txtGarantia"
+        Me.txtGarantia.Size = New System.Drawing.Size(332, 20)
+        Me.txtGarantia.TabIndex = 48
+        '
+        'txtProyecto
+        '
+        Me.txtProyecto.Location = New System.Drawing.Point(440, 53)
+        Me.txtProyecto.MaxLength = 50
+        Me.txtProyecto.Name = "txtProyecto"
+        Me.txtProyecto.Size = New System.Drawing.Size(332, 20)
+        Me.txtProyecto.TabIndex = 56
+        '
+        'txtEntrega
+        '
+        Me.txtEntrega.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtEntrega.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtEntrega.Location = New System.Drawing.Point(440, 31)
+        Me.txtEntrega.MaxLength = 50
+        Me.txtEntrega.Name = "txtEntrega"
+        Me.txtEntrega.Size = New System.Drawing.Size(332, 20)
+        Me.txtEntrega.TabIndex = 50
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(2, 57)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(41, 13)
+        Me.Label18.TabIndex = 53
+        Me.Label18.Text = "Validez"
+        '
+        'txtValidez
+        '
+        Me.txtValidez.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtValidez.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtValidez.Location = New System.Drawing.Point(59, 53)
+        Me.txtValidez.MaxLength = 50
+        Me.txtValidez.Name = "txtValidez"
+        Me.txtValidez.Size = New System.Drawing.Size(332, 20)
+        Me.txtValidez.TabIndex = 52
+        '
+        'txtPlazo
+        '
+        Me.txtPlazo.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPlazo.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtPlazo.Location = New System.Drawing.Point(440, 9)
+        Me.txtPlazo.MaxLength = 50
+        Me.txtPlazo.Name = "txtPlazo"
+        Me.txtPlazo.Size = New System.Drawing.Size(332, 20)
+        Me.txtPlazo.TabIndex = 46
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(2, 13)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(59, 13)
+        Me.Label8.TabIndex = 45
+        Me.Label8.Text = "Referencia"
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Location = New System.Drawing.Point(394, 57)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(49, 13)
+        Me.Label20.TabIndex = 57
+        Me.Label20.Text = "Proyecto"
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(394, 13)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(33, 13)
+        Me.Label11.TabIndex = 47
+        Me.Label11.Text = "Plazo"
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(394, 35)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(44, 13)
+        Me.Label17.TabIndex = 51
+        Me.Label17.Text = "Entrega"
+        '
+        'UiGroupBox3
+        '
+        Me.UiGroupBox3.BackColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.UiGroupBox3.Controls.Add(Me.btnModificarDetalle)
+        Me.UiGroupBox3.Controls.Add(Me.btnModificarCabecera)
+        Me.UiGroupBox3.Controls.Add(Me.txtObsCab)
+        Me.UiGroupBox3.Controls.Add(Me.Label19)
+        Me.UiGroupBox3.Controls.Add(Me.txtObsDet)
+        Me.UiGroupBox3.Controls.Add(Me.Label21)
+        Me.UiGroupBox3.Location = New System.Drawing.Point(6, 152)
+        Me.UiGroupBox3.Name = "UiGroupBox3"
+        Me.UiGroupBox3.Size = New System.Drawing.Size(775, 42)
+        Me.UiGroupBox3.TabIndex = 61
+        Me.UiGroupBox3.VisualStyle = Janus.Windows.UI.Dock.PanelVisualStyle.VS2005
+        '
+        'btnModificarDetalle
+        '
+        Me.btnModificarDetalle.Image = CType(resources.GetObject("btnModificarDetalle.Image"), System.Drawing.Image)
+        Me.btnModificarDetalle.Location = New System.Drawing.Point(747, 9)
+        Me.btnModificarDetalle.Name = "btnModificarDetalle"
+        Me.btnModificarDetalle.Size = New System.Drawing.Size(25, 22)
+        Me.btnModificarDetalle.TabIndex = 57
+        Me.btnModificarDetalle.UseVisualStyleBackColor = True
+        '
+        'btnModificarCabecera
+        '
+        Me.btnModificarCabecera.Image = CType(resources.GetObject("btnModificarCabecera.Image"), System.Drawing.Image)
+        Me.btnModificarCabecera.Location = New System.Drawing.Point(366, 9)
+        Me.btnModificarCabecera.Name = "btnModificarCabecera"
+        Me.btnModificarCabecera.Size = New System.Drawing.Size(25, 22)
+        Me.btnModificarCabecera.TabIndex = 56
+        Me.btnModificarCabecera.UseVisualStyleBackColor = True
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Location = New System.Drawing.Point(397, 13)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(40, 13)
+        Me.Label19.TabIndex = 55
+        Me.Label19.Text = "Detalle"
+        '
+        'txtObsDet
+        '
+        Me.txtObsDet.Location = New System.Drawing.Point(440, 9)
+        Me.txtObsDet.Multiline = True
+        Me.txtObsDet.Name = "txtObsDet"
+        Me.txtObsDet.Size = New System.Drawing.Size(307, 30)
+        Me.txtObsDet.TabIndex = 54
+        '
+        'cmOpcionesAtender
+        '
+        Me.cmOpcionesAtender.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.miSeleccionarTodo, Me.miSeterCEROTodos})
+        Me.cmOpcionesAtender.Name = "cmOpciones"
+        Me.cmOpcionesAtender.Size = New System.Drawing.Size(176, 48)
+        '
+        'miSeleccionarTodo
+        '
+        Me.miSeleccionarTodo.Image = CType(resources.GetObject("miSeleccionarTodo.Image"), System.Drawing.Image)
+        Me.miSeleccionarTodo.Name = "miSeleccionarTodo"
+        Me.miSeleccionarTodo.Size = New System.Drawing.Size(175, 22)
+        Me.miSeleccionarTodo.Text = "Seleccionar Todos"
+        '
+        'miSeterCEROTodos
+        '
+        Me.miSeterCEROTodos.Image = CType(resources.GetObject("miSeterCEROTodos.Image"), System.Drawing.Image)
+        Me.miSeterCEROTodos.Name = "miSeterCEROTodos"
+        Me.miSeterCEROTodos.Size = New System.Drawing.Size(175, 22)
+        Me.miSeterCEROTodos.Text = "Poner en ""0"" todos"
+        '
+        'btnVerDetalle
+        '
+        Me.btnVerDetalle.Image = Global.SIGECOM.My.Resources.Resources.derecha
+        Me.btnVerDetalle.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnVerDetalle.Location = New System.Drawing.Point(6, 201)
+        Me.btnVerDetalle.Name = "btnVerDetalle"
+        Me.btnVerDetalle.Size = New System.Drawing.Size(85, 23)
+        Me.btnVerDetalle.TabIndex = 11
+        Me.btnVerDetalle.Text = "Ver Detalle"
+        Me.btnVerDetalle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnVerDetalle.UseVisualStyleBackColor = True
+        '
+        'btnEliminar
+        '
+        Me.btnEliminar.Image = CType(resources.GetObject("btnEliminar.Image"), System.Drawing.Image)
+        Me.btnEliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnEliminar.Location = New System.Drawing.Point(643, 203)
+        Me.btnEliminar.Name = "btnEliminar"
+        Me.btnEliminar.Size = New System.Drawing.Size(73, 23)
+        Me.btnEliminar.TabIndex = 13
+        Me.btnEliminar.Text = "Eliminar"
+        Me.btnEliminar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnEliminar.UseVisualStyleBackColor = True
+        '
+        'btnGuardar
+        '
+        Me.btnGuardar.Image = CType(resources.GetObject("btnGuardar.Image"), System.Drawing.Image)
+        Me.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnGuardar.Location = New System.Drawing.Point(569, 203)
+        Me.btnGuardar.Name = "btnGuardar"
+        Me.btnGuardar.Size = New System.Drawing.Size(73, 23)
+        Me.btnGuardar.TabIndex = 12
+        Me.btnGuardar.Text = "Guardar"
+        Me.btnGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnGuardar.UseVisualStyleBackColor = True
+        '
+        'btnCancelar
+        '
+        Me.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.btnCancelar.Image = CType(resources.GetObject("btnCancelar.Image"), System.Drawing.Image)
+        Me.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnCancelar.Location = New System.Drawing.Point(717, 203)
+        Me.btnCancelar.Name = "btnCancelar"
+        Me.btnCancelar.Size = New System.Drawing.Size(73, 23)
+        Me.btnCancelar.TabIndex = 14
+        Me.btnCancelar.Text = "Cancelar"
+        Me.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnCancelar.UseVisualStyleBackColor = True
+        '
+        'btnGenerarDocumento
+        '
+        Me.btnGenerarDocumento.Image = CType(resources.GetObject("btnGenerarDocumento.Image"), System.Drawing.Image)
+        Me.btnGenerarDocumento.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnGenerarDocumento.Location = New System.Drawing.Point(442, 203)
+        Me.btnGenerarDocumento.Name = "btnGenerarDocumento"
+        Me.btnGenerarDocumento.Size = New System.Drawing.Size(127, 23)
+        Me.btnGenerarDocumento.TabIndex = 16
+        Me.btnGenerarDocumento.Text = "Generar G/F/B/O.C"
+        Me.btnGenerarDocumento.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnGenerarDocumento.UseVisualStyleBackColor = True
+        Me.btnGenerarDocumento.Visible = False
+        '
+        'frmCotizacion
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(797, 545)
+        Me.Controls.Add(Me.btnGenerarDocumento)
+        Me.Controls.Add(Me.gbDatos)
+        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.btnVerDetalle)
+        Me.Controls.Add(Me.btnEliminar)
+        Me.Controls.Add(Me.btnGuardar)
+        Me.Controls.Add(Me.btnCancelar)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
+        Me.Name = "frmCotizacion"
+        Me.ShowInTaskbar = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
+        Me.Text = "Cotización"
+        CType(Me.ofEstiloForm, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox1.ResumeLayout(False)
+        CType(Me.dgvDatos, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.cmOpciones.ResumeLayout(False)
+        CType(Me.UiGroupBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.UiGroupBox1.ResumeLayout(False)
+        Me.UiGroupBox1.PerformLayout()
+        CType(Me.cmbCodPag, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cmbCodMon, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.gbEstado.ResumeLayout(False)
+        Me.gbDatos.ResumeLayout(False)
+        Me.gbDatos.PerformLayout()
+        CType(Me.cmbIdContacto, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.UiGroupBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.UiGroupBox2.ResumeLayout(False)
+        Me.UiGroupBox2.PerformLayout()
+        CType(Me.UiGroupBox3, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.UiGroupBox3.ResumeLayout(False)
+        Me.UiGroupBox3.PerformLayout()
+        Me.cmOpcionesAtender.ResumeLayout(False)
+        Me.ResumeLayout(False)
+
+    End Sub
+    Friend WithEvents txtObsCab As System.Windows.Forms.TextBox
+    Friend WithEvents ofEstiloForm As Janus.Windows.Ribbon.OfficeFormAdorner
+    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents btnAgregarDetalle As System.Windows.Forms.Button
+    Friend WithEvents dgvDatos As Janus.Windows.GridEX.GridEX
+    Friend WithEvents cmOpciones As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents miNuevo As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents miMostrar As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents miEliminar As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents miActualizar As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents UiGroupBox1 As Janus.Windows.EditControls.UIGroupBox
+    Friend WithEvents txtTotalPrecio As Janus.Windows.GridEX.EditControls.NumericEditBox
+    Friend WithEvents txtTotalDescuento As Janus.Windows.GridEX.EditControls.NumericEditBox
+    Friend WithEvents txtTotal As Janus.Windows.GridEX.EditControls.NumericEditBox
+    Friend WithEvents btnCancelar As System.Windows.Forms.Button
+    Friend WithEvents btnGuardar As System.Windows.Forms.Button
+    Friend WithEvents btnEliminar As System.Windows.Forms.Button
+    Friend WithEvents gbDatos As System.Windows.Forms.GroupBox
+    Friend WithEvents cmbCodPag As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents txtIgv As Janus.Windows.GridEX.EditControls.NumericEditBox
+    Friend WithEvents Label10 As System.Windows.Forms.Label
+    Friend WithEvents cmbCodMon As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents txtTipoCambio As System.Windows.Forms.TextBox
+    Friend WithEvents txtCliente As System.Windows.Forms.TextBox
+    Friend WithEvents btnBuscarCliente As System.Windows.Forms.Button
+    Friend WithEvents txtalmacen As System.Windows.Forms.TextBox
+    Friend WithEvents btnBuscarAlmacen As System.Windows.Forms.Button
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents txtNumCot As System.Windows.Forms.TextBox
+    Friend WithEvents gbEstado As System.Windows.Forms.GroupBox
+    Friend WithEvents lblEstado As System.Windows.Forms.Label
+    Friend WithEvents Label21 As System.Windows.Forms.Label
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents Label12 As System.Windows.Forms.Label
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents Label9 As System.Windows.Forms.Label
+    Friend WithEvents Label13 As System.Windows.Forms.Label
+    Friend WithEvents btnVerDetalle As System.Windows.Forms.Button
+    Friend WithEvents miSeleccionarTodo As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents miSeterCEROTodos As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents cmOpcionesAtender As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents cmbIdContacto As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents lblFecha As System.Windows.Forms.Label
+    Friend WithEvents txtFecha As Janus.Windows.CalendarCombo.CalendarCombo
+    Friend WithEvents Label15 As System.Windows.Forms.Label
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents txtValidez As System.Windows.Forms.TextBox
+    Friend WithEvents Label18 As System.Windows.Forms.Label
+    Friend WithEvents txtEntrega As System.Windows.Forms.TextBox
+    Friend WithEvents Label17 As System.Windows.Forms.Label
+    Friend WithEvents txtGarantia As System.Windows.Forms.TextBox
+    Friend WithEvents Label16 As System.Windows.Forms.Label
+    Friend WithEvents txtPlazo As System.Windows.Forms.TextBox
+    Friend WithEvents Label11 As System.Windows.Forms.Label
+    Friend WithEvents txtReferencia As System.Windows.Forms.TextBox
+    Friend WithEvents Label8 As System.Windows.Forms.Label
+    Friend WithEvents txtObsDet As System.Windows.Forms.TextBox
+    Friend WithEvents Label19 As System.Windows.Forms.Label
+    Friend WithEvents txtProyecto As System.Windows.Forms.TextBox
+    Friend WithEvents Label20 As System.Windows.Forms.Label
+    Friend WithEvents txtFacCli As Janus.Windows.GridEX.EditControls.NumericEditBox
+    Friend WithEvents txtDscCli As Janus.Windows.GridEX.EditControls.NumericEditBox
+    Friend WithEvents UiGroupBox2 As Janus.Windows.EditControls.UIGroupBox
+    Friend WithEvents UiGroupBox3 As Janus.Windows.EditControls.UIGroupBox
+    Friend WithEvents btnModificarDetalle As System.Windows.Forms.Button
+    Friend WithEvents btnModificarCabecera As System.Windows.Forms.Button
+    Friend WithEvents txtTotalIGV As Janus.Windows.GridEX.EditControls.NumericEditBox
+    Friend WithEvents txtTotalNeto As Janus.Windows.GridEX.EditControls.NumericEditBox
+    Friend WithEvents lblTotalNeto As System.Windows.Forms.TextBox
+    Friend WithEvents lbltotalIGV As System.Windows.Forms.TextBox
+    Friend WithEvents lblTotal As System.Windows.Forms.TextBox
+    Friend WithEvents btnGenerarDocumento As System.Windows.Forms.Button
+
+End Class

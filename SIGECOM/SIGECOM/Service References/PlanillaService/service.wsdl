@@ -1,0 +1,604 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PlanillaService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IPlanillaService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IPlanillaService_MostrarPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorId" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_SugerirNumero_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirNumero" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_SugerirNumero_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirNumeroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_SugerirNumero_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Aprobar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Aprobar" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Aprobar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AprobarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Aprobar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_RevertirAprobacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:RevertirAprobacion" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_RevertirAprobacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RevertirAprobacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_RevertirAprobacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Reporte_InputMessage">
+    <wsdl:part name="parameters" element="tns:Reporte" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Reporte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_Reporte_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_InsertarTransaccionBanco_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTransaccionBanco" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_InsertarTransaccionBanco_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTransaccionBancoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_InsertarTransaccionBanco_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarTransaccionBanco_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTransaccionBanco" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarTransaccionBanco_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTransaccionBancoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarTransaccionBanco_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_ImprimirTransaccionBanco_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirTransaccionBanco" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_ImprimirTransaccionBanco_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirTransaccionBancoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_ImprimirTransaccionBanco_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarBancos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarBancos" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarBancos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarBancosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarBancos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarCuentas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCuentas" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarCuentas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCuentasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarCuentas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarCuentasEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCuentasEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarCuentasEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCuentasEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarCuentasEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_ActualizarTransaccionBancos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTransaccionBancos" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_ActualizarTransaccionBancos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTransaccionBancosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_ActualizarTransaccionBancos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_ImprimirFila_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirFila" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_ImprimirFila_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirFilaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_ImprimirFila_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_ReporteDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_ReporteDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_ReporteDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarCobradores_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCobradores" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarCobradores_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCobradoresResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaService_MostrarCobradores_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IPlanillaService">
+    <wsdl:operation name="MostrarPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/MostrarPorId" message="tns:IPlanillaService_MostrarPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/MostrarPorIdResponse" message="tns:IPlanillaService_MostrarPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_MostrarPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/Filtrar" message="tns:IPlanillaService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/FiltrarResponse" message="tns:IPlanillaService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/Buscar" message="tns:IPlanillaService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/BuscarResponse" message="tns:IPlanillaService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirNumero">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/SugerirNumero" message="tns:IPlanillaService_SugerirNumero_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/SugerirNumeroResponse" message="tns:IPlanillaService_SugerirNumero_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_SugerirNumero_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/Insertar" message="tns:IPlanillaService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/InsertarResponse" message="tns:IPlanillaService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/Actualizar" message="tns:IPlanillaService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/ActualizarResponse" message="tns:IPlanillaService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/Borrar" message="tns:IPlanillaService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/BorrarResponse" message="tns:IPlanillaService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Aprobar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/Aprobar" message="tns:IPlanillaService_Aprobar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/AprobarResponse" message="tns:IPlanillaService_Aprobar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_Aprobar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RevertirAprobacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/RevertirAprobacion" message="tns:IPlanillaService_RevertirAprobacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/RevertirAprobacionResponse" message="tns:IPlanillaService_RevertirAprobacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_RevertirAprobacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/Imprimir" message="tns:IPlanillaService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/ImprimirResponse" message="tns:IPlanillaService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Reporte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/Reporte" message="tns:IPlanillaService_Reporte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/ReporteResponse" message="tns:IPlanillaService_Reporte_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_Reporte_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTransaccionBanco">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/InsertarTransaccionBanco" message="tns:IPlanillaService_InsertarTransaccionBanco_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/InsertarTransaccionBancoResponse" message="tns:IPlanillaService_InsertarTransaccionBanco_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_InsertarTransaccionBanco_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTransaccionBanco">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/MostrarTransaccionBanco" message="tns:IPlanillaService_MostrarTransaccionBanco_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/MostrarTransaccionBancoResponse" message="tns:IPlanillaService_MostrarTransaccionBanco_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_MostrarTransaccionBanco_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirTransaccionBanco">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/ImprimirTransaccionBanco" message="tns:IPlanillaService_ImprimirTransaccionBanco_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/ImprimirTransaccionBancoResponse" message="tns:IPlanillaService_ImprimirTransaccionBanco_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_ImprimirTransaccionBanco_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarBancos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/MostrarBancos" message="tns:IPlanillaService_MostrarBancos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/MostrarBancosResponse" message="tns:IPlanillaService_MostrarBancos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_MostrarBancos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCuentas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/MostrarCuentas" message="tns:IPlanillaService_MostrarCuentas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/MostrarCuentasResponse" message="tns:IPlanillaService_MostrarCuentas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_MostrarCuentas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCuentasEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/MostrarCuentasEmpresa" message="tns:IPlanillaService_MostrarCuentasEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/MostrarCuentasEmpresaResponse" message="tns:IPlanillaService_MostrarCuentasEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_MostrarCuentasEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTransaccionBancos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/ActualizarTransaccionBancos" message="tns:IPlanillaService_ActualizarTransaccionBancos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/ActualizarTransaccionBancosResponse" message="tns:IPlanillaService_ActualizarTransaccionBancos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_ActualizarTransaccionBancos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirFila">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/ImprimirFila" message="tns:IPlanillaService_ImprimirFila_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/ImprimirFilaResponse" message="tns:IPlanillaService_ImprimirFila_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_ImprimirFila_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/ReporteDetalle" message="tns:IPlanillaService_ReporteDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/ReporteDetalleResponse" message="tns:IPlanillaService_ReporteDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_ReporteDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCobradores">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaService/MostrarCobradores" message="tns:IPlanillaService_MostrarCobradores_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaService/MostrarCobradoresResponse" message="tns:IPlanillaService_MostrarCobradores_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaService_MostrarCobradores_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IPlanillaService" type="tns:IPlanillaService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IPlanillaService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="MostrarPorId">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/MostrarPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirNumero">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/SugerirNumero" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Aprobar">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/Aprobar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RevertirAprobacion">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/RevertirAprobacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Reporte">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/Reporte" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTransaccionBanco">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/InsertarTransaccionBanco" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTransaccionBanco">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/MostrarTransaccionBanco" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirTransaccionBanco">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/ImprimirTransaccionBanco" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarBancos">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/MostrarBancos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCuentas">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/MostrarCuentas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCuentasEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/MostrarCuentasEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTransaccionBancos">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/ActualizarTransaccionBancos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirFila">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/ImprimirFila" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/ReporteDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCobradores">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaService/MostrarCobradores" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PlanillaService">
+    <wsdl:port name="NetTcpBinding_IPlanillaService" binding="tns:NetTcpBinding_IPlanillaService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/PlanillaService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/PlanillaService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

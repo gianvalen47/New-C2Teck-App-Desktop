@@ -1,0 +1,2424 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ComputadoraService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IComputadoraService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IComputadoraService_BorrarComputadora_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarComputadora" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarComputadora_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarComputadoraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarComputadora_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarHardware_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarHardware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarHardware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarHardwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarHardware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarHardware_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarHardware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarHardware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarHardwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarHardware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarHardware_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarHardware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarHardware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarHardwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarHardware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerHardware_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerHardware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerHardware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerHardwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerHardware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarHardware_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarHardware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarHardware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarHardwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarHardware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarHardware_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarHardware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarHardware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarHardwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarHardware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarComputadoraSoftware_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarComputadoraSoftware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarComputadoraSoftware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarComputadoraSoftwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarComputadoraSoftware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BuscarComputadoraSoftware_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarComputadoraSoftware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BuscarComputadoraSoftware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarComputadoraSoftwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BuscarComputadoraSoftware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarComputadoraSoftware_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarComputadoraSoftware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarComputadoraSoftware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarComputadoraSoftwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarComputadoraSoftware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerComputadoraSoftware_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerComputadoraSoftware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerComputadoraSoftware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerComputadoraSoftwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerComputadoraSoftware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarComputadoraSoftware_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarComputadoraSoftware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarComputadoraSoftware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarComputadoraSoftwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarComputadoraSoftware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarComputadoraSoftware_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarComputadoraSoftware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarComputadoraSoftware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarComputadoraSoftwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarComputadoraSoftware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarMarcas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMarcas" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarMarcas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMarcasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarMarcas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarTeclado_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTeclado" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarTeclado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTecladoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarTeclado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTeclado_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTeclado" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTeclado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTecladoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTeclado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarTeclado_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarTeclado" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarTeclado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarTecladoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarTeclado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarTeclado_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTeclado" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarTeclado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTecladoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarTeclado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarTeclado_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarTeclado" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarTeclado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarTecladoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarTeclado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerTeclado_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTeclado" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerTeclado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTecladoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerTeclado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerMouse_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerMouse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerMouse_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerMouseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerMouse_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarMouse_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMouse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarMouse_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMouseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarMouse_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarMouse_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMouse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarMouse_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMouseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarMouse_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarMouse_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarMouse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarMouse_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarMouseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarMouse_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarMouse_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMouse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarMouse_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMouseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarMouse_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarMouse_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarMouse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarMouse_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarMouseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarMouse_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ImprimirComputadora_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirComputadora" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ImprimirComputadora_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirComputadoraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ImprimirComputadora_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTipoDispositivo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDispositivo" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTipoDispositivo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDispositivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTipoDispositivo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q28:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTipoConectorDD_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoConectorDD" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTipoConectorDD_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoConectorDDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTipoConectorDD_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q29:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTipoComputadora_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoComputadora" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTipoComputadora_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoComputadoraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTipoComputadora_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q30:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarLectora_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarLectora" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarLectora_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarLectoraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarLectora_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q31:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarLectora_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLectora" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarLectora_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLectoraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarLectora_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q32:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarLectora_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarLectora" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarLectora_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarLectoraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarLectora_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q33:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerLectora_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerLectora" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerLectora_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerLectoraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerLectora_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q34:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarLectora_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarLectora" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarLectora_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarLectoraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarLectora_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q35="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q35:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarLectora_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarLectora" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarLectora_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarLectoraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarLectora_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q36="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q36:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarMemoria_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMemoria" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarMemoria_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMemoriaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarMemoria_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q37="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q37:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarMemoria_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMemoria" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarMemoria_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMemoriaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarMemoria_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q38="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q38:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarMemoria_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarMemoria" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarMemoria_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarMemoriaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarMemoria_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q39="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q39:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerMemoria_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerMemoria" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerMemoria_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerMemoriaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerMemoria_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q40="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q40:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarMemoria_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMemoria" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarMemoria_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMemoriaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarMemoria_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q41="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q41:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarMemoria_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarMemoria" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarMemoria_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarMemoriaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarMemoria_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q42="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q42:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarDiscoDuro_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarDiscoDuro" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarDiscoDuro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarDiscoDuroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarDiscoDuro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q43="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q43:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarDiscoDuro_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDiscoDuro" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarDiscoDuro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDiscoDuroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarDiscoDuro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q44="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q44:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarDiscoDuro_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarDiscoDuro" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarDiscoDuro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarDiscoDuroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarDiscoDuro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q45="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q45:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerDiscoDuro_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDiscoDuro" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerDiscoDuro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDiscoDuroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerDiscoDuro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q46="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q46:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarDiscoDuro_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarDiscoDuro" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarDiscoDuro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarDiscoDuroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarDiscoDuro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q47="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q47:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarDiscoDuro_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarDiscoDuro" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarDiscoDuro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarDiscoDuroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarDiscoDuro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q48="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q48:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarCargador_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCargador" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarCargador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCargadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarCargador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q49="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q49:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarCargador_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCargador" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarCargador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCargadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarCargador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q50="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q50:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarCargador_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarCargador" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarCargador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarCargadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarCargador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q51="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q51:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerCargador_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCargador" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerCargador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCargadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerCargador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q52="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q52:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarCargador_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCargador" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarCargador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCargadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarCargador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q53="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q53:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarCargador_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCargador" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarCargador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCargadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarCargador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q54="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q54:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarComputadora_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarComputadora" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarComputadora_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarComputadoraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarComputadora_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q55="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q55:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarComputadora_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarComputadora" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarComputadora_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarComputadoraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarComputadora_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q56="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q56:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarComputadora_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarComputadora" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarComputadora_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarComputadoraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarComputadora_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q57="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q57:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerComputadora_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerComputadora" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerComputadora_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerComputadoraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerComputadora_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q58="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q58:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarComputadora_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarComputadora" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarComputadora_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarComputadoraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarComputadora_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q59="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q59:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarTarjetaVideo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTarjetaVideo" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarTarjetaVideo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTarjetaVideoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarTarjetaVideo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q60="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q60:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTarjetaVideo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTarjetaVideo" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTarjetaVideo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTarjetaVideoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTarjetaVideo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q61="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q61:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarTarjetaVideo_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarTarjetaVideo" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarTarjetaVideo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarTarjetaVideoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarTarjetaVideo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q62="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q62:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerTarjetaVideo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTarjetaVideo" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerTarjetaVideo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTarjetaVideoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerTarjetaVideo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q63="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q63:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarTarjetaVideo_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTarjetaVideo" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarTarjetaVideo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTarjetaVideoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarTarjetaVideo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q64="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q64:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarTarjetaVideo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarTarjetaVideo" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarTarjetaVideo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarTarjetaVideoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarTarjetaVideo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q65="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q65:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarSoftware_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarSoftware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarSoftware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarSoftwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarSoftware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q66="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q66:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarSoftware_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSoftware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarSoftware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSoftwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarSoftware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q67="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q67:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarSoftware_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarSoftware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarSoftware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarSoftwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarSoftware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q68="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q68:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerSoftware_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerSoftware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerSoftware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerSoftwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerSoftware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q69="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q69:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarSoftware_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarSoftware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarSoftware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarSoftwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarSoftware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q70="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q70:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarSoftware_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarSoftware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarSoftware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarSoftwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarSoftware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q71="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q71:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarProcesador_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarProcesador" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarProcesador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarProcesadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarProcesador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q72="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q72:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarProcesador_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarProcesador" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarProcesador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarProcesadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarProcesador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q73="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q73:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarProcesador_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarProcesador" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarProcesador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarProcesadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarProcesador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q74="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q74:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerProcesador_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerProcesador" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerProcesador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerProcesadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerProcesador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q75="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q75:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarProcesador_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarProcesador" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarProcesador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarProcesadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarProcesador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q76="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q76:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarProcesador_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarProcesador" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarProcesador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarProcesadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarProcesador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q77="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q77:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarPlacaMadre_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPlacaMadre" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarPlacaMadre_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPlacaMadreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarPlacaMadre_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q78="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q78:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarPlacaMadre_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPlacaMadre" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarPlacaMadre_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPlacaMadreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarPlacaMadre_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q79="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q79:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarPlacaMadre_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarPlacaMadre" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarPlacaMadre_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarPlacaMadreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarPlacaMadre_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q80="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q80:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerPlacaMadre_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPlacaMadre" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerPlacaMadre_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPlacaMadreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerPlacaMadre_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q81="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q81:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarPlacaMadre_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPlacaMadre" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarPlacaMadre_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPlacaMadreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarPlacaMadre_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q82="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q82:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarPlacaMadre_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPlacaMadre" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarPlacaMadre_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPlacaMadreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarPlacaMadre_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q83="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q83:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarMonitor_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMonitor" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarMonitor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMonitorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ActualizarMonitor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q84="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q84:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarMonitor_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMonitor" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarMonitor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMonitorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarMonitor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q85="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q85:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarMonitor_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarMonitor" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarMonitor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarMonitorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_FiltrarMonitor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q86="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q86:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerMonitor_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerMonitor" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerMonitor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerMonitorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_ObtenerMonitor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q87="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q87:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarMonitor_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMonitor" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarMonitor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMonitorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_InsertarMonitor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q88="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q88:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarMonitor_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarMonitor" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarMonitor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarMonitorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_BorrarMonitor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q89="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q89:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTipoSoftware_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoSoftware" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTipoSoftware_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoSoftwareResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTipoSoftware_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q90="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q90:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTipoMonitor_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoMonitor" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTipoMonitor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoMonitorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComputadoraService_MostrarTipoMonitor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q91="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q91:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IComputadoraService">
+    <wsdl:operation name="BorrarComputadora">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/BorrarComputadora" message="tns:IComputadoraService_BorrarComputadora_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/BorrarComputadoraResponse" message="tns:IComputadoraService_BorrarComputadora_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_BorrarComputadora_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarHardware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarHardware" message="tns:IComputadoraService_ActualizarHardware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarHardwareResponse" message="tns:IComputadoraService_ActualizarHardware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ActualizarHardware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarHardware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarHardware" message="tns:IComputadoraService_MostrarHardware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarHardwareResponse" message="tns:IComputadoraService_MostrarHardware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarHardware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarHardware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarHardware" message="tns:IComputadoraService_FiltrarHardware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarHardwareResponse" message="tns:IComputadoraService_FiltrarHardware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_FiltrarHardware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerHardware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerHardware" message="tns:IComputadoraService_ObtenerHardware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerHardwareResponse" message="tns:IComputadoraService_ObtenerHardware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ObtenerHardware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarHardware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/InsertarHardware" message="tns:IComputadoraService_InsertarHardware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/InsertarHardwareResponse" message="tns:IComputadoraService_InsertarHardware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_InsertarHardware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarHardware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/BorrarHardware" message="tns:IComputadoraService_BorrarHardware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/BorrarHardwareResponse" message="tns:IComputadoraService_BorrarHardware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_BorrarHardware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarComputadoraSoftware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarComputadoraSoftware" message="tns:IComputadoraService_ActualizarComputadoraSoftware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarComputadoraSoftwareResponse" message="tns:IComputadoraService_ActualizarComputadoraSoftware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ActualizarComputadoraSoftware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarComputadoraSoftware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/BuscarComputadoraSoftware" message="tns:IComputadoraService_BuscarComputadoraSoftware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/BuscarComputadoraSoftwareResponse" message="tns:IComputadoraService_BuscarComputadoraSoftware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_BuscarComputadoraSoftware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarComputadoraSoftware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarComputadoraSoftware" message="tns:IComputadoraService_MostrarComputadoraSoftware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarComputadoraSoftwareResponse" message="tns:IComputadoraService_MostrarComputadoraSoftware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarComputadoraSoftware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerComputadoraSoftware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerComputadoraSoftware" message="tns:IComputadoraService_ObtenerComputadoraSoftware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerComputadoraSoftwareResponse" message="tns:IComputadoraService_ObtenerComputadoraSoftware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ObtenerComputadoraSoftware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarComputadoraSoftware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/InsertarComputadoraSoftware" message="tns:IComputadoraService_InsertarComputadoraSoftware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/InsertarComputadoraSoftwareResponse" message="tns:IComputadoraService_InsertarComputadoraSoftware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_InsertarComputadoraSoftware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarComputadoraSoftware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/BorrarComputadoraSoftware" message="tns:IComputadoraService_BorrarComputadoraSoftware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/BorrarComputadoraSoftwareResponse" message="tns:IComputadoraService_BorrarComputadoraSoftware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_BorrarComputadoraSoftware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMarcas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarMarcas" message="tns:IComputadoraService_MostrarMarcas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarMarcasResponse" message="tns:IComputadoraService_MostrarMarcas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarMarcas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTeclado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarTeclado" message="tns:IComputadoraService_ActualizarTeclado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarTecladoResponse" message="tns:IComputadoraService_ActualizarTeclado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ActualizarTeclado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTeclado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarTeclado" message="tns:IComputadoraService_MostrarTeclado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarTecladoResponse" message="tns:IComputadoraService_MostrarTeclado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarTeclado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarTeclado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarTeclado" message="tns:IComputadoraService_FiltrarTeclado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarTecladoResponse" message="tns:IComputadoraService_FiltrarTeclado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_FiltrarTeclado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTeclado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/InsertarTeclado" message="tns:IComputadoraService_InsertarTeclado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/InsertarTecladoResponse" message="tns:IComputadoraService_InsertarTeclado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_InsertarTeclado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarTeclado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/BorrarTeclado" message="tns:IComputadoraService_BorrarTeclado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/BorrarTecladoResponse" message="tns:IComputadoraService_BorrarTeclado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_BorrarTeclado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTeclado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerTeclado" message="tns:IComputadoraService_ObtenerTeclado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerTecladoResponse" message="tns:IComputadoraService_ObtenerTeclado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ObtenerTeclado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMouse">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerMouse" message="tns:IComputadoraService_ObtenerMouse_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerMouseResponse" message="tns:IComputadoraService_ObtenerMouse_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ObtenerMouse_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMouse">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarMouse" message="tns:IComputadoraService_ActualizarMouse_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarMouseResponse" message="tns:IComputadoraService_ActualizarMouse_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ActualizarMouse_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMouse">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarMouse" message="tns:IComputadoraService_MostrarMouse_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarMouseResponse" message="tns:IComputadoraService_MostrarMouse_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarMouse_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarMouse">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarMouse" message="tns:IComputadoraService_FiltrarMouse_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarMouseResponse" message="tns:IComputadoraService_FiltrarMouse_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_FiltrarMouse_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMouse">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/InsertarMouse" message="tns:IComputadoraService_InsertarMouse_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/InsertarMouseResponse" message="tns:IComputadoraService_InsertarMouse_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_InsertarMouse_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarMouse">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/BorrarMouse" message="tns:IComputadoraService_BorrarMouse_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/BorrarMouseResponse" message="tns:IComputadoraService_BorrarMouse_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_BorrarMouse_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirComputadora">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ImprimirComputadora" message="tns:IComputadoraService_ImprimirComputadora_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ImprimirComputadoraResponse" message="tns:IComputadoraService_ImprimirComputadora_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ImprimirComputadora_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDispositivo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarTipoDispositivo" message="tns:IComputadoraService_MostrarTipoDispositivo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarTipoDispositivoResponse" message="tns:IComputadoraService_MostrarTipoDispositivo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarTipoDispositivo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoConectorDD">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarTipoConectorDD" message="tns:IComputadoraService_MostrarTipoConectorDD_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarTipoConectorDDResponse" message="tns:IComputadoraService_MostrarTipoConectorDD_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarTipoConectorDD_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoComputadora">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarTipoComputadora" message="tns:IComputadoraService_MostrarTipoComputadora_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarTipoComputadoraResponse" message="tns:IComputadoraService_MostrarTipoComputadora_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarTipoComputadora_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarLectora">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarLectora" message="tns:IComputadoraService_ActualizarLectora_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarLectoraResponse" message="tns:IComputadoraService_ActualizarLectora_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ActualizarLectora_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLectora">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarLectora" message="tns:IComputadoraService_MostrarLectora_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarLectoraResponse" message="tns:IComputadoraService_MostrarLectora_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarLectora_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarLectora">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarLectora" message="tns:IComputadoraService_FiltrarLectora_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarLectoraResponse" message="tns:IComputadoraService_FiltrarLectora_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_FiltrarLectora_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerLectora">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerLectora" message="tns:IComputadoraService_ObtenerLectora_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerLectoraResponse" message="tns:IComputadoraService_ObtenerLectora_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ObtenerLectora_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarLectora">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/InsertarLectora" message="tns:IComputadoraService_InsertarLectora_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/InsertarLectoraResponse" message="tns:IComputadoraService_InsertarLectora_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_InsertarLectora_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarLectora">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/BorrarLectora" message="tns:IComputadoraService_BorrarLectora_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/BorrarLectoraResponse" message="tns:IComputadoraService_BorrarLectora_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_BorrarLectora_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMemoria">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarMemoria" message="tns:IComputadoraService_ActualizarMemoria_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarMemoriaResponse" message="tns:IComputadoraService_ActualizarMemoria_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ActualizarMemoria_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMemoria">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarMemoria" message="tns:IComputadoraService_MostrarMemoria_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarMemoriaResponse" message="tns:IComputadoraService_MostrarMemoria_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarMemoria_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarMemoria">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarMemoria" message="tns:IComputadoraService_FiltrarMemoria_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarMemoriaResponse" message="tns:IComputadoraService_FiltrarMemoria_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_FiltrarMemoria_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMemoria">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerMemoria" message="tns:IComputadoraService_ObtenerMemoria_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerMemoriaResponse" message="tns:IComputadoraService_ObtenerMemoria_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ObtenerMemoria_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMemoria">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/InsertarMemoria" message="tns:IComputadoraService_InsertarMemoria_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/InsertarMemoriaResponse" message="tns:IComputadoraService_InsertarMemoria_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_InsertarMemoria_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarMemoria">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/BorrarMemoria" message="tns:IComputadoraService_BorrarMemoria_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/BorrarMemoriaResponse" message="tns:IComputadoraService_BorrarMemoria_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_BorrarMemoria_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarDiscoDuro">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarDiscoDuro" message="tns:IComputadoraService_ActualizarDiscoDuro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarDiscoDuroResponse" message="tns:IComputadoraService_ActualizarDiscoDuro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ActualizarDiscoDuro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDiscoDuro">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarDiscoDuro" message="tns:IComputadoraService_MostrarDiscoDuro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarDiscoDuroResponse" message="tns:IComputadoraService_MostrarDiscoDuro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarDiscoDuro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarDiscoDuro">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarDiscoDuro" message="tns:IComputadoraService_FiltrarDiscoDuro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarDiscoDuroResponse" message="tns:IComputadoraService_FiltrarDiscoDuro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_FiltrarDiscoDuro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDiscoDuro">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerDiscoDuro" message="tns:IComputadoraService_ObtenerDiscoDuro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerDiscoDuroResponse" message="tns:IComputadoraService_ObtenerDiscoDuro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ObtenerDiscoDuro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarDiscoDuro">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/InsertarDiscoDuro" message="tns:IComputadoraService_InsertarDiscoDuro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/InsertarDiscoDuroResponse" message="tns:IComputadoraService_InsertarDiscoDuro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_InsertarDiscoDuro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarDiscoDuro">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/BorrarDiscoDuro" message="tns:IComputadoraService_BorrarDiscoDuro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/BorrarDiscoDuroResponse" message="tns:IComputadoraService_BorrarDiscoDuro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_BorrarDiscoDuro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCargador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarCargador" message="tns:IComputadoraService_ActualizarCargador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarCargadorResponse" message="tns:IComputadoraService_ActualizarCargador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ActualizarCargador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCargador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarCargador" message="tns:IComputadoraService_MostrarCargador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarCargadorResponse" message="tns:IComputadoraService_MostrarCargador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarCargador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarCargador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarCargador" message="tns:IComputadoraService_FiltrarCargador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarCargadorResponse" message="tns:IComputadoraService_FiltrarCargador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_FiltrarCargador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCargador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerCargador" message="tns:IComputadoraService_ObtenerCargador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerCargadorResponse" message="tns:IComputadoraService_ObtenerCargador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ObtenerCargador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCargador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/InsertarCargador" message="tns:IComputadoraService_InsertarCargador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/InsertarCargadorResponse" message="tns:IComputadoraService_InsertarCargador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_InsertarCargador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCargador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/BorrarCargador" message="tns:IComputadoraService_BorrarCargador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/BorrarCargadorResponse" message="tns:IComputadoraService_BorrarCargador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_BorrarCargador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarComputadora">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarComputadora" message="tns:IComputadoraService_ActualizarComputadora_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarComputadoraResponse" message="tns:IComputadoraService_ActualizarComputadora_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ActualizarComputadora_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarComputadora">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarComputadora" message="tns:IComputadoraService_MostrarComputadora_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarComputadoraResponse" message="tns:IComputadoraService_MostrarComputadora_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarComputadora_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarComputadora">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarComputadora" message="tns:IComputadoraService_FiltrarComputadora_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarComputadoraResponse" message="tns:IComputadoraService_FiltrarComputadora_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_FiltrarComputadora_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerComputadora">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerComputadora" message="tns:IComputadoraService_ObtenerComputadora_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerComputadoraResponse" message="tns:IComputadoraService_ObtenerComputadora_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ObtenerComputadora_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarComputadora">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/InsertarComputadora" message="tns:IComputadoraService_InsertarComputadora_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/InsertarComputadoraResponse" message="tns:IComputadoraService_InsertarComputadora_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_InsertarComputadora_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTarjetaVideo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarTarjetaVideo" message="tns:IComputadoraService_ActualizarTarjetaVideo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarTarjetaVideoResponse" message="tns:IComputadoraService_ActualizarTarjetaVideo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ActualizarTarjetaVideo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTarjetaVideo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarTarjetaVideo" message="tns:IComputadoraService_MostrarTarjetaVideo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarTarjetaVideoResponse" message="tns:IComputadoraService_MostrarTarjetaVideo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarTarjetaVideo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarTarjetaVideo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarTarjetaVideo" message="tns:IComputadoraService_FiltrarTarjetaVideo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarTarjetaVideoResponse" message="tns:IComputadoraService_FiltrarTarjetaVideo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_FiltrarTarjetaVideo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTarjetaVideo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerTarjetaVideo" message="tns:IComputadoraService_ObtenerTarjetaVideo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerTarjetaVideoResponse" message="tns:IComputadoraService_ObtenerTarjetaVideo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ObtenerTarjetaVideo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTarjetaVideo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/InsertarTarjetaVideo" message="tns:IComputadoraService_InsertarTarjetaVideo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/InsertarTarjetaVideoResponse" message="tns:IComputadoraService_InsertarTarjetaVideo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_InsertarTarjetaVideo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarTarjetaVideo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/BorrarTarjetaVideo" message="tns:IComputadoraService_BorrarTarjetaVideo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/BorrarTarjetaVideoResponse" message="tns:IComputadoraService_BorrarTarjetaVideo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_BorrarTarjetaVideo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarSoftware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarSoftware" message="tns:IComputadoraService_ActualizarSoftware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarSoftwareResponse" message="tns:IComputadoraService_ActualizarSoftware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ActualizarSoftware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSoftware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarSoftware" message="tns:IComputadoraService_MostrarSoftware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarSoftwareResponse" message="tns:IComputadoraService_MostrarSoftware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarSoftware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarSoftware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarSoftware" message="tns:IComputadoraService_FiltrarSoftware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarSoftwareResponse" message="tns:IComputadoraService_FiltrarSoftware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_FiltrarSoftware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerSoftware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerSoftware" message="tns:IComputadoraService_ObtenerSoftware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerSoftwareResponse" message="tns:IComputadoraService_ObtenerSoftware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ObtenerSoftware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarSoftware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/InsertarSoftware" message="tns:IComputadoraService_InsertarSoftware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/InsertarSoftwareResponse" message="tns:IComputadoraService_InsertarSoftware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_InsertarSoftware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarSoftware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/BorrarSoftware" message="tns:IComputadoraService_BorrarSoftware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/BorrarSoftwareResponse" message="tns:IComputadoraService_BorrarSoftware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_BorrarSoftware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarProcesador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarProcesador" message="tns:IComputadoraService_ActualizarProcesador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarProcesadorResponse" message="tns:IComputadoraService_ActualizarProcesador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ActualizarProcesador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarProcesador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarProcesador" message="tns:IComputadoraService_MostrarProcesador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarProcesadorResponse" message="tns:IComputadoraService_MostrarProcesador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarProcesador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarProcesador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarProcesador" message="tns:IComputadoraService_FiltrarProcesador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarProcesadorResponse" message="tns:IComputadoraService_FiltrarProcesador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_FiltrarProcesador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerProcesador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerProcesador" message="tns:IComputadoraService_ObtenerProcesador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerProcesadorResponse" message="tns:IComputadoraService_ObtenerProcesador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ObtenerProcesador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarProcesador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/InsertarProcesador" message="tns:IComputadoraService_InsertarProcesador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/InsertarProcesadorResponse" message="tns:IComputadoraService_InsertarProcesador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_InsertarProcesador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarProcesador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/BorrarProcesador" message="tns:IComputadoraService_BorrarProcesador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/BorrarProcesadorResponse" message="tns:IComputadoraService_BorrarProcesador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_BorrarProcesador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPlacaMadre">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarPlacaMadre" message="tns:IComputadoraService_ActualizarPlacaMadre_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarPlacaMadreResponse" message="tns:IComputadoraService_ActualizarPlacaMadre_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ActualizarPlacaMadre_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPlacaMadre">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarPlacaMadre" message="tns:IComputadoraService_MostrarPlacaMadre_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarPlacaMadreResponse" message="tns:IComputadoraService_MostrarPlacaMadre_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarPlacaMadre_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarPlacaMadre">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarPlacaMadre" message="tns:IComputadoraService_FiltrarPlacaMadre_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarPlacaMadreResponse" message="tns:IComputadoraService_FiltrarPlacaMadre_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_FiltrarPlacaMadre_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPlacaMadre">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerPlacaMadre" message="tns:IComputadoraService_ObtenerPlacaMadre_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerPlacaMadreResponse" message="tns:IComputadoraService_ObtenerPlacaMadre_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ObtenerPlacaMadre_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPlacaMadre">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/InsertarPlacaMadre" message="tns:IComputadoraService_InsertarPlacaMadre_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/InsertarPlacaMadreResponse" message="tns:IComputadoraService_InsertarPlacaMadre_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_InsertarPlacaMadre_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPlacaMadre">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/BorrarPlacaMadre" message="tns:IComputadoraService_BorrarPlacaMadre_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/BorrarPlacaMadreResponse" message="tns:IComputadoraService_BorrarPlacaMadre_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_BorrarPlacaMadre_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMonitor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarMonitor" message="tns:IComputadoraService_ActualizarMonitor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ActualizarMonitorResponse" message="tns:IComputadoraService_ActualizarMonitor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ActualizarMonitor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMonitor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarMonitor" message="tns:IComputadoraService_MostrarMonitor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarMonitorResponse" message="tns:IComputadoraService_MostrarMonitor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarMonitor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarMonitor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarMonitor" message="tns:IComputadoraService_FiltrarMonitor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/FiltrarMonitorResponse" message="tns:IComputadoraService_FiltrarMonitor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_FiltrarMonitor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMonitor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerMonitor" message="tns:IComputadoraService_ObtenerMonitor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/ObtenerMonitorResponse" message="tns:IComputadoraService_ObtenerMonitor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_ObtenerMonitor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMonitor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/InsertarMonitor" message="tns:IComputadoraService_InsertarMonitor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/InsertarMonitorResponse" message="tns:IComputadoraService_InsertarMonitor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_InsertarMonitor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarMonitor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/BorrarMonitor" message="tns:IComputadoraService_BorrarMonitor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/BorrarMonitorResponse" message="tns:IComputadoraService_BorrarMonitor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_BorrarMonitor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoSoftware">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarTipoSoftware" message="tns:IComputadoraService_MostrarTipoSoftware_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarTipoSoftwareResponse" message="tns:IComputadoraService_MostrarTipoSoftware_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarTipoSoftware_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoMonitor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComputadoraService/MostrarTipoMonitor" message="tns:IComputadoraService_MostrarTipoMonitor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComputadoraService/MostrarTipoMonitorResponse" message="tns:IComputadoraService_MostrarTipoMonitor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IComputadoraService_MostrarTipoMonitor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IComputadoraService" type="tns:IComputadoraService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IComputadoraService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="BorrarComputadora">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/BorrarComputadora" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarHardware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ActualizarHardware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarHardware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarHardware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarHardware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/FiltrarHardware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerHardware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ObtenerHardware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarHardware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/InsertarHardware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarHardware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/BorrarHardware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarComputadoraSoftware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ActualizarComputadoraSoftware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarComputadoraSoftware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/BuscarComputadoraSoftware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarComputadoraSoftware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarComputadoraSoftware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerComputadoraSoftware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ObtenerComputadoraSoftware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarComputadoraSoftware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/InsertarComputadoraSoftware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarComputadoraSoftware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/BorrarComputadoraSoftware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMarcas">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarMarcas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTeclado">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ActualizarTeclado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTeclado">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarTeclado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarTeclado">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/FiltrarTeclado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTeclado">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/InsertarTeclado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarTeclado">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/BorrarTeclado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTeclado">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ObtenerTeclado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMouse">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ObtenerMouse" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMouse">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ActualizarMouse" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMouse">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarMouse" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarMouse">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/FiltrarMouse" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMouse">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/InsertarMouse" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarMouse">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/BorrarMouse" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirComputadora">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ImprimirComputadora" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDispositivo">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarTipoDispositivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoConectorDD">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarTipoConectorDD" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoComputadora">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarTipoComputadora" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarLectora">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ActualizarLectora" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLectora">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarLectora" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarLectora">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/FiltrarLectora" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerLectora">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ObtenerLectora" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarLectora">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/InsertarLectora" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarLectora">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/BorrarLectora" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMemoria">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ActualizarMemoria" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMemoria">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarMemoria" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarMemoria">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/FiltrarMemoria" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMemoria">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ObtenerMemoria" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMemoria">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/InsertarMemoria" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarMemoria">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/BorrarMemoria" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarDiscoDuro">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ActualizarDiscoDuro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDiscoDuro">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarDiscoDuro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarDiscoDuro">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/FiltrarDiscoDuro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDiscoDuro">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ObtenerDiscoDuro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarDiscoDuro">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/InsertarDiscoDuro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarDiscoDuro">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/BorrarDiscoDuro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCargador">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ActualizarCargador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCargador">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarCargador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarCargador">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/FiltrarCargador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCargador">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ObtenerCargador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCargador">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/InsertarCargador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCargador">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/BorrarCargador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarComputadora">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ActualizarComputadora" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarComputadora">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarComputadora" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarComputadora">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/FiltrarComputadora" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerComputadora">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ObtenerComputadora" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarComputadora">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/InsertarComputadora" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTarjetaVideo">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ActualizarTarjetaVideo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTarjetaVideo">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarTarjetaVideo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarTarjetaVideo">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/FiltrarTarjetaVideo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTarjetaVideo">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ObtenerTarjetaVideo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTarjetaVideo">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/InsertarTarjetaVideo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarTarjetaVideo">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/BorrarTarjetaVideo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarSoftware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ActualizarSoftware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSoftware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarSoftware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarSoftware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/FiltrarSoftware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerSoftware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ObtenerSoftware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarSoftware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/InsertarSoftware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarSoftware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/BorrarSoftware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarProcesador">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ActualizarProcesador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarProcesador">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarProcesador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarProcesador">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/FiltrarProcesador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerProcesador">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ObtenerProcesador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarProcesador">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/InsertarProcesador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarProcesador">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/BorrarProcesador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPlacaMadre">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ActualizarPlacaMadre" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPlacaMadre">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarPlacaMadre" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarPlacaMadre">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/FiltrarPlacaMadre" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPlacaMadre">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ObtenerPlacaMadre" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPlacaMadre">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/InsertarPlacaMadre" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPlacaMadre">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/BorrarPlacaMadre" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMonitor">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ActualizarMonitor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMonitor">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarMonitor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarMonitor">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/FiltrarMonitor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMonitor">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/ObtenerMonitor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMonitor">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/InsertarMonitor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarMonitor">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/BorrarMonitor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoSoftware">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarTipoSoftware" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoMonitor">
+      <soap12:operation soapAction="http://tempuri.org/IComputadoraService/MostrarTipoMonitor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ComputadoraService">
+    <wsdl:port name="NetTcpBinding_IComputadoraService" binding="tns:NetTcpBinding_IComputadoraService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/ComputadoraService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/ComputadoraService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

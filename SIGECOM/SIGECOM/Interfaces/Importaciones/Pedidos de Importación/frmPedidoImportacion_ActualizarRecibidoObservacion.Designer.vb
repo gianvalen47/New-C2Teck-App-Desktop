@@ -1,0 +1,126 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class frmPedidoImportacion_ActualizarRecibidoObservacion
+    Inherits System.Windows.Forms.Form
+
+    'Form overrides dispose to clean up the component list.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmPedidoImportacion_ActualizarRecibidoObservacion))
+        Me.ofEstiloForm = New Janus.Windows.Ribbon.OfficeFormAdorner(Me.components)
+        Me.UiGroupBox6 = New Janus.Windows.EditControls.UIGroupBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.btnAceptar = New System.Windows.Forms.Button()
+        Me.btnCancelar = New System.Windows.Forms.Button()
+        Me.txtCodigo = New System.Windows.Forms.TextBox()
+        CType(Me.ofEstiloForm, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.UiGroupBox6, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.UiGroupBox6.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'ofEstiloForm
+        '
+        Me.ofEstiloForm.Form = Me
+        Me.ofEstiloForm.Office2007CustomColor = System.Drawing.Color.Empty
+        '
+        'UiGroupBox6
+        '
+        Me.UiGroupBox6.Controls.Add(Me.Label1)
+        Me.UiGroupBox6.Controls.Add(Me.btnAceptar)
+        Me.UiGroupBox6.Controls.Add(Me.btnCancelar)
+        Me.UiGroupBox6.Controls.Add(Me.txtCodigo)
+        Me.UiGroupBox6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.UiGroupBox6.Location = New System.Drawing.Point(12, 12)
+        Me.UiGroupBox6.Name = "UiGroupBox6"
+        Me.UiGroupBox6.Size = New System.Drawing.Size(495, 109)
+        Me.UiGroupBox6.TabIndex = 107
+        Me.UiGroupBox6.Text = "Observación"
+        Me.UiGroupBox6.VisualStyle = Janus.Windows.UI.Dock.PanelVisualStyle.Office2007
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(6, 33)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(132, 13)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "Ingrese Observación :"
+        '
+        'btnAceptar
+        '
+        Me.btnAceptar.Image = Global.SIGECOM.My.Resources.Resources.Aceptar
+        Me.btnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnAceptar.Location = New System.Drawing.Point(180, 80)
+        Me.btnAceptar.Name = "btnAceptar"
+        Me.btnAceptar.Size = New System.Drawing.Size(75, 23)
+        Me.btnAceptar.TabIndex = 1
+        Me.btnAceptar.Text = "Aceptar"
+        Me.btnAceptar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnAceptar.UseVisualStyleBackColor = True
+        '
+        'btnCancelar
+        '
+        Me.btnCancelar.Image = Global.SIGECOM.My.Resources.Resources.Cerrar
+        Me.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnCancelar.Location = New System.Drawing.Point(261, 80)
+        Me.btnCancelar.Name = "btnCancelar"
+        Me.btnCancelar.Size = New System.Drawing.Size(75, 23)
+        Me.btnCancelar.TabIndex = 2
+        Me.btnCancelar.Text = "Cancelar"
+        Me.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnCancelar.UseVisualStyleBackColor = True
+        '
+        'txtCodigo
+        '
+        Me.txtCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCodigo.Location = New System.Drawing.Point(143, 30)
+        Me.txtCodigo.MaxLength = 0
+        Me.txtCodigo.Multiline = True
+        Me.txtCodigo.Name = "txtCodigo"
+        Me.txtCodigo.Size = New System.Drawing.Size(346, 41)
+        Me.txtCodigo.TabIndex = 3
+        '
+        'frmPedidoImportacion_ActualizarRecibidoObservacion
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(521, 133)
+        Me.Controls.Add(Me.UiGroupBox6)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
+        Me.Name = "frmPedidoImportacion_ActualizarRecibidoObservacion"
+        Me.ShowInTaskbar = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "Actualizar Observacion Masiva"
+        CType(Me.ofEstiloForm, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.UiGroupBox6, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.UiGroupBox6.ResumeLayout(False)
+        Me.UiGroupBox6.PerformLayout()
+        Me.ResumeLayout(False)
+
+    End Sub
+    Friend WithEvents ofEstiloForm As Janus.Windows.Ribbon.OfficeFormAdorner
+    Friend WithEvents UiGroupBox6 As Janus.Windows.EditControls.UIGroupBox
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents btnAceptar As System.Windows.Forms.Button
+    Friend WithEvents btnCancelar As System.Windows.Forms.Button
+    Friend WithEvents txtCodigo As System.Windows.Forms.TextBox
+End Class

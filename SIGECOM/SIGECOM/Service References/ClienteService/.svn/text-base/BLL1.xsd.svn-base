@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/BLL" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/BLL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="Cliente">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbrCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AprCli" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DesCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DiaPago" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DirCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DniCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DueCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Estado" type="xs:int" />
+      <xs:element minOccurs="0" name="FaxCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HoraPago" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdCliente" type="xs:int" />
+      <xs:element minOccurs="0" name="ListaCli" type="xs:boolean" />
+      <xs:element minOccurs="0" name="NumCta" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ObsCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RucCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SectorCliente" nillable="true" type="tns:SectorCliente" />
+      <xs:element minOccurs="0" name="TelCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoCliente" nillable="true" type="tns:TipoCliente" />
+      <xs:element minOccurs="0" name="TipoContribuyente" nillable="true" type="tns:TipoContribuyente" />
+      <xs:element minOccurs="0" name="UrlCli" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Cliente" nillable="true" type="tns:Cliente" />
+  <xs:complexType name="SectorCliente">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbrSec" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodSec" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DesSec" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SectorCliente" nillable="true" type="tns:SectorCliente" />
+  <xs:complexType name="TipoCliente">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbrTipo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DesTipoCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdTipoCliente" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TipoCliente" nillable="true" type="tns:TipoCliente" />
+  <xs:complexType name="TipoContribuyente">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbrTipo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DesTipo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdTipoCon" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TipoContribuyente" nillable="true" type="tns:TipoContribuyente" />
+</xs:schema>

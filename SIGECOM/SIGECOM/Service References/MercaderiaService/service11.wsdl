@@ -1,0 +1,682 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MercaderiaService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IMercaderiaService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMercaderiaService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_MostrarPorCodigo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorCodigo" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_MostrarPorCodigo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorCodigoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_MostrarPorCodigo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_ObtenerCore_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCore" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_ObtenerCore_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_ObtenerCore_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_FiltrarCore_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarCore" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_FiltrarCore_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarCoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_FiltrarCore_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_BuscarCore_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarCore" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_BuscarCore_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarCoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_BuscarCore_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_InsertarCore_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCore" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_InsertarCore_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_InsertarCore_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_ActualizarCore_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCore" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_ActualizarCore_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_ActualizarCore_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_BorrarCore_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCore" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_BorrarCore_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_BorrarCore_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_ObtenerClase_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerClase" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_ObtenerClase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerClaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_ObtenerClase_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_InsertarClase_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarClase" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_InsertarClase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarClaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_InsertarClase_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_ActualizarClase_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarClase" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_ActualizarClase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarClaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_ActualizarClase_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_BorrarClase_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarClase" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_BorrarClase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarClaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_BorrarClase_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_FiltrarGerencia_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarGerencia" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_FiltrarGerencia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarGerenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_FiltrarGerencia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_BuscarRegalo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRegalo" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_BuscarRegalo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRegaloResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_BuscarRegalo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_MostrarUniMedPeso_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUniMedPeso" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_MostrarUniMedPeso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUniMedPesoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_MostrarUniMedPeso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_ObtenerIdListaPre_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdListaPre" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_ObtenerIdListaPre_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdListaPreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_ObtenerIdListaPre_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_MostrarRubrosEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubrosEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_MostrarRubrosEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubrosEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_MostrarRubrosEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_MostrarClasePorEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarClasePorEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_MostrarClasePorEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarClasePorEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_MostrarClasePorEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_FiltrarClaseMerca_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarClaseMerca" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_FiltrarClaseMerca_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarClaseMercaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMercaderiaService_FiltrarClaseMerca_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IMercaderiaService">
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/Mostrar" message="tns:IMercaderiaService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/MostrarResponse" message="tns:IMercaderiaService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/Filtrar" message="tns:IMercaderiaService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/FiltrarResponse" message="tns:IMercaderiaService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorCodigo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/MostrarPorCodigo" message="tns:IMercaderiaService_MostrarPorCodigo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/MostrarPorCodigoResponse" message="tns:IMercaderiaService_MostrarPorCodigo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_MostrarPorCodigo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/Buscar" message="tns:IMercaderiaService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/BuscarResponse" message="tns:IMercaderiaService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/Insertar" message="tns:IMercaderiaService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/InsertarResponse" message="tns:IMercaderiaService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/Actualizar" message="tns:IMercaderiaService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/ActualizarResponse" message="tns:IMercaderiaService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/Borrar" message="tns:IMercaderiaService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/BorrarResponse" message="tns:IMercaderiaService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCore">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/ObtenerCore" message="tns:IMercaderiaService_ObtenerCore_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/ObtenerCoreResponse" message="tns:IMercaderiaService_ObtenerCore_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_ObtenerCore_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarCore">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/FiltrarCore" message="tns:IMercaderiaService_FiltrarCore_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/FiltrarCoreResponse" message="tns:IMercaderiaService_FiltrarCore_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_FiltrarCore_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarCore">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/BuscarCore" message="tns:IMercaderiaService_BuscarCore_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/BuscarCoreResponse" message="tns:IMercaderiaService_BuscarCore_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_BuscarCore_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCore">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/InsertarCore" message="tns:IMercaderiaService_InsertarCore_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/InsertarCoreResponse" message="tns:IMercaderiaService_InsertarCore_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_InsertarCore_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCore">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/ActualizarCore" message="tns:IMercaderiaService_ActualizarCore_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/ActualizarCoreResponse" message="tns:IMercaderiaService_ActualizarCore_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_ActualizarCore_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCore">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/BorrarCore" message="tns:IMercaderiaService_BorrarCore_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/BorrarCoreResponse" message="tns:IMercaderiaService_BorrarCore_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_BorrarCore_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerClase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/ObtenerClase" message="tns:IMercaderiaService_ObtenerClase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/ObtenerClaseResponse" message="tns:IMercaderiaService_ObtenerClase_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_ObtenerClase_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarClase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/InsertarClase" message="tns:IMercaderiaService_InsertarClase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/InsertarClaseResponse" message="tns:IMercaderiaService_InsertarClase_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_InsertarClase_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarClase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/ActualizarClase" message="tns:IMercaderiaService_ActualizarClase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/ActualizarClaseResponse" message="tns:IMercaderiaService_ActualizarClase_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_ActualizarClase_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarClase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/BorrarClase" message="tns:IMercaderiaService_BorrarClase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/BorrarClaseResponse" message="tns:IMercaderiaService_BorrarClase_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_BorrarClase_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarGerencia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/FiltrarGerencia" message="tns:IMercaderiaService_FiltrarGerencia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/FiltrarGerenciaResponse" message="tns:IMercaderiaService_FiltrarGerencia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_FiltrarGerencia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRegalo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/BuscarRegalo" message="tns:IMercaderiaService_BuscarRegalo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/BuscarRegaloResponse" message="tns:IMercaderiaService_BuscarRegalo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_BuscarRegalo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUniMedPeso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/MostrarUniMedPeso" message="tns:IMercaderiaService_MostrarUniMedPeso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/MostrarUniMedPesoResponse" message="tns:IMercaderiaService_MostrarUniMedPeso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_MostrarUniMedPeso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdListaPre">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/ObtenerIdListaPre" message="tns:IMercaderiaService_ObtenerIdListaPre_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/ObtenerIdListaPreResponse" message="tns:IMercaderiaService_ObtenerIdListaPre_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_ObtenerIdListaPre_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubrosEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/MostrarRubrosEmpresa" message="tns:IMercaderiaService_MostrarRubrosEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/MostrarRubrosEmpresaResponse" message="tns:IMercaderiaService_MostrarRubrosEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_MostrarRubrosEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarClasePorEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/MostrarClasePorEmpresa" message="tns:IMercaderiaService_MostrarClasePorEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/MostrarClasePorEmpresaResponse" message="tns:IMercaderiaService_MostrarClasePorEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_MostrarClasePorEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarClaseMerca">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMercaderiaService/FiltrarClaseMerca" message="tns:IMercaderiaService_FiltrarClaseMerca_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMercaderiaService/FiltrarClaseMercaResponse" message="tns:IMercaderiaService_FiltrarClaseMerca_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IMercaderiaService_FiltrarClaseMerca_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IMercaderiaService" type="tns:IMercaderiaService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IMercaderiaService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorCodigo">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/MostrarPorCodigo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCore">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/ObtenerCore" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarCore">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/FiltrarCore" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarCore">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/BuscarCore" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCore">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/InsertarCore" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCore">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/ActualizarCore" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCore">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/BorrarCore" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerClase">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/ObtenerClase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarClase">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/InsertarClase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarClase">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/ActualizarClase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarClase">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/BorrarClase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarGerencia">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/FiltrarGerencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRegalo">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/BuscarRegalo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUniMedPeso">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/MostrarUniMedPeso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdListaPre">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/ObtenerIdListaPre" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubrosEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/MostrarRubrosEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarClasePorEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/MostrarClasePorEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarClaseMerca">
+      <soap12:operation soapAction="http://tempuri.org/IMercaderiaService/FiltrarClaseMerca" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MercaderiaService">
+    <wsdl:port name="NetTcpBinding_IMercaderiaService" binding="tns:NetTcpBinding_IMercaderiaService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/MercaderiaService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/MercaderiaService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

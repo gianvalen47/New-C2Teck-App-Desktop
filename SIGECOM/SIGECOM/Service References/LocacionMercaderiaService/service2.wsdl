@@ -1,0 +1,1644 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="LocacionMercaderiaService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ILocacionMercaderiaService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ILocacionMercaderiaService_ObtenerSaldoInicio_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerSaldoInicio" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ObtenerSaldoInicio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerSaldoInicioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ObtenerSaldoInicio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ObtenerCostoVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCostoVenta" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ObtenerCostoVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCostoVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ObtenerCostoVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioPermanenteValorizado_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteInventarioPermanenteValorizado" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioPermanenteValorizado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteInventarioPermanenteValorizadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioPermanenteValorizado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteUnificadoComServ_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteUnificadoComServ" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteUnificadoComServ_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteUnificadoComServResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteUnificadoComServ_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGMROI_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGMROI" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGMROI_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGMROIResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGMROI_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarLocacionesKardex_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLocacionesKardex" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarLocacionesKardex_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLocacionesKardexResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarLocacionesKardex_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarOficinasKardex_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOficinasKardex" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarOficinasKardex_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOficinasKardexResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarOficinasKardex_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ObtenerUbicacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerUbicacion" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ObtenerUbicacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerUbicacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ObtenerUbicacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_FiltrarUbicacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarUbicacion" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_FiltrarUbicacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarUbicacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_FiltrarUbicacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_BuscarUbicacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUbicacion" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_BuscarUbicacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUbicacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_BuscarUbicacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_InsertarUbicacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarUbicacion" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_InsertarUbicacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarUbicacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_InsertarUbicacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ActualizarUbicacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarUbicacion" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ActualizarUbicacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarUbicacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ActualizarUbicacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_BorrarUbicacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarUbicacion" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_BorrarUbicacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarUbicacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_BorrarUbicacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarEstante_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstante" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarEstante_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstanteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarEstante_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioGlobal_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteInventarioGlobal" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioGlobal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteInventarioGlobalResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioGlobal_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteCompras_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCompras" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteCompras_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteComprasResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteCompras_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ObtenerCodigoSPCC_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCodigoSPCC" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ObtenerCodigoSPCC_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCodigoSPCCResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ObtenerCodigoSPCC_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioPorUnidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteInventarioPorUnidad" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioPorUnidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteInventarioPorUnidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioPorUnidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioComprometido_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteInventarioComprometido" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioComprometido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteInventarioComprometidoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioComprometido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarUnidadesNegocioAlmacen_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUnidadesNegocioAlmacen" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarUnidadesNegocioAlmacen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUnidadesNegocioAlmacenResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarUnidadesNegocioAlmacen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarOficinasUnidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOficinasUnidad" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarOficinasUnidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOficinasUnidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarOficinasUnidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarLocacionesUnidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLocacionesUnidad" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarLocacionesUnidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLocacionesUnidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarLocacionesUnidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioExcel_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteInventarioExcel" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioExcel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteInventarioExcelResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioExcel_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioGlobalExcel_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteInventarioGlobalExcel" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioGlobalExcel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteInventarioGlobalExcelResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventarioGlobalExcel_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteMovimientosDetallado_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteMovimientosDetallado" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteMovimientosDetallado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteMovimientosDetalladoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteMovimientosDetallado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarPorCodigo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorCodigo" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarPorCodigo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorCodigoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarPorCodigo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q28:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q29:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q30:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q31:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q32:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarStock_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarStock" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarStock_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarStockResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarStock_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q33:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarKardex_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarKardex" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarKardex_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarKardexResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarKardex_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q34:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarStockGeneral_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarStockGeneral" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarStockGeneral_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarStockGeneralResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarStockGeneral_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q35="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q35:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventario_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteInventario" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteInventarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInventario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q36="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q36:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteTomaInventario_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteTomaInventario" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteTomaInventario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteTomaInventarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteTomaInventario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q37="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q37:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteMovimientos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteMovimientos" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteMovimientos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteMovimientosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteMovimientos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q38="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q38:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteValeMateriales_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteValeMateriales" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteValeMateriales_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteValeMaterialesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteValeMateriales_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q39="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q39:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteKardexMotor_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteKardexMotor" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteKardexMotor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteKardexMotorResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteKardexMotor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q40="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q40:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteKardexMotorVendido_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteKardexMotorVendido" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteKardexMotorVendido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteKardexMotorVendidoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteKardexMotorVendido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q41="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q41:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteKardex_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteKardex" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteKardex_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteKardexResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteKardex_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q42="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q42:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_TotalIngresos_InputMessage">
+    <wsdl:part name="parameters" element="tns:TotalIngresos" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_TotalIngresos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TotalIngresosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_TotalIngresos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q43="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q43:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_TotalEgresos_InputMessage">
+    <wsdl:part name="parameters" element="tns:TotalEgresos" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_TotalEgresos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TotalEgresosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_TotalEgresos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q44="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q44:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialValorizado_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerencialValorizado" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialValorizado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerencialValorizadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialValorizado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q45="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q45:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialStockMotores_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerencialStockMotores" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialStockMotores_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerencialStockMotoresResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialStockMotores_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q46="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q46:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialStockBaterias_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerencialStockBaterias" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialStockBaterias_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerencialStockBateriasResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialStockBaterias_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q47="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q47:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialStockFiltros_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerencialStockFiltros" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialStockFiltros_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerencialStockFiltrosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialStockFiltros_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q48="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q48:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialStockRepuestos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerencialStockRepuestos" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialStockRepuestos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerencialStockRepuestosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialStockRepuestos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q49="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q49:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteIndicadores_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteIndicadores" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteIndicadores_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteIndicadoresResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteIndicadores_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q50="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q50:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarStockEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarStockEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarStockEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarStockEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarStockEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q51="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q51:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarCostoEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCostoEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarCostoEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCostoEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarCostoEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q52="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q52:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarMercaderiaMinMax_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMercaderiaMinMax" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarMercaderiaMinMax_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMercaderiaMinMaxResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarMercaderiaMinMax_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q53="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q53:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ActualizarMinMax_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMinMax" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ActualizarMinMax_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMinMaxResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ActualizarMinMax_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q54="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q54:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarHistoryMinMax_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarHistoryMinMax" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarHistoryMinMax_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarHistoryMinMaxResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarHistoryMinMax_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q55="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q55:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarHistoryMinMaxDet_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarHistoryMinMaxDet" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarHistoryMinMaxDet_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarHistoryMinMaxDetResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarHistoryMinMaxDet_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q56="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q56:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_AnularProcesoMinMax_InputMessage">
+    <wsdl:part name="parameters" element="tns:AnularProcesoMinMax" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_AnularProcesoMinMax_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AnularProcesoMinMaxResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_AnularProcesoMinMax_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q57="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q57:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarCodigoBarras_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCodigoBarras" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarCodigoBarras_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCodigoBarrasResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_MostrarCodigoBarras_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q58="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q58:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInvRot_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteInvRot" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInvRot_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteInvRotResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteInvRot_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q59="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q59:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_InsertarInvRot_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarInvRot" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_InsertarInvRot_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarInvRotResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_InsertarInvRot_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q60="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q60:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialInventarios_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerencialInventarios" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialInventarios_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteGerencialInventariosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILocacionMercaderiaService_ReporteGerencialInventarios_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q61="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q61:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="ILocacionMercaderiaService">
+    <wsdl:operation name="ObtenerSaldoInicio">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ObtenerSaldoInicio" message="tns:ILocacionMercaderiaService_ObtenerSaldoInicio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ObtenerSaldoInicioResponse" message="tns:ILocacionMercaderiaService_ObtenerSaldoInicio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ObtenerSaldoInicio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCostoVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ObtenerCostoVenta" message="tns:ILocacionMercaderiaService_ObtenerCostoVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ObtenerCostoVentaResponse" message="tns:ILocacionMercaderiaService_ObtenerCostoVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ObtenerCostoVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteInventarioPermanenteValorizado">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioPermanenteValorizado" message="tns:ILocacionMercaderiaService_ReporteInventarioPermanenteValorizado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioPermanenteValorizadoResponse" message="tns:ILocacionMercaderiaService_ReporteInventarioPermanenteValorizado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteInventarioPermanenteValorizado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteUnificadoComServ">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteUnificadoComServ" message="tns:ILocacionMercaderiaService_ReporteUnificadoComServ_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteUnificadoComServResponse" message="tns:ILocacionMercaderiaService_ReporteUnificadoComServ_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteUnificadoComServ_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGMROI">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteGMROI" message="tns:ILocacionMercaderiaService_ReporteGMROI_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteGMROIResponse" message="tns:ILocacionMercaderiaService_ReporteGMROI_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteGMROI_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLocacionesKardex">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarLocacionesKardex" message="tns:ILocacionMercaderiaService_MostrarLocacionesKardex_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarLocacionesKardexResponse" message="tns:ILocacionMercaderiaService_MostrarLocacionesKardex_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_MostrarLocacionesKardex_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOficinasKardex">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarOficinasKardex" message="tns:ILocacionMercaderiaService_MostrarOficinasKardex_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarOficinasKardexResponse" message="tns:ILocacionMercaderiaService_MostrarOficinasKardex_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_MostrarOficinasKardex_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUbicacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ObtenerUbicacion" message="tns:ILocacionMercaderiaService_ObtenerUbicacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ObtenerUbicacionResponse" message="tns:ILocacionMercaderiaService_ObtenerUbicacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ObtenerUbicacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarUbicacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/FiltrarUbicacion" message="tns:ILocacionMercaderiaService_FiltrarUbicacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/FiltrarUbicacionResponse" message="tns:ILocacionMercaderiaService_FiltrarUbicacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_FiltrarUbicacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUbicacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/BuscarUbicacion" message="tns:ILocacionMercaderiaService_BuscarUbicacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/BuscarUbicacionResponse" message="tns:ILocacionMercaderiaService_BuscarUbicacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_BuscarUbicacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarUbicacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/InsertarUbicacion" message="tns:ILocacionMercaderiaService_InsertarUbicacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/InsertarUbicacionResponse" message="tns:ILocacionMercaderiaService_InsertarUbicacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_InsertarUbicacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarUbicacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ActualizarUbicacion" message="tns:ILocacionMercaderiaService_ActualizarUbicacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ActualizarUbicacionResponse" message="tns:ILocacionMercaderiaService_ActualizarUbicacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ActualizarUbicacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarUbicacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/BorrarUbicacion" message="tns:ILocacionMercaderiaService_BorrarUbicacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/BorrarUbicacionResponse" message="tns:ILocacionMercaderiaService_BorrarUbicacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_BorrarUbicacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstante">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarEstante" message="tns:ILocacionMercaderiaService_MostrarEstante_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarEstanteResponse" message="tns:ILocacionMercaderiaService_MostrarEstante_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_MostrarEstante_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteInventarioGlobal">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioGlobal" message="tns:ILocacionMercaderiaService_ReporteInventarioGlobal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioGlobalResponse" message="tns:ILocacionMercaderiaService_ReporteInventarioGlobal_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteInventarioGlobal_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCompras">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteCompras" message="tns:ILocacionMercaderiaService_ReporteCompras_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteComprasResponse" message="tns:ILocacionMercaderiaService_ReporteCompras_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteCompras_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCodigoSPCC">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ObtenerCodigoSPCC" message="tns:ILocacionMercaderiaService_ObtenerCodigoSPCC_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ObtenerCodigoSPCCResponse" message="tns:ILocacionMercaderiaService_ObtenerCodigoSPCC_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ObtenerCodigoSPCC_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteInventarioPorUnidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioPorUnidad" message="tns:ILocacionMercaderiaService_ReporteInventarioPorUnidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioPorUnidadResponse" message="tns:ILocacionMercaderiaService_ReporteInventarioPorUnidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteInventarioPorUnidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteInventarioComprometido">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioComprometido" message="tns:ILocacionMercaderiaService_ReporteInventarioComprometido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioComprometidoResponse" message="tns:ILocacionMercaderiaService_ReporteInventarioComprometido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteInventarioComprometido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUnidadesNegocioAlmacen">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarUnidadesNegocioAlmacen" message="tns:ILocacionMercaderiaService_MostrarUnidadesNegocioAlmacen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarUnidadesNegocioAlmacenResponse" message="tns:ILocacionMercaderiaService_MostrarUnidadesNegocioAlmacen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_MostrarUnidadesNegocioAlmacen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOficinasUnidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarOficinasUnidad" message="tns:ILocacionMercaderiaService_MostrarOficinasUnidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarOficinasUnidadResponse" message="tns:ILocacionMercaderiaService_MostrarOficinasUnidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_MostrarOficinasUnidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLocacionesUnidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarLocacionesUnidad" message="tns:ILocacionMercaderiaService_MostrarLocacionesUnidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarLocacionesUnidadResponse" message="tns:ILocacionMercaderiaService_MostrarLocacionesUnidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_MostrarLocacionesUnidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteInventarioExcel">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioExcel" message="tns:ILocacionMercaderiaService_ReporteInventarioExcel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioExcelResponse" message="tns:ILocacionMercaderiaService_ReporteInventarioExcel_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteInventarioExcel_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteInventarioGlobalExcel">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioGlobalExcel" message="tns:ILocacionMercaderiaService_ReporteInventarioGlobalExcel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioGlobalExcelResponse" message="tns:ILocacionMercaderiaService_ReporteInventarioGlobalExcel_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteInventarioGlobalExcel_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteMovimientosDetallado">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteMovimientosDetallado" message="tns:ILocacionMercaderiaService_ReporteMovimientosDetallado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteMovimientosDetalladoResponse" message="tns:ILocacionMercaderiaService_ReporteMovimientosDetallado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteMovimientosDetallado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/Mostrar" message="tns:ILocacionMercaderiaService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarResponse" message="tns:ILocacionMercaderiaService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorCodigo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarPorCodigo" message="tns:ILocacionMercaderiaService_MostrarPorCodigo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarPorCodigoResponse" message="tns:ILocacionMercaderiaService_MostrarPorCodigo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_MostrarPorCodigo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/Filtrar" message="tns:ILocacionMercaderiaService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/FiltrarResponse" message="tns:ILocacionMercaderiaService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/Buscar" message="tns:ILocacionMercaderiaService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/BuscarResponse" message="tns:ILocacionMercaderiaService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/Insertar" message="tns:ILocacionMercaderiaService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/InsertarResponse" message="tns:ILocacionMercaderiaService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/Actualizar" message="tns:ILocacionMercaderiaService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ActualizarResponse" message="tns:ILocacionMercaderiaService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/Borrar" message="tns:ILocacionMercaderiaService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/BorrarResponse" message="tns:ILocacionMercaderiaService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarStock">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarStock" message="tns:ILocacionMercaderiaService_MostrarStock_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarStockResponse" message="tns:ILocacionMercaderiaService_MostrarStock_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_MostrarStock_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarKardex">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarKardex" message="tns:ILocacionMercaderiaService_MostrarKardex_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarKardexResponse" message="tns:ILocacionMercaderiaService_MostrarKardex_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_MostrarKardex_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarStockGeneral">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarStockGeneral" message="tns:ILocacionMercaderiaService_MostrarStockGeneral_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarStockGeneralResponse" message="tns:ILocacionMercaderiaService_MostrarStockGeneral_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_MostrarStockGeneral_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteInventario">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteInventario" message="tns:ILocacionMercaderiaService_ReporteInventario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioResponse" message="tns:ILocacionMercaderiaService_ReporteInventario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteInventario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteTomaInventario">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteTomaInventario" message="tns:ILocacionMercaderiaService_ReporteTomaInventario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteTomaInventarioResponse" message="tns:ILocacionMercaderiaService_ReporteTomaInventario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteTomaInventario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteMovimientos">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteMovimientos" message="tns:ILocacionMercaderiaService_ReporteMovimientos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteMovimientosResponse" message="tns:ILocacionMercaderiaService_ReporteMovimientos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteMovimientos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteValeMateriales">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteValeMateriales" message="tns:ILocacionMercaderiaService_ReporteValeMateriales_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteValeMaterialesResponse" message="tns:ILocacionMercaderiaService_ReporteValeMateriales_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteValeMateriales_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteKardexMotor">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteKardexMotor" message="tns:ILocacionMercaderiaService_ReporteKardexMotor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteKardexMotorResponse" message="tns:ILocacionMercaderiaService_ReporteKardexMotor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteKardexMotor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteKardexMotorVendido">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteKardexMotorVendido" message="tns:ILocacionMercaderiaService_ReporteKardexMotorVendido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteKardexMotorVendidoResponse" message="tns:ILocacionMercaderiaService_ReporteKardexMotorVendido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteKardexMotorVendido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteKardex">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteKardex" message="tns:ILocacionMercaderiaService_ReporteKardex_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteKardexResponse" message="tns:ILocacionMercaderiaService_ReporteKardex_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteKardex_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TotalIngresos">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/TotalIngresos" message="tns:ILocacionMercaderiaService_TotalIngresos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/TotalIngresosResponse" message="tns:ILocacionMercaderiaService_TotalIngresos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_TotalIngresos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TotalEgresos">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/TotalEgresos" message="tns:ILocacionMercaderiaService_TotalEgresos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/TotalEgresosResponse" message="tns:ILocacionMercaderiaService_TotalEgresos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_TotalEgresos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerencialValorizado">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialValorizado" message="tns:ILocacionMercaderiaService_ReporteGerencialValorizado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialValorizadoResponse" message="tns:ILocacionMercaderiaService_ReporteGerencialValorizado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteGerencialValorizado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerencialStockMotores">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialStockMotores" message="tns:ILocacionMercaderiaService_ReporteGerencialStockMotores_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialStockMotoresResponse" message="tns:ILocacionMercaderiaService_ReporteGerencialStockMotores_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteGerencialStockMotores_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerencialStockBaterias">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialStockBaterias" message="tns:ILocacionMercaderiaService_ReporteGerencialStockBaterias_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialStockBateriasResponse" message="tns:ILocacionMercaderiaService_ReporteGerencialStockBaterias_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteGerencialStockBaterias_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerencialStockFiltros">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialStockFiltros" message="tns:ILocacionMercaderiaService_ReporteGerencialStockFiltros_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialStockFiltrosResponse" message="tns:ILocacionMercaderiaService_ReporteGerencialStockFiltros_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteGerencialStockFiltros_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerencialStockRepuestos">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialStockRepuestos" message="tns:ILocacionMercaderiaService_ReporteGerencialStockRepuestos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialStockRepuestosResponse" message="tns:ILocacionMercaderiaService_ReporteGerencialStockRepuestos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteGerencialStockRepuestos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteIndicadores">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteIndicadores" message="tns:ILocacionMercaderiaService_ReporteIndicadores_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteIndicadoresResponse" message="tns:ILocacionMercaderiaService_ReporteIndicadores_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteIndicadores_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarStockEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarStockEmpresa" message="tns:ILocacionMercaderiaService_MostrarStockEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarStockEmpresaResponse" message="tns:ILocacionMercaderiaService_MostrarStockEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_MostrarStockEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCostoEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarCostoEmpresa" message="tns:ILocacionMercaderiaService_MostrarCostoEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarCostoEmpresaResponse" message="tns:ILocacionMercaderiaService_MostrarCostoEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_MostrarCostoEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMercaderiaMinMax">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarMercaderiaMinMax" message="tns:ILocacionMercaderiaService_MostrarMercaderiaMinMax_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarMercaderiaMinMaxResponse" message="tns:ILocacionMercaderiaService_MostrarMercaderiaMinMax_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_MostrarMercaderiaMinMax_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMinMax">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ActualizarMinMax" message="tns:ILocacionMercaderiaService_ActualizarMinMax_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ActualizarMinMaxResponse" message="tns:ILocacionMercaderiaService_ActualizarMinMax_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ActualizarMinMax_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarHistoryMinMax">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarHistoryMinMax" message="tns:ILocacionMercaderiaService_MostrarHistoryMinMax_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarHistoryMinMaxResponse" message="tns:ILocacionMercaderiaService_MostrarHistoryMinMax_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_MostrarHistoryMinMax_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarHistoryMinMaxDet">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarHistoryMinMaxDet" message="tns:ILocacionMercaderiaService_MostrarHistoryMinMaxDet_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarHistoryMinMaxDetResponse" message="tns:ILocacionMercaderiaService_MostrarHistoryMinMaxDet_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_MostrarHistoryMinMaxDet_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AnularProcesoMinMax">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/AnularProcesoMinMax" message="tns:ILocacionMercaderiaService_AnularProcesoMinMax_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/AnularProcesoMinMaxResponse" message="tns:ILocacionMercaderiaService_AnularProcesoMinMax_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_AnularProcesoMinMax_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCodigoBarras">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarCodigoBarras" message="tns:ILocacionMercaderiaService_MostrarCodigoBarras_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/MostrarCodigoBarrasResponse" message="tns:ILocacionMercaderiaService_MostrarCodigoBarras_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_MostrarCodigoBarras_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteInvRot">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteInvRot" message="tns:ILocacionMercaderiaService_ReporteInvRot_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteInvRotResponse" message="tns:ILocacionMercaderiaService_ReporteInvRot_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteInvRot_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarInvRot">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/InsertarInvRot" message="tns:ILocacionMercaderiaService_InsertarInvRot_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/InsertarInvRotResponse" message="tns:ILocacionMercaderiaService_InsertarInvRot_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_InsertarInvRot_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerencialInventarios">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialInventarios" message="tns:ILocacionMercaderiaService_ReporteGerencialInventarios_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialInventariosResponse" message="tns:ILocacionMercaderiaService_ReporteGerencialInventarios_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ILocacionMercaderiaService_ReporteGerencialInventarios_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ILocacionMercaderiaService" type="tns:ILocacionMercaderiaService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ILocacionMercaderiaService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="ObtenerSaldoInicio">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ObtenerSaldoInicio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCostoVenta">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ObtenerCostoVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteInventarioPermanenteValorizado">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioPermanenteValorizado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteUnificadoComServ">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteUnificadoComServ" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGMROI">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteGMROI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLocacionesKardex">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/MostrarLocacionesKardex" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOficinasKardex">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/MostrarOficinasKardex" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUbicacion">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ObtenerUbicacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarUbicacion">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/FiltrarUbicacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUbicacion">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/BuscarUbicacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarUbicacion">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/InsertarUbicacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarUbicacion">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ActualizarUbicacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarUbicacion">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/BorrarUbicacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstante">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/MostrarEstante" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteInventarioGlobal">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioGlobal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCompras">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteCompras" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCodigoSPCC">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ObtenerCodigoSPCC" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteInventarioPorUnidad">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioPorUnidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteInventarioComprometido">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioComprometido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUnidadesNegocioAlmacen">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/MostrarUnidadesNegocioAlmacen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOficinasUnidad">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/MostrarOficinasUnidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLocacionesUnidad">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/MostrarLocacionesUnidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteInventarioExcel">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioExcel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteInventarioGlobalExcel">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteInventarioGlobalExcel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteMovimientosDetallado">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteMovimientosDetallado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorCodigo">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/MostrarPorCodigo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarStock">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/MostrarStock" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarKardex">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/MostrarKardex" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarStockGeneral">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/MostrarStockGeneral" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteInventario">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteInventario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteTomaInventario">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteTomaInventario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteMovimientos">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteMovimientos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteValeMateriales">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteValeMateriales" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteKardexMotor">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteKardexMotor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteKardexMotorVendido">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteKardexMotorVendido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteKardex">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteKardex" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="TotalIngresos">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/TotalIngresos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="TotalEgresos">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/TotalEgresos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerencialValorizado">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialValorizado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerencialStockMotores">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialStockMotores" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerencialStockBaterias">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialStockBaterias" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerencialStockFiltros">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialStockFiltros" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerencialStockRepuestos">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialStockRepuestos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteIndicadores">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteIndicadores" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarStockEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/MostrarStockEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCostoEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/MostrarCostoEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMercaderiaMinMax">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/MostrarMercaderiaMinMax" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMinMax">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ActualizarMinMax" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarHistoryMinMax">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/MostrarHistoryMinMax" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarHistoryMinMaxDet">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/MostrarHistoryMinMaxDet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AnularProcesoMinMax">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/AnularProcesoMinMax" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCodigoBarras">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/MostrarCodigoBarras" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteInvRot">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteInvRot" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarInvRot">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/InsertarInvRot" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteGerencialInventarios">
+      <soap12:operation soapAction="http://tempuri.org/ILocacionMercaderiaService/ReporteGerencialInventarios" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LocacionMercaderiaService">
+    <wsdl:port name="NetTcpBinding_ILocacionMercaderiaService" binding="tns:NetTcpBinding_ILocacionMercaderiaService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/LocacionMercaderiaService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/LocacionMercaderiaService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

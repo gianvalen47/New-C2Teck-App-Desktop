@@ -1,0 +1,812 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RondasService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IRondasService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IRondasService_InsertarRuteador_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRuteador" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_InsertarRuteador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRuteadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_InsertarRuteador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ActualizarRuteador_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRuteador" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ActualizarRuteador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRuteadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ActualizarRuteador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BorrarRuteador_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRuteador" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BorrarRuteador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRuteadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BorrarRuteador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ObtenerRuteador_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRuteador" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ObtenerRuteador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRuteadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ObtenerRuteador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_MostrarRuteador_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRuteador" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_MostrarRuteador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRuteadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_MostrarRuteador_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_MostrarRutas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRutas" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_MostrarRutas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRutasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_MostrarRutas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_InsertarRutas_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRutas" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_InsertarRutas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRutasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_InsertarRutas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ActualizarRutas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRutas" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ActualizarRutas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRutasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ActualizarRutas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BorrarRutas_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRutas" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BorrarRutas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRutasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BorrarRutas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BuscarRutas_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRutas" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BuscarRutas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRutasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BuscarRutas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ObtenerRutas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRutas" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ObtenerRutas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRutasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ObtenerRutas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_MostrarPuntos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPuntos" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_MostrarPuntos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPuntosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_MostrarPuntos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_InsertarPuntos_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPuntos" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_InsertarPuntos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPuntosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_InsertarPuntos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ActualizarPuntos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPuntos" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ActualizarPuntos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPuntosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ActualizarPuntos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BorrarPuntos_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPuntos" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BorrarPuntos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPuntosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BorrarPuntos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BuscarPuntos_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPuntos" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BuscarPuntos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPuntosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BuscarPuntos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ObtenerPuntos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPuntos" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ObtenerPuntos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPuntosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ObtenerPuntos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_MostrarPuntosRuta_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPuntosRuta" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_MostrarPuntosRuta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPuntosRutaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_MostrarPuntosRuta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_InsertarPuntosRuta_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPuntosRuta" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_InsertarPuntosRuta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPuntosRutaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_InsertarPuntosRuta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ActualizarPuntosRuta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPuntosRuta" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ActualizarPuntosRuta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPuntosRutaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ActualizarPuntosRuta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BorrarPuntosRuta_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPuntosRuta" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BorrarPuntosRuta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPuntosRutaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BorrarPuntosRuta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BuscarPuntosRuta_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPuntosRuta" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BuscarPuntosRuta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPuntosRutaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BuscarPuntosRuta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ObtenerPuntosRuta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPuntosRuta" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ObtenerPuntosRuta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPuntosRutaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ObtenerPuntosRuta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_MostrarRuteadorRutas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRuteadorRutas" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_MostrarRuteadorRutas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRuteadorRutasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_MostrarRuteadorRutas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_InsertarRuteadorRutas_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRuteadorRutas" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_InsertarRuteadorRutas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRuteadorRutasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_InsertarRuteadorRutas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ActualizarRuteadorRutas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRuteadorRutas" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ActualizarRuteadorRutas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRuteadorRutasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ActualizarRuteadorRutas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BorrarRuteadorRutas_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRuteadorRutas" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BorrarRuteadorRutas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRuteadorRutasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BorrarRuteadorRutas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BuscarRuteadorRutas_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRuteadorRutas" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BuscarRuteadorRutas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRuteadorRutasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_BuscarRuteadorRutas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q28:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ObtenerRuteadorRutas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRuteadorRutas" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ObtenerRuteadorRutas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRuteadorRutasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRondasService_ObtenerRuteadorRutas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q29:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IRondasService">
+    <wsdl:operation name="InsertarRuteador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/InsertarRuteador" message="tns:IRondasService_InsertarRuteador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/InsertarRuteadorResponse" message="tns:IRondasService_InsertarRuteador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_InsertarRuteador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRuteador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/ActualizarRuteador" message="tns:IRondasService_ActualizarRuteador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/ActualizarRuteadorResponse" message="tns:IRondasService_ActualizarRuteador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_ActualizarRuteador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRuteador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/BorrarRuteador" message="tns:IRondasService_BorrarRuteador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/BorrarRuteadorResponse" message="tns:IRondasService_BorrarRuteador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_BorrarRuteador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRuteador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/ObtenerRuteador" message="tns:IRondasService_ObtenerRuteador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/ObtenerRuteadorResponse" message="tns:IRondasService_ObtenerRuteador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_ObtenerRuteador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRuteador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/MostrarRuteador" message="tns:IRondasService_MostrarRuteador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/MostrarRuteadorResponse" message="tns:IRondasService_MostrarRuteador_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_MostrarRuteador_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRutas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/MostrarRutas" message="tns:IRondasService_MostrarRutas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/MostrarRutasResponse" message="tns:IRondasService_MostrarRutas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_MostrarRutas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRutas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/InsertarRutas" message="tns:IRondasService_InsertarRutas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/InsertarRutasResponse" message="tns:IRondasService_InsertarRutas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_InsertarRutas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRutas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/ActualizarRutas" message="tns:IRondasService_ActualizarRutas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/ActualizarRutasResponse" message="tns:IRondasService_ActualizarRutas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_ActualizarRutas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRutas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/BorrarRutas" message="tns:IRondasService_BorrarRutas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/BorrarRutasResponse" message="tns:IRondasService_BorrarRutas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_BorrarRutas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRutas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/BuscarRutas" message="tns:IRondasService_BuscarRutas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/BuscarRutasResponse" message="tns:IRondasService_BuscarRutas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_BuscarRutas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRutas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/ObtenerRutas" message="tns:IRondasService_ObtenerRutas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/ObtenerRutasResponse" message="tns:IRondasService_ObtenerRutas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_ObtenerRutas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPuntos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/MostrarPuntos" message="tns:IRondasService_MostrarPuntos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/MostrarPuntosResponse" message="tns:IRondasService_MostrarPuntos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_MostrarPuntos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPuntos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/InsertarPuntos" message="tns:IRondasService_InsertarPuntos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/InsertarPuntosResponse" message="tns:IRondasService_InsertarPuntos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_InsertarPuntos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPuntos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/ActualizarPuntos" message="tns:IRondasService_ActualizarPuntos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/ActualizarPuntosResponse" message="tns:IRondasService_ActualizarPuntos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_ActualizarPuntos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPuntos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/BorrarPuntos" message="tns:IRondasService_BorrarPuntos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/BorrarPuntosResponse" message="tns:IRondasService_BorrarPuntos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_BorrarPuntos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPuntos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/BuscarPuntos" message="tns:IRondasService_BuscarPuntos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/BuscarPuntosResponse" message="tns:IRondasService_BuscarPuntos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_BuscarPuntos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPuntos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/ObtenerPuntos" message="tns:IRondasService_ObtenerPuntos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/ObtenerPuntosResponse" message="tns:IRondasService_ObtenerPuntos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_ObtenerPuntos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPuntosRuta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/MostrarPuntosRuta" message="tns:IRondasService_MostrarPuntosRuta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/MostrarPuntosRutaResponse" message="tns:IRondasService_MostrarPuntosRuta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_MostrarPuntosRuta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPuntosRuta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/InsertarPuntosRuta" message="tns:IRondasService_InsertarPuntosRuta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/InsertarPuntosRutaResponse" message="tns:IRondasService_InsertarPuntosRuta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_InsertarPuntosRuta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPuntosRuta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/ActualizarPuntosRuta" message="tns:IRondasService_ActualizarPuntosRuta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/ActualizarPuntosRutaResponse" message="tns:IRondasService_ActualizarPuntosRuta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_ActualizarPuntosRuta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPuntosRuta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/BorrarPuntosRuta" message="tns:IRondasService_BorrarPuntosRuta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/BorrarPuntosRutaResponse" message="tns:IRondasService_BorrarPuntosRuta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_BorrarPuntosRuta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPuntosRuta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/BuscarPuntosRuta" message="tns:IRondasService_BuscarPuntosRuta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/BuscarPuntosRutaResponse" message="tns:IRondasService_BuscarPuntosRuta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_BuscarPuntosRuta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPuntosRuta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/ObtenerPuntosRuta" message="tns:IRondasService_ObtenerPuntosRuta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/ObtenerPuntosRutaResponse" message="tns:IRondasService_ObtenerPuntosRuta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_ObtenerPuntosRuta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRuteadorRutas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/MostrarRuteadorRutas" message="tns:IRondasService_MostrarRuteadorRutas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/MostrarRuteadorRutasResponse" message="tns:IRondasService_MostrarRuteadorRutas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_MostrarRuteadorRutas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRuteadorRutas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/InsertarRuteadorRutas" message="tns:IRondasService_InsertarRuteadorRutas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/InsertarRuteadorRutasResponse" message="tns:IRondasService_InsertarRuteadorRutas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_InsertarRuteadorRutas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRuteadorRutas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/ActualizarRuteadorRutas" message="tns:IRondasService_ActualizarRuteadorRutas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/ActualizarRuteadorRutasResponse" message="tns:IRondasService_ActualizarRuteadorRutas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_ActualizarRuteadorRutas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRuteadorRutas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/BorrarRuteadorRutas" message="tns:IRondasService_BorrarRuteadorRutas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/BorrarRuteadorRutasResponse" message="tns:IRondasService_BorrarRuteadorRutas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_BorrarRuteadorRutas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRuteadorRutas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/BuscarRuteadorRutas" message="tns:IRondasService_BuscarRuteadorRutas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/BuscarRuteadorRutasResponse" message="tns:IRondasService_BuscarRuteadorRutas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_BuscarRuteadorRutas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRuteadorRutas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRondasService/ObtenerRuteadorRutas" message="tns:IRondasService_ObtenerRuteadorRutas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRondasService/ObtenerRuteadorRutasResponse" message="tns:IRondasService_ObtenerRuteadorRutas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRondasService_ObtenerRuteadorRutas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IRondasService" type="tns:IRondasService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IRondasService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="InsertarRuteador">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/InsertarRuteador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRuteador">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/ActualizarRuteador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRuteador">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/BorrarRuteador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRuteador">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/ObtenerRuteador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRuteador">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/MostrarRuteador" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRutas">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/MostrarRutas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRutas">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/InsertarRutas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRutas">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/ActualizarRutas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRutas">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/BorrarRutas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRutas">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/BuscarRutas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRutas">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/ObtenerRutas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPuntos">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/MostrarPuntos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPuntos">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/InsertarPuntos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPuntos">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/ActualizarPuntos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPuntos">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/BorrarPuntos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPuntos">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/BuscarPuntos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPuntos">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/ObtenerPuntos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPuntosRuta">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/MostrarPuntosRuta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPuntosRuta">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/InsertarPuntosRuta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPuntosRuta">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/ActualizarPuntosRuta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPuntosRuta">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/BorrarPuntosRuta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPuntosRuta">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/BuscarPuntosRuta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPuntosRuta">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/ObtenerPuntosRuta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRuteadorRutas">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/MostrarRuteadorRutas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRuteadorRutas">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/InsertarRuteadorRutas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRuteadorRutas">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/ActualizarRuteadorRutas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRuteadorRutas">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/BorrarRuteadorRutas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRuteadorRutas">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/BuscarRuteadorRutas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRuteadorRutas">
+      <soap12:operation soapAction="http://tempuri.org/IRondasService/ObtenerRuteadorRutas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RondasService">
+    <wsdl:port name="NetTcpBinding_IRondasService" binding="tns:NetTcpBinding_IRondasService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/RondasService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/RondasService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

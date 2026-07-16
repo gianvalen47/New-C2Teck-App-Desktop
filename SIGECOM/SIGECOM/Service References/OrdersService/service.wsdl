@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:tns="http://tempuri.org/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="OrdersService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IOrdersService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/BLL" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IOrdersService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_MostrarLista_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLista" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_MostrarLista_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarListaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_MostrarLista_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_MostrarPorID_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorID" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_MostrarPorID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_MostrarPorID_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_Actu_OrderEstado_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actu_OrderEstado" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_Actu_OrderEstado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Actu_OrderEstadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_Actu_OrderEstado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_BuscarGuia_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGuia" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_BuscarGuia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGuiaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_BuscarGuia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_BuscarSerieGuia_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarSerieGuia" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_BuscarSerieGuia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarSerieGuiaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_BuscarSerieGuia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_BuscarIgv_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarIgv" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_BuscarIgv_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarIgvResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_BuscarIgv_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_GenerarDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_GenerarDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_GenerarDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_MostrarUnidadesMedida_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUnidadesMedida" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_MostrarUnidadesMedida_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUnidadesMedidaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrdersService_MostrarUnidadesMedida_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IOrdersService">
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersService/Filtrar" message="tns:IOrdersService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersService/FiltrarResponse" message="tns:IOrdersService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdersService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLista">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersService/MostrarLista" message="tns:IOrdersService_MostrarLista_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersService/MostrarListaResponse" message="tns:IOrdersService_MostrarLista_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdersService_MostrarLista_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersService/MostrarPorID" message="tns:IOrdersService_MostrarPorID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersService/MostrarPorIDResponse" message="tns:IOrdersService_MostrarPorID_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdersService_MostrarPorID_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersService/Buscar" message="tns:IOrdersService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersService/BuscarResponse" message="tns:IOrdersService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdersService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actu_OrderEstado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersService/Actu_OrderEstado" message="tns:IOrdersService_Actu_OrderEstado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersService/Actu_OrderEstadoResponse" message="tns:IOrdersService_Actu_OrderEstado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdersService_Actu_OrderEstado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersService/Actualizar" message="tns:IOrdersService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersService/ActualizarResponse" message="tns:IOrdersService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdersService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGuia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersService/BuscarGuia" message="tns:IOrdersService_BuscarGuia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersService/BuscarGuiaResponse" message="tns:IOrdersService_BuscarGuia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdersService_BuscarGuia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarSerieGuia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersService/BuscarSerieGuia" message="tns:IOrdersService_BuscarSerieGuia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersService/BuscarSerieGuiaResponse" message="tns:IOrdersService_BuscarSerieGuia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdersService_BuscarSerieGuia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarIgv">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersService/BuscarIgv" message="tns:IOrdersService_BuscarIgv_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersService/BuscarIgvResponse" message="tns:IOrdersService_BuscarIgv_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdersService_BuscarIgv_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersService/GenerarDocumento" message="tns:IOrdersService_GenerarDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersService/GenerarDocumentoResponse" message="tns:IOrdersService_GenerarDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdersService_GenerarDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUnidadesMedida">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrdersService/MostrarUnidadesMedida" message="tns:IOrdersService_MostrarUnidadesMedida_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrdersService/MostrarUnidadesMedidaResponse" message="tns:IOrdersService_MostrarUnidadesMedida_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IOrdersService_MostrarUnidadesMedida_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IOrdersService" type="tns:IOrdersService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IOrdersService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLista">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersService/MostrarLista" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorID">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersService/MostrarPorID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actu_OrderEstado">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersService/Actu_OrderEstado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGuia">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersService/BuscarGuia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarSerieGuia">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersService/BuscarSerieGuia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarIgv">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersService/BuscarIgv" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersService/GenerarDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUnidadesMedida">
+      <soap12:operation soapAction="http://tempuri.org/IOrdersService/MostrarUnidadesMedida" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OrdersService">
+    <wsdl:port name="NetTcpBinding_IOrdersService" binding="tns:NetTcpBinding_IOrdersService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/OrdersService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/OrdersService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

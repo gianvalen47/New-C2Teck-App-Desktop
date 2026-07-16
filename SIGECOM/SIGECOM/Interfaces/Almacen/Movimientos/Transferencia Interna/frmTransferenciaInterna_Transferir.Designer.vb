@@ -1,0 +1,144 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class frmTransferenciaInterna_Transferir
+    Inherits System.Windows.Forms.Form
+
+    'Form overrides dispose to clean up the component list.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmTransferenciaInterna_Transferir))
+        Me.ofEstiloForm = New Janus.Windows.Ribbon.OfficeFormAdorner(Me.components)
+        Me.txtalmacen = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.gbDatos = New System.Windows.Forms.GroupBox()
+        Me.btnBuscarAlmacen = New System.Windows.Forms.Button()
+        Me.btnGuardar = New System.Windows.Forms.Button()
+        Me.btnCancelar = New System.Windows.Forms.Button()
+        CType(Me.ofEstiloForm, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.gbDatos.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'ofEstiloForm
+        '
+        Me.ofEstiloForm.Form = Me
+        Me.ofEstiloForm.Office2007ColorScheme = Janus.Windows.Ribbon.Office2007ColorScheme.Black
+        Me.ofEstiloForm.Office2007CustomColor = System.Drawing.Color.Empty
+        '
+        'txtalmacen
+        '
+        Me.txtalmacen.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtalmacen.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtalmacen.ForeColor = System.Drawing.SystemColors.WindowFrame
+        Me.txtalmacen.Location = New System.Drawing.Point(79, 21)
+        Me.txtalmacen.MaxLength = 3
+        Me.txtalmacen.Name = "txtalmacen"
+        Me.txtalmacen.ReadOnly = True
+        Me.txtalmacen.Size = New System.Drawing.Size(281, 20)
+        Me.txtalmacen.TabIndex = 1
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(9, 24)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(55, 13)
+        Me.Label3.TabIndex = 7
+        Me.Label3.Text = "Almacén"
+        '
+        'gbDatos
+        '
+        Me.gbDatos.Controls.Add(Me.txtalmacen)
+        Me.gbDatos.Controls.Add(Me.btnBuscarAlmacen)
+        Me.gbDatos.Controls.Add(Me.Label3)
+        Me.gbDatos.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbDatos.Location = New System.Drawing.Point(6, 0)
+        Me.gbDatos.Name = "gbDatos"
+        Me.gbDatos.Size = New System.Drawing.Size(393, 55)
+        Me.gbDatos.TabIndex = 6
+        Me.gbDatos.TabStop = False
+        Me.gbDatos.Text = "Datos"
+        '
+        'btnBuscarAlmacen
+        '
+        Me.btnBuscarAlmacen.Image = Global.SIGECOM.My.Resources.Resources.Buscar
+        Me.btnBuscarAlmacen.Location = New System.Drawing.Point(360, 20)
+        Me.btnBuscarAlmacen.Name = "btnBuscarAlmacen"
+        Me.btnBuscarAlmacen.Size = New System.Drawing.Size(25, 22)
+        Me.btnBuscarAlmacen.TabIndex = 3
+        Me.btnBuscarAlmacen.TabStop = False
+        Me.btnBuscarAlmacen.UseVisualStyleBackColor = True
+        '
+        'btnGuardar
+        '
+        Me.btnGuardar.Image = Global.SIGECOM.My.Resources.Resources.Trasladar
+        Me.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnGuardar.Location = New System.Drawing.Point(184, 61)
+        Me.btnGuardar.Name = "btnGuardar"
+        Me.btnGuardar.Size = New System.Drawing.Size(133, 25)
+        Me.btnGuardar.TabIndex = 5
+        Me.btnGuardar.Text = "Transferir Documento"
+        Me.btnGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnGuardar.UseVisualStyleBackColor = True
+        '
+        'btnCancelar
+        '
+        Me.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.btnCancelar.Image = Global.SIGECOM.My.Resources.Resources.Cerrar
+        Me.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnCancelar.Location = New System.Drawing.Point(318, 61)
+        Me.btnCancelar.Name = "btnCancelar"
+        Me.btnCancelar.Size = New System.Drawing.Size(73, 25)
+        Me.btnCancelar.TabIndex = 7
+        Me.btnCancelar.TabStop = False
+        Me.btnCancelar.Text = "Cancelar"
+        Me.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnCancelar.UseVisualStyleBackColor = True
+        '
+        'frmTransferenciaInterna_Transferir
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(408, 94)
+        Me.Controls.Add(Me.btnGuardar)
+        Me.Controls.Add(Me.gbDatos)
+        Me.Controls.Add(Me.btnCancelar)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.KeyPreview = True
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
+        Me.Name = "frmTransferenciaInterna_Transferir"
+        Me.ShowInTaskbar = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
+        Me.Text = "Transferir Documento"
+        CType(Me.ofEstiloForm, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.gbDatos.ResumeLayout(False)
+        Me.gbDatos.PerformLayout()
+        Me.ResumeLayout(False)
+
+    End Sub
+    Friend WithEvents ofEstiloForm As Janus.Windows.Ribbon.OfficeFormAdorner
+    Friend WithEvents btnGuardar As System.Windows.Forms.Button
+    Friend WithEvents gbDatos As System.Windows.Forms.GroupBox
+    Friend WithEvents txtalmacen As System.Windows.Forms.TextBox
+    Friend WithEvents btnBuscarAlmacen As System.Windows.Forms.Button
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents btnCancelar As System.Windows.Forms.Button
+
+End Class

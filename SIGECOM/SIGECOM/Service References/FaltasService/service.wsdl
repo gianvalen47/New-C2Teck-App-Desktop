@@ -1,0 +1,500 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="FaltasService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IFaltasService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IFaltasService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_MostrarMotivos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMotivos" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_MostrarMotivos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMotivosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_MostrarMotivos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ReporteFaltas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteFaltas" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ReporteFaltas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteFaltasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ReporteFaltas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ImprimirGrupo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirGrupo" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ImprimirGrupo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirGrupoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ImprimirGrupo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ObtenerValorTiempo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerValorTiempo" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ObtenerValorTiempo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerValorTiempoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ObtenerValorTiempo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ProcesarCronogramaMinas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarCronogramaMinas" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ProcesarCronogramaMinas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarCronogramaMinasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ProcesarCronogramaMinas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ConsultarProcesoCronogramaMina_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarProcesoCronogramaMina" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ConsultarProcesoCronogramaMina_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarProcesoCronogramaMinaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ConsultarProcesoCronogramaMina_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_RevertirPagado_InputMessage">
+    <wsdl:part name="parameters" element="tns:RevertirPagado" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_RevertirPagado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RevertirPagadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_RevertirPagado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_GenerarCompensarHoras_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarCompensarHoras" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_GenerarCompensarHoras_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarCompensarHorasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_GenerarCompensarHoras_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ObtenerTotalMinutosExtrasCompensar_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTotalMinutosExtrasCompensar" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ObtenerTotalMinutosExtrasCompensar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTotalMinutosExtrasCompensarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ObtenerTotalMinutosExtrasCompensar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ConsultarHorasCompensar_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarHorasCompensar" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ConsultarHorasCompensar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarHorasCompensarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFaltasService_ConsultarHorasCompensar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IFaltasService">
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/Insertar" message="tns:IFaltasService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/InsertarResponse" message="tns:IFaltasService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/Actualizar" message="tns:IFaltasService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/ActualizarResponse" message="tns:IFaltasService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/Borrar" message="tns:IFaltasService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/BorrarResponse" message="tns:IFaltasService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/Obtener" message="tns:IFaltasService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/ObtenerResponse" message="tns:IFaltasService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/Filtrar" message="tns:IFaltasService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/FiltrarResponse" message="tns:IFaltasService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/Buscar" message="tns:IFaltasService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/BuscarResponse" message="tns:IFaltasService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMotivos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/MostrarMotivos" message="tns:IFaltasService_MostrarMotivos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/MostrarMotivosResponse" message="tns:IFaltasService_MostrarMotivos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_MostrarMotivos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteFaltas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/ReporteFaltas" message="tns:IFaltasService_ReporteFaltas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/ReporteFaltasResponse" message="tns:IFaltasService_ReporteFaltas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_ReporteFaltas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/Imprimir" message="tns:IFaltasService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/ImprimirResponse" message="tns:IFaltasService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirGrupo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/ImprimirGrupo" message="tns:IFaltasService_ImprimirGrupo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/ImprimirGrupoResponse" message="tns:IFaltasService_ImprimirGrupo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_ImprimirGrupo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerValorTiempo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/ObtenerValorTiempo" message="tns:IFaltasService_ObtenerValorTiempo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/ObtenerValorTiempoResponse" message="tns:IFaltasService_ObtenerValorTiempo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_ObtenerValorTiempo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarCronogramaMinas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/ProcesarCronogramaMinas" message="tns:IFaltasService_ProcesarCronogramaMinas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/ProcesarCronogramaMinasResponse" message="tns:IFaltasService_ProcesarCronogramaMinas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_ProcesarCronogramaMinas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarProcesoCronogramaMina">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/ConsultarProcesoCronogramaMina" message="tns:IFaltasService_ConsultarProcesoCronogramaMina_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/ConsultarProcesoCronogramaMinaResponse" message="tns:IFaltasService_ConsultarProcesoCronogramaMina_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_ConsultarProcesoCronogramaMina_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RevertirPagado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/RevertirPagado" message="tns:IFaltasService_RevertirPagado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/RevertirPagadoResponse" message="tns:IFaltasService_RevertirPagado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_RevertirPagado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarCompensarHoras">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/GenerarCompensarHoras" message="tns:IFaltasService_GenerarCompensarHoras_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/GenerarCompensarHorasResponse" message="tns:IFaltasService_GenerarCompensarHoras_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_GenerarCompensarHoras_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTotalMinutosExtrasCompensar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/ObtenerTotalMinutosExtrasCompensar" message="tns:IFaltasService_ObtenerTotalMinutosExtrasCompensar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/ObtenerTotalMinutosExtrasCompensarResponse" message="tns:IFaltasService_ObtenerTotalMinutosExtrasCompensar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_ObtenerTotalMinutosExtrasCompensar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarHorasCompensar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFaltasService/ConsultarHorasCompensar" message="tns:IFaltasService_ConsultarHorasCompensar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFaltasService/ConsultarHorasCompensarResponse" message="tns:IFaltasService_ConsultarHorasCompensar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFaltasService_ConsultarHorasCompensar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IFaltasService" type="tns:IFaltasService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IFaltasService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMotivos">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/MostrarMotivos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteFaltas">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/ReporteFaltas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirGrupo">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/ImprimirGrupo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerValorTiempo">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/ObtenerValorTiempo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarCronogramaMinas">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/ProcesarCronogramaMinas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarProcesoCronogramaMina">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/ConsultarProcesoCronogramaMina" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RevertirPagado">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/RevertirPagado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarCompensarHoras">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/GenerarCompensarHoras" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTotalMinutosExtrasCompensar">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/ObtenerTotalMinutosExtrasCompensar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarHorasCompensar">
+      <soap12:operation soapAction="http://tempuri.org/IFaltasService/ConsultarHorasCompensar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="FaltasService">
+    <wsdl:port name="NetTcpBinding_IFaltasService" binding="tns:NetTcpBinding_IFaltasService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/FaltasService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/FaltasService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

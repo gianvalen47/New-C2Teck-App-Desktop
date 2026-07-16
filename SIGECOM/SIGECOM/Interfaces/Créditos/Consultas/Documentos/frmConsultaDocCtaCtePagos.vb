@@ -1,0 +1,3 @@
+﻿Public Class frmConsultaDocCtaCtePagos
+
+End Class

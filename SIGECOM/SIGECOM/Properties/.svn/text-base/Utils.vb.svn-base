@@ -1,0 +1,96 @@
+﻿Module utils
+    Public Function toNull(ByVal campo As String) As String
+        If IsDBNull(campo) Then
+            campo = Nothing
+        ElseIf campo = Nothing Then
+            campo = Nothing
+        ElseIf campo.Trim.Length < 1 Then
+            campo = Nothing
+        Else
+            campo = campo.Trim
+        End If
+        Return campo
+    End Function
+    Public Function toBlank(ByVal campo As String) As String
+        Try
+            If campo = Nothing Then
+                campo = ""
+            ElseIf campo.Trim.Length < 1 Then
+                campo = ""
+            Else
+                campo = campo.Trim
+            End If
+        Catch ex As Exception
+            campo = ""
+        End Try
+        Return campo
+    End Function
+    Public Function toNumber(ByVal campo As String) As Integer
+        Dim numero As Integer = 0
+        Try
+            If IsDBNull(campo) Then
+                numero = 0
+            ElseIf campo = Nothing Then
+                numero = 0
+            ElseIf campo Is Nothing Then
+                numero = 0
+            ElseIf campo.Trim.Length < 1 Then
+                numero = 0
+            Else
+                numero = CInt(campo.Trim)
+            End If
+        Catch ex As Exception
+            numero = 0
+        End Try
+
+        Return numero
+    End Function
+    Public Function toDouble(ByVal campo As String) As Double
+        Dim numero As Double = 0.0
+        Try
+            If campo = Nothing Then
+                numero = 0.0
+            ElseIf campo.Trim.Length < 1 Then
+                numero = 0.0
+            Else
+                numero = CDbl(campo.Trim)
+            End If
+        Catch ex As Exception
+            numero = 0.0
+        End Try
+        
+        Return numero
+    End Function
+    Public Function toBoolean(ByVal campo As String) As Boolean
+        Dim estado As Boolean = False
+        Try
+            If campo = Nothing Then
+                estado = False
+            ElseIf campo.Trim.Length < 1 Then
+                estado = False
+            ElseIf campo.Trim.ToUpper = "FALSE" Then
+                estado = False
+            ElseIf campo.Trim.ToUpper = "TRUE" Then
+                estado = True
+            ElseIf campo.Trim = "1" Then
+                estado = True
+            ElseIf campo.Trim = "0" Then
+                estado = False
+            Else
+                estado = False
+            End If
+        Catch ex As Exception
+            estado = False
+        End Try
+
+        Return estado
+    End Function
+    Public Function isClosed(ByVal sender As Object) As Boolean
+        If sender.State = ServiceModel.CommunicationState.Faulted Or _
+           sender.State = ServiceModel.CommunicationState.Closed Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+End Module

@@ -1,0 +1,683 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="VehiculoService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IVehiculoService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IVehiculoService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_MostrarUnidades_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUnidades" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_MostrarUnidades_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUnidadesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_MostrarUnidades_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_MostrarAnios_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAnios" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_MostrarAnios_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAniosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_MostrarAnios_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_InsertarGasto_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarGasto" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_InsertarGasto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarGastoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_InsertarGasto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BorrarGasto_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarGasto" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BorrarGasto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarGastoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BorrarGasto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_MostrarGasto_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarGasto" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_MostrarGasto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarGastoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_MostrarGasto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BuscarGasto_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGasto" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BuscarGasto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGastoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BuscarGasto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_MostrarUnidadesEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUnidadesEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_MostrarUnidadesEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUnidadesEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_MostrarUnidadesEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_ObtenerUnidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerUnidad" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_ObtenerUnidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerUnidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_ObtenerUnidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BuscarUnidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUnidad" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BuscarUnidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUnidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BuscarUnidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_FiltrarUnidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarUnidad" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_FiltrarUnidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarUnidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_FiltrarUnidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_InsertarUnidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarUnidad" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_InsertarUnidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarUnidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_InsertarUnidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_ActualizarUnidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarUnidad" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_ActualizarUnidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarUnidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_ActualizarUnidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BorrarUnidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarUnidad" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BorrarUnidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarUnidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BorrarUnidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_ObtenerUnidadAsignada_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerUnidadAsignada" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_ObtenerUnidadAsignada_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerUnidadAsignadaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_ObtenerUnidadAsignada_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BuscarUnidadAsignada_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUnidadAsignada" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BuscarUnidadAsignada_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUnidadAsignadaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BuscarUnidadAsignada_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_MostrarUnidadAsignada_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUnidadAsignada" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_MostrarUnidadAsignada_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUnidadAsignadaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_MostrarUnidadAsignada_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_InsertarUnidadAsignada_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarUnidadAsignada" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_InsertarUnidadAsignada_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarUnidadAsignadaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_InsertarUnidadAsignada_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_ActualizarUnidadAsignada_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarUnidadAsignada" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_ActualizarUnidadAsignada_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarUnidadAsignadaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_ActualizarUnidadAsignada_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BorrarUnidadAsignada_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarUnidadAsignada" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BorrarUnidadAsignada_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarUnidadAsignadaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVehiculoService_BorrarUnidadAsignada_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IVehiculoService">
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/Obtener" message="tns:IVehiculoService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/ObtenerResponse" message="tns:IVehiculoService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/Filtrar" message="tns:IVehiculoService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/FiltrarResponse" message="tns:IVehiculoService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/Insertar" message="tns:IVehiculoService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/InsertarResponse" message="tns:IVehiculoService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/Actualizar" message="tns:IVehiculoService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/ActualizarResponse" message="tns:IVehiculoService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/Borrar" message="tns:IVehiculoService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/BorrarResponse" message="tns:IVehiculoService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUnidades">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/MostrarUnidades" message="tns:IVehiculoService_MostrarUnidades_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/MostrarUnidadesResponse" message="tns:IVehiculoService_MostrarUnidades_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_MostrarUnidades_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAnios">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/MostrarAnios" message="tns:IVehiculoService_MostrarAnios_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/MostrarAniosResponse" message="tns:IVehiculoService_MostrarAnios_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_MostrarAnios_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarGasto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/InsertarGasto" message="tns:IVehiculoService_InsertarGasto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/InsertarGastoResponse" message="tns:IVehiculoService_InsertarGasto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_InsertarGasto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarGasto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/BorrarGasto" message="tns:IVehiculoService_BorrarGasto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/BorrarGastoResponse" message="tns:IVehiculoService_BorrarGasto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_BorrarGasto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarGasto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/MostrarGasto" message="tns:IVehiculoService_MostrarGasto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/MostrarGastoResponse" message="tns:IVehiculoService_MostrarGasto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_MostrarGasto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGasto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/BuscarGasto" message="tns:IVehiculoService_BuscarGasto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/BuscarGastoResponse" message="tns:IVehiculoService_BuscarGasto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_BuscarGasto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUnidadesEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/MostrarUnidadesEmpresa" message="tns:IVehiculoService_MostrarUnidadesEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/MostrarUnidadesEmpresaResponse" message="tns:IVehiculoService_MostrarUnidadesEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_MostrarUnidadesEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUnidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/ObtenerUnidad" message="tns:IVehiculoService_ObtenerUnidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/ObtenerUnidadResponse" message="tns:IVehiculoService_ObtenerUnidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_ObtenerUnidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUnidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/BuscarUnidad" message="tns:IVehiculoService_BuscarUnidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/BuscarUnidadResponse" message="tns:IVehiculoService_BuscarUnidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_BuscarUnidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarUnidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/FiltrarUnidad" message="tns:IVehiculoService_FiltrarUnidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/FiltrarUnidadResponse" message="tns:IVehiculoService_FiltrarUnidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_FiltrarUnidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarUnidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/InsertarUnidad" message="tns:IVehiculoService_InsertarUnidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/InsertarUnidadResponse" message="tns:IVehiculoService_InsertarUnidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_InsertarUnidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarUnidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/ActualizarUnidad" message="tns:IVehiculoService_ActualizarUnidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/ActualizarUnidadResponse" message="tns:IVehiculoService_ActualizarUnidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_ActualizarUnidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarUnidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/BorrarUnidad" message="tns:IVehiculoService_BorrarUnidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/BorrarUnidadResponse" message="tns:IVehiculoService_BorrarUnidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_BorrarUnidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUnidadAsignada">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/ObtenerUnidadAsignada" message="tns:IVehiculoService_ObtenerUnidadAsignada_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/ObtenerUnidadAsignadaResponse" message="tns:IVehiculoService_ObtenerUnidadAsignada_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_ObtenerUnidadAsignada_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUnidadAsignada">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/BuscarUnidadAsignada" message="tns:IVehiculoService_BuscarUnidadAsignada_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/BuscarUnidadAsignadaResponse" message="tns:IVehiculoService_BuscarUnidadAsignada_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_BuscarUnidadAsignada_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUnidadAsignada">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/MostrarUnidadAsignada" message="tns:IVehiculoService_MostrarUnidadAsignada_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/MostrarUnidadAsignadaResponse" message="tns:IVehiculoService_MostrarUnidadAsignada_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_MostrarUnidadAsignada_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarUnidadAsignada">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/InsertarUnidadAsignada" message="tns:IVehiculoService_InsertarUnidadAsignada_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/InsertarUnidadAsignadaResponse" message="tns:IVehiculoService_InsertarUnidadAsignada_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_InsertarUnidadAsignada_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarUnidadAsignada">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/ActualizarUnidadAsignada" message="tns:IVehiculoService_ActualizarUnidadAsignada_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/ActualizarUnidadAsignadaResponse" message="tns:IVehiculoService_ActualizarUnidadAsignada_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_ActualizarUnidadAsignada_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarUnidadAsignada">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVehiculoService/BorrarUnidadAsignada" message="tns:IVehiculoService_BorrarUnidadAsignada_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVehiculoService/BorrarUnidadAsignadaResponse" message="tns:IVehiculoService_BorrarUnidadAsignada_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IVehiculoService_BorrarUnidadAsignada_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IVehiculoService" type="tns:IVehiculoService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IVehiculoService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUnidades">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/MostrarUnidades" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAnios">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/MostrarAnios" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarGasto">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/InsertarGasto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarGasto">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/BorrarGasto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarGasto">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/MostrarGasto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGasto">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/BuscarGasto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUnidadesEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/MostrarUnidadesEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUnidad">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/ObtenerUnidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUnidad">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/BuscarUnidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarUnidad">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/FiltrarUnidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarUnidad">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/InsertarUnidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarUnidad">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/ActualizarUnidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarUnidad">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/BorrarUnidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUnidadAsignada">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/ObtenerUnidadAsignada" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUnidadAsignada">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/BuscarUnidadAsignada" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUnidadAsignada">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/MostrarUnidadAsignada" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarUnidadAsignada">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/InsertarUnidadAsignada" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarUnidadAsignada">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/ActualizarUnidadAsignada" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarUnidadAsignada">
+      <soap12:operation soapAction="http://tempuri.org/IVehiculoService/BorrarUnidadAsignada" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="VehiculoService">
+    <wsdl:port name="NetTcpBinding_IVehiculoService" binding="tns:NetTcpBinding_IVehiculoService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/VehiculoService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/VehiculoService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

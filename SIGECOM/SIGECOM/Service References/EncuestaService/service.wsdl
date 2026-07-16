@@ -1,0 +1,735 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="EncuestaService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IEncuestaService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IEncuestaService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Activar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Activar" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Activar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActivarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Activar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Desactivar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Desactivar" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Desactivar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DesactivarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_Desactivar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_InsertarPregunta_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPregunta" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_InsertarPregunta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarPreguntaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_InsertarPregunta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_ActualizarPregunta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPregunta" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_ActualizarPregunta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPreguntaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_ActualizarPregunta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_BorrarPregunta_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPregunta" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_BorrarPregunta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarPreguntaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_BorrarPregunta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarPregunta_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPregunta" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarPregunta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPreguntaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarPregunta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_ObtenerPregunta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPregunta" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_ObtenerPregunta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPreguntaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_ObtenerPregunta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_InsertarRespuesta_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRespuesta" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_InsertarRespuesta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRespuestaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_InsertarRespuesta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_ActualizarRespuesta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRespuesta" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_ActualizarRespuesta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRespuestaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_ActualizarRespuesta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_BorrarRespuesta_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRespuesta" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_BorrarRespuesta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRespuestaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_BorrarRespuesta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarRespuesta_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRespuesta" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarRespuesta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRespuestaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarRespuesta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_ObtenerRespuesta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRespuesta" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_ObtenerRespuesta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRespuestaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_ObtenerRespuesta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_InsertarResultado_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResultado" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_InsertarResultado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResultadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_InsertarResultado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarResultado_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResultado" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarResultado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResultadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarResultado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarTipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipo" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarTipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarTipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarActivo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarActivo" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarActivo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarActivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarActivo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarVigente_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarVigente" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarVigente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarVigenteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_MostrarVigente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_BuscarResultado_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResultado" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_BuscarResultado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResultadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_BuscarResultado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_BuscarVigenteUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarVigenteUsuario" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_BuscarVigenteUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarVigenteUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_BuscarVigenteUsuario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_CerrarUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:CerrarUsuario" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_CerrarUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CerrarUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_CerrarUsuario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_ObtenerAnonimo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAnonimo" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_ObtenerAnonimo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAnonimoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEncuestaService_ObtenerAnonimo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IEncuestaService">
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/Insertar" message="tns:IEncuestaService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/InsertarResponse" message="tns:IEncuestaService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/Actualizar" message="tns:IEncuestaService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/ActualizarResponse" message="tns:IEncuestaService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/Borrar" message="tns:IEncuestaService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/BorrarResponse" message="tns:IEncuestaService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/Filtrar" message="tns:IEncuestaService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/FiltrarResponse" message="tns:IEncuestaService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/Obtener" message="tns:IEncuestaService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/ObtenerResponse" message="tns:IEncuestaService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Activar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/Activar" message="tns:IEncuestaService_Activar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/ActivarResponse" message="tns:IEncuestaService_Activar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_Activar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Desactivar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/Desactivar" message="tns:IEncuestaService_Desactivar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/DesactivarResponse" message="tns:IEncuestaService_Desactivar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_Desactivar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPregunta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/InsertarPregunta" message="tns:IEncuestaService_InsertarPregunta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/InsertarPreguntaResponse" message="tns:IEncuestaService_InsertarPregunta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_InsertarPregunta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPregunta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/ActualizarPregunta" message="tns:IEncuestaService_ActualizarPregunta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/ActualizarPreguntaResponse" message="tns:IEncuestaService_ActualizarPregunta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_ActualizarPregunta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPregunta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/BorrarPregunta" message="tns:IEncuestaService_BorrarPregunta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/BorrarPreguntaResponse" message="tns:IEncuestaService_BorrarPregunta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_BorrarPregunta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPregunta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/MostrarPregunta" message="tns:IEncuestaService_MostrarPregunta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/MostrarPreguntaResponse" message="tns:IEncuestaService_MostrarPregunta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_MostrarPregunta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPregunta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/ObtenerPregunta" message="tns:IEncuestaService_ObtenerPregunta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/ObtenerPreguntaResponse" message="tns:IEncuestaService_ObtenerPregunta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_ObtenerPregunta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRespuesta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/InsertarRespuesta" message="tns:IEncuestaService_InsertarRespuesta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/InsertarRespuestaResponse" message="tns:IEncuestaService_InsertarRespuesta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_InsertarRespuesta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRespuesta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/ActualizarRespuesta" message="tns:IEncuestaService_ActualizarRespuesta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/ActualizarRespuestaResponse" message="tns:IEncuestaService_ActualizarRespuesta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_ActualizarRespuesta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRespuesta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/BorrarRespuesta" message="tns:IEncuestaService_BorrarRespuesta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/BorrarRespuestaResponse" message="tns:IEncuestaService_BorrarRespuesta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_BorrarRespuesta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRespuesta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/MostrarRespuesta" message="tns:IEncuestaService_MostrarRespuesta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/MostrarRespuestaResponse" message="tns:IEncuestaService_MostrarRespuesta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_MostrarRespuesta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRespuesta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/ObtenerRespuesta" message="tns:IEncuestaService_ObtenerRespuesta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/ObtenerRespuestaResponse" message="tns:IEncuestaService_ObtenerRespuesta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_ObtenerRespuesta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarResultado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/InsertarResultado" message="tns:IEncuestaService_InsertarResultado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/InsertarResultadoResponse" message="tns:IEncuestaService_InsertarResultado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_InsertarResultado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarResultado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/MostrarResultado" message="tns:IEncuestaService_MostrarResultado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/MostrarResultadoResponse" message="tns:IEncuestaService_MostrarResultado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_MostrarResultado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/MostrarTipo" message="tns:IEncuestaService_MostrarTipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/MostrarTipoResponse" message="tns:IEncuestaService_MostrarTipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_MostrarTipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarActivo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/MostrarActivo" message="tns:IEncuestaService_MostrarActivo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/MostrarActivoResponse" message="tns:IEncuestaService_MostrarActivo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_MostrarActivo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarVigente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/MostrarVigente" message="tns:IEncuestaService_MostrarVigente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/MostrarVigenteResponse" message="tns:IEncuestaService_MostrarVigente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_MostrarVigente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarResultado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/BuscarResultado" message="tns:IEncuestaService_BuscarResultado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/BuscarResultadoResponse" message="tns:IEncuestaService_BuscarResultado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_BuscarResultado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarVigenteUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/BuscarVigenteUsuario" message="tns:IEncuestaService_BuscarVigenteUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/BuscarVigenteUsuarioResponse" message="tns:IEncuestaService_BuscarVigenteUsuario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_BuscarVigenteUsuario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CerrarUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/CerrarUsuario" message="tns:IEncuestaService_CerrarUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/CerrarUsuarioResponse" message="tns:IEncuestaService_CerrarUsuario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_CerrarUsuario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerAnonimo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEncuestaService/ObtenerAnonimo" message="tns:IEncuestaService_ObtenerAnonimo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEncuestaService/ObtenerAnonimoResponse" message="tns:IEncuestaService_ObtenerAnonimo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IEncuestaService_ObtenerAnonimo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IEncuestaService" type="tns:IEncuestaService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IEncuestaService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Activar">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/Activar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Desactivar">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/Desactivar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarPregunta">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/InsertarPregunta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPregunta">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/ActualizarPregunta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarPregunta">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/BorrarPregunta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPregunta">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/MostrarPregunta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPregunta">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/ObtenerPregunta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRespuesta">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/InsertarRespuesta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRespuesta">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/ActualizarRespuesta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRespuesta">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/BorrarRespuesta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRespuesta">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/MostrarRespuesta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRespuesta">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/ObtenerRespuesta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarResultado">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/InsertarResultado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarResultado">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/MostrarResultado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipo">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/MostrarTipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarActivo">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/MostrarActivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarVigente">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/MostrarVigente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarResultado">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/BuscarResultado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarVigenteUsuario">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/BuscarVigenteUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CerrarUsuario">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/CerrarUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerAnonimo">
+      <soap12:operation soapAction="http://tempuri.org/IEncuestaService/ObtenerAnonimo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EncuestaService">
+    <wsdl:port name="NetTcpBinding_IEncuestaService" binding="tns:NetTcpBinding_IEncuestaService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/EncuestaService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/EncuestaService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

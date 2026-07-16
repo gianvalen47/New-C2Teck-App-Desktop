@@ -1,0 +1,235 @@
+﻿Imports System.Windows.Forms
+
+Public Class frmBuscarPedidoImportacion
+
+    Private oPedidoImportService As New PedidoImportService.PedidoImportServiceClient
+    Private oMaestroService As New MaestroService.MaestroClient
+    Private dtDatos As DataTable
+    Private state_Search As Boolean
+    '====================================================================================================================
+    '============================================ LOCAL PARAMETERS ======================================================
+    '====================================================================================================================
+    Private dtOficinas As DataTable
+    Private dtAlmacenes As DataTable
+    Private dtProveedores As DataTable
+
+    Public codigo As String
+    Public numero As Integer
+    Public IdLocacion As Integer
+    Public IdCliente As Integer
+
+    '====================================================================================================================
+    '============================================ CONTROL'S METHOD ======================================================
+    '====================================================================================================================
+    Private Sub SendFocus_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                         txtNumPed.KeyPress _
+                      , cmbOficinas.KeyPress _
+                      , cmbIdLocacion.KeyPress _
+                      , cmbIdCliente.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            SendKeys.Send("{TAB}")
+            listaDatos()
+        End If
+    End Sub
+    Private Sub Salir_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                         txtNumPed.KeyPress _
+                      , cmbOficinas.KeyPress _
+                      , cmbIdLocacion.KeyPress _
+                      , cmbIdCliente.KeyPress _
+                      , btnBuscar.KeyPress _
+                      , dgvDatos.KeyPress
+        If e.KeyChar = ChrW(Keys.Escape) Then
+            Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
+            Me.Close()
+        End If
+    End Sub
+    Private Sub RowPossesion(ByVal lista As Janus.Windows.GridEX.GridEX, ByVal tabla As DataTable, ByVal nombreCampo As String, ByVal codigo As String)
+        Try
+            tabla.DefaultView.Sort = nombreCampo
+            lista.FirstRow = dtDatos.DefaultView.Find(codigo)
+            lista.Row = dtDatos.DefaultView.Find(codigo)
+        Catch ex As Exception
+            MsgBox("ERROR [ROW_POSS]: " + ex.Message, MsgBoxStyle.Critical)
+        End Try
+    End Sub
+    Private Sub Initialize_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Dim estilo As New Estilo
+        estilo.cargaEstiloGrid_Bucadores(dgvDatos)
+        state_Search = False
+        llenarCombos()
+        state_Search = True
+        listaDatos()
+    End Sub
+    Private Sub FinallyObjects_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            oPedidoImportService.Close()
+            oMaestroService.Close()
+        Catch ex As Exception
+            MsgBox("ERROR [FINALLY]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub enableOpciones()
+        If dgvDatos.RowCount < 1 Then
+            miSeleccionar.Enabled = False
+        Else
+            miSeleccionar.Enabled = True
+        End If
+    End Sub
+    Private Function getRowTodos(ByVal data As DataTable)
+        Dim fila As DataRow = data.NewRow
+        Try
+            fila(0) = ""
+        Catch ex As Exception
+            fila(0) = 0
+        End Try
+        fila(1) = "(Todos)"
+        Return fila
+    End Function
+
+    '====================================================================================================================
+    '============================================ TASK'S METHOD =========================================================
+    '====================================================================================================================
+    Private Sub Seleccionar()
+        Try
+            codigo = dgvDatos.CurrentRow.Cells("IdPedidoImp").Text
+            numero = dgvDatos.CurrentRow.Cells("NumPed").Text
+            IdLocacion = dgvDatos.CurrentRow.Cells("IdLocacion").Text
+            IdCliente = dgvDatos.CurrentRow.Cells("IdCliente").Text
+            Me.DialogResult = Windows.Forms.DialogResult.OK
+            Me.Close()
+        Catch ex As Exception
+            MsgBox("ERROR [BUSC-001]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub listaDatos()
+        Try
+            If state_Search = True Then
+                Dim registro As New PedidoImportService.PedidoImport
+                Dim locacion As New PedidoImportService.Locacion
+                Dim cliente As New PedidoImportService.Cliente
+
+                If toNumber(cmbIdLocacion.Value) = 0 Then
+                    locacion.IdLocacion = -1
+                    registro.Locacion = locacion
+                Else
+                    locacion.IdLocacion = toNumber(cmbIdLocacion.Value)
+                    registro.Locacion = locacion
+                End If
+                cliente.IdCliente = toNumber(cmbIdCliente.Value)
+                registro.Cliente = cliente
+                registro.NumPed = toBlank(txtNumPed.Text)
+
+                dtDatos = oPedidoImportService.Filtrar(registro).Tables(0)
+                dgvDatos.SetDataBinding(dtDatos, 0)
+
+                sslTotal.Text = "Registros : " + dgvDatos.RowCount.ToString
+                enableOpciones()
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [BUSC-002]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Function ValidaCodigoSeleccionado() As Boolean
+        Try
+            If dgvDatos.RowCount < 1 Then
+                MsgBox("Lista de registros esta vacío, verificar...!!!", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf dgvDatos.CurrentRow.RowIndex < 0 Then
+                MsgBox("Seleccione un registro ...!!!", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf dgvDatos.CurrentRow.Cells(0).Text = Nothing Then
+                MsgBox("Registro Vacío", MsgBoxStyle.Information, "Información")
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [BUSC-003]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+    Private Sub llenarCombos()
+        Try
+            '======================================= OFICINAS ================================================
+            dtOficinas = oMaestroService.MostrarOficinas.Tables(0)
+            cmbOficinas.DataSource = dtOficinas
+            cmbOficinas.DropDownList.DataMember = dtOficinas.Columns("DesOfi").ToString
+            cmbOficinas.DropDownList.DisplayMember = dtOficinas.Columns("DesOfi").ToString
+            cmbOficinas.DropDownList.ValueMember = dtOficinas.Columns("CodOfi").ToString
+            cmbOficinas.DropDownList.Columns(0).DataMember = dtOficinas.Columns("CodOfi").ToString
+            cmbOficinas.DropDownList.Columns(1).DataMember = dtOficinas.Columns("DesOfi").ToString
+            cmbOficinas.SelectedIndex = 0
+            dtOficinas = Nothing
+            '======================================= PROVEEDORES ================================================
+            dtProveedores = oPedidoImportService.MostrarProveedores(Session.sCodEmp).Tables(0)
+            dtProveedores.Rows.InsertAt(getRowTodos(dtProveedores), 0)
+            cmbIdCliente.DataSource = dtProveedores
+            cmbIdCliente.DropDownList.DataMember = dtProveedores.Columns("DesCli").ToString
+            cmbIdCliente.DropDownList.DisplayMember = dtProveedores.Columns("DesCli").ToString
+            cmbIdCliente.DropDownList.ValueMember = dtProveedores.Columns("IdCliente").ToString
+            cmbIdCliente.DropDownList.Columns(0).DataMember = dtProveedores.Columns("IdCliente").ToString
+            cmbIdCliente.DropDownList.Columns(1).DataMember = dtProveedores.Columns("DesCli").ToString
+            cmbIdCliente.SelectedIndex = 0
+            dtProveedores = Nothing
+        Catch ex As Exception
+            MsgBox("ERROR [BUSC-004]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+
+    '====================================================================================================================
+    '============================================ INTERFACE'S METHOD ====================================================
+    '====================================================================================================================
+    Private Sub dgvDatos_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles dgvDatos.DoubleClick
+        If ValidaCodigoSeleccionado() Then
+            Seleccionar()
+        End If
+    End Sub
+    Private Sub btnBuscar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBuscar.Click
+        listaDatos()
+    End Sub
+    Private Sub miSeleccionar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miSeleccionar.Click
+        If ValidaCodigoSeleccionado() Then
+            Seleccionar()
+        End If
+    End Sub
+    Private Sub miActualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miActualizar.Click
+        Dim codigo As String = ""
+        If dgvDatos.RowCount > 0 Then
+            codigo = dgvDatos.CurrentRow.Cells("IdPedidoImp").Text
+        End If
+        dtDatos = Nothing
+        listaDatos()
+        If dgvDatos.RowCount > 0 And codigo.Trim.Length > 0 Then
+            RowPossesion(dgvDatos, dtDatos, "cIdPedidoImp", codigo)
+        End If
+    End Sub
+    Private Sub EjecutaCombos_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        listaDatos()
+    End Sub
+    Private Sub cmbOficinas_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbOficinas.ValueChanged
+        If toBlank(cmbOficinas.Value) <> "" Then
+            '======================================= ALMACENES ================================================
+            dtAlmacenes = oMaestroService.MostrarLocaciones(Session.sCodEmp, cmbOficinas.Value, Session.sUsuario.cod_usuario).Tables(0)
+            cmbIdLocacion.DataSource = dtAlmacenes
+            cmbIdLocacion.DropDownList.DataMember = dtAlmacenes.Columns("DesAlm").ToString
+            cmbIdLocacion.DropDownList.DisplayMember = dtAlmacenes.Columns("DesAlm").ToString
+            cmbIdLocacion.DropDownList.ValueMember = dtAlmacenes.Columns("IdLocacion").ToString
+            cmbIdLocacion.DropDownList.Columns(0).DataMember = dtAlmacenes.Columns("IdLocacion").ToString
+            cmbIdLocacion.DropDownList.Columns(1).DataMember = dtAlmacenes.Columns("DesAlm").ToString
+            If dtAlmacenes.Rows.Count > 0 Then
+                cmbIdLocacion.SelectedIndex = 0
+            Else
+                cmbIdLocacion.Value = ""
+            End If
+            dtAlmacenes = Nothing
+        Else
+            cmbIdLocacion.Value = ""
+        End If
+    End Sub
+    Private Sub miNinguno_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miNinguno.Click
+        codigo = Nothing
+        numero = 0
+        Me.DialogResult = Windows.Forms.DialogResult.OK
+        Me.Close()
+    End Sub
+End Class

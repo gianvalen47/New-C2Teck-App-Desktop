@@ -1,0 +1,248 @@
+﻿Imports System.Windows.Forms
+
+Public Class frmModelo
+    Public state_button As Boolean              'True: Modificar    False: nuevo
+    Public type_process As String               'update     insert      delete
+    Private oMaestro As New MaestroService.MaestroClient
+    Private oModeloService As New ModeloService.ModeloServiceClient
+    Private dtDatos As DataTable
+    Private state_Search As Boolean
+    '====================================================================================================================
+    '============================================ PARAMETROS LOCALES ====================================================
+    '====================================================================================================================
+    Private dtSeries As DataTable
+    '====================================================================================================================
+    '============================================ CONTROL'S METHOD ======================================================
+    '====================================================================================================================
+    Private Sub SendFocus_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                           txtModMer.KeyPress _
+                          , txtDescripcion.KeyPress _
+                          , cmbCodSerie.KeyPress _
+                          , cbEstado.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            SendKeys.Send("{TAB}")
+        End If
+    End Sub
+    Private Sub Initialize_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Me.CancelButton = Me.btnCancelar
+        state_Search = False
+        llenarCombos()
+        If state_button Then    'Modificar
+            Me.btnGuardar.Location = New System.Drawing.Point(173, 95)
+            Me.btnEliminar.Location = New System.Drawing.Point(247, 95)
+            txtModMer.ReadOnly = True
+            txtModMer.TabStop = False
+            ObtenerRegistro()
+            Me.Text = "Modelo " + Chr(34) + txtModMer.Text.ToString + Chr(34)
+        Else                    'Nuevo
+            btnEliminar.Visible = False
+            Me.btnEliminar.Location = New System.Drawing.Point(173, 95)
+            Me.btnGuardar.Location = New System.Drawing.Point(247, 95)
+            txtModMer.ReadOnly = False
+            txtModMer.TabStop = True
+            Me.Text = "Registrar un nuevo Modelo"
+        End If
+        state_Search = True
+    End Sub
+    Private Sub FinallyObjects_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            If isClosed(oMaestro) = False Then
+                oMaestro.Close()
+            End If
+            If isClosed(oModeloService) = False Then
+                oModeloService.Close()
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [FINALLY]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub setColor_BlankCajaTexto(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles _
+                           txtModMer.KeyUp _
+                          , txtDescripcion.KeyUp
+        Try
+            If state_Search = True Then
+                Dim campo As New Object
+                If sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.EditBox" Then
+                    campo = New Janus.Windows.GridEX.EditControls.EditBox
+                ElseIf sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.NumericEditBox" Then
+                    campo = New Janus.Windows.GridEX.EditControls.NumericEditBox
+                ElseIf sender.GetType.ToString = "System.Windows.Forms.TextBox" Then
+                    campo = New TextBox
+                End If
+                campo = sender
+                If campo.readonly = False Then
+                    If campo.Text.Trim.Length > 0 Then
+                        campo.BackColor = Color.White
+                    Else
+                        campo.BackColor = Color.Red
+                    End If
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+    Private Sub OnlyNumber_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) 'Handles txtModMer.KeyPress
+        If Not Char.IsNumber(e.KeyChar) And (e.KeyChar = ChrW(Keys.Back)) = False And (e.KeyChar = ChrW(Keys.Enter)) = False Then
+            e.KeyChar = Chr(0)
+        End If
+    End Sub
+    Private Function getRowTodos(ByVal data As DataTable)
+        Dim fila As DataRow = data.NewRow
+        Try
+            fila(0) = ""
+        Catch ex As Exception
+            fila(0) = 0
+        End Try
+        fila(1) = "(Todos)"
+        Return fila
+    End Function
+
+    '====================================================================================================================
+    '============================================ TASK'S METHOD =========================================================
+    '====================================================================================================================
+    Private Function ValidaCampos() As Boolean
+        Try
+            Dim registro As New ModeloService.Modelo
+            registro.ModMer = toNull(txtModMer.Text)
+            If txtModMer.Text.Trim = "" Then
+                MsgBox("Debe Ingresar el código del Modelo", MsgBoxStyle.Information, "Información")
+                txtModMer.BackColor = Color.Red
+                txtModMer.Focus()
+                Return False
+            ElseIf cmbCodSerie.Value = "" Then
+                MsgBox("Debe Ingresar la serie del Modelo", MsgBoxStyle.Information, "Información")
+                cmbCodSerie.BackColor = Color.Red
+                cmbCodSerie.Focus()
+                Return False
+            ElseIf txtDescripcion.Text = "" Then
+                MsgBox("Debe Ingresar el descripción del Modelo", MsgBoxStyle.Information, "Información")
+                txtDescripcion.BackColor = Color.Red
+                txtDescripcion.Focus()
+                Return False
+            ElseIf state_button = False And oModeloService.Buscar(registro) = True Then
+                MsgBox("Código " + txtModMer.Text + " ya existe...!", MsgBoxStyle.Information, "Información")
+                txtModMer.Text = ""
+                txtModMer.Focus()
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-001]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+    Private Sub Insertar(ByVal registro As ModeloService.Modelo)
+        Try
+            Dim estado_process As Boolean
+            estado_process = oModeloService.Insertar(registro)
+            type_process = "insert"
+            If estado_process = True Then
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-002]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub Modificar(ByVal registro As ModeloService.Modelo)
+        Try
+            Dim estado_process As Boolean
+            estado_process = oModeloService.Actualizar(registro)
+            type_process = "update"
+            If estado_process = True Then
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-003]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub Eliminar(ByVal registro As ModeloService.Modelo)
+        Try
+            Dim estado_process As Boolean
+            estado_process = oModeloService.Borrar(registro)
+            type_process = "delete"
+            If estado_process = True Then
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-004]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub ObtenerRegistro()
+        Try
+            Dim registro As ModeloService.Modelo
+            registro = oModeloService.MostrarPorCodigo(toNull(txtModMer.Text))
+
+            txtModMer.Text = registro.ModMer
+            txtDescripcion.Text = registro.Descripcion
+            state_button = True
+            cmbCodSerie.Value = registro.Serie.CodSerie
+            cbEstado.Checked = registro.Estado
+
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-005]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub llenarCombos()
+        Try
+            '======================================= SERIES ================================================
+            dtSeries = oMaestro.MostrarSeries.Tables(0)
+            cmbCodSerie.DataSource = dtSeries
+            cmbCodSerie.DropDownList.DataMember = dtSeries.Columns("Descripcion").ToString
+            cmbCodSerie.DropDownList.DisplayMember = dtSeries.Columns("Descripcion").ToString
+            cmbCodSerie.DropDownList.ValueMember = dtSeries.Columns("CodSerie").ToString
+            cmbCodSerie.DropDownList.Columns(0).DataMember = dtSeries.Columns("CodSerie").ToString
+            cmbCodSerie.DropDownList.Columns(1).DataMember = dtSeries.Columns("Descripcion").ToString
+            dtSeries = Nothing
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-006]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+
+    '====================================================================================================================
+    '============================================ INTERFACE'S METHOD ====================================================
+    '====================================================================================================================
+    Private Sub btnCancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancelar.Click
+        Me.DialogResult = Windows.Forms.DialogResult.Cancel
+        Me.Close()
+    End Sub
+    Private Sub btnGuardar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGuardar.Click
+        If MsgBox("¿Está seguro que desea guardar los datos?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes _
+            And ValidaCampos() Then
+
+            Dim registro As New ModeloService.Modelo
+            Dim serie As New ModeloService.Serie
+
+            registro.ModMer = toNull(txtModMer.Text)
+            registro.Descripcion = toNull(txtDescripcion.Text)
+            serie.CodSerie = toNull(cmbCodSerie.Value)
+            registro.Serie = serie
+            registro.Estado = cbEstado.Checked
+
+            If state_button Then        'Modificar
+                Modificar(registro)
+            Else                        'Nuevo
+                Insertar(registro)
+            End If
+        End If
+    End Sub
+    Private Sub btnEliminar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnEliminar.Click
+        If MsgBox("¿Está seguro que desea eliminar el registro?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes Then
+            If txtModMer.Text.Trim.Length > 0 Then
+                Dim registro As New ModeloService.Modelo
+                registro.ModMer = txtModMer.Text.Trim
+                Eliminar(registro)
+            Else
+                MsgBox("Debe Ingresar el Código...!!!", MsgBoxStyle.Information, "Información")
+                txtModMer.Focus()
+            End If
+        End If
+    End Sub
+End Class

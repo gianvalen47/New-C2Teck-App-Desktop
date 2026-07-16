@@ -1,0 +1,928 @@
+﻿Imports System.Windows.Forms
+
+Public Class frmCliente
+
+    Public state_button As Boolean              'True: Modificar    False: nuevo
+    Public type_process As String               'update     insert      delete
+    Private oMaestro As New MaestroService.MaestroClient
+    Private oClienteService As New ClienteService.ClienteServiceClient
+    Private oContactoService As New ContactoService.ContactoServiceClient
+    Private oDireccionFiscalService As New DireccionFiscalService.DireccionFiscalServiceClient
+    Private oLocacionClienteService As New LocacionClienteService.LocacionClienteServiceClient
+    Private oCondicionPagoClienteService As New CondicionPagoClienteService.CondicionPagoClienteServiceClient
+    Private dtDatos As DataTable
+    Private state_Search As Boolean
+    '====================================================================================================================
+    '============================================ PARAMETROS LOCALES ====================================================
+    '====================================================================================================================
+    Private TAB_CONTACTOS As String = "tabpContactos"
+    Private TAB_DIRECCIONES_FISCALES As String = "tabpDireccionesFiscales"
+    Private TAB_LOCACIONES As String = "tabpLocaciones"
+    Private TAB_CONDICIONES_PAGO As String = "tabpCondicionesPago"
+
+    Private dtTiposContribuyentes As DataTable
+    Private dtSectores As DataTable
+    Private dtTiposClientes As DataTable
+
+    '====================================================================================================================
+    '============================================ CONTROL'S METHOD ======================================================
+    '====================================================================================================================
+    Private Sub SendFocus_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                            txtObsCli.KeyPress _
+                          , cmbIdTipoCliente.KeyPress _
+                          , txtDirCli.KeyPress _
+                          , txtDesCli.KeyPress _
+                          , txtIdCliente.KeyPress _
+                          , cmbIdTipoCon.KeyPress _
+                          , txtAbrCli.KeyPress _
+                          , txtDueCli.KeyPress _
+                          , txtRucCli.KeyPress _
+                          , txtDniCli.KeyPress _
+                          , txtUrlCli.KeyPress _
+                          , txtEmail.KeyPress _
+                          , txtFaxCli.KeyPress _
+                          , txtTelCli.KeyPress _
+                          , cmbCodSec.KeyPress _
+                          , cbListaCli.KeyPress _
+                          , cbAprCli.KeyPress _
+                          , txtHoraPago.KeyPress _
+                          , txtDiaPago.KeyPress, txtNumCta.KeyPress, cbEstado.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            SendKeys.Send("{TAB}")
+        End If
+    End Sub
+    Private Sub Initialize_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Me.CancelButton = Me.btnCancelar
+        Me.Size = New System.Drawing.Size(666, 320)
+        state_Search = False
+        llenarCombos()
+        InitDataGrids()
+        If state_button Then    'Modificar
+            Me.btnGuardar.Location = New System.Drawing.Point(429, 254)
+            Me.btnEliminar.Location = New System.Drawing.Point(503, 254)
+            txtIdCliente.ReadOnly = True
+            txtIdCliente.TabStop = False
+            ObtenerRegistro()
+            btnVerDetalle.Visible = True
+            Me.Text = "Cliente " + Chr(34) + txtDesCli.Text.ToString + Chr(34)
+        Else                    'Nuevo
+            btnEliminar.Visible = False
+            Me.btnEliminar.Location = New System.Drawing.Point(429, 254)
+            Me.btnGuardar.Location = New System.Drawing.Point(503, 254)
+            txtIdCliente.ReadOnly = True
+            txtIdCliente.TabStop = False
+            btnVerDetalle.Visible = False
+            Me.Text = "Registrar nuevo Cliente"
+        End If
+        state_Search = True
+    End Sub
+    Private Sub FinallyObjects_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            If isClosed(oMaestro) = False Then
+                oMaestro.Close()
+            End If
+            If isClosed(oClienteService) = False Then
+                oClienteService.Close()
+            End If
+            If isClosed(oContactoService) = False Then
+                oContactoService.Close()
+            End If
+            If isClosed(oDireccionFiscalService) = False Then
+                oDireccionFiscalService.Close()
+            End If
+            If isClosed(oLocacionClienteService) = False Then
+                oLocacionClienteService.Close()
+            End If
+            If isClosed(oCondicionPagoClienteService) = False Then
+                oCondicionPagoClienteService.Close()
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [FINALLY]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub setColor_BlankCajaTexto(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles _
+                           txtIdCliente.KeyUp _
+                          , txtDesCli.KeyUp _
+                          , txtDirCli.KeyUp _
+                          , txtRucCli.KeyUp _
+                          , txtDniCli.KeyUp
+        Try
+            If state_Search = True Then
+                Dim campo As New Object
+                If sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.EditBox" Then
+                    campo = New Janus.Windows.GridEX.EditControls.EditBox
+                ElseIf sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.NumericEditBox" Then
+                    campo = New Janus.Windows.GridEX.EditControls.NumericEditBox
+                ElseIf sender.GetType.ToString = "System.Windows.Forms.TextBox" Then
+                    campo = New TextBox
+                End If
+                campo = sender
+                If campo.readonly = False Then
+                    If campo.Text.Trim.Length > 0 Then
+                        campo.BackColor = Color.White
+                    Else
+                        campo.BackColor = Color.Red
+                    End If
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+    Private Sub OnlyNumber_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) 'Handles txtModMer.KeyPress
+        If Not Char.IsNumber(e.KeyChar) And (e.KeyChar = ChrW(Keys.Back)) = False And (e.KeyChar = ChrW(Keys.Enter)) = False Then
+            e.KeyChar = Chr(0)
+        End If
+    End Sub
+    Private Function getRowTodos(ByVal data As DataTable)
+        Dim fila As DataRow = data.NewRow
+        Try
+            fila(0) = ""
+        Catch ex As Exception
+            fila(0) = 0
+        End Try
+        fila(1) = "(Ninguno)"
+        Return fila
+    End Function
+    Private Sub enableOpciones(ByVal campo As DataGridView)
+        If campo.RowCount < 1 Then
+            miMostrar.Enabled = False
+            miEliminar.Enabled = False
+        Else
+            miMostrar.Enabled = True
+            miEliminar.Enabled = True
+        End If
+    End Sub
+    Private Sub RowPossesion(ByVal lista As DataGridView, ByVal tabla As DataTable, ByVal nombreCampo As String, ByVal codigo As String)
+        Try
+            tabla.DefaultView.Sort = nombreCampo
+            lista.FirstDisplayedScrollingRowIndex = dtDatos.DefaultView.Find(codigo)
+            lista.Rows(dtDatos.DefaultView.Find(codigo)).Selected = True
+            lista.CurrentCell = lista.Rows(dtDatos.DefaultView.Find(codigo)).Cells(0)
+        Catch ex As Exception
+            MsgBox("ERROR [ROW_POSS]: " + ex.Message, MsgBoxStyle.Critical)
+        End Try
+    End Sub
+    Private Sub limpiaDataGrids(ByVal campo As String)
+        If campo = TAB_CONTACTOS Then
+            dgvDireccionesFiscales.DataSource = Nothing
+            dgvLocaciones.DataSource = Nothing
+            dgvCondicionesPago.DataSource = Nothing
+        ElseIf campo = TAB_DIRECCIONES_FISCALES Then
+            dgvContactos.DataSource = Nothing
+            dgvLocaciones.DataSource = Nothing
+            dgvCondicionesPago.DataSource = Nothing
+        ElseIf campo = TAB_LOCACIONES Then
+            dgvContactos.DataSource = Nothing
+            dgvDireccionesFiscales.DataSource = Nothing
+            dgvCondicionesPago.DataSource = Nothing
+        ElseIf campo = TAB_CONDICIONES_PAGO Then
+            dgvContactos.DataSource = Nothing
+            dgvDireccionesFiscales.DataSource = Nothing
+            dgvLocaciones.DataSource = Nothing
+        ElseIf campo = "Todos" Then
+            dtDatos = Nothing
+            dgvContactos.DataSource = Nothing
+            dgvDireccionesFiscales.DataSource = Nothing
+            dgvLocaciones.DataSource = Nothing
+            dgvCondicionesPago.DataSource = Nothing
+        End If
+    End Sub
+    Private Sub InitDataGrids()
+        Dim estilo As New Estilo
+        estilo.cargaEstiloDataDrid(dgvContactos)
+        estilo.cargaEstiloDataDrid(dgvDireccionesFiscales)
+        estilo.cargaEstiloDataDrid(dgvLocaciones)
+        estilo.cargaEstiloDataDrid(dgvCondicionesPago)
+    End Sub
+    '====================================================================================================================
+    '============================================ TASK'S METHOD =========================================================
+    '====================================================================================================================
+    Private Function ValidaCampos() As Boolean
+        Try
+            Dim registro As New ClienteService.Cliente
+            registro.IdCliente = toNumber(txtIdCliente.Text)
+            If state_button = False And toNumber(txtIdCliente.Text) = 0 Then
+                MsgBox("Debe Ingresar el código del Cliente", MsgBoxStyle.Information, "Información")
+                txtIdCliente.BackColor = Color.Red
+                txtIdCliente.Focus()
+                Return False
+            ElseIf toNumber(cmbIdTipoCon.Value) = 0 Then
+                MsgBox("Debe Ingresar el Tipo de contribuyente  del Cliente", MsgBoxStyle.Information, "Información")
+                cmbIdTipoCon.BackColor = Color.Red
+                cmbIdTipoCon.Focus()
+                Return False
+            ElseIf txtDesCli.Text = "" Then
+                MsgBox("Debe Ingresar el descripción del Cliente", MsgBoxStyle.Information, "Información")
+                txtDesCli.BackColor = Color.Red
+                txtDesCli.Focus()
+                Return False
+            ElseIf toNumber(cmbIdTipoCon.Value) = 1 And txtRucCli.Text.Trim.Length <> 11 Then
+                MsgBox("El R.U.C. es incorrecto...!", MsgBoxStyle.Information, "Información")
+                txtRucCli.BackColor = Color.Red
+                txtRucCli.Focus()
+                Return False
+            ElseIf toNumber(cmbIdTipoCon.Value) = 2 And txtDniCli.Text.Trim.Length <> 8 Then
+                MsgBox("El D.N.I. es incorrecto...!", MsgBoxStyle.Information, "Información")
+                txtDniCli.BackColor = Color.Red
+                txtDniCli.Focus()
+                Return False
+            ElseIf txtDirCli.Text = "" Then
+                MsgBox("Debe Ingresar la dirección del Cliente", MsgBoxStyle.Information, "Información")
+                txtDirCli.BackColor = Color.Red
+                txtDirCli.Focus()
+                Return False
+            ElseIf cmbCodSec.Value = "" Then
+                MsgBox("Debe Ingresar el sector del Cliente", MsgBoxStyle.Information, "Información")
+                cmbCodSec.BackColor = Color.Red
+                cmbCodSec.Focus()
+                Return False
+            ElseIf cmbIdTipoCliente.Value = 0 Then
+                MsgBox("Debe Ingresar el tipo de Cliente", MsgBoxStyle.Information, "Información")
+                cmbIdTipoCliente.BackColor = Color.Red
+                cmbIdTipoCliente.Focus()
+                Return False
+            ElseIf toNumber(cmbIdTipoCon.Value) = 1 And state_button = False And oClienteService.BuscarRuc(toNull(txtDniCli.Text)) = True Then
+                MsgBox("El D.N.I. " + txtIdCliente.Text + " ya existe...!", MsgBoxStyle.Information, "Información")
+                txtDniCli.Text = ""
+                txtDniCli.Focus()
+                Return False
+            ElseIf toNumber(cmbIdTipoCon.Value) = 2 And state_button = False And oClienteService.BuscarRuc(toNull(txtRucCli.Text)) = True Then
+                MsgBox("El R.U.C. " + txtIdCliente.Text + " ya existe...!", MsgBoxStyle.Information, "Información")
+                txtRucCli.Text = ""
+                txtRucCli.Focus()
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-001]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+    Private Sub Insertar(ByVal registro As ClienteService.Cliente)
+        Try
+            Dim estado_process As Boolean
+            estado_process = oClienteService.Insertar(Session.sCodEmp, registro)
+            type_process = "insert"
+            If estado_process = True Then
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-002]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub Modificar(ByVal registro As ClienteService.Cliente)
+        Try
+            Dim estado_process As Boolean
+            estado_process = oClienteService.Actualizar(registro)
+            type_process = "update"
+            If estado_process = True Then
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-003]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub Eliminar(ByVal registro As ClienteService.Cliente)
+        Try
+            Dim estado_process As Boolean
+            estado_process = oClienteService.Borrar(registro)
+            type_process = "delete"
+            If estado_process = True Then
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-004]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub ObtenerRegistro()
+        Try
+            Dim registro As ClienteService.Cliente
+            registro = oClienteService.MostrarPorID(toNumber(txtIdCliente.Text))
+
+            txtIdCliente.Text = toBlank(registro.IdCliente)
+            txtDesCli.Text = toBlank(registro.DesCli)
+            txtDirCli.Text = toBlank(registro.DirCli)
+            txtAbrCli.Text = toBlank(registro.AbrCli)
+            txtRucCli.Text = toBlank(registro.RucCli)
+            txtDueCli.Text = toBlank(registro.DueCli)
+            txtNumCta.Text = toBlank(registro.NumCta)
+            txtDiaPago.Text = toBlank(registro.DiaPago)
+            txtHoraPago.Text = toBlank(registro.HoraPago)
+            txtDniCli.Text = toBlank(registro.DniCli)
+            txtTelCli.Text = toBlank(registro.TelCli)
+            txtFaxCli.Text = toBlank(registro.FaxCli)
+            txtEmail.Text = toBlank(registro.Email)
+            txtUrlCli.Text = toBlank(registro.UrlCli)
+            txtObsCli.Text = toBlank(registro.ObsCli)
+            state_Search = True
+            cmbIdTipoCon.Value = registro.TipoContribuyente.IdTipoCon
+            cmbCodSec.Value = toBlank(registro.SectorCliente.CodSec)
+            cbAprCli.Checked = toBlank(registro.AprCli)
+            cbListaCli.Checked = toBlank(registro.ListaCli)
+            cmbIdTipoCliente.Value = registro.TipoCliente.IdTipoCliente
+            cbEstado.Checked = toBlank(registro.Estado)
+
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-005]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub llenarCombos()
+        Try
+            '======================================= TIPOS DE CONTRIBUYENTES =======================================
+            dtTiposContribuyentes = oMaestro.MostrarTipoContribuyente.Tables(0)
+            cmbIdTipoCon.DataSource = dtTiposContribuyentes
+            cmbIdTipoCon.DropDownList.DataMember = dtTiposContribuyentes.Columns("DesTipo").ToString
+            cmbIdTipoCon.DropDownList.DisplayMember = dtTiposContribuyentes.Columns("DesTipo").ToString
+            cmbIdTipoCon.DropDownList.ValueMember = dtTiposContribuyentes.Columns("IdTipoCon").ToString
+            cmbIdTipoCon.DropDownList.Columns(0).DataMember = dtTiposContribuyentes.Columns("IdTipoCon").ToString
+            cmbIdTipoCon.DropDownList.Columns(1).DataMember = dtTiposContribuyentes.Columns("DesTipo").ToString
+            cmbIdTipoCon.SelectedIndex = 0
+            dtTiposContribuyentes = Nothing
+            '======================================= SECTORES =========================================
+            dtSectores = oMaestro.MostrarSectorCliente.Tables(0)
+            cmbCodSec.DataSource = dtSectores
+            cmbCodSec.DropDownList.DataMember = dtSectores.Columns("DesSec").ToString
+            cmbCodSec.DropDownList.DisplayMember = dtSectores.Columns("DesSec").ToString
+            cmbCodSec.DropDownList.ValueMember = dtSectores.Columns("CodSec").ToString
+            cmbCodSec.DropDownList.Columns(0).DataMember = dtSectores.Columns("CodSec").ToString
+            cmbCodSec.DropDownList.Columns(1).DataMember = dtSectores.Columns("DesSec").ToString
+            cmbCodSec.SelectedIndex = 0
+            dtSectores = Nothing
+            '======================================= TIPOS DE CLIENTES =========================================
+            dtTiposClientes = oMaestro.MostrarTipoCliente.Tables(0)
+            cmbIdTipoCliente.DataSource = dtTiposClientes
+            cmbIdTipoCliente.DropDownList.DataMember = dtTiposClientes.Columns("DesTipoCli").ToString
+            cmbIdTipoCliente.DropDownList.DisplayMember = dtTiposClientes.Columns("DesTipoCli").ToString
+            cmbIdTipoCliente.DropDownList.ValueMember = dtTiposClientes.Columns("IdTipoCliente").ToString
+            cmbIdTipoCliente.DropDownList.Columns(0).DataMember = dtTiposClientes.Columns("IdTipoCliente").ToString
+            cmbIdTipoCliente.DropDownList.Columns(1).DataMember = dtTiposClientes.Columns("DesTipoCli").ToString
+            dtTiposClientes = Nothing
+
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-006]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Function ValidaCodigoSeleccionado(ByVal campo As DataGridView) As Boolean
+        Try
+            If campo.RowCount < 1 Then
+                MsgBox("Lista de registros esta vacío, verificar...!!!", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf campo.CurrentRow.Index < 0 Then
+                MsgBox("Seleccione un registro ...!!!", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf campo.Item(0, campo.CurrentRow.Index).Value = Nothing Then
+                MsgBox("Registro Vacío", MsgBoxStyle.Information, "Información")
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-007]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+    Private Sub listaContactos()
+        Try
+            dtDatos = oContactoService.Mostrar(toNumber(txtIdCliente.Text)).Tables(0)
+            dgvContactos.DataSource = dtDatos
+            cIdContacto.DataPropertyName = dtDatos.Columns("IdContacto").ColumnName
+            cNombres.DataPropertyName = dtDatos.Columns("Nombres").ColumnName
+            cApellidos.DataPropertyName = dtDatos.Columns("Apellidos").ColumnName
+
+            enableOpciones(dgvContactos)
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-008]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub listaDirecionFiscal()
+        Try
+            dtDatos = oDireccionFiscalService.Mostrar(toNumber(txtIdCliente.Text)).Tables(0)
+            dgvDireccionesFiscales.DataSource = dtDatos
+            cIdFiscal.DataPropertyName = dtDatos.Columns("IdFiscal").ColumnName
+            cDireccion.DataPropertyName = dtDatos.Columns("Direccion").ColumnName
+
+            enableOpciones(dgvDireccionesFiscales)
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-009]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub listaLocacionesCliente()
+        Try
+            dtDatos = oLocacionClienteService.Mostrar(toNumber(txtIdCliente.Text)).Tables(0)
+            dgvLocaciones.DataSource = dtDatos
+            cIdLocCli.DataPropertyName = dtDatos.Columns("IdLocCli").ColumnName
+            cNombre.DataPropertyName = dtDatos.Columns("Nombre").ColumnName
+            cEmail.DataPropertyName = dtDatos.Columns("Email").ColumnName
+
+            enableOpciones(dgvLocaciones)
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-010]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub listaCondicionesPago()
+        Try
+            dtDatos = oCondicionPagoClienteService.Mostrar(toNumber(txtIdCliente.Text)).Tables(0)
+            dgvCondicionesPago.DataSource = dtDatos
+            cDesRub.DataPropertyName = dtDatos.Columns("DesRub").ColumnName
+            cDesPag.DataPropertyName = dtDatos.Columns("DesPag").ColumnName
+            cDiaPag.DataPropertyName = dtDatos.Columns("DiaPag").ColumnName
+            cCodPag.DataPropertyName = dtDatos.Columns("CodPag").ColumnName
+            cCodRub.DataPropertyName = dtDatos.Columns("CodRub").ColumnName
+
+            enableOpciones(dgvCondicionesPago)
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-011]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub mostrarContacto()
+        Try
+            Dim frm As New frmAgregarContacto
+            frm.state_button = True
+            frm.txtIdContacto.Text = dgvContactos.Item("cIdContacto", dgvContactos.CurrentRow.Index).Value
+
+            dgvContactos.Rows(dgvContactos.CurrentRow.Index).Selected = True
+            If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+                dtDatos = Nothing
+                listaContactos()
+                If frm.type_process = "update" Then
+                    RowPossesion(dgvContactos, dtDatos, "IdContacto", frm.txtIdContacto.Text.Trim)
+                Else
+                    MsgBox("Se elimino el registro correctamente...!!!", MsgBoxStyle.Information)
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-012]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub mostrarDireccionFiscal()
+        Try
+            Dim frm As New frmAgregarDireccionFiscal
+            frm.state_button = True
+            frm.txtIdFiscal.Text = dgvDireccionesFiscales.Item("cIdFiscal", dgvDireccionesFiscales.CurrentRow.Index).Value
+
+            dgvDireccionesFiscales.Rows(dgvDireccionesFiscales.CurrentRow.Index).Selected = True
+            If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+                dtDatos = Nothing
+                listaDirecionFiscal()
+                If frm.type_process = "update" Then
+                    RowPossesion(dgvDireccionesFiscales, dtDatos, "IdFiscal", frm.txtIdFiscal.Text.Trim)
+                Else
+                    MsgBox("Se elimino el registro correctamente...!!!", MsgBoxStyle.Information)
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-013]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub mostrarLocacionCliente()
+        Try
+            Dim frm As New frmAgregarLocacionCliente
+            frm.state_button = True
+            frm.txtIdLocCli.Text = dgvLocaciones.Item("cIdLocCli", dgvLocaciones.CurrentRow.Index).Value
+
+            dgvLocaciones.Rows(dgvLocaciones.CurrentRow.Index).Selected = True
+            If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+                dtDatos = Nothing
+                listaLocacionesCliente()
+                If frm.type_process = "update" Then
+                    RowPossesion(dgvLocaciones, dtDatos, "IdLocCli", frm.txtIdLocCli.Text.Trim)
+                Else
+                    MsgBox("Se elimino el registro correctamente...!!!", MsgBoxStyle.Information)
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-014]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub mostrarCondicionPago()
+        Try
+            Dim frm As New frmAgregarCondicionPago
+            frm.state_button = True
+            frm.IdCliente = toNumber(txtIdCliente.Text)
+            frm.cmbCodRub.Value = dgvCondicionesPago.Item("cCodRub", dgvCondicionesPago.CurrentRow.Index).Value
+
+            dgvCondicionesPago.Rows(dgvCondicionesPago.CurrentRow.Index).Selected = True
+            If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+                dtDatos = Nothing
+                listaContactos()
+                If frm.type_process = "update" Then
+                    'RowPossesion(dgvCondicionesPago, dtDatos, "CodPag", frm.cmbCodPag.Value.Text.Trim)
+                Else
+                    MsgBox("Se elimino el registro correctamente...!!!", MsgBoxStyle.Information)
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-015]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub eliminarContacto()
+        Try
+            cmOpciones.Visible = False
+            If MsgBox("Está seguro de ELIMINAR el registro con CÓDIGO = " + dgvContactos.Item("cIdContacto", dgvContactos.CurrentRow.Index).Value.ToString, MsgBoxStyle.YesNo, "Información") = MsgBoxResult.Yes Then
+                Dim estado_process As Boolean
+
+                Dim registro As New ContactoService.Contacto
+                Dim cliente As New ContactoService.Cliente
+                registro.IdContacto = dgvContactos.Item("cIdContacto", dgvContactos.CurrentRow.Index).Value
+                cliente.IdCliente = toNumber(txtIdCliente.Text)
+                registro.Cliente = cliente
+                estado_process = oContactoService.Borrar(registro)
+
+                If estado_process = True Then
+                    dtDatos = Nothing
+                    listaContactos()
+                    MsgBox("Se elimino correctamente el registro...!!!", MsgBoxStyle.Information)
+                Else
+                    MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-016]:" + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub eliminarDireccionFiscal()
+        Try
+            cmOpciones.Visible = False
+            If MsgBox("Está seguro de ELIMINAR el registro con CÓDIGO = " + dgvDireccionesFiscales.Item("cIdFiscal", dgvDireccionesFiscales.CurrentRow.Index).Value.ToString, MsgBoxStyle.YesNo, "Información") = MsgBoxResult.Yes Then
+                Dim estado_process As Boolean
+
+                Dim registro As New DireccionFiscalService.DireccionFiscal
+                Dim cliente As New DireccionFiscalService.Cliente
+                registro.IdFiscal = dgvDireccionesFiscales.Item("cIdFiscal", dgvDireccionesFiscales.CurrentRow.Index).Value
+                cliente.IdCliente = toNumber(txtIdCliente.Text)
+                registro.Cliente = cliente
+                estado_process = oDireccionFiscalService.Borrar(registro)
+
+                If estado_process = True Then
+                    dtDatos = Nothing
+                    listaDirecionFiscal()
+                    MsgBox("Se elimino correctamente el registro...!!!", MsgBoxStyle.Information)
+                Else
+                    MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-017]:" + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub eliminarLocacionCliente()
+        Try
+            cmOpciones.Visible = False
+            If MsgBox("Está seguro de ELIMINAR el registro con CÓDIGO = " + dgvLocaciones.Item("cIdLocCli", dgvLocaciones.CurrentRow.Index).Value.ToString, MsgBoxStyle.YesNo, "Información") = MsgBoxResult.Yes Then
+                Dim estado_process As Boolean
+
+                Dim registro As New LocacionClienteService.LocacionCliente
+                Dim cliente As New LocacionClienteService.Cliente
+                registro.IdLocCli = dgvLocaciones.Item("cIdLocCli", dgvLocaciones.CurrentRow.Index).Value
+                cliente.IdCliente = toNumber(txtIdCliente.Text)
+                registro.Cliente = cliente
+                estado_process = oLocacionClienteService.Borrar(registro)
+
+                If estado_process = True Then
+                    dtDatos = Nothing
+                    listaLocacionesCliente()
+                    MsgBox("Se elimino correctamente el registro...!!!", MsgBoxStyle.Information)
+                Else
+                    MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-018]:" + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub eliminarCondicionPago()
+        Try
+            cmOpciones.Visible = False
+            If MsgBox("Está seguro de ELIMINAR el registro con Rubro = " _
+                      + dgvCondicionesPago.Item("cCodRub", dgvCondicionesPago.CurrentRow.Index).Value.ToString _
+                      + " y Condición Pago =" + dgvCondicionesPago.Item("cCodPag", dgvCondicionesPago.CurrentRow.Index).Value.ToString _
+                      , MsgBoxStyle.YesNo, "Información") = MsgBoxResult.Yes Then
+                Dim estado_process As Boolean
+
+                Dim registro As New CondicionPagoClienteService.CondicionPagoCliente
+                Dim rubro As New CondicionPagoClienteService.Rubro
+                Dim condicionPago As New CondicionPagoClienteService.CondicionPago
+                Dim cliente As New CondicionPagoClienteService.Cliente
+
+                rubro.CodRub = dgvCondicionesPago.Item("cCodRub", dgvCondicionesPago.CurrentRow.Index).Value
+                registro.Rubro = rubro
+                condicionPago.CodPag = dgvCondicionesPago.Item("cCodPag", dgvCondicionesPago.CurrentRow.Index).Value
+                registro.CondicionPago = condicionPago
+                cliente.IdCliente = toNumber(txtIdCliente.Text)
+                registro.Cliente = cliente
+                estado_process = oCondicionPagoClienteService.Borrar(registro)
+
+                If estado_process = True Then
+                    dtDatos = Nothing
+                    listaCondicionesPago()
+                    MsgBox("Se elimino correctamente el registro...!!!", MsgBoxStyle.Information)
+                Else
+                    MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-019]:" + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub NuevoContacto()
+        Try
+            Dim frm As New frmAgregarContacto
+            frm.state_button = False
+            frm.IdCliente = toNull(txtIdCliente.Text)
+            If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+                dtDatos = Nothing
+                'limpiaOpcionesBusqueda("insert", frm.txtIdCliente.Text.Trim)
+                listaContactos()
+                If frm.type_process = "insert" Then
+                    RowPossesion(dgvContactos, dtDatos, "IdContacto", frm.txtIdContacto.Text.Trim)
+                    'mostrarContacto()
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-020]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub NuevoDireccionFiscal()
+        Try
+            Dim frm As New frmAgregarDireccionFiscal
+            frm.state_button = False
+            frm.IdCliente = toNull(txtIdCliente.Text)
+            If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+                dtDatos = Nothing
+                listaDirecionFiscal()
+                If frm.type_process = "insert" Then
+                    RowPossesion(dgvDireccionesFiscales, dtDatos, "IdFiscal", frm.txtIdFiscal.Text.Trim)
+                    'mostrarDireccionFiscal()
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-021]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub NuevoLocacionCliente()
+        Try
+            Dim frm As New frmAgregarLocacionCliente
+            frm.state_button = False
+            frm.IdCliente = toNull(txtIdCliente.Text)
+            If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+                dtDatos = Nothing
+                'limpiaOpcionesBusqueda("insert", frm.txtIdCliente.Text.Trim)
+                listaLocacionesCliente()
+                If frm.type_process = "insert" Then
+                    RowPossesion(dgvLocaciones, dtDatos, "IdLocCli", frm.txtIdLocCli.Text.Trim)
+                    'mostrarLocacionCliente()
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-022]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub NuevoCondicionPago()
+        Try
+            Dim frm As New frmAgregarCondicionPago
+            frm.state_button = False
+            frm.IdCliente = toNull(txtIdCliente.Text)
+            If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+                dtDatos = Nothing
+                'limpiaOpcionesBusqueda("insert", frm.txtIdCliente.Text.Trim)
+                listaCondicionesPago()
+                If frm.type_process = "insert" Then
+                    'RowPossesion(dgvContactos, dtDatos, "CodPag", frm.cmbCodPag.Value)
+                    'mostrarCondicionPago()
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-023]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub actualizarLista(ByVal campo As DataGridView)
+        Try
+            Dim codigo As String = ""
+            If campo.RowCount > 0 Then
+                codigo = campo.Item(0, campo.CurrentRow.Index).Value
+            End If
+            dtDatos = Nothing
+            If btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_CONTACTOS Then
+                listaContactos()
+                If campo.RowCount > 0 And codigo.Trim.Length > 0 Then
+                    RowPossesion(campo, dtDatos, "IdContacto", codigo)
+                End If
+            ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_DIRECCIONES_FISCALES Then
+                listaDirecionFiscal()
+                If campo.RowCount > 0 And codigo.Trim.Length > 0 Then
+                    RowPossesion(campo, dtDatos, "IdFiscal", codigo)
+                End If
+            ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_LOCACIONES Then
+                listaLocacionesCliente()
+                If campo.RowCount > 0 And codigo.Trim.Length > 0 Then
+                    RowPossesion(campo, dtDatos, "IdLocCli", codigo)
+                End If
+            ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_CONDICIONES_PAGO Then
+                listaCondicionesPago()
+                If campo.RowCount > 0 And codigo.Trim.Length > 0 Then
+                    RowPossesion(campo, dtDatos, "CodPag", codigo)
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-024]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+
+    '====================================================================================================================
+    '============================================ INTERFACE'S METHOD ====================================================
+    '====================================================================================================================
+    Private Sub btnCancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancelar.Click
+        oClienteService.Close()
+        Me.DialogResult = Windows.Forms.DialogResult.Cancel
+        Me.Close()
+    End Sub
+    Private Sub btnGuardar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGuardar.Click
+        If MsgBox("¿Está seguro que desea guardar los datos?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes _
+            And ValidaCampos() Then
+
+            Dim registro As New ClienteService.Cliente
+            Dim tipoContribuyente As New ClienteService.TipoContribuyente
+            Dim sector As New ClienteService.SectorCliente
+            Dim tipoCliente As New ClienteService.TipoCliente
+
+            registro.IdCliente = toNumber(txtIdCliente.Text)
+            tipoContribuyente.IdTipoCon = toNumber(cmbIdTipoCon.Value)
+            registro.TipoContribuyente = tipoContribuyente
+            registro.DesCli = toNull(txtDesCli.Text)
+            registro.DirCli = toNull(txtDirCli.Text)
+            registro.AbrCli = toNull(txtAbrCli.Text)
+            registro.RucCli = toNull(txtRucCli.Text)
+            registro.DueCli = toNull(txtDueCli.Text)
+            registro.NumCta = toNull(txtNumCta.Text)
+            registro.DiaPago = toNull(txtDiaPago.Text)
+            registro.HoraPago = toNull(txtHoraPago.Text)
+            registro.DniCli = toNull(txtDniCli.Text)
+            registro.TelCli = toNull(txtTelCli.Text)
+            registro.FaxCli = toNull(txtFaxCli.Text)
+            registro.Email = toNull(txtEmail.Text)
+            registro.UrlCli = toNull(txtUrlCli.Text)
+            registro.ObsCli = toNull(txtObsCli.Text)
+            sector.CodSec = toNull(cmbCodSec.Value)
+            registro.SectorCliente = sector
+            registro.AprCli = cbAprCli.Checked
+            registro.ListaCli = cbListaCli.Checked
+            tipoCliente.IdTipoCliente = toNumber(cmbIdTipoCliente.Value)
+            registro.TipoCliente = tipoCliente
+            registro.Estado = cbEstado.Checked
+
+            If state_button Then        'Modificar
+                Modificar(registro)
+            Else                        'Nuevo
+                Insertar(registro)
+            End If
+        End If
+    End Sub
+    Private Sub btnEliminar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnEliminar.Click
+        If MsgBox("¿Está seguro que desea eliminar el registro?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes Then
+            If toNumber(txtIdCliente.Text) > 0 Then
+                Dim registro As New ClienteService.Cliente
+                registro.IdCliente = toNumber(txtIdCliente.Text)
+                Eliminar(registro)
+            Else
+                MsgBox("Debe Ingresar el Código...!!!", MsgBoxStyle.Information, "Información")
+                txtIdCliente.Focus()
+            End If
+        End If
+    End Sub
+    Private Sub btnVerDetalle_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVerDetalle.Click
+        If btnVerDetalle.Text = "Ver Detalle" Then
+            Me.Size = New System.Drawing.Size(666, 544)
+            Me.btnVerDetalle.Image = Global.SIGECOM.My.Resources.Resources.ImgAccordionClosed
+            btnVerDetalle.Text = "Ocultar Detalle"
+            btnVerDetalle.Size = New System.Drawing.Size(102, 25)
+
+            tabVentanas.SelectedIndex = 0
+            listaContactos()
+            limpiaDataGrids(TAB_CONTACTOS)
+        Else
+            Me.Size = New System.Drawing.Size(666, 320)
+            Me.btnVerDetalle.Image = Global.SIGECOM.My.Resources.Resources.derecha
+            btnVerDetalle.Text = "Ver Detalle"
+            btnVerDetalle.Size = New System.Drawing.Size(85, 25)
+
+            limpiaDataGrids("Todos")
+        End If
+    End Sub
+    Private Sub tabVentanas_SelectedTabChanged(ByVal sender As System.Object, ByVal e As Janus.Windows.UI.Tab.TabEventArgs) Handles tabVentanas.SelectedTabChanged
+        If btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_CONTACTOS Then
+            listaContactos()
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_DIRECCIONES_FISCALES Then
+            listaDirecionFiscal()
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_LOCACIONES Then
+            listaLocacionesCliente()
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_CONDICIONES_PAGO Then
+            listaCondicionesPago()
+        End If
+        limpiaDataGrids(tabVentanas.SelectedTab.Name)
+    End Sub
+    Private Sub EjecutaDataGrids_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles _
+                          dgvContactos.DoubleClick _
+                        , dgvDireccionesFiscales.DoubleClick _
+                        , dgvLocaciones.DoubleClick _
+                        , dgvCondicionesPago.DoubleClick
+
+        If btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_CONTACTOS Then
+            If ValidaCodigoSeleccionado(dgvContactos) Then
+                mostrarContacto()
+            End If
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_DIRECCIONES_FISCALES Then
+            If ValidaCodigoSeleccionado(dgvDireccionesFiscales) Then
+                mostrarDireccionFiscal()
+            End If
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_LOCACIONES Then
+            If ValidaCodigoSeleccionado(dgvLocaciones) Then
+                mostrarLocacionCliente()
+            End If
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_CONDICIONES_PAGO Then
+            If ValidaCodigoSeleccionado(dgvCondicionesPago) Then
+                mostrarCondicionPago()
+            End If
+        End If
+        limpiaDataGrids(tabVentanas.SelectedTab.Name)
+    End Sub
+    Private Sub miMostrar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miMostrar.Click
+        If btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_CONTACTOS Then
+            If ValidaCodigoSeleccionado(dgvContactos) Then
+                mostrarContacto()
+            End If
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_DIRECCIONES_FISCALES Then
+            If ValidaCodigoSeleccionado(dgvDireccionesFiscales) Then
+                mostrarDireccionFiscal()
+            End If
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_LOCACIONES Then
+            If ValidaCodigoSeleccionado(dgvLocaciones) Then
+                mostrarLocacionCliente()
+            End If
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_CONDICIONES_PAGO Then
+            If ValidaCodigoSeleccionado(dgvCondicionesPago) Then
+                mostrarCondicionPago()
+            End If
+        End If
+    End Sub
+    Private Sub miEliminar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miEliminar.Click
+        If btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_CONTACTOS Then
+            If ValidaCodigoSeleccionado(dgvContactos) Then
+                eliminarContacto()
+            End If
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_DIRECCIONES_FISCALES Then
+            If ValidaCodigoSeleccionado(dgvDireccionesFiscales) Then
+                eliminarDireccionFiscal()
+            End If
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_LOCACIONES Then
+            If ValidaCodigoSeleccionado(dgvLocaciones) Then
+                eliminarLocacionCliente()
+            End If
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_CONDICIONES_PAGO Then
+            If ValidaCodigoSeleccionado(dgvCondicionesPago) Then
+                eliminarCondicionPago()
+            End If
+        End If
+        limpiaDataGrids(tabVentanas.SelectedTab.Name)
+    End Sub
+    Private Sub miActualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miActualizar.Click
+        If btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_CONTACTOS Then
+            actualizarLista(dgvContactos)
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_DIRECCIONES_FISCALES Then
+            actualizarLista(dgvDireccionesFiscales)
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_LOCACIONES Then
+            actualizarLista(dgvLocaciones)
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_CONDICIONES_PAGO Then
+            actualizarLista(dgvCondicionesPago)
+        End If
+    End Sub
+    Private Sub miNuevo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miNuevo.Click
+        If btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_CONTACTOS Then
+            NuevoContacto()
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_DIRECCIONES_FISCALES Then
+            NuevoDireccionFiscal()
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_LOCACIONES Then
+            NuevoLocacionCliente()
+        ElseIf btnVerDetalle.Text = "Ocultar Detalle" And tabVentanas.SelectedTab.Name = TAB_CONDICIONES_PAGO Then
+            NuevoCondicionPago()
+        End If
+    End Sub
+    Private Sub btnAgregarContacto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAgregarContacto.Click
+        NuevoContacto()
+    End Sub
+    Private Sub btnAgregarDireccionFiscal_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAgregarDireccionFiscal.Click
+        NuevoDireccionFiscal()
+    End Sub
+    Private Sub btnAgregarLocacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAgregarLocacion.Click
+        NuevoLocacionCliente()
+    End Sub
+    Private Sub btnAgregarCondicionPago_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAgregarCondicionPago.Click
+        NuevoCondicionPago()
+    End Sub
+End Class

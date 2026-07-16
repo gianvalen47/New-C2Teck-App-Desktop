@@ -1,0 +1,552 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="DespachoCabService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IDespachoCabService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IDespachoCabService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_BuscarVigente_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarVigente" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_BuscarVigente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarVigenteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_BuscarVigente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_CerrarRuta_InputMessage">
+    <wsdl:part name="parameters" element="tns:CerrarRuta" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_CerrarRuta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CerrarRutaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_CerrarRuta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_MostrarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_MostrarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_MostrarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_ObtenerEstado_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEstado" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_ObtenerEstado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEstadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_ObtenerEstado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_ConsultarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_ConsultarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_ConsultarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Transito_InputMessage">
+    <wsdl:part name="parameters" element="tns:Transito" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Transito_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TransitoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Transito_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Cancelar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Cancelar" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Cancelar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_Cancelar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_ObtenerDatosDespacho_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDatosDespacho" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_ObtenerDatosDespacho_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDatosDespachoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_ObtenerDatosDespacho_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_FiltrarDatosDespacho_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarDatosDespacho" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_FiltrarDatosDespacho_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarDatosDespachoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_FiltrarDatosDespacho_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_InsertarDatosDespacho_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarDatosDespacho" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_InsertarDatosDespacho_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarDatosDespachoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_InsertarDatosDespacho_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_ActualizarDatosDespacho_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarDatosDespacho" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_ActualizarDatosDespacho_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarDatosDespachoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_ActualizarDatosDespacho_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_BorrarDatosDespacho_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarDatosDespacho" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_BorrarDatosDespacho_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarDatosDespachoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_BorrarDatosDespacho_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_ImprimirDatosDespacho_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirDatosDespacho" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_ImprimirDatosDespacho_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirDatosDespachoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDespachoCabService_ImprimirDatosDespacho_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IDespachoCabService">
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/Obtener" message="tns:IDespachoCabService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/ObtenerResponse" message="tns:IDespachoCabService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/Filtrar" message="tns:IDespachoCabService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/FiltrarResponse" message="tns:IDespachoCabService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarVigente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/BuscarVigente" message="tns:IDespachoCabService_BuscarVigente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/BuscarVigenteResponse" message="tns:IDespachoCabService_BuscarVigente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_BuscarVigente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/Insertar" message="tns:IDespachoCabService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/InsertarResponse" message="tns:IDespachoCabService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/Actualizar" message="tns:IDespachoCabService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/ActualizarResponse" message="tns:IDespachoCabService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/Borrar" message="tns:IDespachoCabService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/BorrarResponse" message="tns:IDespachoCabService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CerrarRuta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/CerrarRuta" message="tns:IDespachoCabService_CerrarRuta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/CerrarRutaResponse" message="tns:IDespachoCabService_CerrarRuta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_CerrarRuta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/MostrarEstados" message="tns:IDespachoCabService_MostrarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/MostrarEstadosResponse" message="tns:IDespachoCabService_MostrarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_MostrarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEstado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/ObtenerEstado" message="tns:IDespachoCabService_ObtenerEstado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/ObtenerEstadoResponse" message="tns:IDespachoCabService_ObtenerEstado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_ObtenerEstado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/Imprimir" message="tns:IDespachoCabService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/ImprimirResponse" message="tns:IDespachoCabService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/ConsultarEstados" message="tns:IDespachoCabService_ConsultarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/ConsultarEstadosResponse" message="tns:IDespachoCabService_ConsultarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_ConsultarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Transito">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/Transito" message="tns:IDespachoCabService_Transito_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/TransitoResponse" message="tns:IDespachoCabService_Transito_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_Transito_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Cancelar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/Cancelar" message="tns:IDespachoCabService_Cancelar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/CancelarResponse" message="tns:IDespachoCabService_Cancelar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_Cancelar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDatosDespacho">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/ObtenerDatosDespacho" message="tns:IDespachoCabService_ObtenerDatosDespacho_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/ObtenerDatosDespachoResponse" message="tns:IDespachoCabService_ObtenerDatosDespacho_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_ObtenerDatosDespacho_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarDatosDespacho">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/FiltrarDatosDespacho" message="tns:IDespachoCabService_FiltrarDatosDespacho_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/FiltrarDatosDespachoResponse" message="tns:IDespachoCabService_FiltrarDatosDespacho_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_FiltrarDatosDespacho_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarDatosDespacho">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/InsertarDatosDespacho" message="tns:IDespachoCabService_InsertarDatosDespacho_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/InsertarDatosDespachoResponse" message="tns:IDespachoCabService_InsertarDatosDespacho_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_InsertarDatosDespacho_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarDatosDespacho">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/ActualizarDatosDespacho" message="tns:IDespachoCabService_ActualizarDatosDespacho_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/ActualizarDatosDespachoResponse" message="tns:IDespachoCabService_ActualizarDatosDespacho_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_ActualizarDatosDespacho_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarDatosDespacho">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/BorrarDatosDespacho" message="tns:IDespachoCabService_BorrarDatosDespacho_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/BorrarDatosDespachoResponse" message="tns:IDespachoCabService_BorrarDatosDespacho_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_BorrarDatosDespacho_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirDatosDespacho">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDespachoCabService/ImprimirDatosDespacho" message="tns:IDespachoCabService_ImprimirDatosDespacho_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDespachoCabService/ImprimirDatosDespachoResponse" message="tns:IDespachoCabService_ImprimirDatosDespacho_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IDespachoCabService_ImprimirDatosDespacho_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IDespachoCabService" type="tns:IDespachoCabService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IDespachoCabService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarVigente">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/BuscarVigente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CerrarRuta">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/CerrarRuta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/MostrarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEstado">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/ObtenerEstado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/ConsultarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Transito">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/Transito" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Cancelar">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/Cancelar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDatosDespacho">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/ObtenerDatosDespacho" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarDatosDespacho">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/FiltrarDatosDespacho" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarDatosDespacho">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/InsertarDatosDespacho" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarDatosDespacho">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/ActualizarDatosDespacho" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarDatosDespacho">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/BorrarDatosDespacho" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirDatosDespacho">
+      <soap12:operation soapAction="http://tempuri.org/IDespachoCabService/ImprimirDatosDespacho" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DespachoCabService">
+    <wsdl:port name="NetTcpBinding_IDespachoCabService" binding="tns:NetTcpBinding_IDespachoCabService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/DespachoCabService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/DespachoCabService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

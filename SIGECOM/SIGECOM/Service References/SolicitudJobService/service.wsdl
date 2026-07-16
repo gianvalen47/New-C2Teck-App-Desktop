@@ -1,0 +1,630 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SolicitudJobService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ISolicitudJobService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISolicitudJobService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Estado_InputMessage">
+    <wsdl:part name="parameters" element="tns:Estado" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Estado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EstadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Estado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_MostrarListaCorreos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarListaCorreos" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_MostrarListaCorreos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarListaCorreosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_MostrarListaCorreos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_InsertarDestinatario_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarDestinatario" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_InsertarDestinatario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarDestinatarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_InsertarDestinatario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_MostrarDestinatarios_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDestinatarios" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_MostrarDestinatarios_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDestinatariosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_MostrarDestinatarios_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Enviar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Enviar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Enviar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Enviar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_MostrarTipoSolicitud_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoSolicitud" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_MostrarTipoSolicitud_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoSolicitudResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_MostrarTipoSolicitud_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_MostrarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstados" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_MostrarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_MostrarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_BuscarCorreo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarCorreo" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_BuscarCorreo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarCorreoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_BuscarCorreo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_BorrarCorreo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCorreo" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_BorrarCorreo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCorreoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_BorrarCorreo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Anular_InputMessage">
+    <wsdl:part name="parameters" element="tns:Anular" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Anular_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AnularResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Anular_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_ObtenerCodBloque_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCodBloque" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_ObtenerCodBloque_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCodBloqueResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_ObtenerCodBloque_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Rechazar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Rechazar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Rechazar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RechazarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Rechazar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_ObtenerIdClienteArea_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdClienteArea" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_ObtenerIdClienteArea_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdClienteAreaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_ObtenerIdClienteArea_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_ReporteSolicitudJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteSolicitudJob" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_ReporteSolicitudJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteSolicitudJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_ReporteSolicitudJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Duplicar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Duplicar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Duplicar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DuplicarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_Duplicar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_BuscarIdClienteArea_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarIdClienteArea" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_BuscarIdClienteArea_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarIdClienteAreaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudJobService_BuscarIdClienteArea_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="ISolicitudJobService">
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/Insertar" message="tns:ISolicitudJobService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/InsertarResponse" message="tns:ISolicitudJobService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/Actualizar" message="tns:ISolicitudJobService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/ActualizarResponse" message="tns:ISolicitudJobService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/Borrar" message="tns:ISolicitudJobService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/BorrarResponse" message="tns:ISolicitudJobService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/Filtrar" message="tns:ISolicitudJobService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/FiltrarResponse" message="tns:ISolicitudJobService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/Obtener" message="tns:ISolicitudJobService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/ObtenerResponse" message="tns:ISolicitudJobService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/Imprimir" message="tns:ISolicitudJobService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/ImprimirResponse" message="tns:ISolicitudJobService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/Estado" message="tns:ISolicitudJobService_Estado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/EstadoResponse" message="tns:ISolicitudJobService_Estado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_Estado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarListaCorreos">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/MostrarListaCorreos" message="tns:ISolicitudJobService_MostrarListaCorreos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/MostrarListaCorreosResponse" message="tns:ISolicitudJobService_MostrarListaCorreos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_MostrarListaCorreos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarDestinatario">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/InsertarDestinatario" message="tns:ISolicitudJobService_InsertarDestinatario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/InsertarDestinatarioResponse" message="tns:ISolicitudJobService_InsertarDestinatario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_InsertarDestinatario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDestinatarios">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/MostrarDestinatarios" message="tns:ISolicitudJobService_MostrarDestinatarios_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/MostrarDestinatariosResponse" message="tns:ISolicitudJobService_MostrarDestinatarios_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_MostrarDestinatarios_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Enviar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/Enviar" message="tns:ISolicitudJobService_Enviar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/EnviarResponse" message="tns:ISolicitudJobService_Enviar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_Enviar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoSolicitud">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/MostrarTipoSolicitud" message="tns:ISolicitudJobService_MostrarTipoSolicitud_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/MostrarTipoSolicitudResponse" message="tns:ISolicitudJobService_MostrarTipoSolicitud_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_MostrarTipoSolicitud_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/MostrarEstados" message="tns:ISolicitudJobService_MostrarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/MostrarEstadosResponse" message="tns:ISolicitudJobService_MostrarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_MostrarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarCorreo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/BuscarCorreo" message="tns:ISolicitudJobService_BuscarCorreo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/BuscarCorreoResponse" message="tns:ISolicitudJobService_BuscarCorreo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_BuscarCorreo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCorreo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/BorrarCorreo" message="tns:ISolicitudJobService_BorrarCorreo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/BorrarCorreoResponse" message="tns:ISolicitudJobService_BorrarCorreo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_BorrarCorreo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Anular">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/Anular" message="tns:ISolicitudJobService_Anular_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/AnularResponse" message="tns:ISolicitudJobService_Anular_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_Anular_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCodBloque">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/ObtenerCodBloque" message="tns:ISolicitudJobService_ObtenerCodBloque_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/ObtenerCodBloqueResponse" message="tns:ISolicitudJobService_ObtenerCodBloque_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_ObtenerCodBloque_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Rechazar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/Rechazar" message="tns:ISolicitudJobService_Rechazar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/RechazarResponse" message="tns:ISolicitudJobService_Rechazar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_Rechazar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdClienteArea">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/ObtenerIdClienteArea" message="tns:ISolicitudJobService_ObtenerIdClienteArea_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/ObtenerIdClienteAreaResponse" message="tns:ISolicitudJobService_ObtenerIdClienteArea_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_ObtenerIdClienteArea_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteSolicitudJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/ReporteSolicitudJob" message="tns:ISolicitudJobService_ReporteSolicitudJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/ReporteSolicitudJobResponse" message="tns:ISolicitudJobService_ReporteSolicitudJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_ReporteSolicitudJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Duplicar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/Duplicar" message="tns:ISolicitudJobService_Duplicar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/DuplicarResponse" message="tns:ISolicitudJobService_Duplicar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_Duplicar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarIdClienteArea">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudJobService/BuscarIdClienteArea" message="tns:ISolicitudJobService_BuscarIdClienteArea_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudJobService/BuscarIdClienteAreaResponse" message="tns:ISolicitudJobService_BuscarIdClienteArea_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudJobService_BuscarIdClienteArea_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ISolicitudJobService" type="tns:ISolicitudJobService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ISolicitudJobService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/Estado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarListaCorreos">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/MostrarListaCorreos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarDestinatario">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/InsertarDestinatario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDestinatarios">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/MostrarDestinatarios" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Enviar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/Enviar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoSolicitud">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/MostrarTipoSolicitud" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/MostrarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarCorreo">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/BuscarCorreo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCorreo">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/BorrarCorreo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Anular">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/Anular" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCodBloque">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/ObtenerCodBloque" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Rechazar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/Rechazar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdClienteArea">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/ObtenerIdClienteArea" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteSolicitudJob">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/ReporteSolicitudJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Duplicar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/Duplicar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarIdClienteArea">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudJobService/BuscarIdClienteArea" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SolicitudJobService">
+    <wsdl:port name="NetTcpBinding_ISolicitudJobService" binding="tns:NetTcpBinding_ISolicitudJobService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/SolicitudJobService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/SolicitudJobService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

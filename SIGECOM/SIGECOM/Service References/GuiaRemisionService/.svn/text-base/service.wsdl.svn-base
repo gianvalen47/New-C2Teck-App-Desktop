@@ -1,0 +1,553 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:tns="http://tempuri.org/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="GuiaRemisionService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IGuiaRemisionService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/BLL" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IGuiaRemisionService_MostrarPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorId" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_MostrarPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_MostrarPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_MostrarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_MostrarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_MostrarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Transferir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Transferir" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Transferir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TransferirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Transferir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Anular_InputMessage">
+    <wsdl:part name="parameters" element="tns:Anular" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Anular_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AnularResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Anular_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_MostrarOrden_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOrden" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_MostrarOrden_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOrdenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_MostrarOrden_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Estado_InputMessage">
+    <wsdl:part name="parameters" element="tns:Estado" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Estado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EstadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_Estado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_MostrarCotizacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCotizacion" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_MostrarCotizacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCotizacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_MostrarCotizacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_MostraIdSerie_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostraIdSerie" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_MostraIdSerie_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostraIdSerieResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_MostraIdSerie_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_SugerirNumero_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirNumero" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_SugerirNumero_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirNumeroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_SugerirNumero_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_ActualizarObservacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarObservacion" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_ActualizarObservacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarObservacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_ActualizarObservacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_BuscarOrdenCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarOrdenCliente" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_BuscarOrdenCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarOrdenClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_BuscarOrdenCliente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_GenerarDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_GenerarDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_GenerarDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_SugerirFactura_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirFactura" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_SugerirFactura_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirFacturaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_SugerirFactura_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_SugerirBoleta_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirBoleta" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_SugerirBoleta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirBoletaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGuiaRemisionService_SugerirBoleta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IGuiaRemisionService">
+    <wsdl:operation name="MostrarPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/MostrarPorId" message="tns:IGuiaRemisionService_MostrarPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/MostrarPorIdResponse" message="tns:IGuiaRemisionService_MostrarPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_MostrarPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/Buscar" message="tns:IGuiaRemisionService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/BuscarResponse" message="tns:IGuiaRemisionService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/Filtrar" message="tns:IGuiaRemisionService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/FiltrarResponse" message="tns:IGuiaRemisionService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/Insertar" message="tns:IGuiaRemisionService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/InsertarResponse" message="tns:IGuiaRemisionService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/Actualizar" message="tns:IGuiaRemisionService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/ActualizarResponse" message="tns:IGuiaRemisionService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/Borrar" message="tns:IGuiaRemisionService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/BorrarResponse" message="tns:IGuiaRemisionService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/MostrarEstados" message="tns:IGuiaRemisionService_MostrarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/MostrarEstadosResponse" message="tns:IGuiaRemisionService_MostrarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_MostrarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Transferir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/Transferir" message="tns:IGuiaRemisionService_Transferir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/TransferirResponse" message="tns:IGuiaRemisionService_Transferir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_Transferir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Anular">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/Anular" message="tns:IGuiaRemisionService_Anular_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/AnularResponse" message="tns:IGuiaRemisionService_Anular_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_Anular_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOrden">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/MostrarOrden" message="tns:IGuiaRemisionService_MostrarOrden_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/MostrarOrdenResponse" message="tns:IGuiaRemisionService_MostrarOrden_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_MostrarOrden_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/Estado" message="tns:IGuiaRemisionService_Estado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/EstadoResponse" message="tns:IGuiaRemisionService_Estado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_Estado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCotizacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/MostrarCotizacion" message="tns:IGuiaRemisionService_MostrarCotizacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/MostrarCotizacionResponse" message="tns:IGuiaRemisionService_MostrarCotizacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_MostrarCotizacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostraIdSerie">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/MostraIdSerie" message="tns:IGuiaRemisionService_MostraIdSerie_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/MostraIdSerieResponse" message="tns:IGuiaRemisionService_MostraIdSerie_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_MostraIdSerie_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirNumero">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/SugerirNumero" message="tns:IGuiaRemisionService_SugerirNumero_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/SugerirNumeroResponse" message="tns:IGuiaRemisionService_SugerirNumero_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_SugerirNumero_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarObservacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/ActualizarObservacion" message="tns:IGuiaRemisionService_ActualizarObservacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/ActualizarObservacionResponse" message="tns:IGuiaRemisionService_ActualizarObservacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_ActualizarObservacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarOrdenCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/BuscarOrdenCliente" message="tns:IGuiaRemisionService_BuscarOrdenCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/BuscarOrdenClienteResponse" message="tns:IGuiaRemisionService_BuscarOrdenCliente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_BuscarOrdenCliente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/GenerarDocumento" message="tns:IGuiaRemisionService_GenerarDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/GenerarDocumentoResponse" message="tns:IGuiaRemisionService_GenerarDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_GenerarDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirFactura">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/SugerirFactura" message="tns:IGuiaRemisionService_SugerirFactura_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/SugerirFacturaResponse" message="tns:IGuiaRemisionService_SugerirFactura_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_SugerirFactura_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirBoleta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuiaRemisionService/SugerirBoleta" message="tns:IGuiaRemisionService_SugerirBoleta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuiaRemisionService/SugerirBoletaResponse" message="tns:IGuiaRemisionService_SugerirBoleta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGuiaRemisionService_SugerirBoleta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IGuiaRemisionService" type="tns:IGuiaRemisionService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IGuiaRemisionService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="MostrarPorId">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/MostrarPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/MostrarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Transferir">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/Transferir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Anular">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/Anular" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOrden">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/MostrarOrden" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/Estado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCotizacion">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/MostrarCotizacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostraIdSerie">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/MostraIdSerie" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirNumero">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/SugerirNumero" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarObservacion">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/ActualizarObservacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarOrdenCliente">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/BuscarOrdenCliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/GenerarDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirFactura">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/SugerirFactura" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirBoleta">
+      <soap12:operation soapAction="http://tempuri.org/IGuiaRemisionService/SugerirBoleta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GuiaRemisionService">
+    <wsdl:port name="NetTcpBinding_IGuiaRemisionService" binding="tns:NetTcpBinding_IGuiaRemisionService">
+      <soap12:address location="net.tcp://192.168.1.248/ServicioBLL/GuiaRemisionService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.1.248/ServicioBLL/GuiaRemisionService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

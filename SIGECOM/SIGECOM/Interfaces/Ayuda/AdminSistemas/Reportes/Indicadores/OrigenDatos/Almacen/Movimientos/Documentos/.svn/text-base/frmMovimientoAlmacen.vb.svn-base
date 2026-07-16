@@ -1,0 +1,658 @@
+﻿Imports System.Windows.Forms
+
+Public Class frmMovimientoAlmacen
+
+    Public state_button As Boolean              'True: Modificar    False: nuevo
+    Public type_process As String               'update     insert      delete
+    Private oMaestroService As New MaestroService.MaestroClient
+    Private oMoviAlmacenService As New MoviAlmacenService.MoviAlmacenServiceClient
+    Private oMoviAlmacenDetService As New MoviAlmacenDetService.MoviAlmacenDetServiceClient
+    Private dtDatos As DataTable
+    '====================================================================================================================
+    '============================================ PARAMETROS LOCALES ====================================================
+    '====================================================================================================================
+    Public IdMovimiento As String
+    Private IdLocacion As String
+    Private IdCliente As String
+    Private CodMerRef As String
+
+    Private dtAlmacenes As DataTable
+    Private dtTipoDocumentos As DataTable
+    Private dtTipoMovimientos As DataTable
+    Private dtMonedas As DataTable
+    Private dtAreas As DataTable
+    Private dtMotivos As DataTable
+
+    '====================================================================================================================
+    '============================================ CONTROL'S METHOD ======================================================
+    '====================================================================================================================
+    Private Sub SendFocus_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                             txtNumJob.KeyPress _
+                          , txtTipoCambio.KeyPress _
+                          , txtFecDoc.KeyPress _
+                          , txtCliente.KeyPress _
+                          , txtalmacen.KeyPress _
+                          , txtNumDoc.KeyPress _
+                          , cmbCodMon.KeyPress _
+                          , txtIgv.KeyPress _
+                          , txtNumFac.KeyPress _
+                          , txtObservacion.KeyPress _
+                          , cmbIdSerieDoc.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            SendKeys.Send("{TAB}")
+        End If
+    End Sub
+    Private Sub Initialize_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Me.CancelButton = Me.btnCancelar
+        Me.Size = New System.Drawing.Size(737, 220)
+        llenarCombos()
+        If state_button Then    'Modificar
+            Me.btnGuardar.Location = New System.Drawing.Point(496, 154)
+            Me.btnEliminar.Location = New System.Drawing.Point(570, 154)
+            txtNumDoc.ReadOnly = True
+            txtNumDoc.TabStop = False
+            ObtenerRegistro()
+            gbEstado.Visible = True
+            btnVerDetalle.Visible = True
+            If (lblEstado.Text = "GENERADO" Or lblEstado.Text = "GN") Then
+                btnGuardar.Enabled = True
+                btnEliminar.Enabled = True
+            Else
+                btnGuardar.Enabled = False
+                btnEliminar.Enabled = False
+            End If
+            btnBuscarAlmacen.Enabled = False
+            btnBuscarCliente.Enabled = False
+            txtFecDoc.ReadOnly = True
+            txtFecDoc.BackColor = System.Drawing.SystemColors.Control
+            cmbTipMov.ReadOnly = True
+            cmbTipMov.BackColor = System.Drawing.SystemColors.Control
+            cmbIdSerieDoc.ReadOnly = True
+            cmbIdSerieDoc.BackColor = System.Drawing.SystemColors.Control
+            cmbCodMon.ReadOnly = True
+            cmbCodMon.BackColor = System.Drawing.SystemColors.Control
+            Me.Text = "Movimiento Almacén Nº " + Chr(34) + txtNumDoc.Text.ToString + Chr(34)
+        Else                    'Nuevo
+            btnEliminar.Visible = False
+            Me.btnGuardar.Location = New System.Drawing.Point(570, 154)
+            txtNumDoc.ReadOnly = True
+            txtNumDoc.TabStop = False
+            gbEstado.Visible = False
+            btnVerDetalle.Visible = False
+            btnBuscarCliente.Visible = True
+            Me.Text = "Registrar nuevo Movimiento Almacén"
+        End If
+        Dim estilo As New Estilo
+        estilo.cargaEstiloGridExt(dgvDatos)
+    End Sub
+    Private Sub FinallyObjects_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            If isClosed(oMaestroService) = False Then
+                oMaestroService.Close()
+            End If
+            If isClosed(oMoviAlmacenService) = False Then
+                oMoviAlmacenService.Close()
+            End If
+            If isClosed(oMoviAlmacenDetService) = False Then
+                oMoviAlmacenDetService.Close()
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [FINALLY]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub setColor_BlankCajaTexto(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles _
+                           txtNumDoc.KeyUp
+        Try
+            Dim campo As New Object
+            If sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.EditBox" Then
+                campo = New Janus.Windows.GridEX.EditControls.EditBox
+            ElseIf sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.NumericEditBox" Then
+                campo = New Janus.Windows.GridEX.EditControls.NumericEditBox
+            ElseIf sender.GetType.ToString = "System.Windows.Forms.TextBox" Then
+                campo = New TextBox
+            End If
+            campo = sender
+            If campo.readonly = False Then
+                If campo.Text.Trim.Length > 0 Then
+                    campo.BackColor = Color.White
+                Else
+                    campo.BackColor = Color.Red
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+    Private Sub OnlyNumber_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtNumDoc.KeyPress, txtNumFac.KeyPress
+        If Not Char.IsNumber(e.KeyChar) And (e.KeyChar = ChrW(Keys.Back)) = False And (e.KeyChar = ChrW(Keys.Enter)) = False Then
+            e.KeyChar = Chr(0)
+        End If
+    End Sub
+    Private Function getRowTodos(ByVal data As DataTable)
+        Dim fila As DataRow = data.NewRow
+        Try
+            fila(0) = ""
+        Catch ex As Exception
+            fila(0) = 0
+        End Try
+        Try
+            fila(1) = "(Ninguno)"
+        Catch ex As Exception
+        End Try
+        Try
+            fila(2) = "(Ninguno)"
+        Catch ex As Exception
+        End Try
+        Return fila
+    End Function
+    Private Sub RowPossesion(ByVal lista As Janus.Windows.GridEX.GridEX, ByVal tabla As DataTable, ByVal nombreCampo As String, ByVal codigo As String)
+        Try
+            tabla.DefaultView.Sort = nombreCampo
+            lista.Row = dtDatos.DefaultView.Find(codigo)
+        Catch ex As Exception
+            MsgBox("ERROR [ROW_POSS]: " + ex.Message, MsgBoxStyle.Critical)
+        End Try
+    End Sub
+    Private Sub enableOpciones()
+        If dgvDatos.RowCount < 1 Then
+            miMostrar.Enabled = False
+            miEliminar.Enabled = False
+        Else
+            miMostrar.Enabled = True
+            miEliminar.Enabled = True
+        End If
+        If state_button = True And (toBlank(lblEstado.Text) = "GENERADO" Or toBlank(lblEstado.Text) = "GN") Then
+            miNuevo.Enabled = True
+            miEliminar.Enabled = True
+            btnAgregarDetalle.Enabled = True
+        Else
+            miNuevo.Enabled = False
+            miEliminar.Enabled = False
+            btnAgregarDetalle.Enabled = False
+        End If
+    End Sub
+    Private Sub enableCampos(ByVal codigo As String)
+        If codigo = "10" Then               'TRANSFERENCIA INTERNA
+            txtNumFac.Enabled = False
+        ElseIf codigo = "15" Then           'Vale Materiales 
+            txtNumFac.Enabled = True
+        ElseIf codigo = "16" Then           'Memo de transferencia Desarmados 
+            txtNumFac.Enabled = False
+        Else
+            txtNumFac.Enabled = True
+        End If
+    End Sub
+    Private Function SumarSubTotal(ByVal campo As String, ByVal nro_columna As Integer) As Double
+        Dim total As Double = 0
+        For i As Integer = 0 To dtDatos.Rows.Count - 1
+            Dim r As DataRow
+            r = dtDatos.Rows.Item(i)
+            total = total + CDbl(r.Item(nro_columna))
+        Next
+        Return total
+    End Function
+
+    '====================================================================================================================
+    '============================================ TASK'S METHOD =========================================================
+    '====================================================================================================================
+    Private Function ValidaCampos() As Boolean
+        Try
+            If toNumber(txtNumDoc.Text) = 0 Then
+                MsgBox("Debe Ingresar el número del cocumento.", MsgBoxStyle.Information, "Información")
+                txtNumDoc.BackColor = Color.Red
+                txtNumDoc.Focus()
+                Return False
+            ElseIf toNumber(IdLocacion) = 0 Then
+                MsgBox("Debe Ingresar la almacén del documento.", MsgBoxStyle.Information, "Información")
+                txtalmacen.BackColor = Color.Red
+                btnBuscarAlmacen.Focus()
+                Return False
+            ElseIf toNumber(cmbIdSerieDoc.Value) = 0 Then
+                MsgBox("Debe Ingresar el tipo de documento.", MsgBoxStyle.Information, "Información")
+                txtalmacen.BackColor = Color.Red
+                btnBuscarAlmacen.Focus()
+                Return False
+            ElseIf toNumber(IdCliente) = 0 Then
+                MsgBox("Debe Ingresar el clienete ", MsgBoxStyle.Information, "Información")
+                txtCliente.BackColor = Color.Red
+                btnBuscarCliente.Focus()
+                Return False
+            ElseIf toNull(cmbCodMon.Value) = Nothing Then
+                MsgBox("Debe tipo de moneda.", MsgBoxStyle.Information, "Información")
+                cmbCodMon.BackColor = Color.Red
+                cmbCodMon.Focus()
+                Return False
+            ElseIf toNull(cmbTipMov.Value) = Nothing Then
+                MsgBox("Debe Ingresar el tipo de Movimiento que desea hacer.", MsgBoxStyle.Information, "Información")
+                txtFecDoc.BackColor = Color.Red
+                txtFecDoc.Focus()
+                Return False
+            ElseIf cmbCodMon.Value <> "NS" And toDouble(txtTipoCambio.Text) <= 0 Then
+                MsgBox("Tipo de cambio no puede ser CERO..", MsgBoxStyle.Information, "Información")
+                txtTipoCambio.BackColor = Color.Red
+                txtTipoCambio.Focus()
+                Return False
+            ElseIf state_button = False And oMoviAlmacenService.Buscar(IdLocacion, cmbIdSerieDoc.Value, toNumber(txtNumDoc.Text)) Then
+                MsgBox("Número " + txtNumDoc.Text + " de documento ya existe...!", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf state_button = True And toBlank(lblEstado.Text) <> "GENERADO" And toBlank(lblEstado.Text) <> "GN" Then
+                MsgBox("Pedido ya no se puede modificar...!" + vbCr + "Debido que ya no se encuentra en el estado generado...!!", MsgBoxStyle.Information, "Información")
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-001]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+    Private Sub Insertar(ByVal registro As MoviAlmacenService.MoviAlmacen)
+        Try
+            Dim estado_process As Integer
+            estado_process = oMoviAlmacenService.Insertar(registro)
+            type_process = "insert"
+            If estado_process > 0 Then
+                IdMovimiento = estado_process
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-002]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub Modificar(ByVal registro As MoviAlmacenService.MoviAlmacen)
+        Try
+            Dim estado_process As Boolean
+            estado_process = oMoviAlmacenService.Actualizar(registro)
+            type_process = "update"
+            If estado_process = True Then
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-003]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub Eliminar()
+        Try
+            Dim estado_process As Boolean
+            estado_process = oMoviAlmacenService.Borrar(toNull(IdMovimiento), Session.sUsuario.cod_usuario)
+            type_process = "delete"
+            If estado_process = True Then
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-004]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub ObtenerRegistro()
+        Try
+            Dim registro As MoviAlmacenService.MoviAlmacen
+            registro = oMoviAlmacenService.MostrarPorId(toNumber(IdMovimiento))
+
+            IdMovimiento = registro.IdMovimiento
+            IdLocacion = registro.Locacion.IdLocacion
+            '======================================= TIPOS DE DOCUMENTOS ================================================
+            dtTipoDocumentos = oMaestroService.MostrarSerieDocumento(toNumber(IdLocacion), 2, cmbTipMov.Value).Tables(0)
+            cmbIdSerieDoc.DataSource = dtTipoDocumentos
+            cmbIdSerieDoc.DropDownList.DataMember = dtTipoDocumentos.Columns("Descripcion").ToString
+            cmbIdSerieDoc.DropDownList.DisplayMember = dtTipoDocumentos.Columns("Descripcion").ToString
+            cmbIdSerieDoc.DropDownList.ValueMember = dtTipoDocumentos.Columns("IdSerieDoc").ToString
+            cmbIdSerieDoc.DropDownList.Columns(0).DataMember = dtTipoDocumentos.Columns("IdSerieDoc").ToString
+            cmbIdSerieDoc.DropDownList.Columns(1).DataMember = dtTipoDocumentos.Columns("Descripcion").ToString
+            dtTipoDocumentos = Nothing
+
+            txtalmacen.Text = registro.Locacion.Oficina.DesOfi + " - " + registro.Locacion.Almacen.DesAlm
+            cmbIdSerieDoc.Value = registro.SerieDocumento.IdSerieDoc
+            txtNumDoc.Text = registro.NumDoc
+            txtFecDoc.Text = registro.FecDoc
+            IdCliente = registro.Cliente.IdCliente
+            txtCliente.Text = registro.Cliente.DesCli
+            cmbCodMon.Value = registro.Moneda.CodMon
+            txtNumJob.Text = toBlank(registro.NumJob)
+            cmbTipMov.Value = registro.TipMov
+            txtNumFac.Text = toNull(registro.NumFac)
+            txtIgv.Text = registro.Igv
+            txtObservacion.Text = toBlank(registro.Observacion)
+            lblEstado.Text = toBlank(registro.Estado)
+
+            enableCampos(toBlank(cmbIdSerieDoc.Value))
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-005]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub llenarCombos()
+        Try
+            '======================================= TIPOS DE DOCUMENTOS ================================================
+            dtTipoDocumentos = oMaestroService.MostrarSerieDocumento(toNumber(IdLocacion), 2, cmbTipMov.Value).Tables(0)
+            cmbIdSerieDoc.DataSource = dtTipoDocumentos
+            cmbIdSerieDoc.DropDownList.DataMember = dtTipoDocumentos.Columns("Descripcion").ToString
+            cmbIdSerieDoc.DropDownList.DisplayMember = dtTipoDocumentos.Columns("Descripcion").ToString
+            cmbIdSerieDoc.DropDownList.ValueMember = dtTipoDocumentos.Columns("IdSerieDoc").ToString
+            cmbIdSerieDoc.DropDownList.Columns(0).DataMember = dtTipoDocumentos.Columns("IdSerieDoc").ToString
+            cmbIdSerieDoc.DropDownList.Columns(1).DataMember = dtTipoDocumentos.Columns("Descripcion").ToString
+            dtTipoDocumentos = Nothing
+            '======================================= MONEDAS ================================================
+            dtMonedas = oMaestroService.MostrarMonedas.Tables(0)
+            cmbCodMon.DataSource = dtMonedas
+            cmbCodMon.DropDownList.DataMember = dtMonedas.Columns("AbrMon").ToString
+            cmbCodMon.DropDownList.DisplayMember = dtMonedas.Columns("AbrMon").ToString
+            cmbCodMon.DropDownList.ValueMember = dtMonedas.Columns("CodMon").ToString
+            cmbCodMon.DropDownList.Columns(0).DataMember = dtMonedas.Columns("CodMon").ToString
+            cmbCodMon.DropDownList.Columns(1).DataMember = dtMonedas.Columns("AbrMon").ToString
+            dtMonedas = Nothing
+            '======================================= TIPO DE MOVIMIENTO ================================================
+            dtTipoMovimientos = New DataTable
+            dtTipoMovimientos.Columns.Add(New DataColumn("codigo", Type.GetType("System.String")))
+            dtTipoMovimientos.Columns.Add(New DataColumn("nombre", Type.GetType("System.String")))
+            dtTipoMovimientos.Rows.Add(New Object() {"H", "Ingreso"})
+            dtTipoMovimientos.Rows.Add(New Object() {"D", "Salida"})
+            dtTipoMovimientos.Rows.Add(New Object() {"C", "Costos"})
+
+            cmbTipMov.DataSource = dtTipoMovimientos
+            cmbTipMov.DropDownList.DataMember = dtTipoMovimientos.Columns("nombre").ToString
+            cmbTipMov.DropDownList.DisplayMember = dtTipoMovimientos.Columns("nombre").ToString
+            cmbTipMov.DropDownList.ValueMember = dtTipoMovimientos.Columns("codigo").ToString
+            cmbTipMov.DropDownList.Columns(0).DataMember = dtTipoMovimientos.Columns("codigo").ToString
+            cmbTipMov.DropDownList.Columns(1).DataMember = dtTipoMovimientos.Columns("nombre").ToString
+            cmbTipMov.SelectedIndex = 1
+            dtTipoMovimientos = Nothing
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-006]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub listaDatos()
+        Try
+            dtDatos = oMoviAlmacenDetService.Mostrar(toNumber(IdMovimiento)).Tables(0)
+            dgvDatos.SetDataBinding(dtDatos, 0)
+
+            txtTotalPrecio.Text = oMaestroService.MostrarDato("SIGECOM.Almacen.MoviAlmacen", "TotBruto", "IdMovimiento", IdMovimiento)
+            txtTotalDescuento.Text = oMaestroService.MostrarDato("SIGECOM.Almacen.MoviAlmacen", "TotDscto", "IdMovimiento", IdMovimiento)
+            txtTotal.Text = oMaestroService.MostrarDato("SIGECOM.Almacen.MoviAlmacen", "TotVenta", "IdMovimiento", IdMovimiento)
+            txtTotalIGV.Text = oMaestroService.MostrarDato("SIGECOM.Almacen.MoviAlmacen", "TotIgv", "IdMovimiento", IdMovimiento)
+            txtTotalNeto.Text = oMaestroService.MostrarDato("SIGECOM.Almacen.MoviAlmacen", "TotNeto", "IdMovimiento", IdMovimiento)
+            lblTotal.Text = "SUB TOTALES"
+            lbltotalIGV.Text = "IGV"
+            lblTotalNeto.Text = "TOTAL (" + oMaestroService.MostrarDato("SIGECOM.Maestro.Monedas", "AbrMon", "CodMon", oMaestroService.MostrarDato("SIGECOM.Almacen.MoviAlmacen", "CodMon", "IdMovimiento", IdMovimiento)) + ")"
+
+            enableOpciones()
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-007]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub NuevoDetalle()
+        Try
+            Dim frm As New frmMovimAlmacen_AgregarDetalle
+            frm.IdLocacion = IdLocacion
+            frm.state_button = False
+            frm.IdMovimiento = IdMovimiento
+            frm.estado = "GN"
+            frm.tioMovimineto = cmbTipMov.Value
+            If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+                dtDatos = Nothing
+                listaDatos()
+                If frm.type_process = "insert" Then
+                    RowPossesion(dgvDatos, dtDatos, "IdMovimientoDet", frm.IdMovimientoDet)
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-008]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub eliminarDetalle()
+        Try
+            cmOpciones.Visible = False
+            If MsgBox("Está seguro de ELIMINAR el registro con CÓDIGO = " + dgvDatos.CurrentRow.Cells("CodMer").Text.ToString, MsgBoxStyle.YesNo, "Información") = MsgBoxResult.Yes Then
+                Dim estado_process As Boolean
+
+                estado_process = oMoviAlmacenDetService.Borrar(toNumber(dgvDatos.CurrentRow.Cells("IdMovimientoDet").Text), _
+                                                               IdMovimiento, Session.sUsuario.cod_usuario)
+                If estado_process = True Then
+                    dtDatos = Nothing
+                    listaDatos()
+                    MsgBox("Se elimino correctamente el registro...!!!", MsgBoxStyle.Information)
+                Else
+                    MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-009]:" + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub mostrarDetalle()
+        Try
+            Dim frm As New frmMovimAlmacen_AgregarDetalle
+            frm.state_button = True
+            frm.IdMovimientoDet = dgvDatos.CurrentRow.Cells("IdMovimientoDet").Text
+            frm.IdMovimiento = IdMovimiento
+            frm.IdLocacion = IdLocacion
+            frm.estado = toBlank(lblEstado.Text)
+            frm.tioMovimineto = cmbTipMov.Value
+
+            If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+                dtDatos = Nothing
+                listaDatos()
+                If frm.type_process = "update" Then
+                    RowPossesion(dgvDatos, dtDatos, "IdMovimientoDet", frm.IdMovimientoDet)
+                Else
+                    MsgBox("Se elimino el registro correctamente...!!!", MsgBoxStyle.Information)
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-010]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Function ValidaCodigoSeleccionado() As Boolean
+        Try
+            If dgvDatos.RowCount < 1 Then
+                MsgBox("Lista de registros esta vacío, verificar...!!!", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf dgvDatos.CurrentRow.RowIndex < 0 Then
+                MsgBox("Seleccione un registro ...!!!", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf dgvDatos.CurrentRow.Cells(0).Text = Nothing Then
+                MsgBox("Registro Vacío", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf toNumber(IdLocacion) = 0 Then
+                MsgBox("Debe ingresar el almacén.", MsgBoxStyle.Information, "Información")
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-011]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+    Private Sub actualizar()
+        Try
+            Dim codigo As String = ""
+            If dgvDatos.RowCount > 0 Then
+                If IsDBNull(dgvDatos.CurrentRow.Cells(0).Text) = False Then
+                    codigo = dgvDatos.CurrentRow.Cells("IdMovimientoDet").Text
+                End If
+            End If
+            dtDatos = Nothing
+            listaDatos()
+            If dgvDatos.RowCount > 0 And codigo.Trim.Length > 0 Then
+                RowPossesion(dgvDatos, dtDatos, "IdMovimientoDet", codigo)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-012]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+
+    '====================================================================================================================
+    '============================================ INTERFACE'S METHOD ====================================================
+    '====================================================================================================================
+    Private Sub btnCancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancelar.Click
+        Me.DialogResult = Windows.Forms.DialogResult.Cancel
+        Me.Close()
+    End Sub
+    Private Sub btnGuardar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGuardar.Click
+        If MsgBox("¿Está seguro que desea guardar los datos?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes _
+            And ValidaCampos() Then
+
+            Dim registro As New MoviAlmacenService.MoviAlmacen
+            Dim locacion As New MoviAlmacenService.Locacion
+            Dim serie As New MoviAlmacenService.SerieDocumento
+            Dim cliente As New MoviAlmacenService.Cliente
+            Dim moneda As New MoviAlmacenService.Moneda
+
+            registro.IdMovimiento = toNull(IdMovimiento)
+            locacion.IdLocacion = toNull(IdLocacion)
+            registro.Locacion = locacion
+            serie.IdSerieDoc = toNull(cmbIdSerieDoc.Value)
+            registro.SerieDocumento = serie
+            registro.NumDoc = toNull(txtNumDoc.Text)
+            registro.FecDoc = toNull(txtFecDoc.Text)
+            cliente.IdCliente = toNull(IdCliente)
+            registro.Cliente = cliente
+            moneda.CodMon = toNull(cmbCodMon.Value)
+            registro.Moneda = moneda
+            registro.NumJob = toNull(txtNumJob.Text)
+            registro.TipMov = toNull(cmbTipMov.Value)
+            registro.NumFac = IIf(toBlank(txtNumFac.Text) = "", Nothing, toNumber(txtNumFac.Text))
+            registro.Igv = toNull(txtIgv.Text)
+            registro.Observacion = toNull(txtObservacion.Text)
+            registro.Estado = toNull(lblEstado.Text)
+            registro.CodUsu = Session.sUsuario.cod_usuario
+
+            If state_button Then        'Modificar
+                Modificar(registro)
+            Else                        'Nuevo
+                Insertar(registro)
+            End If
+        End If
+    End Sub
+    Private Sub btnEliminar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnEliminar.Click
+        If MsgBox("¿Está seguro que desea eliminar el registro?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes Then
+            If toNumber(txtNumDoc.Text) > 0 And toNumber(IdMovimiento) <> 0 Then
+                Eliminar()
+            Else
+                MsgBox("Debe Ingresar el Código...!!!", MsgBoxStyle.Information, "Información")
+                txtNumDoc.Focus()
+            End If
+        End If
+    End Sub
+    Private Sub btnBuscarAlmacen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBuscarAlmacen.Click
+        Dim frm As New frmBuscarAlmacen
+        If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+            txtalmacen.Text = frm.descripcion
+            txtalmacen.BackColor = System.Drawing.SystemColors.Control
+            IdLocacion = frm.codigo
+            '======================================= TIPOS DE DOCUMENTOS ================================================
+            dtTipoDocumentos = oMaestroService.MostrarSerieDocumento(toNumber(IdLocacion), 2, cmbTipMov.Value).Tables(0)
+            cmbIdSerieDoc.DataSource = dtTipoDocumentos
+            cmbIdSerieDoc.DropDownList.DataMember = dtTipoDocumentos.Columns("Descripcion").ToString
+            cmbIdSerieDoc.DropDownList.DisplayMember = dtTipoDocumentos.Columns("Descripcion").ToString
+            cmbIdSerieDoc.DropDownList.ValueMember = dtTipoDocumentos.Columns("IdSerieDoc").ToString
+            cmbIdSerieDoc.DropDownList.Columns(0).DataMember = dtTipoDocumentos.Columns("IdSerieDoc").ToString
+            cmbIdSerieDoc.DropDownList.Columns(1).DataMember = dtTipoDocumentos.Columns("Descripcion").ToString
+            dtTipoDocumentos = Nothing
+            txtIgv.Text = toDouble(oMaestroService.MostrarDato("SIGECOM.Maestro.Parametros", "igv", "IdLocacion", IdLocacion)) / 100
+        End If
+
+    End Sub
+    Private Sub btnBuscarCliente_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBuscarCliente.Click
+        Dim frm As New frmBuscarCliente
+        If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+            txtCliente.Text = frm.descripcion
+            txtCliente.BackColor = System.Drawing.SystemColors.Control
+            IdCliente = frm.codigo
+        End If
+    End Sub
+    Private Sub btnBuscarJob_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBuscarJob.Click
+        Dim frm As New frmBuscarJob
+        If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+            txtNumJob.BackColor = System.Drawing.SystemColors.Control
+            txtNumJob.Text = frm.cod_job
+        End If
+    End Sub
+    Private Sub btnVerDetalle_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVerDetalle.Click
+        If btnVerDetalle.Text = "Ver Detalle" Then
+            Me.Size = New System.Drawing.Size(737, 550)
+            Me.btnVerDetalle.Image = Global.SIGECOM.My.Resources.Resources.ImgAccordionClosed
+            btnVerDetalle.Text = "Ocultar Detalle"
+            btnVerDetalle.Size = New System.Drawing.Size(102, 25)
+
+            listaDatos()
+        Else
+            Me.Size = New System.Drawing.Size(737, 220)
+            Me.btnVerDetalle.Image = Global.SIGECOM.My.Resources.Resources.derecha
+            btnVerDetalle.Text = "Ver Detalle"
+            btnVerDetalle.Size = New System.Drawing.Size(85, 25)
+
+            dtDatos = Nothing
+            dgvDatos.DataSource = Nothing
+        End If
+    End Sub
+    Private Sub btnAgregarDetalle_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAgregarDetalle.Click
+        If state_button = True And (toBlank(lblEstado.Text) = "GENERADO" Or toBlank(lblEstado.Text) = "GN") Then
+            NuevoDetalle()
+        End If
+
+    End Sub
+    Private Sub miMostrar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miMostrar.Click
+        If ValidaCodigoSeleccionado() Then
+            mostrarDetalle()
+        End If
+    End Sub
+    Private Sub miEliminar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miEliminar.Click
+        If ValidaCodigoSeleccionado() Then
+            eliminarDetalle()
+        End If
+    End Sub
+    Private Sub miActualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miActualizar.Click
+        actualizar()
+    End Sub
+    Private Sub miNuevo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miNuevo.Click
+        If state_button = True And (toBlank(lblEstado.Text) = "GENERADO" Or toBlank(lblEstado.Text) = "GN") Then
+            NuevoDetalle()
+        End If
+    End Sub
+    Private Sub dgvDatos_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles dgvDatos.DoubleClick
+        If ValidaCodigoSeleccionado() Then
+            mostrarDetalle()
+        End If
+    End Sub
+    Private Sub cmbIdSerieDoc_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbIdSerieDoc.ValueChanged
+        If state_button = False Then
+            txtNumDoc.ReadOnly = False
+            txtNumDoc.TabStop = True
+            txtNumDoc.Text = oMaestroService.MostrarDato("SIGECOM.Maestro.SerieDocumento", "NumDoc", "IdSerieDoc", cmbIdSerieDoc.Value)
+        End If
+        enableCampos(toBlank(cmbIdSerieDoc.Value))
+    End Sub
+    Private Sub cmbCodMon_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbCodMon.ValueChanged
+        txtTipoCambio.Text = toDouble(oMaestroService.MostrarTipoCambio(cmbCodMon.Value, Date.Today))
+    End Sub
+    Private Sub cmbTipMov_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        '======================================= TIPOS DE DOCUMENTOS ================================================
+        dtTipoDocumentos = oMaestroService.MostrarSerieDocumento(toNumber(IdLocacion), 2, cmbTipMov.Value).Tables(0)
+        cmbIdSerieDoc.DataSource = dtTipoDocumentos
+        cmbIdSerieDoc.DropDownList.DataMember = dtTipoDocumentos.Columns("Nombre").ToString
+        cmbIdSerieDoc.DropDownList.DisplayMember = dtTipoDocumentos.Columns("Nombre").ToString
+        cmbIdSerieDoc.DropDownList.ValueMember = dtTipoDocumentos.Columns("IdSerieDoc").ToString
+        cmbIdSerieDoc.DropDownList.Columns(0).DataMember = dtTipoDocumentos.Columns("IdSerieDoc").ToString
+        cmbIdSerieDoc.DropDownList.Columns(1).DataMember = dtTipoDocumentos.Columns("Nombre").ToString
+        dtTipoDocumentos = Nothing
+        txtIgv.Text = toDouble(oMaestroService.MostrarDato("SIGECOM.Maestro.Parametros", "igv", "IdLocacion", IdLocacion)) / 100
+    End Sub
+    Private Sub cmbTipMov_ValueChanged_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbTipMov.ValueChanged
+        '======================================= TIPOS DE DOCUMENTOS ================================================
+        dtTipoDocumentos = oMaestroService.MostrarSerieDocumento(toNumber(IdLocacion), 2, cmbTipMov.Value).Tables(0)
+        cmbIdSerieDoc.DataSource = dtTipoDocumentos
+        cmbIdSerieDoc.DropDownList.DataMember = dtTipoDocumentos.Columns("Descripcion").ToString
+        cmbIdSerieDoc.DropDownList.DisplayMember = dtTipoDocumentos.Columns("Descripcion").ToString
+        cmbIdSerieDoc.DropDownList.ValueMember = dtTipoDocumentos.Columns("IdSerieDoc").ToString
+        cmbIdSerieDoc.DropDownList.Columns(0).DataMember = dtTipoDocumentos.Columns("IdSerieDoc").ToString
+        cmbIdSerieDoc.DropDownList.Columns(1).DataMember = dtTipoDocumentos.Columns("Descripcion").ToString
+        dtTipoDocumentos = Nothing
+        txtIgv.Text = toDouble(oMaestroService.MostrarDato("SIGECOM.Maestro.Parametros", "igv", "IdLocacion", IdLocacion)) / 100
+    End Sub
+
+End Class

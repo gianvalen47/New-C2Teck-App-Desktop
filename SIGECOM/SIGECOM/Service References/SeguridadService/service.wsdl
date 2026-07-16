@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:tns="http://tempuri.org/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="Seguridad" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ISeguridad_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/BLL" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISeguridad_MostrarPorCodigo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorCodigo" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPorCodigo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorCodigoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPorCodigo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ValidarAccesoUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarAccesoUsuario" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ValidarAccesoUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarAccesoUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_ValidarAccesoUsuario_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPermisos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPermisos" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPermisos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPermisosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarPermisos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarTipoCambio_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoCambio" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarTipoCambio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoCambioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_MostrarTipoCambio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarTipoCambio_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTipoCambio" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarTipoCambio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTipoCambioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISeguridad_InsertarTipoCambio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="ISeguridad">
+    <wsdl:operation name="MostrarPorCodigo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarPorCodigo" message="tns:ISeguridad_MostrarPorCodigo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarPorCodigoResponse" message="tns:ISeguridad_MostrarPorCodigo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarPorCodigo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidarAccesoUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/ValidarAccesoUsuario" message="tns:ISeguridad_ValidarAccesoUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/ValidarAccesoUsuarioResponse" message="tns:ISeguridad_ValidarAccesoUsuario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_ValidarAccesoUsuario_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPermisos">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarPermisos" message="tns:ISeguridad_MostrarPermisos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarPermisosResponse" message="tns:ISeguridad_MostrarPermisos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarPermisos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoCambio">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/MostrarTipoCambio" message="tns:ISeguridad_MostrarTipoCambio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/MostrarTipoCambioResponse" message="tns:ISeguridad_MostrarTipoCambio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_MostrarTipoCambio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTipoCambio">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISeguridad/InsertarTipoCambio" message="tns:ISeguridad_InsertarTipoCambio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISeguridad/InsertarTipoCambioResponse" message="tns:ISeguridad_InsertarTipoCambio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISeguridad_InsertarTipoCambio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ISeguridad" type="tns:ISeguridad">
+    <wsp:PolicyReference URI="#NetTcpBinding_ISeguridad_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="MostrarPorCodigo">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarPorCodigo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ValidarAccesoUsuario">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/ValidarAccesoUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPermisos">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarPermisos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoCambio">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/MostrarTipoCambio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTipoCambio">
+      <soap12:operation soapAction="http://tempuri.org/ISeguridad/InsertarTipoCambio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Seguridad">
+    <wsdl:port name="NetTcpBinding_ISeguridad" binding="tns:NetTcpBinding_ISeguridad">
+      <soap12:address location="net.tcp://192.168.1.248/ServicioBLL/Seguridad/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.1.248/ServicioBLL/Seguridad/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

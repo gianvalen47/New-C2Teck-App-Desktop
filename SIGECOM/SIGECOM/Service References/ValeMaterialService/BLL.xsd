@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/BLL" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/BLL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ValeMaterial">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Area" nillable="true" type="tns:Area" />
+      <xs:element minOccurs="0" name="Cliente" nillable="true" type="tns:Cliente" />
+      <xs:element minOccurs="0" name="CodUsu" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Estado" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FecDoc" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IdVale" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Igv" type="xs:double" />
+      <xs:element minOccurs="0" name="Locacion" nillable="true" type="tns:Locacion" />
+      <xs:element minOccurs="0" name="Moneda" nillable="true" type="tns:Moneda" />
+      <xs:element minOccurs="0" name="NumDoc" type="xs:int" />
+      <xs:element minOccurs="0" name="NumJob" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Observacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Persona" nillable="true" type="tns:Persona" />
+      <xs:element minOccurs="0" name="SerieDocumento" nillable="true" type="tns:SerieDocumento" />
+      <xs:element minOccurs="0" name="TipMov" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TotBruto" type="xs:double" />
+      <xs:element minOccurs="0" name="TotDscto" type="xs:double" />
+      <xs:element minOccurs="0" name="TotIgv" type="xs:double" />
+      <xs:element minOccurs="0" name="TotNeto" type="xs:double" />
+      <xs:element minOccurs="0" name="TotVenta" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ValeMaterial" nillable="true" type="tns:ValeMaterial" />
+  <xs:complexType name="Area">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodArea" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DesArea" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Area" nillable="true" type="tns:Area" />
+  <xs:complexType name="Cliente">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbrCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AprCli" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DesCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DiaPago" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DirCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DniCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DueCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Estado" type="xs:int" />
+      <xs:element minOccurs="0" name="FaxCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HoraPago" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdCliente" type="xs:int" />
+      <xs:element minOccurs="0" name="ListaCli" type="xs:boolean" />
+      <xs:element minOccurs="0" name="NumCta" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ObsCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RucCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SectorCliente" nillable="true" type="tns:SectorCliente" />
+      <xs:element minOccurs="0" name="TelCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoCliente" nillable="true" type="tns:TipoCliente" />
+      <xs:element minOccurs="0" name="TipoContribuyente" nillable="true" type="tns:TipoContribuyente" />
+      <xs:element minOccurs="0" name="UrlCli" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Cliente" nillable="true" type="tns:Cliente" />
+  <xs:complexType name="SectorCliente">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbrSec" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodSec" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DesSec" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SectorCliente" nillable="true" type="tns:SectorCliente" />
+  <xs:complexType name="TipoCliente">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbrTipo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DesTipoCli" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdTipoCliente" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TipoCliente" nillable="true" type="tns:TipoCliente" />
+  <xs:complexType name="TipoContribuyente">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbrTipo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DesTipo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdTipoCon" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TipoContribuyente" nillable="true" type="tns:TipoContribuyente" />
+  <xs:complexType name="Locacion">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Almacen" nillable="true" type="tns:Almacen" />
+      <xs:element minOccurs="0" name="Empresa" nillable="true" type="tns:Empresa" />
+      <xs:element minOccurs="0" name="GrupoAlmacen" nillable="true" type="tns:GrupoAlmacen" />
+      <xs:element minOccurs="0" name="GrupoVenta" nillable="true" type="tns:GrupoVenta" />
+      <xs:element minOccurs="0" name="IdLocacion" type="xs:int" />
+      <xs:element minOccurs="0" name="Oficina" nillable="true" type="tns:Oficina" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Locacion" nillable="true" type="tns:Locacion" />
+  <xs:complexType name="Almacen">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbrAlm" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodAlm" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DesAlm" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Almacen" nillable="true" type="tns:Almacen" />
+  <xs:complexType name="Empresa">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbrEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CorEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DesEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DirEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FaxEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RucEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TelEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WebEmp" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Empresa" nillable="true" type="tns:Empresa" />
+  <xs:complexType name="GrupoAlmacen">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DesGru" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GruAlm" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GrupoAlmacen" nillable="true" type="tns:GrupoAlmacen" />
+  <xs:complexType name="GrupoVenta">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DesVen" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GruVen" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GrupoVenta" nillable="true" type="tns:GrupoVenta" />
+  <xs:complexType name="Oficina">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbrOfi" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodOfi" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DesOfi" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DirOfi" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Oficina" nillable="true" type="tns:Oficina" />
+  <xs:complexType name="Moneda">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbrMon" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodMon" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DesMon" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Moneda" nillable="true" type="tns:Moneda" />
+  <xs:complexType name="Persona">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ApeNom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdPer" nillable="true" type="xs:anyType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Persona" nillable="true" type="tns:Persona" />
+  <xs:complexType name="SerieDocumento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodSerie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdSerieDoc" type="xs:int" />
+      <xs:element minOccurs="0" name="Locacion" nillable="true" type="tns:Locacion" />
+      <xs:element minOccurs="0" name="NumDoc" type="xs:int" />
+      <xs:element minOccurs="0" name="TipMov" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDocumento" nillable="true" type="tns:TipoDocumento" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SerieDocumento" nillable="true" type="tns:SerieDocumento" />
+  <xs:complexType name="TipoDocumento">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbrDoc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Compras" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Costos" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CtaCte" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IdDocumento" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipDoc" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TipoDocumento" nillable="true" type="tns:TipoDocumento" />
+</xs:schema>

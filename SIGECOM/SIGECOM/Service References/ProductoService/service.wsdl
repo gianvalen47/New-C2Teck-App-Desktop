@@ -1,0 +1,682 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ProductoService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IProductoService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IProductoService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_FiltrarGerencia_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarGerencia" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_FiltrarGerencia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarGerenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_FiltrarGerencia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarUniMedPeso_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUniMedPeso" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarUniMedPeso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUniMedPesoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarUniMedPeso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_ObtenerIdListaPre_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdListaPre" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_ObtenerIdListaPre_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdListaPreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_ObtenerIdListaPre_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarRubrosEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubrosEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarRubrosEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubrosEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarRubrosEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarClasePorEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarClasePorEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarClasePorEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarClasePorEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarClasePorEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarModelo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarModelo" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarModelo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarModeloResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarModelo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_ObtenerModelo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerModelo" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_ObtenerModelo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerModeloResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_ObtenerModelo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_BuscarModelo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarModelo" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_BuscarModelo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarModeloResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_BuscarModelo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_InsertarModelo_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarModelo" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_InsertarModelo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarModeloResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_InsertarModelo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_ActualizarModelo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarModelo" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_ActualizarModelo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarModeloResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_ActualizarModelo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_BorrarModelo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarModelo" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_BorrarModelo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarModeloResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_BorrarModelo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarImagen_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarImagen" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarImagen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarImagenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarImagen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_ObtenerImagen_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerImagen" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_ObtenerImagen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerImagenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_ObtenerImagen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_InsertarImagen_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarImagen" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_InsertarImagen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarImagenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_InsertarImagen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_BorrarImagen_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarImagen" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_BorrarImagen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarImagenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_BorrarImagen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_ActualizarImagen_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarImagen" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_ActualizarImagen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarImagenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_ActualizarImagen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_SugerirItem_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirItem" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_SugerirItem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_SugerirItem_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarRubroMotor_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroMotor" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarRubroMotor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroMotorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProductoService_MostrarRubroMotor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IProductoService">
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/Filtrar" message="tns:IProductoService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/FiltrarResponse" message="tns:IProductoService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/Obtener" message="tns:IProductoService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/ObtenerResponse" message="tns:IProductoService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/Buscar" message="tns:IProductoService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/BuscarResponse" message="tns:IProductoService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/Insertar" message="tns:IProductoService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/InsertarResponse" message="tns:IProductoService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/Actualizar" message="tns:IProductoService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/ActualizarResponse" message="tns:IProductoService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/Borrar" message="tns:IProductoService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/BorrarResponse" message="tns:IProductoService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarGerencia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/FiltrarGerencia" message="tns:IProductoService_FiltrarGerencia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/FiltrarGerenciaResponse" message="tns:IProductoService_FiltrarGerencia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_FiltrarGerencia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUniMedPeso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/MostrarUniMedPeso" message="tns:IProductoService_MostrarUniMedPeso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/MostrarUniMedPesoResponse" message="tns:IProductoService_MostrarUniMedPeso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_MostrarUniMedPeso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdListaPre">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/ObtenerIdListaPre" message="tns:IProductoService_ObtenerIdListaPre_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/ObtenerIdListaPreResponse" message="tns:IProductoService_ObtenerIdListaPre_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_ObtenerIdListaPre_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubrosEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/MostrarRubrosEmpresa" message="tns:IProductoService_MostrarRubrosEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/MostrarRubrosEmpresaResponse" message="tns:IProductoService_MostrarRubrosEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_MostrarRubrosEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarClasePorEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/MostrarClasePorEmpresa" message="tns:IProductoService_MostrarClasePorEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/MostrarClasePorEmpresaResponse" message="tns:IProductoService_MostrarClasePorEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_MostrarClasePorEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarModelo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/MostrarModelo" message="tns:IProductoService_MostrarModelo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/MostrarModeloResponse" message="tns:IProductoService_MostrarModelo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_MostrarModelo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerModelo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/ObtenerModelo" message="tns:IProductoService_ObtenerModelo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/ObtenerModeloResponse" message="tns:IProductoService_ObtenerModelo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_ObtenerModelo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarModelo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/BuscarModelo" message="tns:IProductoService_BuscarModelo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/BuscarModeloResponse" message="tns:IProductoService_BuscarModelo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_BuscarModelo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarModelo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/InsertarModelo" message="tns:IProductoService_InsertarModelo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/InsertarModeloResponse" message="tns:IProductoService_InsertarModelo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_InsertarModelo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarModelo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/ActualizarModelo" message="tns:IProductoService_ActualizarModelo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/ActualizarModeloResponse" message="tns:IProductoService_ActualizarModelo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_ActualizarModelo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarModelo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/BorrarModelo" message="tns:IProductoService_BorrarModelo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/BorrarModeloResponse" message="tns:IProductoService_BorrarModelo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_BorrarModelo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarImagen">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/MostrarImagen" message="tns:IProductoService_MostrarImagen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/MostrarImagenResponse" message="tns:IProductoService_MostrarImagen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_MostrarImagen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerImagen">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/ObtenerImagen" message="tns:IProductoService_ObtenerImagen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/ObtenerImagenResponse" message="tns:IProductoService_ObtenerImagen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_ObtenerImagen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarImagen">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/InsertarImagen" message="tns:IProductoService_InsertarImagen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/InsertarImagenResponse" message="tns:IProductoService_InsertarImagen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_InsertarImagen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarImagen">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/BorrarImagen" message="tns:IProductoService_BorrarImagen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/BorrarImagenResponse" message="tns:IProductoService_BorrarImagen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_BorrarImagen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarImagen">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/ActualizarImagen" message="tns:IProductoService_ActualizarImagen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/ActualizarImagenResponse" message="tns:IProductoService_ActualizarImagen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_ActualizarImagen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirItem">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/SugerirItem" message="tns:IProductoService_SugerirItem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/SugerirItemResponse" message="tns:IProductoService_SugerirItem_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_SugerirItem_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroMotor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProductoService/MostrarRubroMotor" message="tns:IProductoService_MostrarRubroMotor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProductoService/MostrarRubroMotorResponse" message="tns:IProductoService_MostrarRubroMotor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IProductoService_MostrarRubroMotor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IProductoService" type="tns:IProductoService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IProductoService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarGerencia">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/FiltrarGerencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUniMedPeso">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/MostrarUniMedPeso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdListaPre">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/ObtenerIdListaPre" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubrosEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/MostrarRubrosEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarClasePorEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/MostrarClasePorEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarModelo">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/MostrarModelo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerModelo">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/ObtenerModelo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarModelo">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/BuscarModelo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarModelo">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/InsertarModelo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarModelo">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/ActualizarModelo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarModelo">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/BorrarModelo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarImagen">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/MostrarImagen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerImagen">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/ObtenerImagen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarImagen">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/InsertarImagen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarImagen">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/BorrarImagen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarImagen">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/ActualizarImagen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirItem">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/SugerirItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroMotor">
+      <soap12:operation soapAction="http://tempuri.org/IProductoService/MostrarRubroMotor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ProductoService">
+    <wsdl:port name="NetTcpBinding_IProductoService" binding="tns:NetTcpBinding_IProductoService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/ProductoService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/ProductoService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

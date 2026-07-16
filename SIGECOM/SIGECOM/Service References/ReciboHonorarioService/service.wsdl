@@ -1,0 +1,578 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReciboHonorarioService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IReciboHonorarioService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IReciboHonorarioService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ImportarDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportarDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ImportarDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportarDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ImportarDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_BuscarPago_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPago" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_BuscarPago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarPagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_BuscarPago_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ObtenerIdHonorarioDoc_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdHonorarioDoc" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ObtenerIdHonorarioDoc_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdHonorarioDocResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ObtenerIdHonorarioDoc_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_BuscarXml_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarXml" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_BuscarXml_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarXmlResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_BuscarXml_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_DescargarXml_InputMessage">
+    <wsdl:part name="parameters" element="tns:DescargarXml" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_DescargarXml_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DescargarXmlResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_DescargarXml_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_DescargarPdf_InputMessage">
+    <wsdl:part name="parameters" element="tns:DescargarPdf" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_DescargarPdf_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DescargarPdfResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_DescargarPdf_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ObtenerNombre_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerNombre" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ObtenerNombre_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerNombreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ObtenerNombre_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ExportarCtasPorPagar_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExportarCtasPorPagar" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ExportarCtasPorPagar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExportarCtasPorPagarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ExportarCtasPorPagar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ObtenerIR_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIR" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ObtenerIR_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIRResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ObtenerIR_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ObtenerRegistro_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRegistro" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ObtenerRegistro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRegistroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_ObtenerRegistro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_BuscarRegistro_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRegistro" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_BuscarRegistro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRegistroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_BuscarRegistro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_DuplicarRegistro_InputMessage">
+    <wsdl:part name="parameters" element="tns:DuplicarRegistro" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_DuplicarRegistro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DuplicarRegistroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_DuplicarRegistro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_GenerarArchivoProveedores_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarArchivoProveedores" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_GenerarArchivoProveedores_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarArchivoProveedoresResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReciboHonorarioService_GenerarArchivoProveedores_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IReciboHonorarioService">
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/Obtener" message="tns:IReciboHonorarioService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/ObtenerResponse" message="tns:IReciboHonorarioService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/Buscar" message="tns:IReciboHonorarioService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/BuscarResponse" message="tns:IReciboHonorarioService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/Insertar" message="tns:IReciboHonorarioService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/InsertarResponse" message="tns:IReciboHonorarioService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/Actualizar" message="tns:IReciboHonorarioService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/ActualizarResponse" message="tns:IReciboHonorarioService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/Borrar" message="tns:IReciboHonorarioService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/BorrarResponse" message="tns:IReciboHonorarioService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/Filtrar" message="tns:IReciboHonorarioService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/FiltrarResponse" message="tns:IReciboHonorarioService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportarDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/ImportarDocumento" message="tns:IReciboHonorarioService_ImportarDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/ImportarDocumentoResponse" message="tns:IReciboHonorarioService_ImportarDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_ImportarDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/BuscarPago" message="tns:IReciboHonorarioService_BuscarPago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/BuscarPagoResponse" message="tns:IReciboHonorarioService_BuscarPago_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_BuscarPago_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/Imprimir" message="tns:IReciboHonorarioService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/ImprimirResponse" message="tns:IReciboHonorarioService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdHonorarioDoc">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/ObtenerIdHonorarioDoc" message="tns:IReciboHonorarioService_ObtenerIdHonorarioDoc_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/ObtenerIdHonorarioDocResponse" message="tns:IReciboHonorarioService_ObtenerIdHonorarioDoc_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_ObtenerIdHonorarioDoc_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarXml">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/BuscarXml" message="tns:IReciboHonorarioService_BuscarXml_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/BuscarXmlResponse" message="tns:IReciboHonorarioService_BuscarXml_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_BuscarXml_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DescargarXml">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/DescargarXml" message="tns:IReciboHonorarioService_DescargarXml_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/DescargarXmlResponse" message="tns:IReciboHonorarioService_DescargarXml_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_DescargarXml_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DescargarPdf">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/DescargarPdf" message="tns:IReciboHonorarioService_DescargarPdf_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/DescargarPdfResponse" message="tns:IReciboHonorarioService_DescargarPdf_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_DescargarPdf_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerNombre">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/ObtenerNombre" message="tns:IReciboHonorarioService_ObtenerNombre_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/ObtenerNombreResponse" message="tns:IReciboHonorarioService_ObtenerNombre_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_ObtenerNombre_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExportarCtasPorPagar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/ExportarCtasPorPagar" message="tns:IReciboHonorarioService_ExportarCtasPorPagar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/ExportarCtasPorPagarResponse" message="tns:IReciboHonorarioService_ExportarCtasPorPagar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_ExportarCtasPorPagar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIR">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/ObtenerIR" message="tns:IReciboHonorarioService_ObtenerIR_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/ObtenerIRResponse" message="tns:IReciboHonorarioService_ObtenerIR_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_ObtenerIR_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRegistro">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/ObtenerRegistro" message="tns:IReciboHonorarioService_ObtenerRegistro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/ObtenerRegistroResponse" message="tns:IReciboHonorarioService_ObtenerRegistro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_ObtenerRegistro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRegistro">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/BuscarRegistro" message="tns:IReciboHonorarioService_BuscarRegistro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/BuscarRegistroResponse" message="tns:IReciboHonorarioService_BuscarRegistro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_BuscarRegistro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DuplicarRegistro">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/DuplicarRegistro" message="tns:IReciboHonorarioService_DuplicarRegistro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/DuplicarRegistroResponse" message="tns:IReciboHonorarioService_DuplicarRegistro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_DuplicarRegistro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarArchivoProveedores">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReciboHonorarioService/GenerarArchivoProveedores" message="tns:IReciboHonorarioService_GenerarArchivoProveedores_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReciboHonorarioService/GenerarArchivoProveedoresResponse" message="tns:IReciboHonorarioService_GenerarArchivoProveedores_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IReciboHonorarioService_GenerarArchivoProveedores_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IReciboHonorarioService" type="tns:IReciboHonorarioService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IReciboHonorarioService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImportarDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/ImportarDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarPago">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/BuscarPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdHonorarioDoc">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/ObtenerIdHonorarioDoc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarXml">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/BuscarXml" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DescargarXml">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/DescargarXml" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DescargarPdf">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/DescargarPdf" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerNombre">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/ObtenerNombre" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ExportarCtasPorPagar">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/ExportarCtasPorPagar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIR">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/ObtenerIR" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRegistro">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/ObtenerRegistro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRegistro">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/BuscarRegistro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DuplicarRegistro">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/DuplicarRegistro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarArchivoProveedores">
+      <soap12:operation soapAction="http://tempuri.org/IReciboHonorarioService/GenerarArchivoProveedores" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ReciboHonorarioService">
+    <wsdl:port name="NetTcpBinding_IReciboHonorarioService" binding="tns:NetTcpBinding_IReciboHonorarioService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/ReciboHonorarioService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/ReciboHonorarioService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

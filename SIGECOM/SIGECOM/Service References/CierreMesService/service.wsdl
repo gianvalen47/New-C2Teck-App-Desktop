@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:tns="http://tempuri.org/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="CierreMesService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ICierreMesService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/BLL" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ICierreMesService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_RecalcularKardex_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecalcularKardex" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_RecalcularKardex_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecalcularKardexResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_RecalcularKardex_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_RecalcularAlmacen_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecalcularAlmacen" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_RecalcularAlmacen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecalcularAlmacenResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_RecalcularAlmacen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_BuscarAjuste_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAjuste" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_BuscarAjuste_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAjusteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_BuscarAjuste_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_InsertarAjuste_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarAjuste" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_InsertarAjuste_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarAjusteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_InsertarAjuste_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_ActualizarAjuste_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarAjuste" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_ActualizarAjuste_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarAjusteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_ActualizarAjuste_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_BorrarAjuste_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarAjuste" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_BorrarAjuste_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarAjusteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_BorrarAjuste_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_MostrarSaldoInicio_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSaldoInicio" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_MostrarSaldoInicio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSaldoInicioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_MostrarSaldoInicio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_StockValorizado_InputMessage">
+    <wsdl:part name="parameters" element="tns:StockValorizado" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_StockValorizado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StockValorizadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_StockValorizado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_ReporteDiarioAlmacen_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteDiarioAlmacen" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_ReporteDiarioAlmacen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteDiarioAlmacenResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_ReporteDiarioAlmacen_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_MostrarCuadroCierre_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCuadroCierre" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_MostrarCuadroCierre_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCuadroCierreResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICierreMesService_MostrarCuadroCierre_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="ICierreMesService">
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICierreMesService/Buscar" message="tns:ICierreMesService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICierreMesService/BuscarResponse" message="tns:ICierreMesService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICierreMesService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICierreMesService/Insertar" message="tns:ICierreMesService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICierreMesService/InsertarResponse" message="tns:ICierreMesService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICierreMesService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecalcularKardex">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICierreMesService/RecalcularKardex" message="tns:ICierreMesService_RecalcularKardex_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICierreMesService/RecalcularKardexResponse" message="tns:ICierreMesService_RecalcularKardex_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICierreMesService_RecalcularKardex_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecalcularAlmacen">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICierreMesService/RecalcularAlmacen" message="tns:ICierreMesService_RecalcularAlmacen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICierreMesService/RecalcularAlmacenResponse" message="tns:ICierreMesService_RecalcularAlmacen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICierreMesService_RecalcularAlmacen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarAjuste">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICierreMesService/BuscarAjuste" message="tns:ICierreMesService_BuscarAjuste_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICierreMesService/BuscarAjusteResponse" message="tns:ICierreMesService_BuscarAjuste_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICierreMesService_BuscarAjuste_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarAjuste">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICierreMesService/InsertarAjuste" message="tns:ICierreMesService_InsertarAjuste_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICierreMesService/InsertarAjusteResponse" message="tns:ICierreMesService_InsertarAjuste_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICierreMesService_InsertarAjuste_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarAjuste">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICierreMesService/ActualizarAjuste" message="tns:ICierreMesService_ActualizarAjuste_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICierreMesService/ActualizarAjusteResponse" message="tns:ICierreMesService_ActualizarAjuste_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICierreMesService_ActualizarAjuste_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarAjuste">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICierreMesService/BorrarAjuste" message="tns:ICierreMesService_BorrarAjuste_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICierreMesService/BorrarAjusteResponse" message="tns:ICierreMesService_BorrarAjuste_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICierreMesService_BorrarAjuste_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSaldoInicio">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICierreMesService/MostrarSaldoInicio" message="tns:ICierreMesService_MostrarSaldoInicio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICierreMesService/MostrarSaldoInicioResponse" message="tns:ICierreMesService_MostrarSaldoInicio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICierreMesService_MostrarSaldoInicio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StockValorizado">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICierreMesService/StockValorizado" message="tns:ICierreMesService_StockValorizado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICierreMesService/StockValorizadoResponse" message="tns:ICierreMesService_StockValorizado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICierreMesService_StockValorizado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteDiarioAlmacen">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICierreMesService/ReporteDiarioAlmacen" message="tns:ICierreMesService_ReporteDiarioAlmacen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICierreMesService/ReporteDiarioAlmacenResponse" message="tns:ICierreMesService_ReporteDiarioAlmacen_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICierreMesService_ReporteDiarioAlmacen_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCuadroCierre">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICierreMesService/MostrarCuadroCierre" message="tns:ICierreMesService_MostrarCuadroCierre_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICierreMesService/MostrarCuadroCierreResponse" message="tns:ICierreMesService_MostrarCuadroCierre_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICierreMesService_MostrarCuadroCierre_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ICierreMesService" type="tns:ICierreMesService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ICierreMesService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/ICierreMesService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/ICierreMesService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RecalcularKardex">
+      <soap12:operation soapAction="http://tempuri.org/ICierreMesService/RecalcularKardex" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RecalcularAlmacen">
+      <soap12:operation soapAction="http://tempuri.org/ICierreMesService/RecalcularAlmacen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarAjuste">
+      <soap12:operation soapAction="http://tempuri.org/ICierreMesService/BuscarAjuste" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarAjuste">
+      <soap12:operation soapAction="http://tempuri.org/ICierreMesService/InsertarAjuste" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarAjuste">
+      <soap12:operation soapAction="http://tempuri.org/ICierreMesService/ActualizarAjuste" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarAjuste">
+      <soap12:operation soapAction="http://tempuri.org/ICierreMesService/BorrarAjuste" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSaldoInicio">
+      <soap12:operation soapAction="http://tempuri.org/ICierreMesService/MostrarSaldoInicio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="StockValorizado">
+      <soap12:operation soapAction="http://tempuri.org/ICierreMesService/StockValorizado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteDiarioAlmacen">
+      <soap12:operation soapAction="http://tempuri.org/ICierreMesService/ReporteDiarioAlmacen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCuadroCierre">
+      <soap12:operation soapAction="http://tempuri.org/ICierreMesService/MostrarCuadroCierre" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CierreMesService">
+    <wsdl:port name="NetTcpBinding_ICierreMesService" binding="tns:NetTcpBinding_ICierreMesService">
+      <soap12:address location="net.tcp://192.168.1.248/ServicioBLL/CierreMesService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.1.248/ServicioBLL/CierreMesService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

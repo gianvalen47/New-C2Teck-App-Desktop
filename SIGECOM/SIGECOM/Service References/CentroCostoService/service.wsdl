@@ -1,0 +1,526 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CentroCostoService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ICentroCostoService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ICentroCostoService_InsertarArea_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarArea" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_InsertarArea_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarAreaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_InsertarArea_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_ActualizarArea_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarArea" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_ActualizarArea_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarAreaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_ActualizarArea_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_BorrarArea_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarArea" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_BorrarArea_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarAreaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_BorrarArea_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_FiltrarArea_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarArea" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_FiltrarArea_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarAreaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_FiltrarArea_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_ObtenerArea_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerArea" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_ObtenerArea_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAreaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_ObtenerArea_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_BuscarArea_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarArea" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_BuscarArea_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAreaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_BuscarArea_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_InsertarCentroCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCentroCosto" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_InsertarCentroCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCentroCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_InsertarCentroCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_ActualizarCentroCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCentroCosto" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_ActualizarCentroCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCentroCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_ActualizarCentroCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_BorrarCentroCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCentroCosto" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_BorrarCentroCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCentroCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_BorrarCentroCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_FiltrarCentroCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarCentroCosto" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_FiltrarCentroCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarCentroCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_FiltrarCentroCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_ObtenerCentroCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCentroCosto" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_ObtenerCentroCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCentroCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_ObtenerCentroCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_BuscarCentroCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarCentroCosto" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_BuscarCentroCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarCentroCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_BuscarCentroCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_MostrarUnidadNegocio_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUnidadNegocio" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_MostrarUnidadNegocio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUnidadNegocioResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_MostrarUnidadNegocio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_MostrarAreas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAreas" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_MostrarAreas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAreasResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_MostrarAreas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_ObtenerDesUnidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDesUnidad" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_ObtenerDesUnidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDesUnidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_ObtenerDesUnidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_SugerirCodigoArea_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirCodigoArea" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_SugerirCodigoArea_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirCodigoAreaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_SugerirCodigoArea_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_SugerirCodigoCentroCosto_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirCodigoCentroCosto" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_SugerirCodigoCentroCosto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirCodigoCentroCostoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICentroCostoService_SugerirCodigoCentroCosto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="ICentroCostoService">
+    <wsdl:operation name="InsertarArea">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/InsertarArea" message="tns:ICentroCostoService_InsertarArea_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/InsertarAreaResponse" message="tns:ICentroCostoService_InsertarArea_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_InsertarArea_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarArea">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/ActualizarArea" message="tns:ICentroCostoService_ActualizarArea_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/ActualizarAreaResponse" message="tns:ICentroCostoService_ActualizarArea_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_ActualizarArea_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarArea">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/BorrarArea" message="tns:ICentroCostoService_BorrarArea_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/BorrarAreaResponse" message="tns:ICentroCostoService_BorrarArea_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_BorrarArea_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarArea">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/FiltrarArea" message="tns:ICentroCostoService_FiltrarArea_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/FiltrarAreaResponse" message="tns:ICentroCostoService_FiltrarArea_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_FiltrarArea_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArea">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/ObtenerArea" message="tns:ICentroCostoService_ObtenerArea_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/ObtenerAreaResponse" message="tns:ICentroCostoService_ObtenerArea_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_ObtenerArea_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarArea">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/BuscarArea" message="tns:ICentroCostoService_BuscarArea_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/BuscarAreaResponse" message="tns:ICentroCostoService_BuscarArea_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_BuscarArea_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCentroCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/InsertarCentroCosto" message="tns:ICentroCostoService_InsertarCentroCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/InsertarCentroCostoResponse" message="tns:ICentroCostoService_InsertarCentroCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_InsertarCentroCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCentroCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/ActualizarCentroCosto" message="tns:ICentroCostoService_ActualizarCentroCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/ActualizarCentroCostoResponse" message="tns:ICentroCostoService_ActualizarCentroCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_ActualizarCentroCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCentroCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/BorrarCentroCosto" message="tns:ICentroCostoService_BorrarCentroCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/BorrarCentroCostoResponse" message="tns:ICentroCostoService_BorrarCentroCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_BorrarCentroCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarCentroCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/FiltrarCentroCosto" message="tns:ICentroCostoService_FiltrarCentroCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/FiltrarCentroCostoResponse" message="tns:ICentroCostoService_FiltrarCentroCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_FiltrarCentroCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCentroCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/ObtenerCentroCosto" message="tns:ICentroCostoService_ObtenerCentroCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/ObtenerCentroCostoResponse" message="tns:ICentroCostoService_ObtenerCentroCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_ObtenerCentroCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarCentroCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/BuscarCentroCosto" message="tns:ICentroCostoService_BuscarCentroCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/BuscarCentroCostoResponse" message="tns:ICentroCostoService_BuscarCentroCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_BuscarCentroCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUnidadNegocio">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/MostrarUnidadNegocio" message="tns:ICentroCostoService_MostrarUnidadNegocio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/MostrarUnidadNegocioResponse" message="tns:ICentroCostoService_MostrarUnidadNegocio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_MostrarUnidadNegocio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAreas">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/MostrarAreas" message="tns:ICentroCostoService_MostrarAreas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/MostrarAreasResponse" message="tns:ICentroCostoService_MostrarAreas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_MostrarAreas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDesUnidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/ObtenerDesUnidad" message="tns:ICentroCostoService_ObtenerDesUnidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/ObtenerDesUnidadResponse" message="tns:ICentroCostoService_ObtenerDesUnidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_ObtenerDesUnidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/Imprimir" message="tns:ICentroCostoService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/ImprimirResponse" message="tns:ICentroCostoService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirCodigoArea">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/SugerirCodigoArea" message="tns:ICentroCostoService_SugerirCodigoArea_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/SugerirCodigoAreaResponse" message="tns:ICentroCostoService_SugerirCodigoArea_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_SugerirCodigoArea_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirCodigoCentroCosto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICentroCostoService/SugerirCodigoCentroCosto" message="tns:ICentroCostoService_SugerirCodigoCentroCosto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICentroCostoService/SugerirCodigoCentroCostoResponse" message="tns:ICentroCostoService_SugerirCodigoCentroCosto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICentroCostoService_SugerirCodigoCentroCosto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ICentroCostoService" type="tns:ICentroCostoService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ICentroCostoService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="InsertarArea">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/InsertarArea" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarArea">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/ActualizarArea" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarArea">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/BorrarArea" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarArea">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/FiltrarArea" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArea">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/ObtenerArea" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarArea">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/BuscarArea" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCentroCosto">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/InsertarCentroCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCentroCosto">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/ActualizarCentroCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCentroCosto">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/BorrarCentroCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarCentroCosto">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/FiltrarCentroCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCentroCosto">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/ObtenerCentroCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarCentroCosto">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/BuscarCentroCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUnidadNegocio">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/MostrarUnidadNegocio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAreas">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/MostrarAreas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDesUnidad">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/ObtenerDesUnidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirCodigoArea">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/SugerirCodigoArea" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirCodigoCentroCosto">
+      <soap12:operation soapAction="http://tempuri.org/ICentroCostoService/SugerirCodigoCentroCosto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CentroCostoService">
+    <wsdl:port name="NetTcpBinding_ICentroCostoService" binding="tns:NetTcpBinding_ICentroCostoService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/CentroCostoService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/CentroCostoService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

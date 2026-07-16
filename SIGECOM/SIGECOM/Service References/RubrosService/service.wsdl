@@ -1,0 +1,370 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RubrosService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IRubrosService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IRubrosService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_SugerirCodigo_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirCodigo" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_SugerirCodigo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirCodigoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_SugerirCodigo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_ObtenerRubrosEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRubrosEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_ObtenerRubrosEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRubrosEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_ObtenerRubrosEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_BuscarRubrosEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRubrosEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_BuscarRubrosEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRubrosEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_BuscarRubrosEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_InsertarRubrosEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRubrosEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_InsertarRubrosEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRubrosEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_InsertarRubrosEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_ActualizarRubrosEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRubrosEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_ActualizarRubrosEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRubrosEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_ActualizarRubrosEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_BorrarRubrosEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRubrosEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_BorrarRubrosEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRubrosEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_BorrarRubrosEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_MostrarRubrosEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubrosEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_MostrarRubrosEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubrosEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRubrosService_MostrarRubrosEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IRubrosService">
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRubrosService/Filtrar" message="tns:IRubrosService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRubrosService/FiltrarResponse" message="tns:IRubrosService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IRubrosService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRubrosService/Insertar" message="tns:IRubrosService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRubrosService/InsertarResponse" message="tns:IRubrosService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IRubrosService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRubrosService/Actualizar" message="tns:IRubrosService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRubrosService/ActualizarResponse" message="tns:IRubrosService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IRubrosService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRubrosService/Borrar" message="tns:IRubrosService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRubrosService/BorrarResponse" message="tns:IRubrosService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IRubrosService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRubrosService/Obtener" message="tns:IRubrosService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRubrosService/ObtenerResponse" message="tns:IRubrosService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IRubrosService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirCodigo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRubrosService/SugerirCodigo" message="tns:IRubrosService_SugerirCodigo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRubrosService/SugerirCodigoResponse" message="tns:IRubrosService_SugerirCodigo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IRubrosService_SugerirCodigo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRubrosEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRubrosService/ObtenerRubrosEmpresa" message="tns:IRubrosService_ObtenerRubrosEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRubrosService/ObtenerRubrosEmpresaResponse" message="tns:IRubrosService_ObtenerRubrosEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IRubrosService_ObtenerRubrosEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRubrosEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRubrosService/BuscarRubrosEmpresa" message="tns:IRubrosService_BuscarRubrosEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRubrosService/BuscarRubrosEmpresaResponse" message="tns:IRubrosService_BuscarRubrosEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IRubrosService_BuscarRubrosEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRubrosEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRubrosService/InsertarRubrosEmpresa" message="tns:IRubrosService_InsertarRubrosEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRubrosService/InsertarRubrosEmpresaResponse" message="tns:IRubrosService_InsertarRubrosEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IRubrosService_InsertarRubrosEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRubrosEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRubrosService/ActualizarRubrosEmpresa" message="tns:IRubrosService_ActualizarRubrosEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRubrosService/ActualizarRubrosEmpresaResponse" message="tns:IRubrosService_ActualizarRubrosEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IRubrosService_ActualizarRubrosEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRubrosEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRubrosService/BorrarRubrosEmpresa" message="tns:IRubrosService_BorrarRubrosEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRubrosService/BorrarRubrosEmpresaResponse" message="tns:IRubrosService_BorrarRubrosEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IRubrosService_BorrarRubrosEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubrosEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRubrosService/MostrarRubrosEmpresa" message="tns:IRubrosService_MostrarRubrosEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRubrosService/MostrarRubrosEmpresaResponse" message="tns:IRubrosService_MostrarRubrosEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MiError" name="MiErrorFault" message="tns:IRubrosService_MostrarRubrosEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IRubrosService" type="tns:IRubrosService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IRubrosService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IRubrosService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IRubrosService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IRubrosService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IRubrosService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IRubrosService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirCodigo">
+      <soap12:operation soapAction="http://tempuri.org/IRubrosService/SugerirCodigo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRubrosEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/IRubrosService/ObtenerRubrosEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRubrosEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/IRubrosService/BuscarRubrosEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRubrosEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/IRubrosService/InsertarRubrosEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRubrosEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/IRubrosService/ActualizarRubrosEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRubrosEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/IRubrosService/BorrarRubrosEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubrosEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/IRubrosService/MostrarRubrosEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RubrosService">
+    <wsdl:port name="NetTcpBinding_IRubrosService" binding="tns:NetTcpBinding_IRubrosService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/RubrosService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/RubrosService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

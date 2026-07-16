@@ -1,0 +1,234 @@
+﻿Imports System.Windows.Forms
+
+Public Class frmBuscarLocacionMercaderia
+
+    Private oLocacionMercaderiaService As New LocacionMercaderiaService.LocacionMercaderiaServiceClient
+    Private oMaestro As New MaestroService.MaestroClient
+    Private dtDatos As DataTable
+    Private state_Search As Boolean
+    '====================================================================================================================
+    '============================================ LOCAL PARAMETERS ======================================================
+    '====================================================================================================================
+    Private dtClases As DataTable
+    Private dtRubros As DataTable
+
+    Public IdLocacion As String
+    Public codigo As String
+    Public descripcion As String
+    Public precio As Double
+    Public descuento As Double
+    Public costo_dolares As Double
+    Public costo_soles As Double
+    Public stock As Integer
+
+    Public CodRub As String
+
+    '====================================================================================================================
+    '============================================ CONTROL'S METHOD ======================================================
+    '====================================================================================================================
+    Private Sub SendFocus_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                        txtCodMer.KeyPress _
+                      , txtDesMer1.KeyPress _
+                      , cmbCodRub.KeyPress _
+                      , cmbIdClase.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            SendKeys.Send("{TAB}")
+            listaDatos()
+        End If
+    End Sub
+    Private Sub Salir_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                         txtCodMer.KeyPress _
+                      , txtDesMer1.KeyPress _
+                      , btnBuscar.KeyPress _
+                      , cmbCodRub.KeyPress _
+                      , cmbIdClase.KeyPress _
+                      , dgvDatos.KeyPress
+        If e.KeyChar = ChrW(Keys.Escape) Then
+            Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
+            Me.Close()
+        End If
+    End Sub
+    Private Sub RowPossesion(ByVal lista As Janus.Windows.GridEX.GridEX, ByVal tabla As DataTable, ByVal nombreCampo As String, ByVal codigo As String)
+        Try
+            tabla.DefaultView.Sort = nombreCampo
+            lista.FirstRow = dtDatos.DefaultView.Find(codigo)
+            lista.Row = dtDatos.DefaultView.Find(codigo)
+        Catch ex As Exception
+            MsgBox("ERROR [ROW_POSS]: " + ex.Message, MsgBoxStyle.Critical)
+        End Try
+    End Sub
+    Private Sub Initialize_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Dim estilo As New Estilo
+        estilo.cargaEstiloGrid_Bucadores(dgvDatos)
+        state_Search = False
+        llenarCombos()
+        If toBlank(CodRub) <> "" Then
+            cmbCodRub.Value = CodRub
+        End If
+        state_Search = True
+        listaDatos()
+        Me.Text = "Buscar Mercadería en almacén " + Chr(34) + oMaestro.MostrarDesLoc(IdLocacion) + Chr(34)
+    End Sub
+    Private Sub FinallyObjects_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            oLocacionMercaderiaService.Close()
+            oMaestro.Close()
+        Catch ex As Exception
+            MsgBox("ERROR [FINALLY]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub enableOpciones()
+        If dgvDatos.RowCount < 1 Then
+            miSeleccionar.Enabled = False
+        Else
+            miSeleccionar.Enabled = True
+        End If
+    End Sub
+    Private Function getRowTodos(ByVal data As DataTable)
+        Dim fila As DataRow = data.NewRow
+        Try
+            fila(0) = ""
+        Catch ex As Exception
+            fila(0) = 0
+        End Try
+        fila(1) = "(Todos)"
+        Return fila
+    End Function
+
+    '====================================================================================================================
+    '============================================ TASK'S METHOD =========================================================
+    '====================================================================================================================
+    Private Sub Seleccionar()
+        Try
+            codigo = dgvDatos.CurrentRow.Cells("CodMer").Text
+            descripcion = dgvDatos.CurrentRow.Cells("DesMer1").Text
+            precio = dgvDatos.CurrentRow.Cells("DeaMer").Text
+            descuento = 0.0
+            costo_dolares = dgvDatos.CurrentRow.Cells("CosDol").Text
+            costo_soles = dgvDatos.CurrentRow.Cells("CosSol").Text
+            stock = toNumber(dgvDatos.CurrentRow.Cells("Stock").Text)
+            Me.DialogResult = Windows.Forms.DialogResult.OK
+            Me.Close()
+        Catch ex As Exception
+            MsgBox("ERROR [BUSC-001]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub listaDatos()
+        Try
+            If state_Search = True Then
+                Dim registro As New LocacionMercaderiaService.LocacionMercaderia
+                Dim mercaderia As New LocacionMercaderiaService.Mercaderia
+                Dim locacion As New LocacionMercaderiaService.Locacion
+                Dim rubro As New LocacionMercaderiaService.Rubro
+                Dim clase As New LocacionMercaderiaService.ClaseMerca
+
+                locacion.IdLocacion = toNumber(IdLocacion)
+                registro.Locacion = locacion
+                mercaderia.CodMer = toBlank(txtCodMer.Text)
+                rubro.CodRub = toBlank(cmbCodRub.Value)
+                mercaderia.Rubro = rubro
+                clase.IdClase = toNumber(cmbIdClase.Value)
+                mercaderia.ClaseMerca = clase
+                registro.Mercaderia = mercaderia
+
+                dtDatos = oLocacionMercaderiaService.Filtrar(registro).Tables(0)
+                dgvDatos.SetDataBinding(dtDatos, 0)
+
+                sslTotal.Text = "Registros : " + dgvDatos.RowCount.ToString
+                enableOpciones()
+
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [BUSC-002]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Function ValidaCodigoSeleccionado() As Boolean
+        Try
+            If dgvDatos.RowCount < 1 Then
+                MsgBox("Lista de registros esta vacío, verificar...!!!", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf dgvDatos.CurrentRow.RowIndex < 0 Then
+                MsgBox("Seleccione un registro ...!!!", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf dgvDatos.CurrentRow.Cells("CodMer").Text = Nothing Then
+                MsgBox("Registro Vacío", MsgBoxStyle.Information, "Información")
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [BUSC-003]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+    Private Sub llenarCombos()
+        Try
+            '======================================= CLASES ================================================
+            dtClases = oMaestro.MostrarClaseMerca.Tables(0)
+            dtClases.Rows.InsertAt(getRowTodos(dtClases), 0)
+            cmbIdClase.DataSource = dtClases
+            cmbIdClase.DropDownList.DataMember = dtClases.Columns("NomClas").ToString
+            cmbIdClase.DropDownList.DisplayMember = dtClases.Columns("NomClas").ToString
+            cmbIdClase.DropDownList.ValueMember = dtClases.Columns("IdClase").ToString
+            cmbIdClase.DropDownList.Columns(0).DataMember = dtClases.Columns("IdClase").ToString
+            cmbIdClase.DropDownList.Columns(1).DataMember = dtClases.Columns("NomClas").ToString
+            cmbIdClase.SelectedIndex = 0
+            dtClases = Nothing
+            '======================================= RUBROS ================================================
+            dtRubros = oMaestro.MostrarRubros.Tables(0)
+            dtRubros.Rows.InsertAt(getRowTodos(dtRubros), 0)
+            cmbCodRub.DataSource = dtRubros
+            cmbCodRub.DropDownList.DataMember = dtRubros.Columns("DesRub").ToString
+            cmbCodRub.DropDownList.DisplayMember = dtRubros.Columns("DesRub").ToString
+            cmbCodRub.DropDownList.ValueMember = dtRubros.Columns("CodRub").ToString
+            cmbCodRub.DropDownList.Columns(0).DataMember = dtRubros.Columns("CodRub").ToString
+            cmbCodRub.DropDownList.Columns(1).DataMember = dtRubros.Columns("DesRub").ToString
+            cmbCodRub.SelectedIndex = 4
+            dtRubros = Nothing
+        Catch ex As Exception
+            MsgBox("ERROR [BUSC-004]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+
+    '====================================================================================================================
+    '============================================ INTERFACE'S METHOD ====================================================
+    '====================================================================================================================
+    Private Sub dgvDatos_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles dgvDatos.DoubleClick
+        If ValidaCodigoSeleccionado() Then
+            Seleccionar()
+        End If
+    End Sub
+    Private Sub btnBuscar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBuscar.Click
+        listaDatos()
+    End Sub
+    Private Sub miSeleccionar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miSeleccionar.Click
+        If ValidaCodigoSeleccionado() Then
+            Seleccionar()
+        End If
+    End Sub
+    Private Sub miActualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miActualizar.Click
+        Dim codigo As String = ""
+        If dgvDatos.RowCount > 0 Then
+            codigo = dgvDatos.CurrentRow.Cells("CodMer").Text
+        End If
+        dtDatos = Nothing
+        listaDatos()
+        If dgvDatos.RowCount > 0 And codigo.Trim.Length > 0 Then
+            RowPossesion(dgvDatos, dtDatos, "CodMer", codigo)
+        End If
+    End Sub
+    Private Sub EjecutaCombos_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles _
+                      cmbCodRub.ValueChanged _
+                    , cmbIdClase.ValueChanged
+        listaDatos()
+    End Sub
+
+    Private Sub miNinguno_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miNinguno.Click
+        codigo = Nothing
+        descripcion = Nothing
+        precio = 0.0
+        stock = 0
+        Me.DialogResult = Windows.Forms.DialogResult.OK
+        Me.Close()
+    End Sub
+End Class

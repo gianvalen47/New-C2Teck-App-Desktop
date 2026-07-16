@@ -1,0 +1,812 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="TablasPersonalService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ITablasPersonalService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ITablasPersonalService_InsertarEquipoMarcacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarEquipoMarcacion" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_InsertarEquipoMarcacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarEquipoMarcacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_InsertarEquipoMarcacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ActualizarEquipoMarcacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarEquipoMarcacion" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ActualizarEquipoMarcacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarEquipoMarcacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ActualizarEquipoMarcacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BorrarEquipoMarcacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarEquipoMarcacion" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BorrarEquipoMarcacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarEquipoMarcacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BorrarEquipoMarcacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ObtenerEquipoMarcacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEquipoMarcacion" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ObtenerEquipoMarcacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerEquipoMarcacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ObtenerEquipoMarcacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_MostrarEquipoMarcacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEquipoMarcacion" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_MostrarEquipoMarcacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEquipoMarcacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_MostrarEquipoMarcacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_InsertarMotivoFaltas_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMotivoFaltas" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_InsertarMotivoFaltas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMotivoFaltasResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_InsertarMotivoFaltas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ActualizarMotivoFaltas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMotivoFaltas" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ActualizarMotivoFaltas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMotivoFaltasResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ActualizarMotivoFaltas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BorrarMotivoFaltas_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarMotivoFaltas" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BorrarMotivoFaltas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarMotivoFaltasResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BorrarMotivoFaltas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ObtenerMotivoFaltas_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerMotivoFaltas" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ObtenerMotivoFaltas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerMotivoFaltasResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ObtenerMotivoFaltas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BuscarMotivoFaltas_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarMotivoFaltas" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BuscarMotivoFaltas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarMotivoFaltasResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BuscarMotivoFaltas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_FiltrarMotivoFaltas_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarMotivoFaltas" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_FiltrarMotivoFaltas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarMotivoFaltasResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_FiltrarMotivoFaltas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_MostrarTipoHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_MostrarTipoHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_MostrarTipoHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ObtenerTipoHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTipoHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ObtenerTipoHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTipoHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ObtenerTipoHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_InsertarTipoHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTipoHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_InsertarTipoHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarTipoHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_InsertarTipoHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ActualizarTipoHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTipoHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ActualizarTipoHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTipoHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ActualizarTipoHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BorrarTipoHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarTipoHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BorrarTipoHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarTipoHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BorrarTipoHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_FiltrarTipoHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarTipoHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_FiltrarTipoHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarTipoHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_FiltrarTipoHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_InsertarUbicacionEquipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarUbicacionEquipo" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_InsertarUbicacionEquipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarUbicacionEquipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_InsertarUbicacionEquipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ActualizarUbicacionEquipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarUbicacionEquipo" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ActualizarUbicacionEquipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarUbicacionEquipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ActualizarUbicacionEquipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BorrarUbicacionEquipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarUbicacionEquipo" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BorrarUbicacionEquipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarUbicacionEquipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BorrarUbicacionEquipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ObtenerUbicacionEquipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerUbicacionEquipo" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ObtenerUbicacionEquipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerUbicacionEquipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ObtenerUbicacionEquipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_MostrarUbicacionEquipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUbicacionEquipo" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_MostrarUbicacionEquipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarUbicacionEquipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_MostrarUbicacionEquipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BuscarUbicacionEquipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUbicacionEquipo" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BuscarUbicacionEquipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUbicacionEquipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BuscarUbicacionEquipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_MostrarLectoresEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLectoresEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_MostrarLectoresEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLectoresEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_MostrarLectoresEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_InsertarLectorEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarLectorEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_InsertarLectorEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarLectorEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_InsertarLectorEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ActualizarLectorEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarLectorEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ActualizarLectorEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarLectorEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ActualizarLectorEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BorrarLectorEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarLectorEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BorrarLectorEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarLectorEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_BorrarLectorEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ObtenerLectorEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerLectorEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ObtenerLectorEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerLectorEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_ObtenerLectorEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q28:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_MostrarTipoSuspension_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoSuspension" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_MostrarTipoSuspension_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoSuspensionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITablasPersonalService_MostrarTipoSuspension_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q29:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="ITablasPersonalService">
+    <wsdl:operation name="InsertarEquipoMarcacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/InsertarEquipoMarcacion" message="tns:ITablasPersonalService_InsertarEquipoMarcacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/InsertarEquipoMarcacionResponse" message="tns:ITablasPersonalService_InsertarEquipoMarcacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_InsertarEquipoMarcacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarEquipoMarcacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/ActualizarEquipoMarcacion" message="tns:ITablasPersonalService_ActualizarEquipoMarcacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/ActualizarEquipoMarcacionResponse" message="tns:ITablasPersonalService_ActualizarEquipoMarcacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_ActualizarEquipoMarcacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarEquipoMarcacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/BorrarEquipoMarcacion" message="tns:ITablasPersonalService_BorrarEquipoMarcacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/BorrarEquipoMarcacionResponse" message="tns:ITablasPersonalService_BorrarEquipoMarcacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_BorrarEquipoMarcacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEquipoMarcacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/ObtenerEquipoMarcacion" message="tns:ITablasPersonalService_ObtenerEquipoMarcacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/ObtenerEquipoMarcacionResponse" message="tns:ITablasPersonalService_ObtenerEquipoMarcacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_ObtenerEquipoMarcacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEquipoMarcacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/MostrarEquipoMarcacion" message="tns:ITablasPersonalService_MostrarEquipoMarcacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/MostrarEquipoMarcacionResponse" message="tns:ITablasPersonalService_MostrarEquipoMarcacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_MostrarEquipoMarcacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMotivoFaltas">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/InsertarMotivoFaltas" message="tns:ITablasPersonalService_InsertarMotivoFaltas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/InsertarMotivoFaltasResponse" message="tns:ITablasPersonalService_InsertarMotivoFaltas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_InsertarMotivoFaltas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMotivoFaltas">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/ActualizarMotivoFaltas" message="tns:ITablasPersonalService_ActualizarMotivoFaltas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/ActualizarMotivoFaltasResponse" message="tns:ITablasPersonalService_ActualizarMotivoFaltas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_ActualizarMotivoFaltas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarMotivoFaltas">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/BorrarMotivoFaltas" message="tns:ITablasPersonalService_BorrarMotivoFaltas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/BorrarMotivoFaltasResponse" message="tns:ITablasPersonalService_BorrarMotivoFaltas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_BorrarMotivoFaltas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMotivoFaltas">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/ObtenerMotivoFaltas" message="tns:ITablasPersonalService_ObtenerMotivoFaltas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/ObtenerMotivoFaltasResponse" message="tns:ITablasPersonalService_ObtenerMotivoFaltas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_ObtenerMotivoFaltas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarMotivoFaltas">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/BuscarMotivoFaltas" message="tns:ITablasPersonalService_BuscarMotivoFaltas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/BuscarMotivoFaltasResponse" message="tns:ITablasPersonalService_BuscarMotivoFaltas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_BuscarMotivoFaltas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarMotivoFaltas">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/FiltrarMotivoFaltas" message="tns:ITablasPersonalService_FiltrarMotivoFaltas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/FiltrarMotivoFaltasResponse" message="tns:ITablasPersonalService_FiltrarMotivoFaltas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_FiltrarMotivoFaltas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/MostrarTipoHoraExtra" message="tns:ITablasPersonalService_MostrarTipoHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/MostrarTipoHoraExtraResponse" message="tns:ITablasPersonalService_MostrarTipoHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_MostrarTipoHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTipoHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/ObtenerTipoHoraExtra" message="tns:ITablasPersonalService_ObtenerTipoHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/ObtenerTipoHoraExtraResponse" message="tns:ITablasPersonalService_ObtenerTipoHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_ObtenerTipoHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTipoHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/InsertarTipoHoraExtra" message="tns:ITablasPersonalService_InsertarTipoHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/InsertarTipoHoraExtraResponse" message="tns:ITablasPersonalService_InsertarTipoHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_InsertarTipoHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTipoHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/ActualizarTipoHoraExtra" message="tns:ITablasPersonalService_ActualizarTipoHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/ActualizarTipoHoraExtraResponse" message="tns:ITablasPersonalService_ActualizarTipoHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_ActualizarTipoHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarTipoHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/BorrarTipoHoraExtra" message="tns:ITablasPersonalService_BorrarTipoHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/BorrarTipoHoraExtraResponse" message="tns:ITablasPersonalService_BorrarTipoHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_BorrarTipoHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarTipoHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/FiltrarTipoHoraExtra" message="tns:ITablasPersonalService_FiltrarTipoHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/FiltrarTipoHoraExtraResponse" message="tns:ITablasPersonalService_FiltrarTipoHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_FiltrarTipoHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarUbicacionEquipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/InsertarUbicacionEquipo" message="tns:ITablasPersonalService_InsertarUbicacionEquipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/InsertarUbicacionEquipoResponse" message="tns:ITablasPersonalService_InsertarUbicacionEquipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_InsertarUbicacionEquipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarUbicacionEquipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/ActualizarUbicacionEquipo" message="tns:ITablasPersonalService_ActualizarUbicacionEquipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/ActualizarUbicacionEquipoResponse" message="tns:ITablasPersonalService_ActualizarUbicacionEquipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_ActualizarUbicacionEquipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarUbicacionEquipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/BorrarUbicacionEquipo" message="tns:ITablasPersonalService_BorrarUbicacionEquipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/BorrarUbicacionEquipoResponse" message="tns:ITablasPersonalService_BorrarUbicacionEquipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_BorrarUbicacionEquipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUbicacionEquipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/ObtenerUbicacionEquipo" message="tns:ITablasPersonalService_ObtenerUbicacionEquipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/ObtenerUbicacionEquipoResponse" message="tns:ITablasPersonalService_ObtenerUbicacionEquipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_ObtenerUbicacionEquipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUbicacionEquipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/MostrarUbicacionEquipo" message="tns:ITablasPersonalService_MostrarUbicacionEquipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/MostrarUbicacionEquipoResponse" message="tns:ITablasPersonalService_MostrarUbicacionEquipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_MostrarUbicacionEquipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUbicacionEquipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/BuscarUbicacionEquipo" message="tns:ITablasPersonalService_BuscarUbicacionEquipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/BuscarUbicacionEquipoResponse" message="tns:ITablasPersonalService_BuscarUbicacionEquipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_BuscarUbicacionEquipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLectoresEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/MostrarLectoresEmpresa" message="tns:ITablasPersonalService_MostrarLectoresEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/MostrarLectoresEmpresaResponse" message="tns:ITablasPersonalService_MostrarLectoresEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_MostrarLectoresEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarLectorEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/InsertarLectorEmpresa" message="tns:ITablasPersonalService_InsertarLectorEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/InsertarLectorEmpresaResponse" message="tns:ITablasPersonalService_InsertarLectorEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_InsertarLectorEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarLectorEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/ActualizarLectorEmpresa" message="tns:ITablasPersonalService_ActualizarLectorEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/ActualizarLectorEmpresaResponse" message="tns:ITablasPersonalService_ActualizarLectorEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_ActualizarLectorEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarLectorEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/BorrarLectorEmpresa" message="tns:ITablasPersonalService_BorrarLectorEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/BorrarLectorEmpresaResponse" message="tns:ITablasPersonalService_BorrarLectorEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_BorrarLectorEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerLectorEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/ObtenerLectorEmpresa" message="tns:ITablasPersonalService_ObtenerLectorEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/ObtenerLectorEmpresaResponse" message="tns:ITablasPersonalService_ObtenerLectorEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_ObtenerLectorEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoSuspension">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITablasPersonalService/MostrarTipoSuspension" message="tns:ITablasPersonalService_MostrarTipoSuspension_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITablasPersonalService/MostrarTipoSuspensionResponse" message="tns:ITablasPersonalService_MostrarTipoSuspension_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ITablasPersonalService_MostrarTipoSuspension_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ITablasPersonalService" type="tns:ITablasPersonalService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ITablasPersonalService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="InsertarEquipoMarcacion">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/InsertarEquipoMarcacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarEquipoMarcacion">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/ActualizarEquipoMarcacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarEquipoMarcacion">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/BorrarEquipoMarcacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerEquipoMarcacion">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/ObtenerEquipoMarcacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEquipoMarcacion">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/MostrarEquipoMarcacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMotivoFaltas">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/InsertarMotivoFaltas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMotivoFaltas">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/ActualizarMotivoFaltas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarMotivoFaltas">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/BorrarMotivoFaltas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMotivoFaltas">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/ObtenerMotivoFaltas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarMotivoFaltas">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/BuscarMotivoFaltas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarMotivoFaltas">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/FiltrarMotivoFaltas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/MostrarTipoHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTipoHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/ObtenerTipoHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarTipoHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/InsertarTipoHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTipoHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/ActualizarTipoHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarTipoHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/BorrarTipoHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarTipoHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/FiltrarTipoHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarUbicacionEquipo">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/InsertarUbicacionEquipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarUbicacionEquipo">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/ActualizarUbicacionEquipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarUbicacionEquipo">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/BorrarUbicacionEquipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUbicacionEquipo">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/ObtenerUbicacionEquipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarUbicacionEquipo">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/MostrarUbicacionEquipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUbicacionEquipo">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/BuscarUbicacionEquipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLectoresEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/MostrarLectoresEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarLectorEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/InsertarLectorEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarLectorEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/ActualizarLectorEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarLectorEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/BorrarLectorEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerLectorEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/ObtenerLectorEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoSuspension">
+      <soap12:operation soapAction="http://tempuri.org/ITablasPersonalService/MostrarTipoSuspension" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TablasPersonalService">
+    <wsdl:port name="NetTcpBinding_ITablasPersonalService" binding="tns:NetTcpBinding_ITablasPersonalService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/TablasPersonalService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/TablasPersonalService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

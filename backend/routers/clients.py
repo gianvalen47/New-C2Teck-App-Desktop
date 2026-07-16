@@ -1,0 +1,101 @@
+"""
+API routers for clients
+"""
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+import uuid
+from datetime import datetime
+
+from config import SessionLocal
+from models import ClientModel
+from schemas import ClientCreate, ClientRead, ClientUpdate
+
+router = APIRouter(prefix="/clients", tags=["Clients"])
+
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+@router.get("", response_model=list[ClientRead])
+def list_clients(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    """List all clients"""
+    clients = db.query(ClientModel).offset(skip).limit(limit).all()
+    return clients
+
+
+@router.get("/{client_id}", response_model=ClientRead)
+def get_client(client_id: str, db: Session = Depends(get_db)):
+    """Get a specific client"""
+    client = db.query(ClientModel).filter(ClientModel.id == client_id).first()
+    if not client:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Client {client_id} not found"
+        )
+    return client
+
+
+@router.post("", response_model=ClientRead)
+def create_client(client: ClientCreate, db: Session = Depends(get_db)):
+    """Create a new client"""
+    # Check if RUC already exists
+    if client.ruc:
+        existing = db.query(ClientModel).filter(ClientModel.ruc == client.ruc).first()
+        if existing:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Client with RUC {client.ruc} already exists"
+            )
+    
+    db_client = ClientModel(
+        id=str(uuid.uuid4()),
+        name=client.name,
+        ruc=client.ruc,
+        address=client.address,
+        phone=client.phone,
+        email=client.email
+    )
+    db.add(db_client)
+    db.commit()
+    db.refresh(db_client)
+    return db_client
+
+
+@router.put("/{client_id}", response_model=ClientRead)
+def update_client(client_id: str, client: ClientUpdate, db: Session = Depends(get_db)):
+    """Update a client"""
+    db_client = db.query(ClientModel).filter(ClientModel.id == client_id).first()
+    if not db_client:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Client {client_id} not found"
+        )
+    
+    update_data = client.dict(exclude_unset=True)
+    for key, value in update_data.items():
+        setattr(db_client, key, value)
+    
+    db.add(db_client)
+    db.commit()
+    db.refresh(db_client)
+    return db_client
+
+
+@router.delete("/{client_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_client(client_id: str, db: Session = Depends(get_db)):
+    """Delete a client (soft delete - mark as inactive)"""
+    db_client = db.query(ClientModel).filter(ClientModel.id == client_id).first()
+    if not db_client:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Client {client_id} not found"
+        )
+    
+    db_client.active = 0
+    db.add(db_client)
+    db.commit()

@@ -1,0 +1,385 @@
+﻿Public Class frmTransferenciasInterna
+
+    Public state_button As Boolean              'True: Modificar    False: nuevo
+    Public type_process As String               'update     insert      delete
+    Private oMaestroService As New MaestroService.MaestroClient
+    Private oDocumentoTransitoService As New DocumentoTransitoService.DocumentoTransitoServiceClient
+    Private oDocumentoTransitoDetService As New DocumentoTransitoDetService.DocumentoTransitoDetServiceClient
+    Private dtDatos As DataTable
+    '====================================================================================================================
+    '============================================ PARAMETROS LOCALES ====================================================
+    '====================================================================================================================
+    'Public IdTransferencia As Integer
+    Public IdTransito As Integer
+
+    Private dtAlmacenes As DataTable
+    Private dtTipoDocumentos As DataTable
+    Private dtTipoMovimientos As DataTable
+    Private dtMonedas As DataTable
+    Private dtAreas As DataTable
+    Private dtMotivos As DataTable
+
+    '====================================================================================================================
+    '============================================ CONTROL'S METHOD ======================================================
+    '====================================================================================================================
+    Private Sub SendFocus_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                               txtNumDoc.KeyPress _
+                             , txtUsuRec.KeyPress _
+                             , txtObservacion.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            SendKeys.Send("{TAB}")
+        End If
+    End Sub
+    Private Sub Initialize_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Dim estilo As New Estilo
+        estilo.cargaEstiloGridExt(dgvDatos)
+        Me.CancelButton = Me.btnCancelar
+
+        ObtenerRegistro()
+        listaDatos()
+        dgvDatos.AllowEdit = Janus.Windows.GridEX.InheritableBoolean.True
+        dgvDatos.RootTable.Columns(1).EditType = Janus.Windows.GridEX.EditType.NoEdit
+        dgvDatos.RootTable.Columns(2).EditType = Janus.Windows.GridEX.EditType.NoEdit
+        dgvDatos.RootTable.Columns(3).EditType = Janus.Windows.GridEX.EditType.NoEdit
+        dgvDatos.RootTable.Columns(4).EditType = Janus.Windows.GridEX.EditType.TextBox
+        dgvDatos.RootTable.Columns(5).EditType = Janus.Windows.GridEX.EditType.NoEdit
+        dgvDatos.RootTable.Columns(6).EditType = Janus.Windows.GridEX.EditType.NoEdit
+        dgvDatos.RootTable.Columns(7).EditType = Janus.Windows.GridEX.EditType.NoEdit
+
+        'Aactiva o desactiva los botones o la modificación de las cantidades de recepción
+        stateButton()
+
+    End Sub
+    Private Sub FinallyObjects_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            If isClosed(oMaestroService) = False Then
+                oMaestroService.Close()
+            End If
+            If isClosed(oDocumentoTransitoService) = False Then
+                oDocumentoTransitoService.Close()
+            End If
+            If isClosed(oDocumentoTransitoDetService) = False Then
+                oDocumentoTransitoDetService.Close()
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [FINALLY]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub setColor_BlankCajaTexto(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles _
+                           txtNumDoc.KeyUp _
+                           , txtUsuRec.KeyUp
+        Try
+            Dim campo As New Object
+            If sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.EditBox" Then
+                campo = New Janus.Windows.GridEX.EditControls.EditBox
+            ElseIf sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.NumericEditBox" Then
+                campo = New Janus.Windows.GridEX.EditControls.NumericEditBox
+            ElseIf sender.GetType.ToString = "System.Windows.Forms.TextBox" Then
+                campo = New TextBox
+            End If
+            campo = sender
+            If campo.readonly = False Then
+                If campo.Text.Trim.Length > 0 Then
+                    campo.BackColor = Color.White
+                Else
+                    campo.BackColor = Color.Red
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+    Private Sub RowPossesion(ByVal lista As Janus.Windows.GridEX.GridEX, ByVal tabla As DataTable, ByVal nombreCampo As String, ByVal codigo As String)
+        Try
+            tabla.DefaultView.Sort = nombreCampo
+            lista.FirstRow = dtDatos.DefaultView.Find(codigo)
+            lista.Row = dtDatos.DefaultView.Find(codigo)
+        Catch ex As Exception
+            MsgBox("ERROR [ROW_POSS]: " + ex.Message, MsgBoxStyle.Critical)
+        End Try
+    End Sub
+    Private Function getTotal(ByVal columna As String) As Double
+        Dim total As Double = 0
+        For i As Integer = 0 To dtDatos.Rows.Count - 1
+            Dim r As DataRow
+            r = dtDatos.Rows.Item(i)
+            total = total + CDbl(r.Item(columna))
+        Next
+        Return total
+    End Function
+    Private Sub seleccionaTodos(ByVal condicion As Boolean)
+        For i As Integer = 0 To dtDatos.Rows.Count - 1
+            If condicion = True Then
+                dgvDatos.GetRow(i).Cells("CanRec").Text = dgvDatos.GetRow(i).Cells("CanMer").Text
+                ModificarItem(i)
+            Else
+                dgvDatos.GetRow(i).Cells("CanRec").Text = 0
+                oDocumentoTransitoDetService.Actualizar(dgvDatos.GetRow(i).Cells(0).Text, 0)
+            End If
+        Next
+    End Sub
+    Private Sub stateButton()
+        If state_button Then
+            btnTransferirDocumento.Enabled = False
+            btnEliminar.Enabled = False
+            dgvDatos.RootTable.Columns(4).EditType = Janus.Windows.GridEX.EditType.NoEdit
+            miSeleccionarTodo.Enabled = False
+            miSeterCEROTodos.Enabled = False
+        Else
+            btnTransferirDocumento.Enabled = True
+            btnEliminar.Enabled = True
+            dgvDatos.RootTable.Columns(4).EditType = Janus.Windows.GridEX.EditType.TextBox
+            miSeleccionarTodo.Enabled = True
+            miSeterCEROTodos.Enabled = True
+        End If
+    End Sub
+
+    '====================================================================================================================
+    '============================================ TASK'S METHOD =========================================================
+    '====================================================================================================================
+    Private Function ValidaCampos() As Boolean
+        Try
+            If toNumber(IdTransito) = 0 Then
+                MsgBox("Debe Ingresar el número del cocumento.", MsgBoxStyle.Information, "Información")
+                txtNumDoc.Focus()
+                Return False
+            ElseIf toBlank(txtFecIng.Text) = "" Then
+                MsgBox("Debe la fecha de recepción.", MsgBoxStyle.Information, "Información")
+                txtFecIng.Focus()
+                Return False
+            ElseIf toBlank(txtUsuRec.Text) = "" Then
+                MsgBox("Debe de ingresar por quien fue decepcionado.", MsgBoxStyle.Information, "Información")
+                txtUsuRec.BackColor = Color.Red
+                txtUsuRec.Focus()
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-001]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+    Private Sub Modificar(ByVal registro As DocumentoTransitoService.DocumentoTransito)
+        Try
+            Dim estado_process As Boolean
+            estado_process = oDocumentoTransitoService.Actualizar(registro)
+            type_process = "update"
+            If estado_process = True Then
+                Timer1.Interval = 3000
+                Timer1.Start()
+                ToolTip1.IsBalloon = True
+                ToolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
+                ToolTip1.Show("Se grabaron los datos correctamente...!", lblRecibidoPor)
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-002]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub Eliminar()
+        Try
+            Dim estado_process As Boolean
+            estado_process = oDocumentoTransitoService.Borrar(IdTransito)
+            type_process = "delete"
+            If estado_process = True Then
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-004]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub ModificarItem(ByVal fila As Integer)
+        Try
+            If dgvDatos.GetRow(fila).Cells("CanRec").Text > 0 Then
+                oDocumentoTransitoDetService.Actualizar(dgvDatos.GetRow(fila).Cells(0).Text, dgvDatos.GetRow(fila).Cells("CanRec").Text)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-0010]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+        Me.ToolTip1.IsBalloon = False
+        Me.ToolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.None
+        ToolTip1.Hide(lblRecibidoPor)
+        Timer1.Stop()
+    End Sub
+    Private Sub ObtenerRegistro()
+        Try
+            Dim registro As DocumentoTransitoService.DocumentoTransito
+            registro = oDocumentoTransitoService.MostrarPorId(toNumber(IdTransito))
+
+            IdTransito = registro.IdTransito
+
+            If registro.Tipo = 1 Then
+                lblAlmacen.Text = registro.Locacion.Almacen.DesAlm + " - " + registro.Locacion.Oficina.DesOfi
+                txtNumDoc.Text = toBlank(registro.Transferencia.NumDoc)
+                lblFecha.Text = toBlank(registro.Transferencia.FecDoc)
+                lblCliente.Text = toBlank(registro.Transferencia.Cliente.DesCli)
+                lblMoneda.Text = toBlank(registro.Transferencia.Moneda.DesMon)
+                lblJOb.Text = toBlank(registro.Transferencia.NumJob)
+                Me.Text = "Transito de Transferencia interna Nº " + txtNumDoc.Text
+                gbDatos.Text = "Transferencia Interna"
+            ElseIf registro.Tipo = 2 Then
+                lblAlmacen.Text = registro.Locacion.Almacen.DesAlm + " - " + registro.Locacion.Oficina.DesOfi
+                txtNumDoc.Text = toBlank(registro.GuiaRemision.NumDoc)
+                lblFecha.Text = toBlank(registro.GuiaRemision.FecDoc)
+                lblCliente.Text = toBlank(registro.GuiaRemision.Cliente.DesCli)
+                lblMoneda.Text = toBlank(registro.GuiaRemision.Moneda.DesMon)
+                lblJOb.Text = toBlank(registro.GuiaRemision.NumJob)
+                Me.Text = "Transito de Guía de Remisión Nº " + txtNumDoc.Text
+                gbDatos.Text = "Guía de Remisión"
+            End If
+
+            If oDocumentoTransitoService.ValidarIngreso(IdTransito) = True Then
+                Dim documento As DocumentoTransitoService.DocumentoTransito
+                documento = oDocumentoTransitoService.MostrarPorId(IdTransito)
+                txtFecIng.Text = documento.FecIng
+                txtUsuRec.Text = documento.UsuRec
+                txtObservacion.Text = documento.Observacion
+                state_button = documento.Recibido
+            Else
+                state_button = False
+            End If
+
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-003]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub listaDatos()
+        Try
+            dtDatos = oDocumentoTransitoDetService.Mostrar(IdTransito).Tables(0)
+            dgvDatos.SetDataBinding(dtDatos, 0)
+
+            txtTotalPrecio.Text = getTotal("PreMer")
+            txtTotalDescuento.Text = getTotal("DscMer")
+            txtTotalNeto.Text = getTotal("TotalFila")
+
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-004]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Function ValidaCodigoSeleccionado() As Boolean
+        Try
+            If dgvDatos.RowCount < 1 Then
+                MsgBox("Lista de registros esta vacío, verificar...!!!", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf dgvDatos.CurrentRow.RowIndex < 0 Then
+                MsgBox("Seleccione un registro ...!!!", MsgBoxStyle.Information, "Información")
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-05]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+    Private Sub actualizar()
+        Try
+            Dim codigo As String = ""
+            If dgvDatos.RowCount > 0 Then
+
+                If IsDBNull(dgvDatos.CurrentRow.Cells(0).Text) = False Then
+                    codigo = dgvDatos.CurrentRow.Cells("CodMer").Text
+                End If
+            End If
+            dtDatos = Nothing
+            listaDatos()
+            If dgvDatos.RowCount > 0 And codigo.Trim.Length > 0 Then
+                RowPossesion(dgvDatos, dtDatos, "CodMer", codigo)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-06]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Function actualizaListaDetalle() As Integer
+        Dim nroItem As Integer = 0
+        For i As Integer = 0 To dtDatos.Rows.Count - 1
+            dtDatos.Rows(i).Item(6) = dgvDatos.GetRow(i).Cells("CanRec").Text
+            If toNumber(dtDatos.Rows(i).Item(6)) > 0 Then
+                nroItem = nroItem + 1
+            End If
+        Next
+        Return nroItem
+    End Function
+
+    '====================================================================================================================
+    '============================================ INTERFACE'S METHOD ====================================================
+    '====================================================================================================================
+    Private Sub btnCancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancelar.Click
+        Me.DialogResult = Windows.Forms.DialogResult.Cancel
+        Me.Close()
+    End Sub
+    Private Sub miActualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miActualizar.Click
+        actualizar()
+    End Sub
+    Private Sub miSeleccionarTodo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miSeleccionarTodo.Click
+        If dgvDatos.RowCount > 0 Then
+            seleccionaTodos(True)
+        Else
+            MsgBox(gbDatos.Text + ", no tienes ningún ítem como detalle, verificar…!!!", MsgBoxStyle.Information, "Información")
+        End If
+    End Sub
+    Private Sub miSeterCEROTodos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miSeterCEROTodos.Click
+        If dgvDatos.RowCount > 0 Then
+            seleccionaTodos(False)
+        Else
+            MsgBox(gbDatos.Text + ", no tienes ningún ítem como detalle, verificar…!!!", MsgBoxStyle.Information, "Información")
+        End If
+    End Sub
+    Private Sub btnTransferirDocumento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnTransferirDocumento.Click
+        If dgvDatos.RowCount > 0 Then
+            If MsgBox("¿Está seguro que desea Transladar el documento Nº " + txtNumDoc.Text + " ?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes Then
+                If oDocumentoTransitoService.ValidarIngreso(IdTransito) Then
+                    If actualizaListaDetalle() > 0 Then
+                        oDocumentoTransitoService.TrasladarDocumento(IdTransito, Session.sUsuario.cod_usuario)
+                        state_button = toBoolean(oMaestroService.MostrarDato("SIGECOM.Almacen.DocumentoTransito", "Recibido", "IdTransito", IdTransito))
+                        stateButton()
+                        type_process = "update"
+                        listaDatos()
+                        MsgBox("Se translado el documento correctamente de Nº " + txtNumDoc.Text + ".", MsgBoxStyle.Information)
+                    Else
+                        MsgBox("Debe recepcionar por lo menos un item.", MsgBoxStyle.Exclamation)
+                    End If
+                Else
+                    MsgBox("Debe de registrar la fecha y quien recepciono el documento.", MsgBoxStyle.Exclamation)
+                End If
+            End If
+        Else
+            MsgBox(gbDatos.Text + ", no tienes ningún ítem como detalle, verificar…!!!", MsgBoxStyle.Information, "Información")
+        End If
+    End Sub
+    Private Sub btnGuardar_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGuardar.Click
+        If ValidaCampos() Then
+            Dim registro As New DocumentoTransitoService.DocumentoTransito
+            registro.IdTransito = IdTransito
+            registro.FecIng = txtFecIng.Text
+            registro.UsuRec = toNull(txtUsuRec.Text)
+            registro.Observacion = toNull(txtObservacion.Text)
+            registro.CodUsu = toNull(Session.sUsuario.cod_usuario)
+
+            Modificar(registro)
+        End If
+    End Sub
+    Private Sub btnEliminar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnEliminar.Click
+        If MsgBox("¿Está seguro que desea eliminar el registro?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes Then
+            If toNumber(IdTransito) <> 0 Then
+                Eliminar()
+            Else
+                MsgBox("Debe Ingresar el Código...!!!", MsgBoxStyle.Information, "Información")
+            End If
+        End If
+    End Sub
+    Private Sub dgvDatos_EditModeChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles dgvDatos.EditModeChanged
+        Try
+            ModificarItem(dgvDatos.CurrentRow.RowIndex)
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-0010]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+
+
+End Class

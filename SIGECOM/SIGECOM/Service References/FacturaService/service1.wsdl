@@ -1,0 +1,1593 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="FacturaService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IFacturaService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IFacturaService_MostrarSerieFacturarJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieFacturarJob" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarSerieFacturarJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieFacturarJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarSerieFacturarJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarMoneda_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMoneda" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarMoneda_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarMonedaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarMoneda_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_BuscarGuia_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGuia" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_BuscarGuia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGuiaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_BuscarGuia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_FacturarJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:FacturarJob" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_FacturarJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FacturarJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_FacturarJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarEstadoInicial_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarEstadoInicial" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarEstadoInicial_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarEstadoInicialResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarEstadoInicial_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarTipo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipo" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarTipo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarTipo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ImprimirDigital_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirDigital" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ImprimirDigital_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirDigitalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ImprimirDigital_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ComunicacionBajaDigital_InputMessage">
+    <wsdl:part name="parameters" element="tns:ComunicacionBajaDigital" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ComunicacionBajaDigital_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ComunicacionBajaDigitalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ComunicacionBajaDigital_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarTipoAfectacionIgv_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoAfectacionIgv" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarTipoAfectacionIgv_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoAfectacionIgvResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarTipoAfectacionIgv_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_SugerirNumeroFactura_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirNumeroFactura" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_SugerirNumeroFactura_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirNumeroFacturaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_SugerirNumeroFactura_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_GenerarAsiento_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarAsiento" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_GenerarAsiento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarAsientoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_GenerarAsiento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ObtenerAplicaIgv_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAplicaIgv" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ObtenerAplicaIgv_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAplicaIgvResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ObtenerAplicaIgv_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_InsertarCuota_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCuota" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_InsertarCuota_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCuotaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_InsertarCuota_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarCuota_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCuota" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarCuota_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCuotaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarCuota_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_BorrarCuota_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCuota" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_BorrarCuota_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCuotaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_BorrarCuota_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarCuota_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCuota" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarCuota_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCuotaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarCuota_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ObtenerCuota_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCuota" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ObtenerCuota_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCuotaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ObtenerCuota_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ObtenerTotalCuota_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTotalCuota" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ObtenerTotalCuota_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerTotalCuotaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ObtenerTotalCuota_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ObtenerContabilizado_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerContabilizado" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ObtenerContabilizado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerContabilizadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ObtenerContabilizado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_SugerirNumeroCuota_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirNumeroCuota" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_SugerirNumeroCuota_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirNumeroCuotaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_SugerirNumeroCuota_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarTipoDetraccion_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDetraccion" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarTipoDetraccion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDetraccionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarTipoDetraccion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarSerieFacturas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieFacturas" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarSerieFacturas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieFacturasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarSerieFacturas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_GenerarNotaCredito_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarNotaCredito" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_GenerarNotaCredito_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarNotaCreditoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_GenerarNotaCredito_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorId" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Estado_InputMessage">
+    <wsdl:part name="parameters" element="tns:Estado" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Estado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EstadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Estado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarOrden_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOrden" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarOrden_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarOrdenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarOrden_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q28:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarCotizacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCotizacion" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarCotizacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCotizacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarCotizacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q29:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q30:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q31:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q32:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Anular_InputMessage">
+    <wsdl:part name="parameters" element="tns:Anular" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Anular_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AnularResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Anular_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q33:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q34:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_SugerirNumero_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirNumero" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_SugerirNumero_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirNumeroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_SugerirNumero_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q35="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q35:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarObservacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarObservacion" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarObservacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarObservacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarObservacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q36="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q36:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_EnviarCreditos_InputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarCreditos" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_EnviarCreditos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarCreditosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_EnviarCreditos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q37="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q37:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarSugeridoPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSugeridoPorId" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarSugeridoPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSugeridoPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarSugeridoPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q38="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q38:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_BuscarSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarSugerido" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_BuscarSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_BuscarSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q39="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q39:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_InsertarSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarSugerido" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_InsertarSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_InsertarSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q40="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q40:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarSugerido" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q41="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q41:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_BorrarSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarSugerido" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_BorrarSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_BorrarSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q42="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q42:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarIdSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIdSugerido" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarIdSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIdSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarIdSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q43="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q43:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_PermisoFactura_InputMessage">
+    <wsdl:part name="parameters" element="tns:PermisoFactura" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_PermisoFactura_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PermisoFacturaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_PermisoFactura_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q44="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q44:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarGuiasPorJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarGuiasPorJob" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarGuiasPorJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarGuiasPorJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarGuiasPorJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q45="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q45:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_TipMov_InputMessage">
+    <wsdl:part name="parameters" element="tns:TipMov" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_TipMov_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TipMovResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_TipMov_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q46="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q46:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q47="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q47:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarEstadoImpreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarEstadoImpreso" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarEstadoImpreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarEstadoImpresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarEstadoImpreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q48="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q48:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarLiquidacionJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLiquidacionJob" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarLiquidacionJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLiquidacionJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarLiquidacionJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q49="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q49:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarVendedor_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarVendedor" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarVendedor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarVendedorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarVendedor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q50="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q50:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarSerieFacturaBoleta_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieFacturaBoleta" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarSerieFacturaBoleta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieFacturaBoletaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_MostrarSerieFacturaBoleta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q51="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q51:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_FacturarGuias_InputMessage">
+    <wsdl:part name="parameters" element="tns:FacturarGuias" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_FacturarGuias_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FacturarGuiasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_FacturarGuias_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q52="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q52:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_BuscarDocumentoVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarDocumentoVenta" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_BuscarDocumentoVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarDocumentoVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_BuscarDocumentoVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q53="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q53:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_AnulacionConsulta_InputMessage">
+    <wsdl:part name="parameters" element="tns:AnulacionConsulta" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_AnulacionConsulta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AnulacionConsultaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_AnulacionConsulta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q54="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q54:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ConsultarSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarSugerido" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ConsultarSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ConsultarSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q55="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q55:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_VincularGuia_InputMessage">
+    <wsdl:part name="parameters" element="tns:VincularGuia" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_VincularGuia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VincularGuiaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_VincularGuia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q56="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q56:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_FacturarGrupoGuias_InputMessage">
+    <wsdl:part name="parameters" element="tns:FacturarGrupoGuias" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_FacturarGrupoGuias_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FacturarGrupoGuiasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_FacturarGrupoGuias_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q57="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q57:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ConsultarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ConsultarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ConsultarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q58="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q58:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarLocacionCliente_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarLocacionCliente" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarLocacionCliente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarLocacionClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaService_ActualizarLocacionCliente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q59="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q59:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IFacturaService">
+    <wsdl:operation name="MostrarSerieFacturarJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/MostrarSerieFacturarJob" message="tns:IFacturaService_MostrarSerieFacturarJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/MostrarSerieFacturarJobResponse" message="tns:IFacturaService_MostrarSerieFacturarJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_MostrarSerieFacturarJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMoneda">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/ActualizarMoneda" message="tns:IFacturaService_ActualizarMoneda_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ActualizarMonedaResponse" message="tns:IFacturaService_ActualizarMoneda_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_ActualizarMoneda_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGuia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/BuscarGuia" message="tns:IFacturaService_BuscarGuia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/BuscarGuiaResponse" message="tns:IFacturaService_BuscarGuia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_BuscarGuia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FacturarJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/FacturarJob" message="tns:IFacturaService_FacturarJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/FacturarJobResponse" message="tns:IFacturaService_FacturarJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_FacturarJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarEstadoInicial">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/ActualizarEstadoInicial" message="tns:IFacturaService_ActualizarEstadoInicial_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ActualizarEstadoInicialResponse" message="tns:IFacturaService_ActualizarEstadoInicial_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_ActualizarEstadoInicial_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/MostrarTipo" message="tns:IFacturaService_MostrarTipo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/MostrarTipoResponse" message="tns:IFacturaService_MostrarTipo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_MostrarTipo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirDigital">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/ImprimirDigital" message="tns:IFacturaService_ImprimirDigital_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ImprimirDigitalResponse" message="tns:IFacturaService_ImprimirDigital_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_ImprimirDigital_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ComunicacionBajaDigital">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/ComunicacionBajaDigital" message="tns:IFacturaService_ComunicacionBajaDigital_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ComunicacionBajaDigitalResponse" message="tns:IFacturaService_ComunicacionBajaDigital_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_ComunicacionBajaDigital_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoAfectacionIgv">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/MostrarTipoAfectacionIgv" message="tns:IFacturaService_MostrarTipoAfectacionIgv_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/MostrarTipoAfectacionIgvResponse" message="tns:IFacturaService_MostrarTipoAfectacionIgv_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_MostrarTipoAfectacionIgv_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirNumeroFactura">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/SugerirNumeroFactura" message="tns:IFacturaService_SugerirNumeroFactura_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/SugerirNumeroFacturaResponse" message="tns:IFacturaService_SugerirNumeroFactura_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_SugerirNumeroFactura_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarAsiento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/GenerarAsiento" message="tns:IFacturaService_GenerarAsiento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/GenerarAsientoResponse" message="tns:IFacturaService_GenerarAsiento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_GenerarAsiento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerAplicaIgv">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/ObtenerAplicaIgv" message="tns:IFacturaService_ObtenerAplicaIgv_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ObtenerAplicaIgvResponse" message="tns:IFacturaService_ObtenerAplicaIgv_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_ObtenerAplicaIgv_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCuota">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/InsertarCuota" message="tns:IFacturaService_InsertarCuota_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/InsertarCuotaResponse" message="tns:IFacturaService_InsertarCuota_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_InsertarCuota_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCuota">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/ActualizarCuota" message="tns:IFacturaService_ActualizarCuota_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ActualizarCuotaResponse" message="tns:IFacturaService_ActualizarCuota_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_ActualizarCuota_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCuota">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/BorrarCuota" message="tns:IFacturaService_BorrarCuota_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/BorrarCuotaResponse" message="tns:IFacturaService_BorrarCuota_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_BorrarCuota_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCuota">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/MostrarCuota" message="tns:IFacturaService_MostrarCuota_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/MostrarCuotaResponse" message="tns:IFacturaService_MostrarCuota_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_MostrarCuota_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCuota">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/ObtenerCuota" message="tns:IFacturaService_ObtenerCuota_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ObtenerCuotaResponse" message="tns:IFacturaService_ObtenerCuota_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_ObtenerCuota_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTotalCuota">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/ObtenerTotalCuota" message="tns:IFacturaService_ObtenerTotalCuota_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ObtenerTotalCuotaResponse" message="tns:IFacturaService_ObtenerTotalCuota_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_ObtenerTotalCuota_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerContabilizado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/ObtenerContabilizado" message="tns:IFacturaService_ObtenerContabilizado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ObtenerContabilizadoResponse" message="tns:IFacturaService_ObtenerContabilizado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_ObtenerContabilizado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirNumeroCuota">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/SugerirNumeroCuota" message="tns:IFacturaService_SugerirNumeroCuota_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/SugerirNumeroCuotaResponse" message="tns:IFacturaService_SugerirNumeroCuota_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_SugerirNumeroCuota_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDetraccion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/MostrarTipoDetraccion" message="tns:IFacturaService_MostrarTipoDetraccion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/MostrarTipoDetraccionResponse" message="tns:IFacturaService_MostrarTipoDetraccion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_MostrarTipoDetraccion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieFacturas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/MostrarSerieFacturas" message="tns:IFacturaService_MostrarSerieFacturas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/MostrarSerieFacturasResponse" message="tns:IFacturaService_MostrarSerieFacturas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_MostrarSerieFacturas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarNotaCredito">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/GenerarNotaCredito" message="tns:IFacturaService_GenerarNotaCredito_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/GenerarNotaCreditoResponse" message="tns:IFacturaService_GenerarNotaCredito_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_GenerarNotaCredito_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/MostrarPorId" message="tns:IFacturaService_MostrarPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/MostrarPorIdResponse" message="tns:IFacturaService_MostrarPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_MostrarPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/Buscar" message="tns:IFacturaService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/BuscarResponse" message="tns:IFacturaService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/Filtrar" message="tns:IFacturaService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/FiltrarResponse" message="tns:IFacturaService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/Estado" message="tns:IFacturaService_Estado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/EstadoResponse" message="tns:IFacturaService_Estado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_Estado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOrden">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/MostrarOrden" message="tns:IFacturaService_MostrarOrden_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/MostrarOrdenResponse" message="tns:IFacturaService_MostrarOrden_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_MostrarOrden_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCotizacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/MostrarCotizacion" message="tns:IFacturaService_MostrarCotizacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/MostrarCotizacionResponse" message="tns:IFacturaService_MostrarCotizacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_MostrarCotizacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/Insertar" message="tns:IFacturaService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/InsertarResponse" message="tns:IFacturaService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/Actualizar" message="tns:IFacturaService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ActualizarResponse" message="tns:IFacturaService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/Borrar" message="tns:IFacturaService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/BorrarResponse" message="tns:IFacturaService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Anular">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/Anular" message="tns:IFacturaService_Anular_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/AnularResponse" message="tns:IFacturaService_Anular_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_Anular_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/MostrarEstados" message="tns:IFacturaService_MostrarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/MostrarEstadosResponse" message="tns:IFacturaService_MostrarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_MostrarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirNumero">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/SugerirNumero" message="tns:IFacturaService_SugerirNumero_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/SugerirNumeroResponse" message="tns:IFacturaService_SugerirNumero_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_SugerirNumero_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarObservacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/ActualizarObservacion" message="tns:IFacturaService_ActualizarObservacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ActualizarObservacionResponse" message="tns:IFacturaService_ActualizarObservacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_ActualizarObservacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EnviarCreditos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/EnviarCreditos" message="tns:IFacturaService_EnviarCreditos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/EnviarCreditosResponse" message="tns:IFacturaService_EnviarCreditos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_EnviarCreditos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSugeridoPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/MostrarSugeridoPorId" message="tns:IFacturaService_MostrarSugeridoPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/MostrarSugeridoPorIdResponse" message="tns:IFacturaService_MostrarSugeridoPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_MostrarSugeridoPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/BuscarSugerido" message="tns:IFacturaService_BuscarSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/BuscarSugeridoResponse" message="tns:IFacturaService_BuscarSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_BuscarSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/InsertarSugerido" message="tns:IFacturaService_InsertarSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/InsertarSugeridoResponse" message="tns:IFacturaService_InsertarSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_InsertarSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/ActualizarSugerido" message="tns:IFacturaService_ActualizarSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ActualizarSugeridoResponse" message="tns:IFacturaService_ActualizarSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_ActualizarSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/BorrarSugerido" message="tns:IFacturaService_BorrarSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/BorrarSugeridoResponse" message="tns:IFacturaService_BorrarSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_BorrarSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIdSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/MostrarIdSugerido" message="tns:IFacturaService_MostrarIdSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/MostrarIdSugeridoResponse" message="tns:IFacturaService_MostrarIdSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_MostrarIdSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PermisoFactura">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/PermisoFactura" message="tns:IFacturaService_PermisoFactura_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/PermisoFacturaResponse" message="tns:IFacturaService_PermisoFactura_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_PermisoFactura_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarGuiasPorJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/MostrarGuiasPorJob" message="tns:IFacturaService_MostrarGuiasPorJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/MostrarGuiasPorJobResponse" message="tns:IFacturaService_MostrarGuiasPorJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_MostrarGuiasPorJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TipMov">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/TipMov" message="tns:IFacturaService_TipMov_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/TipMovResponse" message="tns:IFacturaService_TipMov_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_TipMov_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/Imprimir" message="tns:IFacturaService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ImprimirResponse" message="tns:IFacturaService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarEstadoImpreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/ActualizarEstadoImpreso" message="tns:IFacturaService_ActualizarEstadoImpreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ActualizarEstadoImpresoResponse" message="tns:IFacturaService_ActualizarEstadoImpreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_ActualizarEstadoImpreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLiquidacionJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/MostrarLiquidacionJob" message="tns:IFacturaService_MostrarLiquidacionJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/MostrarLiquidacionJobResponse" message="tns:IFacturaService_MostrarLiquidacionJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_MostrarLiquidacionJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarVendedor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/ActualizarVendedor" message="tns:IFacturaService_ActualizarVendedor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ActualizarVendedorResponse" message="tns:IFacturaService_ActualizarVendedor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_ActualizarVendedor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieFacturaBoleta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/MostrarSerieFacturaBoleta" message="tns:IFacturaService_MostrarSerieFacturaBoleta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/MostrarSerieFacturaBoletaResponse" message="tns:IFacturaService_MostrarSerieFacturaBoleta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_MostrarSerieFacturaBoleta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FacturarGuias">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/FacturarGuias" message="tns:IFacturaService_FacturarGuias_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/FacturarGuiasResponse" message="tns:IFacturaService_FacturarGuias_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_FacturarGuias_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarDocumentoVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/BuscarDocumentoVenta" message="tns:IFacturaService_BuscarDocumentoVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/BuscarDocumentoVentaResponse" message="tns:IFacturaService_BuscarDocumentoVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_BuscarDocumentoVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AnulacionConsulta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/AnulacionConsulta" message="tns:IFacturaService_AnulacionConsulta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/AnulacionConsultaResponse" message="tns:IFacturaService_AnulacionConsulta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_AnulacionConsulta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/ConsultarSugerido" message="tns:IFacturaService_ConsultarSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ConsultarSugeridoResponse" message="tns:IFacturaService_ConsultarSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_ConsultarSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VincularGuia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/VincularGuia" message="tns:IFacturaService_VincularGuia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/VincularGuiaResponse" message="tns:IFacturaService_VincularGuia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_VincularGuia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FacturarGrupoGuias">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/FacturarGrupoGuias" message="tns:IFacturaService_FacturarGrupoGuias_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/FacturarGrupoGuiasResponse" message="tns:IFacturaService_FacturarGrupoGuias_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_FacturarGrupoGuias_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/ConsultarEstados" message="tns:IFacturaService_ConsultarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ConsultarEstadosResponse" message="tns:IFacturaService_ConsultarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_ConsultarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarLocacionCliente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaService/ActualizarLocacionCliente" message="tns:IFacturaService_ActualizarLocacionCliente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaService/ActualizarLocacionClienteResponse" message="tns:IFacturaService_ActualizarLocacionCliente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaService_ActualizarLocacionCliente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IFacturaService" type="tns:IFacturaService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IFacturaService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="MostrarSerieFacturarJob">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/MostrarSerieFacturarJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarMoneda">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/ActualizarMoneda" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGuia">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/BuscarGuia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FacturarJob">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/FacturarJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarEstadoInicial">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/ActualizarEstadoInicial" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipo">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/MostrarTipo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImprimirDigital">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/ImprimirDigital" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ComunicacionBajaDigital">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/ComunicacionBajaDigital" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoAfectacionIgv">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/MostrarTipoAfectacionIgv" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirNumeroFactura">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/SugerirNumeroFactura" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarAsiento">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/GenerarAsiento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerAplicaIgv">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/ObtenerAplicaIgv" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCuota">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/InsertarCuota" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCuota">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/ActualizarCuota" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCuota">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/BorrarCuota" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCuota">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/MostrarCuota" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCuota">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/ObtenerCuota" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTotalCuota">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/ObtenerTotalCuota" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerContabilizado">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/ObtenerContabilizado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirNumeroCuota">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/SugerirNumeroCuota" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDetraccion">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/MostrarTipoDetraccion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieFacturas">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/MostrarSerieFacturas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarNotaCredito">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/GenerarNotaCredito" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/MostrarPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/Estado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarOrden">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/MostrarOrden" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCotizacion">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/MostrarCotizacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Anular">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/Anular" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/MostrarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirNumero">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/SugerirNumero" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarObservacion">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/ActualizarObservacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="EnviarCreditos">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/EnviarCreditos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSugeridoPorId">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/MostrarSugeridoPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarSugerido">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/BuscarSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarSugerido">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/InsertarSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarSugerido">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/ActualizarSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarSugerido">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/BorrarSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIdSugerido">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/MostrarIdSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PermisoFactura">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/PermisoFactura" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarGuiasPorJob">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/MostrarGuiasPorJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="TipMov">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/TipMov" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarEstadoImpreso">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/ActualizarEstadoImpreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLiquidacionJob">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/MostrarLiquidacionJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarVendedor">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/ActualizarVendedor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieFacturaBoleta">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/MostrarSerieFacturaBoleta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FacturarGuias">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/FacturarGuias" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarDocumentoVenta">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/BuscarDocumentoVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AnulacionConsulta">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/AnulacionConsulta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarSugerido">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/ConsultarSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="VincularGuia">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/VincularGuia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FacturarGrupoGuias">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/FacturarGrupoGuias" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/ConsultarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarLocacionCliente">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaService/ActualizarLocacionCliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="FacturaService">
+    <wsdl:port name="NetTcpBinding_IFacturaService" binding="tns:NetTcpBinding_IFacturaService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/FacturaService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/FacturaService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

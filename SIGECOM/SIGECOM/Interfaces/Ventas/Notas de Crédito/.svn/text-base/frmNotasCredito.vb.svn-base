@@ -1,0 +1,404 @@
+﻿Public Class frmNotasCredito
+    Private oMaestroService As New MaestroService.MaestroClient
+    Private oNotaCreditoService As New NotaCreditoService.NotaCreditoServiceClient
+    Private dtDatos As DataTable
+    Private state_Search As Boolean
+    '====================================================================================================================
+    '============================================ LOCAL PARAMETERS ======================================================
+    '====================================================================================================================
+    Private IdCliente As Integer
+
+    Private dtOficinas As DataTable
+    Private dtAlmacenes As DataTable
+    Private dtClientes As DataTable
+    Private dtEstados As DataTable
+    Private dtMeses As DataTable
+    Private dtTipos As DataTable
+
+    '====================================================================================================================
+    '============================================ CONTROL'S METHOD ======================================================
+    '====================================================================================================================
+    Private Sub SendFocus_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                         txtNumDoc.KeyPress _
+                      , cmbOficinas.KeyPress _
+                      , cmbIdLocacion.KeyPress _
+                      , cmbEstado.KeyPress _
+                      , txtanio.KeyPress _
+                      , txtIdCliente.KeyPress _
+                      , cmbMes.KeyPress _
+                      , cmbTipFac.KeyPress _
+                      , cmbIdSerieDoc.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            SendKeys.Send("{TAB}")
+            listaDatos()
+        End If
+    End Sub
+    Private Sub Salir_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                         txtNumDoc.KeyPress _
+                      , cmbOficinas.KeyPress _
+                      , cmbIdLocacion.KeyPress _
+                      , cmbEstado.KeyPress _
+                      , txtanio.KeyPress _
+                      , txtIdCliente.KeyPress _
+                      , cmbMes.KeyPress _
+                      , btnBuscar.KeyPress _
+                      , dgvDatos.KeyPress _
+                      , cmbTipFac.KeyPress _
+                      , cmbIdSerieDoc.KeyPress
+        If e.KeyChar = ChrW(Keys.Escape) Then
+            Me.Dispose()
+        End If
+    End Sub
+    Private Sub OnlyNumber_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtNumDoc.KeyPress
+        If Not Char.IsNumber(e.KeyChar) And (e.KeyChar = ChrW(Keys.Back)) = False And (e.KeyChar = ChrW(Keys.Enter)) = False Then
+            e.KeyChar = Chr(0)
+        End If
+    End Sub
+    Private Sub RowPossesion(ByVal lista As Janus.Windows.GridEX.GridEX, ByVal tabla As DataTable, ByVal nombreCampo As String, ByVal codigo As String)
+        Try
+            tabla.DefaultView.Sort = nombreCampo
+            lista.FirstRow = dtDatos.DefaultView.Find(codigo)
+            lista.Row = dtDatos.DefaultView.Find(codigo)
+        Catch ex As Exception
+            MsgBox("ERROR [ROW_POSS]: " + ex.Message, MsgBoxStyle.Critical)
+        End Try
+    End Sub
+    Private Sub Initialize_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Dim estilo As New Estilo
+        estilo.cargaEstiloGridExtAlternating(dgvDatos)
+        state_Search = False
+        llenarCombos()
+        txtanio.Value = Today.Year
+        cmbMes.Value = Today.Month
+        IdCliente = 0
+        txtIdCliente.Text = "(Todos)"
+        cmbEstado.Value = "GN"
+        state_Search = True
+        listaDatos()
+    End Sub
+    Private Sub FinallyObjects_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            If isClosed(oMaestroService) = False Then
+                oMaestroService.Close()
+            End If
+            If isClosed(oNotaCreditoService) = False Then
+                oNotaCreditoService.Close()
+            End If
+            If isClosed(oMaestroService) = False Then
+                oMaestroService.Close()
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [FINALLY]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub limpiaOpcionesBusqueda(ByVal type_process As String, ByVal numero As String)
+        If type_process = "update" Then
+            cmbEstado.Value = ""
+            cmbTipFac.SelectedIndex = 0
+            txtNumDoc.Text = numero
+        ElseIf type_process = "insert" Then
+            cmbEstado.Value = "GN"
+            cmbTipFac.SelectedIndex = 0
+            txtNumDoc.Text = numero
+        End If
+    End Sub
+    Private Sub enableOpciones()
+        If dgvDatos.RowCount < 1 Then
+            miMostrar.Enabled = False
+            miEliminar.Enabled = False
+            biMostrar.Enabled = False
+            biEliminar.Enabled = False
+        Else
+            miMostrar.Enabled = True
+            miEliminar.Enabled = True
+            biMostrar.Enabled = True
+            biEliminar.Enabled = True
+        End If
+    End Sub
+    Private Function getRowTodos(ByVal data As DataTable)
+        Dim fila As DataRow = data.NewRow
+        Try
+            fila(0) = ""
+        Catch ex As Exception
+            fila(0) = 0
+        End Try
+        Try
+            fila(1) = "(Todos)"
+        Catch ex As Exception
+        End Try
+        Try
+            fila(2) = "(Todos)"
+        Catch ex As Exception
+        End Try
+
+        Return fila
+    End Function
+    '====================================================================================================================
+    '============================================ TASK'S METHOD =========================================================
+    '====================================================================================================================
+    Private Sub mostrar()
+        Try
+            Dim frm As New frmNotaCredito
+            frm.state_button = True
+            frm.IdNota = dgvDatos.CurrentRow.Cells("IdNota").Text
+
+            If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+                dtDatos = Nothing
+                If frm.type_process = "update" Then
+                    limpiaOpcionesBusqueda("update", frm.txtNumDoc.Text)
+                    listaDatos()
+                    RowPossesion(dgvDatos, dtDatos, "IdNota", frm.IdNota)
+                Else
+                    listaDatos()
+                    MsgBox("Se elimino el registro correctamente...!!!", MsgBoxStyle.Information)
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [LIST-001]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub eliminar()
+        Try
+            cmOpciones.Visible = False
+            If MsgBox("Está seguro de ELIMINAR la Nota Nº " + dgvDatos.CurrentRow.Cells("NumDoc").Text.ToString, MsgBoxStyle.YesNo, "Información") = MsgBoxResult.Yes Then
+                Dim estado_process As Boolean
+
+                estado_process = oNotaCreditoService.Borrar(dgvDatos.CurrentRow.Cells("IdNota").Text, Session.sUsuario.cod_usuario)
+                If estado_process = True Then
+                    dtDatos = Nothing
+                    listaDatos()
+                    MsgBox("Se elimino correctamente el registro...!!!", MsgBoxStyle.Information)
+                Else
+                    MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [LIST-002]:" + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub listaDatos()
+        Try
+            If state_Search = True Then
+                dtDatos = oNotaCreditoService.Filtrar(txtanio.Value _
+                                                     , cmbMes.Value _
+                                                     , IIf(toNumber(cmbIdLocacion.Value) = 0, -1, cmbIdLocacion.Value) _
+                                                     , cmbIdSerieDoc.Value _
+                                                     , toNumber(IdCliente) _
+                                                     , cmbEstado.Value _
+                                                     , toNumber(txtNumDoc.Text) _
+                                                     , toBlank(cmbTipFac.Value)).Tables(0)
+                dgvDatos.SetDataBinding(dtDatos, 0)
+
+                sslTotal.Text = "Registros : " + dgvDatos.RowCount.ToString
+                enableOpciones()
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [LIST-003]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub Nuevo()
+        Try
+            Dim frm As New frmNotaCredito
+            frm.state_button = False
+            If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+                dtDatos = Nothing
+                limpiaOpcionesBusqueda("insert", frm.txtNumDoc.Text)
+                listaDatos()
+                If frm.type_process = "insert" Then
+                    RowPossesion(dgvDatos, dtDatos, "IdNota", frm.IdNota)
+                    mostrar()
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [LIST-004]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Function ValidaCodigoSeleccionado() As Boolean
+        Try
+            If dgvDatos.RowCount < 1 Then
+                MsgBox("Lista de registros esta vacío, verificar...!!!", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf dgvDatos.CurrentRow.RowIndex < 0 Then
+                MsgBox("Seleccione un registro ...!!!", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf dgvDatos.CurrentRow.Cells("IdNota").Text = Nothing Then
+                MsgBox("Registro Vacío", MsgBoxStyle.Information, "Información")
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [LIST-005]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+    Private Sub llenarCombos()
+        Try
+            '======================================= OFICINAS ================================================
+            dtOficinas = oMaestroService.MostrarOficinas.Tables(0)
+            cmbOficinas.DataSource = dtOficinas
+            cmbOficinas.DropDownList.DataMember = dtOficinas.Columns("DesOfi").ToString
+            cmbOficinas.DropDownList.DisplayMember = dtOficinas.Columns("DesOfi").ToString
+            cmbOficinas.DropDownList.ValueMember = dtOficinas.Columns("CodOfi").ToString
+            cmbOficinas.DropDownList.Columns(0).DataMember = dtOficinas.Columns("CodOfi").ToString
+            cmbOficinas.DropDownList.Columns(1).DataMember = dtOficinas.Columns("DesOfi").ToString
+            cmbOficinas.SelectedIndex = 0
+            dtOficinas = Nothing
+            '======================================= MESES ================================================
+            dtMeses = oMaestroService.MostrarMeses
+            dtMeses.Rows.InsertAt(getRowTodos(dtMeses), 0)
+            cmbMes.DataSource = dtMeses
+            cmbMes.DropDownList.DataMember = dtMeses.Columns("Descripcion").ToString
+            cmbMes.DropDownList.DisplayMember = dtMeses.Columns("Descripcion").ToString
+            cmbMes.DropDownList.ValueMember = dtMeses.Columns("Codigo").ToString
+            cmbMes.DropDownList.Columns(0).DataMember = dtMeses.Columns("Codigo").ToString
+            cmbMes.DropDownList.Columns(1).DataMember = dtMeses.Columns("Descripcion").ToString
+            cmbMes.SelectedIndex = 0
+            dtMeses = Nothing
+            '======================================= ESTADOS ================================================
+            dtEstados = oNotaCreditoService.MostrarEstados
+            dtEstados.Rows.InsertAt(getRowTodos(dtEstados), 0)
+            cmbEstado.DataSource = dtEstados
+            cmbEstado.DropDownList.DataMember = dtEstados.Columns("Descripcion").ToString
+            cmbEstado.DropDownList.DisplayMember = dtEstados.Columns("Descripcion").ToString
+            cmbEstado.DropDownList.ValueMember = dtEstados.Columns("Estado").ToString
+            cmbEstado.DropDownList.Columns(0).DataMember = dtEstados.Columns("Estado").ToString
+            cmbEstado.DropDownList.Columns(1).DataMember = dtEstados.Columns("Descripcion").ToString
+            cmbEstado.SelectedIndex = 0
+            dtEstados = Nothing
+            '======================================= TIPOS DE FACTURAS ================================================
+            dtTipos = New DataTable
+            dtTipos.Columns.Add(New DataColumn("codigo", Type.GetType("System.String")))
+            dtTipos.Columns.Add(New DataColumn("nombre", Type.GetType("System.String")))
+            dtTipos.Rows.Add(New Object() {"", "(Todos)"})
+            dtTipos.Rows.Add(New Object() {"1", "Crédito"})
+            dtTipos.Rows.Add(New Object() {"2", "Contado"})
+            dtTipos.Rows.Add(New Object() {"3", "Nota Cargo"})
+            dtTipos.Rows.Add(New Object() {"4", "Flete"})
+            dtTipos.Rows.Add(New Object() {"5", "Embalaje"})
+
+            cmbTipFac.DataSource = dtTipos
+            cmbTipFac.DropDownList.DataMember = dtTipos.Columns("nombre").ToString
+            cmbTipFac.DropDownList.DisplayMember = dtTipos.Columns("nombre").ToString
+            cmbTipFac.DropDownList.ValueMember = dtTipos.Columns("codigo").ToString
+            cmbTipFac.DropDownList.Columns(0).DataMember = dtTipos.Columns("codigo").ToString
+            cmbTipFac.DropDownList.Columns(1).DataMember = dtTipos.Columns("nombre").ToString
+            cmbTipFac.SelectedIndex = 2
+            dtTipos = Nothing
+            '======================================= TIPOS DE DOCUMENTOS ================================================
+            dtEstados = oMaestroService.MostrarSerieDocumento(cmbIdLocacion.Value, 1, "").Tables(0)
+            dtEstados.Rows.InsertAt(getRowTodos(dtEstados), 0)
+            cmbIdSerieDoc.DataSource = dtEstados
+            cmbIdSerieDoc.DropDownList.DataMember = dtEstados.Columns("Descripcion").ToString
+            cmbIdSerieDoc.DropDownList.DisplayMember = dtEstados.Columns("Descripcion").ToString
+            cmbIdSerieDoc.DropDownList.ValueMember = dtEstados.Columns("IdSerieDoc").ToString
+            cmbIdSerieDoc.DropDownList.Columns(0).DataMember = dtEstados.Columns("IdSerieDoc").ToString
+            cmbIdSerieDoc.DropDownList.Columns(1).DataMember = dtEstados.Columns("Descripcion").ToString
+            cmbIdSerieDoc.SelectedIndex = 0
+            dtEstados = Nothing
+        Catch ex As Exception
+            MsgBox("ERROR [LIST-006]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    '====================================================================================================================
+    '============================================ INTERFACE'S METHOD ====================================================
+    '====================================================================================================================
+    Private Sub dgvDatos_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles dgvDatos.DoubleClick
+        If ValidaCodigoSeleccionado() Then
+            mostrar()
+        End If
+    End Sub
+    Private Sub btnBuscar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBuscar.Click
+        listaDatos()
+    End Sub
+    Private Sub biNuevo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles biNuevo.Click
+        Nuevo()
+    End Sub
+    Private Sub biMostrar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles biMostrar.Click
+        If ValidaCodigoSeleccionado() Then
+            mostrar()
+        End If
+    End Sub
+    Private Sub biEliminar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles biEliminar.Click
+        If ValidaCodigoSeleccionado() Then
+            eliminar()
+        End If
+    End Sub
+    Private Sub biSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles biSalir.Click
+        Me.Dispose()
+    End Sub
+    Private Sub miMuestra_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miMostrar.Click
+        If ValidaCodigoSeleccionado() Then
+            mostrar()
+        End If
+    End Sub
+    Private Sub miEliminar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miEliminar.Click
+        If ValidaCodigoSeleccionado() Then
+            eliminar()
+        End If
+    End Sub
+    Private Sub miActualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miActualizar.Click
+        Dim codigo As String = ""
+        If dgvDatos.RowCount > 0 Then
+            codigo = dgvDatos.CurrentRow.Cells("IdNota").Text
+        End If
+        dtDatos = Nothing
+        listaDatos()
+        If dgvDatos.RowCount > 0 And codigo.Trim.Length > 0 Then
+            RowPossesion(dgvDatos, dtDatos, "IdNota", codigo)
+        End If
+    End Sub
+    Private Sub miNuevo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miNuevo.Click
+        Nuevo()
+    End Sub
+    Private Sub EjecutaCombos_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles _
+                    cmbIdLocacion.ValueChanged _
+                  , cmbEstado.ValueChanged _
+                  , cmbMes.ValueChanged _
+                  , cmbTipFac.ValueChanged _
+                  , cmbIdSerieDoc.ValueChanged
+        listaDatos()
+    End Sub
+    Private Sub cmbOficinas_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbOficinas.ValueChanged
+        If toBlank(cmbOficinas.Value) <> "" Then
+            '======================================= ALMACENES ================================================
+            dtAlmacenes = oMaestroService.MostrarLocaciones(Session.sCodEmp, cmbOficinas.Value, Session.sUsuario.cod_usuario).Tables(0)
+            cmbIdLocacion.DataSource = dtAlmacenes
+            cmbIdLocacion.DropDownList.DataMember = dtAlmacenes.Columns("DesAlm").ToString
+            cmbIdLocacion.DropDownList.DisplayMember = dtAlmacenes.Columns("DesAlm").ToString
+            cmbIdLocacion.DropDownList.ValueMember = dtAlmacenes.Columns("IdLocacion").ToString
+            cmbIdLocacion.DropDownList.Columns(0).DataMember = dtAlmacenes.Columns("IdLocacion").ToString
+            cmbIdLocacion.DropDownList.Columns(1).DataMember = dtAlmacenes.Columns("DesAlm").ToString
+            If dtAlmacenes.Rows.Count > 0 Then
+                cmbIdLocacion.SelectedIndex = 0
+            Else
+                cmbIdLocacion.Value = ""
+            End If
+            dtAlmacenes = Nothing
+        Else
+            cmbIdLocacion.Value = ""
+        End If
+    End Sub
+    Private Sub txtFecIni_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        listaDatos()
+    End Sub
+    Private Sub txtFecFin_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        listaDatos()
+    End Sub
+    Private Sub txtanio_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtanio.Click
+        listaDatos()
+    End Sub
+    Private Sub txtIdCliente_ButtonClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtIdCliente.ButtonClick
+        Dim frm As New frmBuscarCliente
+        If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If toNull(frm.codigo) <> Nothing Then
+                txtIdCliente.Text = frm.descripcion
+                IdCliente = frm.codigo
+            Else
+                txtIdCliente.Text = "(Todos)"
+                IdCliente = 0
+            End If
+            listaDatos()
+        End If
+    End Sub
+End Class

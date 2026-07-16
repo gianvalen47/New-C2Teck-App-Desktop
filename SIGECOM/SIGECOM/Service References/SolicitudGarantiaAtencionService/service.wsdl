@@ -1,0 +1,422 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SolicitudGarantiaAtencionService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ISolicitudGarantiaAtencionService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_ObtenerRepuesto_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRepuesto" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_ObtenerRepuesto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRepuestoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_ObtenerRepuesto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_BuscarGuia_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGuia" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_BuscarGuia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGuiaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_BuscarGuia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_MostrarRepuestos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRepuestos" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_MostrarRepuestos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRepuestosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_MostrarRepuestos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_InsertarGuia_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarGuia" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_InsertarGuia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarGuiaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_InsertarGuia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_ActualizarRepuesto_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRepuesto" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_ActualizarRepuesto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRepuestoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_ActualizarRepuesto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_BorrarGuia_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarGuia" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_BorrarGuia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarGuiaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_BorrarGuia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Atender_InputMessage">
+    <wsdl:part name="parameters" element="tns:Atender" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Atender_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AtenderResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Atender_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Rechazar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Rechazar" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Rechazar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RechazarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_Rechazar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_ActualizarEstadoInicial_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarEstadoInicial" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_ActualizarEstadoInicial_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarEstadoInicialResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISolicitudGarantiaAtencionService_ActualizarEstadoInicial_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="ISolicitudGarantiaAtencionService">
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/Mostrar" message="tns:ISolicitudGarantiaAtencionService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/MostrarResponse" message="tns:ISolicitudGarantiaAtencionService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGarantiaAtencionService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/Obtener" message="tns:ISolicitudGarantiaAtencionService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/ObtenerResponse" message="tns:ISolicitudGarantiaAtencionService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGarantiaAtencionService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/Insertar" message="tns:ISolicitudGarantiaAtencionService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/InsertarResponse" message="tns:ISolicitudGarantiaAtencionService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGarantiaAtencionService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/Actualizar" message="tns:ISolicitudGarantiaAtencionService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/ActualizarResponse" message="tns:ISolicitudGarantiaAtencionService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGarantiaAtencionService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/Borrar" message="tns:ISolicitudGarantiaAtencionService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/BorrarResponse" message="tns:ISolicitudGarantiaAtencionService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGarantiaAtencionService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRepuesto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/ObtenerRepuesto" message="tns:ISolicitudGarantiaAtencionService_ObtenerRepuesto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/ObtenerRepuestoResponse" message="tns:ISolicitudGarantiaAtencionService_ObtenerRepuesto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGarantiaAtencionService_ObtenerRepuesto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGuia">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/BuscarGuia" message="tns:ISolicitudGarantiaAtencionService_BuscarGuia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/BuscarGuiaResponse" message="tns:ISolicitudGarantiaAtencionService_BuscarGuia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGarantiaAtencionService_BuscarGuia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRepuestos">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/MostrarRepuestos" message="tns:ISolicitudGarantiaAtencionService_MostrarRepuestos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/MostrarRepuestosResponse" message="tns:ISolicitudGarantiaAtencionService_MostrarRepuestos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGarantiaAtencionService_MostrarRepuestos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarGuia">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/InsertarGuia" message="tns:ISolicitudGarantiaAtencionService_InsertarGuia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/InsertarGuiaResponse" message="tns:ISolicitudGarantiaAtencionService_InsertarGuia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGarantiaAtencionService_InsertarGuia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRepuesto">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/ActualizarRepuesto" message="tns:ISolicitudGarantiaAtencionService_ActualizarRepuesto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/ActualizarRepuestoResponse" message="tns:ISolicitudGarantiaAtencionService_ActualizarRepuesto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGarantiaAtencionService_ActualizarRepuesto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarGuia">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/BorrarGuia" message="tns:ISolicitudGarantiaAtencionService_BorrarGuia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/BorrarGuiaResponse" message="tns:ISolicitudGarantiaAtencionService_BorrarGuia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGarantiaAtencionService_BorrarGuia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Atender">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/Atender" message="tns:ISolicitudGarantiaAtencionService_Atender_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/AtenderResponse" message="tns:ISolicitudGarantiaAtencionService_Atender_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGarantiaAtencionService_Atender_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Rechazar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/Rechazar" message="tns:ISolicitudGarantiaAtencionService_Rechazar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/RechazarResponse" message="tns:ISolicitudGarantiaAtencionService_Rechazar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGarantiaAtencionService_Rechazar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarEstadoInicial">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/ActualizarEstadoInicial" message="tns:ISolicitudGarantiaAtencionService_ActualizarEstadoInicial_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISolicitudGarantiaAtencionService/ActualizarEstadoInicialResponse" message="tns:ISolicitudGarantiaAtencionService_ActualizarEstadoInicial_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ISolicitudGarantiaAtencionService_ActualizarEstadoInicial_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ISolicitudGarantiaAtencionService" type="tns:ISolicitudGarantiaAtencionService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ISolicitudGarantiaAtencionService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGarantiaAtencionService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGarantiaAtencionService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGarantiaAtencionService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGarantiaAtencionService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGarantiaAtencionService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRepuesto">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGarantiaAtencionService/ObtenerRepuesto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGuia">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGarantiaAtencionService/BuscarGuia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRepuestos">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGarantiaAtencionService/MostrarRepuestos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarGuia">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGarantiaAtencionService/InsertarGuia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRepuesto">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGarantiaAtencionService/ActualizarRepuesto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarGuia">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGarantiaAtencionService/BorrarGuia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Atender">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGarantiaAtencionService/Atender" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Rechazar">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGarantiaAtencionService/Rechazar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarEstadoInicial">
+      <soap12:operation soapAction="http://tempuri.org/ISolicitudGarantiaAtencionService/ActualizarEstadoInicial" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SolicitudGarantiaAtencionService">
+    <wsdl:port name="NetTcpBinding_ISolicitudGarantiaAtencionService" binding="tns:NetTcpBinding_ISolicitudGarantiaAtencionService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/SolicitudGarantiaAtencionService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/SolicitudGarantiaAtencionService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

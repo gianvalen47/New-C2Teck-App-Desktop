@@ -1,0 +1,1722 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PlanillaSueldosDetService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IPlanillaSueldosDetService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerRubroDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRubroDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerRubroDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRubroDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerRubroDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_FiltrarRubroIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarRubroIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_FiltrarRubroIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarRubroIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_FiltrarRubroIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_FiltrarRubroDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarRubroDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_FiltrarRubroDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarRubroDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_FiltrarRubroDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerParametroHoraReal_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerParametroHoraReal" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerParametroHoraReal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerParametroHoraRealResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerParametroHoraReal_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarMasivo_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMasivo" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarMasivo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarMasivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarMasivo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ReprocesarIngresos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReprocesarIngresos" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ReprocesarIngresos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReprocesarIngresosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ReprocesarIngresos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ReprocesarDescuentos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReprocesarDescuentos" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ReprocesarDescuentos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReprocesarDescuentosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ReprocesarDescuentos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ReprocesarHorasExtras_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReprocesarHorasExtras" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ReprocesarHorasExtras_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReprocesarHorasExtrasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ReprocesarHorasExtras_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarEnvioCorreo_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarEnvioCorreo" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarEnvioCorreo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarEnvioCorreoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarEnvioCorreo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_FiltrarConceptoRemuneracion_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarConceptoRemuneracion" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_FiltrarConceptoRemuneracion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarConceptoRemuneracionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_FiltrarConceptoRemuneracion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarIngresoCTS_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIngresoCTS" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarIngresoCTS_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIngresoCTSResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarIngresoCTS_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerIngresoCTS_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIngresoCTS" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerIngresoCTS_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIngresoCTSResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerIngresoCTS_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarIngresoCTS_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarIngresoCTS" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarIngresoCTS_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarIngresoCTSResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarIngresoCTS_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarIngresoCTS_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarIngresoCTS" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarIngresoCTS_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarIngresoCTSResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarIngresoCTS_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarIngresoCTS_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarIngresoCTS" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarIngresoCTS_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarIngresoCTSResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarIngresoCTS_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarIngresoGrati_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIngresoGrati" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarIngresoGrati_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIngresoGratiResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarIngresoGrati_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerIngresoGrati_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIngresoGrati" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerIngresoGrati_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIngresoGratiResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerIngresoGrati_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarIngresoGrati_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarIngresoGrati" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarIngresoGrati_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarIngresoGratiResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarIngresoGrati_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarIngresoGrati_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarIngresoGrati" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarIngresoGrati_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarIngresoGratiResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarIngresoGrati_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarIngresoGrati_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarIngresoGrati" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarIngresoGrati_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarIngresoGratiResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarIngresoGrati_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarIngresoVaca_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIngresoVaca" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarIngresoVaca_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIngresoVacaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarIngresoVaca_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerIngresoVaca_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIngresoVaca" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerIngresoVaca_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIngresoVacaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerIngresoVaca_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarIngresoVaca_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarIngresoVaca" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarIngresoVaca_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarIngresoVacaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarIngresoVaca_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarIngresoVaca_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarIngresoVaca" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarIngresoVaca_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarIngresoVacaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarIngresoVaca_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q24:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarIngresoVaca_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarIngresoVaca" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarIngresoVaca_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarIngresoVacaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarIngresoVaca_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q25:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BuscarIngresoVaca_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarIngresoVaca" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BuscarIngresoVaca_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarIngresoVacaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BuscarIngresoVaca_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q26:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BuscarVacaciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarVacaciones" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BuscarVacaciones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarVacacionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BuscarVacaciones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q27:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarTipoVacaciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoVacaciones" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarTipoVacaciones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoVacacionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarTipoVacaciones_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q28:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q29:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q30:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q31:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q32:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q33:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q34:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q35="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q35:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q36="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q36:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q37="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q37:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q38="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q38:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q39="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q39:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BuscarIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BuscarIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BuscarIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q40="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q40:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q41="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q41:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BuscarDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BuscarDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BuscarDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q42="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q42:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q43="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q43:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q44="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q44:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q45="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q45:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q46="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q46:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarAportacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAportacion" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarAportacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarAportacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarAportacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q47="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q47:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q48="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q48:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BuscarHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BuscarHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BuscarHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q49="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q49:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q50="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q50:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q51="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q51:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q52="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q52:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q53="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q53:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarRubroIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarRubroIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarRubroIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q54="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q54:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarRubroDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarRubroDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarRubroDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q55="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q55:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarTipoHoraExtra_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoHoraExtra" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarTipoHoraExtra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoHoraExtraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarTipoHoraExtra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q56="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q56:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarRubroAportacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroAportacion" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarRubroAportacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroAportacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_MostrarRubroAportacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q57="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q57:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerRubroIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRubroIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerRubroIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRubroIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ObtenerRubroIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q58="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q58:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarRubroIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRubroIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarRubroIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRubroIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarRubroIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q59="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q59:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarRubroIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRubroIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarRubroIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRubroIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarRubroIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q60="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q60:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarRubroIngreso_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRubroIngreso" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarRubroIngreso_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRubroIngresoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarRubroIngreso_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q61="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q61:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarRubroDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRubroDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarRubroDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRubroDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_InsertarRubroDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q62="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q62:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarRubroDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRubroDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarRubroDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRubroDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_ActualizarRubroDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q63="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q63:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarRubroDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRubroDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarRubroDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRubroDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPlanillaSueldosDetService_BorrarRubroDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q64="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q64:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IPlanillaSueldosDetService">
+    <wsdl:operation name="ObtenerRubroDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerRubroDescuento" message="tns:IPlanillaSueldosDetService_ObtenerRubroDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerRubroDescuentoResponse" message="tns:IPlanillaSueldosDetService_ObtenerRubroDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ObtenerRubroDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarRubroIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/FiltrarRubroIngreso" message="tns:IPlanillaSueldosDetService_FiltrarRubroIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/FiltrarRubroIngresoResponse" message="tns:IPlanillaSueldosDetService_FiltrarRubroIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_FiltrarRubroIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarRubroDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/FiltrarRubroDescuento" message="tns:IPlanillaSueldosDetService_FiltrarRubroDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/FiltrarRubroDescuentoResponse" message="tns:IPlanillaSueldosDetService_FiltrarRubroDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_FiltrarRubroDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerParametroHoraReal">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerParametroHoraReal" message="tns:IPlanillaSueldosDetService_ObtenerParametroHoraReal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerParametroHoraRealResponse" message="tns:IPlanillaSueldosDetService_ObtenerParametroHoraReal_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ObtenerParametroHoraReal_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMasivo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarMasivo" message="tns:IPlanillaSueldosDetService_InsertarMasivo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarMasivoResponse" message="tns:IPlanillaSueldosDetService_InsertarMasivo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_InsertarMasivo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReprocesarIngresos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ReprocesarIngresos" message="tns:IPlanillaSueldosDetService_ReprocesarIngresos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ReprocesarIngresosResponse" message="tns:IPlanillaSueldosDetService_ReprocesarIngresos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ReprocesarIngresos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReprocesarDescuentos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ReprocesarDescuentos" message="tns:IPlanillaSueldosDetService_ReprocesarDescuentos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ReprocesarDescuentosResponse" message="tns:IPlanillaSueldosDetService_ReprocesarDescuentos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ReprocesarDescuentos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReprocesarHorasExtras">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ReprocesarHorasExtras" message="tns:IPlanillaSueldosDetService_ReprocesarHorasExtras_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ReprocesarHorasExtrasResponse" message="tns:IPlanillaSueldosDetService_ReprocesarHorasExtras_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ReprocesarHorasExtras_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarEnvioCorreo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarEnvioCorreo" message="tns:IPlanillaSueldosDetService_InsertarEnvioCorreo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarEnvioCorreoResponse" message="tns:IPlanillaSueldosDetService_InsertarEnvioCorreo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_InsertarEnvioCorreo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarConceptoRemuneracion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/FiltrarConceptoRemuneracion" message="tns:IPlanillaSueldosDetService_FiltrarConceptoRemuneracion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/FiltrarConceptoRemuneracionResponse" message="tns:IPlanillaSueldosDetService_FiltrarConceptoRemuneracion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_FiltrarConceptoRemuneracion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIngresoCTS">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarIngresoCTS" message="tns:IPlanillaSueldosDetService_MostrarIngresoCTS_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarIngresoCTSResponse" message="tns:IPlanillaSueldosDetService_MostrarIngresoCTS_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_MostrarIngresoCTS_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIngresoCTS">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerIngresoCTS" message="tns:IPlanillaSueldosDetService_ObtenerIngresoCTS_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerIngresoCTSResponse" message="tns:IPlanillaSueldosDetService_ObtenerIngresoCTS_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ObtenerIngresoCTS_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarIngresoCTS">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarIngresoCTS" message="tns:IPlanillaSueldosDetService_InsertarIngresoCTS_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarIngresoCTSResponse" message="tns:IPlanillaSueldosDetService_InsertarIngresoCTS_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_InsertarIngresoCTS_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarIngresoCTS">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarIngresoCTS" message="tns:IPlanillaSueldosDetService_ActualizarIngresoCTS_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarIngresoCTSResponse" message="tns:IPlanillaSueldosDetService_ActualizarIngresoCTS_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ActualizarIngresoCTS_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarIngresoCTS">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarIngresoCTS" message="tns:IPlanillaSueldosDetService_BorrarIngresoCTS_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarIngresoCTSResponse" message="tns:IPlanillaSueldosDetService_BorrarIngresoCTS_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_BorrarIngresoCTS_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIngresoGrati">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarIngresoGrati" message="tns:IPlanillaSueldosDetService_MostrarIngresoGrati_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarIngresoGratiResponse" message="tns:IPlanillaSueldosDetService_MostrarIngresoGrati_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_MostrarIngresoGrati_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIngresoGrati">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerIngresoGrati" message="tns:IPlanillaSueldosDetService_ObtenerIngresoGrati_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerIngresoGratiResponse" message="tns:IPlanillaSueldosDetService_ObtenerIngresoGrati_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ObtenerIngresoGrati_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarIngresoGrati">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarIngresoGrati" message="tns:IPlanillaSueldosDetService_InsertarIngresoGrati_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarIngresoGratiResponse" message="tns:IPlanillaSueldosDetService_InsertarIngresoGrati_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_InsertarIngresoGrati_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarIngresoGrati">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarIngresoGrati" message="tns:IPlanillaSueldosDetService_ActualizarIngresoGrati_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarIngresoGratiResponse" message="tns:IPlanillaSueldosDetService_ActualizarIngresoGrati_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ActualizarIngresoGrati_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarIngresoGrati">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarIngresoGrati" message="tns:IPlanillaSueldosDetService_BorrarIngresoGrati_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarIngresoGratiResponse" message="tns:IPlanillaSueldosDetService_BorrarIngresoGrati_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_BorrarIngresoGrati_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIngresoVaca">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarIngresoVaca" message="tns:IPlanillaSueldosDetService_MostrarIngresoVaca_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarIngresoVacaResponse" message="tns:IPlanillaSueldosDetService_MostrarIngresoVaca_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_MostrarIngresoVaca_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIngresoVaca">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerIngresoVaca" message="tns:IPlanillaSueldosDetService_ObtenerIngresoVaca_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerIngresoVacaResponse" message="tns:IPlanillaSueldosDetService_ObtenerIngresoVaca_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ObtenerIngresoVaca_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarIngresoVaca">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarIngresoVaca" message="tns:IPlanillaSueldosDetService_InsertarIngresoVaca_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarIngresoVacaResponse" message="tns:IPlanillaSueldosDetService_InsertarIngresoVaca_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_InsertarIngresoVaca_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarIngresoVaca">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarIngresoVaca" message="tns:IPlanillaSueldosDetService_ActualizarIngresoVaca_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarIngresoVacaResponse" message="tns:IPlanillaSueldosDetService_ActualizarIngresoVaca_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ActualizarIngresoVaca_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarIngresoVaca">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarIngresoVaca" message="tns:IPlanillaSueldosDetService_BorrarIngresoVaca_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarIngresoVacaResponse" message="tns:IPlanillaSueldosDetService_BorrarIngresoVaca_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_BorrarIngresoVaca_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarIngresoVaca">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BuscarIngresoVaca" message="tns:IPlanillaSueldosDetService_BuscarIngresoVaca_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BuscarIngresoVacaResponse" message="tns:IPlanillaSueldosDetService_BuscarIngresoVaca_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_BuscarIngresoVaca_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarVacaciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BuscarVacaciones" message="tns:IPlanillaSueldosDetService_BuscarVacaciones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BuscarVacacionesResponse" message="tns:IPlanillaSueldosDetService_BuscarVacaciones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_BuscarVacaciones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoVacaciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarTipoVacaciones" message="tns:IPlanillaSueldosDetService_MostrarTipoVacaciones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarTipoVacacionesResponse" message="tns:IPlanillaSueldosDetService_MostrarTipoVacaciones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_MostrarTipoVacaciones_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/Mostrar" message="tns:IPlanillaSueldosDetService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarResponse" message="tns:IPlanillaSueldosDetService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/Obtener" message="tns:IPlanillaSueldosDetService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerResponse" message="tns:IPlanillaSueldosDetService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/Insertar" message="tns:IPlanillaSueldosDetService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarResponse" message="tns:IPlanillaSueldosDetService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/Actualizar" message="tns:IPlanillaSueldosDetService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarResponse" message="tns:IPlanillaSueldosDetService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/Borrar" message="tns:IPlanillaSueldosDetService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarResponse" message="tns:IPlanillaSueldosDetService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/Buscar" message="tns:IPlanillaSueldosDetService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BuscarResponse" message="tns:IPlanillaSueldosDetService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarIngreso" message="tns:IPlanillaSueldosDetService_MostrarIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarIngresoResponse" message="tns:IPlanillaSueldosDetService_MostrarIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_MostrarIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerIngreso" message="tns:IPlanillaSueldosDetService_ObtenerIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerIngresoResponse" message="tns:IPlanillaSueldosDetService_ObtenerIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ObtenerIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarIngreso" message="tns:IPlanillaSueldosDetService_InsertarIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarIngresoResponse" message="tns:IPlanillaSueldosDetService_InsertarIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_InsertarIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarIngreso" message="tns:IPlanillaSueldosDetService_ActualizarIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarIngresoResponse" message="tns:IPlanillaSueldosDetService_ActualizarIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ActualizarIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarIngreso" message="tns:IPlanillaSueldosDetService_BorrarIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarIngresoResponse" message="tns:IPlanillaSueldosDetService_BorrarIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_BorrarIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BuscarIngreso" message="tns:IPlanillaSueldosDetService_BuscarIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BuscarIngresoResponse" message="tns:IPlanillaSueldosDetService_BuscarIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_BuscarIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarDescuento" message="tns:IPlanillaSueldosDetService_MostrarDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarDescuentoResponse" message="tns:IPlanillaSueldosDetService_MostrarDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_MostrarDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BuscarDescuento" message="tns:IPlanillaSueldosDetService_BuscarDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BuscarDescuentoResponse" message="tns:IPlanillaSueldosDetService_BuscarDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_BuscarDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerDescuento" message="tns:IPlanillaSueldosDetService_ObtenerDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerDescuentoResponse" message="tns:IPlanillaSueldosDetService_ObtenerDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ObtenerDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarDescuento" message="tns:IPlanillaSueldosDetService_InsertarDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarDescuentoResponse" message="tns:IPlanillaSueldosDetService_InsertarDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_InsertarDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarDescuento" message="tns:IPlanillaSueldosDetService_ActualizarDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarDescuentoResponse" message="tns:IPlanillaSueldosDetService_ActualizarDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ActualizarDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarDescuento" message="tns:IPlanillaSueldosDetService_BorrarDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarDescuentoResponse" message="tns:IPlanillaSueldosDetService_BorrarDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_BorrarDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAportacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarAportacion" message="tns:IPlanillaSueldosDetService_MostrarAportacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarAportacionResponse" message="tns:IPlanillaSueldosDetService_MostrarAportacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_MostrarAportacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarHoraExtra" message="tns:IPlanillaSueldosDetService_MostrarHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarHoraExtraResponse" message="tns:IPlanillaSueldosDetService_MostrarHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_MostrarHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BuscarHoraExtra" message="tns:IPlanillaSueldosDetService_BuscarHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BuscarHoraExtraResponse" message="tns:IPlanillaSueldosDetService_BuscarHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_BuscarHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerHoraExtra" message="tns:IPlanillaSueldosDetService_ObtenerHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerHoraExtraResponse" message="tns:IPlanillaSueldosDetService_ObtenerHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ObtenerHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarHoraExtra" message="tns:IPlanillaSueldosDetService_InsertarHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarHoraExtraResponse" message="tns:IPlanillaSueldosDetService_InsertarHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_InsertarHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarHoraExtra" message="tns:IPlanillaSueldosDetService_ActualizarHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarHoraExtraResponse" message="tns:IPlanillaSueldosDetService_ActualizarHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ActualizarHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarHoraExtra" message="tns:IPlanillaSueldosDetService_BorrarHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarHoraExtraResponse" message="tns:IPlanillaSueldosDetService_BorrarHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_BorrarHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarRubroIngreso" message="tns:IPlanillaSueldosDetService_MostrarRubroIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarRubroIngresoResponse" message="tns:IPlanillaSueldosDetService_MostrarRubroIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_MostrarRubroIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarRubroDescuento" message="tns:IPlanillaSueldosDetService_MostrarRubroDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarRubroDescuentoResponse" message="tns:IPlanillaSueldosDetService_MostrarRubroDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_MostrarRubroDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoHoraExtra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarTipoHoraExtra" message="tns:IPlanillaSueldosDetService_MostrarTipoHoraExtra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarTipoHoraExtraResponse" message="tns:IPlanillaSueldosDetService_MostrarTipoHoraExtra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_MostrarTipoHoraExtra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroAportacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarRubroAportacion" message="tns:IPlanillaSueldosDetService_MostrarRubroAportacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/MostrarRubroAportacionResponse" message="tns:IPlanillaSueldosDetService_MostrarRubroAportacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_MostrarRubroAportacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRubroIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerRubroIngreso" message="tns:IPlanillaSueldosDetService_ObtenerRubroIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ObtenerRubroIngresoResponse" message="tns:IPlanillaSueldosDetService_ObtenerRubroIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ObtenerRubroIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRubroIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarRubroIngreso" message="tns:IPlanillaSueldosDetService_InsertarRubroIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarRubroIngresoResponse" message="tns:IPlanillaSueldosDetService_InsertarRubroIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_InsertarRubroIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRubroIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarRubroIngreso" message="tns:IPlanillaSueldosDetService_ActualizarRubroIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarRubroIngresoResponse" message="tns:IPlanillaSueldosDetService_ActualizarRubroIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ActualizarRubroIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRubroIngreso">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarRubroIngreso" message="tns:IPlanillaSueldosDetService_BorrarRubroIngreso_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarRubroIngresoResponse" message="tns:IPlanillaSueldosDetService_BorrarRubroIngreso_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_BorrarRubroIngreso_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRubroDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarRubroDescuento" message="tns:IPlanillaSueldosDetService_InsertarRubroDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/InsertarRubroDescuentoResponse" message="tns:IPlanillaSueldosDetService_InsertarRubroDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_InsertarRubroDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRubroDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarRubroDescuento" message="tns:IPlanillaSueldosDetService_ActualizarRubroDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/ActualizarRubroDescuentoResponse" message="tns:IPlanillaSueldosDetService_ActualizarRubroDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_ActualizarRubroDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRubroDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarRubroDescuento" message="tns:IPlanillaSueldosDetService_BorrarRubroDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPlanillaSueldosDetService/BorrarRubroDescuentoResponse" message="tns:IPlanillaSueldosDetService_BorrarRubroDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPlanillaSueldosDetService_BorrarRubroDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IPlanillaSueldosDetService" type="tns:IPlanillaSueldosDetService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IPlanillaSueldosDetService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="ObtenerRubroDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ObtenerRubroDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarRubroIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/FiltrarRubroIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarRubroDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/FiltrarRubroDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerParametroHoraReal">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ObtenerParametroHoraReal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarMasivo">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/InsertarMasivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReprocesarIngresos">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ReprocesarIngresos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReprocesarDescuentos">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ReprocesarDescuentos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReprocesarHorasExtras">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ReprocesarHorasExtras" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarEnvioCorreo">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/InsertarEnvioCorreo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarConceptoRemuneracion">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/FiltrarConceptoRemuneracion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIngresoCTS">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/MostrarIngresoCTS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIngresoCTS">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ObtenerIngresoCTS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarIngresoCTS">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/InsertarIngresoCTS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarIngresoCTS">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ActualizarIngresoCTS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarIngresoCTS">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/BorrarIngresoCTS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIngresoGrati">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/MostrarIngresoGrati" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIngresoGrati">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ObtenerIngresoGrati" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarIngresoGrati">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/InsertarIngresoGrati" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarIngresoGrati">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ActualizarIngresoGrati" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarIngresoGrati">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/BorrarIngresoGrati" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIngresoVaca">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/MostrarIngresoVaca" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIngresoVaca">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ObtenerIngresoVaca" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarIngresoVaca">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/InsertarIngresoVaca" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarIngresoVaca">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ActualizarIngresoVaca" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarIngresoVaca">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/BorrarIngresoVaca" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarIngresoVaca">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/BuscarIngresoVaca" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarVacaciones">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/BuscarVacaciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoVacaciones">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/MostrarTipoVacaciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/MostrarIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ObtenerIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/InsertarIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ActualizarIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/BorrarIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/BuscarIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/MostrarDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/BuscarDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ObtenerDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/InsertarDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ActualizarDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/BorrarDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarAportacion">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/MostrarAportacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/MostrarHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/BuscarHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ObtenerHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/InsertarHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ActualizarHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/BorrarHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/MostrarRubroIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/MostrarRubroDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoHoraExtra">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/MostrarTipoHoraExtra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroAportacion">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/MostrarRubroAportacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRubroIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ObtenerRubroIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRubroIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/InsertarRubroIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRubroIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ActualizarRubroIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRubroIngreso">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/BorrarRubroIngreso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRubroDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/InsertarRubroDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRubroDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/ActualizarRubroDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRubroDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IPlanillaSueldosDetService/BorrarRubroDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PlanillaSueldosDetService">
+    <wsdl:port name="NetTcpBinding_IPlanillaSueldosDetService" binding="tns:NetTcpBinding_IPlanillaSueldosDetService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/PlanillaSueldosDetService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/PlanillaSueldosDetService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

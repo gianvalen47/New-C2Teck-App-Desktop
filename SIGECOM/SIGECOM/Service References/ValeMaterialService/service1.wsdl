@@ -1,0 +1,631 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ValeMaterialService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IValeMaterialService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IValeMaterialService_MostrarPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorId" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_MostrarPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_MostrarPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_MostrarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_MostrarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_MostrarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_SugerirNumero_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirNumero" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_SugerirNumero_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirNumeroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_SugerirNumero_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Estado_InputMessage">
+    <wsdl:part name="parameters" element="tns:Estado" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Estado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EstadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Estado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_ActualizarObservacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarObservacion" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_ActualizarObservacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarObservacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_ActualizarObservacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_MostrarLocacionUsaVale_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLocacionUsaVale" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_MostrarLocacionUsaVale_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarLocacionUsaValeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_MostrarLocacionUsaVale_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_GenerarAtencionJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarAtencionJob" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_GenerarAtencionJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarAtencionJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_GenerarAtencionJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_GenerarGuiaConsumoJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarGuiaConsumoJob" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_GenerarGuiaConsumoJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarGuiaConsumoJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_GenerarGuiaConsumoJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_MostrarConsumoRepuestos_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarConsumoRepuestos" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_MostrarConsumoRepuestos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarConsumoRepuestosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_MostrarConsumoRepuestos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Atender_InputMessage">
+    <wsdl:part name="parameters" element="tns:Atender" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Atender_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AtenderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_Atender_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_GenerarGuiaConsumoJobNoComprometido_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarGuiaConsumoJobNoComprometido" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_GenerarGuiaConsumoJobNoComprometido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarGuiaConsumoJobNoComprometidoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_GenerarGuiaConsumoJobNoComprometido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_MostrarConsumoRepuestosNoComprometido_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarConsumoRepuestosNoComprometido" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_MostrarConsumoRepuestosNoComprometido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarConsumoRepuestosNoComprometidoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_MostrarConsumoRepuestosNoComprometido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_DuplicarVale_InputMessage">
+    <wsdl:part name="parameters" element="tns:DuplicarVale" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_DuplicarVale_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DuplicarValeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_DuplicarVale_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_ConsultarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_ConsultarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_ConsultarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_GenerarDevolucion_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarDevolucion" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_GenerarDevolucion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarDevolucionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_GenerarDevolucion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_DejarAtender_InputMessage">
+    <wsdl:part name="parameters" element="tns:DejarAtender" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_DejarAtender_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DejarAtenderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValeMaterialService_DejarAtender_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IValeMaterialService">
+    <wsdl:operation name="MostrarPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/MostrarPorId" message="tns:IValeMaterialService_MostrarPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/MostrarPorIdResponse" message="tns:IValeMaterialService_MostrarPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_MostrarPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/Filtrar" message="tns:IValeMaterialService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/FiltrarResponse" message="tns:IValeMaterialService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/Buscar" message="tns:IValeMaterialService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/BuscarResponse" message="tns:IValeMaterialService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/Insertar" message="tns:IValeMaterialService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/InsertarResponse" message="tns:IValeMaterialService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/Actualizar" message="tns:IValeMaterialService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/ActualizarResponse" message="tns:IValeMaterialService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/Borrar" message="tns:IValeMaterialService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/BorrarResponse" message="tns:IValeMaterialService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/MostrarEstados" message="tns:IValeMaterialService_MostrarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/MostrarEstadosResponse" message="tns:IValeMaterialService_MostrarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_MostrarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirNumero">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/SugerirNumero" message="tns:IValeMaterialService_SugerirNumero_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/SugerirNumeroResponse" message="tns:IValeMaterialService_SugerirNumero_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_SugerirNumero_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/Estado" message="tns:IValeMaterialService_Estado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/EstadoResponse" message="tns:IValeMaterialService_Estado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_Estado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarObservacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/ActualizarObservacion" message="tns:IValeMaterialService_ActualizarObservacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/ActualizarObservacionResponse" message="tns:IValeMaterialService_ActualizarObservacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_ActualizarObservacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLocacionUsaVale">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/MostrarLocacionUsaVale" message="tns:IValeMaterialService_MostrarLocacionUsaVale_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/MostrarLocacionUsaValeResponse" message="tns:IValeMaterialService_MostrarLocacionUsaVale_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_MostrarLocacionUsaVale_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarAtencionJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/GenerarAtencionJob" message="tns:IValeMaterialService_GenerarAtencionJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/GenerarAtencionJobResponse" message="tns:IValeMaterialService_GenerarAtencionJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_GenerarAtencionJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarGuiaConsumoJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/GenerarGuiaConsumoJob" message="tns:IValeMaterialService_GenerarGuiaConsumoJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/GenerarGuiaConsumoJobResponse" message="tns:IValeMaterialService_GenerarGuiaConsumoJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_GenerarGuiaConsumoJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarConsumoRepuestos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/MostrarConsumoRepuestos" message="tns:IValeMaterialService_MostrarConsumoRepuestos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/MostrarConsumoRepuestosResponse" message="tns:IValeMaterialService_MostrarConsumoRepuestos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_MostrarConsumoRepuestos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/Imprimir" message="tns:IValeMaterialService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/ImprimirResponse" message="tns:IValeMaterialService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Atender">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/Atender" message="tns:IValeMaterialService_Atender_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/AtenderResponse" message="tns:IValeMaterialService_Atender_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_Atender_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarGuiaConsumoJobNoComprometido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/GenerarGuiaConsumoJobNoComprometido" message="tns:IValeMaterialService_GenerarGuiaConsumoJobNoComprometido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/GenerarGuiaConsumoJobNoComprometidoResponse" message="tns:IValeMaterialService_GenerarGuiaConsumoJobNoComprometido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_GenerarGuiaConsumoJobNoComprometido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarConsumoRepuestosNoComprometido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/MostrarConsumoRepuestosNoComprometido" message="tns:IValeMaterialService_MostrarConsumoRepuestosNoComprometido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/MostrarConsumoRepuestosNoComprometidoResponse" message="tns:IValeMaterialService_MostrarConsumoRepuestosNoComprometido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_MostrarConsumoRepuestosNoComprometido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DuplicarVale">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/DuplicarVale" message="tns:IValeMaterialService_DuplicarVale_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/DuplicarValeResponse" message="tns:IValeMaterialService_DuplicarVale_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_DuplicarVale_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/ConsultarEstados" message="tns:IValeMaterialService_ConsultarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/ConsultarEstadosResponse" message="tns:IValeMaterialService_ConsultarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_ConsultarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarDevolucion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/GenerarDevolucion" message="tns:IValeMaterialService_GenerarDevolucion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/GenerarDevolucionResponse" message="tns:IValeMaterialService_GenerarDevolucion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_GenerarDevolucion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DejarAtender">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValeMaterialService/DejarAtender" message="tns:IValeMaterialService_DejarAtender_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValeMaterialService/DejarAtenderResponse" message="tns:IValeMaterialService_DejarAtender_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IValeMaterialService_DejarAtender_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IValeMaterialService" type="tns:IValeMaterialService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IValeMaterialService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="MostrarPorId">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/MostrarPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/MostrarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirNumero">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/SugerirNumero" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/Estado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarObservacion">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/ActualizarObservacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarLocacionUsaVale">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/MostrarLocacionUsaVale" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarAtencionJob">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/GenerarAtencionJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarGuiaConsumoJob">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/GenerarGuiaConsumoJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarConsumoRepuestos">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/MostrarConsumoRepuestos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Atender">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/Atender" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarGuiaConsumoJobNoComprometido">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/GenerarGuiaConsumoJobNoComprometido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarConsumoRepuestosNoComprometido">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/MostrarConsumoRepuestosNoComprometido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DuplicarVale">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/DuplicarVale" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/ConsultarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarDevolucion">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/GenerarDevolucion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DejarAtender">
+      <soap12:operation soapAction="http://tempuri.org/IValeMaterialService/DejarAtender" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ValeMaterialService">
+    <wsdl:port name="NetTcpBinding_IValeMaterialService" binding="tns:NetTcpBinding_IValeMaterialService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/ValeMaterialService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/ValeMaterialService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

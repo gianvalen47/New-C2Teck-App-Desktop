@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Models" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Models" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="Hardware">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cargador" nillable="true" type="tns:Cargador" />
+      <xs:element minOccurs="0" name="DiscoDuro" nillable="true" type="tns:DiscoDuro" />
+      <xs:element minOccurs="0" name="FecFinUso" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecIniUso" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IdHardware" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Lectora" nillable="true" type="tns:Lectora" />
+      <xs:element minOccurs="0" name="MemoriaRAM" nillable="true" type="tns:MemoriaRAM" />
+      <xs:element minOccurs="0" name="Monitor" nillable="true" type="tns:Monitor" />
+      <xs:element minOccurs="0" name="MotivoFinUso" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Mouse" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NotaHardware" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PlacaMadre" nillable="true" type="tns:PlacaMadre" />
+      <xs:element minOccurs="0" name="Procesador" nillable="true" type="tns:Procesador" />
+      <xs:element minOccurs="0" name="TarjetaVideo" nillable="true" type="tns:TarjetaVideo" />
+      <xs:element minOccurs="0" name="Teclado" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDispositivo" nillable="true" type="tns:TipoDispositivo" />
+      <xs:element minOccurs="0" name="Vigente" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Hardware" nillable="true" type="tns:Hardware" />
+  <xs:complexType name="Cargador">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Computadora" nillable="true" type="tns:Computadora" />
+      <xs:element minOccurs="0" name="DesCargador" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FecFinGarantia" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecFinUso" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecIniUso" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IdCargador" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Marca" nillable="true" type="tns:MarcaComputo" />
+      <xs:element minOccurs="0" name="Modelo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MotivoFinUso" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Observacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Serie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDispositivo" nillable="true" type="tns:TipoDispositivo" />
+      <xs:element minOccurs="0" name="Vigente" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Voltaje" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Cargador" nillable="true" type="tns:Cargador" />
+  <xs:complexType name="Computadora">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Empresa" nillable="true" type="tns:Empresa" />
+      <xs:element minOccurs="0" name="IdComputadora" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="NomPc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Observacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoComputadora" nillable="true" type="tns:TipoComputadora" />
+      <xs:element minOccurs="0" name="Vigente" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Computadora" nillable="true" type="tns:Computadora" />
+  <xs:complexType name="Empresa">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbrEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CorEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DesEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DirEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FaxEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Igv" type="xs:int" />
+      <xs:element minOccurs="0" name="RucEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TelEmp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WebEmp" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Empresa" nillable="true" type="tns:Empresa" />
+  <xs:complexType name="TipoComputadora">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DesTipoComputadora" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdTipoComputadora" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TipoComputadora" nillable="true" type="tns:TipoComputadora" />
+  <xs:complexType name="MarcaComputo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DesMarca" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdMarca" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MarcaComputo" nillable="true" type="tns:MarcaComputo" />
+  <xs:complexType name="TipoDispositivo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DesTipoDispositivo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdTipoDispositivo" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TipoDispositivo" nillable="true" type="tns:TipoDispositivo" />
+  <xs:complexType name="DiscoDuro">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Capacidad" type="xs:int" />
+      <xs:element minOccurs="0" name="Computadora" nillable="true" type="tns:Computadora" />
+      <xs:element minOccurs="0" name="DesDiscoDuro" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FecFinGarantia" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecFinUso" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecIniUso" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IdDiscoDuro" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Marca" nillable="true" type="tns:MarcaComputo" />
+      <xs:element minOccurs="0" name="Modelo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MotivoFinUso" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Observacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Serie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoConectorDD" nillable="true" type="tns:TipoConectorDD" />
+      <xs:element minOccurs="0" name="TipoDispositivo" nillable="true" type="tns:TipoDispositivo" />
+      <xs:element minOccurs="0" name="Vigente" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DiscoDuro" nillable="true" type="tns:DiscoDuro" />
+  <xs:complexType name="TipoConectorDD">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DesTipoConector" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdTipoConector" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TipoConectorDD" nillable="true" type="tns:TipoConectorDD" />
+  <xs:complexType name="Lectora">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Computadora" nillable="true" type="tns:Computadora" />
+      <xs:element minOccurs="0" name="DesLectora" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FecFinGarantia" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecFinUso" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecIniUso" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IdLectora" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Marca" nillable="true" type="tns:MarcaComputo" />
+      <xs:element minOccurs="0" name="Modelo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MotivoFinUso" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Observacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Serie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoConector" nillable="true" type="tns:TipoConectorDD" />
+      <xs:element minOccurs="0" name="TipoDispositivo" nillable="true" type="tns:TipoDispositivo" />
+      <xs:element minOccurs="0" name="VelocidadOper" type="xs:int" />
+      <xs:element minOccurs="0" name="Vigente" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Lectora" nillable="true" type="tns:Lectora" />
+  <xs:complexType name="MemoriaRAM">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Bus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Cantidad" type="xs:int" />
+      <xs:element minOccurs="0" name="Computadora" nillable="true" type="tns:Computadora" />
+      <xs:element minOccurs="0" name="DesMemRam" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FecFinGarantia" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecFinUso" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecIniUso" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IdMemRam" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Marca" nillable="true" type="tns:MarcaComputo" />
+      <xs:element minOccurs="0" name="Modelo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MotivoFinUso" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Observacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Serie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tipo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDispositivo" nillable="true" type="tns:TipoDispositivo" />
+      <xs:element minOccurs="0" name="Vigente" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MemoriaRAM" nillable="true" type="tns:MemoriaRAM" />
+  <xs:complexType name="Monitor">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Computadora" nillable="true" type="tns:Computadora" />
+      <xs:element minOccurs="0" name="DesMonitor" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Dispositivos" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FecFinGarantia" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecFinUso" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecIniUso" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IdMonitor" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Marca" nillable="true" type="tns:MarcaComputo" />
+      <xs:element minOccurs="0" name="Modelo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MotivoFinUso" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Observacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Serie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDispositivo" nillable="true" type="tns:TipoDispositivo" />
+      <xs:element minOccurs="0" name="TipoMonitor" nillable="true" type="tns:TipoMonitor" />
+      <xs:element minOccurs="0" name="Vigente" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Monitor" nillable="true" type="tns:Monitor" />
+  <xs:complexType name="TipoMonitor">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DesTipoMonitor" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdTipoMonitor" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TipoMonitor" nillable="true" type="tns:TipoMonitor" />
+  <xs:complexType name="PlacaMadre">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CantidadVideo" type="xs:int" />
+      <xs:element minOccurs="0" name="Computadora" nillable="true" type="tns:Computadora" />
+      <xs:element minOccurs="0" name="DesPlaca" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FecFinGarantia" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecFinUso" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecIniUso" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IdPlaca" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Marca" nillable="true" type="tns:MarcaComputo" />
+      <xs:element minOccurs="0" name="Modelo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MotivoFinUso" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Observacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Serie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDispositivo" nillable="true" type="tns:TipoDispositivo" />
+      <xs:element minOccurs="0" name="VideoIntegrado" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Vigente" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlacaMadre" nillable="true" type="tns:PlacaMadre" />
+  <xs:complexType name="Procesador">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Computadora" nillable="true" type="tns:Computadora" />
+      <xs:element minOccurs="0" name="DesProcesador" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FecFinGarantia" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecFinUso" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecIniUso" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="GeneracionPro" type="xs:int" />
+      <xs:element minOccurs="0" name="IdProcesador" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Marca" nillable="true" type="tns:MarcaComputo" />
+      <xs:element minOccurs="0" name="Modelo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MotivoFinUso" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Observacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Serie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDispositivo" nillable="true" type="tns:TipoDispositivo" />
+      <xs:element minOccurs="0" name="TipoPro" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VelocidadPro" type="xs:double" />
+      <xs:element minOccurs="0" name="Vigente" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Procesador" nillable="true" type="tns:Procesador" />
+  <xs:complexType name="TarjetaVideo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Capacidad" type="xs:int" />
+      <xs:element minOccurs="0" name="Computadora" nillable="true" type="tns:Computadora" />
+      <xs:element minOccurs="0" name="DesTarjetaVideo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FecFinGarantia" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecFinUso" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecIniUso" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IdTarjetaVideo" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Marca" nillable="true" type="tns:MarcaComputo" />
+      <xs:element minOccurs="0" name="Modelo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MotivoFinUso" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Observacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Serie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDispositivo" nillable="true" type="tns:TipoDispositivo" />
+      <xs:element minOccurs="0" name="TipoMemoria" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Vigente" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TarjetaVideo" nillable="true" type="tns:TarjetaVideo" />
+  <xs:complexType name="ComputadoraSoftware">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodUsu" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Computadora" nillable="true" type="tns:Computadora" />
+      <xs:element minOccurs="0" name="DirIp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FecReg" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="NomPc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Observacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Software" nillable="true" type="tns:Software" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ComputadoraSoftware" nillable="true" type="tns:ComputadoraSoftware" />
+  <xs:complexType name="Software">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FecFinLic" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecIniLic" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IdSoftware" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="LicenciaAplica" type="xs:boolean" />
+      <xs:element minOccurs="0" name="NomAplicacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoSoftware" nillable="true" type="tns:TipoSoftware" />
+      <xs:element minOccurs="0" name="Vigente" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Software" nillable="true" type="tns:Software" />
+  <xs:complexType name="TipoSoftware">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DesTipoSoftware" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdTipoSoftware" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TipoSoftware" nillable="true" type="tns:TipoSoftware" />
+  <xs:complexType name="Teclado">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Computadora" nillable="true" type="tns:Computadora" />
+      <xs:element minOccurs="0" name="DesTeclado" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Entrada" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FecFinGarantia" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecFinUso" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecIniUso" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IdTeclado" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Marca" nillable="true" type="tns:MarcaComputo" />
+      <xs:element minOccurs="0" name="Modelo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MotivoFinUso" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Observacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Serie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDispositivo" nillable="true" type="tns:TipoDispositivo" />
+      <xs:element minOccurs="0" name="Vigente" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Teclado" nillable="true" type="tns:Teclado" />
+  <xs:complexType name="Mouse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Computadora" nillable="true" type="tns:Computadora" />
+      <xs:element minOccurs="0" name="DesMouse" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Entrada" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FecFinGarantia" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecFinUso" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecIniUso" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IdMouse" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Marca" nillable="true" type="tns:MarcaComputo" />
+      <xs:element minOccurs="0" name="Modelo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MotivoFinUso" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Observacion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Serie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoDispositivo" nillable="true" type="tns:TipoDispositivo" />
+      <xs:element minOccurs="0" name="Vigente" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Mouse" nillable="true" type="tns:Mouse" />
+</xs:schema>

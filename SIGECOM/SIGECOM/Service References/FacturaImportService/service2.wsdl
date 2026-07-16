@@ -1,0 +1,656 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="FacturaImportService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IFacturaImportService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IFacturaImportService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorId" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ActualizarReferencia_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarReferencia" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ActualizarReferencia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarReferenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ActualizarReferencia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_GenerarDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_GenerarDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_GenerarDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ReporteFacturaImport_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteFacturaImport" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ReporteFacturaImport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteFacturaImportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ReporteFacturaImport_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarMarcas_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMarcas" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarMarcas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarMarcasResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarMarcas_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarPaises_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPaises" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarPaises_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPaisesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarPaises_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Mensaje_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mensaje" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Mensaje_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MensajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Mensaje_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ActualizarFechaProbable_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarFechaProbable" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ActualizarFechaProbable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarFechaProbableResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ActualizarFechaProbable_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ObtenerIdFactura_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdFactura" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ObtenerIdFactura_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdFacturaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ObtenerIdFactura_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Reporte_InputMessage">
+    <wsdl:part name="parameters" element="tns:Reporte" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Reporte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_Reporte_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarPendientes_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPendientes" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarPendientes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPendientesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarPendientes_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarFacturasPendientes_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarFacturasPendientes" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarFacturasPendientes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarFacturasPendientesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarFacturasPendientes_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ImpresionExcel_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImpresionExcel" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ImpresionExcel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImpresionExcelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ImpresionExcel_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarSerieImportacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieImportacion" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarSerieImportacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSerieImportacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_MostrarSerieImportacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ExportarCtasPorPagar_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExportarCtasPorPagar" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ExportarCtasPorPagar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExportarCtasPorPagarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ExportarCtasPorPagar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_GenerarSolicitudGasto_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarSolicitudGasto" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_GenerarSolicitudGasto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerarSolicitudGastoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_GenerarSolicitudGasto_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ConsultarEstados_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarEstados" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ConsultarEstados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarEstadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFacturaImportService_ConsultarEstados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q23:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IFacturaImportService">
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/Mostrar" message="tns:IFacturaImportService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/MostrarResponse" message="tns:IFacturaImportService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/MostrarPorId" message="tns:IFacturaImportService_MostrarPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/MostrarPorIdResponse" message="tns:IFacturaImportService_MostrarPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_MostrarPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/Filtrar" message="tns:IFacturaImportService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/FiltrarResponse" message="tns:IFacturaImportService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/Buscar" message="tns:IFacturaImportService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/BuscarResponse" message="tns:IFacturaImportService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/Insertar" message="tns:IFacturaImportService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/InsertarResponse" message="tns:IFacturaImportService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/Actualizar" message="tns:IFacturaImportService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/ActualizarResponse" message="tns:IFacturaImportService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/Borrar" message="tns:IFacturaImportService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/BorrarResponse" message="tns:IFacturaImportService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarReferencia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/ActualizarReferencia" message="tns:IFacturaImportService_ActualizarReferencia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/ActualizarReferenciaResponse" message="tns:IFacturaImportService_ActualizarReferencia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_ActualizarReferencia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/GenerarDocumento" message="tns:IFacturaImportService_GenerarDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/GenerarDocumentoResponse" message="tns:IFacturaImportService_GenerarDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_GenerarDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteFacturaImport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/ReporteFacturaImport" message="tns:IFacturaImportService_ReporteFacturaImport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/ReporteFacturaImportResponse" message="tns:IFacturaImportService_ReporteFacturaImport_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_ReporteFacturaImport_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMarcas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/MostrarMarcas" message="tns:IFacturaImportService_MostrarMarcas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/MostrarMarcasResponse" message="tns:IFacturaImportService_MostrarMarcas_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_MostrarMarcas_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPaises">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/MostrarPaises" message="tns:IFacturaImportService_MostrarPaises_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/MostrarPaisesResponse" message="tns:IFacturaImportService_MostrarPaises_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_MostrarPaises_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Mensaje">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/Mensaje" message="tns:IFacturaImportService_Mensaje_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/MensajeResponse" message="tns:IFacturaImportService_Mensaje_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_Mensaje_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarFechaProbable">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/ActualizarFechaProbable" message="tns:IFacturaImportService_ActualizarFechaProbable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/ActualizarFechaProbableResponse" message="tns:IFacturaImportService_ActualizarFechaProbable_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_ActualizarFechaProbable_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdFactura">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/ObtenerIdFactura" message="tns:IFacturaImportService_ObtenerIdFactura_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/ObtenerIdFacturaResponse" message="tns:IFacturaImportService_ObtenerIdFactura_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_ObtenerIdFactura_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Reporte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/Reporte" message="tns:IFacturaImportService_Reporte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/ReporteResponse" message="tns:IFacturaImportService_Reporte_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_Reporte_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPendientes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/MostrarPendientes" message="tns:IFacturaImportService_MostrarPendientes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/MostrarPendientesResponse" message="tns:IFacturaImportService_MostrarPendientes_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_MostrarPendientes_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarFacturasPendientes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/MostrarFacturasPendientes" message="tns:IFacturaImportService_MostrarFacturasPendientes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/MostrarFacturasPendientesResponse" message="tns:IFacturaImportService_MostrarFacturasPendientes_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_MostrarFacturasPendientes_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImpresionExcel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/ImpresionExcel" message="tns:IFacturaImportService_ImpresionExcel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/ImpresionExcelResponse" message="tns:IFacturaImportService_ImpresionExcel_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_ImpresionExcel_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieImportacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/MostrarSerieImportacion" message="tns:IFacturaImportService_MostrarSerieImportacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/MostrarSerieImportacionResponse" message="tns:IFacturaImportService_MostrarSerieImportacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_MostrarSerieImportacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExportarCtasPorPagar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/ExportarCtasPorPagar" message="tns:IFacturaImportService_ExportarCtasPorPagar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/ExportarCtasPorPagarResponse" message="tns:IFacturaImportService_ExportarCtasPorPagar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_ExportarCtasPorPagar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerarSolicitudGasto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/GenerarSolicitudGasto" message="tns:IFacturaImportService_GenerarSolicitudGasto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/GenerarSolicitudGastoResponse" message="tns:IFacturaImportService_GenerarSolicitudGasto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_GenerarSolicitudGasto_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFacturaImportService/ConsultarEstados" message="tns:IFacturaImportService_ConsultarEstados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFacturaImportService/ConsultarEstadosResponse" message="tns:IFacturaImportService_ConsultarEstados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IFacturaImportService_ConsultarEstados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IFacturaImportService" type="tns:IFacturaImportService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IFacturaImportService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/MostrarPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarReferencia">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/ActualizarReferencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/GenerarDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteFacturaImport">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/ReporteFacturaImport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarMarcas">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/MostrarMarcas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPaises">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/MostrarPaises" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Mensaje">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/Mensaje" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarFechaProbable">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/ActualizarFechaProbable" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdFactura">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/ObtenerIdFactura" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Reporte">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/Reporte" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPendientes">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/MostrarPendientes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarFacturasPendientes">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/MostrarFacturasPendientes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImpresionExcel">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/ImpresionExcel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSerieImportacion">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/MostrarSerieImportacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ExportarCtasPorPagar">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/ExportarCtasPorPagar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerarSolicitudGasto">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/GenerarSolicitudGasto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarEstados">
+      <soap12:operation soapAction="http://tempuri.org/IFacturaImportService/ConsultarEstados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="FacturaImportService">
+    <wsdl:port name="NetTcpBinding_IFacturaImportService" binding="tns:NetTcpBinding_IFacturaImportService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/FacturaImportService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/FacturaImportService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

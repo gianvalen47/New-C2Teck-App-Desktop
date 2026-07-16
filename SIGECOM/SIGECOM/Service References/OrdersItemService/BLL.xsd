@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/BLL" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/BLL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="OrdersItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IdOrder" type="xs:int" />
+      <xs:element minOccurs="0" name="IdOrderItem" type="xs:int" />
+      <xs:element minOccurs="0" name="InventoryNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MPOfferingCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OfferingBuyerCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OfferingDeliveryDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OfferingDetailDesc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OfferingPrice" type="xs:double" />
+      <xs:element minOccurs="0" name="OfferingProductDesc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OfferingProductDesc1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OfferingQuantity" type="xs:double" />
+      <xs:element minOccurs="0" name="OfferingQuantityAtendido" type="xs:double" />
+      <xs:element minOccurs="0" name="OfferingQuantityDespachar" type="xs:double" />
+      <xs:element minOccurs="0" name="OfferingQuantityPendiente" type="xs:double" />
+      <xs:element minOccurs="0" name="OfferingSupplierCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OfferingUnit" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Position" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RequisitionItemNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RequisitionNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Usuario" nillable="true" type="tns:Usuario" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrdersItem" nillable="true" type="tns:OrdersItem" />
+  <xs:complexType name="Usuario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Clave" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodUsu" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FecCreacion" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FecMod" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Persona" nillable="true" type="tns:Persona" />
+      <xs:element minOccurs="0" name="Seteo" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Vigente" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Usuario" nillable="true" type="tns:Usuario" />
+  <xs:complexType name="Persona">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ApeNom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Area" nillable="true" type="tns:Area" />
+      <xs:element minOccurs="0" name="IdPer" nillable="true" type="xs:anyType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Persona" nillable="true" type="tns:Persona" />
+  <xs:complexType name="Area">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodArea" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DesArea" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Area" nillable="true" type="tns:Area" />
+</xs:schema>

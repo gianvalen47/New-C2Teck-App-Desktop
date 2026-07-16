@@ -1,0 +1,175 @@
+﻿Imports System.Windows.Forms
+
+Public Class frmKardex_Tarjeta
+
+    Public state_button As Boolean              'True: Modificar    False: nuevo
+    Public type_process As String               'update     insert      delete
+    Private oMaestroService As New MaestroService.MaestroClient
+    Private oLocacionMercaderiaService As New LocacionMercaderiaService.LocacionMercaderiaServiceClient
+    Private oMercaderiaService As New MercaderiaService.MercaderiaServiceClient
+    Private oPrecioService As New PrecioService.PrecioServiceClient
+    Private oPedidoImportDetService As New PedidoImportDetService.PedidoImportDetServiceClient
+    Private oOrdenCompraDetService As New OrdenCompraDetService.OrdenCompraDetServiceClient
+
+    Private dtDatos As DataTable
+    '====================================================================================================================
+    '============================================ PARAMETROS LOCALES ====================================================
+    '====================================================================================================================
+    Public IdLocacion As String
+
+    '====================================================================================================================
+    '============================================ CONTROL'S METHOD ======================================================
+    '====================================================================================================================
+    Private Sub SendFocus_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                  txtObservacion.KeyPress _
+                , txtCorMer.KeyPress _
+                , txtDeaMer.KeyPress _
+                , txtCodMer.KeyPress _
+                , txtSPCC.KeyPress _
+                , txtMostradorSoles.KeyPress _
+                , txtMostradorDolares.KeyPress _
+                , txtPrecioOferta.KeyPress _
+                , txtDisponible.KeyPress _
+                , txtSeparado.KeyPress _
+                , txtStock.KeyPress _
+                , txtMaximo.KeyPress _
+                , txtMinimo.KeyPress _
+                , txtCantidadPedida.KeyPress _
+                , txtCostoSoles.KeyPress _
+                , txtCostoDolares.KeyPress _
+                , txtOserbacionLocacion.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            SendKeys.Send("{TAB}")
+        End If
+    End Sub
+    Private Sub Initialize_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Me.CancelButton = Me.btnCancelar
+        ObtenerRegistro()
+    End Sub
+    Private Sub FinallyObjects_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            If isClosed(oMaestroService) = False Then
+                oMaestroService.Close()
+            End If
+            If isClosed(oLocacionMercaderiaService) = False Then
+                oLocacionMercaderiaService.Close()
+            End If
+            If isClosed(oMercaderiaService) = False Then
+                oMercaderiaService.Close()
+            End If
+            If isClosed(oPrecioService) = False Then
+                oPrecioService.Close()
+            End If
+            If isClosed(oPedidoImportDetService) = False Then
+                oPedidoImportDetService.Close()
+            End If
+            If isClosed(oOrdenCompraDetService) = False Then
+                oOrdenCompraDetService.Close()
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [FINALLY]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    '====================================================================================================================
+    '============================================ TASK'S METHOD =========================================================
+    '====================================================================================================================
+    Private Sub ObtenerRegistro()
+        Try
+            Dim registro As LocacionMercaderiaService.LocacionMercaderia
+            registro = oLocacionMercaderiaService.MostrarPorCodigo(IdLocacion, toBlank(txtCodMer.Text))
+            Dim mercaderia As MercaderiaService.Mercaderia
+            mercaderia = oMercaderiaService.MostrarPorCodigo(txtCodMer.Text)
+
+            txtCodMer.Text = toBlank(registro.Mercaderia.CodMer)
+            lblUbiMer.Text = toBlank(registro.UbiMer)
+            lblUniMed.Text = toBlank(mercaderia.UnidadMedida.Nombre)
+            lblClase.Text = toBlank(mercaderia.ClaseMerca.DesClas)
+            lblDesMer1.Text = toBlank(mercaderia.DesMer1)
+            lblDesMer2.Text = toBlank(mercaderia.DesMer2)
+            lblrubro.Text = toBlank(mercaderia.Rubro.DesRub)
+            lblPeso.Text = toBlank(mercaderia.PesMer)
+            lblGrupo.Text = toBlank(mercaderia.GrupoMerca.DesGru)
+            lblPartida.Text = toBlank(mercaderia.Partida.DesPar)
+            lblTipoMotor.Text = toBlank(mercaderia.TipoMotor.Descripcion)
+            lblTipoMovi.Text = toBlank(mercaderia.Movimiento.DesMov)
+            lblAplicacion.Text = toBlank(mercaderia.AplicacionMerca.DesApl)
+            lblMarca.Text = toBlank(mercaderia.Marca.DesMar)
+            lblCodigoAntiguo.Text = toBlank(registro.Mercaderia.AntMer)
+            lblCodigonuevo.Text = toBlank(registro.Mercaderia.NueMer)
+            lblFactorSPCC.Text = toDouble(oMaestroService.MostrarDato("SIGECOM.Maestro.Partidas", "FacPar", "CodPar", mercaderia.Partida.CodPar))
+
+            txtDeaMer.Text = mercaderia.DeaMer
+            txtCorMer.Text = mercaderia.CorMer
+            txtPrecioOferta.Text = oPrecioService.PrecioOferta(IdLocacion, txtCodMer.Text)
+            txtMostradorDolares.Text = oPrecioService.PrecioMostrador(IdLocacion, txtCodMer.Text, "US")
+            txtMostradorSoles.Text = oPrecioService.PrecioMostrador(IdLocacion, txtCodMer.Text, "NS")
+            txtSPCC.Text = oPrecioService.PrecioSPCC(txtCodMer.Text)
+
+            txtStock.Text = registro.Stock
+            txtSeparado.Text = oOrdenCompraDetService.CantidadSeparada(IdLocacion, txtCodMer.Text)
+            txtDisponible.Text = registro.Stock - toNumber(txtSeparado.Text)
+
+            txtCantidadPedida.Text = oPedidoImportDetService.CantidadPedida(txtCodMer.Text)
+            txtMinimo.Text = registro.MinMer
+            txtMaximo.Text = registro.MaxMer
+
+            txtCostoDolares.Text = registro.CosDol
+            txtCostoSoles.Text = registro.CosSol
+
+            txtObservacion.Text = mercaderia.ObsMer
+            txtOserbacionLocacion.Text = registro.ObsMer
+
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-005]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+
+    '====================================================================================================================
+    '============================================ INTERFACE'S METHOD ====================================================
+    '====================================================================================================================
+    Private Sub btnCancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancelar.Click
+        Me.DialogResult = Windows.Forms.DialogResult.Cancel
+        Me.Close()
+    End Sub
+    Private Sub btnVerKardex_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVerKardex.Click
+        If toBlank(txtCodMer.Text) <> "" Then
+            Dim frm As New frmKardex_VerKardex
+            frm.IdLocacion = IdLocacion
+            frm.CodMer = txtCodMer.Text
+            frm.ShowDialog()
+        Else
+            MsgBox("Debe de ingresar el código de la mercaderia", MsgBoxStyle.Information)
+        End If
+    End Sub
+    Private Sub btnPedidos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPedidos.Click
+        If toBlank(txtCodMer.Text) <> "" Then
+            Dim frm As New frmKardex_VerPedidos
+            frm.IdLocacion = IdLocacion
+            frm.CodMer = txtCodMer.Text
+            frm.ShowDialog()
+        Else
+            MsgBox("Debe de ingresar el código de la mercaderia", MsgBoxStyle.Information)
+        End If
+    End Sub
+    Private Sub btnVerStock_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVerStock.Click
+        If toBlank(txtCodMer.Text) <> "" Then
+            Dim frm As New frmKardex_VerStock
+            frm.IdLocacion = IdLocacion
+            frm.CodMer = txtCodMer.Text
+            frm.ShowDialog()
+        Else
+            MsgBox("Debe de ingresar el código de la mercaderia", MsgBoxStyle.Information)
+        End If
+    End Sub
+    Private Sub btnSeparaciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSeparaciones.Click
+        If toBlank(txtCodMer.Text) <> "" Then
+            Dim frm As New frmKardex_VerSeparacion
+            frm.IdLocacion = IdLocacion
+            frm.CodMer = txtCodMer.Text
+            frm.ShowDialog()
+        Else
+            MsgBox("Debe de ingresar el código de la mercaderia", MsgBoxStyle.Information)
+        End If
+    End Sub
+End Class

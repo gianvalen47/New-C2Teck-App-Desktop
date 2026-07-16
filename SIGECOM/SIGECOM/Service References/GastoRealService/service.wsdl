@@ -1,0 +1,630 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="GastoRealService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IGastoRealService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IGastoRealService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Estado_InputMessage">
+    <wsdl:part name="parameters" element="tns:Estado" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Estado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EstadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Estado_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_MostrarRubros_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubros" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_MostrarRubros_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubrosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_MostrarRubros_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_MostrarSubRubros_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSubRubros" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_MostrarSubRubros_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSubRubrosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_MostrarSubRubros_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_MostrarTipoDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_MostrarTipoDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_MostrarTipoDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Reporte_InputMessage">
+    <wsdl:part name="parameters" element="tns:Reporte" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Reporte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Reporte_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_ReporteTotalPorRubro_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteTotalPorRubro" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_ReporteTotalPorRubro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteTotalPorRubroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_ReporteTotalPorRubro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_TrasladarGastos_InputMessage">
+    <wsdl:part name="parameters" element="tns:TrasladarGastos" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_TrasladarGastos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TrasladarGastosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_TrasladarGastos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_ActualizarRubro_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRubro" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_ActualizarRubro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRubroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_ActualizarRubro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_InsertarGastoGerencia_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarGastoGerencia" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_InsertarGastoGerencia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarGastoGerenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_InsertarGastoGerencia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_ActualizarGastoGerencia_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarGastoGerencia" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_ActualizarGastoGerencia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarGastoGerenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_ActualizarGastoGerencia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_BorrarGastoGerencia_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarGastoGerencia" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_BorrarGastoGerencia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarGastoGerenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_BorrarGastoGerencia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_FiltrarGastoGerencia_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarGastoGerencia" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_FiltrarGastoGerencia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarGastoGerenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_FiltrarGastoGerencia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_ObtenerGastoGerencia_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerGastoGerencia" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_ObtenerGastoGerencia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerGastoGerenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_ObtenerGastoGerencia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Procesar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Procesar" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Procesar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_Procesar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_BuscarRubroGastoGerencia_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRubroGastoGerencia" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_BuscarRubroGastoGerencia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRubroGastoGerenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGastoRealService_BuscarRubroGastoGerencia_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IGastoRealService">
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/Insertar" message="tns:IGastoRealService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/InsertarResponse" message="tns:IGastoRealService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/Actualizar" message="tns:IGastoRealService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/ActualizarResponse" message="tns:IGastoRealService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/Filtrar" message="tns:IGastoRealService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/FiltrarResponse" message="tns:IGastoRealService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/Borrar" message="tns:IGastoRealService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/BorrarResponse" message="tns:IGastoRealService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/Obtener" message="tns:IGastoRealService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/ObtenerResponse" message="tns:IGastoRealService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/Imprimir" message="tns:IGastoRealService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/ImprimirResponse" message="tns:IGastoRealService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/Estado" message="tns:IGastoRealService_Estado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/EstadoResponse" message="tns:IGastoRealService_Estado_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_Estado_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubros">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/MostrarRubros" message="tns:IGastoRealService_MostrarRubros_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/MostrarRubrosResponse" message="tns:IGastoRealService_MostrarRubros_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_MostrarRubros_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSubRubros">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/MostrarSubRubros" message="tns:IGastoRealService_MostrarSubRubros_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/MostrarSubRubrosResponse" message="tns:IGastoRealService_MostrarSubRubros_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_MostrarSubRubros_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/MostrarTipoDocumento" message="tns:IGastoRealService_MostrarTipoDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/MostrarTipoDocumentoResponse" message="tns:IGastoRealService_MostrarTipoDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_MostrarTipoDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/Mostrar" message="tns:IGastoRealService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/MostrarResponse" message="tns:IGastoRealService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Reporte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/Reporte" message="tns:IGastoRealService_Reporte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/ReporteResponse" message="tns:IGastoRealService_Reporte_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_Reporte_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteTotalPorRubro">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/ReporteTotalPorRubro" message="tns:IGastoRealService_ReporteTotalPorRubro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/ReporteTotalPorRubroResponse" message="tns:IGastoRealService_ReporteTotalPorRubro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_ReporteTotalPorRubro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TrasladarGastos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/TrasladarGastos" message="tns:IGastoRealService_TrasladarGastos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/TrasladarGastosResponse" message="tns:IGastoRealService_TrasladarGastos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_TrasladarGastos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRubro">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/ActualizarRubro" message="tns:IGastoRealService_ActualizarRubro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/ActualizarRubroResponse" message="tns:IGastoRealService_ActualizarRubro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_ActualizarRubro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarGastoGerencia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/InsertarGastoGerencia" message="tns:IGastoRealService_InsertarGastoGerencia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/InsertarGastoGerenciaResponse" message="tns:IGastoRealService_InsertarGastoGerencia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_InsertarGastoGerencia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarGastoGerencia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/ActualizarGastoGerencia" message="tns:IGastoRealService_ActualizarGastoGerencia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/ActualizarGastoGerenciaResponse" message="tns:IGastoRealService_ActualizarGastoGerencia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_ActualizarGastoGerencia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarGastoGerencia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/BorrarGastoGerencia" message="tns:IGastoRealService_BorrarGastoGerencia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/BorrarGastoGerenciaResponse" message="tns:IGastoRealService_BorrarGastoGerencia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_BorrarGastoGerencia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarGastoGerencia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/FiltrarGastoGerencia" message="tns:IGastoRealService_FiltrarGastoGerencia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/FiltrarGastoGerenciaResponse" message="tns:IGastoRealService_FiltrarGastoGerencia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_FiltrarGastoGerencia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerGastoGerencia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/ObtenerGastoGerencia" message="tns:IGastoRealService_ObtenerGastoGerencia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/ObtenerGastoGerenciaResponse" message="tns:IGastoRealService_ObtenerGastoGerencia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_ObtenerGastoGerencia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Procesar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/Procesar" message="tns:IGastoRealService_Procesar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/ProcesarResponse" message="tns:IGastoRealService_Procesar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_Procesar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRubroGastoGerencia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGastoRealService/BuscarRubroGastoGerencia" message="tns:IGastoRealService_BuscarRubroGastoGerencia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGastoRealService/BuscarRubroGastoGerenciaResponse" message="tns:IGastoRealService_BuscarRubroGastoGerencia_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IGastoRealService_BuscarRubroGastoGerencia_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IGastoRealService" type="tns:IGastoRealService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IGastoRealService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/Estado" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubros">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/MostrarRubros" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSubRubros">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/MostrarSubRubros" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/MostrarTipoDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Reporte">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/Reporte" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteTotalPorRubro">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/ReporteTotalPorRubro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="TrasladarGastos">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/TrasladarGastos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRubro">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/ActualizarRubro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarGastoGerencia">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/InsertarGastoGerencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarGastoGerencia">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/ActualizarGastoGerencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarGastoGerencia">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/BorrarGastoGerencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarGastoGerencia">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/FiltrarGastoGerencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerGastoGerencia">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/ObtenerGastoGerencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Procesar">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/Procesar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRubroGastoGerencia">
+      <soap12:operation soapAction="http://tempuri.org/IGastoRealService/BuscarRubroGastoGerencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GastoRealService">
+    <wsdl:port name="NetTcpBinding_IGastoRealService" binding="tns:NetTcpBinding_IGastoRealService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/GastoRealService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/GastoRealService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

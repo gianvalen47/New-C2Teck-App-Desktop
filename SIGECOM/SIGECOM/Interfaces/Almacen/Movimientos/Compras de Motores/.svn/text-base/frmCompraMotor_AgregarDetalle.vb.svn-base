@@ -1,0 +1,241 @@
+﻿Imports System.Windows.Forms
+
+Public Class frmCompraMotor_AgregarDetalle
+    Public state_button As Boolean              'True: Modificar    False: nuevo
+    Public type_process As String               'update     insert      delete
+    Private oComprasMotorDetService As New ComprasMotorDetService.ComprasMotorDetServiceClient
+    Private oComprasMotorService As New ComprasMotorService.ComprasMotorServiceClient
+    Private oLocacionMercaderiaService As New LocacionMercaderiaService.LocacionMercaderiaServiceClient
+    Private dtDatos As DataTable
+    Private state_Search As Boolean
+    '====================================================================================================================
+    '============================================ PARAMETROS LOCALES ====================================================
+    '====================================================================================================================
+    Public IdCompraMotDet As Integer
+    Public IdCompraMot As Integer
+    Public IdLocacion As Integer
+    Public IdCliente As Integer
+    Public CodMon As String
+    Public estado As String
+    '====================================================================================================================
+    '============================================ CONTROL'S METHOD ======================================================
+    '====================================================================================================================
+    Private Sub SendFocus_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                            txtPreMer.KeyPress _
+                          , txtTotal.KeyPress _
+                          , txtCanMer.KeyPress _
+                          , txtDesMer.KeyPress _
+                          , txtCodMer.KeyPress _
+                          , txtStock.KeyPress _
+                          , txtDscMer.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            SendKeys.Send("{TAB}")
+        End If
+    End Sub
+    Private Sub Initialize_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Me.CancelButton = Me.btnCancelar
+        state_Search = False
+        If state_button Then    'Modificar
+            ObtenerRegistro()
+            btnBuscarMercaderia.Enabled = False
+            Me.Text = "Modificar detalle " + txtCodMer.Text.ToString
+        Else                    'Nuevo
+            btnBuscarMercaderia.Enabled = True
+            Me.Text = "Agregar Detalle"
+        End If
+        If estado = "GENERADO" Or estado = "GN" Or state_button = False Then
+            btnGuardar.Enabled = True
+        Else
+            btnGuardar.Enabled = False
+        End If
+        state_Search = True
+    End Sub
+    Private Sub FinallyObjects_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            If isClosed(oComprasMotorDetService) = False Then
+                oComprasMotorDetService.Close()
+            End If
+            If isClosed(oComprasMotorService) = False Then
+                oComprasMotorService.Close()
+            End If
+            If isClosed(oLocacionMercaderiaService) = False Then
+                oLocacionMercaderiaService.Close()
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [FINALLY]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub setColor_BlankCajaTexto(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles _
+                            txtPreMer.KeyUp _
+                          , txtCanMer.KeyUp _
+                          , txtDesMer.KeyUp _
+                          , txtCodMer.KeyUp _
+                          , txtStock.KeyUp _
+                          , txtDscMer.KeyUp _
+                          , txtCosDol.KeyUp _
+                          , txtCosSol.KeyUp
+        Try
+            If state_Search = True Then
+                Dim campo As New Object
+                If sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.EditBox" Then
+                    campo = New Janus.Windows.GridEX.EditControls.EditBox
+                ElseIf sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.NumericEditBox" Then
+                    campo = New Janus.Windows.GridEX.EditControls.NumericEditBox
+                ElseIf sender.GetType.ToString = "System.Windows.Forms.TextBox" Then
+                    campo = New TextBox
+                End If
+                campo = sender
+                If campo.readonly = False Then
+                    If campo.Text.Trim.Length > 0 Then
+                        campo.BackColor = Color.White
+                    Else
+                        campo.BackColor = Color.Red
+                    End If
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+    Private Function calculateTotal() As Double
+        txtTotal.Text = (toNumber(txtCanMer.Value) * toDouble(txtPreMer.Text)) - (toNumber(txtCanMer.Value) * toDouble(txtDscMer.Text))
+    End Function
+    '====================================================================================================================
+    '============================================ TASK'S METHOD =========================================================
+    '====================================================================================================================
+    Private Function ValidaCampos() As Boolean
+        Try
+            If toNumber(IdCompraMot) = 0 Then
+                MsgBox("Debe Ingresrar el código del Compra de motor. ", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf toBlank(txtCodMer.Text) = "" Then
+                MsgBox("Debe Ingresar el código de la mercadería", MsgBoxStyle.Information, "Información")
+                txtCodMer.BackColor = Color.Red
+                txtCodMer.Focus()
+                Return False
+            ElseIf toNumber(txtCanMer.Value) <= 0 Then
+                MsgBox("La cantidad solicitada debe ser mayor a CERO. ", MsgBoxStyle.Information, "Información")
+                txtCanMer.BackColor = Color.Red
+                txtCanMer.Focus()
+                Return False
+            ElseIf toDouble(txtPreMer.Text) <= 0 Then
+                MsgBox("Debe ingresar el precio del artículo ", MsgBoxStyle.Information, "Información")
+                txtPreMer.BackColor = Color.Red
+                txtPreMer.Focus()
+                Return False
+            ElseIf state_button = False And oComprasMotorDetService.Buscar(IdCompraMot, toBlank(txtCodMer.Text)) Then
+                MsgBox("Código " + txtCodMer.Text + " ya existe...!", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf state_button = True And oComprasMotorService.Estado(IdCompraMot) <> "GENERADO" Then
+                MsgBox("Ya no se puede realizar modificaciones...!" + vbCr + "Debido que ya no se encuentra en el estado generado...!!", MsgBoxStyle.Information, "Información")
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [AGRE-001]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+    Private Sub Insertar(ByVal registro As ComprasMotorDetService.ComprasMotorDet)
+        Try
+            Dim estado_process As Integer
+            estado_process = oComprasMotorDetService.Insertar(registro)
+            type_process = "insert"
+            If estado_process > 0 Then
+                IdCompraMotDet = estado_process
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [AGRE-002]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub Modificar(ByVal registro As ComprasMotorDetService.ComprasMotorDet)
+        Try
+            Dim estado_process As Boolean
+            estado_process = oComprasMotorDetService.Actualizar(registro)
+            type_process = "update"
+            If estado_process = True Then
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [AGRE-003]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub ObtenerRegistro()
+        Try
+            Dim registro As ComprasMotorDetService.ComprasMotorDet
+            registro = oComprasMotorDetService.MostrarPorId(toNumber(IdCompraMotDet))
+
+            IdCompraMotDet = registro.IdCompraMotDet
+            IdCompraMot = registro.ComprasMotor.IdCompraMot
+            txtCodMer.Text = registro.CodMer
+            txtDesMer.Text = registro.DesMer
+            txtCanMer.Text = registro.CanMer
+            txtPreMer.Text = registro.PreMer
+            txtCosDol.Text = registro.CosDol
+            txtCosSol.Text = registro.CosSol
+            txtDscMer.Text = registro.DscMer
+            txtTotal.Text = registro.TotalFila
+            txtStock.Text = oLocacionMercaderiaService.MostrarStock(IdLocacion, txtCodMer.Text)
+
+            estado = oComprasMotorService.Estado(IdCompraMot)
+        Catch ex As Exception
+            MsgBox("ERROR [AGRE-004]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    '====================================================================================================================
+    '============================================ INTERFACE'S METHOD ====================================================
+    '====================================================================================================================
+    Private Sub btnCancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancelar.Click
+        Me.DialogResult = Windows.Forms.DialogResult.Cancel
+        Me.Close()
+    End Sub
+    Private Sub btnGuardar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGuardar.Click
+        If MsgBox("¿Está seguro que desea guardar los datos?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes _
+            And ValidaCampos() Then
+
+            Dim registro As New ComprasMotorDetService.ComprasMotorDet
+            Dim comprasMotor As New ComprasMotorDetService.ComprasMotor
+
+            registro.IdCompraMotDet = IIf(toNumber(IdCompraMotDet) = 0, Nothing, IdCompraMotDet)
+            comprasMotor.IdCompraMot = IdCompraMot
+            registro.ComprasMotor = comprasMotor
+            registro.CodMer = toNull(txtCodMer.Text)
+            registro.CanMer = toNumber(txtCanMer.Text)
+            registro.PreMer = toDouble(txtPreMer.Text)
+            registro.DscMer = toDouble(txtDscMer.Text)
+            registro.DesMer = toNull(txtDesMer.Text)
+            registro.CosDol = toDouble(txtCosDol.Text)
+            registro.CosSol = toDouble(txtCosSol.Text)
+
+            If state_button Then        'Modificar
+                Modificar(registro)
+            Else                        'Nuevo
+                Insertar(registro)
+            End If
+        End If
+    End Sub
+    Private Sub btnBuscarMercaderia_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBuscarMercaderia.Click
+        Dim frm As New frmBuscarLocacionMercaderia
+        frm.IdLocacion = IdLocacion
+        If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+            txtDesMer.Text = frm.descripcion
+            txtCodMer.Text = frm.codigo
+            txtPreMer.Text = frm.precio
+            txtDscMer.Text = frm.descuento
+            txtCosDol.Text = frm.costo_dolares
+            txtCosSol.Text = frm.costo_soles
+            txtCodMer.BackColor = System.Drawing.SystemColors.Window
+            txtStock.Text = oLocacionMercaderiaService.MostrarStock(IdLocacion, txtCodMer.Text)
+            calculateTotal()
+        End If
+    End Sub
+    Private Sub txtCanMer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtCanMer.Click
+        calculateTotal()
+    End Sub
+End Class

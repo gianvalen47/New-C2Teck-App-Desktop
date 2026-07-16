@@ -1,0 +1,631 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RegistroCompraService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IRegistroCompraService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IRegistroCompraService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_BuscarDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_BuscarDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_BuscarDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ObtenerRegistro_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRegistro" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ObtenerRegistro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRegistroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ObtenerRegistro_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_MostrarTipoDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_MostrarTipoDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_MostrarTipoDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ObtenerIdCompra_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdCompra" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ObtenerIdCompra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerIdCompraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ObtenerIdCompra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ConsultarDocumentos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarDocumentos" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ConsultarDocumentos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConsultarDocumentosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ConsultarDocumentos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ImportarDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportarDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ImportarDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportarDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ImportarDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ReporteRegistroCompra_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteRegistroCompra" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ReporteRegistroCompra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteRegistroCompraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ReporteRegistroCompra_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Imprimir_InputMessage">
+    <wsdl:part name="parameters" element="tns:Imprimir" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Imprimir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImprimirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_Imprimir_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_BuscarXml_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarXml" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_BuscarXml_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarXmlResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_BuscarXml_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_DescargarXml_InputMessage">
+    <wsdl:part name="parameters" element="tns:DescargarXml" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_DescargarXml_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DescargarXmlResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_DescargarXml_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_DescargarPdf_InputMessage">
+    <wsdl:part name="parameters" element="tns:DescargarPdf" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_DescargarPdf_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DescargarPdfResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_DescargarPdf_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ObtenerNombre_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerNombre" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ObtenerNombre_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerNombreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ObtenerNombre_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ReporteVencimientosCtaPorPagar_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteVencimientosCtaPorPagar" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ReporteVencimientosCtaPorPagar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteVencimientosCtaPorPagarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ReporteVencimientosCtaPorPagar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ReporteCtasPorPagar_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCtasPorPagar" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ReporteCtasPorPagar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCtasPorPagarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ReporteCtasPorPagar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ActualizarPagos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPagos" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ActualizarPagos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarPagosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_ActualizarPagos_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q21:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_RepVencimientosProveedor_InputMessage">
+    <wsdl:part name="parameters" element="tns:RepVencimientosProveedor" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_RepVencimientosProveedor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RepVencimientosProveedorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegistroCompraService_RepVencimientosProveedor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q22:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IRegistroCompraService">
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/Obtener" message="tns:IRegistroCompraService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/ObtenerResponse" message="tns:IRegistroCompraService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/BuscarDocumento" message="tns:IRegistroCompraService_BuscarDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/BuscarDocumentoResponse" message="tns:IRegistroCompraService_BuscarDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_BuscarDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/Buscar" message="tns:IRegistroCompraService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/BuscarResponse" message="tns:IRegistroCompraService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/Insertar" message="tns:IRegistroCompraService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/InsertarResponse" message="tns:IRegistroCompraService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/Actualizar" message="tns:IRegistroCompraService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/ActualizarResponse" message="tns:IRegistroCompraService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/Borrar" message="tns:IRegistroCompraService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/BorrarResponse" message="tns:IRegistroCompraService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRegistro">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/ObtenerRegistro" message="tns:IRegistroCompraService_ObtenerRegistro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/ObtenerRegistroResponse" message="tns:IRegistroCompraService_ObtenerRegistro_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_ObtenerRegistro_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/MostrarTipoDocumento" message="tns:IRegistroCompraService_MostrarTipoDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/MostrarTipoDocumentoResponse" message="tns:IRegistroCompraService_MostrarTipoDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_MostrarTipoDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/Filtrar" message="tns:IRegistroCompraService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/FiltrarResponse" message="tns:IRegistroCompraService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdCompra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/ObtenerIdCompra" message="tns:IRegistroCompraService_ObtenerIdCompra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/ObtenerIdCompraResponse" message="tns:IRegistroCompraService_ObtenerIdCompra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_ObtenerIdCompra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarDocumentos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/ConsultarDocumentos" message="tns:IRegistroCompraService_ConsultarDocumentos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/ConsultarDocumentosResponse" message="tns:IRegistroCompraService_ConsultarDocumentos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_ConsultarDocumentos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportarDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/ImportarDocumento" message="tns:IRegistroCompraService_ImportarDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/ImportarDocumentoResponse" message="tns:IRegistroCompraService_ImportarDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_ImportarDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteRegistroCompra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/ReporteRegistroCompra" message="tns:IRegistroCompraService_ReporteRegistroCompra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/ReporteRegistroCompraResponse" message="tns:IRegistroCompraService_ReporteRegistroCompra_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_ReporteRegistroCompra_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/Imprimir" message="tns:IRegistroCompraService_Imprimir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/ImprimirResponse" message="tns:IRegistroCompraService_Imprimir_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_Imprimir_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarXml">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/BuscarXml" message="tns:IRegistroCompraService_BuscarXml_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/BuscarXmlResponse" message="tns:IRegistroCompraService_BuscarXml_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_BuscarXml_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DescargarXml">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/DescargarXml" message="tns:IRegistroCompraService_DescargarXml_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/DescargarXmlResponse" message="tns:IRegistroCompraService_DescargarXml_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_DescargarXml_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DescargarPdf">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/DescargarPdf" message="tns:IRegistroCompraService_DescargarPdf_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/DescargarPdfResponse" message="tns:IRegistroCompraService_DescargarPdf_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_DescargarPdf_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerNombre">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/ObtenerNombre" message="tns:IRegistroCompraService_ObtenerNombre_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/ObtenerNombreResponse" message="tns:IRegistroCompraService_ObtenerNombre_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_ObtenerNombre_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteVencimientosCtaPorPagar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/ReporteVencimientosCtaPorPagar" message="tns:IRegistroCompraService_ReporteVencimientosCtaPorPagar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/ReporteVencimientosCtaPorPagarResponse" message="tns:IRegistroCompraService_ReporteVencimientosCtaPorPagar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_ReporteVencimientosCtaPorPagar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCtasPorPagar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/ReporteCtasPorPagar" message="tns:IRegistroCompraService_ReporteCtasPorPagar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/ReporteCtasPorPagarResponse" message="tns:IRegistroCompraService_ReporteCtasPorPagar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_ReporteCtasPorPagar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPagos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/ActualizarPagos" message="tns:IRegistroCompraService_ActualizarPagos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/ActualizarPagosResponse" message="tns:IRegistroCompraService_ActualizarPagos_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_ActualizarPagos_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RepVencimientosProveedor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRegistroCompraService/RepVencimientosProveedor" message="tns:IRegistroCompraService_RepVencimientosProveedor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRegistroCompraService/RepVencimientosProveedorResponse" message="tns:IRegistroCompraService_RepVencimientosProveedor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IRegistroCompraService_RepVencimientosProveedor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IRegistroCompraService" type="tns:IRegistroCompraService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IRegistroCompraService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/BuscarDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRegistro">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/ObtenerRegistro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/MostrarTipoDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerIdCompra">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/ObtenerIdCompra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarDocumentos">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/ConsultarDocumentos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImportarDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/ImportarDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteRegistroCompra">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/ReporteRegistroCompra" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Imprimir">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/Imprimir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarXml">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/BuscarXml" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DescargarXml">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/DescargarXml" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DescargarPdf">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/DescargarPdf" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerNombre">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/ObtenerNombre" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteVencimientosCtaPorPagar">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/ReporteVencimientosCtaPorPagar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCtasPorPagar">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/ReporteCtasPorPagar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarPagos">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/ActualizarPagos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RepVencimientosProveedor">
+      <soap12:operation soapAction="http://tempuri.org/IRegistroCompraService/RepVencimientosProveedor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RegistroCompraService">
+    <wsdl:port name="NetTcpBinding_IRegistroCompraService" binding="tns:NetTcpBinding_IRegistroCompraService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/RegistroCompraService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/RegistroCompraService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

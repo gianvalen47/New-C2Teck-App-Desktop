@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CotizacionDetalleService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ICotizacionDetalleService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ICotizacionDetalleService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_MostrarPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorId" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_MostrarPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_MostrarPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_SugerirItem_InputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirItem" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_SugerirItem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SugerirItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_SugerirItem_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_MostrarPorIdSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdSugerido" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_MostrarPorIdSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_MostrarPorIdSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_BuscarSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarSugerido" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_BuscarSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_BuscarSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_InsertarSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarSugerido" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_InsertarSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_InsertarSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_ActualizarSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarSugerido" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_ActualizarSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_ActualizarSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_BorrarSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarSugerido" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_BorrarSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_BorrarSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_IngresarPlantilla_InputMessage">
+    <wsdl:part name="parameters" element="tns:IngresarPlantilla" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_IngresarPlantilla_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IngresarPlantillaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_IngresarPlantilla_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_IngresarConsumoJob_InputMessage">
+    <wsdl:part name="parameters" element="tns:IngresarConsumoJob" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_IngresarConsumoJob_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IngresarConsumoJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICotizacionDetalleService_IngresarConsumoJob_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="ICotizacionDetalleService">
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICotizacionDetalleService/Mostrar" message="tns:ICotizacionDetalleService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICotizacionDetalleService/MostrarResponse" message="tns:ICotizacionDetalleService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICotizacionDetalleService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICotizacionDetalleService/MostrarPorId" message="tns:ICotizacionDetalleService_MostrarPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICotizacionDetalleService/MostrarPorIdResponse" message="tns:ICotizacionDetalleService_MostrarPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICotizacionDetalleService_MostrarPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICotizacionDetalleService/Buscar" message="tns:ICotizacionDetalleService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICotizacionDetalleService/BuscarResponse" message="tns:ICotizacionDetalleService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICotizacionDetalleService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICotizacionDetalleService/Insertar" message="tns:ICotizacionDetalleService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICotizacionDetalleService/InsertarResponse" message="tns:ICotizacionDetalleService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICotizacionDetalleService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICotizacionDetalleService/Actualizar" message="tns:ICotizacionDetalleService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICotizacionDetalleService/ActualizarResponse" message="tns:ICotizacionDetalleService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICotizacionDetalleService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICotizacionDetalleService/Borrar" message="tns:ICotizacionDetalleService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICotizacionDetalleService/BorrarResponse" message="tns:ICotizacionDetalleService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICotizacionDetalleService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SugerirItem">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICotizacionDetalleService/SugerirItem" message="tns:ICotizacionDetalleService_SugerirItem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICotizacionDetalleService/SugerirItemResponse" message="tns:ICotizacionDetalleService_SugerirItem_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICotizacionDetalleService_SugerirItem_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorIdSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICotizacionDetalleService/MostrarPorIdSugerido" message="tns:ICotizacionDetalleService_MostrarPorIdSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICotizacionDetalleService/MostrarPorIdSugeridoResponse" message="tns:ICotizacionDetalleService_MostrarPorIdSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICotizacionDetalleService_MostrarPorIdSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICotizacionDetalleService/BuscarSugerido" message="tns:ICotizacionDetalleService_BuscarSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICotizacionDetalleService/BuscarSugeridoResponse" message="tns:ICotizacionDetalleService_BuscarSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICotizacionDetalleService_BuscarSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICotizacionDetalleService/InsertarSugerido" message="tns:ICotizacionDetalleService_InsertarSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICotizacionDetalleService/InsertarSugeridoResponse" message="tns:ICotizacionDetalleService_InsertarSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICotizacionDetalleService_InsertarSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICotizacionDetalleService/ActualizarSugerido" message="tns:ICotizacionDetalleService_ActualizarSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICotizacionDetalleService/ActualizarSugeridoResponse" message="tns:ICotizacionDetalleService_ActualizarSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICotizacionDetalleService_ActualizarSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICotizacionDetalleService/BorrarSugerido" message="tns:ICotizacionDetalleService_BorrarSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICotizacionDetalleService/BorrarSugeridoResponse" message="tns:ICotizacionDetalleService_BorrarSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICotizacionDetalleService_BorrarSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IngresarPlantilla">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICotizacionDetalleService/IngresarPlantilla" message="tns:ICotizacionDetalleService_IngresarPlantilla_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICotizacionDetalleService/IngresarPlantillaResponse" message="tns:ICotizacionDetalleService_IngresarPlantilla_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICotizacionDetalleService_IngresarPlantilla_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IngresarConsumoJob">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICotizacionDetalleService/IngresarConsumoJob" message="tns:ICotizacionDetalleService_IngresarConsumoJob_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICotizacionDetalleService/IngresarConsumoJobResponse" message="tns:ICotizacionDetalleService_IngresarConsumoJob_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:ICotizacionDetalleService_IngresarConsumoJob_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ICotizacionDetalleService" type="tns:ICotizacionDetalleService">
+    <wsp:PolicyReference URI="#NetTcpBinding_ICotizacionDetalleService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/ICotizacionDetalleService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <soap12:operation soapAction="http://tempuri.org/ICotizacionDetalleService/MostrarPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/ICotizacionDetalleService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/ICotizacionDetalleService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/ICotizacionDetalleService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/ICotizacionDetalleService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SugerirItem">
+      <soap12:operation soapAction="http://tempuri.org/ICotizacionDetalleService/SugerirItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorIdSugerido">
+      <soap12:operation soapAction="http://tempuri.org/ICotizacionDetalleService/MostrarPorIdSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarSugerido">
+      <soap12:operation soapAction="http://tempuri.org/ICotizacionDetalleService/BuscarSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarSugerido">
+      <soap12:operation soapAction="http://tempuri.org/ICotizacionDetalleService/InsertarSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarSugerido">
+      <soap12:operation soapAction="http://tempuri.org/ICotizacionDetalleService/ActualizarSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarSugerido">
+      <soap12:operation soapAction="http://tempuri.org/ICotizacionDetalleService/BorrarSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="IngresarPlantilla">
+      <soap12:operation soapAction="http://tempuri.org/ICotizacionDetalleService/IngresarPlantilla" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="IngresarConsumoJob">
+      <soap12:operation soapAction="http://tempuri.org/ICotizacionDetalleService/IngresarConsumoJob" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CotizacionDetalleService">
+    <wsdl:port name="NetTcpBinding_ICotizacionDetalleService" binding="tns:NetTcpBinding_ICotizacionDetalleService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/CotizacionDetalleService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/CotizacionDetalleService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,500 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AsignacionHorarioService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IAsignacionHorarioService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IAsignacionHorarioService_ObtenerCodHor_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCodHor" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_ObtenerCodHor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCodHorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_ObtenerCodHor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_BuscarHorarioLector_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarHorarioLector" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_BuscarHorarioLector_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarHorarioLectorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_BuscarHorarioLector_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_BuscarVigente_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarVigente" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_BuscarVigente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarVigenteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_BuscarVigente_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_ObtenerCronograma_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCronograma" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_ObtenerCronograma_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_ObtenerCronograma_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_FiltrarCronograma_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarCronograma" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_FiltrarCronograma_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_FiltrarCronograma_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_InsertarCronograma_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCronograma" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_InsertarCronograma_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_InsertarCronograma_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_ActualizarCronograma_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCronograma" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_ActualizarCronograma_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_ActualizarCronograma_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_BorrarCronograma_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCronograma" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_BorrarCronograma_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_BorrarCronograma_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_MostrarTipoCronograma_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoCronograma" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_MostrarTipoCronograma_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_MostrarTipoCronograma_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_ReporteCronograma_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCronograma" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_ReporteCronograma_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteCronogramaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_ReporteCronograma_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Reporte_InputMessage">
+    <wsdl:part name="parameters" element="tns:Reporte" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Reporte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReporteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAsignacionHorarioService_Reporte_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IAsignacionHorarioService">
+    <wsdl:operation name="ObtenerCodHor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/ObtenerCodHor" message="tns:IAsignacionHorarioService_ObtenerCodHor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/ObtenerCodHorResponse" message="tns:IAsignacionHorarioService_ObtenerCodHor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_ObtenerCodHor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarHorarioLector">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/BuscarHorarioLector" message="tns:IAsignacionHorarioService_BuscarHorarioLector_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/BuscarHorarioLectorResponse" message="tns:IAsignacionHorarioService_BuscarHorarioLector_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_BuscarHorarioLector_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarVigente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/BuscarVigente" message="tns:IAsignacionHorarioService_BuscarVigente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/BuscarVigenteResponse" message="tns:IAsignacionHorarioService_BuscarVigente_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_BuscarVigente_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/Buscar" message="tns:IAsignacionHorarioService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/BuscarResponse" message="tns:IAsignacionHorarioService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/Obtener" message="tns:IAsignacionHorarioService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/ObtenerResponse" message="tns:IAsignacionHorarioService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/Filtrar" message="tns:IAsignacionHorarioService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/FiltrarResponse" message="tns:IAsignacionHorarioService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/Insertar" message="tns:IAsignacionHorarioService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/InsertarResponse" message="tns:IAsignacionHorarioService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/Actualizar" message="tns:IAsignacionHorarioService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/ActualizarResponse" message="tns:IAsignacionHorarioService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/Borrar" message="tns:IAsignacionHorarioService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/BorrarResponse" message="tns:IAsignacionHorarioService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCronograma">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/ObtenerCronograma" message="tns:IAsignacionHorarioService_ObtenerCronograma_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/ObtenerCronogramaResponse" message="tns:IAsignacionHorarioService_ObtenerCronograma_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_ObtenerCronograma_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarCronograma">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/FiltrarCronograma" message="tns:IAsignacionHorarioService_FiltrarCronograma_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/FiltrarCronogramaResponse" message="tns:IAsignacionHorarioService_FiltrarCronograma_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_FiltrarCronograma_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCronograma">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/InsertarCronograma" message="tns:IAsignacionHorarioService_InsertarCronograma_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/InsertarCronogramaResponse" message="tns:IAsignacionHorarioService_InsertarCronograma_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_InsertarCronograma_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCronograma">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/ActualizarCronograma" message="tns:IAsignacionHorarioService_ActualizarCronograma_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/ActualizarCronogramaResponse" message="tns:IAsignacionHorarioService_ActualizarCronograma_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_ActualizarCronograma_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCronograma">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/BorrarCronograma" message="tns:IAsignacionHorarioService_BorrarCronograma_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/BorrarCronogramaResponse" message="tns:IAsignacionHorarioService_BorrarCronograma_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_BorrarCronograma_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoCronograma">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/MostrarTipoCronograma" message="tns:IAsignacionHorarioService_MostrarTipoCronograma_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/MostrarTipoCronogramaResponse" message="tns:IAsignacionHorarioService_MostrarTipoCronograma_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_MostrarTipoCronograma_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCronograma">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/ReporteCronograma" message="tns:IAsignacionHorarioService_ReporteCronograma_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/ReporteCronogramaResponse" message="tns:IAsignacionHorarioService_ReporteCronograma_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_ReporteCronograma_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Reporte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAsignacionHorarioService/Reporte" message="tns:IAsignacionHorarioService_Reporte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAsignacionHorarioService/ReporteResponse" message="tns:IAsignacionHorarioService_Reporte_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAsignacionHorarioService_Reporte_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IAsignacionHorarioService" type="tns:IAsignacionHorarioService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IAsignacionHorarioService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="ObtenerCodHor">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/ObtenerCodHor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarHorarioLector">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/BuscarHorarioLector" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarVigente">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/BuscarVigente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCronograma">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/ObtenerCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarCronograma">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/FiltrarCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarCronograma">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/InsertarCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCronograma">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/ActualizarCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarCronograma">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/BorrarCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoCronograma">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/MostrarTipoCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReporteCronograma">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/ReporteCronograma" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Reporte">
+      <soap12:operation soapAction="http://tempuri.org/IAsignacionHorarioService/Reporte" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AsignacionHorarioService">
+    <wsdl:port name="NetTcpBinding_IAsignacionHorarioService" binding="tns:NetTcpBinding_IAsignacionHorarioService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/AsignacionHorarioService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/AsignacionHorarioService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

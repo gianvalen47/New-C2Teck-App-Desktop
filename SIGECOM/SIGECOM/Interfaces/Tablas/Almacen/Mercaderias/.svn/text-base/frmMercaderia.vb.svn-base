@@ -1,0 +1,484 @@
+﻿Imports System.Windows.Forms
+
+Public Class frmMercaderia
+    Public state_button As Boolean              'True: Modificar    False: nuevo
+    Public type_process As String               'update     insert      delete
+    Private oMaestro As New MaestroService.MaestroClient
+    Private oMercaderiaService As New MercaderiaService.MercaderiaServiceClient
+    Private oModeloService As New ModeloService.ModeloServiceClient
+    Private oTipoMotorService As New TipoMotorService.TipoMotorServiceClient
+    Private dtDatos As DataTable
+    Private state_Search As Boolean
+    '====================================================================================================================
+    '============================================ PARAMETROS LOCALES ====================================================
+    '====================================================================================================================
+    Private dtModelos As DataTable
+    Private dtTiposMotores As DataTable
+    Private dtUnidadesMedida As DataTable
+    Private dtRubros As DataTable
+    Private dtRubrosMotor As DataTable
+    Private dtMovimientos As DataTable
+    Private dtSubMovimientos As DataTable
+
+    Private IdClase As String
+    Private CodGru As String
+    Private CodPais As String
+    Private CodPar As String
+    Private CodMar As String
+    Private CodApl As String
+
+    '====================================================================================================================
+    '============================================ CONTROL'S METHOD ======================================================
+    '====================================================================================================================
+    Private Sub SendFocus_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                            txtDesMer1.KeyPress _
+                          , txtCodMer.KeyPress _
+                          , txtDesMer2.KeyPress _
+                          , txtCorMer.KeyPress _
+                          , txtDeaMer.KeyPress _
+                          , txtAntMer.KeyPress _
+                          , txtNueMer.KeyPress _
+                          , cmbModMer.KeyPress _
+                          , cmbTipMot.KeyPress _
+                          , cmbCodUniMed.KeyPress _
+                          , txtGrupo.KeyPress _
+                          , cmbCodRub.KeyPress _
+                          , cmbCodRubMot.KeyPress _
+                          , txtMarca.KeyPress _
+                          , txtPartida.KeyPress _
+                          , txtPais.KeyPress _
+                          , cmbCodSubMov.KeyPress _
+                          , cmbCodMov.KeyPress _
+                          , txtAplicacion.KeyPress _
+                          , txtPesMer.KeyPress _
+                          , txtObsMer.KeyPress _
+                          , txtClase.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            SendKeys.Send("{TAB}")
+        End If
+    End Sub
+    Private Sub Initialize_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Me.CancelButton = Me.btnCancelar
+        state_Search = False
+        llenarCombos()
+        If state_button Then    'Modificar
+            Me.btnGuardar.Location = New System.Drawing.Point(443, 277)
+            Me.btnEliminar.Location = New System.Drawing.Point(517, 277)
+            txtCodMer.ReadOnly = True
+            txtCodMer.TabStop = False
+            ObtenerRegistro()
+            Me.Text = "Mercadería " + Chr(34) + txtCodMer.Text.ToString + Chr(34)
+        Else                    'Nuevo
+            btnEliminar.Visible = False
+            Me.btnEliminar.Location = New System.Drawing.Point(443, 277)
+            Me.btnGuardar.Location = New System.Drawing.Point(517, 277)
+            txtCodMer.ReadOnly = False
+            txtCodMer.TabStop = True
+            Me.Text = "Registrar una nueva Mercadería"
+        End If
+        state_Search = True
+    End Sub
+    Private Sub FinallyObjects_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            If isClosed(oMaestro) = False Then
+                oMaestro.Close()
+            End If
+            If isClosed(oMercaderiaService) = False Then
+                oMercaderiaService.Close()
+            End If
+            If isClosed(oModeloService) = False Then
+                oModeloService.Close()
+            End If
+            If isClosed(oTipoMotorService) = False Then
+                oTipoMotorService.Close()
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [FINALLY]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub setColor_BlankCajaTexto(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles _
+                           txtCodMer.KeyUp _
+                          , txtDesMer1.KeyUp
+        Try
+            If state_Search = True Then
+                Dim campo As New Object
+                If sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.EditBox" Then
+                    campo = New Janus.Windows.GridEX.EditControls.EditBox
+                ElseIf sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.NumericEditBox" Then
+                    campo = New Janus.Windows.GridEX.EditControls.NumericEditBox
+                ElseIf sender.GetType.ToString = "System.Windows.Forms.TextBox" Then
+                    campo = New TextBox
+                End If
+                campo = sender
+                If campo.readonly = False Then
+                    If campo.Text.Trim.Length > 0 Then
+                        campo.BackColor = Color.White
+                    Else
+                        campo.BackColor = Color.Red
+                    End If
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+    Private Sub OnlyNumber_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) 'Handles txtModMer.KeyPress
+        If Not Char.IsNumber(e.KeyChar) And (e.KeyChar = ChrW(Keys.Back)) = False And (e.KeyChar = ChrW(Keys.Enter)) = False Then
+            e.KeyChar = Chr(0)
+        End If
+    End Sub
+    Private Function getRowTodos(ByVal data As DataTable)
+        Dim fila As DataRow = data.NewRow
+        Try
+            fila(0) = ""
+        Catch ex As Exception
+            fila(0) = 0
+        End Try
+        fila(1) = "(Ninguno)"
+        Return fila
+    End Function
+
+    '====================================================================================================================
+    '============================================ TASK'S METHOD =========================================================
+    '====================================================================================================================
+    Private Function ValidaCampos() As Boolean
+        Try
+            If txtCodMer.Text.Trim = "" Then
+                MsgBox("Debe Ingresar el código de la Mercadería", MsgBoxStyle.Information, "Información")
+                txtCodMer.BackColor = Color.Red
+                txtCodMer.Focus()
+                Return False
+            ElseIf txtDesMer1.Text = "" Then
+                MsgBox("Debe Ingresar el descripción de la Mercadería", MsgBoxStyle.Information, "Información")
+                txtDesMer1.BackColor = Color.Red
+                txtDesMer1.Focus()
+                Return False
+            ElseIf IdClase.Trim.Length < 1 Then
+                MsgBox("Debe Ingresar la clase de la Mercadería", MsgBoxStyle.Information, "Información")
+                txtClase.BackColor = Color.Red
+                btnBuscarClase.Focus()
+                Return False
+            ElseIf cmbCodUniMed.Value = "" Then
+                MsgBox("Debe Ingresar la Unidad de Medida de la Mercadería", MsgBoxStyle.Information, "Información")
+                cmbCodUniMed.BackColor = Color.Red
+                cmbCodUniMed.Focus()
+                Return False
+            ElseIf cmbCodRub.Value = "" Then
+                MsgBox("Debe Ingresar el rubro de la Mercadería", MsgBoxStyle.Information, "Información")
+                cmbCodRub.BackColor = Color.Red
+                cmbCodRub.Focus()
+                Return False
+            ElseIf toNull(CodPar) = Nothing Then
+                MsgBox("Debe Ingresar la partida de la Mercadería", MsgBoxStyle.Information, "Información")
+                txtPartida.BackColor = Color.Red
+                btnBuscarPartida.Focus()
+                Return False
+            ElseIf toNull(CodMar) = Nothing Then
+                MsgBox("Debe Ingresar la marca de la Mercadería", MsgBoxStyle.Information, "Información")
+                txtMarca.BackColor = Color.Red
+                btnBuscarMarca.Focus()
+                Return False
+            ElseIf state_button = False And oMercaderiaService.Buscar(toNull(txtCodMer.Text)) = True Then
+                MsgBox("Código " + txtCodMer.Text + " ya existe...!", MsgBoxStyle.Information, "Información")
+                txtCodMer.Text = ""
+                txtCodMer.Focus()
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-001]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+    Private Sub Insertar(ByVal registro As MercaderiaService.Mercaderia)
+        Try
+            Dim estado_process As Boolean
+            estado_process = oMercaderiaService.Insertar(registro)
+            type_process = "insert"
+            If estado_process = True Then
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-002]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub Modificar(ByVal registro As MercaderiaService.Mercaderia)
+        Try
+            Dim estado_process As Boolean
+            estado_process = oMercaderiaService.Actualizar(registro)
+            type_process = "update"
+            If estado_process = True Then
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-003]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub Eliminar(ByVal registro As MercaderiaService.Mercaderia)
+        Try
+            Dim estado_process As Boolean
+            estado_process = oMercaderiaService.Borrar(registro)
+            type_process = "delete"
+            If estado_process = True Then
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-004]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub ObtenerRegistro()
+        Try
+            Dim registro As MercaderiaService.Mercaderia
+            registro = oMercaderiaService.MostrarPorCodigo(toNull(txtCodMer.Text))
+
+            txtCodMer.Text = registro.CodMer
+            IdClase = registro.ClaseMerca.IdClase
+            txtClase.Text = registro.ClaseMerca.NomClas
+            txtDesMer1.Text = registro.DesMer1
+            txtDesMer2.Text = registro.DesMer2
+            txtObsMer.Text = registro.ObsMer
+            txtDeaMer.Text = registro.DeaMer
+            txtCorMer.Text = registro.CorMer
+            txtNueMer.Text = registro.NueMer
+            txtAntMer.Text = registro.AntMer
+            txtPesMer.Text = registro.PesMer
+            CodGru = registro.GrupoMerca.CodGru
+            txtGrupo.Text = registro.GrupoMerca.DesGru
+            CodPais = registro.Pais.CodPais
+            txtPais.Text = registro.Pais.DesPais
+            CodPar = registro.Partida.CodPar
+            txtPartida.Text = registro.Partida.ParPar
+            CodMar = registro.Marca.CodMar
+            txtMarca.Text = registro.Marca.DesMar
+            CodApl = registro.AplicacionMerca.CodApl
+            txtAplicacion.Text = registro.AplicacionMerca.DesApl
+            state_Search = True
+            cmbModMer.Value = toBlank(registro.Modelo.ModMer)
+            cmbTipMot.Value = toBlank(registro.TipoMotor.TipMot)
+            cmbCodUniMed.Value = toBlank(registro.UnidadMedida.CodUniMed)
+            cmbCodRub.Value = toBlank(registro.Rubro.CodRub)
+            cmbCodRubMot.Value = toBlank(registro.RubroMotor.CodRubMot)
+            cmbCodMov.Value = toBlank(registro.Movimiento.CodMov)
+            cmbCodSubMov.Value = toBlank(registro.SubMovimiento.CodSubMov)
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-005]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub llenarCombos()
+        Try
+            '======================================= MODELOS ================================================
+            dtModelos = oModeloService.Mostrar.Tables(0)
+            dtModelos.Rows.InsertAt(getRowTodos(dtModelos), 0)
+            cmbModMer.DataSource = dtModelos
+            cmbModMer.DropDownList.DataMember = dtModelos.Columns("Descripcion").ToString
+            cmbModMer.DropDownList.DisplayMember = dtModelos.Columns("Descripcion").ToString
+            cmbModMer.DropDownList.ValueMember = dtModelos.Columns("ModMer").ToString
+            cmbModMer.DropDownList.Columns(0).DataMember = dtModelos.Columns("ModMer").ToString
+            cmbModMer.DropDownList.Columns(1).DataMember = dtModelos.Columns("Descripcion").ToString
+            cmbModMer.SelectedIndex = 0
+            dtModelos = Nothing
+            '======================================= TIPOS DE MOTORES =========================================
+            dtTiposMotores = oTipoMotorService.Mostrar.Tables(0)
+            dtTiposMotores.Rows.InsertAt(getRowTodos(dtTiposMotores), 0)
+            cmbTipMot.DataSource = dtTiposMotores
+            cmbTipMot.DropDownList.DataMember = dtTiposMotores.Columns("Descripcion").ToString
+            cmbTipMot.DropDownList.DisplayMember = dtTiposMotores.Columns("Descripcion").ToString
+            cmbTipMot.DropDownList.ValueMember = dtTiposMotores.Columns("TipMot").ToString
+            cmbTipMot.DropDownList.Columns(0).DataMember = dtTiposMotores.Columns("TipMot").ToString
+            cmbTipMot.DropDownList.Columns(1).DataMember = dtTiposMotores.Columns("Descripcion").ToString
+            cmbTipMot.SelectedIndex = 0
+            dtTiposMotores = Nothing
+            '======================================= UNIDAD DE MEDIDA =========================================
+            dtUnidadesMedida = oMaestro.MostrarUnidadMedida.Tables(0)
+            dtUnidadesMedida.Rows.InsertAt(getRowTodos(dtUnidadesMedida), 0)
+            cmbCodUniMed.DataSource = dtUnidadesMedida
+            cmbCodUniMed.DropDownList.DataMember = dtUnidadesMedida.Columns("Nombre").ToString
+            cmbCodUniMed.DropDownList.DisplayMember = dtUnidadesMedida.Columns("Nombre").ToString
+            cmbCodUniMed.DropDownList.ValueMember = dtUnidadesMedida.Columns("CodUniMed").ToString
+            cmbCodUniMed.DropDownList.Columns(0).DataMember = dtUnidadesMedida.Columns("CodUniMed").ToString
+            cmbCodUniMed.DropDownList.Columns(1).DataMember = dtUnidadesMedida.Columns("Nombre").ToString
+            dtUnidadesMedida = Nothing
+            '======================================= RUBROS ================================================
+            dtRubros = oMaestro.MostrarRubros.Tables(0)
+            dtRubros.Rows.InsertAt(getRowTodos(dtRubros), 0)
+            cmbCodRub.DataSource = dtRubros
+            cmbCodRub.DropDownList.DataMember = dtRubros.Columns("DesRub").ToString
+            cmbCodRub.DropDownList.DisplayMember = dtRubros.Columns("DesRub").ToString
+            cmbCodRub.DropDownList.ValueMember = dtRubros.Columns("CodRub").ToString
+            cmbCodRub.DropDownList.Columns(0).DataMember = dtRubros.Columns("CodRub").ToString
+            cmbCodRub.DropDownList.Columns(1).DataMember = dtRubros.Columns("DesRub").ToString
+            cmbCodRub.SelectedIndex = 0
+            dtRubros = Nothing
+            '======================================= RUBRO MOTOR ================================================
+            dtRubrosMotor = oMaestro.MostrarRubroMotor.Tables(0)
+            dtRubrosMotor.Rows.InsertAt(getRowTodos(dtRubrosMotor), 0)
+            cmbCodRubMot.DataSource = dtRubrosMotor
+            cmbCodRubMot.DropDownList.DataMember = dtRubrosMotor.Columns("DesRubMot").ToString
+            cmbCodRubMot.DropDownList.DisplayMember = dtRubrosMotor.Columns("DesRubMot").ToString
+            cmbCodRubMot.DropDownList.ValueMember = dtRubrosMotor.Columns("CodRubMot").ToString
+            cmbCodRubMot.DropDownList.Columns(0).DataMember = dtRubrosMotor.Columns("CodRubMot").ToString
+            cmbCodRubMot.DropDownList.Columns(1).DataMember = dtRubrosMotor.Columns("DesRubMot").ToString
+            dtRubrosMotor = Nothing
+            '======================================= MOVIMIENTOS ===============================================
+            dtMovimientos = oMaestro.MostrarMovimiento.Tables(0)
+            dtMovimientos.Rows.InsertAt(getRowTodos(dtMovimientos), 0)
+            cmbCodMov.DataSource = dtMovimientos
+            cmbCodMov.DropDownList.DataMember = dtMovimientos.Columns("DesMov").ToString
+            cmbCodMov.DropDownList.DisplayMember = dtMovimientos.Columns("DesMov").ToString
+            cmbCodMov.DropDownList.ValueMember = dtMovimientos.Columns("CodMov").ToString
+            cmbCodMov.DropDownList.Columns(0).DataMember = dtMovimientos.Columns("CodMov").ToString
+            cmbCodMov.DropDownList.Columns(1).DataMember = dtMovimientos.Columns("DesMov").ToString
+            dtMovimientos = Nothing
+            '======================================= SUB MOVIMIENTOS ===========================================
+            dtSubMovimientos = oMaestro.MostrarSubMovimiento.Tables(0)
+            dtSubMovimientos.Rows.InsertAt(getRowTodos(dtSubMovimientos), 0)
+            cmbCodSubMov.DataSource = dtSubMovimientos
+            cmbCodSubMov.DropDownList.DataMember = dtSubMovimientos.Columns("DesSubMov").ToString
+            cmbCodSubMov.DropDownList.DisplayMember = dtSubMovimientos.Columns("DesSubMov").ToString
+            cmbCodSubMov.DropDownList.ValueMember = dtSubMovimientos.Columns("CodSubMov").ToString
+            cmbCodSubMov.DropDownList.Columns(0).DataMember = dtSubMovimientos.Columns("CodSubMov").ToString
+            cmbCodSubMov.DropDownList.Columns(1).DataMember = dtSubMovimientos.Columns("DesSubMov").ToString
+            dtSubMovimientos = Nothing
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-006]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+
+    '====================================================================================================================
+    '============================================ INTERFACE'S METHOD ====================================================
+    '====================================================================================================================
+    Private Sub btnCancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancelar.Click
+        Me.DialogResult = Windows.Forms.DialogResult.Cancel
+        Me.Close()
+    End Sub
+    Private Sub btnGuardar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGuardar.Click
+        If MsgBox("¿Está seguro que desea guardar los datos?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes _
+            And ValidaCampos() Then
+
+            Dim registro As New MercaderiaService.Mercaderia
+            Dim rubro As New MercaderiaService.Rubro
+            Dim modelo As New MercaderiaService.Modelo
+            Dim tipoMotor As New MercaderiaService.TipoMotor
+            Dim claseMerca As New MercaderiaService.ClaseMerca
+            Dim unidadMedida As New MercaderiaService.UnidadMedida
+            Dim rubroMotor As New MercaderiaService.RubroMotor
+            Dim marca As New MercaderiaService.Marca
+            Dim aplicacionMerca As New MercaderiaService.AplicacionMerca
+            Dim movimiento As New MercaderiaService.Movimiento
+            Dim submovimiento As New MercaderiaService.SubMovimiento
+            Dim grupo As New MercaderiaService.GrupoMerca
+            Dim pais As New MercaderiaService.Pais
+            Dim partida As New MercaderiaService.Partida
+
+            registro.CodMer = toNull(txtCodMer.Text)
+            claseMerca.IdClase = toNull(IdClase)
+            registro.ClaseMerca = claseMerca
+            registro.DesMer1 = toNull(txtDesMer1.Text)
+            registro.DesMer2 = toNull(txtDesMer2.Text)
+            registro.ObsMer = toNull(txtObsMer.Text)
+            registro.DeaMer = toNull(txtDeaMer.Text)
+            registro.CorMer = toNull(txtCorMer.Text)
+            modelo.ModMer = toNull(cmbModMer.Value)
+            registro.Modelo = modelo
+            registro.NueMer = toNull(txtNueMer.Text)
+            registro.AntMer = toNull(txtAntMer.Text)
+            tipoMotor.TipMot = toNull(cmbTipMot.Value)
+            registro.TipoMotor = tipoMotor
+            registro.PesMer = toNull(txtPesMer.Text)
+            unidadMedida.CodUniMed = toNull(cmbCodUniMed.Value)
+            registro.UnidadMedida = unidadMedida
+            grupo.CodGru = toNull(CodGru)
+            registro.GrupoMerca = grupo
+            rubro.CodRub = toNull(cmbCodRub.Value)
+            registro.Rubro = rubro
+            rubroMotor.CodRubMot = toNull(cmbCodRubMot.Value)
+            registro.RubroMotor = rubroMotor
+            pais.CodPais = toNull(CodPais)
+            registro.Pais = pais
+            partida.CodPar = toNull(CodPar)
+            registro.Partida = partida
+            marca.CodMar = toNull(CodMar)
+            registro.Marca = marca
+            aplicacionMerca.CodApl = toNull(CodApl)
+            registro.AplicacionMerca = aplicacionMerca
+            movimiento.CodMov = toNull(cmbCodMov.Value)
+            registro.Movimiento = movimiento
+            submovimiento.CodSubMov = toNull(cmbCodSubMov.Value)
+            registro.SubMovimiento = submovimiento
+
+            If state_button Then        'Modificar
+                Modificar(registro)
+            Else                        'Nuevo
+                Insertar(registro)
+            End If
+        End If
+    End Sub
+    Private Sub btnEliminar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnEliminar.Click
+        If MsgBox("¿Está seguro que desea eliminar el registro?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes Then
+            If txtCodMer.Text.Trim.Length > 0 Then
+                Dim registro As New MercaderiaService.Mercaderia
+                registro.Modelo.ModMer = txtCodMer.Text.Trim
+                Eliminar(registro)
+            Else
+                MsgBox("Debe Ingresar el Código...!!!", MsgBoxStyle.Information, "Información")
+                txtCodMer.Focus()
+            End If
+        End If
+    End Sub
+    Private Sub btnBuscarClase_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBuscarClase.Click
+        Dim frm As New frmBuscarClase
+        If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+            txtClase.Text = frm.descripcion
+            txtClase.BackColor = System.Drawing.SystemColors.Control
+            IdClase = frm.codigo
+        End If
+    End Sub
+    Private Sub btnBuscarGrupo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBuscarGrupo.Click
+        Dim frm As New frmBuscarGrupo
+        If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+            txtGrupo.Text = frm.descripcion
+            txtGrupo.BackColor = System.Drawing.SystemColors.Control
+            CodGru = frm.codigo
+        End If
+    End Sub
+    Private Sub btnBuscarPais_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBuscarPais.Click
+        Dim frm As New frmBuscarPais
+        If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+            txtPais.Text = frm.descripcion
+            txtPais.BackColor = System.Drawing.SystemColors.Control
+            CodPais = frm.codigo
+        End If
+    End Sub
+    Private Sub btnBuscarPartida_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBuscarPartida.Click
+        Dim frm As New frmBuscarPartida
+        frm.txtCodPar.Text = toBlank(CodPar)
+        If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+            txtPartida.Text = frm.descripcion
+            txtPartida.BackColor = System.Drawing.SystemColors.Control
+            CodPar = frm.codigo
+        End If
+    End Sub
+    Private Sub btnBuscarMarca_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBuscarMarca.Click
+        Dim frm As New frmBuscarMarca
+        If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+            txtMarca.Text = frm.descripcion
+            txtMarca.BackColor = System.Drawing.SystemColors.Control
+            CodMar = frm.codigo
+        End If
+    End Sub
+    Private Sub btnBuscarAplicacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBuscarAplicacion.Click
+        Dim frm As New frmBuscarAplicacion
+        If frm.ShowDialog = Windows.Forms.DialogResult.OK Then
+            txtAplicacion.Text = frm.descripcion
+            txtAplicacion.BackColor = System.Drawing.SystemColors.Control
+            CodApl = frm.codigo
+        End If
+    End Sub
+End Class

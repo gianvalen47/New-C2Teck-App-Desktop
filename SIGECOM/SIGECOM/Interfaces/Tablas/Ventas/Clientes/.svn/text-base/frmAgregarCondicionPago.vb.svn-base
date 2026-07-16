@@ -1,0 +1,205 @@
+﻿Imports System.Windows.Forms
+
+Public Class frmAgregarCondicionPago
+
+    Public state_button As Boolean              'True: Modificar    False: nuevo
+    Public type_process As String               'update     insert      delete
+    Private oCondicionPagoClienteService As New CondicionPagoClienteService.CondicionPagoClienteServiceClient
+    Private oMaestroService As New MaestroService.MaestroClient
+    Private dtDatos As DataTable
+    '====================================================================================================================
+    '============================================ PARAMETROS LOCALES ====================================================
+    '====================================================================================================================
+    Private dtRubros As DataTable
+    Private dtCondicionesPago
+
+    Public IdCliente As String
+
+    '====================================================================================================================
+    '============================================ CONTROL'S METHOD ======================================================
+    '====================================================================================================================
+    Private Sub SendFocus_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                            cmbCodPag.KeyPress _
+                          , cmbCodRub.KeyPress 
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            SendKeys.Send("{TAB}")
+        End If
+    End Sub
+    Private Sub Initialize_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Me.CancelButton = Me.btnCancelar
+        llenarCombos()
+        If state_button Then    'Modificar
+            ObtenerRegistro()
+        Else                    'Nuevo
+        End If
+    End Sub
+    Private Sub FinallyObjects_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            If isClosed(oCondicionPagoClienteService) = False Then
+                oCondicionPagoClienteService.Close()
+            End If
+            If isClosed(oMaestroService) = False Then
+                oMaestroService.Close()
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [FINALLY]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub setColor_BlankCombo(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles _
+                       cmbCodPag.ValueChanged _
+                     , cmbCodRub.ValueChanged
+
+        Try
+            Dim campo As New Object
+            If sender.GetType.ToString = "Janus.Windows.GridEX.EditControls.MultiColumnCombo" Then
+                campo = New Janus.Windows.GridEX.EditControls.MultiColumnCombo
+            End If
+            campo = sender
+            If toNumber(campo.value) <> 0 Then
+                campo.BackColor = Color.White
+            Else
+                campo.BackColor = Color.Red
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+    '====================================================================================================================
+    '============================================ TASK'S METHOD =========================================================
+    '====================================================================================================================
+    Private Function ValidaCampos() As Boolean
+        Try
+            Dim registro As New CondicionPagoClienteService.CondicionPagoCliente
+            Dim cliente As New CondicionPagoClienteService.Cliente
+            Dim rubro As New CondicionPagoClienteService.Rubro
+
+            cliente.IdCliente = toNumber(IdCliente)
+            registro.Cliente = cliente
+            rubro.CodRub = toNull(cmbCodRub.Value)
+            registro.Rubro = rubro
+
+            If toNumber(IdCliente) = 0 Then
+                MsgBox("Debe Ingresar el código del Cliente", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf toBlank(cmbCodRub.Value) = "" Then
+                MsgBox("Debe Ingresar el Rubro de la condición", MsgBoxStyle.Information, "Información")
+                cmbCodRub.BackColor = Color.Red
+                cmbCodRub.Focus()
+                Return False
+            ElseIf toBlank(cmbCodPag.Value) = "" Then
+                MsgBox("Debe Ingresar la condición", MsgBoxStyle.Information, "Información")
+                cmbCodPag.BackColor = Color.Red
+                cmbCodPag.Focus()
+                Return False
+            ElseIf state_button = False And oCondicionPagoClienteService.Buscar(registro) = True Then
+                MsgBox("El rubro de código " + registro.Rubro.CodRub + " ya existe en esta condición de pago...!", MsgBoxStyle.Information, "Información")
+                cmbCodRub.Value = ""
+                cmbCodRub.Focus()
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [AGRE-001]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+    Private Sub Insertar(ByVal registro As CondicionPagoClienteService.CondicionPagoCliente)
+        Try
+            Dim estado_process As Boolean
+            estado_process = oCondicionPagoClienteService.Insertar(registro)
+            type_process = "insert"
+            If estado_process = True Then
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [AGRE-002]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub Modificar(ByVal registro As CondicionPagoClienteService.CondicionPagoCliente)
+        Try
+            Dim estado_process As Boolean
+            estado_process = oCondicionPagoClienteService.Actualizar(registro)
+            type_process = "update"
+            If estado_process = True Then
+                Me.DialogResult = Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [AGRE-003]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub ObtenerRegistro()
+        Try
+            Dim registro As CondicionPagoClienteService.CondicionPagoCliente
+            registro = oCondicionPagoClienteService.MostrarPorCondicion(IdCliente, cmbCodRub.Value)
+
+            IdCliente = registro.Cliente.IdCliente
+            cmbCodRub.Value = toBlank(registro.Rubro.CodRub)
+            cmbCodPag.Value = toBlank(registro.CondicionPago.CodPag)
+
+        Catch ex As Exception
+            MsgBox("ERROR [AGRE-004]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub llenarCombos()
+        Try
+            '======================================= RUBROS ================================================
+            dtRubros = oMaestroService.MostrarRubros.Tables(0)
+            cmbCodRub.DataSource = dtRubros
+            cmbCodRub.DropDownList.DataMember = dtRubros.Columns("DesRub").ToString
+            cmbCodRub.DropDownList.DisplayMember = dtRubros.Columns("DesRub").ToString
+            cmbCodRub.DropDownList.ValueMember = dtRubros.Columns("CodRub").ToString
+            cmbCodRub.DropDownList.Columns(0).DataMember = dtRubros.Columns("CodRub").ToString
+            cmbCodRub.DropDownList.Columns(1).DataMember = dtRubros.Columns("DesRub").ToString
+            dtRubros = Nothing
+            '======================================= CONDICIONES DE PAGO =======================================
+            dtCondicionesPago = oMaestroService.MostrarCondicionPago.Tables(0)
+            cmbCodPag.DataSource = dtCondicionesPago
+            cmbCodPag.DropDownList.DataMember = dtCondicionesPago.Columns("DesPag").ToString
+            cmbCodPag.DropDownList.DisplayMember = dtCondicionesPago.Columns("DesPag").ToString
+            cmbCodPag.DropDownList.ValueMember = dtCondicionesPago.Columns("CodPag").ToString
+            cmbCodPag.DropDownList.Columns(0).DataMember = dtCondicionesPago.Columns("CodPag").ToString
+            cmbCodPag.DropDownList.Columns(1).DataMember = dtCondicionesPago.Columns("DesPag").ToString
+            cmbCodPag.DropDownList.Columns(2).DataMember = dtCondicionesPago.Columns("DiaPag").ToString
+            dtCondicionesPago = Nothing
+        Catch ex As Exception
+            MsgBox("ERROR [INFO-005]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    '====================================================================================================================
+    '============================================ INTERFACE'S METHOD ====================================================
+    '====================================================================================================================
+    Private Sub btnCancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancelar.Click
+        Me.DialogResult = Windows.Forms.DialogResult.Cancel
+        Me.Close()
+    End Sub
+    Private Sub btnGuardar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGuardar.Click
+        If MsgBox("¿Está seguro que desea guardar los datos?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes _
+            And ValidaCampos() Then
+
+            Dim registro As New CondicionPagoClienteService.CondicionPagoCliente
+            Dim cliente As New CondicionPagoClienteService.Cliente
+            Dim condicionPago As New CondicionPagoClienteService.CondicionPago
+            Dim rubro As New CondicionPagoClienteService.Rubro
+
+            cliente.IdCliente = IdCliente
+            registro.Cliente = cliente
+            rubro.CodRub = toNull(cmbCodRub.Value)
+            registro.Rubro = rubro
+            condicionPago.CodPag = toNull(cmbCodPag.Value)
+            registro.CondicionPago = condicionPago
+
+            If state_button Then        'Modificar
+                Modificar(registro)
+            Else                        'Nuevo
+                Insertar(registro)
+            End If
+        End If
+    End Sub
+
+
+End Class

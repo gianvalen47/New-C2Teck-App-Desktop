@@ -1,0 +1,448 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AfpService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IAfpService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IAfpService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Obtener_InputMessage">
+    <wsdl:part name="parameters" element="tns:Obtener" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Obtener_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Obtener_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_MostrarPorPersonaRubroDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorPersonaRubroDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_MostrarPorPersonaRubroDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorPersonaRubroDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_MostrarPorPersonaRubroDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_MostrarRubroDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_MostrarRubroDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_MostrarRubroDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_ObtenerRubroDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRubroDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_ObtenerRubroDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerRubroDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_ObtenerRubroDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_InsertarRubroDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRubroDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_InsertarRubroDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarRubroDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_InsertarRubroDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_ActualizarRubroDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRubroDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_ActualizarRubroDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarRubroDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_ActualizarRubroDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_BorrarRubroDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRubroDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_BorrarRubroDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarRubroDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_BorrarRubroDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_BuscarRubroDescuento_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRubroDescuento" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_BuscarRubroDescuento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarRubroDescuentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_BuscarRubroDescuento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_MostrarRubroDescuentoAutomatico_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroDescuentoAutomatico" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_MostrarRubroDescuentoAutomatico_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarRubroDescuentoAutomaticoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_MostrarRubroDescuentoAutomatico_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_MostrarModalidad_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarModalidad" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_MostrarModalidad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarModalidadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAfpService_MostrarModalidad_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IAfpService">
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAfpService/Mostrar" message="tns:IAfpService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAfpService/MostrarResponse" message="tns:IAfpService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAfpService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAfpService/Filtrar" message="tns:IAfpService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAfpService/FiltrarResponse" message="tns:IAfpService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAfpService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAfpService/Obtener" message="tns:IAfpService_Obtener_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAfpService/ObtenerResponse" message="tns:IAfpService_Obtener_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAfpService_Obtener_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAfpService/Insertar" message="tns:IAfpService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAfpService/InsertarResponse" message="tns:IAfpService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAfpService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAfpService/Actualizar" message="tns:IAfpService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAfpService/ActualizarResponse" message="tns:IAfpService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAfpService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAfpService/Borrar" message="tns:IAfpService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAfpService/BorrarResponse" message="tns:IAfpService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAfpService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorPersonaRubroDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAfpService/MostrarPorPersonaRubroDescuento" message="tns:IAfpService_MostrarPorPersonaRubroDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAfpService/MostrarPorPersonaRubroDescuentoResponse" message="tns:IAfpService_MostrarPorPersonaRubroDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAfpService_MostrarPorPersonaRubroDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAfpService/MostrarRubroDescuento" message="tns:IAfpService_MostrarRubroDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAfpService/MostrarRubroDescuentoResponse" message="tns:IAfpService_MostrarRubroDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAfpService_MostrarRubroDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRubroDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAfpService/ObtenerRubroDescuento" message="tns:IAfpService_ObtenerRubroDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAfpService/ObtenerRubroDescuentoResponse" message="tns:IAfpService_ObtenerRubroDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAfpService_ObtenerRubroDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRubroDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAfpService/InsertarRubroDescuento" message="tns:IAfpService_InsertarRubroDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAfpService/InsertarRubroDescuentoResponse" message="tns:IAfpService_InsertarRubroDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAfpService_InsertarRubroDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRubroDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAfpService/ActualizarRubroDescuento" message="tns:IAfpService_ActualizarRubroDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAfpService/ActualizarRubroDescuentoResponse" message="tns:IAfpService_ActualizarRubroDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAfpService_ActualizarRubroDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRubroDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAfpService/BorrarRubroDescuento" message="tns:IAfpService_BorrarRubroDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAfpService/BorrarRubroDescuentoResponse" message="tns:IAfpService_BorrarRubroDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAfpService_BorrarRubroDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRubroDescuento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAfpService/BuscarRubroDescuento" message="tns:IAfpService_BuscarRubroDescuento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAfpService/BuscarRubroDescuentoResponse" message="tns:IAfpService_BuscarRubroDescuento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAfpService_BuscarRubroDescuento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroDescuentoAutomatico">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAfpService/MostrarRubroDescuentoAutomatico" message="tns:IAfpService_MostrarRubroDescuentoAutomatico_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAfpService/MostrarRubroDescuentoAutomaticoResponse" message="tns:IAfpService_MostrarRubroDescuentoAutomatico_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAfpService_MostrarRubroDescuentoAutomatico_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarModalidad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAfpService/MostrarModalidad" message="tns:IAfpService_MostrarModalidad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAfpService/MostrarModalidadResponse" message="tns:IAfpService_MostrarModalidad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAfpService_MostrarModalidad_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IAfpService" type="tns:IAfpService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IAfpService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/IAfpService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IAfpService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener">
+      <soap12:operation soapAction="http://tempuri.org/IAfpService/Obtener" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IAfpService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IAfpService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IAfpService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorPersonaRubroDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IAfpService/MostrarPorPersonaRubroDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IAfpService/MostrarRubroDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerRubroDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IAfpService/ObtenerRubroDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarRubroDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IAfpService/InsertarRubroDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarRubroDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IAfpService/ActualizarRubroDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarRubroDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IAfpService/BorrarRubroDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarRubroDescuento">
+      <soap12:operation soapAction="http://tempuri.org/IAfpService/BuscarRubroDescuento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarRubroDescuentoAutomatico">
+      <soap12:operation soapAction="http://tempuri.org/IAfpService/MostrarRubroDescuentoAutomatico" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarModalidad">
+      <soap12:operation soapAction="http://tempuri.org/IAfpService/MostrarModalidad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AfpService">
+    <wsdl:port name="NetTcpBinding_IAfpService" binding="tns:NetTcpBinding_IAfpService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/AfpService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/AfpService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

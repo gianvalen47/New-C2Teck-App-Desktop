@@ -1,0 +1,578 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AprobarVentaService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IAprobarVentaService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IAprobarVentaService_MostrarPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorId" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_Filtrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Filtrar" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_Filtrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_Filtrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarDetalles_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDetalles" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarDetalles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarDetallesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarDetalles_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_Aprobar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Aprobar" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_Aprobar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AprobarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_Aprobar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_Rechazar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Rechazar" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_Rechazar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RechazarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_Rechazar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarTipoDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarTipoDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTipoDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarTipoDocumento_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarSugerido_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSugerido" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarSugerido_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarSugeridoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarSugerido_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarCotizacionServicio_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCotizacionServicio" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarCotizacionServicio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCotizacionServicioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarCotizacionServicio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarCotizacionServicioDetalle_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCotizacionServicioDetalle" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarCotizacionServicioDetalle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarCotizacionServicioDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarCotizacionServicioDetalle_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_ObtenerDocumentoVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDocumentoVenta" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_ObtenerDocumentoVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerDocumentoVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_ObtenerDocumentoVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_BuscarDocumentoVenta_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarDocumentoVenta" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_BuscarDocumentoVenta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarDocumentoVentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_BuscarDocumentoVenta_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_ActualizarVendedor_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarVendedor" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_ActualizarVendedor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarVendedorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_ActualizarVendedor_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_FiltrarAutorizacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarAutorizacion" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_FiltrarAutorizacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FiltrarAutorizacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_FiltrarAutorizacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_InsertarAutorizacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarAutorizacion" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_InsertarAutorizacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarAutorizacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_InsertarAutorizacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q14:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_ActualizarAutorizacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarAutorizacion" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_ActualizarAutorizacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarAutorizacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_ActualizarAutorizacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q15:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_ObtenerAutorizacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAutorizacion" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_ObtenerAutorizacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAutorizacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_ObtenerAutorizacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q16:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_BuscarAutorizacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAutorizacion" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_BuscarAutorizacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarAutorizacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_BuscarAutorizacion_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q17:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_BuscarFecha_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarFecha" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_BuscarFecha_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarFechaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_BuscarFecha_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q18:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_ActualizarTipoCambio_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTipoCambio" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_ActualizarTipoCambio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarTipoCambioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_ActualizarTipoCambio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q19:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarHistorialTipoCambio_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarHistorialTipoCambio" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarHistorialTipoCambio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarHistorialTipoCambioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAprobarVentaService_MostrarHistorialTipoCambio_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q20:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IAprobarVentaService">
+    <wsdl:operation name="MostrarPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/MostrarPorId" message="tns:IAprobarVentaService_MostrarPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/MostrarPorIdResponse" message="tns:IAprobarVentaService_MostrarPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_MostrarPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/Filtrar" message="tns:IAprobarVentaService_Filtrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/FiltrarResponse" message="tns:IAprobarVentaService_Filtrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_Filtrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDetalles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/MostrarDetalles" message="tns:IAprobarVentaService_MostrarDetalles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/MostrarDetallesResponse" message="tns:IAprobarVentaService_MostrarDetalles_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_MostrarDetalles_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Aprobar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/Aprobar" message="tns:IAprobarVentaService_Aprobar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/AprobarResponse" message="tns:IAprobarVentaService_Aprobar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_Aprobar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Rechazar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/Rechazar" message="tns:IAprobarVentaService_Rechazar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/RechazarResponse" message="tns:IAprobarVentaService_Rechazar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_Rechazar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/MostrarTipoDocumento" message="tns:IAprobarVentaService_MostrarTipoDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/MostrarTipoDocumentoResponse" message="tns:IAprobarVentaService_MostrarTipoDocumento_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_MostrarTipoDocumento_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSugerido">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/MostrarSugerido" message="tns:IAprobarVentaService_MostrarSugerido_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/MostrarSugeridoResponse" message="tns:IAprobarVentaService_MostrarSugerido_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_MostrarSugerido_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCotizacionServicio">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/MostrarCotizacionServicio" message="tns:IAprobarVentaService_MostrarCotizacionServicio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/MostrarCotizacionServicioResponse" message="tns:IAprobarVentaService_MostrarCotizacionServicio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_MostrarCotizacionServicio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCotizacionServicioDetalle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/MostrarCotizacionServicioDetalle" message="tns:IAprobarVentaService_MostrarCotizacionServicioDetalle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/MostrarCotizacionServicioDetalleResponse" message="tns:IAprobarVentaService_MostrarCotizacionServicioDetalle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_MostrarCotizacionServicioDetalle_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDocumentoVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/ObtenerDocumentoVenta" message="tns:IAprobarVentaService_ObtenerDocumentoVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/ObtenerDocumentoVentaResponse" message="tns:IAprobarVentaService_ObtenerDocumentoVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_ObtenerDocumentoVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarDocumentoVenta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/BuscarDocumentoVenta" message="tns:IAprobarVentaService_BuscarDocumentoVenta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/BuscarDocumentoVentaResponse" message="tns:IAprobarVentaService_BuscarDocumentoVenta_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_BuscarDocumentoVenta_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarVendedor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/ActualizarVendedor" message="tns:IAprobarVentaService_ActualizarVendedor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/ActualizarVendedorResponse" message="tns:IAprobarVentaService_ActualizarVendedor_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_ActualizarVendedor_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarAutorizacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/FiltrarAutorizacion" message="tns:IAprobarVentaService_FiltrarAutorizacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/FiltrarAutorizacionResponse" message="tns:IAprobarVentaService_FiltrarAutorizacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_FiltrarAutorizacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertarAutorizacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/InsertarAutorizacion" message="tns:IAprobarVentaService_InsertarAutorizacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/InsertarAutorizacionResponse" message="tns:IAprobarVentaService_InsertarAutorizacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_InsertarAutorizacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarAutorizacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/ActualizarAutorizacion" message="tns:IAprobarVentaService_ActualizarAutorizacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/ActualizarAutorizacionResponse" message="tns:IAprobarVentaService_ActualizarAutorizacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_ActualizarAutorizacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerAutorizacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/ObtenerAutorizacion" message="tns:IAprobarVentaService_ObtenerAutorizacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/ObtenerAutorizacionResponse" message="tns:IAprobarVentaService_ObtenerAutorizacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_ObtenerAutorizacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarAutorizacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/BuscarAutorizacion" message="tns:IAprobarVentaService_BuscarAutorizacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/BuscarAutorizacionResponse" message="tns:IAprobarVentaService_BuscarAutorizacion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_BuscarAutorizacion_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarFecha">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/BuscarFecha" message="tns:IAprobarVentaService_BuscarFecha_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/BuscarFechaResponse" message="tns:IAprobarVentaService_BuscarFecha_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_BuscarFecha_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTipoCambio">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/ActualizarTipoCambio" message="tns:IAprobarVentaService_ActualizarTipoCambio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/ActualizarTipoCambioResponse" message="tns:IAprobarVentaService_ActualizarTipoCambio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_ActualizarTipoCambio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarHistorialTipoCambio">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAprobarVentaService/MostrarHistorialTipoCambio" message="tns:IAprobarVentaService_MostrarHistorialTipoCambio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAprobarVentaService/MostrarHistorialTipoCambioResponse" message="tns:IAprobarVentaService_MostrarHistorialTipoCambio_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IAprobarVentaService_MostrarHistorialTipoCambio_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IAprobarVentaService" type="tns:IAprobarVentaService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IAprobarVentaService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="MostrarPorId">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/MostrarPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Filtrar">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/Filtrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarDetalles">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/MostrarDetalles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Aprobar">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/Aprobar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Rechazar">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/Rechazar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTipoDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/MostrarTipoDocumento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarSugerido">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/MostrarSugerido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCotizacionServicio">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/MostrarCotizacionServicio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarCotizacionServicioDetalle">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/MostrarCotizacionServicioDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDocumentoVenta">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/ObtenerDocumentoVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarDocumentoVenta">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/BuscarDocumentoVenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarVendedor">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/ActualizarVendedor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FiltrarAutorizacion">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/FiltrarAutorizacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertarAutorizacion">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/InsertarAutorizacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarAutorizacion">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/ActualizarAutorizacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerAutorizacion">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/ObtenerAutorizacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarAutorizacion">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/BuscarAutorizacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarFecha">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/BuscarFecha" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarTipoCambio">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/ActualizarTipoCambio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarHistorialTipoCambio">
+      <soap12:operation soapAction="http://tempuri.org/IAprobarVentaService/MostrarHistorialTipoCambio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AprobarVentaService">
+    <wsdl:port name="NetTcpBinding_IAprobarVentaService" binding="tns:NetTcpBinding_IAprobarVentaService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/AprobarVentaService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/AprobarVentaService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

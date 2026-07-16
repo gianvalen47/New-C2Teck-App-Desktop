@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PedidoImportDetService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IPedidoImportDetService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServicioBLL" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IPedidoImportDetService_Mostrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Mostrar" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_Mostrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_Mostrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q1:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_MostrarPorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorId" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_MostrarPorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_MostrarPorId_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q2:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_Buscar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Buscar" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_Buscar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_Buscar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q3:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_Insertar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Insertar" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_Insertar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_Insertar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q4:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_Actualizar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Actualizar" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_Actualizar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_Actualizar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q5:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_Borrar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Borrar" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_Borrar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_Borrar_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q6:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_CantidadPedida_InputMessage">
+    <wsdl:part name="parameters" element="tns:CantidadPedida" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_CantidadPedida_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CantidadPedidaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_CantidadPedida_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q7:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_MostrarPedidoPorCodigo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPedidoPorCodigo" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_MostrarPedidoPorCodigo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPedidoPorCodigoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_MostrarPedidoPorCodigo_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q8:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_MostrarPedidoPorCodigoEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPedidoPorCodigoEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_MostrarPedidoPorCodigoEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPedidoPorCodigoEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_MostrarPedidoPorCodigoEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q9:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_CantidadPedidaEmpresa_InputMessage">
+    <wsdl:part name="parameters" element="tns:CantidadPedidaEmpresa" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_CantidadPedidaEmpresa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CantidadPedidaEmpresaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_CantidadPedidaEmpresa_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q10:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_ActualizarCanRec_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCanRec" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_ActualizarCanRec_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarCanRecResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_ActualizarCanRec_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q11:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_MostrarPendientes_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPendientes" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_MostrarPendientes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarPendientesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_MostrarPendientes_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q12:MiError" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_MostrarActualizados_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarActualizados" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_MostrarActualizados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarActualizadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPedidoImportDetService_MostrarActualizados_MiErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/ServicioBLL" name="detail" element="q13:MiError" />
+  </wsdl:message>
+  <wsdl:portType name="IPedidoImportDetService">
+    <wsdl:operation name="Mostrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPedidoImportDetService/Mostrar" message="tns:IPedidoImportDetService_Mostrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPedidoImportDetService/MostrarResponse" message="tns:IPedidoImportDetService_Mostrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPedidoImportDetService_Mostrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPedidoImportDetService/MostrarPorId" message="tns:IPedidoImportDetService_MostrarPorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPedidoImportDetService/MostrarPorIdResponse" message="tns:IPedidoImportDetService_MostrarPorId_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPedidoImportDetService_MostrarPorId_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPedidoImportDetService/Buscar" message="tns:IPedidoImportDetService_Buscar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPedidoImportDetService/BuscarResponse" message="tns:IPedidoImportDetService_Buscar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPedidoImportDetService_Buscar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPedidoImportDetService/Insertar" message="tns:IPedidoImportDetService_Insertar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPedidoImportDetService/InsertarResponse" message="tns:IPedidoImportDetService_Insertar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPedidoImportDetService_Insertar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPedidoImportDetService/Actualizar" message="tns:IPedidoImportDetService_Actualizar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPedidoImportDetService/ActualizarResponse" message="tns:IPedidoImportDetService_Actualizar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPedidoImportDetService_Actualizar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPedidoImportDetService/Borrar" message="tns:IPedidoImportDetService_Borrar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPedidoImportDetService/BorrarResponse" message="tns:IPedidoImportDetService_Borrar_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPedidoImportDetService_Borrar_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CantidadPedida">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPedidoImportDetService/CantidadPedida" message="tns:IPedidoImportDetService_CantidadPedida_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPedidoImportDetService/CantidadPedidaResponse" message="tns:IPedidoImportDetService_CantidadPedida_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPedidoImportDetService_CantidadPedida_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPedidoPorCodigo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPedidoImportDetService/MostrarPedidoPorCodigo" message="tns:IPedidoImportDetService_MostrarPedidoPorCodigo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPedidoImportDetService/MostrarPedidoPorCodigoResponse" message="tns:IPedidoImportDetService_MostrarPedidoPorCodigo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPedidoImportDetService_MostrarPedidoPorCodigo_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPedidoPorCodigoEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPedidoImportDetService/MostrarPedidoPorCodigoEmpresa" message="tns:IPedidoImportDetService_MostrarPedidoPorCodigoEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPedidoImportDetService/MostrarPedidoPorCodigoEmpresaResponse" message="tns:IPedidoImportDetService_MostrarPedidoPorCodigoEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPedidoImportDetService_MostrarPedidoPorCodigoEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CantidadPedidaEmpresa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPedidoImportDetService/CantidadPedidaEmpresa" message="tns:IPedidoImportDetService_CantidadPedidaEmpresa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPedidoImportDetService/CantidadPedidaEmpresaResponse" message="tns:IPedidoImportDetService_CantidadPedidaEmpresa_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPedidoImportDetService_CantidadPedidaEmpresa_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCanRec">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPedidoImportDetService/ActualizarCanRec" message="tns:IPedidoImportDetService_ActualizarCanRec_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPedidoImportDetService/ActualizarCanRecResponse" message="tns:IPedidoImportDetService_ActualizarCanRec_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPedidoImportDetService_ActualizarCanRec_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPendientes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPedidoImportDetService/MostrarPendientes" message="tns:IPedidoImportDetService_MostrarPendientes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPedidoImportDetService/MostrarPendientesResponse" message="tns:IPedidoImportDetService_MostrarPendientes_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPedidoImportDetService_MostrarPendientes_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarActualizados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPedidoImportDetService/MostrarActualizados" message="tns:IPedidoImportDetService_MostrarActualizados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPedidoImportDetService/MostrarActualizadosResponse" message="tns:IPedidoImportDetService_MostrarActualizados_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://www.ddperu.com.pe/MyError" name="MiErrorFault" message="tns:IPedidoImportDetService_MostrarActualizados_MiErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IPedidoImportDetService" type="tns:IPedidoImportDetService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IPedidoImportDetService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Mostrar">
+      <soap12:operation soapAction="http://tempuri.org/IPedidoImportDetService/Mostrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPorId">
+      <soap12:operation soapAction="http://tempuri.org/IPedidoImportDetService/MostrarPorId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Buscar">
+      <soap12:operation soapAction="http://tempuri.org/IPedidoImportDetService/Buscar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Insertar">
+      <soap12:operation soapAction="http://tempuri.org/IPedidoImportDetService/Insertar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Actualizar">
+      <soap12:operation soapAction="http://tempuri.org/IPedidoImportDetService/Actualizar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Borrar">
+      <soap12:operation soapAction="http://tempuri.org/IPedidoImportDetService/Borrar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CantidadPedida">
+      <soap12:operation soapAction="http://tempuri.org/IPedidoImportDetService/CantidadPedida" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPedidoPorCodigo">
+      <soap12:operation soapAction="http://tempuri.org/IPedidoImportDetService/MostrarPedidoPorCodigo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPedidoPorCodigoEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/IPedidoImportDetService/MostrarPedidoPorCodigoEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CantidadPedidaEmpresa">
+      <soap12:operation soapAction="http://tempuri.org/IPedidoImportDetService/CantidadPedidaEmpresa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarCanRec">
+      <soap12:operation soapAction="http://tempuri.org/IPedidoImportDetService/ActualizarCanRec" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarPendientes">
+      <soap12:operation soapAction="http://tempuri.org/IPedidoImportDetService/MostrarPendientes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarActualizados">
+      <soap12:operation soapAction="http://tempuri.org/IPedidoImportDetService/MostrarActualizados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="MiErrorFault">
+        <soap12:fault use="literal" name="MiErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PedidoImportDetService">
+    <wsdl:port name="NetTcpBinding_IPedidoImportDetService" binding="tns:NetTcpBinding_IPedidoImportDetService">
+      <soap12:address location="net.tcp://192.168.10.252/ServicioBLL/PedidoImportDetService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://192.168.10.252/ServicioBLL/PedidoImportDetService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
