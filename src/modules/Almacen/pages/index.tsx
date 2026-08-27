@@ -1,16 +1,16 @@
-import { Link } from '@tanstack/react-router';
+﻿import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Package, Truck, MapPin, AlertCircle, Search, BarChart3 } from 'lucide-react';
 
 export default function AlmacenModule() {
   const features = [
-    { id: 'movimientos', label: 'Movimientos', icon: Package, description: 'Registrar movimientos de almacén' },
+    { id: 'movimientos', label: 'Movimientos', icon: Package, description: 'Registrar movimientos de almacÃ©n' },
     { id: 'despacho', label: 'Despacho', icon: Truck, description: 'Gestionar despachos' },
     { id: 'ubicaciones', label: 'Ubicaciones', icon: MapPin, description: 'Administrar ubicaciones' },
-    { id: 'minimos-maximos', label: 'Mínimos/Máximos', icon: AlertCircle, description: 'Control de niveles de inventario' },
+    { id: 'minimos-maximos', label: 'MÃ­nimos/MÃ¡ximos', icon: AlertCircle, description: 'Control de niveles de inventario' },
     { id: 'consultas', label: 'Consultas', icon: Search, description: 'Consultar inventario' },
-    { id: 'reportes', label: 'Reportes', icon: BarChart3, description: 'Reportes de almacén' },
+    { id: 'reportes', label: 'Reportes', icon: BarChart3, description: 'Reportes de almacÃ©n' },
   ];
 
   return (
@@ -18,7 +18,7 @@ export default function AlmacenModule() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">Módulo de Almacén</h1>
+          <h1 className="text-4xl font-bold text-slate-900 mb-2">MÃ³dulo de AlmacÃ©n</h1>
           <p className="text-lg text-slate-600">Control integral del inventario, movimientos y despachos</p>
         </div>
 
@@ -38,7 +38,7 @@ export default function AlmacenModule() {
                   <CardDescription>{feature.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Link to={`/dashboard/almacen/${feature.id}`}>
+                  <Link to={`/dashboard/almacen/${feature.id}` as any}>
                     <Button className="w-full bg-amber-600 hover:bg-amber-700">Acceder</Button>
                   </Link>
                 </CardContent>
@@ -59,10 +59,11 @@ export default function AlmacenModule() {
           </div>
           <div className="text-center">
             <p className="text-3xl font-bold text-purple-600">Real-time</p>
-            <p className="text-sm text-slate-600">Sincronización</p>
+            <p className="text-sm text-slate-600">SincronizaciÃ³n</p>
           </div>
         </div>
       </div>
     </div>
   );
 }
+

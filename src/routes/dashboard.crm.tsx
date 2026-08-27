@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { KpiCard } from "@/components/ui/kpi-card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { leads } from "@/lib/mock-data";
-import { fetchSigecoomClients, type SigecoomClient } from "@/lib/sigecoom-api";
+import { fetchBackendHealth, fetchSigecoomClients, type BackendHealth, type SigecoomClient } from "@/lib/sigecoom-api";
 
 export const Route = createFileRoute("/dashboard/crm")({
   head: () => ({
@@ -20,9 +20,22 @@ export const Route = createFileRoute("/dashboard/crm")({
 function CRMPage() {
   const [clients, setClients] = useState<SigecoomClient[]>([]);
   const [loadingClients, setLoadingClients] = useState(true);
+  const [sourceInfo, setSourceInfo] = useState<BackendHealth | null>(null);
 
   useEffect(() => {
     let ignore = false;
+
+    fetchBackendHealth()
+      .then((health) => {
+        if (!ignore) {
+          setSourceInfo(health);
+        }
+      })
+      .catch(() => {
+        if (!ignore) {
+          setSourceInfo({ status: "unavailable", database: "unknown" });
+        }
+      });
 
     fetchSigecoomClients()
       .then((data) => {
@@ -124,22 +137,29 @@ function CRMPage() {
 
           <div className="mt-6 rounded-lg border border-border p-4">
             <div className="flex items-center justify-between">
-              <h4 className="font-display font-semibold">Clientes desde el adapter SIGECOM</h4>
+              <h4 className="font-display font-semibold">Clientes desde la API SIGECOM original</h4>
               <span className="text-xs text-muted-foreground">{loadingClients ? "Cargando…" : `${clients.length} registros`}</span>
+            </div>
+            <div className="mt-2 flex items-center gap-2 text-[11px] text-muted-foreground">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" />
+              <span className="font-medium">Fuente activa:</span>
+              <span>{sourceInfo?.database ?? "unknown"}</span>
+              <span className="text-slate-400">·</span>
+              <span>{sourceInfo?.status ?? "unknown"}</span>
             </div>
             <div className="mt-3 space-y-2">
               {clients.length > 0 ? (
-                clients.slice(0, 4).map((client) => (
+                clients.slice(0, 8).map((client) => (
                   <div key={client.id} className="flex items-center justify-between rounded-md border border-border bg-muted/20 px-3 py-2 text-sm">
                     <div>
                       <p className="font-medium">{client.name}</p>
-                      <p className="text-xs text-muted-foreground">RUC {client.ruc}</p>
+                      <p className="text-xs text-muted-foreground">RUC {client.ruc ?? "-"} · {client.address ?? "Sin dirección"}</p>
                     </div>
                     <span className="text-xs text-primary">#{client.id}</span>
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-muted-foreground">Sin datos desde el adapter todavía.</p>
+                <p className="text-sm text-muted-foreground">Sin datos desde el origen original todavía.</p>
               )}
             </div>
           </div>

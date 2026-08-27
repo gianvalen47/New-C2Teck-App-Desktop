@@ -1,0 +1,13 @@
+// Auto-generated stub for legacy form
+// Original: Tablas/Ventas/Clientes/frmAgregarContacto.Designer.vb
+import React from 'react'
+
+export default function frmAgregarContacto_Designer() {
+  return (
+    <div style={padding:20}>
+      <h2>Legacy form: frmAgregarContacto_Designer</h2>
+      <p>Original file copied to: <code>Tablas/Ventas/Clientes/frmAgregarContacto.Designer.vb</code></p>
+      <p>This component is a placeholder. Implement React UI here.</p>
+    </div>
+  )
+}

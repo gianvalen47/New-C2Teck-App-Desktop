@@ -1,0 +1,202 @@
+﻿Imports System.Windows.Forms
+
+Public Class frmBuscarAlmacen
+
+    Private oMaestroService As New MaestroService.MaestroClient
+    Private dtDatos As DataTable
+    Private state_Search As Boolean
+    '====================================================================================================================
+    '============================================ LOCAL PARAMETERS ======================================================
+    '====================================================================================================================
+    Private dtOficinas As DataTable
+
+    Public codigo As String
+    Public descripcion As String
+    Public LocUsuario As Boolean = True
+
+    '====================================================================================================================
+    '============================================ CONTROL'S METHOD ======================================================
+    '====================================================================================================================
+    Private Sub SendFocus_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                        txtIdLocacion.KeyPress _
+                      , txtDesAlm.KeyPress _
+                      , cmbOficinas.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            e.Handled = True
+            SendKeys.Send("{TAB}")
+            listaDatos()
+        End If
+    End Sub
+
+    Private Sub dgvDatos_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgvDatos.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If dgvDatos.RowCount > 0 Then
+                dgvDatos_DoubleClick(sender, e)
+                e.Handled = True
+            End If
+        End If
+    End Sub
+    Private Sub Salir_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles _
+                         txtIdLocacion.KeyPress _
+                      , txtDesAlm.KeyPress _
+                      , btnBuscar.KeyPress _
+                      , cmbOficinas.KeyPress _
+                      , dgvDatos.KeyPress
+        If e.KeyChar = ChrW(Keys.Escape) Then
+            Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
+            Me.Close()
+        End If
+    End Sub
+    Private Sub RowPossesion(ByVal lista As Janus.Windows.GridEX.GridEX, ByVal tabla As DataTable, ByVal nombreCampo As String, ByVal codigo As String)
+        Try
+            tabla.DefaultView.Sort = nombreCampo
+            lista.FirstRow = dtDatos.DefaultView.Find(codigo)
+            lista.Row = dtDatos.DefaultView.Find(codigo)
+        Catch ex As Exception
+            MsgBox("ERROR [ROW_POSS]: " + ex.Message, MsgBoxStyle.Critical)
+        End Try
+    End Sub
+
+    Private Sub frmBuscarAlmacen_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
+        If e.KeyCode = Keys.Escape Then
+            Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
+            Me.Close()
+
+        End If
+    End Sub
+    Private Sub Initialize_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Dim estilo As New Estilo
+        estilo.cargaEstiloGrid_Bucadores(dgvDatos)
+        dgvDatos.Anchor = AnchorStyles.Bottom Or AnchorStyles.Top Or AnchorStyles.Right Or AnchorStyles.Left
+        dgvDatos.ScrollBars = Janus.Windows.GridEX.ScrollBars.Both
+        state_Search = False
+        llenarCombos()
+        state_Search = True
+        listaDatos()
+        dgvDatos.Select()
+
+    End Sub
+    Private Sub FinallyObjects_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            oMaestroService.Close()
+        Catch ex As Exception
+            MsgBox("ERROR [FINALLY]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub enableOpciones()
+        If dgvDatos.RowCount < 1 Then
+            miSeleccionar.Enabled = False
+        Else
+            miSeleccionar.Enabled = True
+        End If
+    End Sub
+    Private Function getRowTodos(ByVal data As DataTable)
+        Dim fila As DataRow = data.NewRow
+        Try
+            fila(0) = ""
+        Catch ex As Exception
+            fila(0) = 0
+        End Try
+        fila(1) = "(Todos)"
+        Return fila
+    End Function
+
+    '====================================================================================================================
+    '============================================ TASK'S METHOD =========================================================
+    '====================================================================================================================
+    Private Sub Seleccionar()
+        Try
+            codigo = dgvDatos.CurrentRow.Cells("IdLocacion").Text
+            descripcion = dgvDatos.CurrentRow.Cells("DesAlm").Text
+            Me.DialogResult = System.Windows.Forms.DialogResult.OK
+            Me.Close()
+        Catch ex As Exception
+            MsgBox("ERROR [BUSC-001]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Sub listaDatos()
+        Try
+            If state_Search = True Then
+                dtDatos = oMaestroService.MostrarLocaciones(Session.sCodEmp, cmbOficinas.Value, IIf(LocUsuario, Session.sCodUsu, "")).Tables(0)
+                dgvDatos.SetDataBinding(dtDatos, 0)
+
+                sslTotal.Text = "Registros : " + dgvDatos.RowCount.ToString
+                enableOpciones()
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [BUSC-002]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    Private Function ValidaCodigoSeleccionado() As Boolean
+        Try
+            If dgvDatos.RowCount < 1 Then
+                MsgBox("Lista de registros esta vacío, verificar...!!!", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf dgvDatos.CurrentRow.RowIndex < 0 Then
+                MsgBox("Seleccione un registro ...!!!", MsgBoxStyle.Information, "Información")
+                Return False
+            ElseIf dgvDatos.CurrentRow.Cells("IdLocacion").Text = Nothing Then
+                MsgBox("Registro Vacío", MsgBoxStyle.Information, "Información")
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [BUSC-003]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Function
+    Private Sub llenarCombos()
+        Try
+            '======================================= OFICINAS ================================================
+            dtOficinas = oMaestroService.MostrarOficinasEmpresa(Session.sCodEmp, Session.sCodUsu).Tables(0)
+            cmbOficinas.DataSource = dtOficinas
+            cmbOficinas.DropDownList.DataMember = dtOficinas.Columns("DesOfi").ToString
+            cmbOficinas.DropDownList.DisplayMember = dtOficinas.Columns("DesOfi").ToString
+            cmbOficinas.DropDownList.ValueMember = dtOficinas.Columns("CodOfi").ToString
+            cmbOficinas.DropDownList.Columns(0).DataMember = dtOficinas.Columns("CodOfi").ToString
+            cmbOficinas.DropDownList.Columns(1).DataMember = dtOficinas.Columns("DesOfi").ToString
+            cmbOficinas.SelectedIndex = 0
+            dtOficinas = Nothing
+        Catch ex As Exception
+            MsgBox("ERROR [BUSC-004]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+
+    '====================================================================================================================
+    '============================================ INTERFACE'S METHOD ====================================================
+    '====================================================================================================================
+    Private Sub dgvDatos_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles dgvDatos.DoubleClick
+        If ValidaCodigoSeleccionado() Then
+            Seleccionar()
+        End If
+    End Sub
+    Private Sub btnBuscar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBuscar.Click, txtDesAlm.TextChanged, txtIdLocacion.TextChanged
+        listaDatos()
+    End Sub
+    Private Sub miSeleccionar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miSeleccionar.Click
+        If ValidaCodigoSeleccionado() Then
+            Seleccionar()
+        End If
+    End Sub
+    Private Sub miActualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miActualizar.Click
+        Dim codigo As String = ""
+        If dgvDatos.RowCount > 0 Then
+            codigo = dgvDatos.CurrentRow.Cells("IdLocacion").Text
+        End If
+        dtDatos = Nothing
+        listaDatos()
+        If dgvDatos.RowCount > 0 And codigo.Trim.Length > 0 Then
+            RowPossesion(dgvDatos, dtDatos, "IdLocacion", codigo)
+        End If
+    End Sub
+    Private Sub cmbOficinas_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbOficinas.ValueChanged
+        listaDatos()
+    End Sub
+    Private Sub miNinguno_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles miNinguno.Click
+        codigo = Nothing
+        descripcion = Nothing
+        Me.DialogResult = System.Windows.Forms.DialogResult.OK
+        Me.Close()
+    End Sub
+
+End Class

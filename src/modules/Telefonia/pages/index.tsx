@@ -1,24 +1,24 @@
-import { Link } from '@tanstack/react-router';
+﻿import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Smartphone, PhoneOff, Users, Settings, Search, BarChart3 } from 'lucide-react';
 
 export default function TelefonyModule() {
   const features = [
-    { id: 'equipos', label: 'Equipos', icon: Smartphone, description: 'Gestión de equipos telefónicos' },
-    { id: 'lineas', label: 'Líneas', icon: PhoneOff, description: 'Administración de líneas' },
-    { id: 'asignaciones', label: 'Asignaciones', icon: Users, description: 'Asignación de líneas a personal' },
-    { id: 'modelos', label: 'Modelos', icon: Settings, description: 'Catálogo de modelos' },
-    { id: 'consultas', label: 'Consultas', icon: Search, description: 'Consultar líneas' },
-    { id: 'reportes', label: 'Reportes', icon: BarChart3, description: 'Reportes de telefonía' },
+    { id: 'equipos', label: 'Equipos', icon: Smartphone, description: 'GestiÃ³n de equipos telefÃ³nicos' },
+    { id: 'lineas', label: 'LÃ­neas', icon: PhoneOff, description: 'AdministraciÃ³n de lÃ­neas' },
+    { id: 'asignaciones', label: 'Asignaciones', icon: Users, description: 'AsignaciÃ³n de lÃ­neas a personal' },
+    { id: 'modelos', label: 'Modelos', icon: Settings, description: 'CatÃ¡logo de modelos' },
+    { id: 'consultas', label: 'Consultas', icon: Search, description: 'Consultar lÃ­neas' },
+    { id: 'reportes', label: 'Reportes', icon: BarChart3, description: 'Reportes de telefonÃ­a' },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">Módulo de Telefonía</h1>
-          <p className="text-lg text-slate-600">Gestión de equipos, líneas y asignaciones telefónicas</p>
+          <h1 className="text-4xl font-bold text-slate-900 mb-2">MÃ³dulo de TelefonÃ­a</h1>
+          <p className="text-lg text-slate-600">GestiÃ³n de equipos, lÃ­neas y asignaciones telefÃ³nicas</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -36,7 +36,7 @@ export default function TelefonyModule() {
                   <CardDescription>{feature.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Link to={`/dashboard/telefonia/${feature.id}`}>
+                  <Link to={`/dashboard/telefonica/${feature.id}` as any}>
                     <Button className="w-full bg-indigo-600 hover:bg-indigo-700">Acceder</Button>
                   </Link>
                 </CardContent>
@@ -51,7 +51,7 @@ export default function TelefonyModule() {
             <p className="text-sm text-slate-600">Funcionalidades</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-green-600">✓</p>
+            <p className="text-3xl font-bold text-green-600">âœ“</p>
             <p className="text-sm text-slate-600">Disponible</p>
           </div>
           <div className="text-center">
@@ -63,3 +63,5 @@ export default function TelefonyModule() {
     </div>
   );
 }
+
+

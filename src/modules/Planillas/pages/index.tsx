@@ -1,12 +1,12 @@
-import { Link } from '@tanstack/react-router';
+﻿import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { DollarSign, Percent, BarChart3, FileText, Search } from 'lucide-react';
 
 export default function PlanillasModule() {
   const features = [
-    { id: 'sueldos', label: 'Sueldos', icon: DollarSign, description: 'Liquidación de sueldos' },
-    { id: 'quinta', label: 'Quinta Categoría', icon: Percent, description: 'Cálculos de quinta categoría' },
+    { id: 'sueldos', label: 'Sueldos', icon: DollarSign, description: 'LiquidaciÃ³n de sueldos' },
+    { id: 'quinta', label: 'Quinta CategorÃ­a', icon: Percent, description: 'CÃ¡lculos de quinta categorÃ­a' },
     { id: 'consultas', label: 'Consultas', icon: Search, description: 'Consultar planillas' },
     { id: 'documentos', label: 'Documentos', icon: FileText, description: 'Boletas y comprobantes' },
     { id: 'reportes', label: 'Reportes', icon: BarChart3, description: 'Reportes de planillas' },
@@ -16,8 +16,8 @@ export default function PlanillasModule() {
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-pink-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">Módulo de Planillas</h1>
-          <p className="text-lg text-slate-600">Gestión de nóminas, sueldos y cálculos de remuneraciones</p>
+          <h1 className="text-4xl font-bold text-slate-900 mb-2">MÃ³dulo de Planillas</h1>
+          <p className="text-lg text-slate-600">GestiÃ³n de nÃ³minas, sueldos y cÃ¡lculos de remuneraciones</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -35,7 +35,7 @@ export default function PlanillasModule() {
                   <CardDescription>{feature.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Link to={`/dashboard/planillas/${feature.id}`}>
+                  <Link to={`/dashboard/planillas/${feature.id}` as any}>
                     <Button className="w-full bg-red-600 hover:bg-red-700">Acceder</Button>
                   </Link>
                 </CardContent>
@@ -50,7 +50,7 @@ export default function PlanillasModule() {
             <p className="text-sm text-slate-600">Funcionalidades</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-green-600">✓</p>
+            <p className="text-3xl font-bold text-green-600">âœ“</p>
             <p className="text-sm text-slate-600">Disponible</p>
           </div>
           <div className="text-center">
@@ -62,3 +62,4 @@ export default function PlanillasModule() {
     </div>
   );
 }
+

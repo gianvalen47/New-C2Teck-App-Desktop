@@ -1,0 +1,193 @@
+﻿"""
+API routers for inventory
+"""
+from fastapi import APIRouter, Depends, File, HTTPException, Response, UploadFile, status
+from sqlalchemy import or_
+from sqlalchemy.orm import Session
+import csv
+import io
+import uuid
+
+from config import SessionLocal
+from models import InventoryItemModel
+from schemas import InventoryItemCreate, InventoryItemRead, InventoryItemUpdate
+
+router = APIRouter(prefix="/inventory", tags=["Inventory"])
+
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+@router.get("", response_model=list[InventoryItemRead])
+def list_inventory(skip: int = 0, limit: int = 100, search: str | None = None, db: Session = Depends(get_db)):
+    """List all inventory items"""
+    query = db.query(InventoryItemModel)
+    if search:
+        like = f"%{search}%"
+        query = query.filter(
+            or_(
+                InventoryItemModel.sku.ilike(like),
+                InventoryItemModel.name.ilike(like),
+                InventoryItemModel.category.ilike(like),
+                InventoryItemModel.supplier.ilike(like),
+            )
+        )
+    items = query.offset(skip).limit(limit).all()
+    return items
+
+
+@router.get("/export")
+def export_inventory(format: str = "csv", search: str | None = None, db: Session = Depends(get_db)):
+    """Export inventory items as CSV."""
+    query = db.query(InventoryItemModel)
+    if search:
+        like = f"%{search}%"
+        query = query.filter(
+            or_(
+                InventoryItemModel.sku.ilike(like),
+                InventoryItemModel.name.ilike(like),
+                InventoryItemModel.category.ilike(like),
+                InventoryItemModel.supplier.ilike(like),
+            )
+        )
+    items = query.all()
+
+    if format != "csv":
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Only csv export is supported")
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["SKU", "Name", "Category", "Stock", "Min Stock", "Supplier", "Cost Price", "Sale Price", "Unit", "Active"])
+    for item in items:
+        writer.writerow([
+            item.sku,
+            item.name,
+            item.category or "",
+            item.stock,
+            item.min_stock or 0,
+            item.supplier or "",
+            item.cost_price or 0,
+            item.sale_price or 0,
+            item.unit,
+            item.active,
+        ])
+
+    return Response(
+        content=output.getvalue(),
+        media_type="text/csv",
+        headers={"Content-Disposition": "attachment; filename=inventory_export.csv"},
+    )
+
+
+@router.post("/import")
+async def import_inventory(file: UploadFile = File(...), db: Session = Depends(get_db)):
+    """Import inventory items from a CSV file."""
+    text = await file.read()
+    content = text.decode("utf-8", errors="replace")
+    reader = csv.DictReader(io.StringIO(content))
+    created = 0
+    updated = 0
+
+    for row in reader:
+        sku = (row.get("sku") or row.get("SKU") or "").strip()
+        if not sku:
+            continue
+
+        item = db.query(InventoryItemModel).filter(InventoryItemModel.sku == sku).first()
+        item_data = {
+            "sku": sku,
+            "name": (row.get("name") or row.get("Name") or "").strip() or sku,
+            "description": (row.get("description") or row.get("Description") or "").strip(),
+            "category": (row.get("category") or row.get("Category") or "").strip(),
+            "supplier": (row.get("supplier") or row.get("Supplier") or "").strip(),
+            "unit": (row.get("unit") or row.get("Unit") or "unidad").strip(),
+            "stock": int(row.get("stock") or row.get("Stock") or 0),
+            "min_stock": int(row.get("min_stock") or row.get("Min Stock") or 0),
+            "cost_price": float(row.get("cost_price") or row.get("Cost Price") or 0),
+            "sale_price": float(row.get("sale_price") or row.get("Sale Price") or 0),
+        }
+
+        if item:
+            for key, value in item_data.items():
+                setattr(item, key, value)
+            updated += 1
+        else:
+            db_item = InventoryItemModel(id=str(uuid.uuid4()), **item_data)
+            db.add(db_item)
+            created += 1
+
+    db.commit()
+    return {"created": created, "updated": updated}
+
+
+@router.get("/{item_id}", response_model=InventoryItemRead)
+def get_inventory_item(item_id: str, db: Session = Depends(get_db)):
+    """Get a specific inventory item"""
+    item = db.query(InventoryItemModel).filter(InventoryItemModel.id == item_id).first()
+    if not item:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Item {item_id} not found"
+        )
+    return item
+
+
+@router.post("", response_model=InventoryItemRead)
+def create_inventory_item(item: InventoryItemCreate, db: Session = Depends(get_db)):
+    """Create a new inventory item"""
+    # Check if SKU already exists
+    existing = db.query(InventoryItemModel).filter(InventoryItemModel.sku == item.sku).first()
+    if existing:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Item with SKU {item.sku} already exists"
+        )
+    
+    db_item = InventoryItemModel(
+        id=str(uuid.uuid4()),
+        **item.dict()
+    )
+    db.add(db_item)
+    db.commit()
+    db.refresh(db_item)
+    return db_item
+
+
+@router.put("/{item_id}", response_model=InventoryItemRead)
+def update_inventory_item(item_id: str, item: InventoryItemUpdate, db: Session = Depends(get_db)):
+    """Update an inventory item"""
+    db_item = db.query(InventoryItemModel).filter(InventoryItemModel.id == item_id).first()
+    if not db_item:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Item {item_id} not found"
+        )
+    
+    update_data = item.dict(exclude_unset=True)
+    for key, value in update_data.items():
+        setattr(db_item, key, value)
+    
+    db.add(db_item)
+    db.commit()
+    db.refresh(db_item)
+    return db_item
+
+
+@router.delete("/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_inventory_item(item_id: str, db: Session = Depends(get_db)):
+    """Delete an inventory item (soft delete)"""
+    db_item = db.query(InventoryItemModel).filter(InventoryItemModel.id == item_id).first()
+    if not db_item:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Item {item_id} not found"
+        )
+    
+    db_item.active = 0
+    db.add(db_item)
+    db.commit()

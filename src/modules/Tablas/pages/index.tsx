@@ -1,16 +1,16 @@
-import { Link } from '@tanstack/react-router';
+﻿import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Database, Package, Users, Building, Tag, Settings, MapPin, Zap } from 'lucide-react';
 
 export default function TablasModule() {
   const features = [
-    { id: 'productos', label: 'Productos', icon: Package, description: 'Catálogo de productos' },
+    { id: 'productos', label: 'Productos', icon: Package, description: 'CatÃ¡logo de productos' },
     { id: 'clientes', label: 'Clientes', icon: Users, description: 'Maestro de clientes' },
     { id: 'proveedores', label: 'Proveedores', icon: Building, description: 'Maestro de proveedores' },
     { id: 'marcas', label: 'Marcas', icon: Tag, description: 'Gestionar marcas' },
-    { id: 'ubicaciones', label: 'Ubicaciones', icon: MapPin, description: 'Ubicaciones de almacén' },
-    { id: 'parametros', label: 'Parámetros', icon: Settings, description: 'Configuración del sistema' },
+    { id: 'ubicaciones', label: 'Ubicaciones', icon: MapPin, description: 'Ubicaciones de almacÃ©n' },
+    { id: 'parametros', label: 'ParÃ¡metros', icon: Settings, description: 'ConfiguraciÃ³n del sistema' },
     { id: 'consultas', label: 'Consultas', icon: Database, description: 'Consultar datos maestros' },
     { id: 'reportes', label: 'Reportes', icon: Zap, description: 'Reportes de tablas' },
   ];
@@ -19,8 +19,8 @@ export default function TablasModule() {
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">Módulo de Tablas</h1>
-          <p className="text-lg text-slate-600">Gestión de datos maestros, catálogos y parámetros del sistema</p>
+          <h1 className="text-4xl font-bold text-slate-900 mb-2">MÃ³dulo de Tablas</h1>
+          <p className="text-lg text-slate-600">GestiÃ³n de datos maestros, catÃ¡logos y parÃ¡metros del sistema</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -38,7 +38,7 @@ export default function TablasModule() {
                   <CardDescription>{feature.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Link to={`/dashboard/tablas/${feature.id}`}>
+                  <Link to={`/dashboard/tablas/${feature.id}` as any}>
                     <Button className="w-full bg-purple-600 hover:bg-purple-700">Acceder</Button>
                   </Link>
                 </CardContent>
@@ -53,7 +53,7 @@ export default function TablasModule() {
             <p className="text-sm text-slate-600">Funcionalidades</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-green-600">✓</p>
+            <p className="text-3xl font-bold text-green-600">âœ“</p>
             <p className="text-sm text-slate-600">Disponible</p>
           </div>
           <div className="text-center">
@@ -65,3 +65,4 @@ export default function TablasModule() {
     </div>
   );
 }
+

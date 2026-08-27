@@ -1,22 +1,22 @@
-import { Link } from '@tanstack/react-router';
+﻿import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { LogIn, Lock, User, LogOut } from 'lucide-react';
 
 export default function LoginModule() {
   const features = [
-    { id: 'autenticacion', label: 'Autenticación', icon: LogIn, description: 'Iniciar sesión' },
-    { id: 'cambio-clave', label: 'Cambio de Clave', icon: Lock, description: 'Cambiar contraseña' },
+    { id: 'autenticacion', label: 'AutenticaciÃ³n', icon: LogIn, description: 'Iniciar sesiÃ³n' },
+    { id: 'cambio-clave', label: 'Cambio de Clave', icon: Lock, description: 'Cambiar contraseÃ±a' },
     { id: 'perfil', label: 'Perfil', icon: User, description: 'Mi perfil de usuario' },
-    { id: 'logout', label: 'Cerrar Sesión', icon: LogOut, description: 'Salir de la aplicación' },
+    { id: 'logout', label: 'Cerrar SesiÃ³n', icon: LogOut, description: 'Salir de la aplicaciÃ³n' },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-fuchsia-50 to-pink-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">Autenticación</h1>
-          <p className="text-lg text-slate-600">Acceso seguro al sistema y gestión de credenciales</p>
+          <h1 className="text-4xl font-bold text-slate-900 mb-2">AutenticaciÃ³n</h1>
+          <p className="text-lg text-slate-600">Acceso seguro al sistema y gestiÃ³n de credenciales</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -34,7 +34,7 @@ export default function LoginModule() {
                   <CardDescription>{feature.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Link to={`/dashboard/login/${feature.id}`}>
+                  <Link to={`/dashboard/login/${feature.id}` as any}>
                     <Button className="w-full bg-fuchsia-600 hover:bg-fuchsia-700">Acceder</Button>
                   </Link>
                 </CardContent>
@@ -49,7 +49,7 @@ export default function LoginModule() {
             <p className="text-sm text-slate-600">Funcionalidades</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-green-600">✓</p>
+            <p className="text-3xl font-bold text-green-600">âœ“</p>
             <p className="text-sm text-slate-600">Disponible</p>
           </div>
           <div className="text-center">
@@ -61,3 +61,4 @@ export default function LoginModule() {
     </div>
   );
 }
+

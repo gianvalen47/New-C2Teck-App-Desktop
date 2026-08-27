@@ -1,9 +1,13 @@
 """
 API routers for purchase register (Registro de Compras)
+
+Consumes from legacy SIGECOM adapter when enabled, otherwise uses local SQLite.
 """
+import logging
+import uuid
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-import uuid
 
 from config import SessionLocal
 from models import PurchaseRegisterModel
@@ -12,6 +16,13 @@ from schemas import (
     PurchaseRegisterRead,
     PurchaseRegisterUpdate,
 )
+from legacy_adapter import (
+    is_legacy_source_enabled,
+    list_purchases_legacy,
+    get_purchase_legacy,
+)
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/purchases", tags=["Purchases"])
 
@@ -32,7 +43,25 @@ def list_purchase_registers(
     limit: int = 100,
     db: Session = Depends(get_db),
 ):
-    """List purchase registers with optional filtering."""
+    """List purchase registers with optional filtering (from legacy adapter if enabled)"""
+    if is_legacy_source_enabled():
+        try:
+            data = list_purchases_legacy(skip=skip, limit=limit, estado=status_filter)
+            if isinstance(data, dict) and "items" in data:
+                return data["items"]
+            elif isinstance(data, list):
+                return data
+            else:
+                return [data] if data else []
+        except Exception as exc:
+            logger.error(f"Failed to fetch purchases from legacy adapter: {exc}")
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail=f"SIGECOM legacy adapter unavailable: {type(exc).__name__}. "
+                       f"Start sigecoom-wcf-adapter.exe or check SIGECOM_LEGACY_ADAPTER_BASE_URL.",
+            )
+
+    # Fallback to local SQLite
     query = db.query(PurchaseRegisterModel)
     if status_filter:
         query = query.filter(PurchaseRegisterModel.status == status_filter)

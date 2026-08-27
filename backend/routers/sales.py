@@ -1,8 +1,11 @@
 """
 API routers for sales/invoices
+
+Consumes from legacy SIGECOM adapter when enabled, otherwise uses local SQLite.
 """
 import csv
 import io
+import logging
 import os
 import smtplib
 import uuid
@@ -12,12 +15,19 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Response, status
 from pydantic import BaseModel
-from sqlalchemy import or_
+from sqlalchemy import extract, func, or_
 from sqlalchemy.orm import Session
 
 from config import SessionLocal
 from models import ClientModel, SaleModel
 from schemas import SaleCreate, SaleRead, SaleUpdate
+from legacy_adapter import (
+    is_legacy_source_enabled,
+    list_sales_legacy,
+    get_sale_legacy,
+)
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/sales", tags=["Sales"])
 
@@ -42,8 +52,42 @@ def get_db():
 
 
 @router.get("", response_model=list[SaleRead])
-def list_sales(skip: int = 0, limit: int = 100, search: str | None = None, db: Session = Depends(get_db)):
-    """List all sales/invoices"""
+def list_sales(
+    skip: int = 0,
+    limit: int = 100,
+    search: str | None = None,
+    type: str | None = None,
+    status: str | None = None,
+    series: str | None = None,
+    number: int | None = None,
+    anio: int | None = None,
+    mes: int | None = None,
+    db: Session = Depends(get_db),
+):
+    """List all sales/invoices (from legacy adapter if enabled)"""
+    if is_legacy_source_enabled():
+        try:
+            data = list_sales_legacy(
+                skip=skip,
+                limit=limit,
+                tipo=type,
+                estado=status,
+            )
+            if isinstance(data, dict) and "items" in data:
+                return data["items"]
+            elif isinstance(data, list):
+                return data
+            else:
+                return [data] if data else []
+        except Exception as exc:
+            logger.error(f"Failed to fetch sales from legacy adapter: {exc}")
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail=f"SIGECOM legacy adapter unavailable: {type(exc).__name__}. "
+                       f"Start sigecoom-wcf-adapter.exe or check SIGECOM_LEGACY_ADAPTER_BASE_URL.",
+            )
+
+    # Fallback to local SQLite
     query = db.query(SaleModel)
     if search:
         like = f"%{search}%"
@@ -55,12 +99,32 @@ def list_sales(skip: int = 0, limit: int = 100, search: str | None = None, db: S
                 SaleModel.status.ilike(like),
             )
         )
+    if type:
+        query = query.filter(SaleModel.type == type)
+    if status:
+        query = query.filter(SaleModel.status == status)
+    if series:
+        query = query.filter(SaleModel.series == series)
+    if number is not None:
+        query = query.filter(SaleModel.number == number)
+    if anio is not None:
+        query = query.filter(extract("year", SaleModel.date) == anio)
+    if mes is not None:
+        query = query.filter(extract("month", SaleModel.date) == mes)
+
+    query = query.order_by(SaleModel.date.desc(), SaleModel.number.desc())
     sales = query.offset(skip).limit(limit).all()
     return sales
 
 
 @router.get("/export")
-def export_sales(format: str = "csv", search: str | None = None, db: Session = Depends(get_db)):
+def export_sales(
+    format: str = "csv",
+    search: str | None = None,
+    type: str | None = None,
+    status: str | None = None,
+    db: Session = Depends(get_db),
+):
     """Export sales as CSV."""
     query = db.query(SaleModel)
     if search:
@@ -73,6 +137,10 @@ def export_sales(format: str = "csv", search: str | None = None, db: Session = D
                 SaleModel.status.ilike(like),
             )
         )
+    if type:
+        query = query.filter(SaleModel.type == type)
+    if status:
+        query = query.filter(SaleModel.status == status)
     sales = query.all()
 
     if format != "csv":
@@ -117,11 +185,20 @@ def get_sale(sale_id: str, db: Session = Depends(get_db)):
 @router.post("", response_model=SaleRead)
 def create_sale(sale: SaleCreate, db: Session = Depends(get_db)):
     """Create a new sale/invoice"""
+    next_number = sale.number
+    if next_number is None:
+        max_number_query = db.query(func.max(SaleModel.number)).filter(SaleModel.type == sale.type)
+        if sale.series:
+            max_number_query = max_number_query.filter(SaleModel.series == sale.series)
+        max_number = max_number_query.scalar() or 0
+        next_number = int(max_number) + 1
+
     db_sale = SaleModel(
         id=str(uuid.uuid4()),
         type=sale.type,
         series=sale.series,
-        number=sale.number,
+        number=next_number,
+        date=sale.date or datetime.utcnow(),
         client_id=sale.client_id,
         items=sale.items,
         subtotal=sale.subtotal,
@@ -153,6 +230,21 @@ def update_sale(sale_id: str, sale: SaleUpdate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_sale)
     return db_sale
+
+
+@router.delete("/{sale_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_sale(sale_id: str, db: Session = Depends(get_db)):
+    """Delete a sale/invoice"""
+    db_sale = db.query(SaleModel).filter(SaleModel.id == sale_id).first()
+    if not db_sale:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Sale {sale_id} not found"
+        )
+
+    db.delete(db_sale)
+    db.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @router.post("/{sale_id}/issue", response_model=SaleRead)

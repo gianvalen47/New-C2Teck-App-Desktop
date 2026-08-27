@@ -3,10 +3,12 @@ import { useState, useRef, useEffect, useLayoutEffect, FormEvent } from "react";
 import { toast } from "sonner";
 import { useDesktopMode } from "@/hooks/use-desktop";
 import { createPortal } from "react-dom";
-import { WindowsProvider, useWindows, Workspace, renderWindow } from "@/features/escritorio/windows";
-
+import { WindowsProvider, useWindows} from "@/context/WindowsContext";
+import { Workspace, renderWindow } from "@/features/escritorio/windows";
+import { Glyph } from "@/features/escritorio/glyphs";
+import systeckIcon from "@/assets/Systeck.ico";
 import {
-  Minus, Square, X, ChevronDown, Circle,
+  Minus, Square, X, ChevronDown, Circle, ArrowLeft,
   FileText, ShoppingBag, Users, ClipboardList, Search, BarChart3,
   Tag, Tags, Percent, Factory, Layers, DollarSign, Package,
   Contact, Briefcase, MonitorSmartphone, Cpu, ListOrdered, ScanLine,
@@ -26,7 +28,7 @@ import {
   BookText, ScrollText as Scroll, Building, ArrowDownUp, Landmark, ArrowUpDown, RefreshCcwDot,
   FileDown, PiggyBank, BookCheck, FileWarning,
   Smartphone, Signal, Phone, Target, IdCard, LogOut, Info, KeyRound, Handshake,
-  Eye, EyeOff, Key, User,
+  Eye, EyeOff, Key, User, Zap,
 } from "lucide-react";
 
 export const Route = createFileRoute("/escritorio")({
@@ -47,7 +49,7 @@ const TABS = [
 
 type MenuItem = { icon: any; label: string };
 type MenuSection = { title: string; items: MenuItem[] };
-type RibbonBtn = { icon: any; label: string; big?: boolean; dropdown?: boolean; menu?: MenuSection[] };
+type RibbonBtn = { icon: any; label: string; big?: boolean; dropdown?: boolean; menu?: MenuSection[]; openLabel?: string  };
 type RibbonGroup = { title?: string; items: RibbonBtn[] };
 
 const RIBBONS: Record<string, RibbonGroup[]> = {
@@ -111,7 +113,13 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Reportes",
       items: [
-        { icon: FilePlus, label: "Registro de Venta", dropdown: true },
+        { icon: FilePlus, label: "Registro de Venta", dropdown: true, menu: [
+          { title: "Registro de Venta", items: [
+            { icon: FileText, label: "Registro" },
+            { icon: FileSpreadsheet, label: "Registro Auxiliar" },
+            { icon: FileCheck, label: "Resumen Registro" },
+          ]},
+        ] },
         { icon: FileCheck, label: "Acumulada" },
         { icon: FileSearch, label: "Cotizaciones" },
         { icon: Users, label: "Mensuales x Cliente" },
@@ -233,7 +241,13 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Consultas",
       items: [
-        { icon: BookOpen, label: "Consultas", big: true, dropdown: true },
+        { icon: BookOpen, label: "Consultas", big: true, dropdown: true, menu: [
+          { title: "Consultas", items: [
+            { icon: HandCoins, label: "Ctas. x Cobrar" },
+            { icon: IdCard, label: "Tarjeta Cliente" },
+            { icon: FileClock, label: "Vencimientos" },
+          ]},
+        ]},
       ],
     },
     {
@@ -246,7 +260,12 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
         { icon: FileSpreadsheet, label: "Planillas" },
         { icon: FileEdit, label: "Notas Debito/Credito" },
         { icon: UserSearch, label: "Visita Cobrador" },
-        { icon: FileClock, label: "Vencimientos", dropdown: true },
+        { icon: FileClock, label: "Vencimientos", dropdown: true, menu: [
+          { title: "Vencimientos", items: [
+            { icon: FileEdit, label: "Detalle Vencimientos" },
+            { icon: FileCheck, label: "Acumulado Vencimientos" },
+          ]},
+        ] },
         { icon: Users, label: "Clientes" },
       ],
     },
@@ -500,12 +519,18 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
         { icon: UserCog, label: "Jefe Area" },
         { icon: UserCheck, label: "Recursos" },
         { icon: CalendarCheck, label: "Cronograma Mina" },
+        { icon: Radio, label: "Marcación Online" },
       ],
     },
     {
       title: "Comunicaciones",
       items: [
-        { icon: Radio, label: "Marcación Online" },
+        { icon: MonitorSmartphone, label: "Comunicaciones", big: true, dropdown: true, menu: [
+          { title: "Comunicaciones", items: [
+            { icon: ScanLine, label: "Admin. Lector" },
+            { icon: RefreshCcw, label: "Procesar Marcas" },
+          ]},
+        ]},
       ],
     },
     {
@@ -587,7 +612,14 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
         { icon: HandCoins, label: "Ctas x Pagar" },
         { icon: FileClock, label: "Vencimientos" },
         { icon: Coins, label: "Reembolsos" },
-        { icon: BookMarked, label: "Libros Oficiales", dropdown: true },
+        { icon: BookMarked, label: "Libros Oficiales", dropdown: true, menu: [
+          { title: "Libros Oficiales", items: [
+            { icon: BookText, label: "Libro Diario" },
+            { icon: BookOpen, label: "Libro Mayor" },
+            { icon: Wallet, label: "Caja y Bancos" },
+            { icon: ShoppingCart, label: "Registro de Compras" },
+          ]},
+        ] },
         { icon: Building, label: "Ctas Ctes" },
         { icon: FileWarning, label: "Ctas Ctes Pendiente" },
         { icon: BookCheck, label: "Mayor Auxiliar" },
@@ -800,6 +832,41 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
   ],
 };
 
+function normalizeRibbonLabel(label: string) {
+  return label.replace(/\s+/g, " ").replace(/\n/g, " ").trim();
+}
+
+function collectRibbonLabels(ribbons: Record<string, RibbonGroup[]>) {
+  const labels: string[] = [];
+
+  const addLabel = (value?: string) => {
+    if (!value) return;
+    const normalized = normalizeRibbonLabel(value);
+    if (!normalized) return;
+    labels.push(normalized);
+  };
+
+  const collectMenuSection = (section?: MenuSection[]) => {
+    if (!section) return;
+    section.forEach((menuSection) => {
+      menuSection.items.forEach((menuItem) => addLabel(menuItem.label));
+    });
+  };
+
+  Object.values(ribbons).forEach((groups) => {
+    groups.forEach((group) => {
+      group.items.forEach((item) => {
+        addLabel(item.label);
+        collectMenuSection(item.menu);
+      });
+    });
+  });
+
+  return Array.from(new Set(labels));
+}
+
+const ALL_RIBBON_LABELS = collectRibbonLabels(RIBBONS);
+
 function DesktopApp() {
   return (
     <WindowsProvider>
@@ -811,10 +878,12 @@ function DesktopApp() {
 function DesktopAppInner() {
   const [active, setActive] = useState("Ventas");
   const ribbon = RIBBONS[active] ?? RIBBONS.Ventas;
+  const [ribbonMode, setRibbonMode] = useState<"expanded" | "hidden" | "overlay">("expanded");
   const [now, setNow] = useState("");
   const { isDesktop, minimize, maximize, close } = useDesktopMode();
-  const { open: openWindow } = useWindows();
-  const params = new URLSearchParams(window.location.search);
+  const { open: openWindow, windows, active: activeWindowId, close: closeWindow, focus: focusWindow } = useWindows();
+  const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
+  const [recover, setRecover] = useState(false);
   const popupLabel = params.get("popup");
   const loginMode = params.get("login") === "1";
   const [desktopAuthenticated, setDesktopAuthenticated] = useState(!loginMode);
@@ -822,6 +891,9 @@ function DesktopAppInner() {
   const [busy, setBusy] = useState(false);
   const [user, setUser] = useState("grios");
   const [pass, setPass] = useState("demo1234");
+  const [ribbonMinimized, setRibbonMinimized] = useState(false);
+  const [ribbonBelow, setRibbonBelow] = useState(false);
+  const [ribbonMenu, setRibbonMenu] = useState<{ x: number; y: number } | null>(null);
   const [fecha, setFecha] = useState(new Date().toISOString().slice(0, 10));
   const [tc, setTc] = useState("3.399");
   const [sucursal, setSucursal] = useState("01 - Sede Central Lima");
@@ -830,6 +902,17 @@ function DesktopAppInner() {
 
   useEffect(() => {
     setNow(new Date().toLocaleDateString("es-PE"));
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const desktopWindow = window as Window & { __systeckAllMenuLabels?: string[] };
+    desktopWindow.__systeckAllMenuLabels = ALL_RIBBON_LABELS;
+    return () => {
+      if (desktopWindow.__systeckAllMenuLabels === ALL_RIBBON_LABELS) {
+        delete desktopWindow.__systeckAllMenuLabels;
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -846,6 +929,20 @@ function DesktopAppInner() {
       document.title = "Systeck (Versión 10.6.30) — C2TECK S.A.C.";
     }
   }, [popupLabel]);
+
+  useEffect(() => {
+    if (!ribbonMenu) return;
+    const close = () => setRibbonMenu(null);
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+    window.addEventListener("mousedown", close);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("mousedown", close);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [ribbonMenu]);
 
   const submit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -866,17 +963,7 @@ function DesktopAppInner() {
   const inputCls = "h-9 w-full rounded border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-300";
 
   const openDesktopWindow = (label: string) => {
-    if (isDesktop && typeof window !== "undefined") {
-      const popupUrl = new URL("/escritorio", window.location.origin);
-      popupUrl.searchParams.set("desktop", "1");
-      popupUrl.searchParams.set("popup", label);
-      window.open(
-        popupUrl.toString(),
-        `_popup-${label}-${Date.now()}`,
-        "width=1400,height=900,resizable=yes,scrollbars=no",
-      );
-      return;
-    }
+    // Siempre abrir ventanas simuladas dentro del MDI del escritorio.
     openWindow(label);
   };
 
@@ -951,71 +1038,166 @@ function DesktopAppInner() {
         )}
 
         {/* Quick access + tabs */}
-        <div className="relative z-0 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] border-b border-slate-400/40">
-          <div className="flex items-center px-2 pt-1 gap-0 overflow-x-auto">
-            <div className="flex items-center gap-1 pr-1 shrink-0">
-              <button className="h-5 w-5 rounded hover:bg-white/60 grid place-items-center flex-shrink-0">
-                <ChevronDown className="h-3 w-3" />
-              </button>
-              <div className="w-px h-4 bg-slate-400/30"></div>
-            </div>
-            {TABS.map((t) => (
-              <button
-                key={t}
-                onClick={() => setActive(t)}
-                className={[
-                  "flex-1 px-2 py-2 text-[11px] font-medium rounded-t border-x border-t transition-colors text-center whitespace-nowrap",
-                  active === t
-                    ? "bg-[#F3F6FA] border-slate-400/60 text-slate-900 font-semibold -mb-px"
-                    : "bg-transparent border-transparent text-slate-600 hover:bg-white/40 hover:text-slate-800",
-                ].join(" ")}
-              >
-                {t}
-              </button>
-            ))}
+        <div
+          onContextMenu={(e) => { e.preventDefault(); setRibbonMenu({ x: e.clientX, y: e.clientY }); }}
+          className="shrink-0 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] border-b border-slate-400/40 flex items-stretch relative z-30"
+        >
+          <AppOrb
+            onSwitchCompany={() => { setDesktopAuthenticated(false); toast("Cambiar empresa", { description: "Vuelva a iniciar sesión con las credenciales de la nueva empresa." }); }}
+            onCloseApp={() => { toast.success("Cerrando aplicación…"); setTimeout(() => { window.location.href = "/"; }, 300); }}
+          />
+          <div className="flex-1 min-w-0">
+            <TabsCarousel 
+              tabs={TABS} 
+              active={active} 
+              onSelect={setActive}
+              onTabClick={(e, t) => {
+                const isDouble = e.detail === 2;
+                if (isDouble) {
+                  if (active === t) {
+                    setRibbonMode((m) => (m === "expanded" ? "hidden" : "expanded"));
+                  } else {
+                    setActive(t);
+                    setRibbonMode("expanded");
+                  }
+                  return;
+                }
+
+                if (active === t) {
+                  return;
+                }
+
+                setActive(t);
+              }}
+            />
           </div>
         </div>
 
-        {/* Ribbon */}
-        <div className="shrink-0 bg-gradient-to-b from-[#F8FAFC] to-[#EEF2F7] border-b border-slate-300 px-2 pt-1 pb-0">
-          <div className="flex items-stretch flex-nowrap overflow-x-auto overflow-y-visible">
-            {ribbon.map((group, gi) => (
-              <div key={gi} className="flex flex-col shrink-0 border-r border-slate-200 last:border-r-0">
-                <div className="flex items-start gap-1 px-2 pt-1 pb-0.5 min-h-[78px]">
-                  {group.items.filter(i => i.big).map((btn) => (
-                    <RibbonBigButton key={btn.label} {...btn} onOpen={openDesktopWindow} />
-                  ))}
-                  <div className="grid grid-flow-col grid-rows-2 auto-cols-max gap-x-3 gap-y-0.5 pt-0.5">
-                    {group.items.filter(i => !i.big).map((btn) => (
-                      <RibbonSmallButton key={btn.label} {...btn} onOpen={openDesktopWindow} />
-                    ))}
-                  </div>
-                </div>
-                {group.title && (
-                  <div className="shrink-0 text-[9.5px] lg:text-[10px] text-slate-500 mt-auto px-2 pt-0.5 pb-[3px] border-t border-slate-200/80 bg-slate-50/60 text-center uppercase tracking-wider">
-                    {group.title}
-                  </div>
-                )}
-              </div>
-            ))}
+        {/* Overlay ribbon (does NOT push workspace) */}
+        <div
+          className={[
+            "absolute left-0 right-0 top-full overflow-hidden bg-gradient-to-b from-[#F8FAFC] to-[#EEF2F7] border-b border-slate-300 shadow-[0_12px_24px_-12px_rgba(15,23,42,0.35)] transition-[max-height,opacity,transform] duration-300 ease-out",
+            ribbonMode === "overlay"
+              ? "max-h-[112px] opacity-100 translate-y-0 pointer-events-auto"
+              : "max-h-0 opacity-0 -translate-y-1 pointer-events-none",
+          ].join(" ")}
+          onMouseLeave={() => { if (ribbonMode === "overlay") setRibbonMode("hidden"); }}
+          style={{ zIndex: 29 }}
+        >
+          <div className="px-2 py-1 h-[104px]">
+            <RibbonContent ribbon={ribbon} openDesktopWindow={openDesktopWindow} />
           </div>
         </div>
+
+        {/* Ribbon (in-flow, keeps the normal top position) */}
+        <div
+          className={[
+            "shrink-0 overflow-hidden bg-gradient-to-b from-[#F8FAFC] to-[#EEF2F7] transition-[height,opacity] duration-300 ease-out",
+            ribbonMode === "expanded" && !ribbonMinimized ? "h-[104px] opacity-100 border-b border-slate-300" : "h-0 opacity-0",
+          ].join(" ")}
+        >
+          {!ribbonMinimized && (
+            <div
+              onContextMenu={(e) => { e.preventDefault(); setRibbonMenu({ x: e.clientX, y: e.clientY }); }}
+              className={`px-2 py-1 h-[104px] ${ribbonBelow ? "order-last border-t border-b-0" : ""}`}
+            >
+              <RibbonContent ribbon={ribbon} openDesktopWindow={openDesktopWindow} />
+            </div>
+          )}
+        </div>
+
+        {ribbonMenu && (
+          <div
+            style={{ left: ribbonMenu.x, top: ribbonMenu.y }}
+            onMouseDown={(e) => e.stopPropagation()}
+            className="fixed z-[100] min-w-[220px] rounded-sm border border-slate-400 bg-[#F1F1F1] py-1 shadow-[0_6px_20px_rgba(0,0,0,0.25)] text-[12px] text-slate-800"
+          >
+            <button
+              onClick={() => { toast.success("Añadido a la barra de acceso rápido"); setRibbonMenu(null); }}
+              className="w-full text-left px-3 py-1.5 hover:bg-[#3B82F6] hover:text-white"
+            >
+              <u>A</u>dd to Quick Access Toolbar
+            </button>
+            <button
+              onClick={() => { setRibbonBelow(v => !v); setRibbonMenu(null); }}
+              className="w-full text-left px-3 py-1.5 hover:bg-[#3B82F6] hover:text-white"
+            >
+              <u>S</u>how {ribbonBelow ? "Above" : "Below"} the Ribbon
+            </button>
+            <div className="my-1 border-t border-slate-300" />
+            <button
+              onClick={() => { setRibbonMinimized(v => !v); setRibbonMenu(null); }}
+              className="w-full text-left px-3 py-1.5 hover:bg-[#3B82F6] hover:text-white"
+            >
+              <u>M</u>inimize the Ribbon {ribbonMinimized ? "✓" : ""}
+            </button>
+          </div>
+        )}
 
         {/* Workspace MDI */}
         <Workspace />
 
 
-        {/* Status bar */}
-        <div className="relative z-0 h-6 bg-gradient-to-b from-[#E4EAF1] to-[#C9D3DF] border-t border-slate-400/40 flex items-center px-3 text-[11px] text-slate-700 gap-4 overflow-x-auto">
-          <span>Usuario: <b>grios</b></span>
-          <span className="text-slate-400">/</span>
-          <span>Perfil: <b>Consultor</b></span>
-          <span className="text-slate-400">|</span>
-          <span>Fecha de Transacción: <b>{now}</b></span>
-          <span className="text-slate-400">/</span>
-          <span>Tipo de Cambio Compra: <b>3.399</b></span>
-          <span className="text-slate-400">·</span>
-          <span>Venta: <b>3.411</b></span>
+        {/* Status bar / MDI strip */}
+        <div className="shrink-0 border-t border-slate-900/60 bg-gradient-to-b from-[#243B55] to-[#141E30]">
+          <div className="h-7 border-b border-slate-700/70 px-2 flex items-center gap-2 overflow-x-auto text-[10px] text-slate-300 font-mono">
+            <span className="inline-flex items-center gap-1.5 shrink-0">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#10B981]" />
+              SYSTECK MDI
+            </span>
+            <span className="text-slate-500 shrink-0">|</span>
+            {windows.length === 0 ? (
+              <span className="text-slate-400 shrink-0">sin ventanas abiertas</span>
+            ) : (
+              <div className="flex items-center gap-1.5">
+                {windows.slice(0, 5).map((w) => (
+                  <button
+                    key={w.id}
+                    type="button"
+                    onClick={() => focusWindow(w.id)}
+                    className={[
+                      "inline-flex items-center gap-1.5 h-5 px-2 rounded border shrink-0",
+                      w.id === activeWindowId
+                        ? "border-cyan-500/60 bg-cyan-500/15 text-cyan-200"
+                        : "border-slate-600/80 bg-slate-800/60 text-slate-300 hover:bg-slate-700/70",
+                    ].join(" ")}
+                  >
+                    <span className="truncate max-w-[140px]">{w.label}</span>
+                    <span
+                      className="text-slate-400 hover:text-red-300"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        closeWindow(w.id);
+                      }}
+                    >
+                      x
+                    </span>
+                  </button>
+                ))}
+                {windows.length > 5 && (
+                  <span className="text-slate-400 shrink-0">+{windows.length - 5} más</span>
+                )}
+              </div>
+            )}
+            <span className="ml-auto text-slate-400 shrink-0">{windows.length} ventana{windows.length === 1 ? "" : "s"} • 0 min.</span>
+          </div>
+
+          <div className="h-7 px-2 flex items-center gap-2 overflow-x-auto text-[10.5px] text-slate-200 font-mono">
+            <span className="shrink-0">Usuario: <b className="text-cyan-300">grios</b></span>
+            <span className="text-slate-500 shrink-0">/</span>
+            <span className="shrink-0">Perfil: <b className="text-cyan-300">Consultor</b></span>
+            <span className="text-slate-500 shrink-0">|</span>
+            <span className="shrink-0">Fecha Proceso: <b className="text-amber-300">{now}</b></span>
+            <span className="text-slate-500 shrink-0">/</span>
+            <span className="shrink-0">T.C.: <b className="text-amber-300">3.406</b></span>
+            <span className="text-slate-500 shrink-0">|</span>
+            <span className="shrink-0 inline-flex items-center gap-1.5 px-1.5 h-5 rounded border border-indigo-400/40 bg-indigo-500/10 text-indigo-200">
+              <Zap className="h-2.5 w-2.5 text-cyan-300 animate-pulse" />
+              <span>Systeck-AI Core: <b className="text-emerald-300">ONLINE</b></span>
+            </span>
+            <span className="shrink-0 inline-flex items-center gap-1 px-1.5 h-5 rounded border border-cyan-400/40 bg-cyan-500/10 text-cyan-200">GPU Usage: <b className="text-cyan-100">24%</b></span>
+            <span className="shrink-0 inline-flex items-center gap-1 px-1.5 h-5 rounded border border-cyan-400/40 bg-cyan-500/10 text-cyan-200">Model Latency: <b className="text-cyan-100">12ms</b></span>
+          </div>
         </div>
       </div>
 
@@ -1087,8 +1269,8 @@ function DesktopLogin({
   onToggleShowPass: () => void;
   onCapsChange: (value: boolean) => void;
 }) {
-  const inputCls = "h-9 rounded-md border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-300";
-
+  const inputCls = "h-9 rounded-md border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-300 flex-1";
+  const [recover, setRecover] = useState(false);
   return (
     <div className={`h-screen w-screen overflow-hidden bg-[#F1F4F9] ${busy ? "cursor-wait" : ""}`}>
       <form onSubmit={onSubmit} className="flex h-full w-full flex-col rounded-none overflow-hidden border-0 shadow-none bg-[#F1F4F9]">
@@ -1096,72 +1278,425 @@ function DesktopLogin({
           <span className="font-semibold tracking-tight flex items-center gap-2"><Lock className="h-3.5 w-3.5 text-amber-300" /> Acceso al Sistema — Systeck v10.6.3.0</span>
           <span className="opacity-70 font-mono">C2TECK S.A.C.</span>
         </div>
-        <div className="flex h-full">
-          <div className="w-[170px] bg-gradient-to-b from-[#DDE7F3] to-[#B7C7DC] grid place-items-center border-r border-slate-400/50 py-6 min-h-full">
+        <div className="flex h-full overflow-hidden">
+          <div className="w-[170px] bg-gradient-to-b from-[#DDE7F3] to-[#B7C7DC] grid place-items-center border-r border-slate-400/50 min-h-full">
             <div className="h-28 w-28 rounded-full bg-gradient-to-br from-amber-300 to-amber-600 grid place-items-center shadow-inner ring-4 ring-amber-200/60">
               <Lock className="h-12 w-12 text-white drop-shadow" strokeWidth={2} />
             </div>
           </div>
-          <div className="flex flex-1 flex-col p-4 space-y-2.5">
-            <div className="text-[11px] uppercase tracking-widest text-slate-500 font-semibold border-b border-slate-300 pb-1">Credenciales</div>
-            <label className="flex items-center gap-2">
-              <User className="h-3.5 w-3.5 text-slate-500 shrink-0" />
-              <span className="text-[11.5px] text-slate-700 w-24">Usuario</span>
-              <input value={user} onChange={(e) => onUserChange(e.target.value)} className={inputCls} />
-            </label>
-            <label className="flex items-start gap-2">
-              <Key className="h-3.5 w-3.5 text-slate-500 shrink-0 mt-1.5" />
-              <span className="text-[11.5px] text-slate-700 w-24 mt-1">Clave</span>
-              <div className="flex-1 flex flex-col">
-                <div className="relative">
-                  <input type={showPass ? "text" : "password"} value={pass} onChange={(e) => onPassChange(e.target.value)} onKeyDown={(e) => onCapsChange(e.getModifierState("CapsLock"))} onKeyUp={(e) => onCapsChange(e.getModifierState("CapsLock"))} className={`${inputCls} w-full pr-8`} />
-                  <button type="button" onClick={onToggleShowPass} tabIndex={-1} title={showPass ? "Ocultar clave" : "Mostrar clave"} className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6 grid place-items-center text-slate-500 hover:text-[#3E5B7A]">
-                    {showPass ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
-                  </button>
+          <div className="flex flex-1 flex-col px-6 py-4 overflow-hidden">
+            <div className="text-[11px] uppercase tracking-widest text-slate-500 font-semibold border-b border-slate-300 pb-2 shrink-0">Credenciales</div>
+            <div className="space-y-3 mt-3 shrink-0">
+              <label className="flex items-center gap-3">
+                <User className="h-3.5 w-3.5 text-slate-500 shrink-0" />
+                <span className="text-[11.5px] text-slate-700 w-20 shrink-0">Usuario</span>
+                <input value={user} onChange={(e) => onUserChange(e.target.value)} className={inputCls} />
+              </label>
+              <label className="flex items-start gap-3">
+                <Key className="h-3.5 w-3.5 text-slate-500 shrink-0 mt-1.5" />
+                <span className="text-[11.5px] text-slate-700 w-20 mt-1 shrink-0">Clave</span>
+                <div className="flex-1 flex flex-col min-w-0">
+                  <div className="relative">
+                    <input type={showPass ? "text" : "password"} value={pass} onChange={(e) => onPassChange(e.target.value)} onKeyDown={(e) => onCapsChange(e.getModifierState("CapsLock"))} onKeyUp={(e) => onCapsChange(e.getModifierState("CapsLock"))} className={`${inputCls} w-full pr-8`} />
+                    <button type="button" onClick={onToggleShowPass} tabIndex={-1} title={showPass ? "Ocultar clave" : "Mostrar clave"} className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6 grid place-items-center text-slate-500 hover:text-[#3E5B7A]">
+                      {showPass ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+                    </button>
+                  </div>
+                  {capsOn && <div className="mt-1 text-[10.5px] font-medium text-orange-600 flex items-center gap-1 animate-in fade-in slide-in-from-top-1 duration-150">⚠️ Bloq Mayús activado</div>}
                 </div>
-                {capsOn && <div className="mt-1 text-[10.5px] font-medium text-orange-600 flex items-center gap-1 animate-in fade-in slide-in-from-top-1 duration-150">⚠️ Bloq Mayús activado</div>}
-              </div>
-            </label>
+              </label>
+            </div>
+
+            <div className="text-[11px] uppercase tracking-widest text-slate-500 font-semibold border-b border-slate-300 pb-2 mt-3 shrink-0">Parámetros de Sesión</div>
+            <div className="space-y-3 mt-2 shrink-0">
+              <label className="flex items-center gap-3">
+                <Calendar className="h-3.5 w-3.5 text-slate-500 shrink-0" />
+                <span className="text-[11.5px] text-slate-700 w-20 shrink-0">Fecha Proceso</span>
+                <input value={fecha} onChange={(e) => onFechaChange(e.target.value)} className={inputCls} />
+              </label>
+              <label className="flex items-center gap-3">
+                <DollarSign className="h-3.5 w-3.5 text-slate-500 shrink-0" />
+                <span className="text-[11.5px] text-slate-700 w-20 shrink-0">Tipo de Cambio</span>
+                <input value={tc} onChange={(e) => onTcChange(e.target.value)} className={inputCls} />
+              </label>
+              <label className="flex items-center gap-3">
+                <MapPin className="h-3.5 w-3.5 text-slate-500 shrink-0" />
+                <span className="text-[11.5px] text-slate-700 w-20 shrink-0">Sucursal</span>
+                <select value={sucursal} onChange={(e) => onSucursalChange(e.target.value)} className={`${inputCls} appearance-none cursor-pointer`}>
+                  <option>01 - Sede Central Lima</option>
+                  <option>02 - Almacén Principal</option>
+                  <option>03 - Operación Minera</option>
+                </select>
+              </label>
+            </div>
             
-            <div className="flex flex-1 flex-col justify-between gap-4">
-              <div className="space-y-2.5">
-                <div className="text-[11px] uppercase tracking-widest text-slate-500 font-semibold border-b border-slate-300 pb-1">Parámetros de Sesión</div>
-                <label className="flex items-center gap-2">
-                  <Calendar className="h-3.5 w-3.5 text-slate-500 shrink-0" />
-                  <span className="text-[11.5px] text-slate-700 w-24">Fecha Proceso</span>
-                  <input value={fecha} onChange={(e) => onFechaChange(e.target.value)} className={inputCls} />
-                </label>
-                <label className="flex items-center gap-2">
-                  <DollarSign className="h-3.5 w-3.5 text-slate-500 shrink-0" />
-                  <span className="text-[11.5px] text-slate-700 w-24">Tipo de Cambio</span>
-                  <input value={tc} onChange={(e) => onTcChange(e.target.value)} className={inputCls} />
-                </label>
-                <label className="flex items-center gap-2">
-                  <MapPin className="h-3.5 w-3.5 text-slate-500 shrink-0" />
-                  <span className="text-[11.5px] text-slate-700 w-24">Sucursal</span>
-                  <select value={sucursal} onChange={(e) => onSucursalChange(e.target.value)} className={`${inputCls} appearance-none cursor-pointer`}>
-                    <option>01 - Sede Central Lima</option>
-                    <option>02 - Almacén Principal</option>
-                    <option>03 - Operación Minera</option>
-                  </select>
-                </label>
+            <div className="shrink-0 space-y-2 mt-2">
+              <div className="flex items-center justify-end gap-2 pt-2 pb-2 border-t border-slate-300">
+                <button type="button" onClick={() => window.close()} className="h-7 px-4 text-[12px] rounded-sm border border-slate-400/70 bg-gradient-to-b from-[#F6F9FC] to-[#DDE4EC] hover:from-[#EEF2F7] hover:to-[#C9D3DF] text-slate-800 whitespace-nowrap">Cancelar</button>
+                <button type="submit" disabled={busy} className="h-7 px-6 text-[12px] font-semibold rounded-sm border border-[#2A3F55] bg-gradient-to-b from-[#4C6E93] to-[#2A3F55] hover:from-[#5A80A9] text-white disabled:opacity-60 whitespace-nowrap">{busy ? "Conectando..." : "OK"}</button>
               </div>
-              <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-300">
-                <button type="button" onClick={() => window.close()} className="h-7 px-4 text-[12px] rounded-sm border border-slate-400/70 bg-gradient-to-b from-[#F6F9FC] to-[#DDE4EC] hover:from-[#EEF2F7] hover:to-[#C9D3DF] text-slate-800">Cancelar</button>
-                <button type="submit" disabled={busy} className="h-7 px-6 text-[12px] font-semibold rounded-sm border border-[#2A3F55] bg-gradient-to-b from-[#4C6E93] to-[#2A3F55] hover:from-[#5A80A9] text-white disabled:opacity-60">{busy ? "Conectando..." : "OK"}</button>
+              <div className="text-center">
+                <button
+                  type="button"
+                  onClick={() => setRecover(true)}
+                  className="text-[12px] font-semibold text-red-600 underline underline-offset-2 hover:text-red-700"
+                >
+                  ¿Olvidaste tu clave de acceso?
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <div className="h-5 bg-slate-800 text-slate-400 text-[10px] font-mono flex items-center px-3 gap-2 border-t border-slate-900">
+        <div className="h-5 bg-slate-800 text-slate-400 text-[10px] font-mono flex items-center px-3 gap-2 border-t border-slate-900 shrink-0">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
           <span>Auth Server · 127.0.0.1:8443 · TLS 1.3</span>
           <span className="ml-auto">Hideez FIDO2 ready</span>
         </div>
       </form>
+      {recover && <RecoverPasswordModal onClose={() => setRecover(false)} />}
     </div>
   );
 }
+
+function RecoverPasswordModal({ onClose }: { onClose: () => void }) {
+  const [u, setU] = useState("");
+  return (
+    <div className="fixed inset-0 z-[10000] bg-slate-950/40 grid place-items-center animate-in fade-in duration-150">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (!u.trim()) { toast.error("Ingresa tu usuario"); return; }
+          toast.success("Solicitud enviada", { description: `Se envió el enlace de recuperación para "${u.trim()}".` });
+          onClose();
+        }}
+        className="w-[440px] max-w-[95vw] rounded-md overflow-hidden border border-slate-400/70 shadow-2xl bg-[#F8FAFC]"
+      >
+        <div className="h-8 bg-gradient-to-b from-[#F3F6FA] to-[#E2E8F0] border-b border-slate-300 flex items-center justify-between px-3">
+          <span className="text-[12px] text-slate-700">Recuperar Clave</span>
+          <button type="button" onClick={onClose} className="h-6 w-6 grid place-items-center rounded-sm text-slate-600 hover:bg-red-600 hover:text-white">
+            <X className="h-3.5 w-3.5" />
+          </button>
+        </div>
+        <div className="px-6 py-5">
+          <h3 className="text-center text-[17px] font-bold text-slate-900">Recuperar Contraseña</h3>
+          <label className="mt-5 flex items-center gap-3">
+            <span className="text-[12.5px] text-slate-800 whitespace-nowrap">Ingresa tu usuario :</span>
+            <input
+              value={u}
+              onChange={(e) => setU(e.target.value)}
+              autoFocus
+              className="flex-1 h-8 px-2 text-[12px] bg-white border border-slate-400/70 rounded-sm text-slate-900 focus:border-[#3E5B7A] focus:ring-1 focus:ring-[#3E5B7A]/30 outline-none font-mono"
+            />
+          </label>
+          <div className="mt-6 flex items-center justify-center gap-3">
+            <button type="submit" className="h-8 px-4 text-[12.5px] rounded-sm border border-[#3E7BC0] bg-gradient-to-b from-white to-[#E4EEF9] text-slate-800 inline-flex items-center gap-2 hover:from-[#F2F8FF]">
+              Aceptar <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+            </button>
+            <button type="button" onClick={onClose} className="h-8 px-4 text-[12.5px] rounded-sm border border-slate-400/70 bg-gradient-to-b from-white to-[#E7ECF2] text-slate-800 inline-flex items-center gap-2 hover:from-[#F5F8FB]">
+              Cancelar <ArrowLeft className="h-4 w-4 text-[#2F80ED]" />
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+
+function RibbonContent({ ribbon, openDesktopWindow }: { ribbon: RibbonGroup[]; openDesktopWindow: (label: string) => void }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [collapsedGroups, setCollapsedGroups] = useState<Set<number>>(new Set());
+  const expandedWidthCache = useRef<number[]>([]);
+  const collapsedWidthCache = useRef<number[]>([]);
+
+  const estimateExpandedWidth = (group: RibbonGroup) => {
+    const bigCount = group.items.filter((item) => item.big).length;
+    const smallCount = group.items.length - bigCount;
+    const bigWidth = bigCount > 0 ? bigCount * 66 : 0;
+    const smallWidth = smallCount > 0 ? Math.max(150, smallCount * 72 + 24) : 0;
+    return Math.max(82, bigWidth + smallWidth + 16);
+  };
+
+  useEffect(() => {
+    expandedWidthCache.current = [];
+    collapsedWidthCache.current = [];
+    setCollapsedGroups(new Set());
+  }, [ribbon]);
+
+  useLayoutEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    let raf = 0;
+    const measure = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const children = Array.from(el.children) as HTMLElement[];
+        const currentWidth = children.reduce((total, child, index) => {
+          const width = child.getBoundingClientRect().width;
+          if (collapsedGroups.has(index)) {
+            collapsedWidthCache.current[index] = width;
+          } else {
+            expandedWidthCache.current[index] = width;
+          }
+          return total + width;
+        }, 0);
+
+        const overflow = currentWidth - el.clientWidth;
+        if (overflow > 4) {
+          setCollapsedGroups((prev) => {
+            const candidates = ribbon
+              .map((group, index) => {
+                const expandedWidth = expandedWidthCache.current[index] ?? estimateExpandedWidth(group);
+                const collapsedWidth = collapsedWidthCache.current[index] ?? 84;
+                return {
+                  index,
+                  count: group.items.length,
+                  hasBig: group.items.some((item) => item.big),
+                  savings: Math.max(0, expandedWidth - collapsedWidth),
+                };
+              })
+              .filter((candidate) => !prev.has(candidate.index) && !candidate.hasBig && candidate.count >= 2)
+              .sort((a, b) => b.savings - a.savings || b.count - a.count);
+
+            if (!candidates.length) return prev;
+            const next = new Set(prev);
+            next.add(candidates[0].index);
+            return next;
+          });
+        } else {
+          const freeSpace = Math.max(0, el.clientWidth - currentWidth);
+          setCollapsedGroups((prev) => {
+            if (!prev.size) return prev;
+            let remainingSpace = freeSpace;
+            const candidates = [...prev]
+              .map((index) => {
+                const group = ribbon[index];
+                if (!group) return null;
+                const expandedWidth = expandedWidthCache.current[index] ?? estimateExpandedWidth(group);
+                const collapsedWidth = collapsedWidthCache.current[index] ?? 84;
+                return {
+                  index,
+                  count: group.items.length,
+                  needed: Math.max(0, expandedWidth - collapsedWidth),
+                };
+              })
+              .filter((candidate): candidate is { index: number; count: number; needed: number } => Boolean(candidate))
+              .sort((a, b) => a.needed - b.needed || a.count - b.count);
+
+            const next = new Set(prev);
+            let changed = false;
+            for (const candidate of candidates) {
+              if (remainingSpace >= candidate.needed + 6) {
+                next.delete(candidate.index);
+                remainingSpace -= candidate.needed;
+                changed = true;
+              }
+            }
+            return changed ? next : prev;
+          });
+        }
+      });
+    };
+
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    measure();
+
+    return () => {
+      ro.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, [ribbon, collapsedGroups]);
+
+  return (
+    <div ref={containerRef} className="flex items-stretch flex-nowrap h-full w-full overflow-hidden">
+      {ribbon.map((group, gi) => (
+        collapsedGroups.has(gi) ? (
+          <CollapsedGroupButton key={gi} group={group} onOpen={openDesktopWindow} />
+        ) : (
+          <div key={gi} className="flex flex-col shrink-0 border-r border-slate-200 last:border-r-0">
+            <div className="flex items-start gap-1 px-2 pt-1 pb-0.5 min-h-[78px]">
+              {group.items.filter((item) => item.big).map((btn) => (
+                <RibbonBigButton key={btn.label} {...btn} onOpen={openDesktopWindow} />
+              ))}
+              <div className="grid grid-flow-col grid-rows-2 auto-cols-max gap-x-3 gap-y-0.5 pt-0.5">
+                {group.items.filter((item) => !item.big).map((btn) => (
+                  <RibbonSmallButton key={btn.label} {...btn} onOpen={openDesktopWindow} />
+                ))}
+              </div>
+            </div>
+            {group.title && (
+              <div className="shrink-0 text-[9.5px] lg:text-[10px] text-slate-500 mt-auto px-2 pt-0.5 pb-[3px] border-t border-slate-200/80 bg-slate-50/60 text-center uppercase tracking-wider">
+                {group.title}
+              </div>
+            )}
+          </div>
+        )
+      ))}
+    </div>
+  );
+}
+
+function CollapsedGroupButton({ group, onOpen }: { group: RibbonGroup; onOpen: (label: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
+
+  const label = group.title || group.items[0]?.label || "Grupo";
+
+  const toggle = () => {
+    if (!open && btnRef.current) {
+      const rect = btnRef.current.getBoundingClientRect();
+      setPos({ left: rect.left, top: rect.bottom + 2 });
+    }
+    setOpen((value) => !value);
+  };
+
+  return (
+    <div className="flex flex-col shrink-0 border-r border-slate-200 last:border-r-0">
+      <div className="flex items-start px-1.5 pt-1 pb-0.5 min-h-[78px]">
+        <button
+          ref={btnRef}
+          onClick={toggle}
+          title={label}
+          className={[
+            "flex flex-col items-center justify-center gap-1 rounded border w-[72px] h-[72px] px-1.5",
+            open
+              ? "bg-gradient-to-b from-[#FCE9A8] to-[#F5C86A] border-[#B8892E] shadow-inner"
+              : "border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6]",
+          ].join(" ")}
+        >
+          <Glyph name={label} size={24} className="shrink-0" />
+          <span className="text-[9.5px] leading-tight text-center whitespace-pre text-slate-800 font-medium">{label}</span>
+          <ChevronDown className="h-2.5 w-2.5 text-slate-600" />
+        </button>
+      </div>
+      {open && pos && createPortal(
+        <>
+          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+          <div
+            className="fixed z-[2147483646] bg-[#F3F6FA] border border-slate-400/70 shadow-xl rounded-sm p-2 min-w-[220px] max-h-[60vh] overflow-y-auto"
+            style={{ left: pos.left, top: pos.top }}
+          >
+            <div className="flex flex-col gap-0.5">
+              {group.items.map((item) => (
+                <button
+                  key={item.label}
+                  onClick={() => { onOpen(item.label); setOpen(false); }}
+                  className="flex items-center gap-2 px-1.5 py-1 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border border-transparent text-left"
+                >
+                  <Glyph name={item.label} size={18} className="shrink-0" />
+                  <span className="text-[11.5px] text-slate-800 whitespace-nowrap">{item.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </>,
+        document.body,
+      )}
+    </div>
+  );
+}
+
+function AppOrb({ onSwitchCompany, onCloseApp }: { onSwitchCompany: () => void; onCloseApp: () => void }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => { if (!ref.current?.contains(e.target as Node)) setOpen(false); };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [open]);
+  return (
+    <div ref={ref} className="relative shrink-0 flex items-center pl-1.5 pr-2">
+      <button
+        onClick={() => setOpen(v => !v)}
+        title="Menú de aplicación"
+        className={`group relative h-9 w-9 rounded-full grid place-items-center transition-all duration-200
+          ring-1 ring-slate-900/40
+          bg-[radial-gradient(circle_at_32%_28%,#FFFFFF_0%,#E4ECF5_35%,#A9B8CB_70%,#6B7C93_100%)]
+          shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.9),inset_0_-3px_5px_rgba(30,45,70,0.45),inset_0_0_0_1px_rgba(255,255,255,0.15),0_2px_3px_rgba(0,0,0,0.35),0_4px_10px_rgba(0,0,0,0.25)]
+          hover:bg-[radial-gradient(circle_at_32%_28%,#FFF9D6_0%,#FFD966_35%,#C9962A_72%,#7A5A10_100%)]
+          hover:ring-amber-700/60
+          hover:shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.95),inset_0_-3px_6px_rgba(90,55,5,0.55),inset_0_0_0_1px_rgba(255,220,120,0.35),0_0_14px_rgba(245,196,64,0.6),0_2px_4px_rgba(0,0,0,0.4)]
+          active:translate-y-[1px] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.4),0_1px_2px_rgba(0,0,0,0.3)]
+          ${open ? "ring-2 ring-amber-500 bg-[radial-gradient(circle_at_32%_28%,#FFF9D6_0%,#FFD966_35%,#C9962A_72%,#7A5A10_100%)]" : ""}`}
+      >
+        <img src={systeckIcon} alt="Systeck" className="relative z-10 h-6 w-6 object-contain drop-shadow-[0_1px_1px_rgba(0,0,0,0.55)]" />
+        {/* Specular top highlight (glassy sheen) */}
+        <span aria-hidden className="pointer-events-none absolute inset-0 rounded-full overflow-hidden">
+          <span className="absolute left-[14%] right-[14%] top-[6%] h-[42%] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.85)_0%,rgba(255,255,255,0.35)_45%,rgba(255,255,255,0)_75%)] blur-[0.5px]" />
+        </span>
+        {/* Bottom inner rim reflection */}
+        <span aria-hidden className="pointer-events-none absolute inset-0 rounded-full shadow-[inset_0_-1px_0_rgba(255,255,255,0.25)]" />
+      </button>
+      {open && (
+        <div className="absolute top-full left-1 mt-1 z-[100] w-60 rounded-md border border-slate-400/70 bg-[#F8FAFC] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+          <div className="px-3 py-2 bg-gradient-to-b from-[#4A6789] to-[#243B55] text-white text-[11px] font-semibold tracking-wide flex items-center gap-2">
+            <Cpu className="h-3.5 w-3.5 text-amber-300" /> Systeck — C2TECK S.A.C.
+          </div>
+          <button
+            onClick={() => { setOpen(false); onSwitchCompany(); }}
+            className="w-full text-left px-3 py-2.5 text-[12px] text-slate-800 hover:bg-[#DDE7F3] flex items-center gap-2.5 border-b border-slate-200"
+          >
+            <Building2 className="h-4 w-4 text-[#3E5B7A]" />
+            <div>
+              <div className="font-semibold">Cambiar Empresa</div>
+              <div className="text-[10px] text-slate-500">Cerrar sesión y elegir otro tenant</div>
+            </div>
+          </button>
+          <button
+            onClick={() => { setOpen(false); onCloseApp(); }}
+            className="w-full text-left px-3 py-2.5 text-[12px] text-slate-800 hover:bg-red-50 flex items-center gap-2.5"
+          >
+            <LogOut className="h-4 w-4 text-red-600" />
+            <div>
+              <div className="font-semibold">Cerrar Aplicación</div>
+              <div className="text-[10px] text-slate-500">Salir de Systeck y volver al sitio</div>
+            </div>
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function TabsCarousel({ tabs, active, onSelect, onTabClick }: { tabs: string[]; active: string; onSelect: (tab: string) => void; onTabClick?: (e: React.MouseEvent, t: string) => void }) {
+  const handleTabClick = (e: React.MouseEvent, t: string) => {
+    if (onTabClick) {
+      onTabClick(e, t);
+    } else {
+      onSelect(t);
+    }
+  };
+
+  return (
+    <div className="flex items-center px-2 pt-1 gap-0 overflow-x-auto">
+      <div className="flex items-center gap-1 pr-1 shrink-0">
+        <button className="h-5 w-5 rounded hover:bg-white/60 grid place-items-center flex-shrink-0">
+          <ChevronDown className="h-3 w-3" />
+        </button>
+        <div className="w-px h-4 bg-slate-400/30"></div>
+      </div>
+      {tabs.map((t) => (
+        <button
+          key={t}
+          onClick={(e) => handleTabClick(e, t)}
+          className={[
+            "flex-1 px-2 py-2 text-[11px] font-medium rounded-t border-x border-t transition-colors text-center whitespace-nowrap",
+            active === t
+              ? "bg-[#F3F6FA] border-slate-400/60 text-slate-900 font-semibold -mb-px"
+              : "bg-transparent border-transparent text-slate-600 hover:bg-white/40 hover:text-slate-800",
+          ].join(" ")}
+        >
+          {t}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 
 function RibbonBigButton({ icon: Icon, label, dropdown, menu, onOpen }: RibbonBtn & { onOpen: (label: string) => void }) {
   const [open, setOpen] = useState(false);
@@ -1194,9 +1729,9 @@ function RibbonBigButton({ icon: Icon, label, dropdown, menu, onOpen }: RibbonBt
             : "border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6]",
         ].join(" ")}
       >
-        <Icon className="h-6 w-6 text-slate-700" strokeWidth={1.5} />
-        <span className="text-[9px] leading-tight text-center whitespace-pre text-slate-800">{label}</span>
-        {dropdown && <ChevronDown className="h-2 w-2 text-slate-600 -mt-0.5" />}
+        <Glyph name={cleanLabel} size={30} className="drop-shadow-[0_1px_1px_rgba(15,23,42,0.15)] group-hover/rb:scale-105 transition-transform" />
+        <span className="text-[10.5px] leading-tight text-center whitespace-pre text-slate-800 font-medium">{label}</span>
+        {dropdown && <ChevronDown className="h-2.5 w-2.5 text-slate-500 -mt-1" />}
       </button>
       {open && menu && pos && createPortal(
         <>
@@ -1205,7 +1740,7 @@ function RibbonBigButton({ icon: Icon, label, dropdown, menu, onOpen }: RibbonBt
             className="fixed z-[2147483646] bg-[#F3F6FA] border border-slate-400/70 shadow-xl rounded-sm p-2"
             style={{ left: pos.left, top: pos.top, maxWidth: "700px" }}
           >
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${menu.length}, minmax(0, 1fr))` }}>
               {menu.map((sec) => (
                 <div key={sec.title} className="flex flex-col">
                   <div className="flex flex-col gap-0.5">
@@ -1215,8 +1750,8 @@ function RibbonBigButton({ icon: Icon, label, dropdown, menu, onOpen }: RibbonBt
                         onClick={() => { onOpen(it.label); setOpen(false); }}
                         className="flex items-center gap-1.5 px-1.5 py-0.5 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border border-transparent text-left whitespace-nowrap"
                       >
-                        <it.icon className="h-3.5 w-3.5 text-amber-600 shrink-0" strokeWidth={1.5} />
-                        <span className="text-[10px] text-slate-800">{it.label}</span>
+                        <Glyph name={it.label} size={22} className="shrink-0" />
+                      <span className="text-[11.5px] text-slate-800 whitespace-nowrap font-medium">{it.label}</span>
                       </button>
                     ))}
                   </div>
@@ -1252,16 +1787,69 @@ function DesktopPopoutWindow({ label, onClose }: { label: string; onClose: () =>
   );
 }
 
-function RibbonSmallButton({ icon: Icon, label, dropdown, onOpen }: RibbonBtn & { onOpen: (label: string) => void }) {
+function RibbonSmallButton({ icon: Icon, label, dropdown, menu, onOpen }: RibbonBtn & { onOpen: (label: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
+
+  const toggle = () => {
+    if (!menu) {
+      onOpen(label);
+      return;
+    }
+    if (!open && btnRef.current) {
+      const r = btnRef.current.getBoundingClientRect();
+      setPos({ left: r.left, top: r.bottom + 2 });
+    }
+    setOpen((v) => !v);
+  };
+
   return (
-    <button
-      onClick={() => onOpen(label)}
-      className="flex items-center gap-1 px-1 py-0.5 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border border-transparent text-left text-[10px]"
-    >
-      <Icon className="h-3.5 w-3.5 text-amber-600 shrink-0" strokeWidth={1.5} />
-      <span className="text-slate-800 truncate">{label}</span>
-      {dropdown && <ChevronDown className="h-2 w-2 text-slate-600" />}
-    </button>
+    <>
+      <button
+        ref={btnRef}
+        onClick={toggle}
+        className={[
+          "flex items-center gap-1 px-1 py-0.5 rounded border text-left text-[10px]",
+          open
+            ? "bg-gradient-to-b from-[#FCE9A8] to-[#F5C86A] border-[#B8892E]"
+            : "border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6]",
+        ].join(" ")}
+      >
+        <Glyph name={label} size={19} className="shrink-0 group-hover/rs:scale-105 transition-transform" />
+        <span className="text-slate-800 truncate">{label}</span>
+        {dropdown && <ChevronDown className="h-2 w-2 text-slate-600" />}
+      </button>
+      {open && menu && pos && createPortal(
+        <>
+          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+          <div
+            className="fixed z-[2147483646] bg-[#F3F6FA] border border-slate-400/70 shadow-xl rounded-sm p-2"
+            style={{ left: pos.left, top: pos.top, maxWidth: "700px" }}
+          >
+            <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${menu.length}, minmax(0, 1fr))` }}>
+              {menu.map((sec) => (
+                <div key={sec.title} className="flex flex-col">
+                  <div className="flex flex-col gap-0.5">
+                    {sec.items.map((it) => (
+                      <button
+                        key={it.label}
+                        onClick={() => { onOpen(it.label); setOpen(false); }}
+                        className="flex items-center gap-1.5 px-1.5 py-0.5 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border border-transparent text-left whitespace-nowrap"
+                      >
+                        <Glyph name={it.label} size={18} className="shrink-0" />
+                        <span className="text-[11px] text-slate-800 whitespace-nowrap font-medium">{it.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>,
+        document.body,
+      )}
+    </>
   );
 }
 

@@ -45,6 +45,128 @@ import { Route as DashboardAuditRouteImport } from './routes/dashboard.audit'
 import { Route as DashboardAlmacenRouteImport } from './routes/dashboard.almacen'
 import { Route as DashboardAdministracionRouteImport } from './routes/dashboard.administracion'
 import { Route as DashboardActivosFijosRouteImport } from './routes/dashboard.activos-fijos'
+import { Route as DashboardVentasReportesRouteImport } from './routes/dashboard.ventas.reportes'
+import { Route as DashboardVentasOrdenesRouteImport } from './routes/dashboard.ventas.ordenes'
+import { Route as DashboardVentasNotasCreditoRouteImport } from './routes/dashboard.ventas.notas-credito'
+import { Route as DashboardVentasGuiasRouteImport } from './routes/dashboard.ventas.guias'
+import { Route as DashboardVentasFacturasRouteImport } from './routes/dashboard.ventas.facturas'
+import { Route as DashboardVentasCotizacionesRouteImport } from './routes/dashboard.ventas.cotizaciones'
+import { Route as DashboardVentasConsultasRouteImport } from './routes/dashboard.ventas.consultas'
+import { Route as DashboardVentasCarteraRouteImport } from './routes/dashboard.ventas.cartera'
+import { Route as DashboardVentasBoletasRouteImport } from './routes/dashboard.ventas.boletas'
+import { Route as DashboardTelefoniaReportesRouteImport } from './routes/dashboard.telefonia.reportes'
+import { Route as DashboardTelefoniaModelosRouteImport } from './routes/dashboard.telefonia.modelos'
+import { Route as DashboardTelefoniaLineasRouteImport } from './routes/dashboard.telefonia.lineas'
+import { Route as DashboardTelefoniaEquiposRouteImport } from './routes/dashboard.telefonia.equipos'
+import { Route as DashboardTelefoniaConsultasRouteImport } from './routes/dashboard.telefonia.consultas'
+import { Route as DashboardTelefoniaAsignacionesRouteImport } from './routes/dashboard.telefonia.asignaciones'
+import { Route as DashboardTablasUbicacionesRouteImport } from './routes/dashboard.tablas.ubicaciones'
+import { Route as DashboardTablasReportesRouteImport } from './routes/dashboard.tablas.reportes'
+import { Route as DashboardTablasProveedoresRouteImport } from './routes/dashboard.tablas.proveedores'
+import { Route as DashboardTablasProductosRouteImport } from './routes/dashboard.tablas.productos'
+import { Route as DashboardTablasParametrosRouteImport } from './routes/dashboard.tablas.parametros'
+import { Route as DashboardTablasMarcasRouteImport } from './routes/dashboard.tablas.marcas'
+import { Route as DashboardTablasConsultasRouteImport } from './routes/dashboard.tablas.consultas'
+import { Route as DashboardTablasClientesRouteImport } from './routes/dashboard.tablas.clientes'
+import { Route as DashboardServiciosReportesRouteImport } from './routes/dashboard.servicios.reportes'
+import { Route as DashboardServiciosMarcacionRouteImport } from './routes/dashboard.servicios.marcacion'
+import { Route as DashboardServiciosMantenimientoRouteImport } from './routes/dashboard.servicios.mantenimiento'
+import { Route as DashboardServiciosJobsRouteImport } from './routes/dashboard.servicios.jobs'
+import { Route as DashboardServiciosCotizacionesRouteImport } from './routes/dashboard.servicios.cotizaciones'
+import { Route as DashboardServiciosConsultasRouteImport } from './routes/dashboard.servicios.consultas'
+import { Route as DashboardRondasRuteadoresRouteImport } from './routes/dashboard.rondas.ruteadores'
+import { Route as DashboardRondasRutasRouteImport } from './routes/dashboard.rondas.rutas'
+import { Route as DashboardRondasReportesRouteImport } from './routes/dashboard.rondas.reportes'
+import { Route as DashboardRondasPuntosRouteImport } from './routes/dashboard.rondas.puntos'
+import { Route as DashboardRondasConsultasRouteImport } from './routes/dashboard.rondas.consultas'
+import { Route as DashboardRondasAsignacionesRouteImport } from './routes/dashboard.rondas.asignaciones'
+import { Route as DashboardPlanillasSueldosRouteImport } from './routes/dashboard.planillas.sueldos'
+import { Route as DashboardPlanillasReportesRouteImport } from './routes/dashboard.planillas.reportes'
+import { Route as DashboardPlanillasQuintaRouteImport } from './routes/dashboard.planillas.quinta'
+import { Route as DashboardPlanillasDocumentosRouteImport } from './routes/dashboard.planillas.documentos'
+import { Route as DashboardPlanillasConsultasRouteImport } from './routes/dashboard.planillas.consultas'
+import { Route as DashboardPersonalReportesRouteImport } from './routes/dashboard.personal.reportes'
+import { Route as DashboardPersonalInformacionRouteImport } from './routes/dashboard.personal.informacion'
+import { Route as DashboardPersonalDirectorioRouteImport } from './routes/dashboard.personal.directorio'
+import { Route as DashboardPersonalConsultasRouteImport } from './routes/dashboard.personal.consultas'
+import { Route as DashboardPersonalComunicacionRouteImport } from './routes/dashboard.personal.comunicacion'
+import { Route as DashboardPersonalAsignacionesRouteImport } from './routes/dashboard.personal.asignaciones'
+import { Route as DashboardLoginPerfilRouteImport } from './routes/dashboard.login.perfil'
+import { Route as DashboardLoginLogoutRouteImport } from './routes/dashboard.login.logout'
+import { Route as DashboardLoginCambioClaveRouteImport } from './routes/dashboard.login.cambio-clave'
+import { Route as DashboardLoginAutenticacionRouteImport } from './routes/dashboard.login.autenticacion'
+import { Route as DashboardImportacionesReportesRouteImport } from './routes/dashboard.importaciones.reportes'
+import { Route as DashboardImportacionesPedidosRouteImport } from './routes/dashboard.importaciones.pedidos'
+import { Route as DashboardImportacionesEstadosRouteImport } from './routes/dashboard.importaciones.estados'
+import { Route as DashboardImportacionesEmbarquesRouteImport } from './routes/dashboard.importaciones.embarques'
+import { Route as DashboardImportacionesDocumentosRouteImport } from './routes/dashboard.importaciones.documentos'
+import { Route as DashboardImportacionesConsultasRouteImport } from './routes/dashboard.importaciones.consultas'
+import { Route as DashboardGerenciaReportesRouteImport } from './routes/dashboard.gerencia.reportes'
+import { Route as DashboardGerenciaProyeccionesRouteImport } from './routes/dashboard.gerencia.proyecciones'
+import { Route as DashboardGerenciaIndicadoresRouteImport } from './routes/dashboard.gerencia.indicadores'
+import { Route as DashboardGerenciaEstadoFinancieroRouteImport } from './routes/dashboard.gerencia.estado-financiero'
+import { Route as DashboardGerenciaDashboardRouteImport } from './routes/dashboard.gerencia.dashboard'
+import { Route as DashboardGerenciaConsultasRouteImport } from './routes/dashboard.gerencia.consultas'
+import { Route as DashboardCrmVisitasRouteImport } from './routes/dashboard.crm.visitas'
+import { Route as DashboardCrmReportesRouteImport } from './routes/dashboard.crm.reportes'
+import { Route as DashboardCrmOportunidadesRouteImport } from './routes/dashboard.crm.oportunidades'
+import { Route as DashboardCrmCotizacionesRouteImport } from './routes/dashboard.crm.cotizaciones'
+import { Route as DashboardCrmConsultasRouteImport } from './routes/dashboard.crm.consultas'
+import { Route as DashboardCrmClientesRouteImport } from './routes/dashboard.crm.clientes'
+import { Route as DashboardCreditosReportesRouteImport } from './routes/dashboard.creditos.reportes'
+import { Route as DashboardCreditosPermisosRouteImport } from './routes/dashboard.creditos.permisos'
+import { Route as DashboardCreditosLetrasRouteImport } from './routes/dashboard.creditos.letras'
+import { Route as DashboardCreditosConsultasRouteImport } from './routes/dashboard.creditos.consultas'
+import { Route as DashboardCreditosAprobacionesRouteImport } from './routes/dashboard.creditos.aprobaciones'
+import { Route as DashboardCreditosAnticiposRouteImport } from './routes/dashboard.creditos.anticipos'
+import { Route as DashboardCostosReportesRouteImport } from './routes/dashboard.costos.reportes'
+import { Route as DashboardCostosProcesosRouteImport } from './routes/dashboard.costos.procesos'
+import { Route as DashboardCostosImportacionesRouteImport } from './routes/dashboard.costos.importaciones'
+import { Route as DashboardCostosConsultasRouteImport } from './routes/dashboard.costos.consultas'
+import { Route as DashboardCostosConsolidadosRouteImport } from './routes/dashboard.costos.consolidados'
+import { Route as DashboardContabilidadTesoreriaRouteImport } from './routes/dashboard.contabilidad.tesoreria'
+import { Route as DashboardContabilidadReportesRouteImport } from './routes/dashboard.contabilidad.reportes'
+import { Route as DashboardContabilidadProvisionalRouteImport } from './routes/dashboard.contabilidad.provisional'
+import { Route as DashboardContabilidadFlujoCajaRouteImport } from './routes/dashboard.contabilidad.flujo-caja'
+import { Route as DashboardContabilidadDiariosRouteImport } from './routes/dashboard.contabilidad.diarios'
+import { Route as DashboardContabilidadConsultasRouteImport } from './routes/dashboard.contabilidad.consultas'
+import { Route as DashboardComprasViaticosRouteImport } from './routes/dashboard.compras.viaticos'
+import { Route as DashboardComprasSolicitudesRouteImport } from './routes/dashboard.compras.solicitudes'
+import { Route as DashboardComprasReportesRouteImport } from './routes/dashboard.compras.reportes'
+import { Route as DashboardComprasOrdenesCompraRouteImport } from './routes/dashboard.compras.ordenes-compra'
+import { Route as DashboardComprasCotizacionesRouteImport } from './routes/dashboard.compras.cotizaciones'
+import { Route as DashboardComprasConsultasRouteImport } from './routes/dashboard.compras.consultas'
+import { Route as DashboardBuscadoresReportesBusquedaRouteImport } from './routes/dashboard.buscadores.reportes-busqueda'
+import { Route as DashboardBuscadoresProductosRouteImport } from './routes/dashboard.buscadores.productos'
+import { Route as DashboardBuscadoresMovimientosRouteImport } from './routes/dashboard.buscadores.movimientos'
+import { Route as DashboardBuscadoresFiltrosAvanzadosRouteImport } from './routes/dashboard.buscadores.filtros-avanzados'
+import { Route as DashboardBuscadoresDocumentosRouteImport } from './routes/dashboard.buscadores.documentos'
+import { Route as DashboardBuscadoresComponentesRouteImport } from './routes/dashboard.buscadores.componentes'
+import { Route as DashboardBuscadoresClientesRouteImport } from './routes/dashboard.buscadores.clientes'
+import { Route as DashboardB2mReportesRouteImport } from './routes/dashboard.b2m.reportes'
+import { Route as DashboardB2mProveedoresRouteImport } from './routes/dashboard.b2m.proveedores'
+import { Route as DashboardB2mPedidosRouteImport } from './routes/dashboard.b2m.pedidos'
+import { Route as DashboardB2mCatalogoRouteImport } from './routes/dashboard.b2m.catalogo'
+import { Route as DashboardAyudaSoporteRouteImport } from './routes/dashboard.ayuda.soporte'
+import { Route as DashboardAyudaManualRouteImport } from './routes/dashboard.ayuda.manual'
+import { Route as DashboardAyudaContactoRouteImport } from './routes/dashboard.ayuda.contacto'
+import { Route as DashboardAyudaAcercaRouteImport } from './routes/dashboard.ayuda.acerca'
+import { Route as DashboardAlmacenUbicacionesRouteImport } from './routes/dashboard.almacen.ubicaciones'
+import { Route as DashboardAlmacenReportesRouteImport } from './routes/dashboard.almacen.reportes'
+import { Route as DashboardAlmacenMovimientosRouteImport } from './routes/dashboard.almacen.movimientos'
+import { Route as DashboardAlmacenMinimosMaximosRouteImport } from './routes/dashboard.almacen.minimos-maximos'
+import { Route as DashboardAlmacenDespachoRouteImport } from './routes/dashboard.almacen.despacho'
+import { Route as DashboardAlmacenConsultasRouteImport } from './routes/dashboard.almacen.consultas'
+import { Route as DashboardAdministracionUsuariosRouteImport } from './routes/dashboard.administracion.usuarios'
+import { Route as DashboardAdministracionSesionesRouteImport } from './routes/dashboard.administracion.sesiones'
+import { Route as DashboardAdministracionReportesRouteImport } from './routes/dashboard.administracion.reportes'
+import { Route as DashboardAdministracionPerfilesRouteImport } from './routes/dashboard.administracion.perfiles'
+import { Route as DashboardAdministracionEncuestasRouteImport } from './routes/dashboard.administracion.encuestas'
+import { Route as DashboardAdministracionConfiguracionRouteImport } from './routes/dashboard.administracion.configuracion'
+import { Route as DashboardActivosfijosReportesRouteImport } from './routes/dashboard.activosfijos.reportes'
+import { Route as DashboardActivosfijosDepreciacionRouteImport } from './routes/dashboard.activosfijos.depreciacion'
+import { Route as DashboardActivosfijosConsultasRouteImport } from './routes/dashboard.activosfijos.consultas'
+import { Route as DashboardActivosfijosCompraRouteImport } from './routes/dashboard.activosfijos.compra'
 
 const ProductosRoute = ProductosRouteImport.update({
   id: '/productos',
@@ -226,6 +348,708 @@ const DashboardActivosFijosRoute = DashboardActivosFijosRouteImport.update({
   path: '/activos-fijos',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardVentasReportesRoute = DashboardVentasReportesRouteImport.update({
+  id: '/reportes',
+  path: '/reportes',
+  getParentRoute: () => DashboardVentasRoute,
+} as any)
+const DashboardVentasOrdenesRoute = DashboardVentasOrdenesRouteImport.update({
+  id: '/ordenes',
+  path: '/ordenes',
+  getParentRoute: () => DashboardVentasRoute,
+} as any)
+const DashboardVentasNotasCreditoRoute =
+  DashboardVentasNotasCreditoRouteImport.update({
+    id: '/notas-credito',
+    path: '/notas-credito',
+    getParentRoute: () => DashboardVentasRoute,
+  } as any)
+const DashboardVentasGuiasRoute = DashboardVentasGuiasRouteImport.update({
+  id: '/guias',
+  path: '/guias',
+  getParentRoute: () => DashboardVentasRoute,
+} as any)
+const DashboardVentasFacturasRoute = DashboardVentasFacturasRouteImport.update({
+  id: '/facturas',
+  path: '/facturas',
+  getParentRoute: () => DashboardVentasRoute,
+} as any)
+const DashboardVentasCotizacionesRoute =
+  DashboardVentasCotizacionesRouteImport.update({
+    id: '/cotizaciones',
+    path: '/cotizaciones',
+    getParentRoute: () => DashboardVentasRoute,
+  } as any)
+const DashboardVentasConsultasRoute =
+  DashboardVentasConsultasRouteImport.update({
+    id: '/consultas',
+    path: '/consultas',
+    getParentRoute: () => DashboardVentasRoute,
+  } as any)
+const DashboardVentasCarteraRoute = DashboardVentasCarteraRouteImport.update({
+  id: '/cartera',
+  path: '/cartera',
+  getParentRoute: () => DashboardVentasRoute,
+} as any)
+const DashboardVentasBoletasRoute = DashboardVentasBoletasRouteImport.update({
+  id: '/boletas',
+  path: '/boletas',
+  getParentRoute: () => DashboardVentasRoute,
+} as any)
+const DashboardTelefoniaReportesRoute =
+  DashboardTelefoniaReportesRouteImport.update({
+    id: '/telefonia/reportes',
+    path: '/telefonia/reportes',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardTelefoniaModelosRoute =
+  DashboardTelefoniaModelosRouteImport.update({
+    id: '/telefonia/modelos',
+    path: '/telefonia/modelos',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardTelefoniaLineasRoute =
+  DashboardTelefoniaLineasRouteImport.update({
+    id: '/telefonia/lineas',
+    path: '/telefonia/lineas',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardTelefoniaEquiposRoute =
+  DashboardTelefoniaEquiposRouteImport.update({
+    id: '/telefonia/equipos',
+    path: '/telefonia/equipos',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardTelefoniaConsultasRoute =
+  DashboardTelefoniaConsultasRouteImport.update({
+    id: '/telefonia/consultas',
+    path: '/telefonia/consultas',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardTelefoniaAsignacionesRoute =
+  DashboardTelefoniaAsignacionesRouteImport.update({
+    id: '/telefonia/asignaciones',
+    path: '/telefonia/asignaciones',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardTablasUbicacionesRoute =
+  DashboardTablasUbicacionesRouteImport.update({
+    id: '/ubicaciones',
+    path: '/ubicaciones',
+    getParentRoute: () => DashboardTablasRoute,
+  } as any)
+const DashboardTablasReportesRoute = DashboardTablasReportesRouteImport.update({
+  id: '/reportes',
+  path: '/reportes',
+  getParentRoute: () => DashboardTablasRoute,
+} as any)
+const DashboardTablasProveedoresRoute =
+  DashboardTablasProveedoresRouteImport.update({
+    id: '/proveedores',
+    path: '/proveedores',
+    getParentRoute: () => DashboardTablasRoute,
+  } as any)
+const DashboardTablasProductosRoute =
+  DashboardTablasProductosRouteImport.update({
+    id: '/productos',
+    path: '/productos',
+    getParentRoute: () => DashboardTablasRoute,
+  } as any)
+const DashboardTablasParametrosRoute =
+  DashboardTablasParametrosRouteImport.update({
+    id: '/parametros',
+    path: '/parametros',
+    getParentRoute: () => DashboardTablasRoute,
+  } as any)
+const DashboardTablasMarcasRoute = DashboardTablasMarcasRouteImport.update({
+  id: '/marcas',
+  path: '/marcas',
+  getParentRoute: () => DashboardTablasRoute,
+} as any)
+const DashboardTablasConsultasRoute =
+  DashboardTablasConsultasRouteImport.update({
+    id: '/consultas',
+    path: '/consultas',
+    getParentRoute: () => DashboardTablasRoute,
+  } as any)
+const DashboardTablasClientesRoute = DashboardTablasClientesRouteImport.update({
+  id: '/clientes',
+  path: '/clientes',
+  getParentRoute: () => DashboardTablasRoute,
+} as any)
+const DashboardServiciosReportesRoute =
+  DashboardServiciosReportesRouteImport.update({
+    id: '/reportes',
+    path: '/reportes',
+    getParentRoute: () => DashboardServiciosRoute,
+  } as any)
+const DashboardServiciosMarcacionRoute =
+  DashboardServiciosMarcacionRouteImport.update({
+    id: '/marcacion',
+    path: '/marcacion',
+    getParentRoute: () => DashboardServiciosRoute,
+  } as any)
+const DashboardServiciosMantenimientoRoute =
+  DashboardServiciosMantenimientoRouteImport.update({
+    id: '/mantenimiento',
+    path: '/mantenimiento',
+    getParentRoute: () => DashboardServiciosRoute,
+  } as any)
+const DashboardServiciosJobsRoute = DashboardServiciosJobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => DashboardServiciosRoute,
+} as any)
+const DashboardServiciosCotizacionesRoute =
+  DashboardServiciosCotizacionesRouteImport.update({
+    id: '/cotizaciones',
+    path: '/cotizaciones',
+    getParentRoute: () => DashboardServiciosRoute,
+  } as any)
+const DashboardServiciosConsultasRoute =
+  DashboardServiciosConsultasRouteImport.update({
+    id: '/consultas',
+    path: '/consultas',
+    getParentRoute: () => DashboardServiciosRoute,
+  } as any)
+const DashboardRondasRuteadoresRoute =
+  DashboardRondasRuteadoresRouteImport.update({
+    id: '/ruteadores',
+    path: '/ruteadores',
+    getParentRoute: () => DashboardRondasRoute,
+  } as any)
+const DashboardRondasRutasRoute = DashboardRondasRutasRouteImport.update({
+  id: '/rutas',
+  path: '/rutas',
+  getParentRoute: () => DashboardRondasRoute,
+} as any)
+const DashboardRondasReportesRoute = DashboardRondasReportesRouteImport.update({
+  id: '/reportes',
+  path: '/reportes',
+  getParentRoute: () => DashboardRondasRoute,
+} as any)
+const DashboardRondasPuntosRoute = DashboardRondasPuntosRouteImport.update({
+  id: '/puntos',
+  path: '/puntos',
+  getParentRoute: () => DashboardRondasRoute,
+} as any)
+const DashboardRondasConsultasRoute =
+  DashboardRondasConsultasRouteImport.update({
+    id: '/consultas',
+    path: '/consultas',
+    getParentRoute: () => DashboardRondasRoute,
+  } as any)
+const DashboardRondasAsignacionesRoute =
+  DashboardRondasAsignacionesRouteImport.update({
+    id: '/asignaciones',
+    path: '/asignaciones',
+    getParentRoute: () => DashboardRondasRoute,
+  } as any)
+const DashboardPlanillasSueldosRoute =
+  DashboardPlanillasSueldosRouteImport.update({
+    id: '/sueldos',
+    path: '/sueldos',
+    getParentRoute: () => DashboardPlanillasRoute,
+  } as any)
+const DashboardPlanillasReportesRoute =
+  DashboardPlanillasReportesRouteImport.update({
+    id: '/reportes',
+    path: '/reportes',
+    getParentRoute: () => DashboardPlanillasRoute,
+  } as any)
+const DashboardPlanillasQuintaRoute =
+  DashboardPlanillasQuintaRouteImport.update({
+    id: '/quinta',
+    path: '/quinta',
+    getParentRoute: () => DashboardPlanillasRoute,
+  } as any)
+const DashboardPlanillasDocumentosRoute =
+  DashboardPlanillasDocumentosRouteImport.update({
+    id: '/documentos',
+    path: '/documentos',
+    getParentRoute: () => DashboardPlanillasRoute,
+  } as any)
+const DashboardPlanillasConsultasRoute =
+  DashboardPlanillasConsultasRouteImport.update({
+    id: '/consultas',
+    path: '/consultas',
+    getParentRoute: () => DashboardPlanillasRoute,
+  } as any)
+const DashboardPersonalReportesRoute =
+  DashboardPersonalReportesRouteImport.update({
+    id: '/reportes',
+    path: '/reportes',
+    getParentRoute: () => DashboardPersonalRoute,
+  } as any)
+const DashboardPersonalInformacionRoute =
+  DashboardPersonalInformacionRouteImport.update({
+    id: '/informacion',
+    path: '/informacion',
+    getParentRoute: () => DashboardPersonalRoute,
+  } as any)
+const DashboardPersonalDirectorioRoute =
+  DashboardPersonalDirectorioRouteImport.update({
+    id: '/directorio',
+    path: '/directorio',
+    getParentRoute: () => DashboardPersonalRoute,
+  } as any)
+const DashboardPersonalConsultasRoute =
+  DashboardPersonalConsultasRouteImport.update({
+    id: '/consultas',
+    path: '/consultas',
+    getParentRoute: () => DashboardPersonalRoute,
+  } as any)
+const DashboardPersonalComunicacionRoute =
+  DashboardPersonalComunicacionRouteImport.update({
+    id: '/comunicacion',
+    path: '/comunicacion',
+    getParentRoute: () => DashboardPersonalRoute,
+  } as any)
+const DashboardPersonalAsignacionesRoute =
+  DashboardPersonalAsignacionesRouteImport.update({
+    id: '/asignaciones',
+    path: '/asignaciones',
+    getParentRoute: () => DashboardPersonalRoute,
+  } as any)
+const DashboardLoginPerfilRoute = DashboardLoginPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => DashboardLoginRoute,
+} as any)
+const DashboardLoginLogoutRoute = DashboardLoginLogoutRouteImport.update({
+  id: '/logout',
+  path: '/logout',
+  getParentRoute: () => DashboardLoginRoute,
+} as any)
+const DashboardLoginCambioClaveRoute =
+  DashboardLoginCambioClaveRouteImport.update({
+    id: '/cambio-clave',
+    path: '/cambio-clave',
+    getParentRoute: () => DashboardLoginRoute,
+  } as any)
+const DashboardLoginAutenticacionRoute =
+  DashboardLoginAutenticacionRouteImport.update({
+    id: '/autenticacion',
+    path: '/autenticacion',
+    getParentRoute: () => DashboardLoginRoute,
+  } as any)
+const DashboardImportacionesReportesRoute =
+  DashboardImportacionesReportesRouteImport.update({
+    id: '/reportes',
+    path: '/reportes',
+    getParentRoute: () => DashboardImportacionesRoute,
+  } as any)
+const DashboardImportacionesPedidosRoute =
+  DashboardImportacionesPedidosRouteImport.update({
+    id: '/pedidos',
+    path: '/pedidos',
+    getParentRoute: () => DashboardImportacionesRoute,
+  } as any)
+const DashboardImportacionesEstadosRoute =
+  DashboardImportacionesEstadosRouteImport.update({
+    id: '/estados',
+    path: '/estados',
+    getParentRoute: () => DashboardImportacionesRoute,
+  } as any)
+const DashboardImportacionesEmbarquesRoute =
+  DashboardImportacionesEmbarquesRouteImport.update({
+    id: '/embarques',
+    path: '/embarques',
+    getParentRoute: () => DashboardImportacionesRoute,
+  } as any)
+const DashboardImportacionesDocumentosRoute =
+  DashboardImportacionesDocumentosRouteImport.update({
+    id: '/documentos',
+    path: '/documentos',
+    getParentRoute: () => DashboardImportacionesRoute,
+  } as any)
+const DashboardImportacionesConsultasRoute =
+  DashboardImportacionesConsultasRouteImport.update({
+    id: '/consultas',
+    path: '/consultas',
+    getParentRoute: () => DashboardImportacionesRoute,
+  } as any)
+const DashboardGerenciaReportesRoute =
+  DashboardGerenciaReportesRouteImport.update({
+    id: '/reportes',
+    path: '/reportes',
+    getParentRoute: () => DashboardGerenciaRoute,
+  } as any)
+const DashboardGerenciaProyeccionesRoute =
+  DashboardGerenciaProyeccionesRouteImport.update({
+    id: '/proyecciones',
+    path: '/proyecciones',
+    getParentRoute: () => DashboardGerenciaRoute,
+  } as any)
+const DashboardGerenciaIndicadoresRoute =
+  DashboardGerenciaIndicadoresRouteImport.update({
+    id: '/indicadores',
+    path: '/indicadores',
+    getParentRoute: () => DashboardGerenciaRoute,
+  } as any)
+const DashboardGerenciaEstadoFinancieroRoute =
+  DashboardGerenciaEstadoFinancieroRouteImport.update({
+    id: '/estado-financiero',
+    path: '/estado-financiero',
+    getParentRoute: () => DashboardGerenciaRoute,
+  } as any)
+const DashboardGerenciaDashboardRoute =
+  DashboardGerenciaDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => DashboardGerenciaRoute,
+  } as any)
+const DashboardGerenciaConsultasRoute =
+  DashboardGerenciaConsultasRouteImport.update({
+    id: '/consultas',
+    path: '/consultas',
+    getParentRoute: () => DashboardGerenciaRoute,
+  } as any)
+const DashboardCrmVisitasRoute = DashboardCrmVisitasRouteImport.update({
+  id: '/visitas',
+  path: '/visitas',
+  getParentRoute: () => DashboardCrmRoute,
+} as any)
+const DashboardCrmReportesRoute = DashboardCrmReportesRouteImport.update({
+  id: '/reportes',
+  path: '/reportes',
+  getParentRoute: () => DashboardCrmRoute,
+} as any)
+const DashboardCrmOportunidadesRoute =
+  DashboardCrmOportunidadesRouteImport.update({
+    id: '/oportunidades',
+    path: '/oportunidades',
+    getParentRoute: () => DashboardCrmRoute,
+  } as any)
+const DashboardCrmCotizacionesRoute =
+  DashboardCrmCotizacionesRouteImport.update({
+    id: '/cotizaciones',
+    path: '/cotizaciones',
+    getParentRoute: () => DashboardCrmRoute,
+  } as any)
+const DashboardCrmConsultasRoute = DashboardCrmConsultasRouteImport.update({
+  id: '/consultas',
+  path: '/consultas',
+  getParentRoute: () => DashboardCrmRoute,
+} as any)
+const DashboardCrmClientesRoute = DashboardCrmClientesRouteImport.update({
+  id: '/clientes',
+  path: '/clientes',
+  getParentRoute: () => DashboardCrmRoute,
+} as any)
+const DashboardCreditosReportesRoute =
+  DashboardCreditosReportesRouteImport.update({
+    id: '/reportes',
+    path: '/reportes',
+    getParentRoute: () => DashboardCreditosRoute,
+  } as any)
+const DashboardCreditosPermisosRoute =
+  DashboardCreditosPermisosRouteImport.update({
+    id: '/permisos',
+    path: '/permisos',
+    getParentRoute: () => DashboardCreditosRoute,
+  } as any)
+const DashboardCreditosLetrasRoute = DashboardCreditosLetrasRouteImport.update({
+  id: '/letras',
+  path: '/letras',
+  getParentRoute: () => DashboardCreditosRoute,
+} as any)
+const DashboardCreditosConsultasRoute =
+  DashboardCreditosConsultasRouteImport.update({
+    id: '/consultas',
+    path: '/consultas',
+    getParentRoute: () => DashboardCreditosRoute,
+  } as any)
+const DashboardCreditosAprobacionesRoute =
+  DashboardCreditosAprobacionesRouteImport.update({
+    id: '/aprobaciones',
+    path: '/aprobaciones',
+    getParentRoute: () => DashboardCreditosRoute,
+  } as any)
+const DashboardCreditosAnticiposRoute =
+  DashboardCreditosAnticiposRouteImport.update({
+    id: '/anticipos',
+    path: '/anticipos',
+    getParentRoute: () => DashboardCreditosRoute,
+  } as any)
+const DashboardCostosReportesRoute = DashboardCostosReportesRouteImport.update({
+  id: '/reportes',
+  path: '/reportes',
+  getParentRoute: () => DashboardCostosRoute,
+} as any)
+const DashboardCostosProcesosRoute = DashboardCostosProcesosRouteImport.update({
+  id: '/procesos',
+  path: '/procesos',
+  getParentRoute: () => DashboardCostosRoute,
+} as any)
+const DashboardCostosImportacionesRoute =
+  DashboardCostosImportacionesRouteImport.update({
+    id: '/importaciones',
+    path: '/importaciones',
+    getParentRoute: () => DashboardCostosRoute,
+  } as any)
+const DashboardCostosConsultasRoute =
+  DashboardCostosConsultasRouteImport.update({
+    id: '/consultas',
+    path: '/consultas',
+    getParentRoute: () => DashboardCostosRoute,
+  } as any)
+const DashboardCostosConsolidadosRoute =
+  DashboardCostosConsolidadosRouteImport.update({
+    id: '/consolidados',
+    path: '/consolidados',
+    getParentRoute: () => DashboardCostosRoute,
+  } as any)
+const DashboardContabilidadTesoreriaRoute =
+  DashboardContabilidadTesoreriaRouteImport.update({
+    id: '/tesoreria',
+    path: '/tesoreria',
+    getParentRoute: () => DashboardContabilidadRoute,
+  } as any)
+const DashboardContabilidadReportesRoute =
+  DashboardContabilidadReportesRouteImport.update({
+    id: '/reportes',
+    path: '/reportes',
+    getParentRoute: () => DashboardContabilidadRoute,
+  } as any)
+const DashboardContabilidadProvisionalRoute =
+  DashboardContabilidadProvisionalRouteImport.update({
+    id: '/provisional',
+    path: '/provisional',
+    getParentRoute: () => DashboardContabilidadRoute,
+  } as any)
+const DashboardContabilidadFlujoCajaRoute =
+  DashboardContabilidadFlujoCajaRouteImport.update({
+    id: '/flujo-caja',
+    path: '/flujo-caja',
+    getParentRoute: () => DashboardContabilidadRoute,
+  } as any)
+const DashboardContabilidadDiariosRoute =
+  DashboardContabilidadDiariosRouteImport.update({
+    id: '/diarios',
+    path: '/diarios',
+    getParentRoute: () => DashboardContabilidadRoute,
+  } as any)
+const DashboardContabilidadConsultasRoute =
+  DashboardContabilidadConsultasRouteImport.update({
+    id: '/consultas',
+    path: '/consultas',
+    getParentRoute: () => DashboardContabilidadRoute,
+  } as any)
+const DashboardComprasViaticosRoute =
+  DashboardComprasViaticosRouteImport.update({
+    id: '/viaticos',
+    path: '/viaticos',
+    getParentRoute: () => DashboardComprasRoute,
+  } as any)
+const DashboardComprasSolicitudesRoute =
+  DashboardComprasSolicitudesRouteImport.update({
+    id: '/solicitudes',
+    path: '/solicitudes',
+    getParentRoute: () => DashboardComprasRoute,
+  } as any)
+const DashboardComprasReportesRoute =
+  DashboardComprasReportesRouteImport.update({
+    id: '/reportes',
+    path: '/reportes',
+    getParentRoute: () => DashboardComprasRoute,
+  } as any)
+const DashboardComprasOrdenesCompraRoute =
+  DashboardComprasOrdenesCompraRouteImport.update({
+    id: '/ordenes-compra',
+    path: '/ordenes-compra',
+    getParentRoute: () => DashboardComprasRoute,
+  } as any)
+const DashboardComprasCotizacionesRoute =
+  DashboardComprasCotizacionesRouteImport.update({
+    id: '/cotizaciones',
+    path: '/cotizaciones',
+    getParentRoute: () => DashboardComprasRoute,
+  } as any)
+const DashboardComprasConsultasRoute =
+  DashboardComprasConsultasRouteImport.update({
+    id: '/consultas',
+    path: '/consultas',
+    getParentRoute: () => DashboardComprasRoute,
+  } as any)
+const DashboardBuscadoresReportesBusquedaRoute =
+  DashboardBuscadoresReportesBusquedaRouteImport.update({
+    id: '/reportes-busqueda',
+    path: '/reportes-busqueda',
+    getParentRoute: () => DashboardBuscadoresRoute,
+  } as any)
+const DashboardBuscadoresProductosRoute =
+  DashboardBuscadoresProductosRouteImport.update({
+    id: '/productos',
+    path: '/productos',
+    getParentRoute: () => DashboardBuscadoresRoute,
+  } as any)
+const DashboardBuscadoresMovimientosRoute =
+  DashboardBuscadoresMovimientosRouteImport.update({
+    id: '/movimientos',
+    path: '/movimientos',
+    getParentRoute: () => DashboardBuscadoresRoute,
+  } as any)
+const DashboardBuscadoresFiltrosAvanzadosRoute =
+  DashboardBuscadoresFiltrosAvanzadosRouteImport.update({
+    id: '/filtros-avanzados',
+    path: '/filtros-avanzados',
+    getParentRoute: () => DashboardBuscadoresRoute,
+  } as any)
+const DashboardBuscadoresDocumentosRoute =
+  DashboardBuscadoresDocumentosRouteImport.update({
+    id: '/documentos',
+    path: '/documentos',
+    getParentRoute: () => DashboardBuscadoresRoute,
+  } as any)
+const DashboardBuscadoresComponentesRoute =
+  DashboardBuscadoresComponentesRouteImport.update({
+    id: '/componentes',
+    path: '/componentes',
+    getParentRoute: () => DashboardBuscadoresRoute,
+  } as any)
+const DashboardBuscadoresClientesRoute =
+  DashboardBuscadoresClientesRouteImport.update({
+    id: '/clientes',
+    path: '/clientes',
+    getParentRoute: () => DashboardBuscadoresRoute,
+  } as any)
+const DashboardB2mReportesRoute = DashboardB2mReportesRouteImport.update({
+  id: '/reportes',
+  path: '/reportes',
+  getParentRoute: () => DashboardB2mRoute,
+} as any)
+const DashboardB2mProveedoresRoute = DashboardB2mProveedoresRouteImport.update({
+  id: '/proveedores',
+  path: '/proveedores',
+  getParentRoute: () => DashboardB2mRoute,
+} as any)
+const DashboardB2mPedidosRoute = DashboardB2mPedidosRouteImport.update({
+  id: '/pedidos',
+  path: '/pedidos',
+  getParentRoute: () => DashboardB2mRoute,
+} as any)
+const DashboardB2mCatalogoRoute = DashboardB2mCatalogoRouteImport.update({
+  id: '/catalogo',
+  path: '/catalogo',
+  getParentRoute: () => DashboardB2mRoute,
+} as any)
+const DashboardAyudaSoporteRoute = DashboardAyudaSoporteRouteImport.update({
+  id: '/soporte',
+  path: '/soporte',
+  getParentRoute: () => DashboardAyudaRoute,
+} as any)
+const DashboardAyudaManualRoute = DashboardAyudaManualRouteImport.update({
+  id: '/manual',
+  path: '/manual',
+  getParentRoute: () => DashboardAyudaRoute,
+} as any)
+const DashboardAyudaContactoRoute = DashboardAyudaContactoRouteImport.update({
+  id: '/contacto',
+  path: '/contacto',
+  getParentRoute: () => DashboardAyudaRoute,
+} as any)
+const DashboardAyudaAcercaRoute = DashboardAyudaAcercaRouteImport.update({
+  id: '/acerca',
+  path: '/acerca',
+  getParentRoute: () => DashboardAyudaRoute,
+} as any)
+const DashboardAlmacenUbicacionesRoute =
+  DashboardAlmacenUbicacionesRouteImport.update({
+    id: '/ubicaciones',
+    path: '/ubicaciones',
+    getParentRoute: () => DashboardAlmacenRoute,
+  } as any)
+const DashboardAlmacenReportesRoute =
+  DashboardAlmacenReportesRouteImport.update({
+    id: '/reportes',
+    path: '/reportes',
+    getParentRoute: () => DashboardAlmacenRoute,
+  } as any)
+const DashboardAlmacenMovimientosRoute =
+  DashboardAlmacenMovimientosRouteImport.update({
+    id: '/movimientos',
+    path: '/movimientos',
+    getParentRoute: () => DashboardAlmacenRoute,
+  } as any)
+const DashboardAlmacenMinimosMaximosRoute =
+  DashboardAlmacenMinimosMaximosRouteImport.update({
+    id: '/minimos-maximos',
+    path: '/minimos-maximos',
+    getParentRoute: () => DashboardAlmacenRoute,
+  } as any)
+const DashboardAlmacenDespachoRoute =
+  DashboardAlmacenDespachoRouteImport.update({
+    id: '/despacho',
+    path: '/despacho',
+    getParentRoute: () => DashboardAlmacenRoute,
+  } as any)
+const DashboardAlmacenConsultasRoute =
+  DashboardAlmacenConsultasRouteImport.update({
+    id: '/consultas',
+    path: '/consultas',
+    getParentRoute: () => DashboardAlmacenRoute,
+  } as any)
+const DashboardAdministracionUsuariosRoute =
+  DashboardAdministracionUsuariosRouteImport.update({
+    id: '/usuarios',
+    path: '/usuarios',
+    getParentRoute: () => DashboardAdministracionRoute,
+  } as any)
+const DashboardAdministracionSesionesRoute =
+  DashboardAdministracionSesionesRouteImport.update({
+    id: '/sesiones',
+    path: '/sesiones',
+    getParentRoute: () => DashboardAdministracionRoute,
+  } as any)
+const DashboardAdministracionReportesRoute =
+  DashboardAdministracionReportesRouteImport.update({
+    id: '/reportes',
+    path: '/reportes',
+    getParentRoute: () => DashboardAdministracionRoute,
+  } as any)
+const DashboardAdministracionPerfilesRoute =
+  DashboardAdministracionPerfilesRouteImport.update({
+    id: '/perfiles',
+    path: '/perfiles',
+    getParentRoute: () => DashboardAdministracionRoute,
+  } as any)
+const DashboardAdministracionEncuestasRoute =
+  DashboardAdministracionEncuestasRouteImport.update({
+    id: '/encuestas',
+    path: '/encuestas',
+    getParentRoute: () => DashboardAdministracionRoute,
+  } as any)
+const DashboardAdministracionConfiguracionRoute =
+  DashboardAdministracionConfiguracionRouteImport.update({
+    id: '/configuracion',
+    path: '/configuracion',
+    getParentRoute: () => DashboardAdministracionRoute,
+  } as any)
+const DashboardActivosfijosReportesRoute =
+  DashboardActivosfijosReportesRouteImport.update({
+    id: '/activosfijos/reportes',
+    path: '/activosfijos/reportes',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardActivosfijosDepreciacionRoute =
+  DashboardActivosfijosDepreciacionRouteImport.update({
+    id: '/activosfijos/depreciacion',
+    path: '/activosfijos/depreciacion',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardActivosfijosConsultasRoute =
+  DashboardActivosfijosConsultasRouteImport.update({
+    id: '/activosfijos/consultas',
+    path: '/activosfijos/consultas',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardActivosfijosCompraRoute =
+  DashboardActivosfijosCompraRouteImport.update({
+    id: '/activosfijos/compra',
+    path: '/activosfijos/compra',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -237,33 +1061,155 @@ export interface FileRoutesByFullPath {
   '/portal': typeof PortalRoute
   '/productos': typeof ProductosRoute
   '/dashboard/activos-fijos': typeof DashboardActivosFijosRoute
-  '/dashboard/administracion': typeof DashboardAdministracionRoute
-  '/dashboard/almacen': typeof DashboardAlmacenRoute
+  '/dashboard/administracion': typeof DashboardAdministracionRouteWithChildren
+  '/dashboard/almacen': typeof DashboardAlmacenRouteWithChildren
   '/dashboard/audit': typeof DashboardAuditRoute
-  '/dashboard/ayuda': typeof DashboardAyudaRoute
-  '/dashboard/b2m': typeof DashboardB2mRoute
-  '/dashboard/buscadores': typeof DashboardBuscadoresRoute
-  '/dashboard/compras': typeof DashboardComprasRoute
-  '/dashboard/contabilidad': typeof DashboardContabilidadRoute
-  '/dashboard/costos': typeof DashboardCostosRoute
-  '/dashboard/creditos': typeof DashboardCreditosRoute
-  '/dashboard/crm': typeof DashboardCrmRoute
+  '/dashboard/ayuda': typeof DashboardAyudaRouteWithChildren
+  '/dashboard/b2m': typeof DashboardB2mRouteWithChildren
+  '/dashboard/buscadores': typeof DashboardBuscadoresRouteWithChildren
+  '/dashboard/compras': typeof DashboardComprasRouteWithChildren
+  '/dashboard/contabilidad': typeof DashboardContabilidadRouteWithChildren
+  '/dashboard/costos': typeof DashboardCostosRouteWithChildren
+  '/dashboard/creditos': typeof DashboardCreditosRouteWithChildren
+  '/dashboard/crm': typeof DashboardCrmRouteWithChildren
   '/dashboard/erp': typeof DashboardErpRoute
-  '/dashboard/gerencia': typeof DashboardGerenciaRoute
-  '/dashboard/importaciones': typeof DashboardImportacionesRoute
+  '/dashboard/gerencia': typeof DashboardGerenciaRouteWithChildren
+  '/dashboard/importaciones': typeof DashboardImportacionesRouteWithChildren
   '/dashboard/infrastructure': typeof DashboardInfrastructureRoute
-  '/dashboard/login': typeof DashboardLoginRoute
-  '/dashboard/personal': typeof DashboardPersonalRoute
-  '/dashboard/planillas': typeof DashboardPlanillasRoute
-  '/dashboard/rondas': typeof DashboardRondasRoute
+  '/dashboard/login': typeof DashboardLoginRouteWithChildren
+  '/dashboard/personal': typeof DashboardPersonalRouteWithChildren
+  '/dashboard/planillas': typeof DashboardPlanillasRouteWithChildren
+  '/dashboard/rondas': typeof DashboardRondasRouteWithChildren
   '/dashboard/security': typeof DashboardSecurityRoute
-  '/dashboard/servicios': typeof DashboardServiciosRoute
+  '/dashboard/servicios': typeof DashboardServiciosRouteWithChildren
   '/dashboard/settings': typeof DashboardSettingsRoute
-  '/dashboard/tablas': typeof DashboardTablasRoute
+  '/dashboard/tablas': typeof DashboardTablasRouteWithChildren
   '/dashboard/telefonica': typeof DashboardTelefonicaRoute
-  '/dashboard/ventas': typeof DashboardVentasRoute
+  '/dashboard/ventas': typeof DashboardVentasRouteWithChildren
   '/dashboard/zigma': typeof DashboardZigmaRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/activosfijos/compra': typeof DashboardActivosfijosCompraRoute
+  '/dashboard/activosfijos/consultas': typeof DashboardActivosfijosConsultasRoute
+  '/dashboard/activosfijos/depreciacion': typeof DashboardActivosfijosDepreciacionRoute
+  '/dashboard/activosfijos/reportes': typeof DashboardActivosfijosReportesRoute
+  '/dashboard/administracion/configuracion': typeof DashboardAdministracionConfiguracionRoute
+  '/dashboard/administracion/encuestas': typeof DashboardAdministracionEncuestasRoute
+  '/dashboard/administracion/perfiles': typeof DashboardAdministracionPerfilesRoute
+  '/dashboard/administracion/reportes': typeof DashboardAdministracionReportesRoute
+  '/dashboard/administracion/sesiones': typeof DashboardAdministracionSesionesRoute
+  '/dashboard/administracion/usuarios': typeof DashboardAdministracionUsuariosRoute
+  '/dashboard/almacen/consultas': typeof DashboardAlmacenConsultasRoute
+  '/dashboard/almacen/despacho': typeof DashboardAlmacenDespachoRoute
+  '/dashboard/almacen/minimos-maximos': typeof DashboardAlmacenMinimosMaximosRoute
+  '/dashboard/almacen/movimientos': typeof DashboardAlmacenMovimientosRoute
+  '/dashboard/almacen/reportes': typeof DashboardAlmacenReportesRoute
+  '/dashboard/almacen/ubicaciones': typeof DashboardAlmacenUbicacionesRoute
+  '/dashboard/ayuda/acerca': typeof DashboardAyudaAcercaRoute
+  '/dashboard/ayuda/contacto': typeof DashboardAyudaContactoRoute
+  '/dashboard/ayuda/manual': typeof DashboardAyudaManualRoute
+  '/dashboard/ayuda/soporte': typeof DashboardAyudaSoporteRoute
+  '/dashboard/b2m/catalogo': typeof DashboardB2mCatalogoRoute
+  '/dashboard/b2m/pedidos': typeof DashboardB2mPedidosRoute
+  '/dashboard/b2m/proveedores': typeof DashboardB2mProveedoresRoute
+  '/dashboard/b2m/reportes': typeof DashboardB2mReportesRoute
+  '/dashboard/buscadores/clientes': typeof DashboardBuscadoresClientesRoute
+  '/dashboard/buscadores/componentes': typeof DashboardBuscadoresComponentesRoute
+  '/dashboard/buscadores/documentos': typeof DashboardBuscadoresDocumentosRoute
+  '/dashboard/buscadores/filtros-avanzados': typeof DashboardBuscadoresFiltrosAvanzadosRoute
+  '/dashboard/buscadores/movimientos': typeof DashboardBuscadoresMovimientosRoute
+  '/dashboard/buscadores/productos': typeof DashboardBuscadoresProductosRoute
+  '/dashboard/buscadores/reportes-busqueda': typeof DashboardBuscadoresReportesBusquedaRoute
+  '/dashboard/compras/consultas': typeof DashboardComprasConsultasRoute
+  '/dashboard/compras/cotizaciones': typeof DashboardComprasCotizacionesRoute
+  '/dashboard/compras/ordenes-compra': typeof DashboardComprasOrdenesCompraRoute
+  '/dashboard/compras/reportes': typeof DashboardComprasReportesRoute
+  '/dashboard/compras/solicitudes': typeof DashboardComprasSolicitudesRoute
+  '/dashboard/compras/viaticos': typeof DashboardComprasViaticosRoute
+  '/dashboard/contabilidad/consultas': typeof DashboardContabilidadConsultasRoute
+  '/dashboard/contabilidad/diarios': typeof DashboardContabilidadDiariosRoute
+  '/dashboard/contabilidad/flujo-caja': typeof DashboardContabilidadFlujoCajaRoute
+  '/dashboard/contabilidad/provisional': typeof DashboardContabilidadProvisionalRoute
+  '/dashboard/contabilidad/reportes': typeof DashboardContabilidadReportesRoute
+  '/dashboard/contabilidad/tesoreria': typeof DashboardContabilidadTesoreriaRoute
+  '/dashboard/costos/consolidados': typeof DashboardCostosConsolidadosRoute
+  '/dashboard/costos/consultas': typeof DashboardCostosConsultasRoute
+  '/dashboard/costos/importaciones': typeof DashboardCostosImportacionesRoute
+  '/dashboard/costos/procesos': typeof DashboardCostosProcesosRoute
+  '/dashboard/costos/reportes': typeof DashboardCostosReportesRoute
+  '/dashboard/creditos/anticipos': typeof DashboardCreditosAnticiposRoute
+  '/dashboard/creditos/aprobaciones': typeof DashboardCreditosAprobacionesRoute
+  '/dashboard/creditos/consultas': typeof DashboardCreditosConsultasRoute
+  '/dashboard/creditos/letras': typeof DashboardCreditosLetrasRoute
+  '/dashboard/creditos/permisos': typeof DashboardCreditosPermisosRoute
+  '/dashboard/creditos/reportes': typeof DashboardCreditosReportesRoute
+  '/dashboard/crm/clientes': typeof DashboardCrmClientesRoute
+  '/dashboard/crm/consultas': typeof DashboardCrmConsultasRoute
+  '/dashboard/crm/cotizaciones': typeof DashboardCrmCotizacionesRoute
+  '/dashboard/crm/oportunidades': typeof DashboardCrmOportunidadesRoute
+  '/dashboard/crm/reportes': typeof DashboardCrmReportesRoute
+  '/dashboard/crm/visitas': typeof DashboardCrmVisitasRoute
+  '/dashboard/gerencia/consultas': typeof DashboardGerenciaConsultasRoute
+  '/dashboard/gerencia/dashboard': typeof DashboardGerenciaDashboardRoute
+  '/dashboard/gerencia/estado-financiero': typeof DashboardGerenciaEstadoFinancieroRoute
+  '/dashboard/gerencia/indicadores': typeof DashboardGerenciaIndicadoresRoute
+  '/dashboard/gerencia/proyecciones': typeof DashboardGerenciaProyeccionesRoute
+  '/dashboard/gerencia/reportes': typeof DashboardGerenciaReportesRoute
+  '/dashboard/importaciones/consultas': typeof DashboardImportacionesConsultasRoute
+  '/dashboard/importaciones/documentos': typeof DashboardImportacionesDocumentosRoute
+  '/dashboard/importaciones/embarques': typeof DashboardImportacionesEmbarquesRoute
+  '/dashboard/importaciones/estados': typeof DashboardImportacionesEstadosRoute
+  '/dashboard/importaciones/pedidos': typeof DashboardImportacionesPedidosRoute
+  '/dashboard/importaciones/reportes': typeof DashboardImportacionesReportesRoute
+  '/dashboard/login/autenticacion': typeof DashboardLoginAutenticacionRoute
+  '/dashboard/login/cambio-clave': typeof DashboardLoginCambioClaveRoute
+  '/dashboard/login/logout': typeof DashboardLoginLogoutRoute
+  '/dashboard/login/perfil': typeof DashboardLoginPerfilRoute
+  '/dashboard/personal/asignaciones': typeof DashboardPersonalAsignacionesRoute
+  '/dashboard/personal/comunicacion': typeof DashboardPersonalComunicacionRoute
+  '/dashboard/personal/consultas': typeof DashboardPersonalConsultasRoute
+  '/dashboard/personal/directorio': typeof DashboardPersonalDirectorioRoute
+  '/dashboard/personal/informacion': typeof DashboardPersonalInformacionRoute
+  '/dashboard/personal/reportes': typeof DashboardPersonalReportesRoute
+  '/dashboard/planillas/consultas': typeof DashboardPlanillasConsultasRoute
+  '/dashboard/planillas/documentos': typeof DashboardPlanillasDocumentosRoute
+  '/dashboard/planillas/quinta': typeof DashboardPlanillasQuintaRoute
+  '/dashboard/planillas/reportes': typeof DashboardPlanillasReportesRoute
+  '/dashboard/planillas/sueldos': typeof DashboardPlanillasSueldosRoute
+  '/dashboard/rondas/asignaciones': typeof DashboardRondasAsignacionesRoute
+  '/dashboard/rondas/consultas': typeof DashboardRondasConsultasRoute
+  '/dashboard/rondas/puntos': typeof DashboardRondasPuntosRoute
+  '/dashboard/rondas/reportes': typeof DashboardRondasReportesRoute
+  '/dashboard/rondas/rutas': typeof DashboardRondasRutasRoute
+  '/dashboard/rondas/ruteadores': typeof DashboardRondasRuteadoresRoute
+  '/dashboard/servicios/consultas': typeof DashboardServiciosConsultasRoute
+  '/dashboard/servicios/cotizaciones': typeof DashboardServiciosCotizacionesRoute
+  '/dashboard/servicios/jobs': typeof DashboardServiciosJobsRoute
+  '/dashboard/servicios/mantenimiento': typeof DashboardServiciosMantenimientoRoute
+  '/dashboard/servicios/marcacion': typeof DashboardServiciosMarcacionRoute
+  '/dashboard/servicios/reportes': typeof DashboardServiciosReportesRoute
+  '/dashboard/tablas/clientes': typeof DashboardTablasClientesRoute
+  '/dashboard/tablas/consultas': typeof DashboardTablasConsultasRoute
+  '/dashboard/tablas/marcas': typeof DashboardTablasMarcasRoute
+  '/dashboard/tablas/parametros': typeof DashboardTablasParametrosRoute
+  '/dashboard/tablas/productos': typeof DashboardTablasProductosRoute
+  '/dashboard/tablas/proveedores': typeof DashboardTablasProveedoresRoute
+  '/dashboard/tablas/reportes': typeof DashboardTablasReportesRoute
+  '/dashboard/tablas/ubicaciones': typeof DashboardTablasUbicacionesRoute
+  '/dashboard/telefonia/asignaciones': typeof DashboardTelefoniaAsignacionesRoute
+  '/dashboard/telefonia/consultas': typeof DashboardTelefoniaConsultasRoute
+  '/dashboard/telefonia/equipos': typeof DashboardTelefoniaEquiposRoute
+  '/dashboard/telefonia/lineas': typeof DashboardTelefoniaLineasRoute
+  '/dashboard/telefonia/modelos': typeof DashboardTelefoniaModelosRoute
+  '/dashboard/telefonia/reportes': typeof DashboardTelefoniaReportesRoute
+  '/dashboard/ventas/boletas': typeof DashboardVentasBoletasRoute
+  '/dashboard/ventas/cartera': typeof DashboardVentasCarteraRoute
+  '/dashboard/ventas/consultas': typeof DashboardVentasConsultasRoute
+  '/dashboard/ventas/cotizaciones': typeof DashboardVentasCotizacionesRoute
+  '/dashboard/ventas/facturas': typeof DashboardVentasFacturasRoute
+  '/dashboard/ventas/guias': typeof DashboardVentasGuiasRoute
+  '/dashboard/ventas/notas-credito': typeof DashboardVentasNotasCreditoRoute
+  '/dashboard/ventas/ordenes': typeof DashboardVentasOrdenesRoute
+  '/dashboard/ventas/reportes': typeof DashboardVentasReportesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -274,33 +1220,155 @@ export interface FileRoutesByTo {
   '/portal': typeof PortalRoute
   '/productos': typeof ProductosRoute
   '/dashboard/activos-fijos': typeof DashboardActivosFijosRoute
-  '/dashboard/administracion': typeof DashboardAdministracionRoute
-  '/dashboard/almacen': typeof DashboardAlmacenRoute
+  '/dashboard/administracion': typeof DashboardAdministracionRouteWithChildren
+  '/dashboard/almacen': typeof DashboardAlmacenRouteWithChildren
   '/dashboard/audit': typeof DashboardAuditRoute
-  '/dashboard/ayuda': typeof DashboardAyudaRoute
-  '/dashboard/b2m': typeof DashboardB2mRoute
-  '/dashboard/buscadores': typeof DashboardBuscadoresRoute
-  '/dashboard/compras': typeof DashboardComprasRoute
-  '/dashboard/contabilidad': typeof DashboardContabilidadRoute
-  '/dashboard/costos': typeof DashboardCostosRoute
-  '/dashboard/creditos': typeof DashboardCreditosRoute
-  '/dashboard/crm': typeof DashboardCrmRoute
+  '/dashboard/ayuda': typeof DashboardAyudaRouteWithChildren
+  '/dashboard/b2m': typeof DashboardB2mRouteWithChildren
+  '/dashboard/buscadores': typeof DashboardBuscadoresRouteWithChildren
+  '/dashboard/compras': typeof DashboardComprasRouteWithChildren
+  '/dashboard/contabilidad': typeof DashboardContabilidadRouteWithChildren
+  '/dashboard/costos': typeof DashboardCostosRouteWithChildren
+  '/dashboard/creditos': typeof DashboardCreditosRouteWithChildren
+  '/dashboard/crm': typeof DashboardCrmRouteWithChildren
   '/dashboard/erp': typeof DashboardErpRoute
-  '/dashboard/gerencia': typeof DashboardGerenciaRoute
-  '/dashboard/importaciones': typeof DashboardImportacionesRoute
+  '/dashboard/gerencia': typeof DashboardGerenciaRouteWithChildren
+  '/dashboard/importaciones': typeof DashboardImportacionesRouteWithChildren
   '/dashboard/infrastructure': typeof DashboardInfrastructureRoute
-  '/dashboard/login': typeof DashboardLoginRoute
-  '/dashboard/personal': typeof DashboardPersonalRoute
-  '/dashboard/planillas': typeof DashboardPlanillasRoute
-  '/dashboard/rondas': typeof DashboardRondasRoute
+  '/dashboard/login': typeof DashboardLoginRouteWithChildren
+  '/dashboard/personal': typeof DashboardPersonalRouteWithChildren
+  '/dashboard/planillas': typeof DashboardPlanillasRouteWithChildren
+  '/dashboard/rondas': typeof DashboardRondasRouteWithChildren
   '/dashboard/security': typeof DashboardSecurityRoute
-  '/dashboard/servicios': typeof DashboardServiciosRoute
+  '/dashboard/servicios': typeof DashboardServiciosRouteWithChildren
   '/dashboard/settings': typeof DashboardSettingsRoute
-  '/dashboard/tablas': typeof DashboardTablasRoute
+  '/dashboard/tablas': typeof DashboardTablasRouteWithChildren
   '/dashboard/telefonica': typeof DashboardTelefonicaRoute
-  '/dashboard/ventas': typeof DashboardVentasRoute
+  '/dashboard/ventas': typeof DashboardVentasRouteWithChildren
   '/dashboard/zigma': typeof DashboardZigmaRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/dashboard/activosfijos/compra': typeof DashboardActivosfijosCompraRoute
+  '/dashboard/activosfijos/consultas': typeof DashboardActivosfijosConsultasRoute
+  '/dashboard/activosfijos/depreciacion': typeof DashboardActivosfijosDepreciacionRoute
+  '/dashboard/activosfijos/reportes': typeof DashboardActivosfijosReportesRoute
+  '/dashboard/administracion/configuracion': typeof DashboardAdministracionConfiguracionRoute
+  '/dashboard/administracion/encuestas': typeof DashboardAdministracionEncuestasRoute
+  '/dashboard/administracion/perfiles': typeof DashboardAdministracionPerfilesRoute
+  '/dashboard/administracion/reportes': typeof DashboardAdministracionReportesRoute
+  '/dashboard/administracion/sesiones': typeof DashboardAdministracionSesionesRoute
+  '/dashboard/administracion/usuarios': typeof DashboardAdministracionUsuariosRoute
+  '/dashboard/almacen/consultas': typeof DashboardAlmacenConsultasRoute
+  '/dashboard/almacen/despacho': typeof DashboardAlmacenDespachoRoute
+  '/dashboard/almacen/minimos-maximos': typeof DashboardAlmacenMinimosMaximosRoute
+  '/dashboard/almacen/movimientos': typeof DashboardAlmacenMovimientosRoute
+  '/dashboard/almacen/reportes': typeof DashboardAlmacenReportesRoute
+  '/dashboard/almacen/ubicaciones': typeof DashboardAlmacenUbicacionesRoute
+  '/dashboard/ayuda/acerca': typeof DashboardAyudaAcercaRoute
+  '/dashboard/ayuda/contacto': typeof DashboardAyudaContactoRoute
+  '/dashboard/ayuda/manual': typeof DashboardAyudaManualRoute
+  '/dashboard/ayuda/soporte': typeof DashboardAyudaSoporteRoute
+  '/dashboard/b2m/catalogo': typeof DashboardB2mCatalogoRoute
+  '/dashboard/b2m/pedidos': typeof DashboardB2mPedidosRoute
+  '/dashboard/b2m/proveedores': typeof DashboardB2mProveedoresRoute
+  '/dashboard/b2m/reportes': typeof DashboardB2mReportesRoute
+  '/dashboard/buscadores/clientes': typeof DashboardBuscadoresClientesRoute
+  '/dashboard/buscadores/componentes': typeof DashboardBuscadoresComponentesRoute
+  '/dashboard/buscadores/documentos': typeof DashboardBuscadoresDocumentosRoute
+  '/dashboard/buscadores/filtros-avanzados': typeof DashboardBuscadoresFiltrosAvanzadosRoute
+  '/dashboard/buscadores/movimientos': typeof DashboardBuscadoresMovimientosRoute
+  '/dashboard/buscadores/productos': typeof DashboardBuscadoresProductosRoute
+  '/dashboard/buscadores/reportes-busqueda': typeof DashboardBuscadoresReportesBusquedaRoute
+  '/dashboard/compras/consultas': typeof DashboardComprasConsultasRoute
+  '/dashboard/compras/cotizaciones': typeof DashboardComprasCotizacionesRoute
+  '/dashboard/compras/ordenes-compra': typeof DashboardComprasOrdenesCompraRoute
+  '/dashboard/compras/reportes': typeof DashboardComprasReportesRoute
+  '/dashboard/compras/solicitudes': typeof DashboardComprasSolicitudesRoute
+  '/dashboard/compras/viaticos': typeof DashboardComprasViaticosRoute
+  '/dashboard/contabilidad/consultas': typeof DashboardContabilidadConsultasRoute
+  '/dashboard/contabilidad/diarios': typeof DashboardContabilidadDiariosRoute
+  '/dashboard/contabilidad/flujo-caja': typeof DashboardContabilidadFlujoCajaRoute
+  '/dashboard/contabilidad/provisional': typeof DashboardContabilidadProvisionalRoute
+  '/dashboard/contabilidad/reportes': typeof DashboardContabilidadReportesRoute
+  '/dashboard/contabilidad/tesoreria': typeof DashboardContabilidadTesoreriaRoute
+  '/dashboard/costos/consolidados': typeof DashboardCostosConsolidadosRoute
+  '/dashboard/costos/consultas': typeof DashboardCostosConsultasRoute
+  '/dashboard/costos/importaciones': typeof DashboardCostosImportacionesRoute
+  '/dashboard/costos/procesos': typeof DashboardCostosProcesosRoute
+  '/dashboard/costos/reportes': typeof DashboardCostosReportesRoute
+  '/dashboard/creditos/anticipos': typeof DashboardCreditosAnticiposRoute
+  '/dashboard/creditos/aprobaciones': typeof DashboardCreditosAprobacionesRoute
+  '/dashboard/creditos/consultas': typeof DashboardCreditosConsultasRoute
+  '/dashboard/creditos/letras': typeof DashboardCreditosLetrasRoute
+  '/dashboard/creditos/permisos': typeof DashboardCreditosPermisosRoute
+  '/dashboard/creditos/reportes': typeof DashboardCreditosReportesRoute
+  '/dashboard/crm/clientes': typeof DashboardCrmClientesRoute
+  '/dashboard/crm/consultas': typeof DashboardCrmConsultasRoute
+  '/dashboard/crm/cotizaciones': typeof DashboardCrmCotizacionesRoute
+  '/dashboard/crm/oportunidades': typeof DashboardCrmOportunidadesRoute
+  '/dashboard/crm/reportes': typeof DashboardCrmReportesRoute
+  '/dashboard/crm/visitas': typeof DashboardCrmVisitasRoute
+  '/dashboard/gerencia/consultas': typeof DashboardGerenciaConsultasRoute
+  '/dashboard/gerencia/dashboard': typeof DashboardGerenciaDashboardRoute
+  '/dashboard/gerencia/estado-financiero': typeof DashboardGerenciaEstadoFinancieroRoute
+  '/dashboard/gerencia/indicadores': typeof DashboardGerenciaIndicadoresRoute
+  '/dashboard/gerencia/proyecciones': typeof DashboardGerenciaProyeccionesRoute
+  '/dashboard/gerencia/reportes': typeof DashboardGerenciaReportesRoute
+  '/dashboard/importaciones/consultas': typeof DashboardImportacionesConsultasRoute
+  '/dashboard/importaciones/documentos': typeof DashboardImportacionesDocumentosRoute
+  '/dashboard/importaciones/embarques': typeof DashboardImportacionesEmbarquesRoute
+  '/dashboard/importaciones/estados': typeof DashboardImportacionesEstadosRoute
+  '/dashboard/importaciones/pedidos': typeof DashboardImportacionesPedidosRoute
+  '/dashboard/importaciones/reportes': typeof DashboardImportacionesReportesRoute
+  '/dashboard/login/autenticacion': typeof DashboardLoginAutenticacionRoute
+  '/dashboard/login/cambio-clave': typeof DashboardLoginCambioClaveRoute
+  '/dashboard/login/logout': typeof DashboardLoginLogoutRoute
+  '/dashboard/login/perfil': typeof DashboardLoginPerfilRoute
+  '/dashboard/personal/asignaciones': typeof DashboardPersonalAsignacionesRoute
+  '/dashboard/personal/comunicacion': typeof DashboardPersonalComunicacionRoute
+  '/dashboard/personal/consultas': typeof DashboardPersonalConsultasRoute
+  '/dashboard/personal/directorio': typeof DashboardPersonalDirectorioRoute
+  '/dashboard/personal/informacion': typeof DashboardPersonalInformacionRoute
+  '/dashboard/personal/reportes': typeof DashboardPersonalReportesRoute
+  '/dashboard/planillas/consultas': typeof DashboardPlanillasConsultasRoute
+  '/dashboard/planillas/documentos': typeof DashboardPlanillasDocumentosRoute
+  '/dashboard/planillas/quinta': typeof DashboardPlanillasQuintaRoute
+  '/dashboard/planillas/reportes': typeof DashboardPlanillasReportesRoute
+  '/dashboard/planillas/sueldos': typeof DashboardPlanillasSueldosRoute
+  '/dashboard/rondas/asignaciones': typeof DashboardRondasAsignacionesRoute
+  '/dashboard/rondas/consultas': typeof DashboardRondasConsultasRoute
+  '/dashboard/rondas/puntos': typeof DashboardRondasPuntosRoute
+  '/dashboard/rondas/reportes': typeof DashboardRondasReportesRoute
+  '/dashboard/rondas/rutas': typeof DashboardRondasRutasRoute
+  '/dashboard/rondas/ruteadores': typeof DashboardRondasRuteadoresRoute
+  '/dashboard/servicios/consultas': typeof DashboardServiciosConsultasRoute
+  '/dashboard/servicios/cotizaciones': typeof DashboardServiciosCotizacionesRoute
+  '/dashboard/servicios/jobs': typeof DashboardServiciosJobsRoute
+  '/dashboard/servicios/mantenimiento': typeof DashboardServiciosMantenimientoRoute
+  '/dashboard/servicios/marcacion': typeof DashboardServiciosMarcacionRoute
+  '/dashboard/servicios/reportes': typeof DashboardServiciosReportesRoute
+  '/dashboard/tablas/clientes': typeof DashboardTablasClientesRoute
+  '/dashboard/tablas/consultas': typeof DashboardTablasConsultasRoute
+  '/dashboard/tablas/marcas': typeof DashboardTablasMarcasRoute
+  '/dashboard/tablas/parametros': typeof DashboardTablasParametrosRoute
+  '/dashboard/tablas/productos': typeof DashboardTablasProductosRoute
+  '/dashboard/tablas/proveedores': typeof DashboardTablasProveedoresRoute
+  '/dashboard/tablas/reportes': typeof DashboardTablasReportesRoute
+  '/dashboard/tablas/ubicaciones': typeof DashboardTablasUbicacionesRoute
+  '/dashboard/telefonia/asignaciones': typeof DashboardTelefoniaAsignacionesRoute
+  '/dashboard/telefonia/consultas': typeof DashboardTelefoniaConsultasRoute
+  '/dashboard/telefonia/equipos': typeof DashboardTelefoniaEquiposRoute
+  '/dashboard/telefonia/lineas': typeof DashboardTelefoniaLineasRoute
+  '/dashboard/telefonia/modelos': typeof DashboardTelefoniaModelosRoute
+  '/dashboard/telefonia/reportes': typeof DashboardTelefoniaReportesRoute
+  '/dashboard/ventas/boletas': typeof DashboardVentasBoletasRoute
+  '/dashboard/ventas/cartera': typeof DashboardVentasCarteraRoute
+  '/dashboard/ventas/consultas': typeof DashboardVentasConsultasRoute
+  '/dashboard/ventas/cotizaciones': typeof DashboardVentasCotizacionesRoute
+  '/dashboard/ventas/facturas': typeof DashboardVentasFacturasRoute
+  '/dashboard/ventas/guias': typeof DashboardVentasGuiasRoute
+  '/dashboard/ventas/notas-credito': typeof DashboardVentasNotasCreditoRoute
+  '/dashboard/ventas/ordenes': typeof DashboardVentasOrdenesRoute
+  '/dashboard/ventas/reportes': typeof DashboardVentasReportesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -313,33 +1381,155 @@ export interface FileRoutesById {
   '/portal': typeof PortalRoute
   '/productos': typeof ProductosRoute
   '/dashboard/activos-fijos': typeof DashboardActivosFijosRoute
-  '/dashboard/administracion': typeof DashboardAdministracionRoute
-  '/dashboard/almacen': typeof DashboardAlmacenRoute
+  '/dashboard/administracion': typeof DashboardAdministracionRouteWithChildren
+  '/dashboard/almacen': typeof DashboardAlmacenRouteWithChildren
   '/dashboard/audit': typeof DashboardAuditRoute
-  '/dashboard/ayuda': typeof DashboardAyudaRoute
-  '/dashboard/b2m': typeof DashboardB2mRoute
-  '/dashboard/buscadores': typeof DashboardBuscadoresRoute
-  '/dashboard/compras': typeof DashboardComprasRoute
-  '/dashboard/contabilidad': typeof DashboardContabilidadRoute
-  '/dashboard/costos': typeof DashboardCostosRoute
-  '/dashboard/creditos': typeof DashboardCreditosRoute
-  '/dashboard/crm': typeof DashboardCrmRoute
+  '/dashboard/ayuda': typeof DashboardAyudaRouteWithChildren
+  '/dashboard/b2m': typeof DashboardB2mRouteWithChildren
+  '/dashboard/buscadores': typeof DashboardBuscadoresRouteWithChildren
+  '/dashboard/compras': typeof DashboardComprasRouteWithChildren
+  '/dashboard/contabilidad': typeof DashboardContabilidadRouteWithChildren
+  '/dashboard/costos': typeof DashboardCostosRouteWithChildren
+  '/dashboard/creditos': typeof DashboardCreditosRouteWithChildren
+  '/dashboard/crm': typeof DashboardCrmRouteWithChildren
   '/dashboard/erp': typeof DashboardErpRoute
-  '/dashboard/gerencia': typeof DashboardGerenciaRoute
-  '/dashboard/importaciones': typeof DashboardImportacionesRoute
+  '/dashboard/gerencia': typeof DashboardGerenciaRouteWithChildren
+  '/dashboard/importaciones': typeof DashboardImportacionesRouteWithChildren
   '/dashboard/infrastructure': typeof DashboardInfrastructureRoute
-  '/dashboard/login': typeof DashboardLoginRoute
-  '/dashboard/personal': typeof DashboardPersonalRoute
-  '/dashboard/planillas': typeof DashboardPlanillasRoute
-  '/dashboard/rondas': typeof DashboardRondasRoute
+  '/dashboard/login': typeof DashboardLoginRouteWithChildren
+  '/dashboard/personal': typeof DashboardPersonalRouteWithChildren
+  '/dashboard/planillas': typeof DashboardPlanillasRouteWithChildren
+  '/dashboard/rondas': typeof DashboardRondasRouteWithChildren
   '/dashboard/security': typeof DashboardSecurityRoute
-  '/dashboard/servicios': typeof DashboardServiciosRoute
+  '/dashboard/servicios': typeof DashboardServiciosRouteWithChildren
   '/dashboard/settings': typeof DashboardSettingsRoute
-  '/dashboard/tablas': typeof DashboardTablasRoute
+  '/dashboard/tablas': typeof DashboardTablasRouteWithChildren
   '/dashboard/telefonica': typeof DashboardTelefonicaRoute
-  '/dashboard/ventas': typeof DashboardVentasRoute
+  '/dashboard/ventas': typeof DashboardVentasRouteWithChildren
   '/dashboard/zigma': typeof DashboardZigmaRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard/activosfijos/compra': typeof DashboardActivosfijosCompraRoute
+  '/dashboard/activosfijos/consultas': typeof DashboardActivosfijosConsultasRoute
+  '/dashboard/activosfijos/depreciacion': typeof DashboardActivosfijosDepreciacionRoute
+  '/dashboard/activosfijos/reportes': typeof DashboardActivosfijosReportesRoute
+  '/dashboard/administracion/configuracion': typeof DashboardAdministracionConfiguracionRoute
+  '/dashboard/administracion/encuestas': typeof DashboardAdministracionEncuestasRoute
+  '/dashboard/administracion/perfiles': typeof DashboardAdministracionPerfilesRoute
+  '/dashboard/administracion/reportes': typeof DashboardAdministracionReportesRoute
+  '/dashboard/administracion/sesiones': typeof DashboardAdministracionSesionesRoute
+  '/dashboard/administracion/usuarios': typeof DashboardAdministracionUsuariosRoute
+  '/dashboard/almacen/consultas': typeof DashboardAlmacenConsultasRoute
+  '/dashboard/almacen/despacho': typeof DashboardAlmacenDespachoRoute
+  '/dashboard/almacen/minimos-maximos': typeof DashboardAlmacenMinimosMaximosRoute
+  '/dashboard/almacen/movimientos': typeof DashboardAlmacenMovimientosRoute
+  '/dashboard/almacen/reportes': typeof DashboardAlmacenReportesRoute
+  '/dashboard/almacen/ubicaciones': typeof DashboardAlmacenUbicacionesRoute
+  '/dashboard/ayuda/acerca': typeof DashboardAyudaAcercaRoute
+  '/dashboard/ayuda/contacto': typeof DashboardAyudaContactoRoute
+  '/dashboard/ayuda/manual': typeof DashboardAyudaManualRoute
+  '/dashboard/ayuda/soporte': typeof DashboardAyudaSoporteRoute
+  '/dashboard/b2m/catalogo': typeof DashboardB2mCatalogoRoute
+  '/dashboard/b2m/pedidos': typeof DashboardB2mPedidosRoute
+  '/dashboard/b2m/proveedores': typeof DashboardB2mProveedoresRoute
+  '/dashboard/b2m/reportes': typeof DashboardB2mReportesRoute
+  '/dashboard/buscadores/clientes': typeof DashboardBuscadoresClientesRoute
+  '/dashboard/buscadores/componentes': typeof DashboardBuscadoresComponentesRoute
+  '/dashboard/buscadores/documentos': typeof DashboardBuscadoresDocumentosRoute
+  '/dashboard/buscadores/filtros-avanzados': typeof DashboardBuscadoresFiltrosAvanzadosRoute
+  '/dashboard/buscadores/movimientos': typeof DashboardBuscadoresMovimientosRoute
+  '/dashboard/buscadores/productos': typeof DashboardBuscadoresProductosRoute
+  '/dashboard/buscadores/reportes-busqueda': typeof DashboardBuscadoresReportesBusquedaRoute
+  '/dashboard/compras/consultas': typeof DashboardComprasConsultasRoute
+  '/dashboard/compras/cotizaciones': typeof DashboardComprasCotizacionesRoute
+  '/dashboard/compras/ordenes-compra': typeof DashboardComprasOrdenesCompraRoute
+  '/dashboard/compras/reportes': typeof DashboardComprasReportesRoute
+  '/dashboard/compras/solicitudes': typeof DashboardComprasSolicitudesRoute
+  '/dashboard/compras/viaticos': typeof DashboardComprasViaticosRoute
+  '/dashboard/contabilidad/consultas': typeof DashboardContabilidadConsultasRoute
+  '/dashboard/contabilidad/diarios': typeof DashboardContabilidadDiariosRoute
+  '/dashboard/contabilidad/flujo-caja': typeof DashboardContabilidadFlujoCajaRoute
+  '/dashboard/contabilidad/provisional': typeof DashboardContabilidadProvisionalRoute
+  '/dashboard/contabilidad/reportes': typeof DashboardContabilidadReportesRoute
+  '/dashboard/contabilidad/tesoreria': typeof DashboardContabilidadTesoreriaRoute
+  '/dashboard/costos/consolidados': typeof DashboardCostosConsolidadosRoute
+  '/dashboard/costos/consultas': typeof DashboardCostosConsultasRoute
+  '/dashboard/costos/importaciones': typeof DashboardCostosImportacionesRoute
+  '/dashboard/costos/procesos': typeof DashboardCostosProcesosRoute
+  '/dashboard/costos/reportes': typeof DashboardCostosReportesRoute
+  '/dashboard/creditos/anticipos': typeof DashboardCreditosAnticiposRoute
+  '/dashboard/creditos/aprobaciones': typeof DashboardCreditosAprobacionesRoute
+  '/dashboard/creditos/consultas': typeof DashboardCreditosConsultasRoute
+  '/dashboard/creditos/letras': typeof DashboardCreditosLetrasRoute
+  '/dashboard/creditos/permisos': typeof DashboardCreditosPermisosRoute
+  '/dashboard/creditos/reportes': typeof DashboardCreditosReportesRoute
+  '/dashboard/crm/clientes': typeof DashboardCrmClientesRoute
+  '/dashboard/crm/consultas': typeof DashboardCrmConsultasRoute
+  '/dashboard/crm/cotizaciones': typeof DashboardCrmCotizacionesRoute
+  '/dashboard/crm/oportunidades': typeof DashboardCrmOportunidadesRoute
+  '/dashboard/crm/reportes': typeof DashboardCrmReportesRoute
+  '/dashboard/crm/visitas': typeof DashboardCrmVisitasRoute
+  '/dashboard/gerencia/consultas': typeof DashboardGerenciaConsultasRoute
+  '/dashboard/gerencia/dashboard': typeof DashboardGerenciaDashboardRoute
+  '/dashboard/gerencia/estado-financiero': typeof DashboardGerenciaEstadoFinancieroRoute
+  '/dashboard/gerencia/indicadores': typeof DashboardGerenciaIndicadoresRoute
+  '/dashboard/gerencia/proyecciones': typeof DashboardGerenciaProyeccionesRoute
+  '/dashboard/gerencia/reportes': typeof DashboardGerenciaReportesRoute
+  '/dashboard/importaciones/consultas': typeof DashboardImportacionesConsultasRoute
+  '/dashboard/importaciones/documentos': typeof DashboardImportacionesDocumentosRoute
+  '/dashboard/importaciones/embarques': typeof DashboardImportacionesEmbarquesRoute
+  '/dashboard/importaciones/estados': typeof DashboardImportacionesEstadosRoute
+  '/dashboard/importaciones/pedidos': typeof DashboardImportacionesPedidosRoute
+  '/dashboard/importaciones/reportes': typeof DashboardImportacionesReportesRoute
+  '/dashboard/login/autenticacion': typeof DashboardLoginAutenticacionRoute
+  '/dashboard/login/cambio-clave': typeof DashboardLoginCambioClaveRoute
+  '/dashboard/login/logout': typeof DashboardLoginLogoutRoute
+  '/dashboard/login/perfil': typeof DashboardLoginPerfilRoute
+  '/dashboard/personal/asignaciones': typeof DashboardPersonalAsignacionesRoute
+  '/dashboard/personal/comunicacion': typeof DashboardPersonalComunicacionRoute
+  '/dashboard/personal/consultas': typeof DashboardPersonalConsultasRoute
+  '/dashboard/personal/directorio': typeof DashboardPersonalDirectorioRoute
+  '/dashboard/personal/informacion': typeof DashboardPersonalInformacionRoute
+  '/dashboard/personal/reportes': typeof DashboardPersonalReportesRoute
+  '/dashboard/planillas/consultas': typeof DashboardPlanillasConsultasRoute
+  '/dashboard/planillas/documentos': typeof DashboardPlanillasDocumentosRoute
+  '/dashboard/planillas/quinta': typeof DashboardPlanillasQuintaRoute
+  '/dashboard/planillas/reportes': typeof DashboardPlanillasReportesRoute
+  '/dashboard/planillas/sueldos': typeof DashboardPlanillasSueldosRoute
+  '/dashboard/rondas/asignaciones': typeof DashboardRondasAsignacionesRoute
+  '/dashboard/rondas/consultas': typeof DashboardRondasConsultasRoute
+  '/dashboard/rondas/puntos': typeof DashboardRondasPuntosRoute
+  '/dashboard/rondas/reportes': typeof DashboardRondasReportesRoute
+  '/dashboard/rondas/rutas': typeof DashboardRondasRutasRoute
+  '/dashboard/rondas/ruteadores': typeof DashboardRondasRuteadoresRoute
+  '/dashboard/servicios/consultas': typeof DashboardServiciosConsultasRoute
+  '/dashboard/servicios/cotizaciones': typeof DashboardServiciosCotizacionesRoute
+  '/dashboard/servicios/jobs': typeof DashboardServiciosJobsRoute
+  '/dashboard/servicios/mantenimiento': typeof DashboardServiciosMantenimientoRoute
+  '/dashboard/servicios/marcacion': typeof DashboardServiciosMarcacionRoute
+  '/dashboard/servicios/reportes': typeof DashboardServiciosReportesRoute
+  '/dashboard/tablas/clientes': typeof DashboardTablasClientesRoute
+  '/dashboard/tablas/consultas': typeof DashboardTablasConsultasRoute
+  '/dashboard/tablas/marcas': typeof DashboardTablasMarcasRoute
+  '/dashboard/tablas/parametros': typeof DashboardTablasParametrosRoute
+  '/dashboard/tablas/productos': typeof DashboardTablasProductosRoute
+  '/dashboard/tablas/proveedores': typeof DashboardTablasProveedoresRoute
+  '/dashboard/tablas/reportes': typeof DashboardTablasReportesRoute
+  '/dashboard/tablas/ubicaciones': typeof DashboardTablasUbicacionesRoute
+  '/dashboard/telefonia/asignaciones': typeof DashboardTelefoniaAsignacionesRoute
+  '/dashboard/telefonia/consultas': typeof DashboardTelefoniaConsultasRoute
+  '/dashboard/telefonia/equipos': typeof DashboardTelefoniaEquiposRoute
+  '/dashboard/telefonia/lineas': typeof DashboardTelefoniaLineasRoute
+  '/dashboard/telefonia/modelos': typeof DashboardTelefoniaModelosRoute
+  '/dashboard/telefonia/reportes': typeof DashboardTelefoniaReportesRoute
+  '/dashboard/ventas/boletas': typeof DashboardVentasBoletasRoute
+  '/dashboard/ventas/cartera': typeof DashboardVentasCarteraRoute
+  '/dashboard/ventas/consultas': typeof DashboardVentasConsultasRoute
+  '/dashboard/ventas/cotizaciones': typeof DashboardVentasCotizacionesRoute
+  '/dashboard/ventas/facturas': typeof DashboardVentasFacturasRoute
+  '/dashboard/ventas/guias': typeof DashboardVentasGuiasRoute
+  '/dashboard/ventas/notas-credito': typeof DashboardVentasNotasCreditoRoute
+  '/dashboard/ventas/ordenes': typeof DashboardVentasOrdenesRoute
+  '/dashboard/ventas/reportes': typeof DashboardVentasReportesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -380,6 +1570,128 @@ export interface FileRouteTypes {
     | '/dashboard/ventas'
     | '/dashboard/zigma'
     | '/dashboard/'
+    | '/dashboard/activosfijos/compra'
+    | '/dashboard/activosfijos/consultas'
+    | '/dashboard/activosfijos/depreciacion'
+    | '/dashboard/activosfijos/reportes'
+    | '/dashboard/administracion/configuracion'
+    | '/dashboard/administracion/encuestas'
+    | '/dashboard/administracion/perfiles'
+    | '/dashboard/administracion/reportes'
+    | '/dashboard/administracion/sesiones'
+    | '/dashboard/administracion/usuarios'
+    | '/dashboard/almacen/consultas'
+    | '/dashboard/almacen/despacho'
+    | '/dashboard/almacen/minimos-maximos'
+    | '/dashboard/almacen/movimientos'
+    | '/dashboard/almacen/reportes'
+    | '/dashboard/almacen/ubicaciones'
+    | '/dashboard/ayuda/acerca'
+    | '/dashboard/ayuda/contacto'
+    | '/dashboard/ayuda/manual'
+    | '/dashboard/ayuda/soporte'
+    | '/dashboard/b2m/catalogo'
+    | '/dashboard/b2m/pedidos'
+    | '/dashboard/b2m/proveedores'
+    | '/dashboard/b2m/reportes'
+    | '/dashboard/buscadores/clientes'
+    | '/dashboard/buscadores/componentes'
+    | '/dashboard/buscadores/documentos'
+    | '/dashboard/buscadores/filtros-avanzados'
+    | '/dashboard/buscadores/movimientos'
+    | '/dashboard/buscadores/productos'
+    | '/dashboard/buscadores/reportes-busqueda'
+    | '/dashboard/compras/consultas'
+    | '/dashboard/compras/cotizaciones'
+    | '/dashboard/compras/ordenes-compra'
+    | '/dashboard/compras/reportes'
+    | '/dashboard/compras/solicitudes'
+    | '/dashboard/compras/viaticos'
+    | '/dashboard/contabilidad/consultas'
+    | '/dashboard/contabilidad/diarios'
+    | '/dashboard/contabilidad/flujo-caja'
+    | '/dashboard/contabilidad/provisional'
+    | '/dashboard/contabilidad/reportes'
+    | '/dashboard/contabilidad/tesoreria'
+    | '/dashboard/costos/consolidados'
+    | '/dashboard/costos/consultas'
+    | '/dashboard/costos/importaciones'
+    | '/dashboard/costos/procesos'
+    | '/dashboard/costos/reportes'
+    | '/dashboard/creditos/anticipos'
+    | '/dashboard/creditos/aprobaciones'
+    | '/dashboard/creditos/consultas'
+    | '/dashboard/creditos/letras'
+    | '/dashboard/creditos/permisos'
+    | '/dashboard/creditos/reportes'
+    | '/dashboard/crm/clientes'
+    | '/dashboard/crm/consultas'
+    | '/dashboard/crm/cotizaciones'
+    | '/dashboard/crm/oportunidades'
+    | '/dashboard/crm/reportes'
+    | '/dashboard/crm/visitas'
+    | '/dashboard/gerencia/consultas'
+    | '/dashboard/gerencia/dashboard'
+    | '/dashboard/gerencia/estado-financiero'
+    | '/dashboard/gerencia/indicadores'
+    | '/dashboard/gerencia/proyecciones'
+    | '/dashboard/gerencia/reportes'
+    | '/dashboard/importaciones/consultas'
+    | '/dashboard/importaciones/documentos'
+    | '/dashboard/importaciones/embarques'
+    | '/dashboard/importaciones/estados'
+    | '/dashboard/importaciones/pedidos'
+    | '/dashboard/importaciones/reportes'
+    | '/dashboard/login/autenticacion'
+    | '/dashboard/login/cambio-clave'
+    | '/dashboard/login/logout'
+    | '/dashboard/login/perfil'
+    | '/dashboard/personal/asignaciones'
+    | '/dashboard/personal/comunicacion'
+    | '/dashboard/personal/consultas'
+    | '/dashboard/personal/directorio'
+    | '/dashboard/personal/informacion'
+    | '/dashboard/personal/reportes'
+    | '/dashboard/planillas/consultas'
+    | '/dashboard/planillas/documentos'
+    | '/dashboard/planillas/quinta'
+    | '/dashboard/planillas/reportes'
+    | '/dashboard/planillas/sueldos'
+    | '/dashboard/rondas/asignaciones'
+    | '/dashboard/rondas/consultas'
+    | '/dashboard/rondas/puntos'
+    | '/dashboard/rondas/reportes'
+    | '/dashboard/rondas/rutas'
+    | '/dashboard/rondas/ruteadores'
+    | '/dashboard/servicios/consultas'
+    | '/dashboard/servicios/cotizaciones'
+    | '/dashboard/servicios/jobs'
+    | '/dashboard/servicios/mantenimiento'
+    | '/dashboard/servicios/marcacion'
+    | '/dashboard/servicios/reportes'
+    | '/dashboard/tablas/clientes'
+    | '/dashboard/tablas/consultas'
+    | '/dashboard/tablas/marcas'
+    | '/dashboard/tablas/parametros'
+    | '/dashboard/tablas/productos'
+    | '/dashboard/tablas/proveedores'
+    | '/dashboard/tablas/reportes'
+    | '/dashboard/tablas/ubicaciones'
+    | '/dashboard/telefonia/asignaciones'
+    | '/dashboard/telefonia/consultas'
+    | '/dashboard/telefonia/equipos'
+    | '/dashboard/telefonia/lineas'
+    | '/dashboard/telefonia/modelos'
+    | '/dashboard/telefonia/reportes'
+    | '/dashboard/ventas/boletas'
+    | '/dashboard/ventas/cartera'
+    | '/dashboard/ventas/consultas'
+    | '/dashboard/ventas/cotizaciones'
+    | '/dashboard/ventas/facturas'
+    | '/dashboard/ventas/guias'
+    | '/dashboard/ventas/notas-credito'
+    | '/dashboard/ventas/ordenes'
+    | '/dashboard/ventas/reportes'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -417,6 +1729,128 @@ export interface FileRouteTypes {
     | '/dashboard/ventas'
     | '/dashboard/zigma'
     | '/dashboard'
+    | '/dashboard/activosfijos/compra'
+    | '/dashboard/activosfijos/consultas'
+    | '/dashboard/activosfijos/depreciacion'
+    | '/dashboard/activosfijos/reportes'
+    | '/dashboard/administracion/configuracion'
+    | '/dashboard/administracion/encuestas'
+    | '/dashboard/administracion/perfiles'
+    | '/dashboard/administracion/reportes'
+    | '/dashboard/administracion/sesiones'
+    | '/dashboard/administracion/usuarios'
+    | '/dashboard/almacen/consultas'
+    | '/dashboard/almacen/despacho'
+    | '/dashboard/almacen/minimos-maximos'
+    | '/dashboard/almacen/movimientos'
+    | '/dashboard/almacen/reportes'
+    | '/dashboard/almacen/ubicaciones'
+    | '/dashboard/ayuda/acerca'
+    | '/dashboard/ayuda/contacto'
+    | '/dashboard/ayuda/manual'
+    | '/dashboard/ayuda/soporte'
+    | '/dashboard/b2m/catalogo'
+    | '/dashboard/b2m/pedidos'
+    | '/dashboard/b2m/proveedores'
+    | '/dashboard/b2m/reportes'
+    | '/dashboard/buscadores/clientes'
+    | '/dashboard/buscadores/componentes'
+    | '/dashboard/buscadores/documentos'
+    | '/dashboard/buscadores/filtros-avanzados'
+    | '/dashboard/buscadores/movimientos'
+    | '/dashboard/buscadores/productos'
+    | '/dashboard/buscadores/reportes-busqueda'
+    | '/dashboard/compras/consultas'
+    | '/dashboard/compras/cotizaciones'
+    | '/dashboard/compras/ordenes-compra'
+    | '/dashboard/compras/reportes'
+    | '/dashboard/compras/solicitudes'
+    | '/dashboard/compras/viaticos'
+    | '/dashboard/contabilidad/consultas'
+    | '/dashboard/contabilidad/diarios'
+    | '/dashboard/contabilidad/flujo-caja'
+    | '/dashboard/contabilidad/provisional'
+    | '/dashboard/contabilidad/reportes'
+    | '/dashboard/contabilidad/tesoreria'
+    | '/dashboard/costos/consolidados'
+    | '/dashboard/costos/consultas'
+    | '/dashboard/costos/importaciones'
+    | '/dashboard/costos/procesos'
+    | '/dashboard/costos/reportes'
+    | '/dashboard/creditos/anticipos'
+    | '/dashboard/creditos/aprobaciones'
+    | '/dashboard/creditos/consultas'
+    | '/dashboard/creditos/letras'
+    | '/dashboard/creditos/permisos'
+    | '/dashboard/creditos/reportes'
+    | '/dashboard/crm/clientes'
+    | '/dashboard/crm/consultas'
+    | '/dashboard/crm/cotizaciones'
+    | '/dashboard/crm/oportunidades'
+    | '/dashboard/crm/reportes'
+    | '/dashboard/crm/visitas'
+    | '/dashboard/gerencia/consultas'
+    | '/dashboard/gerencia/dashboard'
+    | '/dashboard/gerencia/estado-financiero'
+    | '/dashboard/gerencia/indicadores'
+    | '/dashboard/gerencia/proyecciones'
+    | '/dashboard/gerencia/reportes'
+    | '/dashboard/importaciones/consultas'
+    | '/dashboard/importaciones/documentos'
+    | '/dashboard/importaciones/embarques'
+    | '/dashboard/importaciones/estados'
+    | '/dashboard/importaciones/pedidos'
+    | '/dashboard/importaciones/reportes'
+    | '/dashboard/login/autenticacion'
+    | '/dashboard/login/cambio-clave'
+    | '/dashboard/login/logout'
+    | '/dashboard/login/perfil'
+    | '/dashboard/personal/asignaciones'
+    | '/dashboard/personal/comunicacion'
+    | '/dashboard/personal/consultas'
+    | '/dashboard/personal/directorio'
+    | '/dashboard/personal/informacion'
+    | '/dashboard/personal/reportes'
+    | '/dashboard/planillas/consultas'
+    | '/dashboard/planillas/documentos'
+    | '/dashboard/planillas/quinta'
+    | '/dashboard/planillas/reportes'
+    | '/dashboard/planillas/sueldos'
+    | '/dashboard/rondas/asignaciones'
+    | '/dashboard/rondas/consultas'
+    | '/dashboard/rondas/puntos'
+    | '/dashboard/rondas/reportes'
+    | '/dashboard/rondas/rutas'
+    | '/dashboard/rondas/ruteadores'
+    | '/dashboard/servicios/consultas'
+    | '/dashboard/servicios/cotizaciones'
+    | '/dashboard/servicios/jobs'
+    | '/dashboard/servicios/mantenimiento'
+    | '/dashboard/servicios/marcacion'
+    | '/dashboard/servicios/reportes'
+    | '/dashboard/tablas/clientes'
+    | '/dashboard/tablas/consultas'
+    | '/dashboard/tablas/marcas'
+    | '/dashboard/tablas/parametros'
+    | '/dashboard/tablas/productos'
+    | '/dashboard/tablas/proveedores'
+    | '/dashboard/tablas/reportes'
+    | '/dashboard/tablas/ubicaciones'
+    | '/dashboard/telefonia/asignaciones'
+    | '/dashboard/telefonia/consultas'
+    | '/dashboard/telefonia/equipos'
+    | '/dashboard/telefonia/lineas'
+    | '/dashboard/telefonia/modelos'
+    | '/dashboard/telefonia/reportes'
+    | '/dashboard/ventas/boletas'
+    | '/dashboard/ventas/cartera'
+    | '/dashboard/ventas/consultas'
+    | '/dashboard/ventas/cotizaciones'
+    | '/dashboard/ventas/facturas'
+    | '/dashboard/ventas/guias'
+    | '/dashboard/ventas/notas-credito'
+    | '/dashboard/ventas/ordenes'
+    | '/dashboard/ventas/reportes'
   id:
     | '__root__'
     | '/'
@@ -455,6 +1889,128 @@ export interface FileRouteTypes {
     | '/dashboard/ventas'
     | '/dashboard/zigma'
     | '/dashboard/'
+    | '/dashboard/activosfijos/compra'
+    | '/dashboard/activosfijos/consultas'
+    | '/dashboard/activosfijos/depreciacion'
+    | '/dashboard/activosfijos/reportes'
+    | '/dashboard/administracion/configuracion'
+    | '/dashboard/administracion/encuestas'
+    | '/dashboard/administracion/perfiles'
+    | '/dashboard/administracion/reportes'
+    | '/dashboard/administracion/sesiones'
+    | '/dashboard/administracion/usuarios'
+    | '/dashboard/almacen/consultas'
+    | '/dashboard/almacen/despacho'
+    | '/dashboard/almacen/minimos-maximos'
+    | '/dashboard/almacen/movimientos'
+    | '/dashboard/almacen/reportes'
+    | '/dashboard/almacen/ubicaciones'
+    | '/dashboard/ayuda/acerca'
+    | '/dashboard/ayuda/contacto'
+    | '/dashboard/ayuda/manual'
+    | '/dashboard/ayuda/soporte'
+    | '/dashboard/b2m/catalogo'
+    | '/dashboard/b2m/pedidos'
+    | '/dashboard/b2m/proveedores'
+    | '/dashboard/b2m/reportes'
+    | '/dashboard/buscadores/clientes'
+    | '/dashboard/buscadores/componentes'
+    | '/dashboard/buscadores/documentos'
+    | '/dashboard/buscadores/filtros-avanzados'
+    | '/dashboard/buscadores/movimientos'
+    | '/dashboard/buscadores/productos'
+    | '/dashboard/buscadores/reportes-busqueda'
+    | '/dashboard/compras/consultas'
+    | '/dashboard/compras/cotizaciones'
+    | '/dashboard/compras/ordenes-compra'
+    | '/dashboard/compras/reportes'
+    | '/dashboard/compras/solicitudes'
+    | '/dashboard/compras/viaticos'
+    | '/dashboard/contabilidad/consultas'
+    | '/dashboard/contabilidad/diarios'
+    | '/dashboard/contabilidad/flujo-caja'
+    | '/dashboard/contabilidad/provisional'
+    | '/dashboard/contabilidad/reportes'
+    | '/dashboard/contabilidad/tesoreria'
+    | '/dashboard/costos/consolidados'
+    | '/dashboard/costos/consultas'
+    | '/dashboard/costos/importaciones'
+    | '/dashboard/costos/procesos'
+    | '/dashboard/costos/reportes'
+    | '/dashboard/creditos/anticipos'
+    | '/dashboard/creditos/aprobaciones'
+    | '/dashboard/creditos/consultas'
+    | '/dashboard/creditos/letras'
+    | '/dashboard/creditos/permisos'
+    | '/dashboard/creditos/reportes'
+    | '/dashboard/crm/clientes'
+    | '/dashboard/crm/consultas'
+    | '/dashboard/crm/cotizaciones'
+    | '/dashboard/crm/oportunidades'
+    | '/dashboard/crm/reportes'
+    | '/dashboard/crm/visitas'
+    | '/dashboard/gerencia/consultas'
+    | '/dashboard/gerencia/dashboard'
+    | '/dashboard/gerencia/estado-financiero'
+    | '/dashboard/gerencia/indicadores'
+    | '/dashboard/gerencia/proyecciones'
+    | '/dashboard/gerencia/reportes'
+    | '/dashboard/importaciones/consultas'
+    | '/dashboard/importaciones/documentos'
+    | '/dashboard/importaciones/embarques'
+    | '/dashboard/importaciones/estados'
+    | '/dashboard/importaciones/pedidos'
+    | '/dashboard/importaciones/reportes'
+    | '/dashboard/login/autenticacion'
+    | '/dashboard/login/cambio-clave'
+    | '/dashboard/login/logout'
+    | '/dashboard/login/perfil'
+    | '/dashboard/personal/asignaciones'
+    | '/dashboard/personal/comunicacion'
+    | '/dashboard/personal/consultas'
+    | '/dashboard/personal/directorio'
+    | '/dashboard/personal/informacion'
+    | '/dashboard/personal/reportes'
+    | '/dashboard/planillas/consultas'
+    | '/dashboard/planillas/documentos'
+    | '/dashboard/planillas/quinta'
+    | '/dashboard/planillas/reportes'
+    | '/dashboard/planillas/sueldos'
+    | '/dashboard/rondas/asignaciones'
+    | '/dashboard/rondas/consultas'
+    | '/dashboard/rondas/puntos'
+    | '/dashboard/rondas/reportes'
+    | '/dashboard/rondas/rutas'
+    | '/dashboard/rondas/ruteadores'
+    | '/dashboard/servicios/consultas'
+    | '/dashboard/servicios/cotizaciones'
+    | '/dashboard/servicios/jobs'
+    | '/dashboard/servicios/mantenimiento'
+    | '/dashboard/servicios/marcacion'
+    | '/dashboard/servicios/reportes'
+    | '/dashboard/tablas/clientes'
+    | '/dashboard/tablas/consultas'
+    | '/dashboard/tablas/marcas'
+    | '/dashboard/tablas/parametros'
+    | '/dashboard/tablas/productos'
+    | '/dashboard/tablas/proveedores'
+    | '/dashboard/tablas/reportes'
+    | '/dashboard/tablas/ubicaciones'
+    | '/dashboard/telefonia/asignaciones'
+    | '/dashboard/telefonia/consultas'
+    | '/dashboard/telefonia/equipos'
+    | '/dashboard/telefonia/lineas'
+    | '/dashboard/telefonia/modelos'
+    | '/dashboard/telefonia/reportes'
+    | '/dashboard/ventas/boletas'
+    | '/dashboard/ventas/cartera'
+    | '/dashboard/ventas/consultas'
+    | '/dashboard/ventas/cotizaciones'
+    | '/dashboard/ventas/facturas'
+    | '/dashboard/ventas/guias'
+    | '/dashboard/ventas/notas-credito'
+    | '/dashboard/ventas/ordenes'
+    | '/dashboard/ventas/reportes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -722,69 +2278,1361 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardActivosFijosRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/ventas/reportes': {
+      id: '/dashboard/ventas/reportes'
+      path: '/reportes'
+      fullPath: '/dashboard/ventas/reportes'
+      preLoaderRoute: typeof DashboardVentasReportesRouteImport
+      parentRoute: typeof DashboardVentasRoute
+    }
+    '/dashboard/ventas/ordenes': {
+      id: '/dashboard/ventas/ordenes'
+      path: '/ordenes'
+      fullPath: '/dashboard/ventas/ordenes'
+      preLoaderRoute: typeof DashboardVentasOrdenesRouteImport
+      parentRoute: typeof DashboardVentasRoute
+    }
+    '/dashboard/ventas/notas-credito': {
+      id: '/dashboard/ventas/notas-credito'
+      path: '/notas-credito'
+      fullPath: '/dashboard/ventas/notas-credito'
+      preLoaderRoute: typeof DashboardVentasNotasCreditoRouteImport
+      parentRoute: typeof DashboardVentasRoute
+    }
+    '/dashboard/ventas/guias': {
+      id: '/dashboard/ventas/guias'
+      path: '/guias'
+      fullPath: '/dashboard/ventas/guias'
+      preLoaderRoute: typeof DashboardVentasGuiasRouteImport
+      parentRoute: typeof DashboardVentasRoute
+    }
+    '/dashboard/ventas/facturas': {
+      id: '/dashboard/ventas/facturas'
+      path: '/facturas'
+      fullPath: '/dashboard/ventas/facturas'
+      preLoaderRoute: typeof DashboardVentasFacturasRouteImport
+      parentRoute: typeof DashboardVentasRoute
+    }
+    '/dashboard/ventas/cotizaciones': {
+      id: '/dashboard/ventas/cotizaciones'
+      path: '/cotizaciones'
+      fullPath: '/dashboard/ventas/cotizaciones'
+      preLoaderRoute: typeof DashboardVentasCotizacionesRouteImport
+      parentRoute: typeof DashboardVentasRoute
+    }
+    '/dashboard/ventas/consultas': {
+      id: '/dashboard/ventas/consultas'
+      path: '/consultas'
+      fullPath: '/dashboard/ventas/consultas'
+      preLoaderRoute: typeof DashboardVentasConsultasRouteImport
+      parentRoute: typeof DashboardVentasRoute
+    }
+    '/dashboard/ventas/cartera': {
+      id: '/dashboard/ventas/cartera'
+      path: '/cartera'
+      fullPath: '/dashboard/ventas/cartera'
+      preLoaderRoute: typeof DashboardVentasCarteraRouteImport
+      parentRoute: typeof DashboardVentasRoute
+    }
+    '/dashboard/ventas/boletas': {
+      id: '/dashboard/ventas/boletas'
+      path: '/boletas'
+      fullPath: '/dashboard/ventas/boletas'
+      preLoaderRoute: typeof DashboardVentasBoletasRouteImport
+      parentRoute: typeof DashboardVentasRoute
+    }
+    '/dashboard/telefonia/reportes': {
+      id: '/dashboard/telefonia/reportes'
+      path: '/telefonia/reportes'
+      fullPath: '/dashboard/telefonia/reportes'
+      preLoaderRoute: typeof DashboardTelefoniaReportesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/telefonia/modelos': {
+      id: '/dashboard/telefonia/modelos'
+      path: '/telefonia/modelos'
+      fullPath: '/dashboard/telefonia/modelos'
+      preLoaderRoute: typeof DashboardTelefoniaModelosRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/telefonia/lineas': {
+      id: '/dashboard/telefonia/lineas'
+      path: '/telefonia/lineas'
+      fullPath: '/dashboard/telefonia/lineas'
+      preLoaderRoute: typeof DashboardTelefoniaLineasRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/telefonia/equipos': {
+      id: '/dashboard/telefonia/equipos'
+      path: '/telefonia/equipos'
+      fullPath: '/dashboard/telefonia/equipos'
+      preLoaderRoute: typeof DashboardTelefoniaEquiposRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/telefonia/consultas': {
+      id: '/dashboard/telefonia/consultas'
+      path: '/telefonia/consultas'
+      fullPath: '/dashboard/telefonia/consultas'
+      preLoaderRoute: typeof DashboardTelefoniaConsultasRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/telefonia/asignaciones': {
+      id: '/dashboard/telefonia/asignaciones'
+      path: '/telefonia/asignaciones'
+      fullPath: '/dashboard/telefonia/asignaciones'
+      preLoaderRoute: typeof DashboardTelefoniaAsignacionesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/tablas/ubicaciones': {
+      id: '/dashboard/tablas/ubicaciones'
+      path: '/ubicaciones'
+      fullPath: '/dashboard/tablas/ubicaciones'
+      preLoaderRoute: typeof DashboardTablasUbicacionesRouteImport
+      parentRoute: typeof DashboardTablasRoute
+    }
+    '/dashboard/tablas/reportes': {
+      id: '/dashboard/tablas/reportes'
+      path: '/reportes'
+      fullPath: '/dashboard/tablas/reportes'
+      preLoaderRoute: typeof DashboardTablasReportesRouteImport
+      parentRoute: typeof DashboardTablasRoute
+    }
+    '/dashboard/tablas/proveedores': {
+      id: '/dashboard/tablas/proveedores'
+      path: '/proveedores'
+      fullPath: '/dashboard/tablas/proveedores'
+      preLoaderRoute: typeof DashboardTablasProveedoresRouteImport
+      parentRoute: typeof DashboardTablasRoute
+    }
+    '/dashboard/tablas/productos': {
+      id: '/dashboard/tablas/productos'
+      path: '/productos'
+      fullPath: '/dashboard/tablas/productos'
+      preLoaderRoute: typeof DashboardTablasProductosRouteImport
+      parentRoute: typeof DashboardTablasRoute
+    }
+    '/dashboard/tablas/parametros': {
+      id: '/dashboard/tablas/parametros'
+      path: '/parametros'
+      fullPath: '/dashboard/tablas/parametros'
+      preLoaderRoute: typeof DashboardTablasParametrosRouteImport
+      parentRoute: typeof DashboardTablasRoute
+    }
+    '/dashboard/tablas/marcas': {
+      id: '/dashboard/tablas/marcas'
+      path: '/marcas'
+      fullPath: '/dashboard/tablas/marcas'
+      preLoaderRoute: typeof DashboardTablasMarcasRouteImport
+      parentRoute: typeof DashboardTablasRoute
+    }
+    '/dashboard/tablas/consultas': {
+      id: '/dashboard/tablas/consultas'
+      path: '/consultas'
+      fullPath: '/dashboard/tablas/consultas'
+      preLoaderRoute: typeof DashboardTablasConsultasRouteImport
+      parentRoute: typeof DashboardTablasRoute
+    }
+    '/dashboard/tablas/clientes': {
+      id: '/dashboard/tablas/clientes'
+      path: '/clientes'
+      fullPath: '/dashboard/tablas/clientes'
+      preLoaderRoute: typeof DashboardTablasClientesRouteImport
+      parentRoute: typeof DashboardTablasRoute
+    }
+    '/dashboard/servicios/reportes': {
+      id: '/dashboard/servicios/reportes'
+      path: '/reportes'
+      fullPath: '/dashboard/servicios/reportes'
+      preLoaderRoute: typeof DashboardServiciosReportesRouteImport
+      parentRoute: typeof DashboardServiciosRoute
+    }
+    '/dashboard/servicios/marcacion': {
+      id: '/dashboard/servicios/marcacion'
+      path: '/marcacion'
+      fullPath: '/dashboard/servicios/marcacion'
+      preLoaderRoute: typeof DashboardServiciosMarcacionRouteImport
+      parentRoute: typeof DashboardServiciosRoute
+    }
+    '/dashboard/servicios/mantenimiento': {
+      id: '/dashboard/servicios/mantenimiento'
+      path: '/mantenimiento'
+      fullPath: '/dashboard/servicios/mantenimiento'
+      preLoaderRoute: typeof DashboardServiciosMantenimientoRouteImport
+      parentRoute: typeof DashboardServiciosRoute
+    }
+    '/dashboard/servicios/jobs': {
+      id: '/dashboard/servicios/jobs'
+      path: '/jobs'
+      fullPath: '/dashboard/servicios/jobs'
+      preLoaderRoute: typeof DashboardServiciosJobsRouteImport
+      parentRoute: typeof DashboardServiciosRoute
+    }
+    '/dashboard/servicios/cotizaciones': {
+      id: '/dashboard/servicios/cotizaciones'
+      path: '/cotizaciones'
+      fullPath: '/dashboard/servicios/cotizaciones'
+      preLoaderRoute: typeof DashboardServiciosCotizacionesRouteImport
+      parentRoute: typeof DashboardServiciosRoute
+    }
+    '/dashboard/servicios/consultas': {
+      id: '/dashboard/servicios/consultas'
+      path: '/consultas'
+      fullPath: '/dashboard/servicios/consultas'
+      preLoaderRoute: typeof DashboardServiciosConsultasRouteImport
+      parentRoute: typeof DashboardServiciosRoute
+    }
+    '/dashboard/rondas/ruteadores': {
+      id: '/dashboard/rondas/ruteadores'
+      path: '/ruteadores'
+      fullPath: '/dashboard/rondas/ruteadores'
+      preLoaderRoute: typeof DashboardRondasRuteadoresRouteImport
+      parentRoute: typeof DashboardRondasRoute
+    }
+    '/dashboard/rondas/rutas': {
+      id: '/dashboard/rondas/rutas'
+      path: '/rutas'
+      fullPath: '/dashboard/rondas/rutas'
+      preLoaderRoute: typeof DashboardRondasRutasRouteImport
+      parentRoute: typeof DashboardRondasRoute
+    }
+    '/dashboard/rondas/reportes': {
+      id: '/dashboard/rondas/reportes'
+      path: '/reportes'
+      fullPath: '/dashboard/rondas/reportes'
+      preLoaderRoute: typeof DashboardRondasReportesRouteImport
+      parentRoute: typeof DashboardRondasRoute
+    }
+    '/dashboard/rondas/puntos': {
+      id: '/dashboard/rondas/puntos'
+      path: '/puntos'
+      fullPath: '/dashboard/rondas/puntos'
+      preLoaderRoute: typeof DashboardRondasPuntosRouteImport
+      parentRoute: typeof DashboardRondasRoute
+    }
+    '/dashboard/rondas/consultas': {
+      id: '/dashboard/rondas/consultas'
+      path: '/consultas'
+      fullPath: '/dashboard/rondas/consultas'
+      preLoaderRoute: typeof DashboardRondasConsultasRouteImport
+      parentRoute: typeof DashboardRondasRoute
+    }
+    '/dashboard/rondas/asignaciones': {
+      id: '/dashboard/rondas/asignaciones'
+      path: '/asignaciones'
+      fullPath: '/dashboard/rondas/asignaciones'
+      preLoaderRoute: typeof DashboardRondasAsignacionesRouteImport
+      parentRoute: typeof DashboardRondasRoute
+    }
+    '/dashboard/planillas/sueldos': {
+      id: '/dashboard/planillas/sueldos'
+      path: '/sueldos'
+      fullPath: '/dashboard/planillas/sueldos'
+      preLoaderRoute: typeof DashboardPlanillasSueldosRouteImport
+      parentRoute: typeof DashboardPlanillasRoute
+    }
+    '/dashboard/planillas/reportes': {
+      id: '/dashboard/planillas/reportes'
+      path: '/reportes'
+      fullPath: '/dashboard/planillas/reportes'
+      preLoaderRoute: typeof DashboardPlanillasReportesRouteImport
+      parentRoute: typeof DashboardPlanillasRoute
+    }
+    '/dashboard/planillas/quinta': {
+      id: '/dashboard/planillas/quinta'
+      path: '/quinta'
+      fullPath: '/dashboard/planillas/quinta'
+      preLoaderRoute: typeof DashboardPlanillasQuintaRouteImport
+      parentRoute: typeof DashboardPlanillasRoute
+    }
+    '/dashboard/planillas/documentos': {
+      id: '/dashboard/planillas/documentos'
+      path: '/documentos'
+      fullPath: '/dashboard/planillas/documentos'
+      preLoaderRoute: typeof DashboardPlanillasDocumentosRouteImport
+      parentRoute: typeof DashboardPlanillasRoute
+    }
+    '/dashboard/planillas/consultas': {
+      id: '/dashboard/planillas/consultas'
+      path: '/consultas'
+      fullPath: '/dashboard/planillas/consultas'
+      preLoaderRoute: typeof DashboardPlanillasConsultasRouteImport
+      parentRoute: typeof DashboardPlanillasRoute
+    }
+    '/dashboard/personal/reportes': {
+      id: '/dashboard/personal/reportes'
+      path: '/reportes'
+      fullPath: '/dashboard/personal/reportes'
+      preLoaderRoute: typeof DashboardPersonalReportesRouteImport
+      parentRoute: typeof DashboardPersonalRoute
+    }
+    '/dashboard/personal/informacion': {
+      id: '/dashboard/personal/informacion'
+      path: '/informacion'
+      fullPath: '/dashboard/personal/informacion'
+      preLoaderRoute: typeof DashboardPersonalInformacionRouteImport
+      parentRoute: typeof DashboardPersonalRoute
+    }
+    '/dashboard/personal/directorio': {
+      id: '/dashboard/personal/directorio'
+      path: '/directorio'
+      fullPath: '/dashboard/personal/directorio'
+      preLoaderRoute: typeof DashboardPersonalDirectorioRouteImport
+      parentRoute: typeof DashboardPersonalRoute
+    }
+    '/dashboard/personal/consultas': {
+      id: '/dashboard/personal/consultas'
+      path: '/consultas'
+      fullPath: '/dashboard/personal/consultas'
+      preLoaderRoute: typeof DashboardPersonalConsultasRouteImport
+      parentRoute: typeof DashboardPersonalRoute
+    }
+    '/dashboard/personal/comunicacion': {
+      id: '/dashboard/personal/comunicacion'
+      path: '/comunicacion'
+      fullPath: '/dashboard/personal/comunicacion'
+      preLoaderRoute: typeof DashboardPersonalComunicacionRouteImport
+      parentRoute: typeof DashboardPersonalRoute
+    }
+    '/dashboard/personal/asignaciones': {
+      id: '/dashboard/personal/asignaciones'
+      path: '/asignaciones'
+      fullPath: '/dashboard/personal/asignaciones'
+      preLoaderRoute: typeof DashboardPersonalAsignacionesRouteImport
+      parentRoute: typeof DashboardPersonalRoute
+    }
+    '/dashboard/login/perfil': {
+      id: '/dashboard/login/perfil'
+      path: '/perfil'
+      fullPath: '/dashboard/login/perfil'
+      preLoaderRoute: typeof DashboardLoginPerfilRouteImport
+      parentRoute: typeof DashboardLoginRoute
+    }
+    '/dashboard/login/logout': {
+      id: '/dashboard/login/logout'
+      path: '/logout'
+      fullPath: '/dashboard/login/logout'
+      preLoaderRoute: typeof DashboardLoginLogoutRouteImport
+      parentRoute: typeof DashboardLoginRoute
+    }
+    '/dashboard/login/cambio-clave': {
+      id: '/dashboard/login/cambio-clave'
+      path: '/cambio-clave'
+      fullPath: '/dashboard/login/cambio-clave'
+      preLoaderRoute: typeof DashboardLoginCambioClaveRouteImport
+      parentRoute: typeof DashboardLoginRoute
+    }
+    '/dashboard/login/autenticacion': {
+      id: '/dashboard/login/autenticacion'
+      path: '/autenticacion'
+      fullPath: '/dashboard/login/autenticacion'
+      preLoaderRoute: typeof DashboardLoginAutenticacionRouteImport
+      parentRoute: typeof DashboardLoginRoute
+    }
+    '/dashboard/importaciones/reportes': {
+      id: '/dashboard/importaciones/reportes'
+      path: '/reportes'
+      fullPath: '/dashboard/importaciones/reportes'
+      preLoaderRoute: typeof DashboardImportacionesReportesRouteImport
+      parentRoute: typeof DashboardImportacionesRoute
+    }
+    '/dashboard/importaciones/pedidos': {
+      id: '/dashboard/importaciones/pedidos'
+      path: '/pedidos'
+      fullPath: '/dashboard/importaciones/pedidos'
+      preLoaderRoute: typeof DashboardImportacionesPedidosRouteImport
+      parentRoute: typeof DashboardImportacionesRoute
+    }
+    '/dashboard/importaciones/estados': {
+      id: '/dashboard/importaciones/estados'
+      path: '/estados'
+      fullPath: '/dashboard/importaciones/estados'
+      preLoaderRoute: typeof DashboardImportacionesEstadosRouteImport
+      parentRoute: typeof DashboardImportacionesRoute
+    }
+    '/dashboard/importaciones/embarques': {
+      id: '/dashboard/importaciones/embarques'
+      path: '/embarques'
+      fullPath: '/dashboard/importaciones/embarques'
+      preLoaderRoute: typeof DashboardImportacionesEmbarquesRouteImport
+      parentRoute: typeof DashboardImportacionesRoute
+    }
+    '/dashboard/importaciones/documentos': {
+      id: '/dashboard/importaciones/documentos'
+      path: '/documentos'
+      fullPath: '/dashboard/importaciones/documentos'
+      preLoaderRoute: typeof DashboardImportacionesDocumentosRouteImport
+      parentRoute: typeof DashboardImportacionesRoute
+    }
+    '/dashboard/importaciones/consultas': {
+      id: '/dashboard/importaciones/consultas'
+      path: '/consultas'
+      fullPath: '/dashboard/importaciones/consultas'
+      preLoaderRoute: typeof DashboardImportacionesConsultasRouteImport
+      parentRoute: typeof DashboardImportacionesRoute
+    }
+    '/dashboard/gerencia/reportes': {
+      id: '/dashboard/gerencia/reportes'
+      path: '/reportes'
+      fullPath: '/dashboard/gerencia/reportes'
+      preLoaderRoute: typeof DashboardGerenciaReportesRouteImport
+      parentRoute: typeof DashboardGerenciaRoute
+    }
+    '/dashboard/gerencia/proyecciones': {
+      id: '/dashboard/gerencia/proyecciones'
+      path: '/proyecciones'
+      fullPath: '/dashboard/gerencia/proyecciones'
+      preLoaderRoute: typeof DashboardGerenciaProyeccionesRouteImport
+      parentRoute: typeof DashboardGerenciaRoute
+    }
+    '/dashboard/gerencia/indicadores': {
+      id: '/dashboard/gerencia/indicadores'
+      path: '/indicadores'
+      fullPath: '/dashboard/gerencia/indicadores'
+      preLoaderRoute: typeof DashboardGerenciaIndicadoresRouteImport
+      parentRoute: typeof DashboardGerenciaRoute
+    }
+    '/dashboard/gerencia/estado-financiero': {
+      id: '/dashboard/gerencia/estado-financiero'
+      path: '/estado-financiero'
+      fullPath: '/dashboard/gerencia/estado-financiero'
+      preLoaderRoute: typeof DashboardGerenciaEstadoFinancieroRouteImport
+      parentRoute: typeof DashboardGerenciaRoute
+    }
+    '/dashboard/gerencia/dashboard': {
+      id: '/dashboard/gerencia/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard/gerencia/dashboard'
+      preLoaderRoute: typeof DashboardGerenciaDashboardRouteImport
+      parentRoute: typeof DashboardGerenciaRoute
+    }
+    '/dashboard/gerencia/consultas': {
+      id: '/dashboard/gerencia/consultas'
+      path: '/consultas'
+      fullPath: '/dashboard/gerencia/consultas'
+      preLoaderRoute: typeof DashboardGerenciaConsultasRouteImport
+      parentRoute: typeof DashboardGerenciaRoute
+    }
+    '/dashboard/crm/visitas': {
+      id: '/dashboard/crm/visitas'
+      path: '/visitas'
+      fullPath: '/dashboard/crm/visitas'
+      preLoaderRoute: typeof DashboardCrmVisitasRouteImport
+      parentRoute: typeof DashboardCrmRoute
+    }
+    '/dashboard/crm/reportes': {
+      id: '/dashboard/crm/reportes'
+      path: '/reportes'
+      fullPath: '/dashboard/crm/reportes'
+      preLoaderRoute: typeof DashboardCrmReportesRouteImport
+      parentRoute: typeof DashboardCrmRoute
+    }
+    '/dashboard/crm/oportunidades': {
+      id: '/dashboard/crm/oportunidades'
+      path: '/oportunidades'
+      fullPath: '/dashboard/crm/oportunidades'
+      preLoaderRoute: typeof DashboardCrmOportunidadesRouteImport
+      parentRoute: typeof DashboardCrmRoute
+    }
+    '/dashboard/crm/cotizaciones': {
+      id: '/dashboard/crm/cotizaciones'
+      path: '/cotizaciones'
+      fullPath: '/dashboard/crm/cotizaciones'
+      preLoaderRoute: typeof DashboardCrmCotizacionesRouteImport
+      parentRoute: typeof DashboardCrmRoute
+    }
+    '/dashboard/crm/consultas': {
+      id: '/dashboard/crm/consultas'
+      path: '/consultas'
+      fullPath: '/dashboard/crm/consultas'
+      preLoaderRoute: typeof DashboardCrmConsultasRouteImport
+      parentRoute: typeof DashboardCrmRoute
+    }
+    '/dashboard/crm/clientes': {
+      id: '/dashboard/crm/clientes'
+      path: '/clientes'
+      fullPath: '/dashboard/crm/clientes'
+      preLoaderRoute: typeof DashboardCrmClientesRouteImport
+      parentRoute: typeof DashboardCrmRoute
+    }
+    '/dashboard/creditos/reportes': {
+      id: '/dashboard/creditos/reportes'
+      path: '/reportes'
+      fullPath: '/dashboard/creditos/reportes'
+      preLoaderRoute: typeof DashboardCreditosReportesRouteImport
+      parentRoute: typeof DashboardCreditosRoute
+    }
+    '/dashboard/creditos/permisos': {
+      id: '/dashboard/creditos/permisos'
+      path: '/permisos'
+      fullPath: '/dashboard/creditos/permisos'
+      preLoaderRoute: typeof DashboardCreditosPermisosRouteImport
+      parentRoute: typeof DashboardCreditosRoute
+    }
+    '/dashboard/creditos/letras': {
+      id: '/dashboard/creditos/letras'
+      path: '/letras'
+      fullPath: '/dashboard/creditos/letras'
+      preLoaderRoute: typeof DashboardCreditosLetrasRouteImport
+      parentRoute: typeof DashboardCreditosRoute
+    }
+    '/dashboard/creditos/consultas': {
+      id: '/dashboard/creditos/consultas'
+      path: '/consultas'
+      fullPath: '/dashboard/creditos/consultas'
+      preLoaderRoute: typeof DashboardCreditosConsultasRouteImport
+      parentRoute: typeof DashboardCreditosRoute
+    }
+    '/dashboard/creditos/aprobaciones': {
+      id: '/dashboard/creditos/aprobaciones'
+      path: '/aprobaciones'
+      fullPath: '/dashboard/creditos/aprobaciones'
+      preLoaderRoute: typeof DashboardCreditosAprobacionesRouteImport
+      parentRoute: typeof DashboardCreditosRoute
+    }
+    '/dashboard/creditos/anticipos': {
+      id: '/dashboard/creditos/anticipos'
+      path: '/anticipos'
+      fullPath: '/dashboard/creditos/anticipos'
+      preLoaderRoute: typeof DashboardCreditosAnticiposRouteImport
+      parentRoute: typeof DashboardCreditosRoute
+    }
+    '/dashboard/costos/reportes': {
+      id: '/dashboard/costos/reportes'
+      path: '/reportes'
+      fullPath: '/dashboard/costos/reportes'
+      preLoaderRoute: typeof DashboardCostosReportesRouteImport
+      parentRoute: typeof DashboardCostosRoute
+    }
+    '/dashboard/costos/procesos': {
+      id: '/dashboard/costos/procesos'
+      path: '/procesos'
+      fullPath: '/dashboard/costos/procesos'
+      preLoaderRoute: typeof DashboardCostosProcesosRouteImport
+      parentRoute: typeof DashboardCostosRoute
+    }
+    '/dashboard/costos/importaciones': {
+      id: '/dashboard/costos/importaciones'
+      path: '/importaciones'
+      fullPath: '/dashboard/costos/importaciones'
+      preLoaderRoute: typeof DashboardCostosImportacionesRouteImport
+      parentRoute: typeof DashboardCostosRoute
+    }
+    '/dashboard/costos/consultas': {
+      id: '/dashboard/costos/consultas'
+      path: '/consultas'
+      fullPath: '/dashboard/costos/consultas'
+      preLoaderRoute: typeof DashboardCostosConsultasRouteImport
+      parentRoute: typeof DashboardCostosRoute
+    }
+    '/dashboard/costos/consolidados': {
+      id: '/dashboard/costos/consolidados'
+      path: '/consolidados'
+      fullPath: '/dashboard/costos/consolidados'
+      preLoaderRoute: typeof DashboardCostosConsolidadosRouteImport
+      parentRoute: typeof DashboardCostosRoute
+    }
+    '/dashboard/contabilidad/tesoreria': {
+      id: '/dashboard/contabilidad/tesoreria'
+      path: '/tesoreria'
+      fullPath: '/dashboard/contabilidad/tesoreria'
+      preLoaderRoute: typeof DashboardContabilidadTesoreriaRouteImport
+      parentRoute: typeof DashboardContabilidadRoute
+    }
+    '/dashboard/contabilidad/reportes': {
+      id: '/dashboard/contabilidad/reportes'
+      path: '/reportes'
+      fullPath: '/dashboard/contabilidad/reportes'
+      preLoaderRoute: typeof DashboardContabilidadReportesRouteImport
+      parentRoute: typeof DashboardContabilidadRoute
+    }
+    '/dashboard/contabilidad/provisional': {
+      id: '/dashboard/contabilidad/provisional'
+      path: '/provisional'
+      fullPath: '/dashboard/contabilidad/provisional'
+      preLoaderRoute: typeof DashboardContabilidadProvisionalRouteImport
+      parentRoute: typeof DashboardContabilidadRoute
+    }
+    '/dashboard/contabilidad/flujo-caja': {
+      id: '/dashboard/contabilidad/flujo-caja'
+      path: '/flujo-caja'
+      fullPath: '/dashboard/contabilidad/flujo-caja'
+      preLoaderRoute: typeof DashboardContabilidadFlujoCajaRouteImport
+      parentRoute: typeof DashboardContabilidadRoute
+    }
+    '/dashboard/contabilidad/diarios': {
+      id: '/dashboard/contabilidad/diarios'
+      path: '/diarios'
+      fullPath: '/dashboard/contabilidad/diarios'
+      preLoaderRoute: typeof DashboardContabilidadDiariosRouteImport
+      parentRoute: typeof DashboardContabilidadRoute
+    }
+    '/dashboard/contabilidad/consultas': {
+      id: '/dashboard/contabilidad/consultas'
+      path: '/consultas'
+      fullPath: '/dashboard/contabilidad/consultas'
+      preLoaderRoute: typeof DashboardContabilidadConsultasRouteImport
+      parentRoute: typeof DashboardContabilidadRoute
+    }
+    '/dashboard/compras/viaticos': {
+      id: '/dashboard/compras/viaticos'
+      path: '/viaticos'
+      fullPath: '/dashboard/compras/viaticos'
+      preLoaderRoute: typeof DashboardComprasViaticosRouteImport
+      parentRoute: typeof DashboardComprasRoute
+    }
+    '/dashboard/compras/solicitudes': {
+      id: '/dashboard/compras/solicitudes'
+      path: '/solicitudes'
+      fullPath: '/dashboard/compras/solicitudes'
+      preLoaderRoute: typeof DashboardComprasSolicitudesRouteImport
+      parentRoute: typeof DashboardComprasRoute
+    }
+    '/dashboard/compras/reportes': {
+      id: '/dashboard/compras/reportes'
+      path: '/reportes'
+      fullPath: '/dashboard/compras/reportes'
+      preLoaderRoute: typeof DashboardComprasReportesRouteImport
+      parentRoute: typeof DashboardComprasRoute
+    }
+    '/dashboard/compras/ordenes-compra': {
+      id: '/dashboard/compras/ordenes-compra'
+      path: '/ordenes-compra'
+      fullPath: '/dashboard/compras/ordenes-compra'
+      preLoaderRoute: typeof DashboardComprasOrdenesCompraRouteImport
+      parentRoute: typeof DashboardComprasRoute
+    }
+    '/dashboard/compras/cotizaciones': {
+      id: '/dashboard/compras/cotizaciones'
+      path: '/cotizaciones'
+      fullPath: '/dashboard/compras/cotizaciones'
+      preLoaderRoute: typeof DashboardComprasCotizacionesRouteImport
+      parentRoute: typeof DashboardComprasRoute
+    }
+    '/dashboard/compras/consultas': {
+      id: '/dashboard/compras/consultas'
+      path: '/consultas'
+      fullPath: '/dashboard/compras/consultas'
+      preLoaderRoute: typeof DashboardComprasConsultasRouteImport
+      parentRoute: typeof DashboardComprasRoute
+    }
+    '/dashboard/buscadores/reportes-busqueda': {
+      id: '/dashboard/buscadores/reportes-busqueda'
+      path: '/reportes-busqueda'
+      fullPath: '/dashboard/buscadores/reportes-busqueda'
+      preLoaderRoute: typeof DashboardBuscadoresReportesBusquedaRouteImport
+      parentRoute: typeof DashboardBuscadoresRoute
+    }
+    '/dashboard/buscadores/productos': {
+      id: '/dashboard/buscadores/productos'
+      path: '/productos'
+      fullPath: '/dashboard/buscadores/productos'
+      preLoaderRoute: typeof DashboardBuscadoresProductosRouteImport
+      parentRoute: typeof DashboardBuscadoresRoute
+    }
+    '/dashboard/buscadores/movimientos': {
+      id: '/dashboard/buscadores/movimientos'
+      path: '/movimientos'
+      fullPath: '/dashboard/buscadores/movimientos'
+      preLoaderRoute: typeof DashboardBuscadoresMovimientosRouteImport
+      parentRoute: typeof DashboardBuscadoresRoute
+    }
+    '/dashboard/buscadores/filtros-avanzados': {
+      id: '/dashboard/buscadores/filtros-avanzados'
+      path: '/filtros-avanzados'
+      fullPath: '/dashboard/buscadores/filtros-avanzados'
+      preLoaderRoute: typeof DashboardBuscadoresFiltrosAvanzadosRouteImport
+      parentRoute: typeof DashboardBuscadoresRoute
+    }
+    '/dashboard/buscadores/documentos': {
+      id: '/dashboard/buscadores/documentos'
+      path: '/documentos'
+      fullPath: '/dashboard/buscadores/documentos'
+      preLoaderRoute: typeof DashboardBuscadoresDocumentosRouteImport
+      parentRoute: typeof DashboardBuscadoresRoute
+    }
+    '/dashboard/buscadores/componentes': {
+      id: '/dashboard/buscadores/componentes'
+      path: '/componentes'
+      fullPath: '/dashboard/buscadores/componentes'
+      preLoaderRoute: typeof DashboardBuscadoresComponentesRouteImport
+      parentRoute: typeof DashboardBuscadoresRoute
+    }
+    '/dashboard/buscadores/clientes': {
+      id: '/dashboard/buscadores/clientes'
+      path: '/clientes'
+      fullPath: '/dashboard/buscadores/clientes'
+      preLoaderRoute: typeof DashboardBuscadoresClientesRouteImport
+      parentRoute: typeof DashboardBuscadoresRoute
+    }
+    '/dashboard/b2m/reportes': {
+      id: '/dashboard/b2m/reportes'
+      path: '/reportes'
+      fullPath: '/dashboard/b2m/reportes'
+      preLoaderRoute: typeof DashboardB2mReportesRouteImport
+      parentRoute: typeof DashboardB2mRoute
+    }
+    '/dashboard/b2m/proveedores': {
+      id: '/dashboard/b2m/proveedores'
+      path: '/proveedores'
+      fullPath: '/dashboard/b2m/proveedores'
+      preLoaderRoute: typeof DashboardB2mProveedoresRouteImport
+      parentRoute: typeof DashboardB2mRoute
+    }
+    '/dashboard/b2m/pedidos': {
+      id: '/dashboard/b2m/pedidos'
+      path: '/pedidos'
+      fullPath: '/dashboard/b2m/pedidos'
+      preLoaderRoute: typeof DashboardB2mPedidosRouteImport
+      parentRoute: typeof DashboardB2mRoute
+    }
+    '/dashboard/b2m/catalogo': {
+      id: '/dashboard/b2m/catalogo'
+      path: '/catalogo'
+      fullPath: '/dashboard/b2m/catalogo'
+      preLoaderRoute: typeof DashboardB2mCatalogoRouteImport
+      parentRoute: typeof DashboardB2mRoute
+    }
+    '/dashboard/ayuda/soporte': {
+      id: '/dashboard/ayuda/soporte'
+      path: '/soporte'
+      fullPath: '/dashboard/ayuda/soporte'
+      preLoaderRoute: typeof DashboardAyudaSoporteRouteImport
+      parentRoute: typeof DashboardAyudaRoute
+    }
+    '/dashboard/ayuda/manual': {
+      id: '/dashboard/ayuda/manual'
+      path: '/manual'
+      fullPath: '/dashboard/ayuda/manual'
+      preLoaderRoute: typeof DashboardAyudaManualRouteImport
+      parentRoute: typeof DashboardAyudaRoute
+    }
+    '/dashboard/ayuda/contacto': {
+      id: '/dashboard/ayuda/contacto'
+      path: '/contacto'
+      fullPath: '/dashboard/ayuda/contacto'
+      preLoaderRoute: typeof DashboardAyudaContactoRouteImport
+      parentRoute: typeof DashboardAyudaRoute
+    }
+    '/dashboard/ayuda/acerca': {
+      id: '/dashboard/ayuda/acerca'
+      path: '/acerca'
+      fullPath: '/dashboard/ayuda/acerca'
+      preLoaderRoute: typeof DashboardAyudaAcercaRouteImport
+      parentRoute: typeof DashboardAyudaRoute
+    }
+    '/dashboard/almacen/ubicaciones': {
+      id: '/dashboard/almacen/ubicaciones'
+      path: '/ubicaciones'
+      fullPath: '/dashboard/almacen/ubicaciones'
+      preLoaderRoute: typeof DashboardAlmacenUbicacionesRouteImport
+      parentRoute: typeof DashboardAlmacenRoute
+    }
+    '/dashboard/almacen/reportes': {
+      id: '/dashboard/almacen/reportes'
+      path: '/reportes'
+      fullPath: '/dashboard/almacen/reportes'
+      preLoaderRoute: typeof DashboardAlmacenReportesRouteImport
+      parentRoute: typeof DashboardAlmacenRoute
+    }
+    '/dashboard/almacen/movimientos': {
+      id: '/dashboard/almacen/movimientos'
+      path: '/movimientos'
+      fullPath: '/dashboard/almacen/movimientos'
+      preLoaderRoute: typeof DashboardAlmacenMovimientosRouteImport
+      parentRoute: typeof DashboardAlmacenRoute
+    }
+    '/dashboard/almacen/minimos-maximos': {
+      id: '/dashboard/almacen/minimos-maximos'
+      path: '/minimos-maximos'
+      fullPath: '/dashboard/almacen/minimos-maximos'
+      preLoaderRoute: typeof DashboardAlmacenMinimosMaximosRouteImport
+      parentRoute: typeof DashboardAlmacenRoute
+    }
+    '/dashboard/almacen/despacho': {
+      id: '/dashboard/almacen/despacho'
+      path: '/despacho'
+      fullPath: '/dashboard/almacen/despacho'
+      preLoaderRoute: typeof DashboardAlmacenDespachoRouteImport
+      parentRoute: typeof DashboardAlmacenRoute
+    }
+    '/dashboard/almacen/consultas': {
+      id: '/dashboard/almacen/consultas'
+      path: '/consultas'
+      fullPath: '/dashboard/almacen/consultas'
+      preLoaderRoute: typeof DashboardAlmacenConsultasRouteImport
+      parentRoute: typeof DashboardAlmacenRoute
+    }
+    '/dashboard/administracion/usuarios': {
+      id: '/dashboard/administracion/usuarios'
+      path: '/usuarios'
+      fullPath: '/dashboard/administracion/usuarios'
+      preLoaderRoute: typeof DashboardAdministracionUsuariosRouteImport
+      parentRoute: typeof DashboardAdministracionRoute
+    }
+    '/dashboard/administracion/sesiones': {
+      id: '/dashboard/administracion/sesiones'
+      path: '/sesiones'
+      fullPath: '/dashboard/administracion/sesiones'
+      preLoaderRoute: typeof DashboardAdministracionSesionesRouteImport
+      parentRoute: typeof DashboardAdministracionRoute
+    }
+    '/dashboard/administracion/reportes': {
+      id: '/dashboard/administracion/reportes'
+      path: '/reportes'
+      fullPath: '/dashboard/administracion/reportes'
+      preLoaderRoute: typeof DashboardAdministracionReportesRouteImport
+      parentRoute: typeof DashboardAdministracionRoute
+    }
+    '/dashboard/administracion/perfiles': {
+      id: '/dashboard/administracion/perfiles'
+      path: '/perfiles'
+      fullPath: '/dashboard/administracion/perfiles'
+      preLoaderRoute: typeof DashboardAdministracionPerfilesRouteImport
+      parentRoute: typeof DashboardAdministracionRoute
+    }
+    '/dashboard/administracion/encuestas': {
+      id: '/dashboard/administracion/encuestas'
+      path: '/encuestas'
+      fullPath: '/dashboard/administracion/encuestas'
+      preLoaderRoute: typeof DashboardAdministracionEncuestasRouteImport
+      parentRoute: typeof DashboardAdministracionRoute
+    }
+    '/dashboard/administracion/configuracion': {
+      id: '/dashboard/administracion/configuracion'
+      path: '/configuracion'
+      fullPath: '/dashboard/administracion/configuracion'
+      preLoaderRoute: typeof DashboardAdministracionConfiguracionRouteImport
+      parentRoute: typeof DashboardAdministracionRoute
+    }
+    '/dashboard/activosfijos/reportes': {
+      id: '/dashboard/activosfijos/reportes'
+      path: '/activosfijos/reportes'
+      fullPath: '/dashboard/activosfijos/reportes'
+      preLoaderRoute: typeof DashboardActivosfijosReportesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/activosfijos/depreciacion': {
+      id: '/dashboard/activosfijos/depreciacion'
+      path: '/activosfijos/depreciacion'
+      fullPath: '/dashboard/activosfijos/depreciacion'
+      preLoaderRoute: typeof DashboardActivosfijosDepreciacionRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/activosfijos/consultas': {
+      id: '/dashboard/activosfijos/consultas'
+      path: '/activosfijos/consultas'
+      fullPath: '/dashboard/activosfijos/consultas'
+      preLoaderRoute: typeof DashboardActivosfijosConsultasRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/activosfijos/compra': {
+      id: '/dashboard/activosfijos/compra'
+      path: '/activosfijos/compra'
+      fullPath: '/dashboard/activosfijos/compra'
+      preLoaderRoute: typeof DashboardActivosfijosCompraRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
+interface DashboardAdministracionRouteChildren {
+  DashboardAdministracionConfiguracionRoute: typeof DashboardAdministracionConfiguracionRoute
+  DashboardAdministracionEncuestasRoute: typeof DashboardAdministracionEncuestasRoute
+  DashboardAdministracionPerfilesRoute: typeof DashboardAdministracionPerfilesRoute
+  DashboardAdministracionReportesRoute: typeof DashboardAdministracionReportesRoute
+  DashboardAdministracionSesionesRoute: typeof DashboardAdministracionSesionesRoute
+  DashboardAdministracionUsuariosRoute: typeof DashboardAdministracionUsuariosRoute
+}
+
+const DashboardAdministracionRouteChildren: DashboardAdministracionRouteChildren =
+  {
+    DashboardAdministracionConfiguracionRoute:
+      DashboardAdministracionConfiguracionRoute,
+    DashboardAdministracionEncuestasRoute:
+      DashboardAdministracionEncuestasRoute,
+    DashboardAdministracionPerfilesRoute: DashboardAdministracionPerfilesRoute,
+    DashboardAdministracionReportesRoute: DashboardAdministracionReportesRoute,
+    DashboardAdministracionSesionesRoute: DashboardAdministracionSesionesRoute,
+    DashboardAdministracionUsuariosRoute: DashboardAdministracionUsuariosRoute,
+  }
+
+const DashboardAdministracionRouteWithChildren =
+  DashboardAdministracionRoute._addFileChildren(
+    DashboardAdministracionRouteChildren,
+  )
+
+interface DashboardAlmacenRouteChildren {
+  DashboardAlmacenConsultasRoute: typeof DashboardAlmacenConsultasRoute
+  DashboardAlmacenDespachoRoute: typeof DashboardAlmacenDespachoRoute
+  DashboardAlmacenMinimosMaximosRoute: typeof DashboardAlmacenMinimosMaximosRoute
+  DashboardAlmacenMovimientosRoute: typeof DashboardAlmacenMovimientosRoute
+  DashboardAlmacenReportesRoute: typeof DashboardAlmacenReportesRoute
+  DashboardAlmacenUbicacionesRoute: typeof DashboardAlmacenUbicacionesRoute
+}
+
+const DashboardAlmacenRouteChildren: DashboardAlmacenRouteChildren = {
+  DashboardAlmacenConsultasRoute: DashboardAlmacenConsultasRoute,
+  DashboardAlmacenDespachoRoute: DashboardAlmacenDespachoRoute,
+  DashboardAlmacenMinimosMaximosRoute: DashboardAlmacenMinimosMaximosRoute,
+  DashboardAlmacenMovimientosRoute: DashboardAlmacenMovimientosRoute,
+  DashboardAlmacenReportesRoute: DashboardAlmacenReportesRoute,
+  DashboardAlmacenUbicacionesRoute: DashboardAlmacenUbicacionesRoute,
+}
+
+const DashboardAlmacenRouteWithChildren =
+  DashboardAlmacenRoute._addFileChildren(DashboardAlmacenRouteChildren)
+
+interface DashboardAyudaRouteChildren {
+  DashboardAyudaAcercaRoute: typeof DashboardAyudaAcercaRoute
+  DashboardAyudaContactoRoute: typeof DashboardAyudaContactoRoute
+  DashboardAyudaManualRoute: typeof DashboardAyudaManualRoute
+  DashboardAyudaSoporteRoute: typeof DashboardAyudaSoporteRoute
+}
+
+const DashboardAyudaRouteChildren: DashboardAyudaRouteChildren = {
+  DashboardAyudaAcercaRoute: DashboardAyudaAcercaRoute,
+  DashboardAyudaContactoRoute: DashboardAyudaContactoRoute,
+  DashboardAyudaManualRoute: DashboardAyudaManualRoute,
+  DashboardAyudaSoporteRoute: DashboardAyudaSoporteRoute,
+}
+
+const DashboardAyudaRouteWithChildren = DashboardAyudaRoute._addFileChildren(
+  DashboardAyudaRouteChildren,
+)
+
+interface DashboardB2mRouteChildren {
+  DashboardB2mCatalogoRoute: typeof DashboardB2mCatalogoRoute
+  DashboardB2mPedidosRoute: typeof DashboardB2mPedidosRoute
+  DashboardB2mProveedoresRoute: typeof DashboardB2mProveedoresRoute
+  DashboardB2mReportesRoute: typeof DashboardB2mReportesRoute
+}
+
+const DashboardB2mRouteChildren: DashboardB2mRouteChildren = {
+  DashboardB2mCatalogoRoute: DashboardB2mCatalogoRoute,
+  DashboardB2mPedidosRoute: DashboardB2mPedidosRoute,
+  DashboardB2mProveedoresRoute: DashboardB2mProveedoresRoute,
+  DashboardB2mReportesRoute: DashboardB2mReportesRoute,
+}
+
+const DashboardB2mRouteWithChildren = DashboardB2mRoute._addFileChildren(
+  DashboardB2mRouteChildren,
+)
+
+interface DashboardBuscadoresRouteChildren {
+  DashboardBuscadoresClientesRoute: typeof DashboardBuscadoresClientesRoute
+  DashboardBuscadoresComponentesRoute: typeof DashboardBuscadoresComponentesRoute
+  DashboardBuscadoresDocumentosRoute: typeof DashboardBuscadoresDocumentosRoute
+  DashboardBuscadoresFiltrosAvanzadosRoute: typeof DashboardBuscadoresFiltrosAvanzadosRoute
+  DashboardBuscadoresMovimientosRoute: typeof DashboardBuscadoresMovimientosRoute
+  DashboardBuscadoresProductosRoute: typeof DashboardBuscadoresProductosRoute
+  DashboardBuscadoresReportesBusquedaRoute: typeof DashboardBuscadoresReportesBusquedaRoute
+}
+
+const DashboardBuscadoresRouteChildren: DashboardBuscadoresRouteChildren = {
+  DashboardBuscadoresClientesRoute: DashboardBuscadoresClientesRoute,
+  DashboardBuscadoresComponentesRoute: DashboardBuscadoresComponentesRoute,
+  DashboardBuscadoresDocumentosRoute: DashboardBuscadoresDocumentosRoute,
+  DashboardBuscadoresFiltrosAvanzadosRoute:
+    DashboardBuscadoresFiltrosAvanzadosRoute,
+  DashboardBuscadoresMovimientosRoute: DashboardBuscadoresMovimientosRoute,
+  DashboardBuscadoresProductosRoute: DashboardBuscadoresProductosRoute,
+  DashboardBuscadoresReportesBusquedaRoute:
+    DashboardBuscadoresReportesBusquedaRoute,
+}
+
+const DashboardBuscadoresRouteWithChildren =
+  DashboardBuscadoresRoute._addFileChildren(DashboardBuscadoresRouteChildren)
+
+interface DashboardComprasRouteChildren {
+  DashboardComprasConsultasRoute: typeof DashboardComprasConsultasRoute
+  DashboardComprasCotizacionesRoute: typeof DashboardComprasCotizacionesRoute
+  DashboardComprasOrdenesCompraRoute: typeof DashboardComprasOrdenesCompraRoute
+  DashboardComprasReportesRoute: typeof DashboardComprasReportesRoute
+  DashboardComprasSolicitudesRoute: typeof DashboardComprasSolicitudesRoute
+  DashboardComprasViaticosRoute: typeof DashboardComprasViaticosRoute
+}
+
+const DashboardComprasRouteChildren: DashboardComprasRouteChildren = {
+  DashboardComprasConsultasRoute: DashboardComprasConsultasRoute,
+  DashboardComprasCotizacionesRoute: DashboardComprasCotizacionesRoute,
+  DashboardComprasOrdenesCompraRoute: DashboardComprasOrdenesCompraRoute,
+  DashboardComprasReportesRoute: DashboardComprasReportesRoute,
+  DashboardComprasSolicitudesRoute: DashboardComprasSolicitudesRoute,
+  DashboardComprasViaticosRoute: DashboardComprasViaticosRoute,
+}
+
+const DashboardComprasRouteWithChildren =
+  DashboardComprasRoute._addFileChildren(DashboardComprasRouteChildren)
+
+interface DashboardContabilidadRouteChildren {
+  DashboardContabilidadConsultasRoute: typeof DashboardContabilidadConsultasRoute
+  DashboardContabilidadDiariosRoute: typeof DashboardContabilidadDiariosRoute
+  DashboardContabilidadFlujoCajaRoute: typeof DashboardContabilidadFlujoCajaRoute
+  DashboardContabilidadProvisionalRoute: typeof DashboardContabilidadProvisionalRoute
+  DashboardContabilidadReportesRoute: typeof DashboardContabilidadReportesRoute
+  DashboardContabilidadTesoreriaRoute: typeof DashboardContabilidadTesoreriaRoute
+}
+
+const DashboardContabilidadRouteChildren: DashboardContabilidadRouteChildren = {
+  DashboardContabilidadConsultasRoute: DashboardContabilidadConsultasRoute,
+  DashboardContabilidadDiariosRoute: DashboardContabilidadDiariosRoute,
+  DashboardContabilidadFlujoCajaRoute: DashboardContabilidadFlujoCajaRoute,
+  DashboardContabilidadProvisionalRoute: DashboardContabilidadProvisionalRoute,
+  DashboardContabilidadReportesRoute: DashboardContabilidadReportesRoute,
+  DashboardContabilidadTesoreriaRoute: DashboardContabilidadTesoreriaRoute,
+}
+
+const DashboardContabilidadRouteWithChildren =
+  DashboardContabilidadRoute._addFileChildren(
+    DashboardContabilidadRouteChildren,
+  )
+
+interface DashboardCostosRouteChildren {
+  DashboardCostosConsolidadosRoute: typeof DashboardCostosConsolidadosRoute
+  DashboardCostosConsultasRoute: typeof DashboardCostosConsultasRoute
+  DashboardCostosImportacionesRoute: typeof DashboardCostosImportacionesRoute
+  DashboardCostosProcesosRoute: typeof DashboardCostosProcesosRoute
+  DashboardCostosReportesRoute: typeof DashboardCostosReportesRoute
+}
+
+const DashboardCostosRouteChildren: DashboardCostosRouteChildren = {
+  DashboardCostosConsolidadosRoute: DashboardCostosConsolidadosRoute,
+  DashboardCostosConsultasRoute: DashboardCostosConsultasRoute,
+  DashboardCostosImportacionesRoute: DashboardCostosImportacionesRoute,
+  DashboardCostosProcesosRoute: DashboardCostosProcesosRoute,
+  DashboardCostosReportesRoute: DashboardCostosReportesRoute,
+}
+
+const DashboardCostosRouteWithChildren = DashboardCostosRoute._addFileChildren(
+  DashboardCostosRouteChildren,
+)
+
+interface DashboardCreditosRouteChildren {
+  DashboardCreditosAnticiposRoute: typeof DashboardCreditosAnticiposRoute
+  DashboardCreditosAprobacionesRoute: typeof DashboardCreditosAprobacionesRoute
+  DashboardCreditosConsultasRoute: typeof DashboardCreditosConsultasRoute
+  DashboardCreditosLetrasRoute: typeof DashboardCreditosLetrasRoute
+  DashboardCreditosPermisosRoute: typeof DashboardCreditosPermisosRoute
+  DashboardCreditosReportesRoute: typeof DashboardCreditosReportesRoute
+}
+
+const DashboardCreditosRouteChildren: DashboardCreditosRouteChildren = {
+  DashboardCreditosAnticiposRoute: DashboardCreditosAnticiposRoute,
+  DashboardCreditosAprobacionesRoute: DashboardCreditosAprobacionesRoute,
+  DashboardCreditosConsultasRoute: DashboardCreditosConsultasRoute,
+  DashboardCreditosLetrasRoute: DashboardCreditosLetrasRoute,
+  DashboardCreditosPermisosRoute: DashboardCreditosPermisosRoute,
+  DashboardCreditosReportesRoute: DashboardCreditosReportesRoute,
+}
+
+const DashboardCreditosRouteWithChildren =
+  DashboardCreditosRoute._addFileChildren(DashboardCreditosRouteChildren)
+
+interface DashboardCrmRouteChildren {
+  DashboardCrmClientesRoute: typeof DashboardCrmClientesRoute
+  DashboardCrmConsultasRoute: typeof DashboardCrmConsultasRoute
+  DashboardCrmCotizacionesRoute: typeof DashboardCrmCotizacionesRoute
+  DashboardCrmOportunidadesRoute: typeof DashboardCrmOportunidadesRoute
+  DashboardCrmReportesRoute: typeof DashboardCrmReportesRoute
+  DashboardCrmVisitasRoute: typeof DashboardCrmVisitasRoute
+}
+
+const DashboardCrmRouteChildren: DashboardCrmRouteChildren = {
+  DashboardCrmClientesRoute: DashboardCrmClientesRoute,
+  DashboardCrmConsultasRoute: DashboardCrmConsultasRoute,
+  DashboardCrmCotizacionesRoute: DashboardCrmCotizacionesRoute,
+  DashboardCrmOportunidadesRoute: DashboardCrmOportunidadesRoute,
+  DashboardCrmReportesRoute: DashboardCrmReportesRoute,
+  DashboardCrmVisitasRoute: DashboardCrmVisitasRoute,
+}
+
+const DashboardCrmRouteWithChildren = DashboardCrmRoute._addFileChildren(
+  DashboardCrmRouteChildren,
+)
+
+interface DashboardGerenciaRouteChildren {
+  DashboardGerenciaConsultasRoute: typeof DashboardGerenciaConsultasRoute
+  DashboardGerenciaDashboardRoute: typeof DashboardGerenciaDashboardRoute
+  DashboardGerenciaEstadoFinancieroRoute: typeof DashboardGerenciaEstadoFinancieroRoute
+  DashboardGerenciaIndicadoresRoute: typeof DashboardGerenciaIndicadoresRoute
+  DashboardGerenciaProyeccionesRoute: typeof DashboardGerenciaProyeccionesRoute
+  DashboardGerenciaReportesRoute: typeof DashboardGerenciaReportesRoute
+}
+
+const DashboardGerenciaRouteChildren: DashboardGerenciaRouteChildren = {
+  DashboardGerenciaConsultasRoute: DashboardGerenciaConsultasRoute,
+  DashboardGerenciaDashboardRoute: DashboardGerenciaDashboardRoute,
+  DashboardGerenciaEstadoFinancieroRoute:
+    DashboardGerenciaEstadoFinancieroRoute,
+  DashboardGerenciaIndicadoresRoute: DashboardGerenciaIndicadoresRoute,
+  DashboardGerenciaProyeccionesRoute: DashboardGerenciaProyeccionesRoute,
+  DashboardGerenciaReportesRoute: DashboardGerenciaReportesRoute,
+}
+
+const DashboardGerenciaRouteWithChildren =
+  DashboardGerenciaRoute._addFileChildren(DashboardGerenciaRouteChildren)
+
+interface DashboardImportacionesRouteChildren {
+  DashboardImportacionesConsultasRoute: typeof DashboardImportacionesConsultasRoute
+  DashboardImportacionesDocumentosRoute: typeof DashboardImportacionesDocumentosRoute
+  DashboardImportacionesEmbarquesRoute: typeof DashboardImportacionesEmbarquesRoute
+  DashboardImportacionesEstadosRoute: typeof DashboardImportacionesEstadosRoute
+  DashboardImportacionesPedidosRoute: typeof DashboardImportacionesPedidosRoute
+  DashboardImportacionesReportesRoute: typeof DashboardImportacionesReportesRoute
+}
+
+const DashboardImportacionesRouteChildren: DashboardImportacionesRouteChildren =
+  {
+    DashboardImportacionesConsultasRoute: DashboardImportacionesConsultasRoute,
+    DashboardImportacionesDocumentosRoute:
+      DashboardImportacionesDocumentosRoute,
+    DashboardImportacionesEmbarquesRoute: DashboardImportacionesEmbarquesRoute,
+    DashboardImportacionesEstadosRoute: DashboardImportacionesEstadosRoute,
+    DashboardImportacionesPedidosRoute: DashboardImportacionesPedidosRoute,
+    DashboardImportacionesReportesRoute: DashboardImportacionesReportesRoute,
+  }
+
+const DashboardImportacionesRouteWithChildren =
+  DashboardImportacionesRoute._addFileChildren(
+    DashboardImportacionesRouteChildren,
+  )
+
+interface DashboardLoginRouteChildren {
+  DashboardLoginAutenticacionRoute: typeof DashboardLoginAutenticacionRoute
+  DashboardLoginCambioClaveRoute: typeof DashboardLoginCambioClaveRoute
+  DashboardLoginLogoutRoute: typeof DashboardLoginLogoutRoute
+  DashboardLoginPerfilRoute: typeof DashboardLoginPerfilRoute
+}
+
+const DashboardLoginRouteChildren: DashboardLoginRouteChildren = {
+  DashboardLoginAutenticacionRoute: DashboardLoginAutenticacionRoute,
+  DashboardLoginCambioClaveRoute: DashboardLoginCambioClaveRoute,
+  DashboardLoginLogoutRoute: DashboardLoginLogoutRoute,
+  DashboardLoginPerfilRoute: DashboardLoginPerfilRoute,
+}
+
+const DashboardLoginRouteWithChildren = DashboardLoginRoute._addFileChildren(
+  DashboardLoginRouteChildren,
+)
+
+interface DashboardPersonalRouteChildren {
+  DashboardPersonalAsignacionesRoute: typeof DashboardPersonalAsignacionesRoute
+  DashboardPersonalComunicacionRoute: typeof DashboardPersonalComunicacionRoute
+  DashboardPersonalConsultasRoute: typeof DashboardPersonalConsultasRoute
+  DashboardPersonalDirectorioRoute: typeof DashboardPersonalDirectorioRoute
+  DashboardPersonalInformacionRoute: typeof DashboardPersonalInformacionRoute
+  DashboardPersonalReportesRoute: typeof DashboardPersonalReportesRoute
+}
+
+const DashboardPersonalRouteChildren: DashboardPersonalRouteChildren = {
+  DashboardPersonalAsignacionesRoute: DashboardPersonalAsignacionesRoute,
+  DashboardPersonalComunicacionRoute: DashboardPersonalComunicacionRoute,
+  DashboardPersonalConsultasRoute: DashboardPersonalConsultasRoute,
+  DashboardPersonalDirectorioRoute: DashboardPersonalDirectorioRoute,
+  DashboardPersonalInformacionRoute: DashboardPersonalInformacionRoute,
+  DashboardPersonalReportesRoute: DashboardPersonalReportesRoute,
+}
+
+const DashboardPersonalRouteWithChildren =
+  DashboardPersonalRoute._addFileChildren(DashboardPersonalRouteChildren)
+
+interface DashboardPlanillasRouteChildren {
+  DashboardPlanillasConsultasRoute: typeof DashboardPlanillasConsultasRoute
+  DashboardPlanillasDocumentosRoute: typeof DashboardPlanillasDocumentosRoute
+  DashboardPlanillasQuintaRoute: typeof DashboardPlanillasQuintaRoute
+  DashboardPlanillasReportesRoute: typeof DashboardPlanillasReportesRoute
+  DashboardPlanillasSueldosRoute: typeof DashboardPlanillasSueldosRoute
+}
+
+const DashboardPlanillasRouteChildren: DashboardPlanillasRouteChildren = {
+  DashboardPlanillasConsultasRoute: DashboardPlanillasConsultasRoute,
+  DashboardPlanillasDocumentosRoute: DashboardPlanillasDocumentosRoute,
+  DashboardPlanillasQuintaRoute: DashboardPlanillasQuintaRoute,
+  DashboardPlanillasReportesRoute: DashboardPlanillasReportesRoute,
+  DashboardPlanillasSueldosRoute: DashboardPlanillasSueldosRoute,
+}
+
+const DashboardPlanillasRouteWithChildren =
+  DashboardPlanillasRoute._addFileChildren(DashboardPlanillasRouteChildren)
+
+interface DashboardRondasRouteChildren {
+  DashboardRondasAsignacionesRoute: typeof DashboardRondasAsignacionesRoute
+  DashboardRondasConsultasRoute: typeof DashboardRondasConsultasRoute
+  DashboardRondasPuntosRoute: typeof DashboardRondasPuntosRoute
+  DashboardRondasReportesRoute: typeof DashboardRondasReportesRoute
+  DashboardRondasRutasRoute: typeof DashboardRondasRutasRoute
+  DashboardRondasRuteadoresRoute: typeof DashboardRondasRuteadoresRoute
+}
+
+const DashboardRondasRouteChildren: DashboardRondasRouteChildren = {
+  DashboardRondasAsignacionesRoute: DashboardRondasAsignacionesRoute,
+  DashboardRondasConsultasRoute: DashboardRondasConsultasRoute,
+  DashboardRondasPuntosRoute: DashboardRondasPuntosRoute,
+  DashboardRondasReportesRoute: DashboardRondasReportesRoute,
+  DashboardRondasRutasRoute: DashboardRondasRutasRoute,
+  DashboardRondasRuteadoresRoute: DashboardRondasRuteadoresRoute,
+}
+
+const DashboardRondasRouteWithChildren = DashboardRondasRoute._addFileChildren(
+  DashboardRondasRouteChildren,
+)
+
+interface DashboardServiciosRouteChildren {
+  DashboardServiciosConsultasRoute: typeof DashboardServiciosConsultasRoute
+  DashboardServiciosCotizacionesRoute: typeof DashboardServiciosCotizacionesRoute
+  DashboardServiciosJobsRoute: typeof DashboardServiciosJobsRoute
+  DashboardServiciosMantenimientoRoute: typeof DashboardServiciosMantenimientoRoute
+  DashboardServiciosMarcacionRoute: typeof DashboardServiciosMarcacionRoute
+  DashboardServiciosReportesRoute: typeof DashboardServiciosReportesRoute
+}
+
+const DashboardServiciosRouteChildren: DashboardServiciosRouteChildren = {
+  DashboardServiciosConsultasRoute: DashboardServiciosConsultasRoute,
+  DashboardServiciosCotizacionesRoute: DashboardServiciosCotizacionesRoute,
+  DashboardServiciosJobsRoute: DashboardServiciosJobsRoute,
+  DashboardServiciosMantenimientoRoute: DashboardServiciosMantenimientoRoute,
+  DashboardServiciosMarcacionRoute: DashboardServiciosMarcacionRoute,
+  DashboardServiciosReportesRoute: DashboardServiciosReportesRoute,
+}
+
+const DashboardServiciosRouteWithChildren =
+  DashboardServiciosRoute._addFileChildren(DashboardServiciosRouteChildren)
+
+interface DashboardTablasRouteChildren {
+  DashboardTablasClientesRoute: typeof DashboardTablasClientesRoute
+  DashboardTablasConsultasRoute: typeof DashboardTablasConsultasRoute
+  DashboardTablasMarcasRoute: typeof DashboardTablasMarcasRoute
+  DashboardTablasParametrosRoute: typeof DashboardTablasParametrosRoute
+  DashboardTablasProductosRoute: typeof DashboardTablasProductosRoute
+  DashboardTablasProveedoresRoute: typeof DashboardTablasProveedoresRoute
+  DashboardTablasReportesRoute: typeof DashboardTablasReportesRoute
+  DashboardTablasUbicacionesRoute: typeof DashboardTablasUbicacionesRoute
+}
+
+const DashboardTablasRouteChildren: DashboardTablasRouteChildren = {
+  DashboardTablasClientesRoute: DashboardTablasClientesRoute,
+  DashboardTablasConsultasRoute: DashboardTablasConsultasRoute,
+  DashboardTablasMarcasRoute: DashboardTablasMarcasRoute,
+  DashboardTablasParametrosRoute: DashboardTablasParametrosRoute,
+  DashboardTablasProductosRoute: DashboardTablasProductosRoute,
+  DashboardTablasProveedoresRoute: DashboardTablasProveedoresRoute,
+  DashboardTablasReportesRoute: DashboardTablasReportesRoute,
+  DashboardTablasUbicacionesRoute: DashboardTablasUbicacionesRoute,
+}
+
+const DashboardTablasRouteWithChildren = DashboardTablasRoute._addFileChildren(
+  DashboardTablasRouteChildren,
+)
+
+interface DashboardVentasRouteChildren {
+  DashboardVentasBoletasRoute: typeof DashboardVentasBoletasRoute
+  DashboardVentasCarteraRoute: typeof DashboardVentasCarteraRoute
+  DashboardVentasConsultasRoute: typeof DashboardVentasConsultasRoute
+  DashboardVentasCotizacionesRoute: typeof DashboardVentasCotizacionesRoute
+  DashboardVentasFacturasRoute: typeof DashboardVentasFacturasRoute
+  DashboardVentasGuiasRoute: typeof DashboardVentasGuiasRoute
+  DashboardVentasNotasCreditoRoute: typeof DashboardVentasNotasCreditoRoute
+  DashboardVentasOrdenesRoute: typeof DashboardVentasOrdenesRoute
+  DashboardVentasReportesRoute: typeof DashboardVentasReportesRoute
+}
+
+const DashboardVentasRouteChildren: DashboardVentasRouteChildren = {
+  DashboardVentasBoletasRoute: DashboardVentasBoletasRoute,
+  DashboardVentasCarteraRoute: DashboardVentasCarteraRoute,
+  DashboardVentasConsultasRoute: DashboardVentasConsultasRoute,
+  DashboardVentasCotizacionesRoute: DashboardVentasCotizacionesRoute,
+  DashboardVentasFacturasRoute: DashboardVentasFacturasRoute,
+  DashboardVentasGuiasRoute: DashboardVentasGuiasRoute,
+  DashboardVentasNotasCreditoRoute: DashboardVentasNotasCreditoRoute,
+  DashboardVentasOrdenesRoute: DashboardVentasOrdenesRoute,
+  DashboardVentasReportesRoute: DashboardVentasReportesRoute,
+}
+
+const DashboardVentasRouteWithChildren = DashboardVentasRoute._addFileChildren(
+  DashboardVentasRouteChildren,
+)
+
 interface DashboardRouteChildren {
   DashboardActivosFijosRoute: typeof DashboardActivosFijosRoute
-  DashboardAdministracionRoute: typeof DashboardAdministracionRoute
-  DashboardAlmacenRoute: typeof DashboardAlmacenRoute
+  DashboardAdministracionRoute: typeof DashboardAdministracionRouteWithChildren
+  DashboardAlmacenRoute: typeof DashboardAlmacenRouteWithChildren
   DashboardAuditRoute: typeof DashboardAuditRoute
-  DashboardAyudaRoute: typeof DashboardAyudaRoute
-  DashboardB2mRoute: typeof DashboardB2mRoute
-  DashboardBuscadoresRoute: typeof DashboardBuscadoresRoute
-  DashboardComprasRoute: typeof DashboardComprasRoute
-  DashboardContabilidadRoute: typeof DashboardContabilidadRoute
-  DashboardCostosRoute: typeof DashboardCostosRoute
-  DashboardCreditosRoute: typeof DashboardCreditosRoute
-  DashboardCrmRoute: typeof DashboardCrmRoute
+  DashboardAyudaRoute: typeof DashboardAyudaRouteWithChildren
+  DashboardB2mRoute: typeof DashboardB2mRouteWithChildren
+  DashboardBuscadoresRoute: typeof DashboardBuscadoresRouteWithChildren
+  DashboardComprasRoute: typeof DashboardComprasRouteWithChildren
+  DashboardContabilidadRoute: typeof DashboardContabilidadRouteWithChildren
+  DashboardCostosRoute: typeof DashboardCostosRouteWithChildren
+  DashboardCreditosRoute: typeof DashboardCreditosRouteWithChildren
+  DashboardCrmRoute: typeof DashboardCrmRouteWithChildren
   DashboardErpRoute: typeof DashboardErpRoute
-  DashboardGerenciaRoute: typeof DashboardGerenciaRoute
-  DashboardImportacionesRoute: typeof DashboardImportacionesRoute
+  DashboardGerenciaRoute: typeof DashboardGerenciaRouteWithChildren
+  DashboardImportacionesRoute: typeof DashboardImportacionesRouteWithChildren
   DashboardInfrastructureRoute: typeof DashboardInfrastructureRoute
-  DashboardLoginRoute: typeof DashboardLoginRoute
-  DashboardPersonalRoute: typeof DashboardPersonalRoute
-  DashboardPlanillasRoute: typeof DashboardPlanillasRoute
-  DashboardRondasRoute: typeof DashboardRondasRoute
+  DashboardLoginRoute: typeof DashboardLoginRouteWithChildren
+  DashboardPersonalRoute: typeof DashboardPersonalRouteWithChildren
+  DashboardPlanillasRoute: typeof DashboardPlanillasRouteWithChildren
+  DashboardRondasRoute: typeof DashboardRondasRouteWithChildren
   DashboardSecurityRoute: typeof DashboardSecurityRoute
-  DashboardServiciosRoute: typeof DashboardServiciosRoute
+  DashboardServiciosRoute: typeof DashboardServiciosRouteWithChildren
   DashboardSettingsRoute: typeof DashboardSettingsRoute
-  DashboardTablasRoute: typeof DashboardTablasRoute
+  DashboardTablasRoute: typeof DashboardTablasRouteWithChildren
   DashboardTelefonicaRoute: typeof DashboardTelefonicaRoute
-  DashboardVentasRoute: typeof DashboardVentasRoute
+  DashboardVentasRoute: typeof DashboardVentasRouteWithChildren
   DashboardZigmaRoute: typeof DashboardZigmaRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardActivosfijosCompraRoute: typeof DashboardActivosfijosCompraRoute
+  DashboardActivosfijosConsultasRoute: typeof DashboardActivosfijosConsultasRoute
+  DashboardActivosfijosDepreciacionRoute: typeof DashboardActivosfijosDepreciacionRoute
+  DashboardActivosfijosReportesRoute: typeof DashboardActivosfijosReportesRoute
+  DashboardTelefoniaAsignacionesRoute: typeof DashboardTelefoniaAsignacionesRoute
+  DashboardTelefoniaConsultasRoute: typeof DashboardTelefoniaConsultasRoute
+  DashboardTelefoniaEquiposRoute: typeof DashboardTelefoniaEquiposRoute
+  DashboardTelefoniaLineasRoute: typeof DashboardTelefoniaLineasRoute
+  DashboardTelefoniaModelosRoute: typeof DashboardTelefoniaModelosRoute
+  DashboardTelefoniaReportesRoute: typeof DashboardTelefoniaReportesRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardActivosFijosRoute: DashboardActivosFijosRoute,
-  DashboardAdministracionRoute: DashboardAdministracionRoute,
-  DashboardAlmacenRoute: DashboardAlmacenRoute,
+  DashboardAdministracionRoute: DashboardAdministracionRouteWithChildren,
+  DashboardAlmacenRoute: DashboardAlmacenRouteWithChildren,
   DashboardAuditRoute: DashboardAuditRoute,
-  DashboardAyudaRoute: DashboardAyudaRoute,
-  DashboardB2mRoute: DashboardB2mRoute,
-  DashboardBuscadoresRoute: DashboardBuscadoresRoute,
-  DashboardComprasRoute: DashboardComprasRoute,
-  DashboardContabilidadRoute: DashboardContabilidadRoute,
-  DashboardCostosRoute: DashboardCostosRoute,
-  DashboardCreditosRoute: DashboardCreditosRoute,
-  DashboardCrmRoute: DashboardCrmRoute,
+  DashboardAyudaRoute: DashboardAyudaRouteWithChildren,
+  DashboardB2mRoute: DashboardB2mRouteWithChildren,
+  DashboardBuscadoresRoute: DashboardBuscadoresRouteWithChildren,
+  DashboardComprasRoute: DashboardComprasRouteWithChildren,
+  DashboardContabilidadRoute: DashboardContabilidadRouteWithChildren,
+  DashboardCostosRoute: DashboardCostosRouteWithChildren,
+  DashboardCreditosRoute: DashboardCreditosRouteWithChildren,
+  DashboardCrmRoute: DashboardCrmRouteWithChildren,
   DashboardErpRoute: DashboardErpRoute,
-  DashboardGerenciaRoute: DashboardGerenciaRoute,
-  DashboardImportacionesRoute: DashboardImportacionesRoute,
+  DashboardGerenciaRoute: DashboardGerenciaRouteWithChildren,
+  DashboardImportacionesRoute: DashboardImportacionesRouteWithChildren,
   DashboardInfrastructureRoute: DashboardInfrastructureRoute,
-  DashboardLoginRoute: DashboardLoginRoute,
-  DashboardPersonalRoute: DashboardPersonalRoute,
-  DashboardPlanillasRoute: DashboardPlanillasRoute,
-  DashboardRondasRoute: DashboardRondasRoute,
+  DashboardLoginRoute: DashboardLoginRouteWithChildren,
+  DashboardPersonalRoute: DashboardPersonalRouteWithChildren,
+  DashboardPlanillasRoute: DashboardPlanillasRouteWithChildren,
+  DashboardRondasRoute: DashboardRondasRouteWithChildren,
   DashboardSecurityRoute: DashboardSecurityRoute,
-  DashboardServiciosRoute: DashboardServiciosRoute,
+  DashboardServiciosRoute: DashboardServiciosRouteWithChildren,
   DashboardSettingsRoute: DashboardSettingsRoute,
-  DashboardTablasRoute: DashboardTablasRoute,
+  DashboardTablasRoute: DashboardTablasRouteWithChildren,
   DashboardTelefonicaRoute: DashboardTelefonicaRoute,
-  DashboardVentasRoute: DashboardVentasRoute,
+  DashboardVentasRoute: DashboardVentasRouteWithChildren,
   DashboardZigmaRoute: DashboardZigmaRoute,
   DashboardIndexRoute: DashboardIndexRoute,
+  DashboardActivosfijosCompraRoute: DashboardActivosfijosCompraRoute,
+  DashboardActivosfijosConsultasRoute: DashboardActivosfijosConsultasRoute,
+  DashboardActivosfijosDepreciacionRoute:
+    DashboardActivosfijosDepreciacionRoute,
+  DashboardActivosfijosReportesRoute: DashboardActivosfijosReportesRoute,
+  DashboardTelefoniaAsignacionesRoute: DashboardTelefoniaAsignacionesRoute,
+  DashboardTelefoniaConsultasRoute: DashboardTelefoniaConsultasRoute,
+  DashboardTelefoniaEquiposRoute: DashboardTelefoniaEquiposRoute,
+  DashboardTelefoniaLineasRoute: DashboardTelefoniaLineasRoute,
+  DashboardTelefoniaModelosRoute: DashboardTelefoniaModelosRoute,
+  DashboardTelefoniaReportesRoute: DashboardTelefoniaReportesRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(

@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router';
+﻿import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { TrendingUp, PieChart, Gauge, BarChart3, Search, DollarSign } from 'lucide-react';
@@ -17,8 +17,8 @@ export default function GerenciaModule() {
     <div className="min-h-screen bg-gradient-to-br from-sky-50 to-indigo-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">Módulo de Gerencia</h1>
-          <p className="text-lg text-slate-600">Herramientas gerenciales, reportes consolidados e indicadores estratégicos</p>
+          <h1 className="text-4xl font-bold text-slate-900 mb-2">MÃ³dulo de Gerencia</h1>
+          <p className="text-lg text-slate-600">Herramientas gerenciales, reportes consolidados e indicadores estratÃ©gicos</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -36,7 +36,7 @@ export default function GerenciaModule() {
                   <CardDescription>{feature.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Link to={`/dashboard/gerencia/${feature.id}`}>
+                  <Link to={`/dashboard/gerencia/${feature.id}` as any}>
                     <Button className="w-full bg-sky-600 hover:bg-sky-700">Acceder</Button>
                   </Link>
                 </CardContent>
@@ -51,7 +51,7 @@ export default function GerenciaModule() {
             <p className="text-sm text-slate-600">Funcionalidades</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-green-600">✓</p>
+            <p className="text-3xl font-bold text-green-600">âœ“</p>
             <p className="text-sm text-slate-600">Disponible</p>
           </div>
           <div className="text-center">
@@ -63,3 +63,4 @@ export default function GerenciaModule() {
     </div>
   );
 }
+

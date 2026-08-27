@@ -1,14 +1,14 @@
-import { Link } from '@tanstack/react-router';
+﻿import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Map, Navigation, MapPin, Users, Search, BarChart3 } from 'lucide-react';
 
 export default function RondasModule() {
   const features = [
-    { id: 'rutas', label: 'Rutas', icon: Map, description: 'Gestión de rutas de distribución' },
-    { id: 'ruteadores', label: 'Ruteadores', icon: Navigation, description: 'Asignación de ruteadores' },
+    { id: 'rutas', label: 'Rutas', icon: Map, description: 'GestiÃ³n de rutas de distribuciÃ³n' },
+    { id: 'ruteadores', label: 'Ruteadores', icon: Navigation, description: 'AsignaciÃ³n de ruteadores' },
     { id: 'puntos', label: 'Puntos de Visita', icon: MapPin, description: 'Puntos de venta y clientes' },
-    { id: 'asignaciones', label: 'Asignaciones', icon: Users, description: 'Asignación de personal' },
+    { id: 'asignaciones', label: 'Asignaciones', icon: Users, description: 'AsignaciÃ³n de personal' },
     { id: 'consultas', label: 'Consultas', icon: Search, description: 'Consultar rondas' },
     { id: 'reportes', label: 'Reportes', icon: BarChart3, description: 'Reportes de rondas' },
   ];
@@ -17,8 +17,8 @@ export default function RondasModule() {
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">Módulo de Rondas</h1>
-          <p className="text-lg text-slate-600">Gestión de rutas, puntos de visita y asignación de ruteadores</p>
+          <h1 className="text-4xl font-bold text-slate-900 mb-2">MÃ³dulo de Rondas</h1>
+          <p className="text-lg text-slate-600">GestiÃ³n de rutas, puntos de visita y asignaciÃ³n de ruteadores</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -36,7 +36,7 @@ export default function RondasModule() {
                   <CardDescription>{feature.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Link to={`/dashboard/rondas/${feature.id}`}>
+                  <Link to={`/dashboard/rondas/${feature.id}` as any}>
                     <Button className="w-full bg-emerald-600 hover:bg-emerald-700">Acceder</Button>
                   </Link>
                 </CardContent>
@@ -51,7 +51,7 @@ export default function RondasModule() {
             <p className="text-sm text-slate-600">Funcionalidades</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-green-600">✓</p>
+            <p className="text-3xl font-bold text-green-600">âœ“</p>
             <p className="text-sm text-slate-600">Disponible</p>
           </div>
           <div className="text-center">
@@ -63,3 +63,4 @@ export default function RondasModule() {
     </div>
   );
 }
+

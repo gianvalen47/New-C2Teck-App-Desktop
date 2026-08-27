@@ -1,12 +1,14 @@
 // Gestión de procesos hijo: backend FastAPI + servidor frontend
 const { spawn } = require("child_process");
 const http = require("http");
+const net = require("net");
 const path = require("path");
 const fs = require("fs");
 
 const PROJECT_ROOT = path.join(__dirname, "..");
-const BACKEND_PORT = Number(process.env.C2TECK_BACKEND_PORT || 8000);
-const FRONTEND_PORT = Number(process.env.C2TECK_FRONTEND_PORT || 5173);
+const DEFAULT_BACKEND_PORT = Number(process.env.C2TECK_BACKEND_PORT || 8000);
+let BACKEND_PORT = DEFAULT_BACKEND_PORT;
+let FRONTEND_PORT = Number(process.env.C2TECK_FRONTEND_PORT || 5173);
 const IS_PROD = process.env.C2TECK_DESKTOP_PROD === "1";
 
 const processes = [];
@@ -87,6 +89,43 @@ function waitForUrl(url, timeoutMs = 120000, intervalMs = 500) {
   });
 }
 
+function isPortAvailable(port) {
+  return new Promise((resolve) => {
+    const server = net.createServer();
+    server.once("error", () => resolve(false));
+    server.once("listening", () => {
+      server.close(() => resolve(true));
+    });
+    server.listen(port, "127.0.0.1");
+  });
+}
+
+async function ensureBackendPort() {
+  let port = DEFAULT_BACKEND_PORT;
+  while (!(await isPortAvailable(port))) {
+    log("setup", `Puerto ${port} ocupado, probando ${port + 1}`);
+    port += 1;
+  }
+
+  if (port !== BACKEND_PORT) {
+    log("setup", `Usando backend en puerto ${port}`);
+    BACKEND_PORT = port;
+  }
+}
+
+async function ensureFrontendPort() {
+  let port = Number(process.env.C2TECK_FRONTEND_PORT || 5173);
+  while (!(await isPortAvailable(port))) {
+    log("setup", `Puerto ${port} ocupado, probando ${port + 1}`);
+    port += 1;
+  }
+
+  if (port !== FRONTEND_PORT) {
+    log("setup", `Usando frontend en puerto ${port}`);
+    FRONTEND_PORT = port;
+  }
+}
+
 async function ensureBackendDeps() {
   const requirements = path.join(PROJECT_ROOT, "backend", "requirements.txt");
   if (!fs.existsSync(requirements)) return;
@@ -150,6 +189,7 @@ async function seedDatabaseIfNeeded() {
 async function startBackend() {
   await ensureBackendDeps();
   await seedDatabaseIfNeeded();
+  await ensureBackendPort();
 
   const python = getPythonExecutable();
   spawnManaged(
@@ -187,6 +227,7 @@ async function startFrontend() {
 }
 
 async function startAllServices() {
+  await ensureFrontendPort();
   await startBackend();
   await startFrontend();
 }

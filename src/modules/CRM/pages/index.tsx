@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router';
+﻿import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Lightbulb, Quote, Eye, Search, BarChart3, Users } from 'lucide-react';
@@ -8,9 +8,9 @@ export default function CRMModule() {
     { id: 'oportunidades', label: 'Oportunidades', icon: Lightbulb, description: 'Gestionar oportunidades de negocio' },
     { id: 'cotizaciones', label: 'Cotizaciones', icon: Quote, description: 'Crear y gestionar cotizaciones' },
     { id: 'visitas', label: 'Visitas', icon: Eye, description: 'Registrar visitas de clientes' },
-    { id: 'consultas', label: 'Consultas', icon: Search, description: 'Consultar información CRM' },
-    { id: 'reportes', label: 'Reportes', icon: BarChart3, description: 'Análisis e indicadores' },
-    { id: 'clientes', label: 'Clientes', icon: Users, description: 'Gestión de cartera de clientes' },
+    { id: 'consultas', label: 'Consultas', icon: Search, description: 'Consultar informaciÃ³n CRM' },
+    { id: 'reportes', label: 'Reportes', icon: BarChart3, description: 'AnÃ¡lisis e indicadores' },
+    { id: 'clientes', label: 'Clientes', icon: Users, description: 'GestiÃ³n de cartera de clientes' },
   ];
 
   return (
@@ -18,8 +18,8 @@ export default function CRMModule() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">Módulo CRM</h1>
-          <p className="text-lg text-slate-600">Gestión integral de relaciones con clientes, oportunidades y visitas</p>
+          <h1 className="text-4xl font-bold text-slate-900 mb-2">MÃ³dulo CRM</h1>
+          <p className="text-lg text-slate-600">GestiÃ³n integral de relaciones con clientes, oportunidades y visitas</p>
         </div>
 
         {/* Features Grid */}
@@ -38,7 +38,7 @@ export default function CRMModule() {
                   <CardDescription>{feature.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Link to={`/dashboard/crm/${feature.id}`}>
+                  <Link to={`/dashboard/crm/${feature.id}` as any}>
                     <Button className="w-full bg-rose-600 hover:bg-rose-700">Acceder</Button>
                   </Link>
                 </CardContent>
@@ -54,11 +54,11 @@ export default function CRMModule() {
             <p className="text-sm text-slate-600">Funcionalidades</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-green-600">∞</p>
+            <p className="text-3xl font-bold text-green-600">âˆž</p>
             <p className="text-sm text-slate-600">Clientes</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-blue-600">360°</p>
+            <p className="text-3xl font-bold text-blue-600">360Â°</p>
             <p className="text-sm text-slate-600">Visibilidad</p>
           </div>
         </div>
@@ -66,3 +66,4 @@ export default function CRMModule() {
     </div>
   );
 }
+

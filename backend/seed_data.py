@@ -8,7 +8,7 @@ BACKEND_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(BACKEND_DIR))
 
 from config import SessionLocal, Base, engine
-from models import ClientModel, SaleModel, InventoryItemModel
+from models import ClientModel, SaleModel, InventoryItemModel, GuiaRemisionModel, GuiaRemisionDetModel
 import uuid
 from datetime import datetime, timedelta
 import json
@@ -44,6 +44,14 @@ try:
             "address": "Av. Tercera 789, Lima",
             "phone": "555-0003",
             "email": "contacto@soluciones.com"
+        },
+        {
+            "id": "200",
+            "name": "CARLOS RIOS",
+            "ruc": "10412345678",
+            "address": "Av. Lima 450, Lima",
+            "phone": "999-555-123",
+            "email": "carlos.rios@example.com"
         },
     ]
     
@@ -176,6 +184,68 @@ try:
         db.add(sale)
         db.commit()
         print(f"  ✅ Factura F001-1 para {client.name}")
+
+    # ====================================================================
+    # CREATE TEST GUIA REMISION
+    # ====================================================================
+    print("\n🔄 Creando guías de remisión de prueba...")
+    cliente_carlos = db.query(ClientModel).filter(ClientModel.id == "200").first()
+    existing_guia = db.query(GuiaRemisionModel).filter(
+        GuiaRemisionModel.id_locacion == 1,
+        GuiaRemisionModel.id_serie_doc == 1,
+        GuiaRemisionModel.num_doc == 6,
+    ).first()
+    if cliente_carlos and not existing_guia:
+        guia = GuiaRemisionModel(
+            id_locacion=1,
+            fec_doc=datetime(2026, 8, 3),
+            id_serie_doc=1,
+            num_doc=6,
+            id_cliente=200,
+            id_loc_cli=None,
+            id_fiscal=None,
+            cod_mot="1",
+            num_job="",
+            pto_partida="CAL. ANTONIO ULLOA NRO. 2182 URB. EL FLORES",
+            pto_llegada="OFICINA PRINCIPAL",
+            cod_mon="US",
+            igv=18.0,
+            tip_cambio=3.4,
+            tot_flete=0.0,
+            tot_embarque=0.0,
+            tot_bruto=100.0,
+            tot_dscto=0.0,
+            tot_venta=100.0,
+            tot_igv=18.0,
+            tot_neto=118.0,
+            num_orden="OC-1234",
+            id_cotizacion=123,
+            observacion="Guía de remisión creada para CARLOS RIOS",
+            peso_bruto=5.0,
+            cod_uni_med_peso="KGM",
+            numero_bultos=1,
+            fec_traslado=datetime(2026, 8, 3),
+            cod_modo="02",
+            estado="GENERADO",
+        )
+        db.add(guia)
+        db.commit()
+        db.refresh(guia)
+
+        detalle = GuiaRemisionDetModel(
+            id_guia=guia.id,
+            item=1,
+            cod_mer="PROD-001",
+            des_mer="Servicio de instalación",
+            cod_uni_med="UN",
+            can_mer=1,
+            pre_mer=100.0,
+            dsc_mer=0.0,
+            total_fila=100.0,
+        )
+        db.add(detalle)
+        db.commit()
+        print(f"  ✅ Guía de remisión N° 6 para {cliente_carlos.name}")
     
     # ====================================================================
     # SUMMARY

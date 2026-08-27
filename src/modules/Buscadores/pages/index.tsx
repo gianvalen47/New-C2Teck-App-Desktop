@@ -1,16 +1,16 @@
-import { Link } from '@tanstack/react-router';
+﻿import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Search, Filter, Users, Package, FileText, DollarSign, BarChart3 } from 'lucide-react';
 
 export default function BuscadoresModule() {
   const features = [
-    { id: 'clientes', label: 'Búsqueda de Clientes', icon: Users, description: 'Buscar y filtrar clientes' },
-    { id: 'productos', label: 'Búsqueda de Productos', icon: Package, description: 'Búsqueda de productos' },
-    { id: 'documentos', label: 'Búsqueda de Documentos', icon: FileText, description: 'Buscar documentos' },
-    { id: 'movimientos', label: 'Búsqueda de Movimientos', icon: DollarSign, description: 'Búsqueda de transacciones' },
-    { id: 'filtros-avanzados', label: 'Filtros Avanzados', icon: Filter, description: 'Filtros y búsquedas complejas' },
-    { id: 'reportes-busqueda', label: 'Reportes de Búsqueda', icon: BarChart3, description: 'Reportes y análisis' },
+    { id: 'clientes', label: 'BÃºsqueda de Clientes', icon: Users, description: 'Buscar y filtrar clientes' },
+    { id: 'productos', label: 'BÃºsqueda de Productos', icon: Package, description: 'BÃºsqueda de productos' },
+    { id: 'documentos', label: 'BÃºsqueda de Documentos', icon: FileText, description: 'Buscar documentos' },
+    { id: 'movimientos', label: 'BÃºsqueda de Movimientos', icon: DollarSign, description: 'BÃºsqueda de transacciones' },
+    { id: 'filtros-avanzados', label: 'Filtros Avanzados', icon: Filter, description: 'Filtros y bÃºsquedas complejas' },
+    { id: 'reportes-busqueda', label: 'Reportes de BÃºsqueda', icon: BarChart3, description: 'Reportes y anÃ¡lisis' },
     { id: 'componentes', label: 'Componentes', icon: Search, description: 'Componentes reutilizables' },
   ];
 
@@ -18,8 +18,8 @@ export default function BuscadoresModule() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-teal-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">Módulo de Buscadores</h1>
-          <p className="text-lg text-slate-600">Componentes de búsqueda reutilizables y filtros avanzados para toda la aplicación</p>
+          <h1 className="text-4xl font-bold text-slate-900 mb-2">MÃ³dulo de Buscadores</h1>
+          <p className="text-lg text-slate-600">Componentes de bÃºsqueda reutilizables y filtros avanzados para toda la aplicaciÃ³n</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -37,7 +37,7 @@ export default function BuscadoresModule() {
                   <CardDescription>{feature.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Link to={`/dashboard/buscadores/${feature.id}`}>
+                  <Link to={`/dashboard/buscadores/${feature.id}` as any}>
                     <Button className="w-full bg-blue-600 hover:bg-blue-700">Acceder</Button>
                   </Link>
                 </CardContent>
@@ -64,3 +64,4 @@ export default function BuscadoresModule() {
     </div>
   );
 }
+

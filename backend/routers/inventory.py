@@ -1,16 +1,27 @@
 """
 API routers for inventory
+
+Consumes from legacy SIGECOM adapter when enabled, otherwise uses local SQLite.
 """
+import csv
+import io
+import logging
+import uuid
+
 from fastapi import APIRouter, Depends, File, HTTPException, Response, UploadFile, status
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
-import csv
-import io
-import uuid
 
 from config import SessionLocal
 from models import InventoryItemModel
 from schemas import InventoryItemCreate, InventoryItemRead, InventoryItemUpdate
+from legacy_adapter import (
+    is_legacy_source_enabled,
+    list_inventory_legacy,
+    get_inventory_item_legacy,
+)
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/inventory", tags=["Inventory"])
 
@@ -25,7 +36,25 @@ def get_db():
 
 @router.get("", response_model=list[InventoryItemRead])
 def list_inventory(skip: int = 0, limit: int = 100, search: str | None = None, db: Session = Depends(get_db)):
-    """List all inventory items"""
+    """List all inventory items (from legacy adapter if enabled)"""
+    if is_legacy_source_enabled():
+        try:
+            data = list_inventory_legacy(skip=skip, limit=limit)
+            if isinstance(data, dict) and "items" in data:
+                return data["items"]
+            elif isinstance(data, list):
+                return data
+            else:
+                return [data] if data else []
+        except Exception as exc:
+            logger.error(f"Failed to fetch inventory from legacy adapter: {exc}")
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail=f"SIGECOM legacy adapter unavailable: {type(exc).__name__}. "
+                       f"Start sigecoom-wcf-adapter.exe or check SIGECOM_LEGACY_ADAPTER_BASE_URL.",
+            )
+
+    # Fallback to local SQLite
     query = db.query(InventoryItemModel)
     if search:
         like = f"%{search}%"

@@ -1,0 +1,71 @@
+﻿Imports System.Windows.Forms
+
+Public Class frmModicarReferencia
+
+    Private oFacturaImportService As New FacturaImportService.FacturaImportServiceClient
+    Public estado_form As String
+    '====================================================================================================================
+    '============================================ PARAMETROS LOCALES ====================================================
+    '====================================================================================================================
+    Public IdFactura As String
+    '====================================================================================================================
+    '============================================ CONTROL'S METHOD ======================================================
+    '====================================================================================================================
+    Private Sub frmModicarReferencia_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
+        If e.KeyCode = Keys.Escape Then
+            btnGuardar_Click(sender, e)
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub Initialize_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        'Me.CancelButton = Me.btnCancelar
+        If estado_form = "GENERADO" Or estado_form = "GN" Then
+            btnGuardar.Enabled = True
+            txtReferencia.Select()
+        Else
+            btnGuardar.Enabled = False
+        End If
+    End Sub
+    Private Sub FinallyObjects_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            If isClosed(oFacturaImportService) = False Then
+                oFacturaImportService.Close()
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [FINALLY]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub    
+    '====================================================================================================================
+    '============================================ TASK'S METHOD =========================================================
+    '====================================================================================================================
+    Private Sub Modificar()
+        Try
+            Dim estado_process As Boolean
+            estado_process = oFacturaImportService.ActualizarReferencia(IdFactura, toNull(txtReferencia.Text))
+            If estado_process = True Then
+                Me.DialogResult = System.Windows.Forms.DialogResult.OK
+            Else
+                MsgBox("Error en el proceso, comuníquese con el departamento de sistemas...!", MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR [MORE-001]: " + ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+    '====================================================================================================================
+    '============================================ INTERFACE'S METHOD ====================================================
+    '====================================================================================================================
+    Private Sub btnCancelar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancelar.Click
+        Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.Close()
+    End Sub
+    Private Sub btnGuardar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGuardar.Click
+        If MsgBox("¿Está seguro de GUARDAR los datos?", MsgBoxStyle.YesNo, "Advertencia") = MsgBoxResult.Yes Then
+            Dim registro As New FacturaImportService.FacturaImport
+            registro.Referencia = toNull(txtReferencia.Text)
+            Modificar()
+        Else
+            Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
+            Me.Close()
+        End If
+    End Sub
+End Class

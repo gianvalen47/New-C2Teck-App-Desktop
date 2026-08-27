@@ -1,0 +1,13 @@
+// Auto-generated stub for legacy form
+// Original: Servicios/Cotizacion/frmServicios_Contactos.vb
+import React from 'react'
+
+export default function frmServicios_Contactos() {
+  return (
+    <div style={padding:20}>
+      <h2>Legacy form: frmServicios_Contactos</h2>
+      <p>Original file copied to: <code>Servicios/Cotizacion/frmServicios_Contactos.vb</code></p>
+      <p>This component is a placeholder. Implement React UI here.</p>
+    </div>
+  )
+}

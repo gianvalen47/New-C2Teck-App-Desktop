@@ -1,0 +1,96 @@
+﻿"""
+API routers for journal entries / accounting
+
+Consumes from legacy SIGECOM adapter when enabled, otherwise uses local SQLite.
+"""
+import logging
+import uuid
+
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+
+from config import SessionLocal
+from models import JournalEntryModel
+from schemas import JournalEntryCreate, JournalEntryRead
+from legacy_adapter import (
+    is_legacy_source_enabled,
+    list_journals_legacy,
+    get_journal_legacy,
+)
+
+logger = logging.getLogger(__name__)
+
+router = APIRouter(prefix="/journals", tags=["Journals"])
+
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+@router.get("", response_model=list[JournalEntryRead])
+def list_journal_entries(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    """List journal entries (from legacy adapter if enabled)"""
+    if is_legacy_source_enabled():
+        try:
+            data = list_journals_legacy(skip=skip, limit=limit)
+            if isinstance(data, dict) and "items" in data:
+                return data["items"]
+            elif isinstance(data, list):
+                return data
+            else:
+                return [data] if data else []
+        except Exception as exc:
+            logger.error(f"Failed to fetch journals from legacy adapter: {exc}")
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail=f"SIGECOM legacy adapter unavailable: {type(exc).__name__}. "
+                       f"Start sigecoom-wcf-adapter.exe or check SIGECOM_LEGACY_ADAPTER_BASE_URL.",
+            )
+
+    # Fallback to local SQLite
+    entries = db.query(JournalEntryModel).offset(skip).limit(limit).order_by(JournalEntryModel.date.desc()).all()
+    return entries
+
+
+@router.get("/{entry_id}", response_model=JournalEntryRead)
+def get_journal_entry(entry_id: str, db: Session = Depends(get_db)):
+    """Get a journal entry by ID (from legacy adapter if enabled)"""
+    if is_legacy_source_enabled():
+        try:
+            return get_journal_legacy(entry_id)
+        except Exception as exc:
+            logger.error(f"Failed to fetch journal {entry_id} from legacy adapter: {exc}")
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail=f"SIGECOM legacy adapter unavailable: {type(exc).__name__}. "
+                       f"Start sigecoom-wcf-adapter.exe or check SIGECOM_LEGACY_ADAPTER_BASE_URL.",
+            )
+
+    # Fallback to local SQLite
+    entry = db.query(JournalEntryModel).filter(JournalEntryModel.id == entry_id).first()
+    if not entry:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Journal entry {entry_id} not found")
+    return entry
+
+
+@router.post("", response_model=JournalEntryRead)
+def create_journal_entry(entry: JournalEntryCreate, db: Session = Depends(get_db)):
+    """Create a new journal entry"""
+    db_entry = JournalEntryModel(
+        id=str(uuid.uuid4()),
+        entry_number=entry.entry_number,
+        date=entry.date,
+        type=entry.type,
+        currency=entry.currency,
+        exchange_rate=entry.exchange_rate,
+        description=entry.description,
+        lines=[line.dict() for line in entry.lines],
+    )
+    db.add(db_entry)
+    db.commit()
+    db.refresh(db_entry)
+    return db_entry

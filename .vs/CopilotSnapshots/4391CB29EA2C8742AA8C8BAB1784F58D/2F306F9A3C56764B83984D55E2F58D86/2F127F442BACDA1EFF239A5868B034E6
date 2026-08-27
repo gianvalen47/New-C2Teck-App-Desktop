@@ -1,0 +1,258 @@
+﻿"""
+Small HTTP compatibility layer for the SIGECOM original API/adapter.
+The legacy API is exposed through a .NET/ASP.NET adapter that proxies to the
+legacy WCF service. This module handles:
+- HTTP consumption from the adapter
+- Data normalization (dates → ISO-8601, IDs, booleans, decimals)
+- Logging with timing and error tracking
+- Fallback error handling for unavailable adapter
+"""
+from __future__ import annotations
+
+import json
+import logging
+import os
+import time
+from datetime import datetime
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
+
+# Setup logging
+logger = logging.getLogger(__name__)
+
+LEGACY_ADAPTER_BASE_URL = os.getenv(
+    "SIGECOM_LEGACY_ADAPTER_BASE_URL",
+    "http://localhost:5000",  # Local development default
+).rstrip("/")
+
+SIGECOM_DATA_SOURCE = os.getenv("SIGECOM_DATA_SOURCE", "sqlite").lower()
+
+
+def is_legacy_source_enabled() -> bool:
+    return SIGECOM_DATA_SOURCE in {"legacy", "sigecoom", "adapter", "wcf", "original"}
+
+
+def build_legacy_url(path: str) -> str:
+    return f"{LEGACY_ADAPTER_BASE_URL}{path}"
+
+
+def _normalize_datetime(value) -> str | None:
+    """Convert datetime/date/timestamp to ISO-8601 UTC string."""
+    if not value:
+        return None
+    if isinstance(value, str):
+        # Already a string; try to parse and re-format for consistency
+        try:
+            # Try common formats
+            for fmt in ["%Y-%m-%dT%H:%M:%S", "%Y-%m-%d %H:%M:%S", "%Y-%m-%d"]:
+                try:
+                    dt = datetime.strptime(value[:19], fmt)
+                    return dt.isoformat() + "Z"
+                except ValueError:
+                    continue
+            return value  # Return as-is if no format matches
+        except Exception:
+            return value
+    elif isinstance(value, datetime):
+        return value.isoformat() + "Z"
+    return None
+
+
+def _normalize_id(value) -> str | int:
+    """Normalize ID fields (convert to string or int as appropriate)."""
+    if isinstance(value, (int, str)):
+        return value
+    return str(value) if value else None
+
+
+def _normalize_boolean(value) -> bool:
+    """Convert various boolean representations to Python bool."""
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, int):
+        return value != 0
+    if isinstance(value, str):
+        return value.lower() in {"true", "1", "yes", "on", "activo"}
+    return False
+
+
+def _normalize_decimal(value) -> float | None:
+    """Convert decimal/currency to float."""
+    if value is None:
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    if isinstance(value, str):
+        try:
+            # Handle both comma and dot as decimal separator
+            return float(value.replace(",", "."))
+        except ValueError:
+            return None
+    return None
+
+
+def _read_json(url: str, timeout: int = 8):
+    """Fetch JSON from URL with logging and error handling."""
+    start_time = time.time()
+    try:
+        logger.debug(f"Fetching from legacy adapter: {url}")
+        req = Request(url, method="GET")
+        req.add_header("Accept", "application/json")
+        with urlopen(req, timeout=timeout) as response:
+            payload = response.read()
+            elapsed = time.time() - start_time
+            data = json.loads(payload.decode("utf-8"))
+            logger.info(
+                f"Legacy adapter request successful: {url} "
+                f"(status={response.status}, time={elapsed:.2f}s, size={len(payload)} bytes)"
+            )
+            return data
+    except URLError as e:
+        elapsed = time.time() - start_time
+        logger.error(
+            f"Legacy adapter unreachable: {url} ({type(e).__name__}: {e.reason}) "
+            f"(time={elapsed:.2f}s)"
+        )
+        raise
+    except json.JSONDecodeError as e:
+        elapsed = time.time() - start_time
+        logger.error(f"Invalid JSON from legacy adapter: {url} (time={elapsed:.2f}s) {e}")
+        raise
+    except Exception as e:
+        elapsed = time.time() - start_time
+        logger.error(f"Legacy adapter error: {url} ({type(e).__name__}: {e}) (time={elapsed:.2f}s)")
+        raise
+
+
+def legacy_health() -> bool:
+    try:
+        url = build_legacy_url("/health")
+        _read_json(url)
+        return True
+    except Exception:
+        return False
+
+
+def list_guias_legacy(
+    *,
+    anio: int | None = None,
+    mes: int | None = None,
+    id_locacion: int | None = None,
+    id_serie_doc: int | None = None,
+    id_cliente: int | None = None,
+    estado: str | None = None,
+    num_doc: int | None = None,
+    skip: int = 0,
+    limit: int = 100,
+):
+    """Read-only list through the HTTP adapter contract."""
+    params = []
+    if anio is not None:
+        params.append(("anio", str(anio)))
+    if mes is not None:
+        params.append(("mes", str(mes)))
+    if id_locacion is not None:
+        params.append(("id_locacion", str(id_locacion)))
+    if id_serie_doc is not None:
+        params.append(("id_serie_doc", str(id_serie_doc)))
+    if id_cliente is not None:
+        params.append(("id_cliente", str(id_cliente)))
+    if estado:
+        params.append(("estado", estado))
+    if num_doc is not None:
+        params.append(("num_doc", str(num_doc)))
+    if skip:
+        params.append(("skip", str(skip)))
+    if limit:
+        params.append(("limit", str(limit)))
+
+    query = "&".join(f"{k}={v}" for k, v in params)
+    endpoint = "/api/v1/guias-remision"
+    if query:
+        endpoint = f"{endpoint}?{query}"
+
+    return _read_json(build_legacy_url(endpoint))
+
+
+def get_guia_legacy(id_guia: int):
+    """Fetch a single legacy guia by id."""
+    endpoint = f"/api/v1/guias-remision/{id_guia}"
+    return _read_json(build_legacy_url(endpoint))
+
+
+def list_clients_legacy(skip: int = 0, limit: int = 100):
+    """List clients through the HTTP adapter contract.
+
+    Falls back to returning metadata about the WSDL if the HTTP adapter is
+    not reachable. Prefer using the ASP.NET adapter that proxies WCF to
+    simple JSON endpoints (the adapter is already included in the repo).
+    """
+    endpoint = f"/api/v1/clients?skip={skip}&limit={limit}"
+    try:
+        return _read_json(build_legacy_url(endpoint))
+    except Exception:
+        # Adapter not reachable; provide an informative error payload instead
+        return {
+            "error": "adapter_unreachable",
+            "message": "HTTP adapter not reachable. Inspect WCF metadata or start the ASP.NET adapter.",
+        }
+
+
+def get_client_legacy(client_id: str):
+    """Fetch a single client from the HTTP adapter contract."""
+    endpoint = f"/api/v1/clients/{client_id}"
+    try:
+        return _read_json(build_legacy_url(endpoint))
+    except Exception:
+        return {
+            "error": "adapter_unreachable",
+            "message": "HTTP adapter not reachable. Inspect WCF metadata or start the ASP.NET adapter.",
+        }
+
+
+def inspect_client_service_wsdl() -> dict:
+    """Attempt to load the WSDL for ClienteService and list operations.
+
+    This helper is useful if you want to consume WCF SOAP directly from
+    Python using a SOAP client such as `zeep`. It reads the environment
+    variable `SIGECOM_WCF_BASE_URL` or falls back to the adapter host's
+    base address to construct a likely WSDL URL.
+    """
+    try:
+        # import here to avoid requiring zeep unless this helper is used
+        from zeep import Client as ZeepClient
+        from zeep.exceptions import Error as ZeepError
+    except Exception as exc:
+        return {"error": "zeep_missing", "message": str(exc)}
+
+    base = os.getenv("SIGECOM_WCF_BASE_URL")
+    if not base:
+        # try to derive from the configured adapter host (strip port if present)
+        try:
+            base = LEGACY_ADAPTER_BASE_URL.split("://", 1)[1].split(":")[0]
+            base = f"http://{base}"
+        except Exception:
+            base = LEGACY_ADAPTER_BASE_URL
+
+    wsdl_candidates = [
+        f"{base.rstrip('/')}/ServicioBLL/ClienteService?wsdl",
+        f"{base.rstrip('/')}/ServicioBLL/ClienteService/mex",
+        f"{base.rstrip('/')}/ServicioBLL/ClienteService?singleWsdl",
+    ]
+
+    for wsdl in wsdl_candidates:
+        try:
+            client = ZeepClient(wsdl)
+            services = []
+            for service in client.wsdl.services.values():
+                for port in service.ports.values():
+                    operations = list(port.binding._operations.keys())
+                    services.append({"service": service.name, "port": port.name, "operations": operations})
+            return {"wsdl": wsdl, "services": services}
+        except ZeepError as ze:
+            # try next candidate
+            last_exc = str(ze)
+        except Exception as e:
+            last_exc = str(e)
+
+    return {"error": "wsdl_unreachable", "message": last_exc, "candidates": wsdl_candidates}

@@ -1,19 +1,19 @@
-import { Link } from '@tanstack/react-router';
+﻿import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Grid2x2Plus, FileText, Receipt, Truck, Quote, CreditCard, ShoppingCart, Search, BarChart3 } from 'lucide-react';
 
 export default function VentasModule() {
   const features = [
-    { id: 'facturas', label: 'Facturas', icon: FileText, description: 'Gestionar facturas electrónicas' },
+    { id: 'facturas', label: 'Facturas', icon: FileText, description: 'Gestionar facturas electrÃ³nicas' },
     { id: 'boletas', label: 'Boletas', icon: Receipt, description: 'Boletas de venta' },
-    { id: 'guias', label: 'Guías de Remisión', icon: Truck, description: 'Guías de despacho' },
+    { id: 'guias', label: 'GuÃ­as de RemisiÃ³n', icon: Truck, description: 'GuÃ­as de despacho' },
     { id: 'cotizaciones', label: 'Cotizaciones', icon: Quote, description: 'Presupuestos y cotizaciones' },
-    { id: 'notas-credito', label: 'Notas de Crédito', icon: CreditCard, description: 'Notas de crédito y devoluciones' },
-    { id: 'cartera', label: 'Cartera de Clientes', icon: ShoppingCart, description: 'Gestión de clientes' },
-    { id: 'ordenes', label: 'Órdenes de Compra', icon: FileText, description: 'Órdenes de compra de clientes' },
+    { id: 'notas-credito', label: 'Notas de CrÃ©dito', icon: CreditCard, description: 'Notas de crÃ©dito y devoluciones' },
+    { id: 'cartera', label: 'Cartera de Clientes', icon: ShoppingCart, description: 'GestiÃ³n de clientes' },
+    { id: 'ordenes', label: 'Ã“rdenes de Compra', icon: FileText, description: 'Ã“rdenes de compra de clientes' },
     { id: 'consultas', label: 'Consultas', icon: Search, description: 'Consultar documentos' },
-    { id: 'reportes', label: 'Reportes', icon: BarChart3, description: 'Reportes y análisis' },
+    { id: 'reportes', label: 'Reportes', icon: BarChart3, description: 'Reportes y anÃ¡lisis' },
   ];
 
   return (
@@ -21,8 +21,8 @@ export default function VentasModule() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">Módulo de Ventas</h1>
-          <p className="text-lg text-slate-600">Gestión completa de documentos de venta, facturas, boletas y cartera de clientes</p>
+          <h1 className="text-4xl font-bold text-slate-900 mb-2">MÃ³dulo de Ventas</h1>
+          <p className="text-lg text-slate-600">GestiÃ³n completa de documentos de venta, facturas, boletas y cartera de clientes</p>
         </div>
 
         {/* Features Grid */}
@@ -41,7 +41,7 @@ export default function VentasModule() {
                   <CardDescription>{feature.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Link to={`/dashboard/ventas/${feature.id}`}>
+                  <Link to={`/dashboard/ventas/${feature.id}` as any}>
                     <Button className="w-full bg-blue-600 hover:bg-blue-700">Acceder</Button>
                   </Link>
                 </CardContent>
@@ -57,7 +57,7 @@ export default function VentasModule() {
             <p className="text-sm text-slate-600">Funcionalidades</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-green-600">∞</p>
+            <p className="text-3xl font-bold text-green-600">âˆž</p>
             <p className="text-sm text-slate-600">Documentos</p>
           </div>
           <div className="text-center">
@@ -69,3 +69,4 @@ export default function VentasModule() {
     </div>
   );
 }
+

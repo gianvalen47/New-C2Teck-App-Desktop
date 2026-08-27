@@ -190,6 +190,93 @@ class GastoModel(Base):
     updated_at = Column(DateTime, onupdate=func.now())
 
 
+class GuiaRemisionModel(Base):
+    """Guía de Remisión - Delivery note header"""
+    __tablename__ = "guias_remision"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id_locacion = Column(Integer, nullable=False, index=True)        # Oficina/Almacén
+    fec_doc = Column(DateTime, nullable=False)                       # Fecha documento
+    id_serie_doc = Column(Integer, nullable=True)                    # Serie del documento
+    num_doc = Column(Integer, nullable=False)                        # Número correlativo
+    id_cliente = Column(Integer, nullable=False, index=True)         # Cliente
+    id_loc_cli = Column(Integer, nullable=True)                      # Locación del cliente
+    id_fiscal = Column(Integer, nullable=True)                       # Dirección fiscal del cliente
+    cod_mot = Column(String, nullable=False)                         # Motivo (1=Venta, 2=Transf.gratuita, ...)
+    num_job = Column(String, nullable=True)                          # N° OT / Job
+    pto_partida = Column(Text, nullable=True)                        # Punto de partida
+    pto_llegada = Column(Text, nullable=True)                        # Punto de llegada / Loc. cliente
+    cod_mon = Column(String, nullable=False, default="NS")           # Moneda (NS=Soles, US=Dólares)
+    igv = Column(Float, nullable=False, default=18.0)               # % IGV
+    tip_cambio = Column(Float, nullable=True, default=1.0)          # Tipo de cambio
+    tot_flete = Column(Float, nullable=False, default=0.0)          # Flete
+    tot_embarque = Column(Float, nullable=False, default=0.0)       # Embarque
+    tot_bruto = Column(Float, nullable=False, default=0.0)          # Subtotal bruto
+    tot_dscto = Column(Float, nullable=False, default=0.0)          # Total descuento
+    tot_venta = Column(Float, nullable=False, default=0.0)          # Total venta
+    tot_igv = Column(Float, nullable=False, default=0.0)            # Total IGV
+    tot_neto = Column(Float, nullable=False, default=0.0)           # Total neto
+    num_orden = Column(String, nullable=True)                        # N° Orden de compra cliente
+    id_cotizacion = Column(Integer, nullable=True)                   # Cotización vinculada
+    observacion = Column(Text, nullable=True)                        # Observación
+    # Campos para guía electrónica SUNAT
+    peso_bruto = Column(Float, nullable=False, default=0.0)         # Peso total
+    cod_uni_med_peso = Column(String, nullable=False, default="KGM") # Unidad de medida del peso
+    numero_bultos = Column(Integer, nullable=False, default=1)      # Cant. bultos/palets
+    fec_traslado = Column(DateTime, nullable=True)                   # Fecha inicio traslado
+    cod_modo = Column(String, nullable=False, default="02")         # Modo traslado (01=Público, 02=Privado)
+    estado = Column(String, nullable=False, default="GENERADO")     # GENERADO, APROBADO, CREDITOS, ANULADO
+    tip_mov = Column(String, nullable=True)                         # Tipo de movimiento
+    cod_usu = Column(String, nullable=True)                         # Usuario que registró
+    nom_pc = Column(String, nullable=True)                          # Nombre del equipo
+    dir_ip = Column(String, nullable=True)                          # Dirección IP
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
+
+
+class GuiaRemisionDetModel(Base):
+    """Guía de Remisión - Delivery note detail lines"""
+    __tablename__ = "guias_remision_det"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id_guia = Column(Integer, nullable=False, index=True)            # FK -> GuiaRemision
+    item = Column(Integer, nullable=False, default=1)               # N° ítem
+    cod_mer = Column(String, nullable=False, index=True)            # Código mercadería
+    des_mer = Column(String, nullable=True)                         # Descripción
+    cod_uni_med = Column(String, nullable=True)                     # Unidad de medida
+    can_mer = Column(Float, nullable=False, default=0)              # Cantidad
+    pre_mer = Column(Float, nullable=False, default=0.0)            # Precio unitario
+    dsc_mer = Column(Float, nullable=False, default=0.0)            # Descuento unitario
+    total_fila = Column(Float, nullable=False, default=0.0)         # Total línea
+    regalo = Column(Boolean, nullable=False, default=False)         # Es regalo / cortesía
+    no_core = Column(Boolean, nullable=False, default=False)        # Sin core
+    cod_usu = Column(String, nullable=True)
+    nom_pc = Column(String, nullable=True)
+    dir_ip = Column(String, nullable=True)
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
+
+
+class TransportistaGuiaModel(Base):
+    """Transportista vinculado a la guía de remisión"""
+    __tablename__ = "transportistas_guia"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id_guia = Column(Integer, nullable=False, index=True)           # FK -> GuiaRemision
+    empresa = Column(String, nullable=True)                         # Empresa transportista
+    direccion = Column(String, nullable=True)                       # Dirección empresa
+    ruc = Column(String, nullable=True)                             # RUC transportista
+    vehiculo = Column(String, nullable=True)                        # Vehículo
+    placa = Column(String, nullable=True)                           # Placa
+    chofer = Column(String, nullable=True)                          # Nombre del chofer
+    licencia = Column(String, nullable=True)                        # Licencia conducir
+    cod_doc_chofer = Column(String, nullable=True)                  # Tipo doc. chofer (DNI, etc.)
+    num_doc_chofer = Column(String, nullable=True)                  # N° documento chofer
+    con_ins = Column(String, nullable=True)                         # Constancia de inscripción
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
+
+
 class UserModel(Base):
     """User/Login model"""
     __tablename__ = "users"

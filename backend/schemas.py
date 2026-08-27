@@ -366,6 +366,11 @@ class PurchaseRegisterCreate(PurchaseRegisterBase):
 class PurchaseRegisterUpdate(BaseModel):
     """Update purchase register"""
     document_type: Optional[str] = None
+    series: Optional[str] = None
+    number: Optional[str] = None
+    document_date: Optional[datetime] = None
+    receipt_date: Optional[datetime] = None
+    supplier_ruc: Optional[str] = None
     supplier_name: Optional[str] = None
     currency: Optional[str] = None
     taxable_base: Optional[float] = None
@@ -472,6 +477,173 @@ class GastoRead(GastoBase):
     reimbursed_date: Optional[datetime]
     created_at: datetime
     updated_at: Optional[datetime]
+
+    class Config:
+        from_attributes = True
+
+
+# ============================================================================
+# GUÍA DE REMISIÓN SCHEMAS
+# ============================================================================
+
+class GuiaRemisionDetBase(BaseModel):
+    """Línea de detalle de la Guía de Remisión"""
+    item: int = 1
+    cod_mer: str = Field(..., min_length=1)       # Código de mercadería
+    des_mer: Optional[str] = None                  # Descripción
+    cod_uni_med: Optional[str] = None             # Unidad de medida
+    can_mer: float                                  # Cantidad
+    pre_mer: float = 0.0                           # Precio unitario
+    dsc_mer: float = 0.0                           # Descuento
+    total_fila: Optional[float] = None             # Calculado: can * pre - dsc
+    regalo: bool = False                           # Es regalo/cortesía
+    no_core: bool = False                          # Sin core
+
+
+class GuiaRemisionDetCreate(GuiaRemisionDetBase):
+    """Crear detalle"""
+    pass
+
+
+class GuiaRemisionDetUpdate(BaseModel):
+    """Actualizar detalle"""
+    des_mer: Optional[str] = None
+    cod_uni_med: Optional[str] = None
+    can_mer: Optional[float] = None
+    pre_mer: Optional[float] = None
+    dsc_mer: Optional[float] = None
+    regalo: Optional[bool] = None
+    no_core: Optional[bool] = None
+
+
+class GuiaRemisionDetRead(GuiaRemisionDetBase):
+    """Leer detalle"""
+    id: int
+    id_guia: int
+    total_fila: float
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
+
+class TransportistaCreate(BaseModel):
+    """Datos del transportista"""
+    empresa: Optional[str] = None        # Empresa transportista
+    direccion: Optional[str] = None      # Dirección
+    ruc: Optional[str] = None            # RUC
+    vehiculo: Optional[str] = None       # Tipo/marca vehículo
+    placa: Optional[str] = None          # Placa
+    chofer: Optional[str] = None         # Nombre chofer
+    licencia: Optional[str] = None       # N° licencia
+    cod_doc_chofer: Optional[str] = None # Tipo doc. chofer (1=DNI, 4=Carné extranjer.)
+    num_doc_chofer: Optional[str] = None # N° documento chofer
+    con_ins: Optional[str] = None        # Constancia inscripción MTC
+
+
+class TransportistaRead(TransportistaCreate):
+    """Leer transportista"""
+    id: int
+    id_guia: int
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
+
+class GuiaRemisionBase(BaseModel):
+    """Campos base de la Guía de Remisión"""
+    id_locacion: int                              # Oficina/Almacén emisor
+    fec_doc: datetime                             # Fecha del documento
+    id_serie_doc: Optional[int] = None            # Serie del documento
+    num_doc: int                                  # Número correlativo
+    id_cliente: int                               # ID del cliente
+    id_loc_cli: Optional[int] = None              # Locación del cliente (dirección de entrega)
+    id_fiscal: Optional[int] = None               # Dirección fiscal del cliente
+    cod_mot: str = "1"                            # Motivo (1=Venta, 2=Transf.gratuita, 3=Consignación, ...)
+    num_job: Optional[str] = None                 # N° OT / Job
+    pto_partida: Optional[str] = None             # Punto de partida (dirección de despacho)
+    pto_llegada: Optional[str] = None             # Punto de llegada
+    cod_mon: str = "NS"                           # Moneda (NS=Soles, US=Dólares)
+    igv: float = 18.0                             # % IGV
+    tip_cambio: Optional[float] = 1.0            # Tipo de cambio
+    tot_flete: float = 0.0                        # Costo flete
+    tot_embarque: float = 0.0                     # Costo embarque
+    num_orden: Optional[str] = None               # N° Orden de compra del cliente
+    id_cotizacion: Optional[int] = None           # Cotización vinculada
+    observacion: Optional[str] = None             # Observación libre
+    # Campos SUNAT para guía electrónica
+    peso_bruto: float = 0.0                       # Peso total (kg)
+    cod_uni_med_peso: str = "KGM"                 # Unidad medida peso (KGM=Kilogramos, TNE=Toneladas)
+    numero_bultos: int = 1                        # Cantidad de bultos/palets
+    fec_traslado: Optional[datetime] = None       # Fecha inicio de traslado
+    cod_modo: str = "02"                          # Modo de traslado (01=Transporte Público, 02=Transporte Privado)
+
+
+class GuiaRemisionCreate(GuiaRemisionBase):
+    """Crear Guía de Remisión"""
+    detalles: List[GuiaRemisionDetCreate] = []
+
+
+class GuiaRemisionUpdate(BaseModel):
+    """Actualizar cabecera de la Guía de Remisión (solo campos modificables)"""
+    id_loc_cli: Optional[int] = None
+    id_fiscal: Optional[int] = None
+    pto_partida: Optional[str] = None
+    pto_llegada: Optional[str] = None
+    num_job: Optional[str] = None
+    num_orden: Optional[str] = None
+    id_cotizacion: Optional[int] = None
+    observacion: Optional[str] = None
+    tot_flete: Optional[float] = None
+    tot_embarque: Optional[float] = None
+    cod_mon: Optional[str] = None
+    tip_cambio: Optional[float] = None
+    igv: Optional[float] = None
+    peso_bruto: Optional[float] = None
+    cod_uni_med_peso: Optional[str] = None
+    numero_bultos: Optional[int] = None
+    fec_traslado: Optional[datetime] = None
+    cod_modo: Optional[str] = None
+    estado: Optional[str] = None
+
+
+class GuiaRemisionRead(GuiaRemisionBase):
+    """Leer Guía de Remisión con totales calculados"""
+    id: int
+    tot_bruto: float
+    tot_dscto: float
+    tot_venta: float
+    tot_igv: float
+    tot_neto: float
+    estado: str
+    tip_mov: Optional[str] = None
+    detalles: List[GuiaRemisionDetRead] = []
+    transportista: Optional[TransportistaRead] = None
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
+
+class GuiaRemisionListRead(GuiaRemisionBase):
+    """Leer Guía de Remisión en listado (sin detalles)"""
+    id: int
+    tot_bruto: float
+    tot_dscto: float
+    tot_venta: float
+    tot_igv: float
+    tot_neto: float
+    cliente_nombre: Optional[str] = None
+    estado: str
+    estado_sunat: Optional[str] = None
+    cod_serie: Optional[str] = None
+    tot_neto_sug: Optional[float] = None
+    created_at: datetime
+    updated_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True

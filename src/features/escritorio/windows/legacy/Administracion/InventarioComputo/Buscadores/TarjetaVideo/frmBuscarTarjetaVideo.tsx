@@ -1,0 +1,13 @@
+// Auto-generated stub for legacy form
+// Original: Administracion/InventarioComputo/Buscadores/TarjetaVideo/frmBuscarTarjetaVideo.vb
+import React from 'react'
+
+export default function frmBuscarTarjetaVideo() {
+  return (
+    <div style={padding:20}>
+      <h2>Legacy form: frmBuscarTarjetaVideo</h2>
+      <p>Original file copied to: <code>Administracion/InventarioComputo/Buscadores/TarjetaVideo/frmBuscarTarjetaVideo.vb</code></p>
+      <p>This component is a placeholder. Implement React UI here.</p>
+    </div>
+  )
+}

@@ -1,0 +1,447 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class frmKardex_Tarjetas
+    Inherits System.Windows.Forms.Form
+
+    'Form overrides dispose to clean up the component list.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container
+        Dim cmbCodRub_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmKardex_Tarjetas))
+        Dim cmbIdClase_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout
+        Dim cmbIdLocacion_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout
+        Dim cmbOficinas_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout
+        Dim dgvDatos_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout
+        Me.cmOpciones = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.miMostrar = New System.Windows.Forms.ToolStripMenuItem
+        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator
+        Me.miActualizar = New System.Windows.Forms.ToolStripMenuItem
+        Me.miSalir = New System.Windows.Forms.ToolStripMenuItem
+        Me.txtUbiMer = New System.Windows.Forms.TextBox
+        Me.Label6 = New System.Windows.Forms.Label
+        Me.Label5 = New System.Windows.Forms.Label
+        Me.cmbCodRub = New Janus.Windows.GridEX.EditControls.MultiColumnCombo
+        Me.Label1 = New System.Windows.Forms.Label
+        Me.cmbIdClase = New Janus.Windows.GridEX.EditControls.MultiColumnCombo
+        Me.Label4 = New System.Windows.Forms.Label
+        Me.cmbIdLocacion = New Janus.Windows.GridEX.EditControls.MultiColumnCombo
+        Me.Label2 = New System.Windows.Forms.Label
+        Me.cmbOficinas = New Janus.Windows.GridEX.EditControls.MultiColumnCombo
+        Me.txtCodMer = New System.Windows.Forms.TextBox
+        Me.btnBuscar = New System.Windows.Forms.Button
+        Me.Label3 = New System.Windows.Forms.Label
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox
+        Me.ofEstiloForm = New Janus.Windows.Ribbon.OfficeFormAdorner(Me.components)
+        Me.ssBarra = New System.Windows.Forms.StatusStrip
+        Me.sslError = New System.Windows.Forms.ToolStripStatusLabel
+        Me.sslTotal = New System.Windows.Forms.ToolStripStatusLabel
+        Me.biMostrar = New System.Windows.Forms.ToolStripButton
+        Me.ToolStrip = New System.Windows.Forms.ToolStrip
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator
+        Me.biActualizar = New System.Windows.Forms.ToolStripButton
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator
+        Me.biSalir = New System.Windows.Forms.ToolStripButton
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator
+        Me.dgvDatos = New Janus.Windows.GridEX.GridEX
+        Me.cmOpciones.SuspendLayout()
+        CType(Me.cmbCodRub, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cmbIdClase, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cmbIdLocacion, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cmbOficinas, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox1.SuspendLayout()
+        CType(Me.ofEstiloForm, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ssBarra.SuspendLayout()
+        Me.ToolStrip.SuspendLayout()
+        CType(Me.dgvDatos, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'cmOpciones
+        '
+        Me.cmOpciones.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.miMostrar, Me.ToolStripSeparator5, Me.ToolStripMenuItem1, Me.miActualizar, Me.miSalir})
+        Me.cmOpciones.Name = "cmOpciones"
+        Me.cmOpciones.Size = New System.Drawing.Size(133, 82)
+        '
+        'miMostrar
+        '
+        Me.miMostrar.Image = Global.SIGECOM.My.Resources.Resources.Seleccionar
+        Me.miMostrar.Name = "miMostrar"
+        Me.miMostrar.Size = New System.Drawing.Size(132, 22)
+        Me.miMostrar.Text = "Mostrar"
+        '
+        'ToolStripSeparator5
+        '
+        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
+        Me.ToolStripSeparator5.Size = New System.Drawing.Size(129, 6)
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(129, 6)
+        '
+        'miActualizar
+        '
+        Me.miActualizar.Image = Global.SIGECOM.My.Resources.Resources.Actualizar
+        Me.miActualizar.Name = "miActualizar"
+        Me.miActualizar.Size = New System.Drawing.Size(132, 22)
+        Me.miActualizar.Text = "Actualizar"
+        '
+        'miSalir
+        '
+        Me.miSalir.Image = Global.SIGECOM.My.Resources.Resources.Cerrar
+        Me.miSalir.Name = "miSalir"
+        Me.miSalir.Size = New System.Drawing.Size(132, 22)
+        Me.miSalir.Text = "Salir"
+        '
+        'txtUbiMer
+        '
+        Me.txtUbiMer.Location = New System.Drawing.Point(568, 29)
+        Me.txtUbiMer.MaxLength = 30
+        Me.txtUbiMer.Name = "txtUbiMer"
+        Me.txtUbiMer.Size = New System.Drawing.Size(96, 20)
+        Me.txtUbiMer.TabIndex = 5
+        Me.txtUbiMer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(568, 13)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(93, 13)
+        Me.Label6.TabIndex = 12
+        Me.Label6.Text = "Ubicación Mer."
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(374, 12)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(41, 13)
+        Me.Label5.TabIndex = 10
+        Me.Label5.Text = "Rubro"
+        '
+        'cmbCodRub
+        '
+        Me.cmbCodRub.ComboStyle = Janus.Windows.GridEX.ComboStyle.DropDownList
+        cmbCodRub_DesignTimeLayout.LayoutString = resources.GetString("cmbCodRub_DesignTimeLayout.LayoutString")
+        Me.cmbCodRub.DesignTimeLayout = cmbCodRub_DesignTimeLayout
+        Me.cmbCodRub.Location = New System.Drawing.Point(374, 29)
+        Me.cmbCodRub.Name = "cmbCodRub"
+        Me.cmbCodRub.SelectedIndex = -1
+        Me.cmbCodRub.SelectedItem = Nothing
+        Me.cmbCodRub.Size = New System.Drawing.Size(90, 20)
+        Me.cmbCodRub.TabIndex = 3
+        Me.cmbCodRub.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(280, 14)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(38, 13)
+        Me.Label1.TabIndex = 9
+        Me.Label1.Text = "Clase"
+        '
+        'cmbIdClase
+        '
+        Me.cmbIdClase.ComboStyle = Janus.Windows.GridEX.ComboStyle.DropDownList
+        cmbIdClase_DesignTimeLayout.LayoutString = resources.GetString("cmbIdClase_DesignTimeLayout.LayoutString")
+        Me.cmbIdClase.DesignTimeLayout = cmbIdClase_DesignTimeLayout
+        Me.cmbIdClase.Location = New System.Drawing.Point(280, 29)
+        Me.cmbIdClase.Name = "cmbIdClase"
+        Me.cmbIdClase.SelectedIndex = -1
+        Me.cmbIdClase.SelectedItem = Nothing
+        Me.cmbIdClase.Size = New System.Drawing.Size(90, 20)
+        Me.cmbIdClase.TabIndex = 2
+        Me.cmbIdClase.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(101, 15)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(55, 13)
+        Me.Label4.TabIndex = 8
+        Me.Label4.Text = "Almacén"
+        '
+        'cmbIdLocacion
+        '
+        Me.cmbIdLocacion.ComboStyle = Janus.Windows.GridEX.ComboStyle.DropDownList
+        cmbIdLocacion_DesignTimeLayout.LayoutString = resources.GetString("cmbIdLocacion_DesignTimeLayout.LayoutString")
+        Me.cmbIdLocacion.DesignTimeLayout = cmbIdLocacion_DesignTimeLayout
+        Me.cmbIdLocacion.Location = New System.Drawing.Point(101, 29)
+        Me.cmbIdLocacion.Name = "cmbIdLocacion"
+        Me.cmbIdLocacion.SelectedIndex = -1
+        Me.cmbIdLocacion.SelectedItem = Nothing
+        Me.cmbIdLocacion.Size = New System.Drawing.Size(175, 20)
+        Me.cmbIdLocacion.TabIndex = 1
+        Me.cmbIdLocacion.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(7, 14)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(47, 13)
+        Me.Label2.TabIndex = 7
+        Me.Label2.Text = "Oficina"
+        '
+        'cmbOficinas
+        '
+        Me.cmbOficinas.ComboStyle = Janus.Windows.GridEX.ComboStyle.DropDownList
+        cmbOficinas_DesignTimeLayout.LayoutString = resources.GetString("cmbOficinas_DesignTimeLayout.LayoutString")
+        Me.cmbOficinas.DesignTimeLayout = cmbOficinas_DesignTimeLayout
+        Me.cmbOficinas.Location = New System.Drawing.Point(7, 29)
+        Me.cmbOficinas.Name = "cmbOficinas"
+        Me.cmbOficinas.SelectedIndex = -1
+        Me.cmbOficinas.SelectedItem = Nothing
+        Me.cmbOficinas.Size = New System.Drawing.Size(90, 20)
+        Me.cmbOficinas.TabIndex = 0
+        Me.cmbOficinas.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'txtCodMer
+        '
+        Me.txtCodMer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCodMer.Location = New System.Drawing.Point(468, 29)
+        Me.txtCodMer.MaxLength = 30
+        Me.txtCodMer.Name = "txtCodMer"
+        Me.txtCodMer.Size = New System.Drawing.Size(96, 20)
+        Me.txtCodMer.TabIndex = 4
+        Me.txtCodMer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'btnBuscar
+        '
+        Me.btnBuscar.Image = CType(resources.GetObject("btnBuscar.Image"), System.Drawing.Image)
+        Me.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnBuscar.Location = New System.Drawing.Point(666, 26)
+        Me.btnBuscar.Name = "btnBuscar"
+        Me.btnBuscar.Size = New System.Drawing.Size(69, 25)
+        Me.btnBuscar.TabIndex = 6
+        Me.btnBuscar.Text = "Buscar"
+        Me.btnBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnBuscar.UseVisualStyleBackColor = True
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(468, 13)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(75, 13)
+        Me.Label3.TabIndex = 11
+        Me.Label3.Text = "Código Mer."
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.txtUbiMer)
+        Me.GroupBox1.Controls.Add(Me.Label6)
+        Me.GroupBox1.Controls.Add(Me.Label5)
+        Me.GroupBox1.Controls.Add(Me.cmbCodRub)
+        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Controls.Add(Me.cmbIdClase)
+        Me.GroupBox1.Controls.Add(Me.Label4)
+        Me.GroupBox1.Controls.Add(Me.cmbIdLocacion)
+        Me.GroupBox1.Controls.Add(Me.Label2)
+        Me.GroupBox1.Controls.Add(Me.cmbOficinas)
+        Me.GroupBox1.Controls.Add(Me.txtCodMer)
+        Me.GroupBox1.Controls.Add(Me.btnBuscar)
+        Me.GroupBox1.Controls.Add(Me.Label3)
+        Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Location = New System.Drawing.Point(2, 40)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(745, 55)
+        Me.GroupBox1.TabIndex = 0
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Datos de Búsqueda"
+        '
+        'ofEstiloForm
+        '
+        Me.ofEstiloForm.Form = Me
+        Me.ofEstiloForm.Office2007CustomColor = System.Drawing.Color.Empty
+        '
+        'ssBarra
+        '
+        Me.ssBarra.AutoSize = False
+        Me.ssBarra.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.sslError, Me.sslTotal})
+        Me.ssBarra.Location = New System.Drawing.Point(0, 359)
+        Me.ssBarra.Name = "ssBarra"
+        Me.ssBarra.Size = New System.Drawing.Size(749, 20)
+        Me.ssBarra.TabIndex = 2
+        '
+        'sslError
+        '
+        Me.sslError.AutoSize = False
+        Me.sslError.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.sslError.Name = "sslError"
+        Me.sslError.Size = New System.Drawing.Size(500, 15)
+        '
+        'sslTotal
+        '
+        Me.sslTotal.AutoSize = False
+        Me.sslTotal.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left
+        Me.sslTotal.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.sslTotal.ForeColor = System.Drawing.SystemColors.Desktop
+        Me.sslTotal.Name = "sslTotal"
+        Me.sslTotal.Size = New System.Drawing.Size(180, 15)
+        Me.sslTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'biMostrar
+        '
+        Me.biMostrar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.biMostrar.Image = Global.SIGECOM.My.Resources.Resources.Seleccionar
+        Me.biMostrar.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.biMostrar.Name = "biMostrar"
+        Me.biMostrar.Size = New System.Drawing.Size(26, 32)
+        Me.biMostrar.Text = "Mostrar los datos del registro seleccionado"
+        '
+        'ToolStrip
+        '
+        Me.ToolStrip.ImageScalingSize = New System.Drawing.Size(22, 22)
+        Me.ToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripSeparator2, Me.biMostrar, Me.ToolStripSeparator1, Me.biActualizar, Me.ToolStripSeparator4, Me.biSalir, Me.ToolStripSeparator3})
+        Me.ToolStrip.Location = New System.Drawing.Point(0, 0)
+        Me.ToolStrip.MinimumSize = New System.Drawing.Size(0, 35)
+        Me.ToolStrip.Name = "ToolStrip"
+        Me.ToolStrip.Size = New System.Drawing.Size(749, 35)
+        Me.ToolStrip.TabIndex = 3
+        Me.ToolStrip.Text = "ToolStrip"
+        '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 35)
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 35)
+        '
+        'biActualizar
+        '
+        Me.biActualizar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.biActualizar.Image = Global.SIGECOM.My.Resources.Resources.Actualizar
+        Me.biActualizar.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.biActualizar.Name = "biActualizar"
+        Me.biActualizar.Size = New System.Drawing.Size(26, 32)
+        Me.biActualizar.Text = "Actualizar Datos del Formulario"
+        '
+        'ToolStripSeparator4
+        '
+        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(6, 35)
+        '
+        'biSalir
+        '
+        Me.biSalir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.biSalir.Image = Global.SIGECOM.My.Resources.Resources.Cerrar
+        Me.biSalir.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.biSalir.Name = "biSalir"
+        Me.biSalir.Size = New System.Drawing.Size(26, 32)
+        Me.biSalir.Text = "Cerrar la ventana actual"
+        '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(6, 35)
+        '
+        'dgvDatos
+        '
+        Me.dgvDatos.ContextMenuStrip = Me.cmOpciones
+        dgvDatos_DesignTimeLayout.LayoutString = resources.GetString("dgvDatos_DesignTimeLayout.LayoutString")
+        Me.dgvDatos.DesignTimeLayout = dgvDatos_DesignTimeLayout
+        Me.dgvDatos.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.dgvDatos.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.dgvDatos.GroupByBoxVisible = False
+        Me.dgvDatos.Location = New System.Drawing.Point(0, 102)
+        Me.dgvDatos.Name = "dgvDatos"
+        Me.dgvDatos.RowFormatStyle.ForeColor = System.Drawing.Color.MidnightBlue
+        Me.dgvDatos.RowHeaders = Janus.Windows.GridEX.InheritableBoolean.[True]
+        Me.dgvDatos.ScrollBars = Janus.Windows.GridEX.ScrollBars.Both
+        Me.dgvDatos.Size = New System.Drawing.Size(749, 257)
+        Me.dgvDatos.TabIndex = 4
+        Me.dgvDatos.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2003
+        '
+        'frmKardex_Tarjetas
+        '
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
+        Me.ClientSize = New System.Drawing.Size(749, 379)
+        Me.Controls.Add(Me.dgvDatos)
+        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.ssBarra)
+        Me.Controls.Add(Me.ToolStrip)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.KeyPreview = True
+        Me.MaximizeBox = False
+        Me.MaximumSize = New System.Drawing.Size(757, 413)
+        Me.MinimizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(757, 413)
+        Me.Name = "frmKardex_Tarjetas"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "Tarjetas del kardex"
+        Me.cmOpciones.ResumeLayout(False)
+        CType(Me.cmbCodRub, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cmbIdClase, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cmbIdLocacion, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cmbOficinas, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        CType(Me.ofEstiloForm, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ssBarra.ResumeLayout(False)
+        Me.ssBarra.PerformLayout()
+        Me.ToolStrip.ResumeLayout(False)
+        Me.ToolStrip.PerformLayout()
+        CType(Me.dgvDatos, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+    Friend WithEvents cmOpciones As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents miMostrar As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents miActualizar As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents txtUbiMer As System.Windows.Forms.TextBox
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents cmbCodRub As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents cmbIdClase As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents cmbIdLocacion As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents cmbOficinas As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents txtCodMer As System.Windows.Forms.TextBox
+    Friend WithEvents btnBuscar As System.Windows.Forms.Button
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents ofEstiloForm As Janus.Windows.Ribbon.OfficeFormAdorner
+    Friend WithEvents ssBarra As System.Windows.Forms.StatusStrip
+    Friend WithEvents sslError As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents sslTotal As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents ToolStrip As System.Windows.Forms.ToolStrip
+    Friend WithEvents biMostrar As System.Windows.Forms.ToolStripButton
+    Friend WithEvents biSalir As System.Windows.Forms.ToolStripButton
+    Friend WithEvents miSalir As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents biActualizar As System.Windows.Forms.ToolStripButton
+    Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripSeparator5 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents dgvDatos As Janus.Windows.GridEX.GridEX
+End Class

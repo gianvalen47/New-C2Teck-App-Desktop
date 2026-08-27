@@ -1,0 +1,13 @@
+// Auto-generated stub for legacy form
+// Original: Contabilidad/Tesoreria/Impresion/rptCheque_CreditoNS.vb
+import React from 'react'
+
+export default function rptCheque_CreditoNS() {
+  return (
+    <div style={padding:20}>
+      <h2>Legacy form: rptCheque_CreditoNS</h2>
+      <p>Original file copied to: <code>Contabilidad/Tesoreria/Impresion/rptCheque_CreditoNS.vb</code></p>
+      <p>This component is a placeholder. Implement React UI here.</p>
+    </div>
+  )
+}

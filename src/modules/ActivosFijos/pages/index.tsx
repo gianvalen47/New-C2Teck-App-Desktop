@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router';
+﻿import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { PieChart, TrendingDown, BarChart3, Search } from 'lucide-react';
@@ -6,7 +6,7 @@ import { PieChart, TrendingDown, BarChart3, Search } from 'lucide-react';
 export default function ActivosFijosModule() {
   const features = [
     { id: 'compra', label: 'Compra de Activos', icon: PieChart, description: 'Registrar adquisiciones' },
-    { id: 'depreciacion', label: 'Depreciación', icon: TrendingDown, description: 'Cálculo de depreciación' },
+    { id: 'depreciacion', label: 'DepreciaciÃ³n', icon: TrendingDown, description: 'CÃ¡lculo de depreciaciÃ³n' },
     { id: 'consultas', label: 'Consultas', icon: Search, description: 'Consultar activos' },
     { id: 'reportes', label: 'Reportes', icon: BarChart3, description: 'Reportes de activos' },
   ];
@@ -15,8 +15,8 @@ export default function ActivosFijosModule() {
     <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">Módulo de Activos Fijos</h1>
-          <p className="text-lg text-slate-600">Gestión completa del ciclo de vida de activos fijos y depreciación</p>
+          <h1 className="text-4xl font-bold text-slate-900 mb-2">MÃ³dulo de Activos Fijos</h1>
+          <p className="text-lg text-slate-600">GestiÃ³n completa del ciclo de vida de activos fijos y depreciaciÃ³n</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -34,7 +34,7 @@ export default function ActivosFijosModule() {
                   <CardDescription>{feature.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Link to={`/dashboard/activos-fijos/${feature.id}`}>
+                  <Link to={`/dashboard/activos-fijos/${feature.id}` as any}>
                     <Button className="w-full bg-cyan-600 hover:bg-cyan-700">Acceder</Button>
                   </Link>
                 </CardContent>
@@ -49,7 +49,7 @@ export default function ActivosFijosModule() {
             <p className="text-sm text-slate-600">Funcionalidades</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-green-600">✓</p>
+            <p className="text-3xl font-bold text-green-600">âœ“</p>
             <p className="text-sm text-slate-600">Disponible</p>
           </div>
           <div className="text-center">
@@ -61,3 +61,4 @@ export default function ActivosFijosModule() {
     </div>
   );
 }
+

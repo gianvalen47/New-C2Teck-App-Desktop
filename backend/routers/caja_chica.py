@@ -1,10 +1,14 @@
 """
 API routers for Caja Chica (petty cash) and Gastos (expenses)
+
+Consumes from legacy SIGECOM adapter when enabled, otherwise uses local SQLite.
 """
+import logging
+import uuid
+from datetime import datetime
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from datetime import datetime
-import uuid
 
 from config import SessionLocal
 from models import CajaChicaModel, GastoModel
@@ -16,6 +20,13 @@ from schemas import (
     GastoRead,
     GastoUpdate,
 )
+from legacy_adapter import (
+    is_legacy_source_enabled,
+    list_caja_chica_legacy,
+    get_caja_chica_legacy,
+)
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/caja-chica", tags=["Caja Chica"])
 
@@ -34,14 +45,44 @@ def get_db():
 
 @router.get("", response_model=list[CajaChicaRead])
 def list_caja_chica(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    """List all petty cash accounts."""
+    """List all petty cash accounts (from legacy adapter if enabled)"""
+    if is_legacy_source_enabled():
+        try:
+            data = list_caja_chica_legacy(skip=skip, limit=limit)
+            if isinstance(data, dict) and "items" in data:
+                return data["items"]
+            elif isinstance(data, list):
+                return data
+            else:
+                return [data] if data else []
+        except Exception as exc:
+            logger.error(f"Failed to fetch caja chica from legacy adapter: {exc}")
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail=f"SIGECOM legacy adapter unavailable: {type(exc).__name__}. "
+                       f"Start sigecoom-wcf-adapter.exe or check SIGECOM_LEGACY_ADAPTER_BASE_URL.",
+            )
+
+    # Fallback to local SQLite
     cajas = db.query(CajaChicaModel).offset(skip).limit(limit).all()
     return cajas
 
 
 @router.get("/{caja_id}", response_model=CajaChicaRead)
 def get_caja_chica(caja_id: str, db: Session = Depends(get_db)):
-    """Get a specific petty cash account."""
+    """Get a specific petty cash account (from legacy adapter if enabled)"""
+    if is_legacy_source_enabled():
+        try:
+            return get_caja_chica_legacy(caja_id)
+        except Exception as exc:
+            logger.error(f"Failed to fetch caja chica {caja_id} from legacy adapter: {exc}")
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail=f"SIGECOM legacy adapter unavailable: {type(exc).__name__}. "
+                       f"Start sigecoom-wcf-adapter.exe or check SIGECOM_LEGACY_ADAPTER_BASE_URL.",
+            )
+
+    # Fallback to local SQLite
     caja = db.query(CajaChicaModel).filter(CajaChicaModel.id == caja_id).first()
     if not caja:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Caja Chica {caja_id} not found")

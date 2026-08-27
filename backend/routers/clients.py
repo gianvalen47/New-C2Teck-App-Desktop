@@ -1,14 +1,24 @@
 """
 API routers for clients
+Consumes from legacy SIGECOM adapter when enabled, otherwise uses local SQLite.
 """
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+import logging
 import uuid
 from datetime import datetime
+
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
 
 from config import SessionLocal
 from models import ClientModel
 from schemas import ClientCreate, ClientRead, ClientUpdate
+from legacy_adapter import (
+    is_legacy_source_enabled,
+    list_clients_legacy,
+    get_client_legacy,
+)
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/clients", tags=["Clients"])
 
@@ -22,15 +32,48 @@ def get_db():
 
 
 @router.get("", response_model=list[ClientRead])
-def list_clients(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    """List all clients"""
+def list_clients(skip: int = 0, limit: int = 500, db: Session = Depends(get_db)):
+    """List all clients (from legacy adapter if enabled)"""
+    if is_legacy_source_enabled():
+        try:
+            data = list_clients_legacy(skip=skip, limit=limit)
+            # data is already normalized by legacy_adapter
+            if isinstance(data, dict) and "items" in data:
+                return data["items"]
+            elif isinstance(data, list):
+                return data
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                    detail="Legacy adapter returned unexpected format"
+                )
+        except Exception as e:
+            logger.error(f"Failed to fetch clients from legacy adapter: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail=f"Legacy adapter unavailable: {type(e).__name__}. Start sigecoom-wcf-adapter.exe."
+            )
+
+    # Fallback to local SQLite
     clients = db.query(ClientModel).offset(skip).limit(limit).all()
     return clients
 
 
 @router.get("/{client_id}", response_model=ClientRead)
 def get_client(client_id: str, db: Session = Depends(get_db)):
-    """Get a specific client"""
+    """Get a specific client (from legacy adapter if enabled)"""
+    if is_legacy_source_enabled():
+        try:
+            data = get_client_legacy(client_id)
+            return data
+        except Exception as e:
+            logger.error(f"Failed to fetch client {client_id} from legacy adapter: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail=f"Legacy adapter unavailable: {type(e).__name__}. Start sigecoom-wcf-adapter.exe."
+            )
+
+    # Fallback to local SQLite
     client = db.query(ClientModel).filter(ClientModel.id == client_id).first()
     if not client:
         raise HTTPException(
