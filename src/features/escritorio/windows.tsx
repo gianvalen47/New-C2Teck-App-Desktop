@@ -4,6 +4,12 @@ import * as React from 'react';
 import systeckIcon from "@/assets/Systeck.ico";
 import logoC2 from "@/assets/Logos/LogoC2teck02.png";
 import {
+  X, Check, Save, Printer, Search, Plus, Trash2, FileDown, FileSpreadsheet,
+  Mail, Send, RefreshCw, Filter, Calendar, DollarSign, User, Package,
+  Wrench, Clock, Car, MapPin, Phone, Users, GraduationCap, Fingerprint, Play, Square,
+  Minus, Maximize2, Minimize2, Copy, Zap, Receipt, LogOut, Settings, ArrowDown, ArrowRight, FileSearch, Percent, CreditCard, Pencil, BarChart3, TrendingUp, TrendingDown, Activity, Brain, Server, ShieldAlert, Sparkles
+} from "lucide-react";
+import {
   inp,
   btn,
   Field,
@@ -18,10 +24,22 @@ import {
   ListQueryForm,
   LookupDialog,
 } from "@/components/ui/desktop-primitives";
-import { normalizeWindowLabel } from "@/context/WindowsContext";
+import { Glyph } from "@/features/escritorio/glyphs";
+import c2teckWatermark from "@/assets/logos/LogoC2teck02.png";
+import { toast } from "sonner";
 import { ReporteContainerList } from "./windows/Reportes/ReporteContainer";
 // Legacy monolith renderer fallback
-import { renderWindow as legacyRenderWindow, Workspace as LegacyWorkspace } from "@/components/windows (1).tsx";
+import {
+  WindowsProvider,
+  useWindows,
+  openDesktopWindow,
+  normalizeWindowLabel,
+  normalizeWindowLookupKey,
+  DESKTOP_STATUS_BAR_H,
+  type WindowSize,
+  type WindowPos,
+  type OpenWindow,
+} from "@/context/WindowsContext";
 import { enhanceToolbar } from "./windows/shared/toolbars";
 
 // Specific feature windows (moved to their own modules)
@@ -261,6 +279,7 @@ add("Reporte GR Pendiente", ReporteGRPendienteList);
 add("Reporte Detalle Descuento", ReporteDetalleDescuentoList);
 add("Reporte Cotizaciones", ReporteCotizacionesList);
 add("Reporte Consignacion", ReporteConsignacionList);
+add("Consignaciones", ReporteConsignacionList);
 add("Reporte Comisiones", ReporteComisionesList);
 add("Reporte Acumulada", ReporteAcumuladaList);
 
@@ -320,17 +339,6 @@ variants.forEach(v => {
   }
 });
 
-// --- Public API ---
-export function getWindowComponentForLabel(label: string): WindowComponent {
-  const key = normalizeWindowLabel(label);
-  if (registry[key]) return registry[key];
-  // fallback: if the legacy monolith knows how to render this label, wrap it
-  return ((props: any) => {
-    const node = legacyRenderWindow(label);
-    return <>{enhanceToolbar(node)}</> as any;
-  }) as WindowComponent;
-}
-
 export function hasWindowForLabel(label: string): boolean {
   return !!registry[normalizeWindowLabel(label)];
 }
@@ -339,17 +347,6 @@ export function registerWindow(label: string, comp: WindowComponent) {
   add(label, comp);
 }
 
-export default getWindowComponentForLabel;
-
-// Backwards-compatible helpers used by older codepaths.
-export function renderWindow(label: string) {
-  const C = getWindowComponentForLabel(label);
-  return C ? React.createElement(C) : null;
-}
-
-export function Workspace(): React.ReactElement {
-  return <LegacyWorkspace />;
-}
 
 // ---------- Ventas: Documentos ----------
 function GuiaRemision() {
@@ -1370,3 +1367,584 @@ const REGISTRY: Record<string, (label: string) => ReactNode> = {
   "Informacion Cambios": () => <InfoCambios />,
   "Acerca": () => <Acerca />,
 };
+
+
+// Reports of Ventas
+const VENTAS_REPORTES = new Set([
+  "Registro de Venta", "Acumulada", "Mensuales x Cliente", "Reclamos", "Consignaciones",
+  "Presupuesto Venta", "Detalle", "G/R Pendiente", "Vale Requisición", "Detalle Descuento",
+  "Órdenes Compra", "Guías Remisión", "Comisiones",
+]);
+
+// Reports of Créditos
+const CREDITOS_REPORTES = new Set([
+  "Cuentas Corrientes", "Documentos Emitidos", "Notas Débito/Crédito", "Notas Débito / Crédito",
+  "Vista Cobrador", "Clientes", "Diario de Pagos", "Letras Aceptadas",
+  "Vencimientos",
+]);
+
+// Reports of Almacenes
+const ALMACEN_REPORTES = new Set([
+  "Inventario", "Movimientos", "Toma de Inventario", "Vale Materiales",
+  "Inv. Perm. Valorizado", "Sin Movimiento",
+]);
+
+// Reports of Costos
+const COSTOS_REPORTES = new Set([
+  "Actualizar Costos", "Diario de Almacén", "Diario de Almacen", "Stock Valorizado", "Kardex", "Condensados",
+  "Resumen General", "GMROI", "Cuadrar Cierre", "Costo de Venta", "Motores", "Sobregiro",
+]);
+
+// Reports of Contabilidad
+const CONTABILIDAD_REPORTES = new Set([
+  "Reembolsos", "Ctas Ctes", "Mayor Auxiliar", "Cheques Girados",
+  "Libros Oficiales", "Ctas Ctes Pendiente", "Estado Financiero", "Provisionales",
+]);
+
+// Reports of Compras
+const COMPRAS_REPORTES = new Set([
+  "Ordenes Compra", "Pagos Cuentas x Pagar", "Solicitud Gastos",
+  "Cuentas x Pagar Por Unidad",
+]);
+
+const GERENCIA_REPORTES = new Set([
+  "000 - Ventas", "010 - Importaciones", "020 - Inventario y Costos", "030 - Contabilidad",
+  "040 - Creditos y Cobranzas", "Datos para Indicadores", "Tarjeta", "Contenedor Reportes", "Estados Financieros",
+]);
+
+const CRM_REPORTES = new Set([
+  "Oportunidad Negocio", "Tarjeta Cliente", "Cuota Vendedor", "Ocurrencias", "Visita Clientes",
+]);
+
+// Reports of Servicios / Talleres
+const SERVICIOS_REPORTES = new Set([
+  "Actividades", "Plantilla", "Productividad", "Programación", "Programacion", "Tablero",
+  "Movimiento Repuestos", "Horas Motor", "Seguimiento", "Generar Pedido", "Horas Escalon", "Horas Escalón",
+  "Motores", "Repuestos", "Gastos Detallados", "Horas de Trabajo", "Gastos Por Rubros",
+  "Liquidación x Garantía", "Liquidacion x Garantia", "LiquidaciÃ³n x Garantia", "Solicitud Garantía", "Solicitud Garantia",
+  "Horas Muertas", "Pendiente Facturación", "Pendiente Facturacion", "Tiempo Reparación", "Tiempo Reparacion",
+  "Proyección", "Proyeccion",
+]);
+
+// Reports of Personal / RRHH
+const PERSONAL_REPORTES = new Set([
+  "Tardanzas", "Contratos", "Asistencia", "Onomásticos", "Onomasticos", "Asignación Horario", "Asignacion Horario",
+]);
+
+const normalizeSet = (values: Iterable<string>) => new Set(Array.from(values, normalizeWindowLookupKey));
+const NORMALIZED_REGISTRY: Record<string, (label: string) => ReactNode> = Object.fromEntries(
+  Object.entries(REGISTRY).map(([key, value]) => [normalizeWindowLookupKey(key), value]),
+);
+const VENTAS_REPORTES_NORMALIZED = normalizeSet(VENTAS_REPORTES);
+const CREDITOS_REPORTES_NORMALIZED = normalizeSet(CREDITOS_REPORTES);
+const ALMACEN_REPORTES_NORMALIZED = normalizeSet(ALMACEN_REPORTES);
+const COSTOS_REPORTES_NORMALIZED = normalizeSet(COSTOS_REPORTES);
+const CONTABILIDAD_REPORTES_NORMALIZED = normalizeSet(CONTABILIDAD_REPORTES);
+const COMPRAS_REPORTES_NORMALIZED = normalizeSet(COMPRAS_REPORTES);
+const GERENCIA_REPORTES_NORMALIZED = normalizeSet(GERENCIA_REPORTES);
+const CRM_REPORTES_NORMALIZED = normalizeSet(CRM_REPORTES);
+const SERVICIOS_REPORTES_NORMALIZED = normalizeSet(SERVICIOS_REPORTES);
+const PERSONAL_REPORTES_NORMALIZED = normalizeSet(PERSONAL_REPORTES);
+
+export function renderWindow(label: string): ReactNode {
+  const normalizedLabel = normalizeWindowLookupKey(label);
+  if (NORMALIZED_REGISTRY[normalizedLabel]) return NORMALIZED_REGISTRY[normalizedLabel](normalizeWindowLabel(label));
+  if (normalizedLabel === normalizeWindowLookupKey("Detalle")) return <VentaReporteDialog label={normalizeWindowLabel(label)} />;
+  
+  // Mapeo de reportes específicos a componentes personalizados
+  switch (normalizedLabel) {
+    case "Acumulada":
+      return <ReporteAcumulada />;
+    case "Guias Remision":
+      return <GuiaRemision />;
+    case "Cotizaciones":
+      return <ReporteCotizaciones />;
+    case "Vale Requisición":
+      return <ReporteValeRequisicion />;
+    case "Mensuales x Cliente":
+      return <ReporteMensualCliente />;
+    case "Detalle Descuento":
+      return <ReporteDetalleDescuento />;
+    case "Reclamos":
+      return <ReporteReclamos />;
+    case "OrdenesCompra":
+      return <ReporteOrdenCompra />;
+    case "Consignaciones":
+      return <ReporteConsignacion />;
+    case "G/R Pendiente":
+      return <ReporteGRPendiente />;
+    case "Presupuesto Venta":
+      return <ReportePresupuestoVenta />;
+    case "Comisiones":
+      return <ReporteComisiones />;
+    case "Costo de Venta":
+      return <ReporteCostoVenta />;
+  }
+  
+  if (VENTAS_REPORTES_NORMALIZED.has(normalizedLabel)) return <VentaReporteDialog label={normalizeWindowLabel(label)} />;
+  if (CREDITOS_REPORTES_NORMALIZED.has(normalizedLabel)) return <CreditosReporteDialog label={normalizeWindowLabel(label)} />;
+  if (ALMACEN_REPORTES_NORMALIZED.has(normalizedLabel)) return <AlmacenReporteDialog label={normalizeWindowLabel(label)} />;
+  if (COSTOS_REPORTES_NORMALIZED.has(normalizedLabel)) return <CostosReporteDialog label={normalizeWindowLabel(label)} />;
+  if (CONTABILIDAD_REPORTES_NORMALIZED.has(normalizedLabel)) return <ContabilidadReporteDialog label={normalizeWindowLabel(label)} />;
+  if (COMPRAS_REPORTES_NORMALIZED.has(normalizedLabel)) return <ComprasReporteDialog label={normalizeWindowLabel(label)} />;
+  if (GERENCIA_REPORTES_NORMALIZED.has(normalizedLabel)) return <GerenciaReporteDialog label={normalizeWindowLabel(label)} />;
+  if (CRM_REPORTES_NORMALIZED.has(normalizedLabel)) return <CrmReporteDialog label={normalizeWindowLabel(label)} />;
+  if (SERVICIOS_REPORTES_NORMALIZED.has(normalizedLabel)) return <ServicioReporteDialog label={normalizeWindowLabel(label)} />;
+  if (PERSONAL_REPORTES_NORMALIZED.has(normalizedLabel)) return <PersonalReporteDialog label={normalizeWindowLabel(label)} />;
+
+  if (/gerencia|indicador|estado financiero|contenedor reportes|cobranzas|importaciones|inventario y costos/i.test(normalizedLabel)) {
+    return <GerenciaReporteDialog label={normalizedLabel} />;
+  }
+  if (/crm|oportunidad|visita clientes|cuota vendedor|ocurrencias|tarjeta cliente/i.test(normalizedLabel)) {
+    return <CrmReporteDialog label={normalizedLabel} />;
+  }
+  return <ConsultaPreciosDialog/>;
+}
+
+
+// ---------- MDI floating workspace ----------
+export function Workspace() {
+  const { windows, active, open, close, focus, move, toggleMaximize, minimize, restore } = useWindows();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const DESKTOP_SMOKE_LABELS = [
+    "Factura",
+    "Ctas x Cobrar",
+    "Doc. Ingresos",
+    "Registro Compra",
+    "Orden de Compra",
+    "Orden de Trabajo",
+    "Marcación Online",
+    "Usuarios",
+    "Oportunidad Negocio",
+    "000 - Ventas",
+    "Acerca",
+  ];
+
+  useEffect(() => {
+    const onOpenWindow = (event: Event) => {
+      const detail = (event as CustomEvent<{ label?: string }>).detail;
+      if (detail?.label) open(detail.label);
+    };
+
+    const onRunDesktopSmoke = (event: Event) => {
+      const detail = (event as CustomEvent<{ labels?: string[] }>).detail;
+      const desktopWindow = window as Window & { __systeckAllMenuLabels?: string[] };
+      const sourceLabels =
+        (Array.isArray(detail?.labels) && detail.labels.length > 0 && detail.labels)
+        || (Array.isArray(desktopWindow.__systeckAllMenuLabels) && desktopWindow.__systeckAllMenuLabels.length > 0 && desktopWindow.__systeckAllMenuLabels)
+        || DESKTOP_SMOKE_LABELS;
+
+      const uniqueLabels = Array.from(new Set(
+        sourceLabels
+          .map((label) => normalizeWindowLabel(String(label)))
+          .filter(Boolean),
+      ));
+
+      const fallbackLabels = uniqueLabels.filter((label) => {
+        const node = renderWindow(label);
+        return isValidElement(node) && node.type === ConsultaPreciosDialog;
+      });
+
+      const coveredCount = uniqueLabels.length - fallbackLabels.length;
+      uniqueLabels.forEach((label, index) => {
+        window.setTimeout(() => open(label), index * 120);
+      });
+
+      toast.success("Recorrido desktop E2E iniciado", {
+        description: `${uniqueLabels.length} ventanas en apertura secuencial. Cobertura: ${coveredCount}/${uniqueLabels.length}.`,
+      });
+
+      if (fallbackLabels.length > 0) {
+        const sample = fallbackLabels.slice(0, 6).join(", ");
+        const extra = fallbackLabels.length > 6 ? ` (+${fallbackLabels.length - 6} más)` : "";
+        toast.message("Cobertura parcial detectada", {
+          description: `Fallback en ${fallbackLabels.length} labels: ${sample}${extra}.`,
+        });
+      } else {
+        toast.success("Cobertura completa", {
+          description: "No se detectaron labels en fallback.",
+        });
+      }
+
+      console.info("[Desktop Smoke]", {
+        total: uniqueLabels.length,
+        covered: coveredCount,
+        fallbackCount: fallbackLabels.length,
+        fallbackLabels,
+      });
+    };
+
+    window.addEventListener("systeck-open-window", onOpenWindow as EventListener);
+    window.addEventListener("systeck-run-desktop-smoke", onRunDesktopSmoke as EventListener);
+    return () => {
+      window.removeEventListener("systeck-open-window", onOpenWindow as EventListener);
+      window.removeEventListener("systeck-run-desktop-smoke", onRunDesktopSmoke as EventListener);
+    };
+  }, [open]);
+
+  const visible = windows.filter(w => !w.isMinimized);
+  const minimized = windows.filter(w => w.isMinimized);
+
+  return (
+    <div
+      ref={containerRef}
+      data-mdi-workspace="true"
+      className="relative flex-1 bg-slate-200/70 overflow-hidden z-20 min-h-0"
+      style={{ flex: 1, backgroundImage: "radial-gradient(circle at 1px 1px, rgba(62,91,122,0.10) 1px, transparent 0)", backgroundSize: "22px 22px" }}
+    >
+      {/* Watermark — always visible behind floating windows */}
+      <div className={["absolute inset-0 grid place-items-center select-none pointer-events-none px-8 transition-opacity duration-300", windows.length > 0 ? "opacity-30" : "opacity-100"].join(" ")}>
+        <div className="text-center">
+          <img
+              src={c2teckWatermark}
+              alt="C2TECK"
+              className="max-w-[70vw] max-h-[60vh] w-auto h-auto object-contain opacity-90 drop-shadow-[0_10px_30px_rgba(58,85,115,0.25)]"
+            />
+            <div className="text-slate-400 text-[11px] mt-6 font-mono">// abre un módulo desde el ribbon superior</div>
+          </div>
+      </div>
+
+      {/* Floating windows */}
+      {visible.map(w => (
+        <FloatingWindow
+          key={w.id}
+          win={w}
+          isActive={active === w.id}
+          containerRef={containerRef}
+          onFocus={() => focus(w.id)}
+          onClose={() => close(w.id)}
+          onMove={(pos) => move(w.id, pos)}
+          onToggleMaximize={() => toggleMaximize(w.id)}
+          onMinimize={() => minimize(w.id)}
+        />
+      ))}
+
+      {/* Taskbar for minimized windows */}
+      {minimized.length > 0 && (
+        <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[#2A3F55] to-[#3E5B7A] border-t border-slate-900/40 flex items-center gap-1 px-2 z-[9999]">
+          {minimized.map(w => (
+            <button
+              key={w.id}
+              onClick={() => restore(w.id)}
+              className="h-6 px-2 max-w-[180px] flex items-center gap-1.5 text-[11px] text-white bg-white/10 hover:bg-white/20 rounded-sm border border-white/10 truncate"
+              title={w.title}
+            >
+              <Square className="h-2.5 w-2.5 shrink-0" />
+              <span className="truncate">{w.title}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+type FWProps = {
+  win: OpenWindow;
+  isActive: boolean;
+  containerRef: RefObject<HTMLDivElement | null>;
+  onFocus: () => void;
+  onClose: () => void;
+  onMove: (pos: WindowPos) => void;
+  onToggleMaximize: () => void;
+  onMinimize: () => void;
+};
+
+const STATUS_BAR_H = DESKTOP_STATUS_BAR_H; // two h-7 rows in escritorio status bar
+
+function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove, onToggleMaximize, onMinimize }: FWProps) {
+  const [pos, setPos] = useState({ x: win.position.x, y: win.position.y });
+  const [localSize, setLocalSize] = useState({ w: win.size.w, h: win.size.h });
+  const posRef = useRef(pos);
+  const sizeRef = useRef(localSize);
+  const pendingPosRef = useRef(pos);
+  const pendingSizeRef = useRef(localSize);
+  const rafRef = useRef<number | null>(null);
+  const dragRef = useRef<{ sx: number; sy: number; ox: number; oy: number } | null>(null);
+  const resizeRef = useRef<{ sx: number; sy: number; ox: number; oy: number; ow: number; oh: number; dir: string } | null>(null);
+  const [contextMenu, setContextMenu] = useState<{ left: number; top: number } | null>(null);
+
+  const scheduleVisualUpdate = useCallback(() => {
+    if (rafRef.current !== null) return;
+    rafRef.current = window.requestAnimationFrame(() => {
+      rafRef.current = null;
+      setPos(pendingPosRef.current);
+      setLocalSize(pendingSizeRef.current);
+    });
+  }, []);
+
+  const closeContextMenu = () => setContextMenu(null);
+
+  const onDragStart = (e: ReactMouseEvent) => {
+    if (win.isMaximized) return;
+    if ((e.target as HTMLElement).closest("[data-window-control]")) return;
+    onFocus();
+    dragRef.current = {
+      sx: e.clientX, sy: e.clientY,
+      ox: posRef.current.x, oy: posRef.current.y,
+    };
+    document.body.style.userSelect = "none";
+    e.preventDefault();
+  };
+
+  const onResizeStart = (e: ReactMouseEvent, dir: string) => {
+    if (win.isMaximized) return;
+    onFocus();
+    resizeRef.current = {
+      sx: e.clientX, sy: e.clientY,
+      ox: posRef.current.x, oy: posRef.current.y,
+      ow: sizeRef.current.w, oh: sizeRef.current.h,
+      dir,
+    };
+    document.body.style.userSelect = "none";
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const onContextMenu = (e: ReactMouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    onFocus();
+    setContextMenu({ left: e.clientX, top: e.clientY });
+  };
+
+  useEffect(() => {
+    if (!contextMenu) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeContextMenu();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [contextMenu]);
+
+  useEffect(() => {
+    const onMouseMove = (e: MouseEvent) => {
+      const cw = containerRef.current?.offsetWidth ?? window.innerWidth;
+      const ch = containerRef.current?.offsetHeight ?? Math.max(320, window.innerHeight - STATUS_BAR_H);
+
+      const d = dragRef.current;
+      if (d) {
+        const dx = e.clientX - d.sx;
+        const dy = e.clientY - d.sy;
+        const maxX = Math.max(0, cw - sizeRef.current.w);
+        const maxY = Math.max(0, ch - sizeRef.current.h);
+        const next = {
+          x: Math.max(0, Math.min(d.ox + dx, maxX)),
+          y: Math.max(0, Math.min(d.oy + dy, maxY)),
+        };
+        pendingPosRef.current = next;
+        pendingSizeRef.current = sizeRef.current;
+        scheduleVisualUpdate();
+        return;
+      }
+
+      const r = resizeRef.current;
+      if (!r) return;
+
+      const dx = e.clientX - r.sx;
+      const dy = e.clientY - r.sy;
+      const MIN_W = 200;
+      const MIN_H = 120;
+
+      let nx = r.ox, ny = r.oy, nw = r.ow, nh = r.oh;
+
+      if (r.dir.includes('e')) {
+        nw = Math.min(cw - nx, Math.max(MIN_W, r.ow + dx));
+      }
+      if (r.dir.includes('s')) {
+        nh = Math.min(ch - ny, Math.max(MIN_H, r.oh + dy));
+      }
+      if (r.dir.includes('w')) {
+        const maxNx = r.ox + r.ow - MIN_W;
+        nx = Math.max(0, Math.min(r.ox + dx, maxNx));
+        nw = r.ow + (r.ox - nx);
+      }
+      if (r.dir.includes('n')) {
+        const maxNy = r.oy + r.oh - MIN_H;
+        ny = Math.max(0, Math.min(r.oy + dy, maxNy));
+        nh = r.oh + (r.oy - ny);
+      }
+
+      if (ny + nh > ch) nh = ch - ny;
+      if (nx + nw > cw) nw = cw - nx;
+
+      nw = Math.max(MIN_W, nw);
+      nh = Math.max(MIN_H, nh);
+
+      pendingPosRef.current = { x: nx, y: ny };
+      pendingSizeRef.current = { w: nw, h: nh };
+      scheduleVisualUpdate();
+    };
+
+    const onMouseUp = () => {
+      const wasDragging = Boolean(dragRef.current || resizeRef.current);
+      if (wasDragging) {
+        setPos(pendingPosRef.current);
+        setLocalSize(pendingSizeRef.current);
+        onMove(pendingPosRef.current);
+      }
+      dragRef.current = null;
+      resizeRef.current = null;
+      if (rafRef.current !== null) {
+        window.cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+      document.body.style.userSelect = "";
+    };
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+      if (rafRef.current !== null) {
+        window.cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+      document.body.style.userSelect = "";
+    };
+  }, [onMove, containerRef, scheduleVisualUpdate]);
+
+  useEffect(() => {
+    setPos(win.position);
+    pendingPosRef.current = win.position;
+  }, [win.position.x, win.position.y]);
+
+  useEffect(() => {
+    posRef.current = pos;
+  }, [pos]);
+
+  useEffect(() => {
+    sizeRef.current = localSize;
+  }, [localSize]);
+
+  useEffect(() => {
+    setLocalSize(win.size);
+    pendingSizeRef.current = win.size;
+  }, [win.size.w, win.size.h]);
+
+  // Use absolute positioning inside the workspace container (position:relative).
+  // This keeps windows correctly contained within the MDI area (below ribbon, above status bar).
+  const style: CSSProperties = win.isMaximized
+    ? { left: 0, top: 0, right: 0, bottom: 0, width: "auto", height: "auto", zIndex: win.zIndex, position: "absolute" }
+    : { left: pos.x, top: pos.y, width: localSize.w, height: localSize.h, zIndex: win.zIndex, position: "absolute" };
+
+  return (
+    <div
+      className={[
+        "flex flex-col bg-white border border-slate-400/60 shadow-2xl overflow-hidden",
+        win.isMaximized ? "rounded-none" : "rounded-lg",
+        isActive
+          ? "ring-2 ring-[#3B5998]/40"
+          : "ring-1 ring-slate-300/40",
+      ].join(" ")}
+      style={style}
+      onMouseDown={onFocus}
+    >
+      {/* Resize handles */}
+      {!win.isMaximized && (
+        <>
+          <div className="absolute top-0 left-3 right-3 h-2 cursor-n-resize z-10" onMouseDown={(e) => onResizeStart(e, 'n')} />
+          <div className="absolute bottom-0 left-3 right-3 h-2 cursor-s-resize z-10" onMouseDown={(e) => onResizeStart(e, 's')} />
+          <div className="absolute left-0 top-3 bottom-3 w-2 cursor-w-resize z-10" onMouseDown={(e) => onResizeStart(e, 'w')} />
+          <div className="absolute right-0 top-3 bottom-3 w-2 cursor-e-resize z-10" onMouseDown={(e) => onResizeStart(e, 'e')} />
+          <div className="absolute top-0 left-0 h-3 w-3 cursor-nw-resize z-10" onMouseDown={(e) => onResizeStart(e, 'nw')} />
+          <div className="absolute top-0 right-0 h-3 w-3 cursor-ne-resize z-10" onMouseDown={(e) => onResizeStart(e, 'ne')} />
+          <div className="absolute bottom-0 left-0 h-3 w-3 cursor-sw-resize z-10" onMouseDown={(e) => onResizeStart(e, 'sw')} />
+          <div className="absolute bottom-0 right-0 h-3 w-3 cursor-se-resize z-10" onMouseDown={(e) => onResizeStart(e, 'se')} />
+        </>
+      )}
+      {/* Title bar */}
+      <div
+        onMouseDown={onDragStart}
+        onDoubleClick={onToggleMaximize}
+        onContextMenu={onContextMenu}
+        className={[
+          "h-9 px-3 flex items-center justify-between select-none shrink-0",
+          win.isMaximized ? "cursor-default" : "cursor-move",
+          isActive
+            ? "bg-gradient-to-b from-[#4C6E93] to-[#2A3F55] text-white"
+            : "bg-gradient-to-b from-slate-300 to-slate-400 text-slate-800",
+        ].join(" ")}
+      >
+        <div className="flex items-center gap-2 min-w-0">
+          <div className={["h-4 w-4 rounded-sm grid place-items-center shrink-0", isActive ? "bg-white/20" : "bg-white/40"].join(" ")}>
+            <Square className="h-2.5 w-2.5" />
+          </div>
+          <span className="text-[12px] font-semibold truncate">{win.title}</span>
+        </div>
+        <div className="flex items-center gap-0.5" data-window-control>
+          <button
+            onClick={(e) => { e.stopPropagation(); onMinimize(); }}
+            className="h-6 w-8 grid place-items-center rounded hover:bg-white/20"
+            title="Minimizar"
+          >
+            <Minus className="h-3.5 w-3.5" />
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); onToggleMaximize(); }}
+            className="h-6 w-8 grid place-items-center rounded hover:bg-white/20"
+            title={win.isMaximized ? "Restaurar" : "Maximizar"}
+          >
+            {win.isMaximized ? <Minimize2 className="h-3.5 w-3.5" /> : <Maximize2 className="h-3.5 w-3.5" />}
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); onClose(); }}
+            className="h-6 w-8 grid place-items-center rounded hover:bg-red-600 hover:text-white"
+            title="Cerrar"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      </div>
+
+      {/* Body */}
+      <div className="flex-1 min-h-0 overflow-hidden bg-white">
+        {renderWindow(win.label)}
+      </div>
+      {contextMenu && createPortal(
+        <>
+          <div className="fixed inset-0 z-[2147483645]" onMouseDown={closeContextMenu} />
+          <div
+            className="fixed z-[2147483646] min-w-[220px] rounded-sm border border-slate-300/80 bg-white shadow-2xl p-2"
+            style={{ left: contextMenu.left, top: contextMenu.top }}
+          >
+            <div className="flex items-center gap-2 border-b border-slate-200 pb-2 mb-2">
+              <Glyph name={win.label} size={20} className="shrink-0" />
+              <div>
+                <div className="text-[12px] font-semibold truncate max-w-[170px]">{win.title}</div>
+                <div className="text-[10px] text-slate-500">Menú contextual de ventana</div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-1">
+              <button
+                type="button"
+                onClick={() => { onToggleMaximize(); closeContextMenu(); }}
+                className="flex items-center gap-2 rounded px-2 py-1.5 text-sm text-slate-800 hover:bg-slate-100"
+              >
+                {win.isMaximized ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+                <span>{win.isMaximized ? "Restaurar" : "Maximizar"}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => { onMinimize(); closeContextMenu(); }}
+                className="flex items-center gap-2 rounded px-2 py-1.5 text-sm text-slate-800 hover:bg-slate-100"
+              >
+                <Minus className="h-4 w-4" />
+                <span>Minimizar</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => { onClose(); closeContextMenu(); }}
+                className="flex items-center gap-2 rounded px-2 py-1.5 text-sm text-slate-800 hover:bg-slate-100"
+              >
+                <X className="h-4 w-4" />
+                <span>Cerrar</span>
+              </button>
+            </div>
+          </div>
+        </>,
+        document.body,
+      )}
+    </div>
+  );
+}
