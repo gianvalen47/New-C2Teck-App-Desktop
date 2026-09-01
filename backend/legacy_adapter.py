@@ -305,6 +305,37 @@ def _normalize_guia(guia: dict) -> dict:
         "created_at": _normalize_datetime(guia.get("created_at") or guia.get("CreatedAt")),
         "updated_at": _normalize_datetime(guia.get("updated_at") or guia.get("UpdatedAt")),
     }
+    # Ensure required totals and id exist for downstream schema compatibility.
+    # Fill sensible defaults when legacy adapter omits fields.
+    # Do not fabricate business data — prefer conservative fallbacks.
+    # Normalize numeric totals
+    tot_neto = normalized.get("tot_neto") or 0.0
+    if "tot_bruto" not in normalized or normalized.get("tot_bruto") is None:
+        normalized["tot_bruto"] = _normalize_decimal(tot_neto) or 0.0
+    if "tot_dscto" not in normalized or normalized.get("tot_dscto") is None:
+        normalized["tot_dscto"] = 0.0
+    if "tot_venta" not in normalized or normalized.get("tot_venta") is None:
+        # tot_venta as conservative fallback equals tot_neto
+        normalized["tot_venta"] = _normalize_decimal(tot_neto) or 0.0
+    if "tot_igv" not in normalized or normalized.get("tot_igv") is None:
+        # Use explicit IGV value if present, otherwise default 0.0
+        normalized["tot_igv"] = _normalize_decimal(normalized.get("igv")) or 0.0
+
+    # Ensure an `id` is present: use existing id or compose from location/series/number
+    if not normalized.get("id"):
+        try:
+            lid = normalized.get("id_locacion") or ""
+            ser = normalized.get("id_serie_doc") or ""
+            num = normalized.get("num_doc") or ""
+            composed = f"{lid}-{ser}-{num}".strip("-")
+            normalized["id"] = composed or None
+        except Exception:
+            normalized["id"] = None
+
+    # Ensure created_at exists (fallback to document date)
+    if not normalized.get("created_at"):
+        normalized["created_at"] = normalized.get("fec_doc")
+
     return {k: v for k, v in normalized.items() if v is not None}
 
 

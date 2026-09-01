@@ -18,6 +18,7 @@ from datetime import datetime
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 from config import SessionLocal, SIGECOM_DATA_SOURCE
@@ -130,7 +131,7 @@ def _to_read(guia: GuiaRemisionModel, db: Session) -> GuiaRemisionRead:
 # GUÍA DE REMISIÓN — CABECERA
 # ===========================================================================
 
-@router.get("", response_model=List[GuiaRemisionListRead], summary="Listar Guías de Remisión")
+@router.get("", summary="Listar Guías de Remisión")
 def list_guias(
     anio: Optional[int] = Query(None, description="Año del documento"),
     mes: Optional[int] = Query(None, ge=1, le=12, description="Mes (1–12)"),
@@ -162,13 +163,16 @@ def list_guias(
                 skip=skip,
                 limit=limit,
             )
-            # Normalize response: extract items if wrapped
+            # When using the legacy adapter return the raw JSON response
+            # without triggering pydantic response_model validation which
+            # expects fields that the legacy adapter may not provide.
             if isinstance(data, dict) and "items" in data:
-                return data["items"]
+                items = data["items"]
             elif isinstance(data, list):
-                return data
+                items = data
             else:
-                return [data] if data else []
+                items = [data] if data else []
+            return JSONResponse(content=items)
         except Exception as exc:
             logger.error(f"Failed to fetch guías from legacy adapter: {exc}")
             raise HTTPException(
@@ -206,7 +210,7 @@ def list_guias(
     return [_build_list_row(guia, db) for guia in guias]
 
 
-@router.get("/{id_guia}", response_model=GuiaRemisionRead, summary="Obtener Guía de Remisión")
+@router.get("/{id_guia}", summary="Obtener Guía de Remisión")
 def get_guia(id_guia: int, db: Session = Depends(get_db)):
     """
     Equivalente a `GuiaRemisionService.MostrarPorId(IdGuia)`.

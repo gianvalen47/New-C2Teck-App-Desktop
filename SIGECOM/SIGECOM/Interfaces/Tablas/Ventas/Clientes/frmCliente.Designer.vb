@@ -1657,7 +1657,7 @@ Partial Class frmCliente
         Me.ToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripSeparator13, Me.btnGuardar, Me.ToolStripSeparator14, Me.btnDeshacer, Me.ToolStripSeparator15, Me.btnEditar, Me.ToolStripSeparator1, Me.btnCancelar})
         Me.ToolStrip.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip.Name = "ToolStrip"
-        Me.ToolStrip.Size = New System.Drawing.Size(718, 31)
+        Me.ToolStrip.Size = New System.Drawing.Size(736, 31)
         Me.ToolStrip.TabIndex = 23
         Me.ToolStrip.Text = "ToolStrip"
         '
@@ -1722,9 +1722,9 @@ Partial Class frmCliente
         Me.ssBarra.AutoSize = False
         Me.ssBarra.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold)
         Me.ssBarra.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.sslError, Me.sslTotal})
-        Me.ssBarra.Location = New System.Drawing.Point(0, 578)
+        Me.ssBarra.Location = New System.Drawing.Point(0, 593)
         Me.ssBarra.Name = "ssBarra"
-        Me.ssBarra.Size = New System.Drawing.Size(718, 20)
+        Me.ssBarra.Size = New System.Drawing.Size(736, 20)
         Me.ssBarra.TabIndex = 25
         '
         'sslError
@@ -1742,7 +1742,7 @@ Partial Class frmCliente
         'frmCliente
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
-        Me.ClientSize = New System.Drawing.Size(718, 598)
+        Me.ClientSize = New System.Drawing.Size(736, 613)
         Me.Controls.Add(Me.gbDatos)
         Me.Controls.Add(Me.ssBarra)
         Me.Controls.Add(Me.ToolStrip)

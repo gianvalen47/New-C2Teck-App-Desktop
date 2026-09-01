@@ -1,5 +1,8 @@
 using System.Data;
+using System.Net;
+using System.Net.Security;
 using System.Reflection;
+using System.Security.Principal;
 using System.ServiceModel;
 using Microsoft.AspNetCore.Mvc;
 using sigecoom_wcf_proxies.GuiaRemisionService;
@@ -11,11 +14,22 @@ namespace sigecoom_wcf_adapter.Controllers
     public class GuiasRemisionController : ControllerBase
     {
         private readonly string _serviceAddress;
+        private readonly string? _domain;
+        private readonly string? _username;
+        private readonly string? _password;
 
         public GuiasRemisionController(IConfiguration configuration)
         {
             _serviceAddress = configuration.GetValue<string>("Sigecoom:GuiaRemisionServiceBaseUrl")
+                ?? Environment.GetEnvironmentVariable("SIGECOM_SERVICE_URL")
                 ?? "net.tcp://192.168.10.252/ServicioBLL/GuiaRemisionService/";
+
+            _domain = configuration.GetValue<string>("Sigecoom:Domain")
+                ?? Environment.GetEnvironmentVariable("SIGECOM_DOMAIN");
+            _username = configuration.GetValue<string>("Sigecoom:Username")
+                ?? Environment.GetEnvironmentVariable("SIGECOM_USERNAME");
+            _password = configuration.GetValue<string>("Sigecoom:Password")
+                ?? Environment.GetEnvironmentVariable("SIGECOM_PASSWORD");
         }
 
         [HttpGet]
@@ -44,9 +58,12 @@ namespace sigecoom_wcf_adapter.Controllers
             }
             catch (Exception ex)
             {
-                // Return mock data if WCF service is unavailable
-                System.Console.WriteLine($"GuiaRemisionService error: {ex.Message}. Returning mock data...");
-                return Ok(GetMockGuiasRemision(anio, mes, id_locacion, id_serie_doc, id_cliente, estado, num_doc));
+                System.Console.WriteLine($"GuiaRemisionService error: {ex.Message}");
+                System.Console.WriteLine($"Inner exception: {ex.InnerException?.Message}");
+                return Problem(
+                    title: "SIGECOM WCF error",
+                    detail: ex.InnerException?.Message ?? ex.Message,
+                    statusCode: StatusCodes.Status503ServiceUnavailable);
             }
         }
 
@@ -61,16 +78,17 @@ namespace sigecoom_wcf_adapter.Controllers
             }
             catch (Exception ex)
             {
+                System.Console.WriteLine($"GuiaRemisionService error on GetById({id}): {ex.Message}");
                 return Problem(
                     title: "SIGECOM WCF error",
                     detail: ex.Message,
-                    statusCode: StatusCodes.Status500InternalServerError);
+                    statusCode: StatusCodes.Status503ServiceUnavailable);
             }
         }
 
         private GuiaRemisionServiceClient CreateClient()
         {
-            var binding = new NetTcpBinding(SecurityMode.None)
+            var binding = new NetTcpBinding(SecurityMode.Transport)
             {
                 CloseTimeout = TimeSpan.FromMinutes(1),
                 OpenTimeout = TimeSpan.FromMinutes(1),
@@ -79,10 +97,35 @@ namespace sigecoom_wcf_adapter.Controllers
                 MaxBufferPoolSize = 524_288,
                 MaxBufferSize = 65_536_066,
                 MaxReceivedMessageSize = 65_536_066,
+                Security = new NetTcpSecurity
+                {
+                    Mode = SecurityMode.Transport,
+                    Transport = new TcpTransportSecurity
+                    {
+                        ClientCredentialType = TcpClientCredentialType.Windows,
+                        ProtectionLevel = ProtectionLevel.EncryptAndSign,
+                    }
+                }
             };
 
             var endpoint = new EndpointAddress(_serviceAddress);
-            return new GuiaRemisionServiceClient(binding, endpoint);
+            var client = new GuiaRemisionServiceClient(binding, endpoint);
+
+            if (!string.IsNullOrWhiteSpace(_username) && !string.IsNullOrWhiteSpace(_password))
+            {
+                client.ClientCredentials.Windows.ClientCredential = new NetworkCredential(
+                    _username,
+                    _password,
+                    string.IsNullOrWhiteSpace(_domain) ? Environment.UserDomainName : _domain);
+                client.ClientCredentials.Windows.AllowedImpersonationLevel = TokenImpersonationLevel.Impersonation;
+            }
+            else
+            {
+                client.ClientCredentials.Windows.ClientCredential = CredentialCache.DefaultNetworkCredentials;
+                client.ClientCredentials.Windows.AllowedImpersonationLevel = TokenImpersonationLevel.Impersonation;
+            }
+
+            return client;
         }
 
         private static IEnumerable<IDictionary<string, object?>> ParseGuiaRemisionRows(DataSet? dataset)
@@ -162,82 +205,5 @@ namespace sigecoom_wcf_adapter.Controllers
             return dict;
         }
 
-        /// <summary>
-        /// Mock data for Guías de Remisión - returns sample data matching VB.NET format
-        /// </summary>
-        private static IEnumerable<IDictionary<string, object?>> GetMockGuiasRemision(
-            int? anio, int? mes, int? id_locacion, int? id_serie_doc, int? id_cliente, string? estado, int? num_doc)
-        {
-            var mockData = new List<IDictionary<string, object?>>
-            {
-                new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase)
-                {
-                    { "id_locacion", 1 },
-                    { "fec_doc", "2026-08-03" },
-                    { "id_serie_doc", 1 },
-                    { "num_doc", 6 },
-                    { "id_cliente", 200 },
-                    { "cliente", "RIOS ROSALES CARLOS" },
-                    { "id_loc_cli", null },
-                    { "id_fiscal", null },
-                    { "cod_mot", "1" },
-                    { "num_job", "" },
-                    { "pto_partida", "CAL. ANTONIO ULLOA NRO. 2182 URB. EL FLORES" },
-                    { "pto_llegada", "OFICINA PRINCIPAL" },
-                    { "cod_mon", "US" },
-                    { "igv", 18.0 },
-                    { "tip_cambio", 3.4 },
-                    { "tot_flete", 0.0 },
-                    { "tot_embarque", 0.0 },
-                    { "tot_bruto", 100.0 },
-                    { "tot_neto", 100.0 },
-                    { "estado", "V" },
-                    { "fec_registro", "2026-08-03T10:30:00" }
-                },
-                new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase)
-                {
-                    { "id_locacion", 1 },
-                    { "fec_doc", "2026-08-02" },
-                    { "id_serie_doc", 1 },
-                    { "num_doc", 5 },
-                    { "id_cliente", 4877 },
-                    { "cliente", "C2teck SAC" },
-                    { "id_loc_cli", null },
-                    { "id_fiscal", null },
-                    { "cod_mot", "1" },
-                    { "num_job", "" },
-                    { "pto_partida", "AV. PRINCIPAL 123" },
-                    { "pto_llegada", "LIMA" },
-                    { "cod_mon", "US" },
-                    { "igv", 18.0 },
-                    { "tip_cambio", 3.4 },
-                    { "tot_flete", 50.0 },
-                    { "tot_embarque", 25.0 },
-                    { "tot_bruto", 250.0 },
-                    { "tot_neto", 250.0 },
-                    { "estado", "V" },
-                    { "fec_registro", "2026-08-02T14:15:30" }
-                }
-            };
-
-            // Filter by parameters if provided
-            if (anio.HasValue && anio > 0)
-            {
-                mockData = mockData.Where(x => 
-                    (x["fec_doc"] as string)?.StartsWith(anio.ToString()) ?? false).ToList();
-            }
-
-            if (id_cliente.HasValue && id_cliente > 0)
-            {
-                mockData = mockData.Where(x => (int?)x["id_cliente"] == id_cliente).ToList();
-            }
-
-            if (num_doc.HasValue && num_doc > 0)
-            {
-                mockData = mockData.Where(x => (int?)x["num_doc"] == num_doc).ToList();
-            }
-
-            return mockData;
-        }
     }
 }

@@ -24,6 +24,9 @@ import {
   fetchSigecoomClients,
   fetchSigecoomLocations,
   getSigecoomClient,
+  fetchGuiasDevolucion,
+  fetchGuiaDevolucionDetalles,
+  fetchGuiaDevolucion,
   type Location,
   type SigecoomClient,
 } from "@/lib/sigecoom-api";
@@ -82,83 +85,7 @@ type GuiaDevolucionFormState = {
   moneda: string;
 };
 
-const MOCK_GUIAS: GuiaDevolucionRow[] = [
-  {
-    id: 1,
-    numero: "GD-2026-0001",
-    fecha: "2026-08-18",
-    cliente: "ACME DISTRIBUCIONES SAC",
-    ruc: "20456789011",
-    tipoDoc: "FACTURA",
-    referencia: "F001-000102",
-    moneda: "PEN",
-    total: 1550.0,
-    estado: "GENERADO",
-    motivo: "Devolución por producto vencido",
-    ubicacion: "LIMA - SAN ISIDRO",
-  },
-  {
-    id: 2,
-    numero: "GD-2026-0002",
-    fecha: "2026-08-20",
-    cliente: "MIRAFLORES COMERCIAL S.A.C.",
-    ruc: "20567890123",
-    tipoDoc: "BOLETA",
-    referencia: "B001-000832",
-    moneda: "PEN",
-    total: 985.5,
-    estado: "IMPRESO",
-    motivo: "Devolución por falta de marca",
-    ubicacion: "LIMA - MIRAFLORES",
-  },
-  {
-    id: 3,
-    numero: "GD-2026-0003",
-    fecha: "2026-08-22",
-    cliente: "NOVA LOGISTICA E.I.R.L.",
-    ruc: "20678901234",
-    tipoDoc: "FACTURA",
-    referencia: "F001-000221",
-    moneda: "USD",
-    total: 2260.0,
-    estado: "PROCESADO",
-    motivo: "Devolución por revisión de calidad",
-    ubicacion: "AREQUIPA - CERRO COLORADO",
-  },
-  {
-    id: 4,
-    numero: "GD-2026-0004",
-    fecha: "2026-08-24",
-    cliente: "DISTRIBUIDORA SOLAR SRL",
-    ruc: "20123456789",
-    tipoDoc: "NOTA DE CRÉDITO",
-    referencia: "NC-000900",
-    moneda: "PEN",
-    total: 430.0,
-    estado: "ANULADO",
-    motivo: "Anulada por duplicidad",
-    ubicacion: "TRUJILLO - LA LIBERTAD",
-  },
-];
-
-const MOCK_DETALLES: Record<number, GuiaDevolucionDet[]> = {
-  1: [
-    { id: 1, producto: "CINTA ADSIVA 2P 5M", unidad: "UND", cantidad: 8, precio: 55, descuento: 0, importe: 440 },
-    { id: 2, producto: "TUBO PVC 1/2", unidad: "M", cantidad: 22, precio: 18, descuento: 5, importe: 375 },
-    { id: 3, producto: "PINTURA ROJA 20L", unidad: "UND", cantidad: 3, precio: 245, descuento: 0, importe: 735 },
-  ],
-  2: [
-    { id: 1, producto: "BOLSA DE POLIPROPILENO", unidad: "UND", cantidad: 12, precio: 28, descuento: 0, importe: 336 },
-    { id: 2, producto: "CABLE 3X1.5", unidad: "M", cantidad: 50, precio: 12.9, descuento: 2, importe: 632.5 },
-  ],
-  3: [
-    { id: 1, producto: "MOTOR 220V 2HP", unidad: "UND", cantidad: 2, precio: 840, descuento: 0, importe: 1680 },
-    { id: 2, producto: "KIT DE ACCESORIOS", unidad: "UND", cantidad: 1, precio: 580, descuento: 0, importe: 580 },
-  ],
-  4: [
-    { id: 1, producto: "PANEL FIJO 120W", unidad: "UND", cantidad: 1, precio: 430, descuento: 0, importe: 430 },
-  ],
-};
+// NOTE: Removed static MOCK data — UI now depends strictly on backend endpoints
 
 const ESTADO_COLORS: Record<string, string> = {
   GENERADO: "border-blue-200 bg-blue-50 text-blue-700",
@@ -180,150 +107,8 @@ function Field({ label, children, className = "" }: { label: string; children: R
       {children}
     </label>
   );
+ 
 }
-
-function formatMoney(value: number) {
-  return new Intl.NumberFormat("es-PE", {
-    style: "currency",
-    currency: "PEN",
-    minimumFractionDigits: 2,
-  }).format(value);
-}
-
-function ClienteLookupModal({
-  onClose,
-  onSelect,
-}: {
-  onClose: () => void;
-  onSelect: (c: SigecoomClient) => void;
-}) {
-  const [rows, setRows] = useState<SigecoomClient[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [desc, setDesc] = useState("");
-  const [doc, setDoc] = useState("");
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-
-  useEffect(() => {
-    let mounted = true;
-    fetchSigecoomClients(200)
-      .then((data) => {
-        if (!mounted) return;
-        setRows(data);
-      })
-      .catch(() => toast.error("No se pudo cargar la lista de clientes"))
-      .finally(() => mounted && setLoading(false));
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  const filtered = rows.filter((row) => {
-    const byDesc = !desc || row.name.toLowerCase().includes(desc.toLowerCase());
-    const byDoc = !doc || (row.ruc ?? "").toLowerCase().includes(doc.toLowerCase());
-    return byDesc && byDoc;
-  });
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[1px]">
-      <div className="w-[820px] overflow-hidden rounded-sm border border-slate-400 bg-[#f4f7fb] shadow-2xl">
-        <div className="flex items-center justify-between bg-gradient-to-r from-slate-700 to-slate-800 px-3 py-2 text-[12px] font-semibold text-white">
-          <span>Buscar cliente</span>
-          <button onClick={onClose} className="rounded-sm p-1 hover:bg-white/10">
-            <X className="h-3.5 w-3.5" />
-          </button>
-        </div>
-
-        <div className="border-b border-slate-300 bg-[#edf2f8] p-2">
-          <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.04em] text-slate-700">Búsqueda</div>
-          <div className="grid grid-cols-[1fr_180px_110px] gap-2">
-            <div>
-              <div className="mb-1 text-[10.5px] font-semibold text-slate-600">Razón social</div>
-              <input className={inp} value={desc} onChange={(e) => setDesc(e.target.value)} />
-            </div>
-            <div>
-              <div className="mb-1 text-[10.5px] font-semibold text-slate-600">RUC/DNI</div>
-              <input className={inp} value={doc} onChange={(e) => setDoc(e.target.value)} />
-            </div>
-            <div className="self-end">
-              <button className={`${btn} w-full justify-center`}>
-                <Search className="h-3.5 w-3.5" />
-                Buscar
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="p-2">
-          <div className="max-h-[340px] overflow-auto border border-slate-300 bg-white">
-            <table className="w-full text-[11px]">
-              <thead className="sticky top-0 bg-gradient-to-b from-slate-200 to-slate-100">
-                <tr>
-                  <th className="border-r border-slate-300 px-2 py-1 text-left font-semibold text-slate-700">Código</th>
-                  <th className="border-r border-slate-300 px-2 py-1 text-left font-semibold text-slate-700">Cliente</th>
-                  <th className="px-2 py-1 text-left font-semibold text-slate-700">RUC</th>
-                </tr>
-              </thead>
-              <tbody>
-                {loading ? (
-                  <tr>
-                    <td colSpan={3} className="px-2 py-5 text-center text-slate-500">
-                      Cargando clientes...
-                    </td>
-                  </tr>
-                ) : filtered.length === 0 ? (
-                  <tr>
-                    <td colSpan={3} className="px-2 py-5 text-center text-slate-500">
-                      Sin resultados
-                    </td>
-                  </tr>
-                ) : (
-                  filtered.map((row) => {
-                    const isSelected = row.id === selectedId;
-                    return (
-                      <tr
-                        key={row.id}
-                        className={`cursor-pointer border-b border-slate-200 ${isSelected ? "bg-sky-100" : "bg-white hover:bg-slate-50"}`}
-                        onClick={() => setSelectedId(row.id)}
-                        onDoubleClick={() => onSelect(row)}
-                      >
-                        <td className="border-r border-slate-200 px-2 py-1 font-mono">{row.id}</td>
-                        <td className="border-r border-slate-200 px-2 py-1">{row.name}</td>
-                        <td className="px-2 py-1 font-mono">{row.ruc ?? "-"}</td>
-                      </tr>
-                    );
-                  })
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div className="flex items-center justify-between border-t border-slate-300 bg-[#edf2f8] px-3 py-2">
-          <span className="text-[11px] text-slate-600">Registros: {filtered.length}</span>
-          <div className="flex gap-2">
-            <button className={btn} onClick={onClose}>
-              <X className="h-3.5 w-3.5" />
-              Cerrar
-            </button>
-            <button
-              className={btnPrimary}
-              onClick={() => {
-                const item = filtered.find((row) => row.id === selectedId);
-                if (item) onSelect(item);
-              }}
-              disabled={!selectedId}
-            >
-              <Check className="h-3.5 w-3.5" />
-              Seleccionar
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function TransportistaModal({
   onClose,
   onSave,
@@ -407,7 +192,8 @@ function GuiaDevolucionForm({
   };
 
   const [form, setForm] = useState<GuiaDevolucionFormState>(emptyForm);
-  const [detalles, setDetalles] = useState<GuiaDevolucionDet[]>(() => MOCK_DETALLES[initialId ?? 1] ?? []);
+  // Start with empty detalles; load from backend when `initialId` is provided
+  const [detalles, setDetalles] = useState<GuiaDevolucionDet[]>([]);
   const [locaciones, setLocaciones] = useState<Location[]>([]);
   const [clientes, setClientes] = useState<SigecoomClient[]>([]);
   const [showClienteDialog, setShowClienteDialog] = useState(false);
@@ -421,30 +207,32 @@ function GuiaDevolucionForm({
         if (!active) return;
         setClientes(clienteData);
         setLocaciones(locData);
-        if (initialId) {
-          const row = MOCK_GUIAS.find((item) => item.id === initialId);
-          if (row) {
-            setForm({
-              id: row.id,
-              numero: row.numero,
-              fecha: row.fecha,
-              clienteId: String(row.id),
-              clienteNombre: row.cliente,
-              ruc: row.ruc,
-              tipoDoc: row.tipoDoc,
-              referencia: row.referencia,
-              ubicacionId: "1",
-              ubicacionNombre: row.ubicacion,
-              observacion: row.motivo,
-              motivo: row.motivo,
-              estado: row.estado,
-              moneda: row.moneda,
-            });
-            setDetalles(MOCK_DETALLES[row.id] ?? []);
-          }
-        }
       })
       .catch(() => toast.error("No se pudieron cargar los catálogos"));
+
+    if (initialId) {
+      fetchGuiaDevolucion(initialId)
+        .then((g) => {
+          if (!active) return
+          setForm((p) => ({
+            ...p,
+            id: g.id ?? initialId,
+            numero: g.numero ?? p.numero,
+            fecha: g.fecha ?? p.fecha,
+            clienteNombre: g.cliente ?? p.clienteNombre,
+            ruc: g.ruc ?? p.ruc,
+            referencia: g.referencia ?? p.referencia,
+            motivo: g.motivo ?? p.motivo,
+            estado: (g.estado as GuiaDevolucionEstado) ?? p.estado,
+            moneda: g.moneda ?? p.moneda,
+          }))
+        })
+        .catch(() => toast.error('No se pudo cargar la guía'))
+
+      fetchGuiaDevolucionDetalles(initialId)
+        .then((d) => { if (!active) return; setDetalles(d) })
+        .catch(() => toast.error('No se pudieron cargar los detalles de la guía'))
+    }
 
     return () => {
       active = false;
@@ -784,7 +572,7 @@ function GuiaDevolucionForm({
 }
 
 export function GuiaDevolucionList() {
-  const [rows, setRows] = useState<GuiaDevolucionRow[]>(MOCK_GUIAS);
+  const [rows, setRows] = useState<GuiaDevolucionRow[]>([]);
   const [filtroNumero, setFiltroNumero] = useState("");
   const [filtroCliente, setFiltroCliente] = useState("");
   const [filtroEstado, setFiltroEstado] = useState("TODOS");
@@ -817,6 +605,15 @@ export function GuiaDevolucionList() {
     if (selectedId === id) setSelectedId(null);
     toast.success("Guía de devolución eliminada");
   }, [selectedId]);
+
+  useEffect(() => {
+    let mounted = true;
+    fetchGuiasDevolucion({ anio: NOW.getFullYear(), mes: NOW.getMonth() + 1 })
+      .then((data) => { if (!mounted) return; setRows(data) })
+      .catch(() => toast.error('No se pudo cargar las guías de devolución desde el backend'))
+
+    return () => { mounted = false }
+  }, [])
 
   return (
     <div className="min-h-[760px] bg-[#edf3f9] p-4 text-slate-800">

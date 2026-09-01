@@ -169,7 +169,7 @@ const API_BASE_URL =
   "http://127.0.0.1:8000";
 const SIGECOOM_ADAPTER_URL =
   (typeof import.meta !== "undefined" && import.meta.env?.VITE_SIGECOOM_ADAPTER_URL) ||
-  "http://127.0.0.1:5000";
+  "http://170.231.82.58:8443";
 const API_V1_PREFIX = "/api/v1";
 
 // ============================================================================
@@ -279,6 +279,58 @@ export async function fetchSigecoomSales(search?: string): Promise<SigecoomSale[
     throw new Error("No se pudo cargar las ventas");
   }
   return response.json();
+}
+
+// ============================================================================
+// GUIAS DE DEVOLUCIÓN (Front-end consumption for Guía Devolución screens)
+// ============================================================================
+
+export type GuiaDevolucionRow = {
+  id: number;
+  numero: string;
+  fecha: string;
+  cliente: string;
+  ruc?: string;
+  tipoDoc?: string;
+  referencia?: string;
+  moneda?: string;
+  total?: number;
+  estado?: string;
+  motivo?: string;
+  ubicacion?: string;
+};
+
+export type GuiaDevolucionDetalle = {
+  id: number;
+  producto: string;
+  unidad: string;
+  cantidad: number;
+  precio: number;
+  descuento: number;
+  importe: number;
+};
+
+export async function fetchGuiasDevolucion(params: Record<string, any> = {}): Promise<GuiaDevolucionRow[]> {
+  const qs = new URLSearchParams()
+  Object.entries(params).forEach(([k, v]) => { if (v !== undefined && v !== null) qs.append(k, String(v)) })
+  const url = `${API_BASE_URL}${API_V1_PREFIX}/guias-devolucion${qs.toString() ? `?${qs.toString()}` : ''}`
+  const response = await fetch(url)
+  if (!response.ok) throw new Error('No se pudo cargar las guías de devolución desde el backend')
+  return response.json()
+}
+
+export async function fetchGuiaDevolucionDetalles(guiaId: number): Promise<GuiaDevolucionDetalle[]> {
+  const url = `${API_BASE_URL}${API_V1_PREFIX}/guias-devolucion/${guiaId}/detalles`
+  const response = await fetch(url)
+  if (!response.ok) throw new Error('No se pudo cargar los detalles de la guía')
+  return response.json()
+}
+
+export async function fetchGuiaDevolucion(guiaId: number): Promise<GuiaDevolucionRow> {
+  const url = `${API_BASE_URL}${API_V1_PREFIX}/guias-devolucion/${guiaId}`
+  const response = await fetch(url)
+  if (!response.ok) throw new Error('No se pudo cargar la guía de devolución')
+  return response.json()
 }
 
 export async function createSigecoomSale(data: {
