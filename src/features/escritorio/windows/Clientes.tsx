@@ -125,8 +125,8 @@ export function ClientesList() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await fetchSigecoomClients();
-      setRows(data);
+      const res = await fetchSigecoomClients(0, 0);
+      setRows(res.items);
       setSearched(true);
     } catch (e: any) {
       toast.error(e.message ?? "Error al cargar clientes");

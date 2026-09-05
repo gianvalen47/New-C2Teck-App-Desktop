@@ -202,10 +202,10 @@ function GuiaDevolucionForm({
 
   useEffect(() => {
     let active = true;
-    Promise.all([fetchSigecoomClients(200), fetchSigecoomLocations()])
-      .then(([clienteData, locData]) => {
+    Promise.all([fetchSigecoomClients(0, 200), fetchSigecoomLocations()])
+      .then(([clienteRes, locData]) => {
         if (!active) return;
-        setClientes(clienteData);
+        setClientes(clienteRes.items);
         setLocaciones(locData);
       })
       .catch(() => toast.error("No se pudieron cargar los catálogos"));

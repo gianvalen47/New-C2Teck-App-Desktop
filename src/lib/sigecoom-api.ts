@@ -204,12 +204,23 @@ export async function fetchBackendHealth(): Promise<BackendHealth> {
 // CLIENTS API
 // ============================================================================
 
-export async function fetchSigecoomClients(limit: number = 500): Promise<SigecoomClient[]> {
-  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/clients?limit=${limit}`);
+export async function fetchSigecoomClients(skip: number = 0, limit: number = 50): Promise<{ items: SigecoomClient[]; total?: number }> {
+  const params = new URLSearchParams();
+  if (skip && skip > 0) params.append("skip", String(skip));
+  if (limit && limit > 0) params.append("limit", String(limit));
+  const url = `${API_BASE_URL}${API_V1_PREFIX}/clients${params.toString() ? `?${params.toString()}` : ""}`;
+  const response = await fetch(url);
   if (!response.ok) {
     throw new Error("No se pudo cargar clientes desde el backend");
   }
-  return response.json();
+  const data = await response.json();
+  if (Array.isArray(data)) {
+    return { items: data, total: data.length };
+  }
+  if (data && data.items) {
+    return { items: data.items, total: data.total };
+  }
+  return { items: [], total: 0 };
 }
 
 export async function createSigecoomClient(data: {

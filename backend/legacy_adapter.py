@@ -22,10 +22,10 @@ logger = logging.getLogger(__name__)
 
 LEGACY_ADAPTER_BASE_URL = os.getenv(
     "SIGECOM_LEGACY_ADAPTER_BASE_URL",
-    "http://localhost:5000",  # Local development default
+    "http://localhost:5041",
 ).rstrip("/")
 
-SIGECOM_DATA_SOURCE = os.getenv("SIGECOM_DATA_SOURCE", "sqlite").lower()
+SIGECOM_DATA_SOURCE = os.getenv("SIGECOM_DATA_SOURCE", "legacy").lower()
 
 
 def is_legacy_source_enabled() -> bool:
@@ -141,24 +141,46 @@ def legacy_health() -> dict:
 # ============================================================================
 
 def list_clients_legacy(skip: int = 0, limit: int = 500):
-    """List clients from legacy adapter."""
-    endpoint = f"/api/v1/clients?skip={skip}&limit={limit}"
+    """List clients from legacy adapter.
+
+    When limit is 0 or negative, fetch all pages until the adapter stops returning rows.
+    """
+    page_size = max(1, limit) if limit and limit > 0 else 5000
+    current_skip = skip
+    normalized = []
+
     try:
-        data = _read_json(build_legacy_url(endpoint))
-        # data may be a list or dict with 'items' key
-        if isinstance(data, dict) and "items" in data:
-            items = data["items"]
-        elif isinstance(data, list):
-            items = data
-        else:
-            items = [data] if data else []
+        while True:
+            endpoint = f"/api/v1/clients?skip={current_skip}&limit={page_size}"
+            data = _read_json(build_legacy_url(endpoint))
 
-        # Normalize each client
-        normalized = []
-        for client in items:
-            normalized.append(_normalize_client(client))
+            if isinstance(data, dict) and "items" in data:
+                items = data["items"]
+            elif isinstance(data, list):
+                items = data
+            else:
+                items = [data] if data else []
 
-        return normalized if isinstance(data, list) else {"items": normalized, "total": len(normalized)}
+            if not items:
+                break
+
+            for client in items:
+                normalized.append(_normalize_client(client))
+
+            if limit and limit > 0:
+                if len(normalized) >= skip + limit:
+                    break
+                if len(items) < page_size:
+                    break
+            else:
+                if len(items) < page_size:
+                    break
+
+            current_skip += page_size
+
+        if limit and limit > 0:
+            return {"items": normalized[skip: skip + limit], "total": len(normalized)}
+        return {"items": normalized, "total": len(normalized)}
     except Exception as e:
         logger.error(f"Failed to list clients from legacy adapter: {e}")
         raise
@@ -181,16 +203,60 @@ def _normalize_client(client: dict) -> dict:
         return {}
 
     # Normalize field names and types
+    # Adapter may return keys like IdCliente, DesCli, RucCli, DniCli, TelCli, Email, Estado, FecIng
+    client_id = client.get("IdCliente") or client.get("id") or client.get("Id")
+    descli = client.get("DesCli") or client.get("DesCliente") or client.get("Nombres")
+    ruc = client.get("RucCli") or client.get("RUC") or client.get("Ruc")
+    dni = client.get("DniCli") or client.get("Dni")
+    address = client.get("Direccion") or client.get("DireccionCli") or client.get("Address")
+    phone = client.get("TelCli") or client.get("Telefono") or client.get("Phone")
+    email = client.get("Email") or client.get("Correo")
+    estado = client.get("Estado")
+    fec_ing = client.get("FecIng") or client.get("FecIngreso") or client.get("FecIngCliente") or client.get("CreatedAt")
+
+    name = None
+    try:
+        if descli:
+            name = str(descli)
+        else:
+            nombres = client.get("Nombres") or ""
+            apepat = client.get("ApePat") or ""
+            apemat = client.get("ApeMat") or ""
+            name = " ".join([p for p in [nombres, apepat, apemat] if p]).strip()
+    except Exception:
+        name = str(descli or "")
+
+    # Ensure id is a string for Pydantic model compatibility
+    nid = _normalize_id(client_id)
+    if isinstance(nid, int):
+        nid = str(nid)
+
+    created = _normalize_datetime(fec_ing)
+    # fallback to now if adapter omitted created date
+    if not created:
+        created = datetime.utcnow().isoformat() + "Z"
+
+    updated = _normalize_datetime(client.get("UpdatedAt") or client.get("FecMod") or client.get("ModifiedAt"))
+    if not updated:
+        updated = created
+
+    # map Estado -> active (legacy: 0 often means active)
+    try:
+        estado_int = int(estado) if estado is not None and str(estado).isdigit() else None
+    except Exception:
+        estado_int = None
+
     normalized = {
-        "id": _normalize_id(client.get("id") or client.get("Id")),
-        "name": str(client.get("name") or client.get("Name") or ""),
-        "ruc": str(client.get("ruc") or client.get("Ruc") or client.get("RUC") or ""),
-        "address": str(client.get("address") or client.get("Address") or ""),
-        "phone": str(client.get("phone") or client.get("Phone") or ""),
-        "email": str(client.get("email") or client.get("Email") or ""),
-        "active": _normalize_boolean(client.get("active") or client.get("Active")),
-        "created_at": _normalize_datetime(client.get("created_at") or client.get("CreatedAt")),
-        "updated_at": _normalize_datetime(client.get("updated_at") or client.get("UpdatedAt")),
+        "id": nid,
+        "name": name or "",
+        "ruc": str(ruc or ""),
+        "dni": str(dni or ""),
+        "address": str(address or ""),
+        "phone": str(phone or ""),
+        "email": str(email or ""),
+        "active": 1 if (estado_int is None or estado_int == 0) else 0,
+        "created_at": created,
+        "updated_at": updated,
     }
     return {k: v for k, v in normalized.items() if v is not None}
 

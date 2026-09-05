@@ -137,16 +137,23 @@ function ClienteLookupModal({
 }) {
   const [rows, setRows] = useState<SigecoomClient[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [skip, setSkip] = useState(0);
+  const pageSize = 50;
+  const [total, setTotal] = useState<number | null>(null);
   const [desc, setDesc] = useState("");
   const [doc, setDoc] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   useEffect(() => {
     let mounted = true;
-    fetchSigecoomClients(500)
-      .then((data) => {
+    setLoading(true);
+    setSkip(0);
+    fetchSigecoomClients(0, pageSize)
+      .then((res) => {
         if (!mounted) return;
-        setRows(data);
+        setRows(res.items);
+        setTotal(res.total ?? res.items.length);
       })
       .catch((e: any) => toast.error(e.message ?? "No se pudo cargar clientes"))
       .finally(() => {
@@ -156,6 +163,22 @@ function ClienteLookupModal({
       mounted = false;
     };
   }, []);
+
+  const loadMore = async () => {
+    if (loadingMore) return;
+    setLoadingMore(true);
+    try {
+      const nextSkip = skip + pageSize;
+      const res = await fetchSigecoomClients(nextSkip, pageSize);
+      setRows((prev) => [...prev, ...res.items]);
+      setSkip(nextSkip);
+      if (res.total !== undefined) setTotal(res.total);
+    } catch (e: any) {
+      toast.error(e.message ?? "No se pudo cargar más clientes");
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
   const qDesc = desc.trim().toLowerCase();
   const qDoc = doc.trim().toLowerCase();
@@ -230,8 +253,15 @@ function ClienteLookupModal({
           </div>
 
           <div className="mt-2 flex items-center justify-between">
-            <div className="text-[11px] text-slate-600">Registros : {filtered.length}</div>
-            <div className="flex gap-2">
+            <div className="text-[11px] text-slate-600">
+              Total servidor: {total ?? rows.length} · Cargados: {rows.length} · Filtrados: {filtered.length}
+            </div>
+            <div className="flex gap-2 items-center">
+              {total !== null && rows.length < (total ?? 0) && (
+                <button className={btn} onClick={loadMore} disabled={loadingMore}>
+                  {loadingMore ? "Cargando…" : "Cargar más"}
+                </button>
+              )}
               <button className={btn} onClick={onClose}><X className="h-3.5 w-3.5" />Cerrar</button>
               <button
                 className={btnPrimary}
@@ -1662,8 +1692,9 @@ export function GuiaRemisionList() {
 
   useEffect(() => {
     load();
-    fetchSigecoomClients()
-      .then((data) => {
+    fetchSigecoomClients(0, 0)
+      .then((res) => {
+        const data = res.items;
         setClients(data);
         const map: Record<number, SigecoomClient> = {};
         data.forEach((item) => {

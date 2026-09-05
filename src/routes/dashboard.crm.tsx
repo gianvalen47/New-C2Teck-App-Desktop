@@ -37,10 +37,10 @@ function CRMPage() {
         }
       });
 
-    fetchSigecoomClients()
-      .then((data) => {
+    fetchSigecoomClients(0, 0)
+      .then((res) => {
         if (!ignore) {
-          setClients(data);
+          setClients(res.items);
           setLoadingClients(false);
         }
       })

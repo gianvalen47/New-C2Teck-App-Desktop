@@ -32,8 +32,11 @@ def get_db():
 
 
 @router.get("", response_model=list[ClientRead])
-def list_clients(skip: int = 0, limit: int = 500, db: Session = Depends(get_db)):
-    """List all clients (from legacy adapter if enabled)"""
+def list_clients(skip: int = 0, limit: int = 0, db: Session = Depends(get_db)):
+    """List all clients (from legacy adapter if enabled).
+
+    When limit is 0, the backend fetches the complete client set from the legacy source.
+    """
     if is_legacy_source_enabled():
         try:
             data = list_clients_legacy(skip=skip, limit=limit)
