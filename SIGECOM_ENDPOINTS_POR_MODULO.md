@@ -1,0 +1,251 @@
+# Endpoints de SIGECOM original por módulo
+
+## Resumen
+- Ventas y comercial: 67 endpoints
+- Compras y proveedores: 12 endpoints
+- Inventario y almacén: 34 endpoints
+- Facturación, SUNAT y documentos: 18 endpoints
+- Contabilidad y finanzas: 15 endpoints
+- Tesorería y caja: 6 endpoints
+- RRHH y personal: 31 endpoints
+- Logística y transporte: 7 endpoints
+- Configuración, catálogos y sistema: 16 endpoints
+- Otros / transversales: 10 endpoints
+
+## Detalle por módulo
+
+### Ventas y comercial (67)
+- AnticipoService
+- AprobarVentaService
+- BoletaDetalleService
+- BoletaDigitalService
+- BoletaService
+- ClienteFacDscService
+- ClienteService
+- ComunicacionBajaDigitalService
+- CondicionPagoClienteService
+- ContactoProveedorService
+- ContactoService
+- CotizacionDetalleService
+- CotizacionService
+- CotizacionServicioDetService
+- CotizacionServicioService
+- CotizacionSolicitudDetService
+- CotizacionSolicitudService
+- CuotaVendedorService
+- DireccionFiscalService
+- FacturaDetalleService
+- FacturaDigitalService
+- FacturaImportDetService
+- FacturaImportService
+- FacturaService
+- GuiaDevolucionDetService
+- GuiaDevolucionService
+- GuiaRemisionDetService
+- GuiaRemisionDigitalService
+- GuiaRemisionService
+- IndicadoresServicioService
+- ListaClienteCabService
+- ListaClienteDetService
+- ListaOfertaCabService
+- ListaOfertaDetService
+- ListaPrecioCabService
+- ListaPrecioClienteDetService
+- ListaPrecioClienteService
+- ListaPrecioDetService
+- ListaPrecioFabricanteCabService
+- ListaPrecioFabricanteDetService
+- LocacionClienteService
+- NotaCreditoDetService
+- NotaCreditoService
+- NotaDigitalService
+- OcurrenciaClienteService
+- OportunidadNegocioService
+- OrdenCompraDetService
+- OrdenCompraService
+- OrdenesCompraDetService
+- OrdenesCompraService
+- PedidoDetService
+- PedidoImportDetService
+- PedidoImportService
+- PedidoService
+- ReclamoClienteService
+- ReclamoService
+- ReporteVentaService
+- RepuestoServicioClienteService
+- ResumenBoletasDigitalService
+- SolicitudGarantiaAtencionService
+- SolicitudGarantiaHorasService
+- SolicitudGarantiaService
+- UsuarioClienteService
+- VendedorClienteService
+- VisitaClienteService
+- VisitaCobradorService
+- VisitaOportunidadService
+
+### Compras y proveedores (12)
+- ComprasMotorDetService
+- ComprasMotorService
+- ImportacionDetService
+- ImportacionService
+- PagoPlanillaService
+- ProveedorService
+- RegistroCompraDetService
+- RegistroCompraService
+- RequisicionDetService
+- RequisicionService
+- SolicitudCompraDetService
+- SolicitudCompraService
+
+### Inventario y almacén (34)
+- CodigoBarraService
+- HorasMotorService
+- IndicadoresAlmacenService
+- JobDetalleService
+- JobRepuestoService
+- JobService
+- LineasService
+- LiquidacionMotorDetService
+- LiquidacionMotorService
+- LocacionMercaderiaService
+- MantenimientoRepuestosService
+- MarcaService
+- MarcacionJobService
+- MarcacionService
+- MercaderiaService
+- ModeloService
+- ModelosProductoService
+- MotorService
+- MoviAlmacenDetService
+- MoviAlmacenService
+- PreMarcacionJobService
+- ProductoService
+- RecursoDetService
+- RecursoService
+- RepuestoServicioService
+- SolicitudJobService
+- TipoMotorProductoService
+- TipoMotorService
+- TransferenciaDetService
+- TransferenciaMotorDetService
+- TransferenciaMotorService
+- TransferenciaService
+- ValeMaterialDetService
+- ValeMaterialService
+
+### Facturación, SUNAT y documentos (18)
+- CierreMesService
+- DocumentoCostoService
+- DocumentoCtaCtesService
+- DocumentoTransitoDetService
+- DocumentoTransitoService
+- LetraService
+- SerieDocumentoService
+- SunatBetaService
+- SunatConsultaService
+- SunatGuiaBetaService
+- SunatProduccionIquitosService
+- SunatProduccionService
+- SunatService
+- SunatServiceBeta
+- SunatServiceConsulta
+- SunatServiceGuia
+- SunatServiceGuiaService
+- SunatServiceProduccion
+
+### Contabilidad y finanzas (15)
+- CentroCostoService
+- ConsolidadoMesService
+- ContabilidadDetService
+- ContabilidadService
+- CtasPorPagarService
+- CuentaContableService
+- FlujoCajaCabService
+- FlujoCajaDetService
+- GastoRealService
+- MovimientoBancosService
+- PagosCtasPorPagarService
+- PartidaService
+- PreGastoRealDetService
+- PreGastoRealService
+- ProvisionalService
+
+### Tesorería y caja (6)
+- ArqueoCajaDetService
+- ArqueoCajaService
+- ReembolsoCajaDetService
+- ReembolsoCajaService
+- TesoreriaDetService
+- TesoreriaService
+
+### RRHH y personal (31)
+- AfpService
+- AsignacionComputadoraService
+- AsignacionHoraExtraService
+- AsignacionHorarioService
+- AsignacionJefesService
+- AsignacionLineaService
+- AumentosService
+- CapacitacionService
+- DescuentoPersonalService
+- EncuestaService
+- EvaluacionDetService
+- EvaluacionService
+- FaltasService
+- HoraExtraDetService
+- HoraExtraService
+- HorarioDetService
+- HorarioService
+- IngresoPersonalService
+- LicenciaService
+- ParametrosPlanillaService
+- PlanillaDetalleService
+- PlanillaService
+- PlanillaSueldosDetService
+- PlanillaSueldosService
+- PlanillaViaticoService
+- ReciboHonorarioDetService
+- ReciboHonorarioService
+- RubrosService
+- TablasPersonalService
+- VacacionesDetService
+- VacacionesService
+
+### Logística y transporte (7)
+- DespachoCabService
+- DespachoDetService
+- EmbarqueDetService
+- EmbarqueService
+- RondasService
+- TransportistaService
+- VehiculoService
+
+### Configuración, catálogos y sistema (16)
+- ActivoFijoService
+- B2MService
+- ComputadoraService
+- ContratoPersonaService
+- EmpresaService
+- EmpresaUsuarioService
+- MaestroService
+- MesaControlService
+- OSEService
+- OSEServiceProduccion
+- OrdersItemService
+- OrdersService
+- ParametrosService
+- PersonaService
+- PrecioService
+- SeguridadService
+
+### Otros / transversales (10)
+- LlamadasService
+- LocacionService
+- MemoDetalleService
+- MemoService
+- QuintaCategoriaCabService
+- QuintaCategoriaDetService
+- SeguimientoService
+- SolicitudGastoDetService
+- SolicitudGastoService
+- SolicitudUsuarioService

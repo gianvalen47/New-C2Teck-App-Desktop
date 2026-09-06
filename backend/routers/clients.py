@@ -67,7 +67,7 @@ def list_clients(skip: int = 0, limit: int = 0, db: Session = Depends(get_db)):
     if limit and limit > 0:
         clients = clients.limit(limit)
     clients = clients.all()
-            return {"items": clients, "total": total}
+    return {"items": clients, "total": total}
 
 
 @router.get("/{client_id}", response_model=ClientRead)

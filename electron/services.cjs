@@ -100,6 +100,36 @@ function isPortAvailable(port) {
   });
 }
 
+async function ensureLegacyAdapter() {
+  const adapterUrl = "http://127.0.0.1:5041/health";
+  try {
+    await waitForUrl(adapterUrl, 3000, 200);
+    log("adapter", "Adaptador legacy ya disponible en 127.0.0.1:5041");
+    return;
+  } catch (error) {
+    log("adapter", "Adaptador legacy no detectado; intentando iniciar el proyecto .NET");
+  }
+
+  const projectDir = path.join(PROJECT_ROOT, "sigecoom-wcf-adapter");
+  const csproj = path.join(projectDir, "sigecoom-wcf-adapter.csproj");
+  if (!fs.existsSync(csproj)) {
+    log("adapter", "No se encontró el proyecto .NET de adaptador legacy. Se continuará sin él.");
+    return;
+  }
+
+  const dotnet = process.platform === "win32" ? "dotnet.exe" : "dotnet";
+  spawnManaged("legacy-adapter", dotnet, ["run", "--project", "sigecoom-wcf-adapter", "--urls", "http://localhost:5041"], {
+    cwd: PROJECT_ROOT,
+  });
+
+  try {
+    await waitForUrl(adapterUrl, 30000, 1000);
+    log("adapter", "Adaptador legacy levantado correctamente en 127.0.0.1:5041");
+  } catch (err) {
+    log("adapter", `No fue posible iniciar el adaptador legacy: ${err.message}`);
+  }
+}
+
 async function ensureBackendPort() {
   let port = DEFAULT_BACKEND_PORT;
   while (!(await isPortAvailable(port))) {
@@ -187,6 +217,7 @@ async function seedDatabaseIfNeeded() {
 }
 
 async function startBackend() {
+  await ensureLegacyAdapter();
   await ensureBackendDeps();
   await seedDatabaseIfNeeded();
   await ensureBackendPort();

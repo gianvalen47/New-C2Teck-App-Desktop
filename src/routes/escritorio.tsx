@@ -31,6 +31,8 @@ import {
   Eye, EyeOff, Key, User, Zap,
 } from "lucide-react";
 
+import { fetchSession, login, type SessionInfo } from "@/lib/sigecoom-api";
+
 export const Route = createFileRoute("/escritorio")({
   head: () => ({
     meta: [
@@ -46,6 +48,41 @@ const TABS = [
   "Servicios", "Compras", "Personal", "Rondas", "Contabilidad", "Telefonía",
   "CRM", "Activos", "Tablas", "Logueo", "Administración", "Ayuda",
 ];
+
+function SessionStatus() {
+  const [s, setS] = useState<SessionInfo | null>(null);
+  useEffect(() => {
+    let mounted = true;
+    fetchSession()
+      .then((res) => { if (mounted) setS(res); })
+      .catch(() => { /* ignore */ });
+    return () => { mounted = false; };
+  }, []);
+
+  if (!s) {
+    return (
+      <>
+        <span className="shrink-0">Usuario: <b className="text-cyan-300">-</b></span>
+        <span className="text-slate-500 shrink-0">/</span>
+        <span className="shrink-0">Perfil: <b className="text-cyan-300">-</b></span>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <span className="shrink-0">Usuario: <b className="text-cyan-300">{s.username}</b></span>
+      <span className="text-slate-500 shrink-0">/</span>
+      <span className="shrink-0">Perfil: <b className="text-cyan-300">{s.perfil}</b></span>
+      <span className="text-slate-500 shrink-0">|</span>
+      <span className="shrink-0">Fecha Proceso: <b className="text-amber-300">{s.fecha_transaccion}</b></span>
+      <span className="text-slate-500 shrink-0">/</span>
+      <span className="shrink-0">Tipo de Cambio Compra: <b className="text-amber-300">{s.tipo_cambio_compra.toFixed(3)}</b></span>
+      <span className="text-slate-500 shrink-0">/</span>
+      <span className="shrink-0">Venta: <b className="text-amber-300">{s.tipo_cambio_venta.toFixed(3)}</b></span>
+    </>
+  );
+}
 
 type MenuItem = { icon: any; label: string };
 type MenuSection = { title: string; items: MenuItem[] };
@@ -890,7 +927,7 @@ function DesktopAppInner() {
   const [desktopReady, setDesktopReady] = useState(false);
   const [busy, setBusy] = useState(false);
   const [user, setUser] = useState("grios");
-  const [pass, setPass] = useState("demo1234");
+  const [pass, setPass] = useState("");
   const [ribbonMinimized, setRibbonMinimized] = useState(false);
   const [ribbonBelow, setRibbonBelow] = useState(false);
   const [ribbonMenu, setRibbonMenu] = useState<{ x: number; y: number } | null>(null);
@@ -916,12 +953,28 @@ function DesktopAppInner() {
   }, []);
 
   useEffect(() => {
+    let mounted = true;
+    fetchSession()
+      .then((session) => {
+        if (!mounted) return;
+        setUser(session.username || "grios");
+        setFecha(session.fecha_transaccion || new Date().toLocaleDateString("es-PE", { day: "2-digit", month: "2-digit", year: "numeric" }).replace(/\//g, "/"));
+        setTc(String(session.tipo_cambio_compra ?? "3.399"));
+      })
+      .catch(() => {
+        // Se mantiene el valor por defecto del Systeck si el backend no está listo.
+      });
+
     setDesktopReady(true);
     if (isDesktop && loginMode) {
       setDesktopAuthenticated(false);
     } else {
       setDesktopAuthenticated(true);
     }
+
+    return () => {
+      mounted = false;
+    };
   }, [isDesktop, loginMode]);
 
   useEffect(() => {
@@ -944,20 +997,26 @@ function DesktopAppInner() {
     };
   }, [ribbonMenu]);
 
-  const submit = (event: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setBusy(true);
 
-    setTimeout(() => {
+    try {
+      const session = await login(user.trim(), pass);
+      localStorage.setItem("sigecoom_session", JSON.stringify(session));
+      setUser(session.username || "grios");
+      setFecha(session.fecha_transaccion || fecha);
+      setTc(String(session.tipo_cambio_compra ?? tc));
+      setDesktopAuthenticated(true);
+      toast.success("Bienvenido a Systeck", { description: `Usuario ${session.username} · Perfil ${session.perfil}` });
+      window.c2teckDesktop?.loginSuccess?.();
+    } catch (error: any) {
+      toast.error("Credenciales inválidas", {
+        description: error?.message ?? "La contraseña del servidor SIGECOM es de 3 dígitos.",
+      });
+    } finally {
       setBusy(false);
-      if (user === "grios" && pass === "demo1234") {
-        setDesktopAuthenticated(true);
-        toast.success("Bienvenido a Systeck", { description: "Acceso al escritorio habilitado" });
-        window.c2teckDesktop?.loginSuccess?.();
-        return;
-      }
-      toast.error("Credenciales inválidas", { description: "Verifica usuario y clave predeterminados" });
-    }, 700);
+    }
   };
 
   const inputCls = "h-9 w-full rounded border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-300";
@@ -1183,13 +1242,7 @@ function DesktopAppInner() {
           </div>
 
           <div className="h-7 px-2 flex items-center gap-2 overflow-x-auto text-[10.5px] text-slate-200 font-mono">
-            <span className="shrink-0">Usuario: <b className="text-cyan-300">grios</b></span>
-            <span className="text-slate-500 shrink-0">/</span>
-            <span className="shrink-0">Perfil: <b className="text-cyan-300">Consultor</b></span>
-            <span className="text-slate-500 shrink-0">|</span>
-            <span className="shrink-0">Fecha Proceso: <b className="text-amber-300">{now}</b></span>
-            <span className="text-slate-500 shrink-0">/</span>
-            <span className="shrink-0">T.C.: <b className="text-amber-300">3.406</b></span>
+            <SessionStatus />
             <span className="text-slate-500 shrink-0">|</span>
             <span className="shrink-0 inline-flex items-center gap-1.5 px-1.5 h-5 rounded border border-indigo-400/40 bg-indigo-500/10 text-indigo-200">
               <Zap className="h-2.5 w-2.5 text-cyan-300 animate-pulse" />

@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { ShieldCheck, Cpu, ArrowLeft, KeyRound } from "lucide-react";
+import { login } from "@/lib/sigecoom-api";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -17,6 +18,24 @@ export const Route = createFileRoute("/login")({
 function LoginPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState("grios");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const session = await login(username.trim(), password);
+      localStorage.setItem("sigecoom_session", JSON.stringify(session));
+      toast.success("Autenticación validada", { description: `Bienvenido ${session.username} (${session.perfil}).` });
+      navigate({ to: "/escritorio" });
+    } catch (error: any) {
+      toast.error(error.message ?? "Credenciales inválidas");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen grid lg:grid-cols-2 bg-background">
@@ -58,23 +77,14 @@ function LoginPage() {
           <h1 className="mt-6 font-display text-3xl font-bold">Iniciar sesión</h1>
           <p className="mt-2 text-sm text-muted-foreground">Solo administradores autorizados pueden acceder al dashboard.</p>
 
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setLoading(true);
-              setTimeout(() => {
-                toast.success("Autenticación validada", { description: "Bienvenido a la consola C2Teck." });
-                navigate({ to: "/dashboard" });
-              }, 700);
-            }}
-            className="mt-8 space-y-4"
-          >
+          <form onSubmit={handleSubmit} className="mt-8 space-y-4">
             <label className="block">
-              <span className="text-xs uppercase tracking-widest text-muted-foreground">Email corporativo</span>
+              <span className="text-xs uppercase tracking-widest text-muted-foreground">Usuario</span>
               <input
-                type="email"
+                type="text"
                 required
-                defaultValue="admin@c2teck.com.pe"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="mt-1 w-full h-11 rounded-md bg-muted px-3 border border-transparent focus:border-primary outline-none"
               />
             </label>
@@ -82,8 +92,12 @@ function LoginPage() {
               <span className="text-xs uppercase tracking-widest text-muted-foreground">Contraseña</span>
               <input
                 type="password"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                maxLength={3}
                 required
-                defaultValue="demo1234"
+                value={password}
+                onChange={(e) => setPassword(e.target.value.replace(/\D/g, "").slice(0, 3))}
                 className="mt-1 w-full h-11 rounded-md bg-muted px-3 border border-transparent focus:border-primary outline-none"
               />
             </label>
@@ -109,7 +123,7 @@ function LoginPage() {
               type="button"
               onClick={() => {
                 toast.success("Hideez Key detectada", { description: "Autenticación FIDO2 exitosa." });
-                setTimeout(() => navigate({ to: "/dashboard" }), 500);
+                setTimeout(() => navigate({ to: "/escritorio" }), 500);
               }}
               className="w-full h-11 rounded-md border border-primary/40 text-primary font-semibold hover:bg-primary/10 inline-flex items-center justify-center gap-2"
             >

@@ -14,15 +14,21 @@ import logging
 import os
 import time
 from datetime import datetime
-from urllib.error import HTTPError, URLError
+from pathlib import Path
+from urllib.error import URLError
 from urllib.request import Request, urlopen
 
 # Setup logging
 logger = logging.getLogger(__name__)
 
+try:
+    from config import SIGECOM_LEGACY_ADAPTER_BASE_URL as CONFIGURED_ADAPTER_BASE_URL
+except Exception:  # pragma: no cover - config may be absent in isolated contexts.
+    CONFIGURED_ADAPTER_BASE_URL = "http://localhost:5041"
+
 LEGACY_ADAPTER_BASE_URL = os.getenv(
     "SIGECOM_LEGACY_ADAPTER_BASE_URL",
-    "http://localhost:5041",
+    CONFIGURED_ADAPTER_BASE_URL,
 ).rstrip("/")
 
 SIGECOM_DATA_SOURCE = os.getenv("SIGECOM_DATA_SOURCE", "legacy").lower()
@@ -34,6 +40,76 @@ def is_legacy_source_enabled() -> bool:
 
 def build_legacy_url(path: str) -> str:
     return f"{LEGACY_ADAPTER_BASE_URL}{path}"
+
+
+def _local_wcf_snapshot_path() -> Path:
+    return Path(__file__).resolve().parents[1] / "sigecoom-wcf-client" / "salida.json"
+
+
+def _load_real_wcf_guia_rows() -> list[dict]:
+    """Load the real WCF export captured from the legacy SIGECOM service."""
+    snapshot_path = _local_wcf_snapshot_path()
+    if not snapshot_path.exists():
+        raise FileNotFoundError(f"SIGECOM WCF snapshot not found: {snapshot_path}")
+
+    raw_text = snapshot_path.read_bytes()
+    for encoding in ("utf-8", "utf-16", "utf-16-le", "utf-16-be"):
+        try:
+            text = raw_text.decode(encoding)
+            break
+        except UnicodeDecodeError:
+            continue
+    else:
+        raise UnicodeDecodeError("utf-8", raw_text, 0, 1, "Unable to decode SIGECOM WCF snapshot")
+
+    start = text.find("[")
+    if start == -1:
+        raise ValueError(f"No JSON array found in SIGECOM WCF snapshot: {snapshot_path}")
+
+    payload = json.loads(text[start:])
+    rows: list[dict] = []
+
+    if isinstance(payload, list):
+        for item in payload:
+            if isinstance(item, dict):
+                rows.extend(item.get("rows") or [])
+    elif isinstance(payload, dict):
+        rows.extend(payload.get("rows") or [])
+
+    return rows
+
+
+def _coerce_wcf_guia_row(raw: dict) -> dict:
+    """Map the real WCF DataSet row to the normalized legacy GUIA schema."""
+    if not raw:
+        return {}
+
+    return {
+        "id": raw.get("IdGuia") or raw.get("id"),
+        "id_locacion": raw.get("IdLocacion") or raw.get("id_locacion"),
+        "fec_doc": raw.get("FecDoc") or raw.get("fec_doc"),
+        "id_serie_doc": raw.get("IdSerieDoc") or raw.get("id_serie_doc"),
+        "num_doc": raw.get("NumDoc") or raw.get("num_doc"),
+        "id_cliente": raw.get("IdCliente") or raw.get("id_cliente"),
+        "cod_mot": raw.get("CodMot") or raw.get("cod_mot") or "1",
+        "num_job": raw.get("NumJob") or raw.get("num_job"),
+        "cod_mon": raw.get("CodMon") or raw.get("cod_mon") or "US",
+        "igv": 0.0,
+        "tip_cambio": 3.36,
+        "tot_flete": 0.0,
+        "tot_embarque": 0.0,
+        "tot_bruto": raw.get("TotNeto") or raw.get("tot_bruto") or 0.0,
+        "tot_dscto": 0.0,
+        "tot_venta": raw.get("TotNeto") or raw.get("tot_venta") or 0.0,
+        "tot_igv": 0.0,
+        "tot_neto": raw.get("TotNeto") or raw.get("tot_neto") or 0.0,
+        "cliente_nombre": raw.get("DesCli") or raw.get("cliente_nombre"),
+        "estado": raw.get("Estado") or raw.get("estado") or "GN",
+        "cod_serie": raw.get("CodSerie") or raw.get("cod_serie"),
+        "tot_neto_sug": raw.get("TotNetoSug") or raw.get("tot_neto_sug") or raw.get("TotNeto") or 0.0,
+        "created_at": raw.get("FecDoc") or raw.get("fec_doc"),
+        "updated_at": raw.get("FecDoc") or raw.get("fec_doc"),
+    }
 
 
 def _normalize_datetime(value) -> str | None:
@@ -74,6 +150,13 @@ def _normalize_boolean(value) -> bool:
     if isinstance(value, str):
         return value.lower() in {"true", "1", "yes", "on", "activo"}
     return False
+
+
+def _lookup_value(mapping: dict, *keys):
+    for key in keys:
+        if key in mapping and mapping[key] is not None:
+            return mapping[key]
+    return None
 
 
 def _normalize_decimal(value) -> float | None:
@@ -124,16 +207,16 @@ def _read_json(url: str, timeout: int = 8):
         raise
 
 
-def legacy_health() -> dict:
+def legacy_health() -> bool:
     """Check if legacy adapter is healthy."""
     try:
         url = build_legacy_url("/health")
         result = _read_json(url)
         logger.info("Legacy adapter health check: OK")
-        return result
+        return bool(result)
     except Exception as e:
         logger.warning(f"Legacy adapter health check failed: {e}")
-        return {"status": "unavailable", "error": str(e)}
+        return False
 
 
 # ============================================================================
@@ -316,8 +399,43 @@ def list_guias_legacy(
         normalized = [_normalize_guia(g) for g in items]
         return normalized if isinstance(data, list) else {"items": normalized, "total": len(normalized)}
     except Exception as e:
-        logger.error(f"Failed to list guías from legacy adapter: {e}")
-        raise
+        logger.warning(f"Legacy adapter unavailable for guías; falling back to SIGECOM WCF snapshot: {e}")
+        try:
+            rows = _load_real_wcf_guia_rows()
+            filtered = []
+            for row in rows:
+                record = _coerce_wcf_guia_row(row)
+                if anio is not None:
+                    doc_date = record.get("fec_doc")
+                    if not doc_date or datetime.strptime(doc_date[:10], "%Y-%m-%d").year != anio:
+                        continue
+                if mes is not None:
+                    doc_date = record.get("fec_doc")
+                    if not doc_date or datetime.strptime(doc_date[:10], "%Y-%m-%d").month != mes:
+                        continue
+                if id_locacion is not None and (record.get("id_locacion") != id_locacion):
+                    continue
+                if id_serie_doc is not None and (record.get("id_serie_doc") != id_serie_doc):
+                    continue
+                if id_cliente is not None and (record.get("id_cliente") != id_cliente):
+                    continue
+                if estado is not None and str(record.get("estado") or "").upper() != str(estado).upper():
+                    continue
+                if num_doc is not None and (record.get("num_doc") != num_doc):
+                    continue
+                filtered.append(_normalize_guia(record))
+
+            total_count = len(filtered)
+            if limit and limit > 0:
+                filtered = filtered[skip: skip + limit]
+            else:
+                filtered = filtered[skip:]
+
+            logger.info("Loaded %s real WCF guías from local SIGECOM snapshot", total_count)
+            return {"items": filtered, "total": total_count}
+        except Exception as snapshot_error:
+            logger.error(f"Failed to load real WCF guías snapshot: {snapshot_error}")
+            raise
 
 
 def get_guia_legacy(id_guia: int | str):
@@ -337,39 +455,43 @@ def _normalize_guia(guia: dict) -> dict:
         return {}
 
     normalized = {
-        "id": _normalize_id(guia.get("id") or guia.get("Id")),
-        "id_locacion": _normalize_id(guia.get("id_locacion") or guia.get("IdLocacion")),
-        "fec_doc": _normalize_datetime(guia.get("fec_doc") or guia.get("FecDoc")),
-        "id_serie_doc": _normalize_id(guia.get("id_serie_doc") or guia.get("IdSerieDoc")),
-        "num_doc": _normalize_id(guia.get("num_doc") or guia.get("NumDoc")),
-        "id_cliente": _normalize_id(guia.get("id_cliente") or guia.get("IdCliente")),
-        "id_loc_cli": _normalize_id(guia.get("id_loc_cli") or guia.get("IdLocCli")),
-        "id_fiscal": _normalize_id(guia.get("id_fiscal") or guia.get("IdFiscal")),
-        "cod_mot": str(guia.get("cod_mot") or guia.get("CodMot") or ""),
-        "num_job": str(guia.get("num_job") or guia.get("NumJob") or ""),
-        "pto_partida": str(guia.get("pto_partida") or guia.get("PtoPartida") or ""),
-        "pto_llegada": str(guia.get("pto_llegada") or guia.get("PtoLlegada") or ""),
-        "cod_mon": str(guia.get("cod_mon") or guia.get("CodMon") or "US"),
-        "igv": _normalize_decimal(guia.get("igv") or guia.get("IGV")),
-        "tip_cambio": _normalize_decimal(guia.get("tip_cambio") or guia.get("TipCambio")),
-        "tot_flete": _normalize_decimal(guia.get("tot_flete") or guia.get("TotFlete")),
-        "tot_embarque": _normalize_decimal(guia.get("tot_embarque") or guia.get("TotEmbarque")),
-        "tot_bruto": _normalize_decimal(guia.get("tot_bruto") or guia.get("TotBruto")),
-        "tot_dscto": _normalize_decimal(guia.get("tot_dscto") or guia.get("TotDscto")),
-        "tot_venta": _normalize_decimal(guia.get("tot_venta") or guia.get("TotVenta")),
-        "tot_igv": _normalize_decimal(guia.get("tot_igv") or guia.get("TotIGV")),
-        "tot_neto": _normalize_decimal(guia.get("tot_neto") or guia.get("TotNeto")),
-        "num_orden": str(guia.get("num_orden") or guia.get("NumOrden") or ""),
-        "id_cotizacion": _normalize_id(guia.get("id_cotizacion") or guia.get("IdCotizacion")),
-        "observacion": str(guia.get("observacion") or guia.get("Observacion") or ""),
-        "peso_bruto": _normalize_decimal(guia.get("peso_bruto") or guia.get("PesoBruto")),
-        "cod_uni_med_peso": str(guia.get("cod_uni_med_peso") or guia.get("CodUniMedPeso") or "KGM"),
-        "numero_bultos": _normalize_id(guia.get("numero_bultos") or guia.get("NumeroBultos")),
-        "fec_traslado": _normalize_datetime(guia.get("fec_traslado") or guia.get("FecTraslado")),
-        "cod_modo": str(guia.get("cod_modo") or guia.get("CodModo") or ""),
-        "estado": str(guia.get("estado") or guia.get("Estado") or ""),
-        "created_at": _normalize_datetime(guia.get("created_at") or guia.get("CreatedAt")),
-        "updated_at": _normalize_datetime(guia.get("updated_at") or guia.get("UpdatedAt")),
+        "id": _normalize_id(_lookup_value(guia, "id", "Id")),
+        "id_locacion": _normalize_id(_lookup_value(guia, "id_locacion", "IdLocacion")),
+        "fec_doc": _normalize_datetime(_lookup_value(guia, "fec_doc", "FecDoc")),
+        "id_serie_doc": _normalize_id(_lookup_value(guia, "id_serie_doc", "IdSerieDoc")),
+        "num_doc": _normalize_id(_lookup_value(guia, "num_doc", "NumDoc")),
+        "id_cliente": _normalize_id(_lookup_value(guia, "id_cliente", "IdCliente")),
+        "id_loc_cli": _normalize_id(_lookup_value(guia, "id_loc_cli", "IdLocCli")),
+        "id_fiscal": _normalize_id(_lookup_value(guia, "id_fiscal", "IdFiscal")),
+        "cod_mot": str(_lookup_value(guia, "cod_mot", "CodMot") or ""),
+        "num_job": str(_lookup_value(guia, "num_job", "NumJob") or ""),
+        "pto_partida": str(_lookup_value(guia, "pto_partida", "PtoPartida") or ""),
+        "pto_llegada": str(_lookup_value(guia, "pto_llegada", "PtoLlegada") or ""),
+        "cod_mon": str(_lookup_value(guia, "cod_mon", "CodMon") or "US"),
+        "igv": _normalize_decimal(_lookup_value(guia, "igv", "IGV")),
+        "tip_cambio": _normalize_decimal(_lookup_value(guia, "tip_cambio", "TipCambio")),
+        "tot_flete": _normalize_decimal(_lookup_value(guia, "tot_flete", "TotFlete")),
+        "tot_embarque": _normalize_decimal(_lookup_value(guia, "tot_embarque", "TotEmbarque")),
+        "tot_bruto": _normalize_decimal(_lookup_value(guia, "tot_bruto", "TotBruto")),
+        "tot_dscto": _normalize_decimal(_lookup_value(guia, "tot_dscto", "TotDscto")),
+        "tot_venta": _normalize_decimal(_lookup_value(guia, "tot_venta", "TotVenta")),
+        "tot_igv": _normalize_decimal(_lookup_value(guia, "tot_igv", "TotIGV")),
+        "tot_neto": _normalize_decimal(_lookup_value(guia, "tot_neto", "TotNeto")),
+        "cliente_nombre": str(_lookup_value(guia, "cliente_nombre", "DesCli", "ClienteNombre") or ""),
+        "estado_sunat": str(_lookup_value(guia, "estado_sunat", "EstadoSunat") or ""),
+        "cod_serie": str(_lookup_value(guia, "cod_serie", "CodSerie") or ""),
+        "tot_neto_sug": _normalize_decimal(_lookup_value(guia, "tot_neto_sug", "TotNetoSug", "TotNeto")),
+        "num_orden": str(_lookup_value(guia, "num_orden", "NumOrden") or ""),
+        "id_cotizacion": _normalize_id(_lookup_value(guia, "id_cotizacion", "IdCotizacion")),
+        "observacion": str(_lookup_value(guia, "observacion", "Observacion") or ""),
+        "peso_bruto": _normalize_decimal(_lookup_value(guia, "peso_bruto", "PesoBruto")),
+        "cod_uni_med_peso": str(_lookup_value(guia, "cod_uni_med_peso", "CodUniMedPeso") or "KGM"),
+        "numero_bultos": _normalize_id(_lookup_value(guia, "numero_bultos", "NumeroBultos")),
+        "fec_traslado": _normalize_datetime(_lookup_value(guia, "fec_traslado", "FecTraslado")),
+        "cod_modo": str(_lookup_value(guia, "cod_modo", "CodModo") or ""),
+        "estado": str(_lookup_value(guia, "estado", "Estado") or ""),
+        "created_at": _normalize_datetime(_lookup_value(guia, "created_at", "CreatedAt") or _lookup_value(guia, "fec_doc", "FecDoc")),
+        "updated_at": _normalize_datetime(_lookup_value(guia, "updated_at", "UpdatedAt") or _lookup_value(guia, "fec_doc", "FecDoc")),
     }
     # Ensure required totals and id exist for downstream schema compatibility.
     # Fill sensible defaults when legacy adapter omits fields.

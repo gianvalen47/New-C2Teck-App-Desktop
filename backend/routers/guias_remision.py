@@ -163,16 +163,43 @@ def list_guias(
                 skip=skip,
                 limit=limit,
             )
-            # When using the legacy adapter return the raw JSON response
-            # without triggering pydantic response_model validation which
-            # expects fields that the legacy adapter may not provide.
+            # Normalize possible shapes from legacy adapter
             if isinstance(data, dict) and "items" in data:
                 items = data["items"]
+                total = data.get("total")
             elif isinstance(data, list):
                 items = data
+                total = len(items)
             else:
                 items = [data] if data else []
-            return JSONResponse(content=items)
+                total = len(items)
+
+            # If the adapter provided a total different from returned page
+            # we may need to compute the global total_amount (sum of tot_venta)
+            total_amount = None
+            try:
+                if isinstance(data, dict) and data.get("total") and data.get("total") > len(items):
+                    # need to fetch full set to compute total_amount
+                    full = list_guias_legacy(
+                        anio=anio,
+                        mes=mes,
+                        id_locacion=id_locacion,
+                        id_serie_doc=id_serie_doc,
+                        id_cliente=id_cliente,
+                        estado=estado,
+                        num_doc=num_doc,
+                        skip=0,
+                        limit=0,
+                    )
+                    full_items = full.get("items") if isinstance(full, dict) else (full if isinstance(full, list) else [])
+                    total_amount = sum(float(x.get("tot_venta") or x.get("tot_neto") or 0) for x in full_items)
+                else:
+                    # compute from returned items only
+                    total_amount = sum(float(x.get("tot_venta") or x.get("tot_neto") or 0) for x in items)
+            except Exception:
+                total_amount = None
+
+            return items
         except Exception as exc:
             logger.error(f"Failed to fetch guías from legacy adapter: {exc}")
             raise HTTPException(

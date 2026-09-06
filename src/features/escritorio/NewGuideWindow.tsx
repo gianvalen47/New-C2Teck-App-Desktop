@@ -61,23 +61,23 @@ export function NewGuideWindow() {
             <div className="grid items-start gap-0.5 xl:grid-cols-[minmax(0,1fr)_168px]">
               <div className="grid gap-0.5">
                 <div className="grid gap-0.5 md:grid-cols-[150px_170px_146px_104px_120px]">
-                <InlineField label="Número" labelWidth="w-[62px]"><input className={inputNarrow} defaultValue="4" /></InlineField>
-                <InlineField label="Fecha" labelWidth="w-[52px]"><input className={inputNarrow} defaultValue="25/07/2026" /></InlineField>
+                <InlineField label="Número" labelWidth="w-[62px]"><input className={inputNarrow} defaultValue="3" /></InlineField>
+                <InlineField label="Fecha" labelWidth="w-[52px]"><input className={inputNarrow} defaultValue="24/07/2026" /></InlineField>
                 <InlineField label="Moneda" labelWidth="w-[58px]"><select className={inputWide}><option>USD</option><option>PEN</option></select></InlineField>
                 <InlineField label="IGV" labelWidth="w-[36px]"><input className={inputNarrow} defaultValue="18.00" /></InlineField>
-                <InlineField label="Tip.Cam." labelWidth="w-[58px]"><input className={inputNarrow} defaultValue="3.411" /></InlineField>
+                <InlineField label="Tip.Cam." labelWidth="w-[58px]"><input className={inputNarrow} defaultValue="3.404" /></InlineField>
               </div>
 
               <div className="grid gap-0.5 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_240px]">
                 <InlineField label="Cliente" labelWidth="w-[62px]">
                   <div className="flex gap-1">
-                    <input className={inputWide} defaultValue="" />
+                    <input className={inputWide} defaultValue="RIOS ROSALES CARLOS" readOnly />
                     <button type="button" className={iconMini} title="Buscar Cliente"><Search className="h-3.5 w-3.5" /></button>
                   </div>
                 </InlineField>
                 <InlineField label="Loc.Cliente" labelWidth="w-[74px]">
                   <div className="flex gap-1">
-                    <input className={inputWide} defaultValue="" />
+                    <input className={inputWide} defaultValue="OFICINA PRINCIPAL" readOnly />
                     <button type="button" className={iconMini} title="Buscar Locación"><Search className="h-3.5 w-3.5" /></button>
                     <button type="button" className={iconMini} title="Editar Locación"><Pencil className="h-3 w-3" /></button>
                   </div>
@@ -88,7 +88,7 @@ export function NewGuideWindow() {
               <div className="grid gap-0.5 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_220px]">
                 <InlineField label="Dir. Fiscal" labelWidth="w-[70px]">
                   <div className="flex gap-1">
-                    <input className={inputWide} defaultValue="" />
+                    <input className={inputWide} defaultValue="CAL. ANTONIO ULLOA NRO. 2182 URB. EL FLORES" readOnly />
                     <button type="button" className={iconMini} title="Buscar Dirección"><Search className="h-3.5 w-3.5" /></button>
                   </div>
                 </InlineField>
@@ -102,24 +102,24 @@ export function NewGuideWindow() {
               </div>
 
               <div className="grid gap-0.5 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)]">
-                <InlineField label="Llegada" labelWidth="w-[62px]"><input className={inputWide} defaultValue="" /></InlineField>
-                <InlineField label="Partida" labelWidth="w-[56px]"><input className={inputWide} defaultValue="CAL. ANTONIO ULLOA NRO. 2182 URB. EL FLORES" /></InlineField>
+                <InlineField label="Llegada" labelWidth="w-[62px]"><input className={inputWide} defaultValue="CAL. ANTONIO ULLOA NRO. 2182 URB. EL FLORES" readOnly /></InlineField>
+                <InlineField label="Partida" labelWidth="w-[56px]"><input className={inputWide} defaultValue="CAL. ANTONIO ULLOA NRO. 2182 URB. EL FLORES" readOnly /></InlineField>
               </div>
 
               <div className="grid gap-0.5 xl:grid-cols-[minmax(0,1fr)_180px]">
-                <InlineField label="Vendedor" labelWidth="w-[74px]"><input className={inputWide} defaultValue="" /></InlineField>
+                <InlineField label="Vendedor" labelWidth="w-[74px]"><input className={inputWide} defaultValue="CABRERA GUTIERREZ HELEN PRISCILLA" readOnly /></InlineField>
                 <InlineField label="O/C" labelWidth="w-[42px]"><input className={inputWide} defaultValue="" /></InlineField>
               </div>
 
               <div className="grid gap-0.5 xl:grid-cols-[190px_minmax(0,1fr)_250px]">
-                <InlineField label="Peso Total" labelWidth="w-[74px]"><input className={inputNarrow} defaultValue="0.000" /></InlineField>
+                <InlineField label="Peso Total" labelWidth="w-[74px]"><input className={inputNarrow} defaultValue="1.000" readOnly /></InlineField>
                 <InlineField label="Unid. Medida Peso" labelWidth="w-[120px]"><select className={inputWide}><option>Kilogramos</option><option>Toneladas</option></select></InlineField>
                 <InlineField label="Cant. Bultos / Palets" labelWidth="w-[128px]"><input className={inputNarrow} defaultValue="1" /></InlineField>
               </div>
 
               <div className="grid gap-0.5 xl:grid-cols-[minmax(0,1fr)_260px]">
                 <InlineField label="Modo Traslado" labelWidth="w-[92px]"><select className={inputWide}><option>Transporte Privado</option><option>Transporte Público</option></select></InlineField>
-                <InlineField label="Fecha Inicio Traslado" labelWidth="w-[130px]"><input className={inputNarrow} defaultValue="25/07/2026" /></InlineField>
+                <InlineField label="Fecha Inicio Traslado" labelWidth="w-[130px]"><input className={inputNarrow} defaultValue="24/07/2026" /></InlineField>
               </div>
               </div>
 

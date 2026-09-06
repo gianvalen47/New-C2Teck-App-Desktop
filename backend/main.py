@@ -16,6 +16,7 @@ from datetime import datetime
 from config import CORS_ALLOW_ORIGIN_REGEX, CORS_ORIGINS, API_V1_STR, PROJECT_NAME, PROJECT_VERSION, Base, engine, SessionLocal, SIGECOM_DATA_SOURCE
 from schemas import HealthCheck
 from routers import clients, sales, inventory
+from routers import auth
 from routers.locations import router as locations_router
 from routers.journals import router as journals_router
 from routers.banking import router as banking_router
@@ -38,82 +39,9 @@ logger = logging.getLogger(__name__)
 # Create database tables
 Base.metadata.create_all(bind=engine)
 
-# Seed demo data for frontend development
-def seed_guias_remision_demo_data() -> None:
-    db = SessionLocal()
-    try:
-        carlos = db.query(ClientModel).filter(ClientModel.id == "200").first()
-        if not carlos:
-            carlos = ClientModel(
-                id="200",
-                name="CARLOS RIOS",
-                ruc="10412345678",
-                address="Av. Lima 450, Lima",
-                phone="999-555-123",
-                email="carlos.rios@example.com",
-            )
-            db.add(carlos)
-            db.commit()
+# Do not seed fake document data here. The real source of truth for guías de remisión
+# is the legacy SIGECOM adapter / WCF service. The UI should filter against that data.
 
-        existing_guia = db.query(GuiaRemisionModel).filter(
-            GuiaRemisionModel.id_locacion == 1,
-            GuiaRemisionModel.id_serie_doc == 1,
-            GuiaRemisionModel.num_doc == 6,
-        ).first()
-        if not existing_guia:
-            guia = GuiaRemisionModel(
-                id_locacion=1,
-                fec_doc=datetime(2026, 8, 3),
-                id_serie_doc=1,
-                num_doc=6,
-                id_cliente=200,
-                id_loc_cli=None,
-                id_fiscal=None,
-                cod_mot="1",
-                num_job="",
-                pto_partida="CAL. ANTONIO ULLOA NRO. 2182 URB. EL FLORES",
-                pto_llegada="OFICINA PRINCIPAL",
-                cod_mon="US",
-                igv=18.0,
-                tip_cambio=3.4,
-                tot_flete=0.0,
-                tot_embarque=0.0,
-                tot_bruto=100.0,
-                tot_dscto=0.0,
-                tot_venta=100.0,
-                tot_igv=18.0,
-                tot_neto=118.0,
-                num_orden="OC-1234",
-                id_cotizacion=123,
-                observacion="Guía de remisión creada para CARLOS RIOS",
-                peso_bruto=5.0,
-                cod_uni_med_peso="KGM",
-                numero_bultos=1,
-                fec_traslado=datetime(2026, 8, 3),
-                cod_modo="02",
-                estado="GENERADO",
-            )
-            db.add(guia)
-            db.commit()
-            db.refresh(guia)
-
-            detalle = GuiaRemisionDetModel(
-                id_guia=guia.id,
-                item=1,
-                cod_mer="PROD-001",
-                des_mer="Servicio de instalación",
-                cod_uni_med="UN",
-                can_mer=1,
-                pre_mer=100.0,
-                dsc_mer=0.0,
-                total_fila=100.0,
-            )
-            db.add(detalle)
-            db.commit()
-    finally:
-        db.close()
-
-seed_guias_remision_demo_data()
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -188,6 +116,9 @@ app.include_router(ordenes_compra.router, prefix=API_V1_STR)
 
 # Admin endpoints for diagnostics, health, etc.
 app.include_router(admin_router, prefix=API_V1_STR)
+
+# Auth (demo)
+app.include_router(auth.router, prefix=API_V1_STR)
 
 
 # ============================================================================

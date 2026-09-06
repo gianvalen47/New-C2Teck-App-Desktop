@@ -166,7 +166,8 @@ export type Gasto = {
 
 const API_BASE_URL =
   (typeof import.meta !== "undefined" && import.meta.env?.VITE_API_URL) ||
-  "http://127.0.0.1:8000";
+  // Backend run_app.py binds to 127.0.0.1:8001 in development; prefer that port
+  "http://127.0.0.1:8001";
 const SIGECOOM_ADAPTER_URL =
   (typeof import.meta !== "undefined" && import.meta.env?.VITE_SIGECOOM_ADAPTER_URL) ||
   "http://170.231.82.58:8443";
@@ -197,6 +198,34 @@ export async function fetchBackendHealth(): Promise<BackendHealth> {
   if (!response.ok) {
     throw new Error("No se pudo consultar el health del backend");
   }
+  return response.json();
+}
+
+// ============================================================================
+// AUTH / SESSION
+// ============================================================================
+
+export type SessionInfo = {
+  username: string;
+  perfil: string;
+  fecha_transaccion: string;
+  tipo_cambio_compra: number;
+  tipo_cambio_venta: number;
+};
+
+export async function fetchSession(): Promise<SessionInfo> {
+  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/auth/session`);
+  if (!response.ok) throw new Error("No se pudo obtener la sesión");
+  return response.json();
+}
+
+export async function login(username: string, password: string): Promise<SessionInfo> {
+  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  });
+  if (!response.ok) throw new Error("Credenciales inválidas");
   return response.json();
 }
 

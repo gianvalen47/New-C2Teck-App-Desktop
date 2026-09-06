@@ -1,5 +1,6 @@
 import os
 import signal
+import socket
 import subprocess
 import sys
 import threading
@@ -92,10 +93,32 @@ class ManagedProcess:
         return self.proc.poll() if self.proc else None
 
 
+def get_available_port(start_port: int = 8000) -> int:
+    port = start_port
+    while True:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            try:
+                sock.bind(("127.0.0.1", port))
+                return port
+            except OSError:
+                port += 1
+
+
 def main():
-    # Commands
-    uvicorn_cmd = [sys.executable, "-m", "uvicorn", "main:app", "--reload", "--port", "8000"]
-    npm_cmd = ["npm", "run", "dev"]
+    backend_port = get_available_port(8000)
+    uvicorn_cmd = [
+        sys.executable,
+        "-m",
+        "uvicorn",
+        "main:app",
+        "--reload",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        str(backend_port),
+    ]
+    npm_cmd = ["npm.cmd", "run", "dev", "--", "--host", "127.0.0.1"] if os.name == "nt" else ["npm", "run", "dev", "--", "--host", "127.0.0.1"]
 
     # Environment for frontend: ensure npm in PATH
     env = os.environ.copy()

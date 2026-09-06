@@ -8,7 +8,6 @@
  */
 
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
-import { ClientProvider } from '@/lib/ClientContext';
 import { createPortal } from "react-dom";
 import {
   Printer, Plus, Search, Trash2, X, Save, RefreshCw, LogOut,
@@ -78,18 +77,6 @@ function EstadoBadge({ estado }: { estado: string }) {
 const MESES = ["ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SETIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE"];
 const NOW = new Date();
 
-const toDateInput = (value?: string | Date | null) => {
-  if (!value) return new Date().toISOString().slice(0, 10);
-  const date = value instanceof Date ? value : new Date(value);
-  if (Number.isNaN(date.getTime())) return new Date().toISOString().slice(0, 10);
-  return date.toISOString().slice(0, 10);
-};
-
-const toMoneyText = (value?: number | string | null) => {
-  const n = Number(value ?? 0);
-  return Number.isFinite(n) ? n.toFixed(2) : "0.00";
-};
-
 // Modal para editar la Observación
 function ObservacionModal({
   value,
@@ -148,34 +135,50 @@ function ClienteLookupModal({
   onClose: () => void;
   onSelect: (c: SigecoomClient) => void;
 }) {
-  const pageSize = 50;
   const [rows, setRows] = useState<SigecoomClient[]>([]);
-  const [total, setTotal] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [skip, setSkip] = useState(0);
+  const pageSize = 50;
+  const [total, setTotal] = useState<number | null>(null);
   const [desc, setDesc] = useState("");
   const [doc, setDoc] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const loadPage = async (s: number) => {
+  useEffect(() => {
+    let mounted = true;
     setLoading(true);
+    setSkip(0);
+    fetchSigecoomClients(0, pageSize)
+      .then((res) => {
+        if (!mounted) return;
+        setRows(res.items);
+        setTotal(res.total ?? res.items.length);
+      })
+      .catch((e: any) => toast.error(e.message ?? "No se pudo cargar clientes"))
+      .finally(() => {
+        if (mounted) setLoading(false);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const loadMore = async () => {
+    if (loadingMore) return;
+    setLoadingMore(true);
     try {
-      const res = await fetchSigecoomClients(s, pageSize);
-      setRows(res.items || []);
-      setTotal(res.total ?? (res.items || []).length);
-      if ((res.items || []).length > 0) setSelectedId(String((res.items || [])[0].id));
-    } catch (e) {
-      console.error('Failed to load clients page', e);
-      setRows([]);
-      setTotal(0);
+      const nextSkip = skip + pageSize;
+      const res = await fetchSigecoomClients(nextSkip, pageSize);
+      setRows((prev) => [...prev, ...res.items]);
+      setSkip(nextSkip);
+      if (res.total !== undefined) setTotal(res.total);
+    } catch (e: any) {
+      toast.error(e.message ?? "No se pudo cargar más clientes");
     } finally {
-      setLoading(false);
+      setLoadingMore(false);
     }
   };
-
-  useEffect(() => {
-    loadPage(0);
-  }, []);
 
   const qDesc = desc.trim().toLowerCase();
   const qDoc = doc.trim().toLowerCase();
@@ -184,7 +187,7 @@ function ClienteLookupModal({
     const byDoc = !qDoc || (r.ruc ?? "").toLowerCase().includes(qDoc);
     return byDesc && byDoc;
   });
-  const selected = filtered.find((c) => String(c.id) === selectedId);
+  const selected = filtered.find((c) => c.id === selectedId);
 
   return (
     <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/35">
@@ -206,9 +209,7 @@ function ClienteLookupModal({
               <input className={inp} value={doc} onChange={(e) => setDoc(e.target.value)} />
             </div>
             <div className="self-end">
-              <button className={`${btn} w-full justify-center`} onClick={() => { setSkip(0); loadPage(0); }}>
-                <Search className="h-3.5 w-3.5" />Buscar
-              </button>
+              <button className={`${btn} w-full justify-center`}><Search className="h-3.5 w-3.5" />Buscar</button>
             </div>
           </div>
         </div>
@@ -251,22 +252,21 @@ function ClienteLookupModal({
             </table>
           </div>
 
-          <div className="mt-2 flex items-center justify-between gap-2">
+          <div className="mt-2 flex items-center justify-between">
             <div className="text-[11px] text-slate-600">
-              Total servidor: <span className="font-semibold text-slate-800">{total ?? rows.length}</span> · Cargados: {rows.length} · Filtrados: {filtered.length}
+              Total servidor: {total ?? rows.length} · Cargados: {rows.length} · Filtrados: {filtered.length}
             </div>
             <div className="flex gap-2 items-center">
-              {total != null && (skip + rows.length) < total && (
-                <button
-                  className={btn}
-                  onClick={() => { const next = skip + pageSize; setSkip(next); loadPage(next); }}
-                >Cargar más</button>
+              {total !== null && rows.length < (total ?? 0) && (
+                <button className={btn} onClick={loadMore} disabled={loadingMore}>
+                  {loadingMore ? "Cargando…" : "Cargar más"}
+                </button>
               )}
               <button className={btn} onClick={onClose}><X className="h-3.5 w-3.5" />Cerrar</button>
               <button
                 className={btnPrimary}
-                disabled={!selected}
                 onClick={() => selected && onSelect(selected)}
+                disabled={!selected}
               >
                 <Check className="h-3.5 w-3.5" />Seleccionar
               </button>
@@ -552,19 +552,11 @@ type GuiaToolWindow = {
   z: number;
 };
 
-type GuiaClientSelection = {
-  // IDs may arrive as numbers or strings from different sources (API vs local DB).
-  // Accept both to avoid repetitive coercions across the codebase.
-  id: number | string | "";
-  label: string;
-};
-
 type GuiaFormWindow = {
   id: string;
   idGuia?: number;
   detailOnly?: boolean;
   title: string;
-  clientSelection?: GuiaClientSelection;
   x: number;
   y: number;
   w: number;
@@ -644,7 +636,7 @@ function ToolGuiaClienteBody({ selected }: { selected: GuiaRemisionRow | null })
     <div className="h-full p-3 text-[12px] text-slate-800 space-y-2 bg-[#F8FBFF]">
       <div className="grid grid-cols-[60px_1fr_85px_90px_70px_90px_86px] gap-1 items-center">
         <span className="text-right font-semibold">Cliente</span>
-        <input className={inp} readOnly value={selected ? (selected.cliente_nombre || `Cliente #${selected.id_cliente}`) : ""} />
+        <input className={inp} readOnly value={selected ? `Cliente #${selected.id_cliente}` : ""} />
         <span className="text-right font-semibold">Serie Doc.</span>
         <input className={`${inp} font-mono`} value={serie} onChange={(e) => setSerie(e.target.value.toUpperCase())} />
         <span className="text-right font-semibold">N° Doc</span>
@@ -851,16 +843,12 @@ export function GuiaRemisionForm({
   onClose,
   onSaved,
   detailOnly = false,
-  initialClientSelection,
-  onClientSelectionChange,
 }: {
   idGuia?: number;
   idLocacion?: number;
   onClose: () => void;
   onSaved?: () => void;
   detailOnly?: boolean;
-  initialClientSelection?: GuiaClientSelection;
-  onClientSelectionChange?: (value: GuiaClientSelection) => void;
 }) {
   const isNew = !idGuia;
   const isDetailOnly = detailOnly && !isNew;
@@ -873,13 +861,6 @@ export function GuiaRemisionForm({
   const [showSugerirFactor, setShowSugerirFactor] = useState(false);
   const [showObsModal, setShowObsModal] = useState(false);
   const [detModal, setDetModal] = useState<{ open: boolean; detalle?: GuiaRemisionDet }>({ open: false });
-  const [sharedClientSelection, setSharedClientSelection] = useState<GuiaClientSelection>(initialClientSelection ?? { id: "", label: "" });
-
-  useEffect(() => {
-    if (initialClientSelection) {
-      setSharedClientSelection(initialClientSelection);
-    }
-  }, [initialClientSelection]);
 
   // Form fields
   const [numDoc, setNumDoc] = useState(isNew ? "" : "");
@@ -919,22 +900,16 @@ export function GuiaRemisionForm({
         .join(" / ") || location.description || location.code
       : "";
 
-    if (g.id_cliente) {
-      try {
-        const client = await getSigecoomClient(String(g.id_cliente));
-        const realName = g.cliente_nombre || client?.name || `Cliente #${g.id_cliente}`;
-        setDesCliente(realName);
-        setDesFiscal(client?.address || "");
-      } catch {
-        setDesCliente(g.cliente_nombre || `Cliente #${g.id_cliente}`);
-        setDesFiscal("");
-      }
-    } else {
-      setDesCliente(g.cliente_nombre || "");
+    try {
+      const client = await getSigecoomClient(String(g.id_cliente));
+      setDesCliente(client.name || `Cliente #${g.id_cliente}`);
+      setDesFiscal(client.address || "");
+    } catch {
+      setDesCliente(`Cliente #${g.id_cliente}`);
       setDesFiscal("");
     }
 
-    setDesLocCli(locText || g.pto_llegada || "");
+    setDesLocCli(locText);
     setIdLocCli(g.id_loc_cli ?? "");
     setIdFiscal(g.id_fiscal ?? "");
   }, []);
@@ -944,27 +919,27 @@ export function GuiaRemisionForm({
     setLoading(true);
     fetchGuiaRemision(idGuia).then(async (g) => {
       setGuia(g);
-      setNumDoc(String(g.num_doc ?? ""));
-      setFecDoc(toDateInput(g.fec_doc));
-      setCodMon(g.cod_mon || "NS");
-      setIgv(String(g.igv ?? 18));
+      setNumDoc(String(g.num_doc));
+      setFecDoc(g.fec_doc.slice(0, 10));
+      setCodMon(g.cod_mon);
+      setIgv(String(g.igv));
       setTipCambio(String(g.tip_cambio ?? 1));
-      setIdCliente(g.id_cliente ?? "");
+      setIdCliente(g.id_cliente);
       setIdLocCli(g.id_loc_cli ?? "");
       setIdFiscal(g.id_fiscal ?? "");
-      setCodMot(g.cod_mot || "1");
+      setCodMot(g.cod_mot);
       setNumJob(g.num_job ?? "");
       setIdCotizacion(g.id_cotizacion ?? "");
       setLlegada(g.pto_llegada ?? "");
       setPartida(g.pto_partida ?? "");
       setNumOrden(g.num_orden ?? "");
-      setPesoTotal(String(g.peso_bruto ?? 0));
-      setCodUniMedPeso(g.cod_uni_med_peso || "KGM");
-      setNumBultos(String(g.numero_bultos ?? 1));
-      setModoTraslado(g.cod_modo || "02");
-      setFecTraslado(toDateInput(g.fec_traslado));
-      setTotFlete(toMoneyText(g.tot_flete));
-      setTotEmbarque(toMoneyText(g.tot_embarque));
+      setPesoTotal(String(g.peso_bruto));
+      setCodUniMedPeso(g.cod_uni_med_peso);
+      setNumBultos(String(g.numero_bultos));
+      setModoTraslado(g.cod_modo);
+      setFecTraslado(g.fec_traslado ? g.fec_traslado.slice(0, 10) : new Date().toISOString().slice(0, 10));
+      setTotFlete(String(g.tot_flete));
+      setTotEmbarque(String(g.tot_embarque));
       setObservacion(g.observacion ?? "");
       await hydrateLookupTexts(g);
     }).catch(e => toast.error(e.message)).finally(() => setLoading(false));
@@ -1567,11 +1542,11 @@ export function GuiaRemisionForm({
                       <td className="px-1.5 py-1 text-center border-b border-r border-slate-200 font-mono">{d.item}</td>
                       <td className="px-1.5 py-1 border-b border-r border-slate-200 font-mono">{d.cod_mer}</td>
                       <td className="px-1.5 py-1 border-b border-r border-slate-200 max-w-[240px] truncate">{d.des_mer}</td>
-                      <td className="px-1.5 py-1 text-right border-b border-r border-slate-200 font-mono">{Number(d.can_mer ?? 0).toFixed(0)}</td>
-                      <td className="px-1.5 py-1 text-right border-b border-r border-slate-200 font-mono">{Number(d.pre_mer ?? 0).toFixed(2)}</td>
-                      <td className="px-1.5 py-1 text-right border-b border-r border-slate-200 font-mono">{Number(d.dsc_mer ?? 0).toFixed(2)}</td>
-                      <td className="px-1.5 py-1 text-right border-b border-r border-slate-200 font-mono font-semibold">{Number(d.total_fila ?? 0).toFixed(2)}</td>
-                      <td className="px-1.5 py-1 text-right border-b border-r border-slate-200 font-mono">{(d as any).total_suger != null ? Number((d as any).total_suger ?? 0).toFixed(2) : ""}</td>
+                      <td className="px-1.5 py-1 text-right border-b border-r border-slate-200 font-mono">{d.can_mer.toFixed(0)}</td>
+                      <td className="px-1.5 py-1 text-right border-b border-r border-slate-200 font-mono">{d.pre_mer.toFixed(2)}</td>
+                      <td className="px-1.5 py-1 text-right border-b border-r border-slate-200 font-mono">{d.dsc_mer.toFixed(2)}</td>
+                      <td className="px-1.5 py-1 text-right border-b border-r border-slate-200 font-mono font-semibold">{d.total_fila.toFixed(2)}</td>
+                      <td className="px-1.5 py-1 text-right border-b border-r border-slate-200 font-mono">{(d as any).total_suger?.toFixed(2) ?? ""}</td>
                       <td className="px-1 py-1 border-b border-slate-200 text-center w-12">
                         {canEdit && (
                           <div className="flex gap-0.5 justify-center">
@@ -1598,13 +1573,13 @@ export function GuiaRemisionForm({
         {guia && (
           <div className="flex justify-end gap-4 px-3 py-1.5 bg-[#EEF2F7] border-t border-slate-300 text-[11.5px]">
             <span className="text-slate-600">Sub Totales ==&gt;</span>
-            <span className="font-mono w-20 text-right">{Number(totals.bruto ?? 0).toFixed(2)}</span>
+            <span className="font-mono w-20 text-right">{totals.bruto.toFixed(2)}</span>
             <span className="text-slate-600">Dscto:</span>
-            <span className="font-mono w-20 text-right text-red-600">-{Number(totals.dscto ?? 0).toFixed(2)}</span>
+            <span className="font-mono w-20 text-right text-red-600">-{totals.dscto.toFixed(2)}</span>
             <span className="text-slate-600">IGV ==&gt;</span>
-            <span className="font-mono w-20 text-right">{Number(totals.igv_amt ?? 0).toFixed(2)}</span>
+            <span className="font-mono w-20 text-right">{totals.igv_amt.toFixed(2)}</span>
             <span className="font-semibold text-slate-800">TOTAL NETO ({codMon === "NS" ? "S/" : "$"}) ==&gt;</span>
-            <span className="font-mono font-bold text-[13px] w-24 text-right text-blue-800">{Number(totals.neto ?? 0).toFixed(2)}</span>
+            <span className="font-mono font-bold text-[13px] w-24 text-right text-blue-800">{totals.neto.toFixed(2)}</span>
           </div>
         )}
       </div>
@@ -1623,9 +1598,6 @@ export function GuiaRemisionForm({
           onClose={() => setShowClienteLookup(false)}
           onSelect={(c) => {
             const parsed = Number(c.id);
-            const nextSelection = { id: Number.isNaN(parsed) ? "" : parsed, label: c.name };
-            setSharedClientSelection(nextSelection);
-            onClientSelectionChange?.(nextSelection);
             if (!Number.isNaN(parsed)) {
               setIdCliente(parsed);
             } else {
@@ -1683,10 +1655,8 @@ export function GuiaRemisionList() {
   const [mes, setMes] = useState("");
   const [estado, setEstado] = useState("");
   const [numDoc, setNumDoc] = useState("");
-  const [clientSelection, setClientSelection] = useState<GuiaClientSelection>({
-    id: "",
-    label: "(Todos)",
-  });
+  const [clientFilterId, setClientFilterId] = useState<number | "">(57558);
+  const [clientFilterLabel, setClientFilterLabel] = useState("RIOS ROSALES CARLOS");
   const [officeFilter, setOfficeFilter] = useState("");
   const [warehouseFilter, setWarehouseFilter] = useState("");
   const [locationFilterId, setLocationFilterId] = useState<number | "">("");
@@ -1696,8 +1666,6 @@ export function GuiaRemisionList() {
   const [selected, setSelected] = useState<GuiaRemisionRow | null>(null);
   const [formWindows, setFormWindows] = useState<GuiaFormWindow[]>([]);
   const [toolWindows, setToolWindows] = useState<GuiaToolWindow[]>([]);
-  const [serverTotalCount, setServerTotalCount] = useState<number | null>(null);
-  const [serverTotalAmount, setServerTotalAmount] = useState<number | null>(null);
   const zRef = useRef(3000);
   const cascadeRef = useRef(0);
 
@@ -1708,32 +1676,19 @@ export function GuiaRemisionList() {
         anio: anio ? parseInt(anio) : undefined,
         mes: mes ? parseInt(mes) : undefined,
         id_locacion: locationFilterId !== "" ? Number(locationFilterId) : undefined,
-        id_cliente: clientSelection.id !== "" ? Number(clientSelection.id) : undefined,
+        id_cliente: clientFilterId !== "" ? Number(clientFilterId) : undefined,
         estado: estado || undefined,
         num_doc: numDoc ? parseInt(numDoc) : undefined,
         limit: 500,
       });
-      // support legacy adapter returning { items, total, total_amount }
-      if (data && typeof data === "object" && Array.isArray((data as any).items)) {
-        setRows((data as any).items);
-        setServerTotalCount(typeof (data as any).total === 'number' ? (data as any).total : null);
-        setServerTotalAmount(typeof (data as any).total_amount === 'number' ? (data as any).total_amount : null);
-      } else if (Array.isArray(data)) {
-        setRows(data);
-        setServerTotalCount(null);
-        setServerTotalAmount(null);
-      } else {
-        setRows([]);
-        setServerTotalCount(null);
-        setServerTotalAmount(null);
-      }
+      setRows(data);
       setSearched(true);
     } catch (e: any) {
       toast.error(e.message ?? "Error al cargar guías");
     } finally {
       setLoading(false);
     }
-  }, [anio, mes, estado, numDoc, clientSelection.id, locationFilterId]);
+  }, [anio, mes, estado, numDoc, clientFilterId, locationFilterId]);
 
   useEffect(() => {
     load();
@@ -1780,7 +1735,7 @@ export function GuiaRemisionList() {
     }
   }, [officeFilter, warehouseFilter, locations]);
 
-  const openFormWindow = useCallback((idGuia?: number, detailOnly = false, initialClientSelection?: GuiaClientSelection) => {
+  const openFormWindow = useCallback((idGuia?: number, detailOnly = false) => {
     const maxW = typeof window !== "undefined" ? window.innerWidth : 1280;
     const maxH = typeof window !== "undefined" ? Math.max(320, window.innerHeight - FLOAT_DESKTOP_STATUS_BAR_H) : 720;
     const isNewForm = !idGuia;
@@ -1805,7 +1760,6 @@ export function GuiaRemisionList() {
         idGuia,
         detailOnly,
         title: idGuia ? detailOnly ? `Editar guía N° ${idGuia}` : `GUIAS DE REMISION N° ${idGuia}` : "Registrar nueva GUIA DE REMISION",
-        clientSelection: initialClientSelection ?? clientSelection,
         x,
         y,
         w,
@@ -1813,21 +1767,16 @@ export function GuiaRemisionList() {
         z: zRef.current,
       },
     ]);
-  }, [clientSelection]);
+  }, []);
 
   const handleNuevo = () => {
     setSelected(null);
-    openFormWindow(undefined, false, clientSelection);
+    openFormWindow(undefined);
   };
 
   const handleMostrar = (row: GuiaRemisionRow, detailOnly = true) => {
     setSelected(row);
-    const nextClientSelection = {
-      id: row.id_cliente ?? "",
-      label: row.cliente_nombre || clientById[row.id_cliente]?.name || `Cliente #${row.id_cliente ?? ""}`,
-    } as GuiaClientSelection;
-    setClientSelection(nextClientSelection);
-    openFormWindow(row.id, detailOnly, nextClientSelection);
+    openFormWindow(row.id, detailOnly);
   };
 
   const handleEliminar = (row: GuiaRemisionRow, detailOnly = true) => {
@@ -1903,10 +1852,6 @@ export function GuiaRemisionList() {
     });
     return out;
   }, [rows, sortBy, clientById]);
-
-  const totalAmount = useMemo(() => {
-    return rows.reduce((acc, r) => acc + Number(r.tot_venta ?? 0), 0);
-  }, [rows]);
 
   const openToolWindow = useCallback((kind: GuiaToolKind) => {
     const meta = TOOL_WINDOW_META[kind];
@@ -1987,8 +1932,7 @@ export function GuiaRemisionList() {
   }, []);
 
   return (
-    <ClientProvider>
-      <div className="relative h-full min-h-0 flex flex-col overflow-hidden bg-[#F3F6FA]">
+    <div className="relative h-full min-h-0 flex flex-col overflow-hidden bg-[#F3F6FA]">
       {/* Toolbar principal */}
       <div className="flex items-center gap-1 px-2 py-1.5 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] border-b border-slate-400/50 shrink-0 overflow-x-auto">
         <button className={iconBtn} title="Imprimir Guía" onClick={() => setShowPrintModal(true)}><Printer className="h-4 w-4" /></button>
@@ -2073,7 +2017,7 @@ export function GuiaRemisionList() {
           <div className="flex gap-1">
             <input
               className={inp}
-              value={clientSelection.label}
+              value={clientFilterLabel}
               placeholder="(Todos)"
               readOnly
             />
@@ -2117,7 +2061,7 @@ export function GuiaRemisionList() {
                 <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev?.col === 'cod_mon' ? { col: 'cod_mon', asc: !prev.asc } : { col: 'cod_mon', asc: true })}>Mon. {sortBy?.col === 'cod_mon' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
                 <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev?.col === 'tot_venta' ? { col: 'tot_venta', asc: !prev.asc } : { col: 'tot_venta', asc: false })}>Total {sortBy?.col === 'tot_venta' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
                 <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev?.col === 'estado' ? { col: 'estado', asc: !prev.asc } : { col: 'estado', asc: true })}>EST {sortBy?.col === 'estado' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
-                <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev?.col === 'estado_sunat' ? { col: 'estado_sunat', asc: !prev.asc } : { col: 'estado_sunat', asc: true })}>Estado Sunat {sortBy?.col === 'estado_sunat' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
+                <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev?.col === 'estado_sunat' ? { col: 'estado_sunat', asc: !prev.asc } : { col: 'estado_sunat', asc: true })}>Estados Sunat {sortBy?.col === 'estado_sunat' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
                 <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev?.col === 'observacion' ? { col: 'observacion', asc: !prev.asc } : { col: 'observacion', asc: true })}>Nota {sortBy?.col === 'observacion' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
                 <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev?.col === 'id_cotizacion' ? { col: 'id_cotizacion', asc: !prev.asc } : { col: 'id_cotizacion', asc: true })}>Cotiz. {sortBy?.col === 'id_cotizacion' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
                 <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev?.col === 'num_orden' ? { col: 'num_orden', asc: !prev.asc } : { col: 'num_orden', asc: true })}>Orden de Compra {sortBy?.col === 'num_orden' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
@@ -2134,14 +2078,11 @@ export function GuiaRemisionList() {
                 </tr>
               ) : rowsView.map((r, i) => {
                 const isSel = selected?.id === r.id;
-                const customerName = r.cliente_nombre || clientById[r.id_cliente]?.name || `Cliente #${r.id_cliente}`;
+                const customerName = r.cliente_nombre ?? clientById[r.id_cliente]?.name ?? `Cliente #${r.id_cliente}`;
                 const reference = r.num_job || r.pto_llegada || r.pto_partida || "-";
                 const estadoSunat = r.estado_sunat ?? (r.estado === "ANULADO" ? "BAJA" : r.estado === "APROBADO" ? "ACEPTADO" : "PENDIENTE");
                 const estadoText = r.estado === "GENERADO" && !isSel ? "" : r.estado;
                 const codSerie = r.cod_serie ?? (r.id_serie_doc !== undefined ? String(r.id_serie_doc) : "-");
-                // map to SIGECOM-like presentation
-                const estadoShort = r.estado === "GENERADO" ? "GN" : r.estado === "APROBADO" ? "AP" : r.estado === "ANULADO" ? "AN" : (r.estado || "");
-                const monedaShort = r.cod_mon === "US" ? "US" : r.cod_mon === "NS" ? "S/" : (r.cod_mon || "-");
                 return (
                   <tr
                     key={r.id}
@@ -2157,14 +2098,14 @@ export function GuiaRemisionList() {
                     <td className="px-2 py-1 text-center border-r border-slate-200 whitespace-nowrap">{r.fec_doc ? new Date(r.fec_doc).toLocaleDateString("es-PE") : ""}</td>
                     <td className="px-2 py-1 border-r border-slate-200 max-w-[140px] truncate">{reference}</td>
                     <td className="px-2 py-1 border-r border-slate-200 max-w-[180px] truncate">{customerName}</td>
-                    <td className="px-2 py-1 text-center border-r border-slate-200">{monedaShort}</td>
-                    <td className="px-2 py-1 text-right border-r border-slate-200 font-mono">{Number(r.tot_venta ?? r.tot_neto ?? 0).toFixed(2)}</td>
-                    <td className="px-2 py-1 text-center border-r border-slate-200 font-mono">{estadoShort}</td>
+                    <td className="px-2 py-1 text-center border-r border-slate-200">{r.cod_mon || "-"}</td>
+                    <td className="px-2 py-1 text-right border-r border-slate-200 font-mono">{r.tot_venta.toFixed(2)}</td>
+                    <td className="px-2 py-1 text-center border-r border-slate-200 font-mono">{estadoText}</td>
                     <td className="px-2 py-1 text-center border-r border-slate-200">{estadoSunat}</td>
                     <td className="px-2 py-1 border-r border-slate-200 max-w-[180px] truncate">{r.observacion ?? "-"}</td>
                     <td className="px-2 py-1 text-center border-r border-slate-200 font-mono">{r.id_cotizacion ?? "-"}</td>
                     <td className="px-2 py-1 text-center border-r border-slate-200">{r.num_orden ?? "-"}</td>
-                    <td className="px-2 py-1 text-right border-r border-slate-200 font-mono font-bold text-blue-800">{Number(r.tot_neto_sug ?? r.tot_neto ?? 0).toFixed(2)}</td>
+                    <td className="px-2 py-1 text-right border-r border-slate-200 font-mono font-bold text-blue-800">{(r.tot_neto_sug ?? r.tot_neto).toFixed(2)}</td>
                     <td className="px-2 py-1 text-center border-r border-slate-200">{codSerie}</td>
                     <td className="px-1 py-1 text-center w-8">
                       <button
@@ -2185,7 +2126,7 @@ export function GuiaRemisionList() {
 
       {/* Footer */}
       <div className="shrink-0 border-t border-slate-400/50 bg-gradient-to-b from-[#D6DEE8] to-[#C0CCDB] px-3 py-0.5 text-[11px] text-slate-700 text-center font-medium flex items-center justify-center whitespace-nowrap overflow-hidden">
-        Registros : {rows.length}{serverTotalCount ? ` / ${serverTotalCount}` : ''} · Total : {(serverTotalAmount ?? totalAmount).toFixed(2)}
+        Registros : {rows.length}
       </div>
 
       {/* Ventanas Flotantes de Herramientas */}
@@ -2218,9 +2159,8 @@ export function GuiaRemisionList() {
         <ClienteLookupModal
           onClose={() => setShowClientLookup(false)}
           onSelect={(c) => {
-            const parsed = Number(c.id);
-            const sel = { id: Number.isNaN(parsed) ? "" : parsed, label: c.name } as GuiaClientSelection;
-            setClientSelection(sel);
+            setClientFilterId(Number(c.id));
+            setClientFilterLabel(c.name);
             setShowClientLookup(false);
           }}
         />
@@ -2246,11 +2186,6 @@ export function GuiaRemisionList() {
         >
           <GuiaRemisionForm
             idGuia={w.idGuia}
-            initialClientSelection={w.clientSelection ?? clientSelection}
-            onClientSelectionChange={(nextSelection) => {
-              setClientSelection(nextSelection);
-              setFormWindows((prev) => prev.map((win) => win.id === w.id ? { ...win, clientSelection: nextSelection } : win));
-            }}
             onClose={() => closeFormWindow(w.id)}
             onSaved={() => {
               closeFormWindow(w.id);
@@ -2259,8 +2194,7 @@ export function GuiaRemisionList() {
           />
         </DraggableToolWindow>
       ))}
-      </div>
-    </ClientProvider>
+    </div>
   );
 }
 
