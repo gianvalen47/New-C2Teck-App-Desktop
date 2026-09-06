@@ -57,6 +57,15 @@ class ClientRead(ClientBase):
         from_attributes = True
 
 
+class ClientsListResponse(BaseModel):
+    """Response wrapper for list endpoints that return items + total"""
+    items: List[ClientRead]
+    total: int
+
+    class Config:
+        from_attributes = True
+
+
 # ============================================================================
 # SALE/INVOICE SCHEMAS
 # ============================================================================

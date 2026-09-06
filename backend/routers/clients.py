@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 
 from config import SessionLocal
 from models import ClientModel
-from schemas import ClientCreate, ClientRead, ClientUpdate
+from schemas import ClientCreate, ClientRead, ClientUpdate, ClientsListResponse
 from legacy_adapter import (
     is_legacy_source_enabled,
     list_clients_legacy,
@@ -31,20 +31,24 @@ def get_db():
         db.close()
 
 
-@router.get("", response_model=list[ClientRead])
+@router.get("", response_model=ClientsListResponse)
 def list_clients(skip: int = 0, limit: int = 0, db: Session = Depends(get_db)):
-    """List all clients (from legacy adapter if enabled).
+    """List clients.
 
-    When limit is 0, the backend fetches the complete client set from the legacy source.
+    Returns a dictionary: { items: [...], total: N } so the frontend can show
+    the server-side total and loaded counts (matching SIGECOM desktop behaviour).
+    When legacy source is enabled this delegates to the legacy adapter which
+    already returns `{'items': ..., 'total': ...}`. When using the local DB the
+    endpoint will compute the total and return the same shape.
     """
     if is_legacy_source_enabled():
         try:
             data = list_clients_legacy(skip=skip, limit=limit)
-            # data is already normalized by legacy_adapter
+            # data is expected to be a dict with 'items' and 'total'
             if isinstance(data, dict) and "items" in data:
-                return data["items"]
-            elif isinstance(data, list):
                 return data
+            elif isinstance(data, list):
+                return {"items": data, "total": len(data)}
             else:
                 raise HTTPException(
                     status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -57,9 +61,13 @@ def list_clients(skip: int = 0, limit: int = 0, db: Session = Depends(get_db)):
                 detail=f"Legacy adapter unavailable: {type(e).__name__}. Start sigecoom-wcf-adapter.exe."
             )
 
-    # Fallback to local SQLite
-    clients = db.query(ClientModel).offset(skip).limit(limit).all()
-    return clients
+    # Fallback to local SQLite - return same shape with total count
+    total = db.query(ClientModel).count()
+    clients = db.query(ClientModel).offset(skip)
+    if limit and limit > 0:
+        clients = clients.limit(limit)
+    clients = clients.all()
+            return {"items": clients, "total": total}
 
 
 @router.get("/{client_id}", response_model=ClientRead)
