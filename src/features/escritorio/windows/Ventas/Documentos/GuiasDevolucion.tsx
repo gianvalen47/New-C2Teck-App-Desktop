@@ -53,14 +53,14 @@ type GuiaDevolucionRow = {
   numero: string;
   fecha: string;
   cliente: string;
-  ruc: string;
-  tipoDoc: string;
-  referencia: string;
-  moneda: string;
+  ruc?: string;
+  tipoDoc?: string;
+  referencia?: string;
+  moneda?: string;
   total: number;
-  estado: GuiaDevolucionEstado;
-  motivo: string;
-  ubicacion: string;
+  estado: string;
+  motivo?: string;
+  ubicacion?: string;
 };
 
 type GuiaDevolucionDet = {
@@ -207,9 +207,10 @@ function ClienteLookupModal({ onClose, onSelect }: { onClose: () => void; onSele
                   <tr><td colSpan={3} className="px-2 py-4 text-center text-slate-500">Sin resultados</td></tr>
                 ) : (
                   filtered.map((client, idx) => {
-                    const isSelected = client.id === selectedId;
+                      const clientId = Number(client.id);
+                    const isSelected = !Number.isNaN(clientId) && clientId === selectedId;
                     return (
-                      <tr key={client.id} onClick={() => setSelectedId(client.id)} onDoubleClick={() => onSelect(client)} className={["cursor-pointer border-b border-slate-200", idx % 2 ? "bg-[#f6f9fc]" : "bg-white", isSelected ? "!bg-[#d6e4f4]" : "hover:bg-[#e8f0f8]/70"].join(" ")}>
+                      <tr key={client.id} onClick={() => setSelectedId(clientId)} onDoubleClick={() => onSelect(client)} className={["cursor-pointer border-b border-slate-200", idx % 2 ? "bg-[#f6f9fc]" : "bg-white", isSelected ? "!bg-[#d6e4f4]" : "hover:bg-[#e8f0f8]/70"].join(" ")}>
                         <td className="border-r border-slate-200 px-2 py-1 font-mono">{String(client.id).slice(0, 8).toUpperCase()}</td>
                         <td className="border-r border-slate-200 px-2 py-1">{client.name}</td>
                         <td className="px-2 py-1 font-mono">{client.ruc || "-"}</td>
@@ -224,7 +225,7 @@ function ClienteLookupModal({ onClose, onSelect }: { onClose: () => void; onSele
             <div className="text-[11px] text-slate-600">Registros: {filtered.length}</div>
             <div className="flex items-center gap-2">
               <button className={btn} onClick={onClose}><X className="h-3.5 w-3.5" />Cerrar</button>
-              <button className={btnPrimary} onClick={() => { const selected = filtered.find((client) => client.id === selectedId); if (selected) onSelect(selected); }} disabled={!selectedId}><Save className="h-3.5 w-3.5" />Seleccionar</button>
+              <button className={btnPrimary} onClick={() => { const selected = filtered.find((client) => Number(client.id) === selectedId); if (selected) onSelect(selected); }} disabled={!selectedId}><Save className="h-3.5 w-3.5" />Seleccionar</button>
             </div>
           </div>
         </div>
@@ -464,7 +465,14 @@ export function GuiaDevolucionList() {
 
   const refreshRows = useCallback(() => {
     fetchGuiasDevolucion({ anio: Number(anio || NOW.getFullYear()), mes: Number(mes || NOW.getMonth() + 1) })
-      .then((data) => setRows(data))
+      .then((data) => setRows(data.map((row) => ({
+        ...row,
+        ruc: row.ruc ?? "",
+        total: Number(row.total ?? 0),
+        estado: (row.estado as GuiaDevolucionEstado) ?? "GENERADO",
+        moneda: row.moneda ?? "PEN",
+        referencia: row.referencia ?? "",
+      }))))
       .catch(() => toast.error("No se pudo cargar las guías de devolución desde el backend"));
   }, [anio, mes]);
 
@@ -542,8 +550,8 @@ export function GuiaDevolucionList() {
                     <td className="border-r border-slate-100 px-3 py-2">{row.referencia || "-"}</td>
                     <td className="border-r border-slate-100 px-3 py-2 max-w-[220px] truncate">{row.cliente || "(Sin cliente)"}</td>
                     <td className="border-r border-slate-100 px-3 py-2">{row.moneda}</td>
-                    <td className="border-r border-slate-100 px-3 py-2 font-mono text-right">{formatMoney(row.total)}</td>
-                    <td className="border-r border-slate-100 px-3 py-2"><StateBadge estado={row.estado} /></td>
+                    <td className="border-r border-slate-100 px-3 py-2 font-mono text-right">{formatMoney(row.total ?? 0)}</td>
+                    <td className="border-r border-slate-100 px-3 py-2"><StateBadge estado={row.estado ?? "GENERADO"} /></td>
                     <td className="px-3 py-2"><div className="flex items-center gap-1.5"><button className={btn} onClick={() => handleOpenEdit(row.id)}><Search className="h-3.5 w-3.5" />Ver</button><button className={btn} onClick={() => handleDelete(row.id)}><Trash2 className="h-3.5 w-3.5" />Borrar</button></div></td>
                   </tr>
                 ))

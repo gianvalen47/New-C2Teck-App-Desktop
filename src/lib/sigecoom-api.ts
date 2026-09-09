@@ -205,12 +205,21 @@ export async function fetchBackendHealth(): Promise<BackendHealth> {
 // AUTH / SESSION
 // ============================================================================
 
+export type EmpresaAsignada = {
+  codigo: string;
+  nombre: string;
+  ruc?: string | null;
+  descripcion?: string | null;
+};
+
 export type SessionInfo = {
   username: string;
   perfil: string;
   fecha_transaccion: string;
   tipo_cambio_compra: number;
   tipo_cambio_venta: number;
+  empresa_actual?: EmpresaAsignada | null;
+  empresas: EmpresaAsignada[];
 };
 
 export async function fetchSession(): Promise<SessionInfo> {
@@ -1354,14 +1363,41 @@ export async function fetchGuiasRemision(params: {
   if (params.num_doc !== undefined) qs.set("num_doc", String(params.num_doc));
   if (params.skip !== undefined) qs.set("skip", String(params.skip));
   if (params.limit !== undefined) qs.set("limit", String(params.limit));
-  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision?${qs}`);
+  const url = `${API_BASE_URL}${API_V1_PREFIX}/guias-remision${qs.toString() ? `?${qs.toString()}` : ''}`;
+  // Try to include the active company from local session (set by login/session)
+  const headers: Record<string, string> = {};
+  try {
+    const raw = localStorage.getItem('sigecoom_session');
+    if (raw) {
+      const sess = JSON.parse(raw);
+      const codigo = sess?.empresa_actual?.codigo || sess?.empresa_actual?.codigo?.toString?.();
+      if (codigo) headers['X-Sigecoom-CodEmp'] = String(codigo);
+    }
+  } catch (e) {
+    // ignore localStorage parsing errors
+  }
+
+  const response = await fetch(url, { headers });
   if (!response.ok) throw new Error("Error al obtener guías de remisión");
   return response.json();
 }
 
+
 /** Obtener cabecera + detalles + transportista — equivale a GuiaRemisionService.MostrarPorId */
 export async function fetchGuiaRemision(id: number | string): Promise<GuiaRemisionFull> {
-  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${encodeURIComponent(String(id))}`);
+  const url = `${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${encodeURIComponent(String(id))}`;
+  const headers: Record<string, string> = {};
+  try {
+    const raw = localStorage.getItem('sigecoom_session');
+    if (raw) {
+      const sess = JSON.parse(raw);
+      const codigo = sess?.empresa_actual?.codigo || sess?.empresa_actual?.codigo?.toString?.();
+      if (codigo) headers['X-Sigecoom-CodEmp'] = String(codigo);
+    }
+  } catch (e) {
+    // ignore
+  }
+  const response = await fetch(url, { headers });
   if (!response.ok) throw new Error("Guía no encontrada");
   return response.json();
 }

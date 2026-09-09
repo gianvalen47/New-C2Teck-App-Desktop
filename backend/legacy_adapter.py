@@ -32,6 +32,34 @@ LEGACY_ADAPTER_BASE_URL = os.getenv(
 ).rstrip("/")
 
 SIGECOM_DATA_SOURCE = os.getenv("SIGECOM_DATA_SOURCE", "legacy").lower()
+SIGECOM_COD_EMP = os.getenv("SIGECOM_COD_EMP", "08").strip()
+
+
+def get_active_company_code() -> str | None:
+    """Return the active SIGECOM company code from the runtime environment."""
+    for name in ("SIGECOM_COD_EMP", "SIGECOM_COMPANY_CODE", "COD_EMP"):
+        value = os.getenv(name, "").strip()
+        if value:
+            return value
+    return None
+
+
+def _row_matches_company(row: dict, company_code: str | None) -> bool:
+    """Filter rows to the active company when the record exposes a company code."""
+    if not company_code:
+        return True
+    if not isinstance(row, dict):
+        return True
+    found_any = False
+    for key in ("CodEmp", "cod_emp", "CodEmpresa", "cod_empresa", "Empresa", "empresa"):
+        if key in row:
+            found_any = True
+            value = row.get(key)
+            if value is not None:
+                return str(value).strip() == str(company_code).strip()
+    # If the row doesn't contain any company metadata, treat it as NOT matching
+    # when an explicit company_code is requested (prevents returning global rows).
+    return False
 
 
 def is_legacy_source_enabled() -> bool:
@@ -396,14 +424,19 @@ def list_guias_legacy(
         else:
             items = [data] if data else []
 
-        normalized = [_normalize_guia(g) for g in items]
+        company_code = get_active_company_code()
+        filtered_items = [g for g in items if _row_matches_company(g, company_code)]
+        normalized = [_normalize_guia(g) for g in filtered_items]
         return normalized if isinstance(data, list) else {"items": normalized, "total": len(normalized)}
     except Exception as e:
         logger.warning(f"Legacy adapter unavailable for guías; falling back to SIGECOM WCF snapshot: {e}")
         try:
             rows = _load_real_wcf_guia_rows()
+            company_code = get_active_company_code()
             filtered = []
             for row in rows:
+                if not _row_matches_company(row, company_code):
+                    continue
                 record = _coerce_wcf_guia_row(row)
                 if anio is not None:
                     doc_date = record.get("fec_doc")

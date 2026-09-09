@@ -2,6 +2,8 @@ import { createPortal } from "react-dom";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   CalendarDays,
+  ChevronDown,
+  ChevronUp,
   Clock3,
   FileText,
   LogOut,
@@ -80,6 +82,47 @@ function InlineField({
 function EstadoBadge({ estado }: { estado: string }) {
   const cls = ESTADO_COLORS[estado] ?? "text-slate-600 bg-slate-50 border-slate-200";
   return <span className={`inline-block px-1.5 py-0 text-[10px] font-bold rounded border ${cls}`}>{estado}</span>;
+}
+
+function YearSpinner({ value, onChange }: { value: string; onChange: (next: string) => void }) {
+  const currentYear = Number(value || new Date().getFullYear());
+  const stepYear = (delta: number) => {
+    const next = Math.max(2000, currentYear + delta);
+    onChange(String(next));
+  };
+
+  return (
+    <div className="flex h-7 w-[82px] items-stretch overflow-hidden rounded border border-slate-300 bg-white shadow-xs">
+      <input
+        type="number"
+        min={2000}
+        value={value}
+        onChange={(e) => {
+          const next = e.target.value;
+          onChange(next === "" ? String(new Date().getFullYear()) : next);
+        }}
+        className="w-[58px] border-0 bg-transparent px-2 py-0 text-[11px] font-mono text-slate-800 outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+      />
+      <div className="flex w-[18px] flex-col border-l border-slate-300">
+        <button
+          type="button"
+          className="flex h-1/2 w-full items-center justify-center bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200"
+          title="Subir año"
+          onClick={() => stepYear(1)}
+        >
+          <ChevronUp className="h-3 w-3" />
+        </button>
+        <button
+          type="button"
+          className="flex h-1/2 w-full items-center justify-center border-t border-slate-300 bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200"
+          title="Bajar año"
+          onClick={() => stepYear(-1)}
+        >
+          <ChevronDown className="h-3 w-3" />
+        </button>
+      </div>
+    </div>
+  );
 }
 
 type BoletaFormWindow = {
@@ -370,27 +413,47 @@ export function BoletaList() {
   return (
     <div className="relative h-full min-h-0 flex flex-col overflow-hidden bg-[#F3F6FA]">
       <div className="flex items-center gap-1 px-2 py-1.5 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] border-b border-slate-400/50 shrink-0 overflow-x-auto">
-        <button className={iconBtn} title="Imprimir Documento"><Printer className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Imprimir Boleta"><Printer className="h-4 w-4" /></button>
         {tbSep}
-        <button className={iconBtn} title="Crear un nuevo registro" onClick={openNew}><Plus className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Imprimir Ticket"><Printer className="h-4 w-4" /></button>
         {tbSep}
-        <button className={iconBtn} title="Mostrar el registro seleccionado" onClick={openEdit} disabled={!selectedRow}><Search className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Enviar a Credito y cobranzas para aprobacion de precios"><Printer className="h-4 w-4" /></button>
         {tbSep}
-        <button className={iconBtn} title="Eliminar el registro seleccionado" disabled={!selectedRow}><Trash2 className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Crear un nuevo registro"><Printer className="h-4 w-4" /></button>
         {tbSep}
-        <button className={iconBtn} title="Enviar boleta" disabled={!selectedRow}><Send className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Eliminar el registro seleccionado"><Printer className="h-4 w-4" /></button>
         {tbSep}
-        <button className={iconBtn} title="Actualizar" onClick={() => setRows((prev) => [...prev])}><RefreshCw className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Mostrar los Estados de la Boleta"><Printer className="h-4 w-4" /></button>
         {tbSep}
-        <button className={iconBtn} title="Gestión"><Wrench className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Anular Boleta"><Printer className="h-4 w-4" /></button>
         {tbSep}
-        <button className={iconBtn} title="Mensajería"><Mail className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Facturar OT"><Printer className="h-4 w-4" /></button>
+        {tbSep}
+        <button className={iconBtn} title="Sugerir Factor / Descuento"><Printer className="h-4 w-4" /></button>
+        {tbSep}
+        <button className={iconBtn} title="Mostrar Precios Sugeridos"><Printer className="h-4 w-4" /></button>
+        {tbSep}
+        <button className={iconBtn} title="Enviar Boleta Electronica" onClick={openNew}><Plus className="h-4 w-4" /></button>
+        {tbSep}
+        <button className={iconBtn} title="Refrescar Datos" onClick={openEdit} disabled={!selectedRow}><Search className="h-4 w-4" /></button>
+        {tbSep}
+        <button className={iconBtn} title="Generar Boleta Electronica" disabled={!selectedRow}><Trash2 className="h-4 w-4" /></button>
+        {tbSep}
+        <button className={iconBtn} title="Comunicacion de Baja Boleta Electronica" disabled={!selectedRow}><Send className="h-4 w-4" /></button>
+        {tbSep}
+        <button className={iconBtn} title="Descargar Boleta Electronica" onClick={() => setRows((prev) => [...prev])}><RefreshCw className="h-4 w-4" /></button>
+        {tbSep}
+        <button className={iconBtn} title="Listar Boleta Electronica"><Wrench className="h-4 w-4" /></button>
+        {tbSep}
+        <button className={iconBtn} title="Listar Comunicados Baja"><Mail className="h-4 w-4" /></button>
         {tbSep}
         <button className={iconBtn} title="Cerrar la ventana actual"><LogOut className="h-4 w-4" /></button>
       </div>
 
       <div className="flex flex-wrap items-end gap-2 px-2 py-1.5 bg-[#F0F4F8] border-b border-slate-300">
-        <Field label="Año" className="w-14"><input className={`${inp} font-mono`} defaultValue="2026" /></Field>
+        <Field label="Año" className="w-[84px]">
+          <YearSpinner value="2026" onChange={() => {}} />
+        </Field>
         <Field label="Mes" className="w-24"><select className={inp} defaultValue="SEPTIEMBRE"><option>SEPTIEMBRE</option><option>AGOSTO</option><option>JULIO</option></select></Field>
         <Field label="Oficina" className="w-28"><select className={inp} defaultValue="LIMA"><option>LIMA</option><option>AREQUIPA</option></select></Field>
         <Field label="Cliente" className="w-52"><div className="flex gap-1"><input className={inp} defaultValue="(Todos)" /><button className={btn} type="button" title="Buscar cliente"><Search className="h-3 w-3" /></button></div></Field>

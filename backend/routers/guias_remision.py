@@ -17,7 +17,8 @@ import logging
 from datetime import datetime
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+import os
+from fastapi import APIRouter, Depends, HTTPException, Query, status, Header
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
@@ -44,6 +45,54 @@ from schemas import (
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/guias-remision", tags=["Guías de Remisión"])
+
+
+def _company_matches(row: dict, company_code: Optional[str]) -> bool:
+    """Filter row-level data to the active empresa when company metadata exists."""
+    if not company_code or not isinstance(row, dict):
+        return True
+    found = False
+    for key in ("CodEmp", "cod_emp", "CodEmpresa", "cod_empresa", "Empresa", "empresa"):
+        if key in row:
+            found = True
+            value = row.get(key)
+            if value is not None:
+                return str(value).strip() == str(company_code).strip()
+    # If the row lacks company metadata, do NOT include it when a company_code is specified.
+    return not bool(company_code) if not found else False
+
+
+def _filter_active_company(items: List[dict], company_code: Optional[str]) -> List[dict]:
+    """Filter items by active company code.
+
+    `company_code` is expected to come from a request header `X-Sigecoom-CodEmp`
+    (preferred) or fall back to `SIGECOM_COD_EMP` when the header is not present.
+    """
+    if not company_code:
+        company_code = os.getenv("SIGECOM_COD_EMP", "08").strip() or None
+    if not company_code:
+        return items
+
+    # If company_code equals the env default, tolerate rows lacking explicit
+    # company metadata (treat them as belonging to the active company) so the
+    # UI doesn't become empty when the dataset lacks CodEmp fields.
+    env_default = (os.getenv("SIGECOM_COD_EMP", "08") or "08").strip()
+    allow_missing_metadata = str(company_code).strip() == env_default
+
+    def matches(item: dict) -> bool:
+        if not isinstance(item, dict):
+            return False
+        # If item has company metadata, enforce match
+        for key in ("CodEmp", "cod_emp", "CodEmpresa", "cod_empresa", "Empresa", "empresa"):
+            if key in item:
+                value = item.get(key)
+                if value is None:
+                    return False
+                return str(value).strip() == str(company_code).strip()
+        # No metadata present: include only if allowed by env default fallback
+        return allow_missing_metadata
+
+    return [item for item in items if matches(item)]
 
 
 # ---------------------------------------------------------------------------
@@ -144,6 +193,7 @@ def list_guias(
     skip: int = 0,
     limit: int = 100,
     db: Session = Depends(get_db),
+    x_sigecoom_codemp: Optional[str] = Header(None, alias="X-Sigecoom-CodEmp"),
 ):
     """
     Listar Guías de Remisión: equivalente a `GuiaRemisionService.Filtrar(...)` en SIGECOM VB.NET.
@@ -164,7 +214,8 @@ def list_guias(
                 skip=skip,
                 limit=limit,
             )
-            # Normalize possible shapes from legacy adapter
+            # Normalize possible shapes from legacy adapter and keep only records
+            # from the active SIGECOM company when that metadata is present.
             if isinstance(data, dict) and "items" in data:
                 items = data["items"]
                 total = data.get("total")
@@ -174,6 +225,9 @@ def list_guias(
             else:
                 items = [data] if data else []
                 total = len(items)
+
+            items = _filter_active_company(items, x_sigecoom_codemp)
+            total = len(items) if total is None else min(total, len(items))
 
             # If the adapter provided a total different from returned page
             # we may need to compute the global total_amount (sum of tot_venta)

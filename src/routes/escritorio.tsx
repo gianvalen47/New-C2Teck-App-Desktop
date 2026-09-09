@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 
 import { fetchSession, login, type SessionInfo } from "@/lib/sigecoom-api";
+import { CompanyPickerModal, COMPANIES, type Company } from "@/features/escritorio/windows/Logueo/CambiarEmpresa";
 
 export const Route = createFileRoute("/escritorio")({
   head: () => ({
@@ -936,6 +937,8 @@ function DesktopAppInner() {
   const [sucursal, setSucursal] = useState("01 - Sede Central Lima");
   const [showPass, setShowPass] = useState(false);
   const [capsOn, setCapsOn] = useState(false);
+  const [companyPickerOpen, setCompanyPickerOpen] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState<Company>(COMPANIES[0]);
 
   useEffect(() => {
     setNow(new Date().toLocaleDateString("es-PE"));
@@ -1061,6 +1064,17 @@ function DesktopAppInner() {
         ? "bg-[#DDE4EC] p-0 flex items-stretch justify-stretch"
         : "bg-slate-900 p-2 sm:p-6 flex items-center justify-center",
     ].join(" ")}>
+      {companyPickerOpen && (
+        <CompanyPickerModal
+          current={selectedCompany}
+          onCancel={() => setCompanyPickerOpen(false)}
+          onAccept={(company) => {
+            setSelectedCompany(company);
+            setCompanyPickerOpen(false);
+            toast.success("Empresa actualizada", { description: `${company.razonSocial} (${company.codigo})` });
+          }}
+        />
+      )}
       {/* Ventana */}
       <div className={[
         "w-full h-full flex flex-col bg-[#DDE4EC] text-slate-800 overflow-visible",
@@ -1102,7 +1116,10 @@ function DesktopAppInner() {
           className="shrink-0 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] border-b border-slate-400/40 flex items-stretch relative z-30"
         >
           <AppOrb
-            onSwitchCompany={() => { setDesktopAuthenticated(false); toast("Cambiar empresa", { description: "Vuelva a iniciar sesión con las credenciales de la nueva empresa." }); }}
+            onSwitchCompany={() => {
+              setCompanyPickerOpen(true);
+              toast.success("Empresa", { description: "Se abrió la selección de empresa." });
+            }}
             onCloseApp={() => { toast.success("Cerrando aplicación…"); setTimeout(() => { window.location.href = "/"; }, 300); }}
           />
           <div className="flex-1 min-w-0">
@@ -1696,7 +1713,7 @@ function AppOrb({ onSwitchCompany, onCloseApp }: { onSwitchCompany: () => void; 
             <Building2 className="h-4 w-4 text-[#3E5B7A]" />
             <div>
               <div className="font-semibold">Cambiar Empresa</div>
-              <div className="text-[10px] text-slate-500">Cerrar sesión y elegir otro tenant</div>
+              <div className="text-[10px] text-slate-500">Abrir ventana con empresas asignadas</div>
             </div>
           </button>
           <button
