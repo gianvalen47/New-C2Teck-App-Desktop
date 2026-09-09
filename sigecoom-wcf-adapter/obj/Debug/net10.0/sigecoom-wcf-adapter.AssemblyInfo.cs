@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("sigecoom-wcf-adapter")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2e0a8431b729b9816d55df77486772b6acd6ae7b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d9821a73151019de487867f3adbf5e996382f881")]
 [assembly: System.Reflection.AssemblyProductAttribute("sigecoom-wcf-adapter")]
 [assembly: System.Reflection.AssemblyTitleAttribute("sigecoom-wcf-adapter")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

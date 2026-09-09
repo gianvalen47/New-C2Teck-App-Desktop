@@ -6,8 +6,21 @@ from pydantic import BaseModel
 
 router = APIRouter()
 
-LEGACY_USERNAME = os.getenv("SIGECOM_LEGACY_USERNAME", "grios").strip().lower()
+
+def _get_default_float(env_name: str, fallback: str) -> float:
+    raw_value = os.getenv(env_name, "").strip()
+    if not raw_value:
+        return float(fallback)
+    try:
+        return float(raw_value)
+    except ValueError:
+        return float(fallback)
+
+
+LEGACY_USERNAME = os.getenv("SIGECOM_LEGACY_USERNAME", "").strip().lower()
 LEGACY_PASSWORD_LENGTH = int(os.getenv("SIGECOM_LEGACY_PASSWORD_LENGTH", "3"))
+DEFAULT_TIPO_CAMBIO_COMPRA = _get_default_float("SIGECOM_TIPO_CAMBIO_COMPRA", "3.36")
+DEFAULT_TIPO_CAMBIO_VENTA = _get_default_float("SIGECOM_TIPO_CAMBIO_VENTA", "3.369")
 
 
 class LoginRequest(BaseModel):
@@ -42,38 +55,31 @@ def _get_empresas_asignadas(username: str) -> list[EmpresaAsignada]:
                 continue
             if ":" in item:
                 codigo, nombre = item.split(":", 1)
+                codigo = codigo.strip()
+                nombre = nombre.strip()
                 empresas.append(EmpresaAsignada(
-                    codigo=codigo.strip(),
-                    nombre=nombre.strip() or "Empresa",
-                    descripcion=f"Empresa asignada al usuario {username}",
+                    codigo=codigo,
+                    nombre=nombre or codigo,
+                    descripcion=None,
                 ))
             elif "|" in item:
                 parts = [p.strip() for p in item.split("|", 2)]
                 if len(parts) >= 2:
                     codigo = parts[0]
-                    nombre = parts[1]
+                    nombre = parts[1] or codigo
                     ruc = parts[2] if len(parts) > 2 else None
-                    empresas.append(EmpresaAsignada(codigo=codigo, nombre=nombre, ruc=ruc, descripcion=f"Empresa asignada al usuario {username}"))
+                    empresas.append(EmpresaAsignada(codigo=codigo, nombre=nombre, ruc=ruc, descripcion=None))
             else:
+                item = item.strip()
                 empresas.append(EmpresaAsignada(
                     codigo=item,
-                    nombre=f"Empresa {item}",
-                    descripcion=f"Empresa asignada al usuario {username}",
+                    nombre=item,
+                    descripcion=None,
                 ))
         if empresas:
             return empresas
 
-    codigo = (os.getenv("SIGECOM_COD_EMP", "08") or "08").strip() or "08"
-    nombre = (os.getenv("SIGECOM_EMPRESA_NOMBRE", "C2TECK S.A.C.") or "C2TECK S.A.C.").strip() or "C2TECK S.A.C."
-    ruc = (os.getenv("SIGECOM_RUC_EMPRESA", "20608806700") or "").strip() or None
-    return [
-        EmpresaAsignada(
-            codigo=codigo,
-            nombre=nombre,
-            ruc=ruc,
-            descripcion=f"Empresa asignada al usuario {username}",
-        )
-    ]
+    return []
 
 
 @router.post("/auth/login", response_model=SessionInfo)
@@ -92,7 +98,7 @@ def login(payload: LoginRequest):
         )
 
     empresas = _get_empresas_asignadas(user)
-    empresa_actual = empresas[0]
+    empresa_actual = empresas[0] if empresas else None
 
     if user == LEGACY_USERNAME:
         fecha = date.today().strftime("%d/%m/%Y")
@@ -100,8 +106,8 @@ def login(payload: LoginRequest):
             username=LEGACY_USERNAME,
             perfil="Consultor",
             fecha_transaccion=fecha,
-            tipo_cambio_compra=3.36,
-            tipo_cambio_venta=3.369,
+            tipo_cambio_compra=DEFAULT_TIPO_CAMBIO_COMPRA,
+            tipo_cambio_venta=DEFAULT_TIPO_CAMBIO_VENTA,
             empresa_actual=empresa_actual,
             empresas=empresas,
         )
@@ -111,8 +117,8 @@ def login(payload: LoginRequest):
         username=payload.username,
         perfil="Usuario",
         fecha_transaccion=fecha,
-        tipo_cambio_compra=3.36,
-        tipo_cambio_venta=3.369,
+        tipo_cambio_compra=DEFAULT_TIPO_CAMBIO_COMPRA,
+        tipo_cambio_venta=DEFAULT_TIPO_CAMBIO_VENTA,
         empresa_actual=empresa_actual,
         empresas=empresas,
     )
@@ -122,14 +128,15 @@ def login(payload: LoginRequest):
 def get_session():
     """Return the current user session with the real assigned companies."""
     fecha = date.today().strftime("%d/%m/%Y")
-    username = LEGACY_USERNAME
+    username = os.getenv("SIGECOM_LOGGED_IN_USER", LEGACY_USERNAME).strip().lower()
     empresas = _get_empresas_asignadas(username)
+    perfil = "Consultor" if username == LEGACY_USERNAME else "Usuario"
     return SessionInfo(
         username=username,
-        perfil="Consultor",
+        perfil=perfil,
         fecha_transaccion=fecha,
-        tipo_cambio_compra=3.36,
-        tipo_cambio_venta=3.369,
-        empresa_actual=empresas[0],
+        tipo_cambio_compra=DEFAULT_TIPO_CAMBIO_COMPRA,
+        tipo_cambio_venta=DEFAULT_TIPO_CAMBIO_VENTA,
+        empresa_actual=empresas[0] if empresas else None,
         empresas=empresas,
     )

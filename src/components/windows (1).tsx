@@ -4031,10 +4031,13 @@ function SaldoBancosCreditos() {
 }
 
 function TipoCambio() {
+  const formatTipoCambio = (value: number) =>
+    Number(value).toFixed(3).replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, "");
+
   const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
   const [currency, setCurrency] = useState("USD");
-  const [buy, setBuy] = useState(3.408);
-  const [sell, setSell] = useState(3.412);
+  const [buy, setBuy] = useState<number | null>(null);
+  const [sell, setSell] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
   const [history, setHistory] = useState<Array<{ id: string; date: string; currency: string; buy: number; sell: number; source: string }>>([]);
   const [message, setMessage] = useState<string | null>(null);
@@ -4058,7 +4061,7 @@ function TipoCambio() {
   };
 
   const handleRefreshSunat = () => {
-    setMessage("Consulta SUNAT simulada: revise y confirme los valores antes de guardar.");
+    setMessage("No hay valor real disponible en esta sesión; debe cargar el tipo de cambio desde el servicio SIGECOM o la base de datos vigente.");
   };
 
   return (
@@ -4066,8 +4069,8 @@ function TipoCambio() {
       <div className="grid grid-cols-4 gap-2 mb-2 text-[11px]">
         <div className="rounded-sm border border-slate-300 bg-white px-2 py-1"><span className="text-slate-600">Registros:</span> <b className="font-mono text-slate-900">{history.length}</b></div>
         <div className="rounded-sm border border-slate-300 bg-white px-2 py-1"><span className="text-slate-600">Moneda:</span> <b className="font-mono text-slate-900">{currency}</b></div>
-        <div className="rounded-sm border border-slate-300 bg-white px-2 py-1"><span className="text-slate-600">Compra:</span> <b className="font-mono text-slate-900">{buy.toFixed(3)}</b></div>
-        <div className="rounded-sm border border-slate-300 bg-white px-2 py-1"><span className="text-slate-600">Venta:</span> <b className="font-mono text-slate-900">{sell.toFixed(3)}</b></div>
+        <div className="rounded-sm border border-slate-300 bg-white px-2 py-1"><span className="text-slate-600">Compra:</span> <b className="font-mono text-slate-900">{formatTipoCambio(buy)}</b></div>
+        <div className="rounded-sm border border-slate-300 bg-white px-2 py-1"><span className="text-slate-600">Venta:</span> <b className="font-mono text-slate-900">{formatTipoCambio(sell)}</b></div>
       </div>
       <div className="grid grid-cols-4 gap-3 max-w-2xl">
         <Field label="Fecha"><input className={inp} type="date" value={date} onChange={(e) => setDate(e.target.value)} /></Field>

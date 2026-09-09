@@ -32,7 +32,7 @@ import {
 } from "lucide-react";
 
 import { fetchSession, login, type SessionInfo } from "@/lib/sigecoom-api";
-import { CompanyPickerModal, COMPANIES, type Company } from "@/features/escritorio/windows/Logueo/CambiarEmpresa";
+import { CompanyPickerModal, type Company } from "@/features/escritorio/windows/Logueo/CambiarEmpresa";
 
 export const Route = createFileRoute("/escritorio")({
   head: () => ({
@@ -60,6 +60,9 @@ function SessionStatus() {
     return () => { mounted = false; };
   }, []);
 
+  const formatExchangeRate = (value: number) =>
+    Number(value).toFixed(3).replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, "");
+
   if (!s) {
     return (
       <>
@@ -78,9 +81,9 @@ function SessionStatus() {
       <span className="text-slate-500 shrink-0">|</span>
       <span className="shrink-0">Fecha Proceso: <b className="text-amber-300">{s.fecha_transaccion}</b></span>
       <span className="text-slate-500 shrink-0">/</span>
-      <span className="shrink-0">Tipo de Cambio Compra: <b className="text-amber-300">{s.tipo_cambio_compra.toFixed(3)}</b></span>
+      <span className="shrink-0">Tipo de Cambio Compra: <b className="text-amber-300">{formatExchangeRate(s.tipo_cambio_compra)}</b></span>
       <span className="text-slate-500 shrink-0">/</span>
-      <span className="shrink-0">Venta: <b className="text-amber-300">{s.tipo_cambio_venta.toFixed(3)}</b></span>
+      <span className="shrink-0">Venta: <b className="text-amber-300">{formatExchangeRate(s.tipo_cambio_venta)}</b></span>
     </>
   );
 }
@@ -927,18 +930,18 @@ function DesktopAppInner() {
   const [desktopAuthenticated, setDesktopAuthenticated] = useState(!loginMode);
   const [desktopReady, setDesktopReady] = useState(false);
   const [busy, setBusy] = useState(false);
-  const [user, setUser] = useState("grios");
+  const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [ribbonMinimized, setRibbonMinimized] = useState(false);
   const [ribbonBelow, setRibbonBelow] = useState(false);
   const [ribbonMenu, setRibbonMenu] = useState<{ x: number; y: number } | null>(null);
-  const [fecha, setFecha] = useState(new Date().toISOString().slice(0, 10));
-  const [tc, setTc] = useState("3.399");
-  const [sucursal, setSucursal] = useState("01 - Sede Central Lima");
+  const [fecha, setFecha] = useState("");
+  const [tc, setTc] = useState("");
+  const [sucursal, setSucursal] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [capsOn, setCapsOn] = useState(false);
   const [companyPickerOpen, setCompanyPickerOpen] = useState(false);
-  const [selectedCompany, setSelectedCompany] = useState<Company>(COMPANIES[0]);
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
 
   useEffect(() => {
     setNow(new Date().toLocaleDateString("es-PE"));
@@ -960,9 +963,9 @@ function DesktopAppInner() {
     fetchSession()
       .then((session) => {
         if (!mounted) return;
-        setUser(session.username || "grios");
-        setFecha(session.fecha_transaccion || new Date().toLocaleDateString("es-PE", { day: "2-digit", month: "2-digit", year: "numeric" }).replace(/\//g, "/"));
-        setTc(String(session.tipo_cambio_compra ?? "3.399"));
+        setUser(session.username || "");
+        setFecha(session.fecha_transaccion || "");
+        setTc(session.tipo_cambio_compra != null ? String(session.tipo_cambio_compra) : "");
       })
       .catch(() => {
         // Se mantiene el valor por defecto del Systeck si el backend no está listo.
@@ -1007,7 +1010,7 @@ function DesktopAppInner() {
     try {
       const session = await login(user.trim(), pass);
       localStorage.setItem("sigecoom_session", JSON.stringify(session));
-      setUser(session.username || "grios");
+      setUser(session.username || "");
       setFecha(session.fecha_transaccion || fecha);
       setTc(String(session.tipo_cambio_compra ?? tc));
       setDesktopAuthenticated(true);
@@ -1071,7 +1074,7 @@ function DesktopAppInner() {
           onAccept={(company) => {
             setSelectedCompany(company);
             setCompanyPickerOpen(false);
-            toast.success("Empresa actualizada", { description: `${company.razonSocial} (${company.codigo})` });
+            toast.success("Empresa actualizada", { description: `${company.nombre} (${company.codigo})` });
           }}
         />
       )}
