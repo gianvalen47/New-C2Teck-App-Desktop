@@ -1,17 +1,22 @@
-// Auto-extraido de windows (1).tsx (monolito legacy) — revisar antes de usar en produccion.
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { FileDown, LogOut, Plus, RefreshCw, Save, Search, Trash2, X } from "lucide-react";
+import { btn, btnPrimary, iconBtn, inp, squareIconBtn, tbSep } from "@/features/escritorio/windows/uiStyles";
 import {
-  inp,
-  Field,
-  WindowShell
-} from "@/components/ui/desktop-primitives";
-import {
-  fetchSigecoomLocations,
   createSigecoomLocation,
-  updateSigecoomLocation,
   deleteSigecoomLocation,
-  type Location
+  fetchSigecoomLocations,
+  type Location,
+  updateSigecoomLocation,
 } from "@/lib/sigecoom-api";
+
+function Field({ label, className = "", children }: { label: string; className?: string; children: React.ReactNode }) {
+  return (
+    <label className={`flex flex-col gap-0.5 ${className}`}>
+      <span className="text-[10.5px] text-slate-600 font-medium leading-tight">{label}</span>
+      {children}
+    </label>
+  );
+}
 
 export function UbicacionesList() {
   const [locations, setLocations] = useState<Location[]>([]);
@@ -55,7 +60,7 @@ export function UbicacionesList() {
   };
 
   useEffect(() => {
-    loadLocations();
+    void loadLocations();
   }, []);
 
   const handleSave = async () => {
@@ -126,53 +131,83 @@ export function UbicacionesList() {
   };
 
   return (
-    <WindowShell title="Ubicaciones de Almacén — Configuración geométrica"
-    >
-      {message && <div className="mb-3 rounded-sm border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">{message}</div>}
-      <div className="grid grid-cols-5 gap-2 mb-3">
-        <Field label="Código"><input className={inp} value={code} onChange={(e) => setCode(e.target.value)} placeholder="UB-001" /></Field>
-        <Field label="Almacén"><select className={inp} value={warehouse} onChange={(e) => setWarehouse(e.target.value)}><option>Central Lima</option><option>Norte</option><option>Sur</option></select></Field>
-        <Field label="Pasillo"><input className={inp} value={aisle} onChange={(e) => setAisle(e.target.value)} /></Field>
-        <Field label="Estantería"><input className={inp} value={shelf} onChange={(e) => setShelf(e.target.value)} /></Field>
-        <Field label="Fila"><input className={inp} value={row} onChange={(e) => setRow(e.target.value)} /></Field>
-        <Field label="Nivel"><input className={inp} value={level} onChange={(e) => setLevel(e.target.value)} /></Field>
-        <Field label="Capacidad"><input className={inp} type="number" value={capacity} onChange={(e) => setCapacity(e.target.value === "" ? "" : Number(e.target.value))} /></Field>
-        <Field label="Ocupación %"><input className={inp} type="number" value={occupancy} onChange={(e) => setOccupancy(e.target.value === "" ? "" : Number(e.target.value))} /></Field>
+    <div className="h-full flex flex-col bg-[#EEF3F8] text-slate-800">
+      <div className="flex items-center justify-between px-3 py-1.5 bg-gradient-to-b from-[#3E5B7A] to-[#2A3F55] border-b border-[#1F2E3F] text-[12px] text-white">
+        <span className="font-medium">Ubicaciones de Almacén — Configuración geométrica</span>
+        <div className="flex items-center gap-1">
+          <button className={iconBtn} title="Guardar" onClick={() => void handleSave()} disabled={saving}><Save className="h-4 w-4 text-white" /></button>
+          {tbSep}
+          <button className={iconBtn} title="Nuevo" onClick={resetForm}><Plus className="h-4 w-4 text-white" /></button>
+          {tbSep}
+          <button className={iconBtn} title="Actualizar" onClick={() => void loadLocations()}><RefreshCw className="h-4 w-4 text-white" /></button>
+          {tbSep}
+          <button className={iconBtn} title="Eliminar" onClick={() => void handleDelete()}><Trash2 className="h-4 w-4 text-white" /></button>
+          {tbSep}
+          <button className={iconBtn} title="Exportar"><FileDown className="h-4 w-4 text-white" /></button>
+          {tbSep}
+          <button className={iconBtn} title="Salir"><LogOut className="h-4 w-4 text-white" /></button>
+        </div>
       </div>
-      <div className="border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
-          <thead className="bg-[#F3F6FA]"><tr>
-            <th className="px-2 py-2 text-left border-b border-slate-300">Sel</th>
-            <th className="px-2 py-2 text-left border-b border-slate-300">Código</th>
-            <th className="px-2 py-2 text-left border-b border-slate-300">Almacén</th>
-            <th className="px-2 py-2 text-left border-b border-slate-300">Pasillo</th>
-            <th className="px-2 py-2 text-left border-b border-slate-300">Estantería</th>
-            <th className="px-2 py-2 text-left border-b border-slate-300">Fila</th>
-            <th className="px-2 py-2 text-left border-b border-slate-300">Nivel</th>
-            <th className="px-2 py-2 text-right border-b border-slate-300">Capacidad</th>
-            <th className="px-2 py-2 text-right border-b border-slate-300">Ocupación</th>
-          </tr></thead>
-          <tbody>
-            {loading ? (
-              <tr><td colSpan={9} className="px-2 py-4 text-sm text-slate-500">Cargando ubicaciones...</td></tr>
-            ) : locations.length === 0 ? (
-              <tr><td colSpan={9} className="px-2 py-4 text-sm text-slate-500">No hay ubicaciones registradas.</td></tr>
-            ) : locations.map((location) => (
-              <tr key={location.id} className={`hover:bg-slate-50 ${selectedLocationId === location.id ? "bg-slate-100" : ""}`} onClick={() => handleSelect(location)}>
-                <td className="px-2 py-2 border-b border-slate-200 text-center"><input type="radio" name="selectedLocation" checked={selectedLocationId === location.id} readOnly /></td>
-                <td className="px-2 py-2 border-b border-slate-200">{location.code}</td>
-                <td className="px-2 py-2 border-b border-slate-200">{location.warehouse}</td>
-                <td className="px-2 py-2 border-b border-slate-200">{location.aisle}</td>
-                <td className="px-2 py-2 border-b border-slate-200">{location.shelf}</td>
-                <td className="px-2 py-2 border-b border-slate-200">{location.row}</td>
-                <td className="px-2 py-2 border-b border-slate-200">{location.level}</td>
-                <td className="px-2 py-2 text-right border-b border-slate-200">{location.capacity ?? "-"}</td>
-                <td className="px-2 py-2 text-right border-b border-slate-200">{location.occupancy_percent ?? "-"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+
+      <div className="flex items-center gap-1 px-2 py-1.5 bg-gradient-to-b from-[#EDF2F7] to-[#D9E2EC] border-b border-slate-300 text-slate-700 overflow-x-auto">
+        <button className={squareIconBtn} title="Guardar" onClick={() => void handleSave()}><Save className="h-3.5 w-3.5" /></button>
+        <button className={squareIconBtn} title="Nuevo" onClick={resetForm}><Plus className="h-3.5 w-3.5" /></button>
+        <button className={squareIconBtn} title="Actualizar" onClick={() => void loadLocations()}><RefreshCw className="h-3.5 w-3.5" /></button>
+        <button className={squareIconBtn} title="Eliminar" onClick={() => void handleDelete()}><Trash2 className="h-3.5 w-3.5" /></button>
+        {tbSep}
+        <button className={squareIconBtn} title="Buscar"><Search className="h-3.5 w-3.5" /></button>
+        <button className={squareIconBtn} title="Cerrar"><X className="h-3.5 w-3.5" /></button>
       </div>
-    </WindowShell>
+
+      <div className="flex-1 min-h-0 overflow-auto p-3">
+        {message && <div className="mb-3 rounded-sm border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">{message}</div>}
+        <div className="grid grid-cols-5 gap-2 mb-3">
+          <Field label="Código"><input className={inp} value={code} onChange={(e) => setCode(e.target.value)} placeholder="UB-001" /></Field>
+          <Field label="Almacén"><select className={inp} value={warehouse} onChange={(e) => setWarehouse(e.target.value)}><option>Central Lima</option><option>Norte</option><option>Sur</option></select></Field>
+          <Field label="Pasillo"><input className={inp} value={aisle} onChange={(e) => setAisle(e.target.value)} /></Field>
+          <Field label="Estantería"><input className={inp} value={shelf} onChange={(e) => setShelf(e.target.value)} /></Field>
+          <Field label="Fila"><input className={inp} value={row} onChange={(e) => setRow(e.target.value)} /></Field>
+          <Field label="Nivel"><input className={inp} value={level} onChange={(e) => setLevel(e.target.value)} /></Field>
+          <Field label="Capacidad"><input className={inp} type="number" value={capacity} onChange={(e) => setCapacity(e.target.value === "" ? "" : Number(e.target.value))} /></Field>
+          <Field label="Ocupación %"><input className={inp} type="number" value={occupancy} onChange={(e) => setOccupancy(e.target.value === "" ? "" : Number(e.target.value))} /></Field>
+        </div>
+
+        <div className="border border-slate-300 rounded-sm bg-white overflow-auto shadow-sm">
+          <table className="w-full text-[11px] border-collapse">
+            <thead className="bg-[#F3F6FA]"><tr>
+              <th className="px-2 py-2 text-left border-b border-slate-300">Sel</th>
+              <th className="px-2 py-2 text-left border-b border-slate-300">Código</th>
+              <th className="px-2 py-2 text-left border-b border-slate-300">Almacén</th>
+              <th className="px-2 py-2 text-left border-b border-slate-300">Pasillo</th>
+              <th className="px-2 py-2 text-left border-b border-slate-300">Estantería</th>
+              <th className="px-2 py-2 text-left border-b border-slate-300">Fila</th>
+              <th className="px-2 py-2 text-left border-b border-slate-300">Nivel</th>
+              <th className="px-2 py-2 text-right border-b border-slate-300">Capacidad</th>
+              <th className="px-2 py-2 text-right border-b border-slate-300">Ocupación</th>
+            </tr></thead>
+            <tbody>
+              {loading ? (
+                <tr><td colSpan={9} className="px-2 py-4 text-sm text-slate-500">Cargando ubicaciones...</td></tr>
+              ) : locations.length === 0 ? (
+                <tr><td colSpan={9} className="px-2 py-4 text-sm text-slate-500">No hay ubicaciones registradas.</td></tr>
+              ) : locations.map((location) => (
+                <tr key={location.id} className={`hover:bg-slate-50 ${selectedLocationId === location.id ? "bg-slate-100" : ""}`} onClick={() => handleSelect(location)}>
+                  <td className="px-2 py-2 border-b border-slate-200 text-center"><input type="radio" name="selectedLocation" checked={selectedLocationId === location.id} readOnly /></td>
+                  <td className="px-2 py-2 border-b border-slate-200">{location.code}</td>
+                  <td className="px-2 py-2 border-b border-slate-200">{location.warehouse}</td>
+                  <td className="px-2 py-2 border-b border-slate-200">{location.aisle}</td>
+                  <td className="px-2 py-2 border-b border-slate-200">{location.shelf}</td>
+                  <td className="px-2 py-2 border-b border-slate-200">{location.row}</td>
+                  <td className="px-2 py-2 border-b border-slate-200">{location.level}</td>
+                  <td className="px-2 py-2 text-right border-b border-slate-200">{location.capacity ?? "-"}</td>
+                  <td className="px-2 py-2 text-right border-b border-slate-200">{location.occupancy_percent ?? "-"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   );
 }
+

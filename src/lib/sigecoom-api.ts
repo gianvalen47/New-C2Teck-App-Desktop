@@ -1255,7 +1255,7 @@ export type GuiaRemisionTransportista = {
 
 /** Fila del listado (frmGuiasRemision) — equivale a GuiaRemisionService.Filtrar */
 export type GuiaRemisionRow = {
-  id: number;
+  id: number | string;
   id_locacion: number;
   fec_doc: string;
   id_serie_doc?: number;
@@ -1360,8 +1360,8 @@ export async function fetchGuiasRemision(params: {
 }
 
 /** Obtener cabecera + detalles + transportista — equivale a GuiaRemisionService.MostrarPorId */
-export async function fetchGuiaRemision(id: number): Promise<GuiaRemisionFull> {
-  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${id}`);
+export async function fetchGuiaRemision(id: number | string): Promise<GuiaRemisionFull> {
+  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${encodeURIComponent(String(id))}`);
   if (!response.ok) throw new Error("Guía no encontrada");
   return response.json();
 }
@@ -1381,8 +1381,8 @@ export async function createGuiaRemision(data: GuiaRemisionCreate): Promise<Guia
 }
 
 /** Actualizar cabecera — equivale a GuiaRemisionService.Actualizar */
-export async function updateGuiaRemision(id: number, data: GuiaRemisionUpdate): Promise<GuiaRemisionFull> {
-  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${id}`, {
+export async function updateGuiaRemision(id: number | string, data: GuiaRemisionUpdate): Promise<GuiaRemisionFull> {
+  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${encodeURIComponent(String(id))}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -1395,9 +1395,9 @@ export async function updateGuiaRemision(id: number, data: GuiaRemisionUpdate): 
 }
 
 /** Anular guía — equivale a cambiar estado ANULADO */
-export async function anularGuiaRemision(id: number): Promise<GuiaRemisionRow> {
+export async function anularGuiaRemision(id: number | string): Promise<GuiaRemisionRow> {
   const response = await fetch(
-    `${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${id}/estado?nuevo_estado=ANULADO`,
+    `${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${encodeURIComponent(String(id))}/estado?nuevo_estado=ANULADO`,
     { method: "PATCH" }
   );
   if (!response.ok) {
@@ -1408,8 +1408,8 @@ export async function anularGuiaRemision(id: number): Promise<GuiaRemisionRow> {
 }
 
 /** Eliminar físicamente la guía (borrado forzado) */
-export async function deleteGuiaRemision(id: number): Promise<void> {
-  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${id}/borrar`, {
+export async function deleteGuiaRemision(id: number | string): Promise<void> {
+  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${encodeURIComponent(String(id))}/borrar`, {
     method: "DELETE",
   });
   if (!response.ok) {

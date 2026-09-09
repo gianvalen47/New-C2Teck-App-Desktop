@@ -439,14 +439,76 @@ def list_guias_legacy(
 
 
 def get_guia_legacy(id_guia: int | str):
-    """Fetch a single guía by id."""
-    endpoint = f"/api/v1/guias-remision/{id_guia}"
+    """Fetch a single guía by id.
+
+    The original SIGECOM WCF data commonly exposes composite identifiers such as
+    "83-375-3". Those values are not plain numeric DB IDs, so we resolve against
+    the real WCF snapshot using location + series + number when necessary.
+    """
+    lookup = parse_guia_lookup_id(id_guia)
+    fallback_error = None
+
     try:
+        endpoint = f"/api/v1/guias-remision/{id_guia}"
         data = _read_json(build_legacy_url(endpoint))
+        if isinstance(data, list):
+            if "id_locacion" in lookup:
+                for row in data:
+                    rec = _normalize_guia(row)
+                    if (
+                        rec.get("id_locacion") == lookup["id_locacion"]
+                        and rec.get("id_serie_doc") == lookup["id_serie_doc"]
+                        and rec.get("num_doc") == lookup["num_doc"]
+                    ):
+                        return rec
+            return _normalize_guia(data[0] if data else {})
         return _normalize_guia(data)
     except Exception as e:
+        fallback_error = e
         logger.error(f"Failed to get guía {id_guia} from legacy adapter: {e}")
-        raise
+
+    try:
+        if "id_locacion" in lookup:
+            rows = _load_real_wcf_guia_rows()
+            for row in rows:
+                rec = _coerce_wcf_guia_row(row)
+                if (
+                    rec.get("id_locacion") == lookup["id_locacion"]
+                    and rec.get("id_serie_doc") == lookup["id_serie_doc"]
+                    and rec.get("num_doc") == lookup["num_doc"]
+                ):
+                    return _normalize_guia(rec)
+    except Exception as snapshot_error:
+        logger.error(f"Failed to resolve composite guía {id_guia} from snapshot: {snapshot_error}")
+
+    raise fallback_error or Exception(f"Guía {id_guia} no encontrada")
+
+
+def parse_guia_lookup_id(raw_id) -> dict:
+    """Normalize the legacy guide identifier into the fields used by the backend.
+
+    Legacy SIGECOM IDs are often composite keys formatted as
+    "{id_locacion}-{id_serie_doc}-{num_doc}" (for example: "83-375-3").
+    """
+    if raw_id is None:
+        return {}
+
+    value = str(raw_id).strip()
+    if not value:
+        return {}
+
+    if value.isdigit() or (value.startswith("-") and value[1:].isdigit()):
+        return {"id": int(value)}
+
+    parts = [part for part in value.split("-") if part]
+    if len(parts) >= 3 and all(part.isdigit() for part in parts[:3]):
+        return {
+            "id_locacion": int(parts[0]),
+            "id_serie_doc": int(parts[1]),
+            "num_doc": int(parts[2]),
+        }
+
+    return {"legacy_key": value}
 
 
 def _normalize_guia(guia: dict) -> dict:

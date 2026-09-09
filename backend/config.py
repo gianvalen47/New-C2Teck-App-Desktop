@@ -58,7 +58,7 @@ PROJECT_VERSION = "0.1.0"
 SIGECOM_DATA_SOURCE = os.getenv("SIGECOM_DATA_SOURCE", "legacy").lower()
 SIGECOM_LEGACY_ADAPTER_BASE_URL = os.getenv(
     "SIGECOM_LEGACY_ADAPTER_BASE_URL",
-    "http://170.231.82.58:8443",
+    "http://localhost:5041",
 ).rstrip("/")
 
 SUPPORTED_SIGECOM_DATA_SOURCES = {"sqlite", "legacy", "sigecoom", "adapter", "wcf", "original"}

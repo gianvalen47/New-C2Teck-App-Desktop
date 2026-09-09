@@ -26,6 +26,7 @@ from legacy_adapter import (
     get_guia_legacy,
     is_legacy_source_enabled,
     list_guias_legacy,
+    parse_guia_lookup_id,
 )
 from models import ClientModel, GuiaRemisionModel, GuiaRemisionDetModel, TransportistaGuiaModel
 from schemas import (
@@ -238,10 +239,13 @@ def list_guias(
 
 
 @router.get("/{id_guia}", summary="Obtener Guía de Remisión")
-def get_guia(id_guia: int, db: Session = Depends(get_db)):
+def get_guia(id_guia: str, db: Session = Depends(get_db)):
     """
     Equivalente a `GuiaRemisionService.MostrarPorId(IdGuia)`.
     Devuelve cabecera + detalles + transportista.
+
+    El legado de SIGECOM usa IDs compuestos como "83-375-3". Necesitamos aceptar
+    esos valores y resolverlos por localizacion + serie + documento cuando sea necesario.
     """
     if SIGECOM_DATA_SOURCE in {"legacy", "sigecoom", "adapter", "wcf", "original"}:
         try:
@@ -252,7 +256,20 @@ def get_guia(id_guia: int, db: Session = Depends(get_db)):
                 detail=f"No se pudo consultar SIGECOM legacy: {exc}",
             )
 
-    guia = db.query(GuiaRemisionModel).filter(GuiaRemisionModel.id == id_guia).first()
+    lookup = parse_guia_lookup_id(id_guia)
+    query = db.query(GuiaRemisionModel)
+
+    if "id" in lookup:
+        guia = query.filter(GuiaRemisionModel.id == lookup["id"]).first()
+    elif "id_locacion" in lookup and "id_serie_doc" in lookup and "num_doc" in lookup:
+        guia = query.filter(
+            GuiaRemisionModel.id_locacion == lookup["id_locacion"],
+            GuiaRemisionModel.id_serie_doc == lookup["id_serie_doc"],
+            GuiaRemisionModel.num_doc == lookup["num_doc"],
+        ).first()
+    else:
+        guia = None
+
     if not guia:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Guía no encontrada")
     return _to_read(guia, db)

@@ -287,7 +287,7 @@ function TransportistaModal({
   onClose,
   onSaved,
 }: {
-  idGuia: number;
+  idGuia: number | string;
   initial?: GuiaRemisionTransportista;
   onClose: () => void;
   onSaved: (t: GuiaRemisionTransportista) => void;
@@ -307,7 +307,13 @@ function TransportistaModal({
   const handleSave = async () => {
     setSaving(true);
     try {
-      const result = await upsertTransportistaGuia(idGuia, {
+      const guiaId = Number(idGuia);
+      if (!Number.isFinite(guiaId)) {
+        toast.error("Guía inválida");
+        return;
+      }
+
+      const result = await upsertTransportistaGuia(guiaId, {
         empresa, direccion, ruc, vehiculo, chofer,
         cod_doc_chofer: codDocChofer, num_doc_chofer: numDocChofer,
         licencia, placa, con_ins: conIns,
@@ -404,7 +410,7 @@ function DetModal({
   onClose,
   onSaved,
 }: {
-  idGuia: number;
+  idGuia: number | string;
   idLocacion: number;
   detalle?: GuiaRemisionDet;
   onClose: () => void;
@@ -431,14 +437,26 @@ function DetModal({
     if (qty <= 0) { toast.error("La cantidad debe ser mayor a 0"); return; }
     setSaving(true);
     try {
+      const guiaId = Number(idGuia);
+      if (!Number.isFinite(guiaId)) {
+        toast.error("Guía inválida");
+        return;
+      }
+
       if (isNew) {
-        await addGuiaRemisionDet(idGuia, {
+        await addGuiaRemisionDet(guiaId, {
           cod_mer: codMer.trim(), des_mer: desMer, cod_uni_med: codUniMed,
           can_mer: qty, pre_mer: price, dsc_mer: disc, regalo, no_core: noCore, item: 1,
         });
         toast.success("Ítem agregado");
       } else {
-        await updateGuiaRemisionDet(idGuia, detalle!.id, {
+        const detId = Number(detalle!.id);
+        if (!Number.isFinite(detId)) {
+          toast.error("Ítem inválido");
+          return;
+        }
+
+        await updateGuiaRemisionDet(guiaId, detId, {
           des_mer: desMer, cod_uni_med: codUniMed,
           can_mer: qty, pre_mer: price, dsc_mer: disc, regalo, no_core: noCore,
         });
@@ -554,7 +572,7 @@ type GuiaToolWindow = {
 
 type GuiaFormWindow = {
   id: string;
-  idGuia?: number;
+  idGuia?: number | string;
   detailOnly?: boolean;
   title: string;
   x: number;
@@ -844,7 +862,7 @@ export function GuiaRemisionForm({
   onSaved,
   detailOnly = false,
 }: {
-  idGuia?: number;
+  idGuia?: number | string;
   idLocacion?: number;
   onClose: () => void;
   onSaved?: () => void;
@@ -1009,7 +1027,14 @@ export function GuiaRemisionForm({
   const handleDeleteDet = async (det: GuiaRemisionDet) => {
     if (!confirm(`¿Eliminar el ítem ${det.cod_mer}?`)) return;
     try {
-      await deleteGuiaRemisionDet(idGuia!, det.id);
+      const guiaId = Number(idGuia);
+      const detId = Number(det.id);
+      if (!Number.isFinite(guiaId) || !Number.isFinite(detId)) {
+        toast.error("Guía o ítem inválido");
+        return;
+      }
+
+      await deleteGuiaRemisionDet(guiaId, detId);
       toast.success("Ítem eliminado");
       await reloadGuia();
     } catch (e: any) {
@@ -1735,7 +1760,7 @@ export function GuiaRemisionList() {
     }
   }, [officeFilter, warehouseFilter, locations]);
 
-  const openFormWindow = useCallback((idGuia?: number, detailOnly = false) => {
+  const openFormWindow = useCallback((idGuia?: number | string, detailOnly = false) => {
     const maxW = typeof window !== "undefined" ? window.innerWidth : 1280;
     const maxH = typeof window !== "undefined" ? Math.max(320, window.innerHeight - FLOAT_DESKTOP_STATUS_BAR_H) : 720;
     const isNewForm = !idGuia;
@@ -1776,7 +1801,7 @@ export function GuiaRemisionList() {
 
   const handleMostrar = (row: GuiaRemisionRow, detailOnly = true) => {
     setSelected(row);
-    openFormWindow(row.id, detailOnly);
+    openFormWindow(String(row.id), detailOnly);
   };
 
   const handleEliminar = (row: GuiaRemisionRow, detailOnly = true) => {
