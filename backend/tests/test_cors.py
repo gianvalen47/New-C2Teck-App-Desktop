@@ -46,6 +46,27 @@ def test_session_matches_legacy_systeck_exchange_rate_contract():
     assert response.status_code == 200
     payload = response.json()
     assert payload["username"] == "grios"
-    assert payload["perfil"] == "Consultor"
+    assert payload["perfil"] == "Usuario"
     assert payload["tipo_cambio_compra"] == 3.36
     assert payload["tipo_cambio_venta"] == 3.369
+
+
+def test_session_uses_real_legacy_exchange_rate_when_adapter_provides_it(monkeypatch):
+    import routers.auth as auth_module
+
+    def fake_fetch_legacy_tipo_cambio(moneda: str, fecha: str):
+        assert moneda == "US"
+        return 3.351, 3.36
+
+    monkeypatch.setattr(auth_module, "_fetch_legacy_tipo_cambio", fake_fetch_legacy_tipo_cambio)
+
+    client = TestClient(app)
+    response = client.post(
+        "/api/v1/auth/login",
+        json={"username": "grios", "password": "123"},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["tipo_cambio_compra"] == 3.351
+    assert payload["tipo_cambio_venta"] == 3.36

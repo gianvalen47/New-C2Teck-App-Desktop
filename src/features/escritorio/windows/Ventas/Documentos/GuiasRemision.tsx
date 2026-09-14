@@ -67,6 +67,34 @@ const ESTADO_COLORS: Record<string, string> = {
   ANULADO:  "text-red-700 bg-red-50 border-red-200",
 };
 
+const GUIA_ESTADO_DESCRIPCIONES: Record<string, string> = {
+  GN: "GENERADO",
+  CR: "CREDITOS",
+  AP: "APROBADO",
+  IM: "IMPRESO",
+  AN: "ANULADO",
+  FC: "FACTURADO",
+  TR: "TRANSFERIDO",
+  GENERADO: "GENERADO",
+  CREDITOS: "CREDITOS",
+  APROBADO: "APROBADO",
+  IMPRESO: "IMPRESO",
+  ANULADO: "ANULADO",
+  FACTURADO: "FACTURADO",
+  TRANSFERIDO: "TRANSFERIDO",
+};
+
+function getGuideEstadoDisplay(value: string | null | undefined) {
+  const raw = String(value ?? "").trim();
+  if (!raw) return "";
+  const key = raw.toUpperCase();
+  const label = GUIA_ESTADO_DESCRIPCIONES[key];
+  if (label) {
+    return label;
+  }
+  return raw;
+}
+
 function EstadoBadge({ estado }: { estado: string }) {
   const cls = ESTADO_COLORS[estado] ?? "text-slate-600 bg-slate-50 border-slate-200";
   return (
@@ -76,6 +104,222 @@ function EstadoBadge({ estado }: { estado: string }) {
 
 const MESES = ["ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SETIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE"];
 const NOW = new Date();
+
+function pickFirstNonEmpty(...values: Array<string | number | null | undefined>) {
+  for (const value of values) {
+    if (value === null || value === undefined) continue;
+    const text = String(value).trim();
+    if (text !== "") return value;
+  }
+  return "";
+}
+
+function getAnyValue(row: any, ...keys: string[]) {
+  for (const key of keys) {
+    const value = row?.[key];
+    if (value === null || value === undefined) continue;
+    const text = String(value).trim();
+    if (text !== "") return value;
+  }
+  return "";
+}
+
+function findAnyLegacyValue(value: any, aliases: string[]): any {
+  if (value === null || value === undefined) return "";
+
+  const normalizedAliases = new Set(aliases.map((alias) => alias.toLowerCase()));
+  const visited = new Set<any>();
+
+  const scan = (current: any): any => {
+    if (current === null || current === undefined) return "";
+    if (typeof current === "string" || typeof current === "number" || typeof current === "boolean") {
+      const text = String(current).trim();
+      return text !== "" ? current : "";
+    }
+    if (typeof current !== "object") return "";
+    if (visited.has(current)) return "";
+    visited.add(current);
+
+    if (Array.isArray(current)) {
+      for (const item of current) {
+        const found = scan(item);
+        if (found !== "" && found !== null && found !== undefined) return found;
+      }
+      return "";
+    }
+
+    for (const [key, nestedValue] of Object.entries(current)) {
+      if (!normalizedAliases.has(key.toLowerCase())) continue;
+
+      if (nestedValue === null || nestedValue === undefined) continue;
+
+      if (typeof nestedValue === "string" || typeof nestedValue === "number" || typeof nestedValue === "boolean") {
+        const text = String(nestedValue).trim();
+        if (text !== "") return nestedValue;
+      }
+
+      const nestedFound = scan(nestedValue);
+      if (nestedFound !== "" && nestedFound !== null && nestedFound !== undefined) return nestedFound;
+    }
+
+    return "";
+  };
+
+  return scan(value);
+}
+
+function normalizeReferenceDisplay(value: string | number | null | undefined) {
+  if (value === null || value === undefined) return "";
+  const text = String(value).trim();
+  if (!text) return "";
+  return text.replace(/\s*\/\s*/g, " / ");
+}
+
+function resolveLegacyGuideDisplayFields(g: any) {
+  const clientPayload = g?.Cliente ?? g?.cliente ?? {};
+  const nestedAddress = pickFirstNonEmpty(
+    clientPayload?.Direccion,
+    clientPayload?.direccion,
+    clientPayload?.DireccionFiscal,
+    clientPayload?.direccion_fiscal,
+    clientPayload?.DirCli,
+    clientPayload?.dir_cli,
+    clientPayload?.Direccion?.Direccion,
+    clientPayload?.direccion?.Direccion,
+  );
+
+  const fiscalObject = g?.DireccionFiscal ?? g?.direccion_fiscal ?? g?.Fiscal ?? g?.fiscal ?? {};
+  const motivoObj = g?.Motivos ?? g?.motivos ?? g?.Motivo ?? g?.motivo ?? {};
+  const cotizacionObj = g?.Cotizacion ?? g?.cotizacion ?? {};
+
+  const referenceValue = pickFirstNonEmpty(
+    findAnyLegacyValue(g, ["NumJob", "num_job", "Referencia", "referencia", "Ref", "ref", "NumFac", "num_fac"]),
+    getAnyValue(g, "NumJob", "num_job", "Referencia", "referencia", "Ref", "ref", "NumFac", "num_fac"),
+    getAnyValue(g, "NumFac", "num_fac", "NumJob", "num_job", "Referencia", "referencia", "Ref", "ref"),
+    (g as any)?.NumJob,
+    (g as any)?.num_job,
+    (g as any)?.Referencia,
+    (g as any)?.referencia,
+    (g as any)?.Ref,
+    (g as any)?.ref,
+  );
+
+  const cotizacionValue = pickFirstNonEmpty(
+    findAnyLegacyValue(g, ["IdCotizacion", "id_cotizacion", "NumCot", "num_cot", "Cotizacion", "cotizacion", "Cotiz", "cotiz"]),
+    getAnyValue(g, "IdCotizacion", "id_cotizacion", "NumCot", "num_cot", "Cotizacion", "cotizacion", "Cotiz", "cotiz"),
+    getAnyValue(g, "NumCot", "num_cot", "IdCotizacion", "id_cotizacion", "Cotizacion", "cotizacion", "Cotiz", "cotiz"),
+    cotizacionObj?.IdCotizacion,
+    cotizacionObj?.id_cotizacion,
+    cotizacionObj?.NumCot,
+    cotizacionObj?.num_cot,
+    g?.Cotizacion?.IdCotizacion,
+    g?.cotizacion?.IdCotizacion,
+    g?.Cotizacion?.NumCot,
+    g?.cotizacion?.NumCot,
+  );
+
+  const clienteNombre = pickFirstNonEmpty(
+    findAnyLegacyValue(g, ["DesCli", "des_cli", "ClienteNombre", "cliente_nombre", "Nombre", "nombre", "RazonSocial", "razon_social"]),
+    g?.cliente_nombre,
+    g?.ClienteNombre,
+    g?.DesCli,
+    g?.des_cli,
+    g?.cliente,
+    g?.Cliente,
+    clientPayload?.DesCli,
+    clientPayload?.des_cli,
+    clientPayload?.Nombre,
+    clientPayload?.nombre,
+    clientPayload?.RazonSocial,
+    clientPayload?.razon_social,
+  );
+
+  const fiscalAddress = pickFirstNonEmpty(
+    findAnyLegacyValue(g, ["DireccionFiscal", "direccion_fiscal", "DirFiscal", "dir_fiscal", "Direccion", "direccion", "DirCli", "dir_cli"]),
+    g?.des_fiscal,
+    g?.DirFiscal,
+    g?.dir_fiscal,
+    g?.DireccionFiscal,
+    g?.direccion_fiscal,
+    fiscalObject?.Direccion,
+    fiscalObject?.direccion,
+    fiscalObject?.DirFiscal,
+    fiscalObject?.dir_fiscal,
+    g?.Direccion,
+    g?.direccion,
+    nestedAddress,
+    clientPayload?.Direccion,
+    clientPayload?.direccion,
+    clientPayload?.DireccionFiscal,
+    clientPayload?.direccion_fiscal,
+  );
+
+  const partida = pickFirstNonEmpty(
+    findAnyLegacyValue(g, ["PtoPartida", "pto_partida", "Partida", "partida", "PuntoPartida", "punto_partida"]),
+    g?.pto_partida,
+    g?.PtoPartida,
+    g?.Locacion?.PuntoPartida,
+    g?.locacion?.PuntoPartida,
+    g?.partida,
+    g?.Partida,
+  );
+
+  const llegada = pickFirstNonEmpty(
+    findAnyLegacyValue(g, ["PtoLlegada", "pto_llegada", "Llegada", "llegada", "PuntoLlegada", "punto_llegada"]),
+    g?.pto_llegada,
+    g?.PtoLlegada,
+    g?.Locacion?.PuntoLlegada,
+    g?.locacion?.PuntoLlegada,
+    g?.llegada,
+    g?.Llegada,
+  );
+
+  const motivo = pickFirstNonEmpty(
+    findAnyLegacyValue(g, ["CodMot", "cod_mot", "DesMot", "des_mot", "Motivo", "motivo", "Descripcion", "descripcion"]),
+    g?.cod_mot,
+    g?.CodMot,
+    g?.motivo,
+    g?.Motivo,
+    motivoObj?.DesMot,
+    motivoObj?.des_mot,
+    motivoObj?.Descripcion,
+    motivoObj?.descripcion,
+  );
+
+  const numOrden = pickFirstNonEmpty(
+    findAnyLegacyValue(g, ["NumOrden", "num_orden", "Orden", "orden", "OrdenCompra", "orden_compra"]),
+    g?.num_orden,
+    g?.NumOrden,
+    g?.orden,
+    g?.Orden,
+    g?.OrdenCompra,
+    g?.orden_compra,
+  );
+
+  const localizacion = pickFirstNonEmpty(
+    findAnyLegacyValue(g, ["IdLocCli", "id_loc_cli", "LocCli", "loc_cli", "Locacion", "locacion", "LocacionCliente", "locacion_cliente"]),
+    g?.id_loc_cli,
+    g?.IdLocCli,
+    g?.loc_cli,
+    g?.LocCli,
+    g?.locacion,
+    g?.Locacion,
+    g?.LocacionCliente,
+    g?.locacion_cliente,
+  );
+
+  return {
+    referencia: normalizeReferenceDisplay(referenceValue),
+    cotizacion: cotizacionValue === "" ? "" : String(cotizacionValue),
+    clienteNombre: clienteNombre === "" ? "" : String(clienteNombre),
+    fiscalAddress: fiscalAddress === "" ? "" : String(fiscalAddress),
+    partida: partida === "" ? "" : String(partida),
+    llegada: llegada === "" ? "" : String(llegada),
+    motivo: motivo === "" ? "" : String(motivo),
+    numOrden: numOrden === "" ? "" : String(numOrden),
+    localizacion,
+  };
+}
 
 function MonthSelector({ value, onChange }: { value: string; onChange: (next: string) => void }) {
   const [open, setOpen] = useState(false);
@@ -1037,6 +1281,15 @@ export function GuiaRemisionForm({
   const [showObsModal, setShowObsModal] = useState(false);
   const [detModal, setDetModal] = useState<{ open: boolean; detalle?: GuiaRemisionDet }>({ open: false });
 
+  const pickFirstNonEmpty = (...values: Array<string | number | null | undefined>) => {
+    for (const value of values) {
+      if (value === null || value === undefined) continue;
+      const text = String(value).trim();
+      if (text !== "") return value;
+    }
+    return "";
+  };
+
   // Form fields
   const [numDoc, setNumDoc] = useState(isNew ? "" : "");
   const [fecDoc, setFecDoc] = useState(new Date().toISOString().slice(0, 10));
@@ -1067,26 +1320,95 @@ export function GuiaRemisionForm({
   const editable = mode === "new" || mode === "edit";
 
   const hydrateLookupTexts = useCallback(async (g: GuiaRemisionFull) => {
+    const legacy = resolveLegacyGuideDisplayFields(g as any);
     const locationLookup = await fetchSigecoomLocations().catch(() => [] as Location[]);
-    const location = locationLookup.find((loc) => String(loc.id) === String(g.id_loc_cli ?? ""));
+    const rawClientId = pickFirstNonEmpty(
+      g?.id_cliente,
+      (g as any)?.IdCliente,
+      (g as any)?.Cliente?.IdCliente,
+      (g as any)?.cliente?.IdCliente,
+      legacy.localizacion,
+      "",
+    );
+    const rawLocCliId = pickFirstNonEmpty(
+      g?.id_loc_cli,
+      (g as any)?.IdLocCli,
+      (g as any)?.Locacion?.IdLocCli,
+      (g as any)?.locacion?.IdLocCli,
+      (g as any)?.Cliente?.IdLocCli,
+      (g as any)?.cliente?.IdLocCli,
+      legacy.localizacion,
+      "",
+    );
+    const rawFiscalId = pickFirstNonEmpty(
+      g?.id_fiscal,
+      (g as any)?.IdFiscal,
+      (g as any)?.DireccionFiscal?.IdFiscal,
+      (g as any)?.direccion_fiscal?.IdFiscal,
+      (g as any)?.Cliente?.IdFiscal,
+      (g as any)?.cliente?.IdFiscal,
+      "",
+    );
+    const location = locationLookup.find((loc) => String(loc.id) === String(rawLocCliId ?? g.id_loc_cli ?? legacy.localizacion ?? ""));
     const locText = location
       ? [location.warehouse, location.aisle, location.shelf, location.row, location.level]
         .filter(Boolean)
         .join(" / ") || location.description || location.code
-      : "";
+      : (legacy.localizacion ? String(legacy.localizacion) : "");
 
-    try {
-      const client = await getSigecoomClient(String(g.id_cliente));
-      setDesCliente(client.name || `Cliente #${g.id_cliente}`);
-      setDesFiscal(client.address || "");
-    } catch {
-      setDesCliente(`Cliente #${g.id_cliente}`);
-      setDesFiscal("");
+    const legacyClientName = pickFirstNonEmpty(
+      legacy.clienteNombre,
+      (g as any)?.Cliente?.DesCli,
+      (g as any)?.cliente?.DesCli,
+      (g as any)?.DesCli,
+      (g as any)?.des_cli,
+      "",
+    );
+    const legacyFiscal = pickFirstNonEmpty(
+      legacy.fiscalAddress,
+      (g as any)?.DireccionFiscal?.Direccion,
+      (g as any)?.direccion_fiscal?.Direccion,
+      (g as any)?.DirFiscal,
+      (g as any)?.dir_fiscal,
+      (g as any)?.Cliente?.Direccion,
+      (g as any)?.cliente?.Direccion,
+      "",
+    );
+
+    if (rawClientId !== "") {
+      setIdCliente(typeof rawClientId === "number" ? rawClientId : Number(rawClientId));
+    } else {
+      setIdCliente("");
     }
 
-    setDesLocCli(locText);
-    setIdLocCli(g.id_loc_cli ?? "");
-    setIdFiscal(g.id_fiscal ?? "");
+    if (legacyClientName) {
+      setDesCliente(String(legacyClientName));
+    } else {
+      try {
+        const client = await getSigecoomClient(String(rawClientId || g.id_cliente || ""));
+        setDesCliente(client.name || (rawClientId ? `Cliente #${rawClientId}` : `Cliente #${g.id_cliente ?? ""}`));
+      } catch {
+        setDesCliente(rawClientId ? `Cliente #${rawClientId}` : `Cliente #${g.id_cliente ?? ""}`);
+      }
+    }
+
+    const fiscalText = typeof legacyFiscal === "string" || typeof legacyFiscal === "number" ? String(legacyFiscal) : "";
+
+    if (fiscalText) {
+      setDesFiscal(fiscalText);
+    } else {
+      try {
+        const client = await getSigecoomClient(String(g.id_cliente));
+        setDesFiscal(client.address || "");
+      } catch {
+        setDesFiscal("");
+      }
+    }
+
+    const locCliValue = rawLocCliId !== "" ? rawLocCliId : (g.id_loc_cli ?? legacy.localizacion ?? "");
+    setDesLocCli(locText || "");
+    setIdLocCli(typeof locCliValue === "number" ? locCliValue : (locCliValue && String(locCliValue).trim() !== "" ? Number(locCliValue) : ""));
+    setIdFiscal(rawFiscalId !== "" ? (typeof rawFiscalId === "number" ? rawFiscalId : Number(rawFiscalId)) : "");
   }, []);
 
   useEffect(() => {
@@ -1094,28 +1416,73 @@ export function GuiaRemisionForm({
     setLoading(true);
     fetchGuiaRemision(idGuia).then(async (g) => {
       setGuia(g);
-      setNumDoc(String(g.num_doc));
-      setFecDoc(g.fec_doc.slice(0, 10));
-      setCodMon(g.cod_mon);
-      setIgv(String(g.igv));
-      setTipCambio(String(g.tip_cambio ?? 1));
-      setIdCliente(g.id_cliente);
-      setIdLocCli(g.id_loc_cli ?? "");
-      setIdFiscal(g.id_fiscal ?? "");
-      setCodMot(g.cod_mot);
-      setNumJob(g.num_job ?? "");
-      setIdCotizacion(g.id_cotizacion ?? "");
-      setLlegada(g.pto_llegada ?? "");
-      setPartida(g.pto_partida ?? "");
-      setNumOrden(g.num_orden ?? "");
-      setPesoTotal(String(g.peso_bruto));
-      setCodUniMedPeso(g.cod_uni_med_peso);
-      setNumBultos(String(g.numero_bultos));
-      setModoTraslado(g.cod_modo);
-      setFecTraslado(g.fec_traslado ? g.fec_traslado.slice(0, 10) : new Date().toISOString().slice(0, 10));
-      setTotFlete(String(g.tot_flete));
-      setTotEmbarque(String(g.tot_embarque));
-      setObservacion(g.observacion ?? "");
+      const derivedFields = resolveLegacyGuideDisplayFields(g);
+
+      const legacyClientId = pickFirstNonEmpty(
+        g?.id_cliente,
+        (g as any)?.IdCliente,
+        (g as any)?.Cliente?.IdCliente,
+        (g as any)?.cliente?.IdCliente,
+        "",
+      );
+      const legacyLocCliId = pickFirstNonEmpty(
+        g?.id_loc_cli,
+        (g as any)?.IdLocCli,
+        (g as any)?.Locacion?.IdLocCli,
+        (g as any)?.locacion?.IdLocCli,
+        (g as any)?.Cliente?.IdLocCli,
+        (g as any)?.cliente?.IdLocCli,
+        "",
+      );
+      const legacyFiscalId = pickFirstNonEmpty(
+        g?.id_fiscal,
+        (g as any)?.IdFiscal,
+        (g as any)?.DireccionFiscal?.IdFiscal,
+        (g as any)?.direccion_fiscal?.IdFiscal,
+        (g as any)?.Cliente?.IdFiscal,
+        (g as any)?.cliente?.IdFiscal,
+        "",
+      );
+
+      setNumDoc(String(g.num_doc ?? (g as any).NumDoc ?? ""));
+      setFecDoc((g.fec_doc ?? (g as any).FecDoc ?? new Date().toISOString().slice(0, 10)).slice(0, 10));
+      setCodMon(g.cod_mon ?? (g as any).CodMon ?? "NS");
+      setIgv(String(g.igv ?? (g as any).IGV ?? "18.00"));
+      setTipCambio(String(g.tip_cambio ?? (g as any).TipCambio ?? 1));
+      setIdCliente(legacyClientId !== "" ? Number(legacyClientId) : "");
+      setIdLocCli(legacyLocCliId !== "" ? Number(legacyLocCliId) : "");
+      setIdFiscal(legacyFiscalId !== "" ? Number(legacyFiscalId) : "");
+      setCodMot(
+        pickFirstNonEmpty(
+          g.cod_mot,
+          (g as any).CodMot,
+          (g as any)?.Motivos?.CodMot,
+          (g as any)?.motivos?.CodMot,
+          (g as any)?.Motivo?.CodMot,
+          derivedFields.motivo,
+          "1",
+        ) as string
+      );
+      setNumJob(derivedFields.referencia || "");
+      setIdCotizacion(derivedFields.cotizacion === "" ? "" : Number(derivedFields.cotizacion));
+      setLlegada(derivedFields.llegada || g.pto_llegada || (g as any).PtoLlegada || "");
+      setPartida(derivedFields.partida || g.pto_partida || (g as any).PtoPartida || "");
+      setNumOrden(derivedFields.numOrden || g.num_orden || (g as any).NumOrden || "");
+      setPesoTotal(String(g.peso_bruto ?? (g as any).PesoBruto ?? 0));
+      setCodUniMedPeso(g.cod_uni_med_peso ?? (g as any).CodUniMedPeso ?? "KGM");
+      setNumBultos(String(g.numero_bultos ?? (g as any).NumeroBultos ?? 1));
+      setModoTraslado(g.cod_modo ?? (g as any).CodModo ?? "02");
+      setFecTraslado(g.fec_traslado ? g.fec_traslado.slice(0, 10) : ((g as any).FecTraslado ? String((g as any).FecTraslado).slice(0, 10) : new Date().toISOString().slice(0, 10)));
+      setTotFlete(String(g.tot_flete ?? (g as any).TotFlete ?? 0));
+      setTotEmbarque(String(g.tot_embarque ?? (g as any).TotEmbarque ?? 0));
+      setObservacion(g.observacion ?? (g as any).Observacion ?? (g as any).ObservacionSunat ?? "");
+
+      const clientName = derivedFields.clienteNombre || (g as any).DesCli || (g as any).des_cli || "";
+      if (clientName) {
+        setDesCliente(clientName);
+      } else {
+        setDesCliente(g.id_cliente ? `Cliente #${g.id_cliente}` : "");
+      }
       await hydrateLookupTexts(g);
     }).catch(e => toast.error(e.message)).finally(() => setLoading(false));
   }, [idGuia, hydrateLookupTexts]);
@@ -1234,6 +1601,7 @@ export function GuiaRemisionForm({
 
   const estado = guia?.estado ?? "GENERADO";
   const canEdit = estado === "GENERADO" || estado === "APROBADO";
+  const estadoDisplay = getGuideEstadoDisplay(estado);
 
   const handleEditarCabecera = () => {
     if (isNew) {
@@ -1544,8 +1912,8 @@ export function GuiaRemisionForm({
 
               {/* Panel Lateral Derecho (Costos + O/C perfectamente alineado a la derecha) */}
               <div className="flex flex-col gap-1">
-                <div className="h-6 bg-slate-200/60 border border-slate-300 rounded-sm flex items-center justify-center text-[11px] font-bold text-slate-800">
-                  {isNew ? "" : estado}
+                <div className="h-6 bg-slate-200/60 border border-slate-300 rounded-sm flex items-center justify-center px-2 text-[11px] font-bold text-slate-800">
+                  {isNew ? "" : estadoDisplay || estado}
                 </div>
                 <div className="border border-slate-300 bg-white p-1.5 shadow-xs">
                   <div className="mb-1 text-[11px] font-bold text-slate-800">Costos</div>
@@ -1987,6 +2355,48 @@ export function GuiaRemisionList() {
 
   const canAnular = (row: GuiaRemisionRow) => row.estado === "GENERADO" || row.estado === "APROBADO";
 
+  const pickFirstNonEmpty = (...values: Array<string | number | null | undefined>) => {
+    for (const value of values) {
+      if (value === null || value === undefined) continue;
+      const text = String(value).trim();
+      if (text !== "") return value;
+    }
+    return "";
+  };
+
+  const getAnyValue = (row: any, ...keys: string[]) => {
+    for (const key of keys) {
+      const value = row?.[key];
+      if (value === null || value === undefined) continue;
+      const text = String(value).trim();
+      if (text !== "") return value;
+    }
+    return "";
+  };
+
+  const getReferenceValue = (row: Partial<GuiaRemisionRow> | any) => {
+    const refValue = pickFirstNonEmpty(
+      getAnyValue(row, "NumJob", "num_job", "NumFac", "num_fac", "Referencia", "referencia", "Ref", "ref"),
+      row?.pto_llegada,
+      row?.PtoLlegada,
+      row?.pto_partida,
+      row?.PtoPartida,
+    );
+    return normalizeReferenceDisplay(refValue);
+  };
+
+  const resolveReferencia = (r: GuiaRemisionRow) => {
+    const raw = getReferenceValue(r);
+    return raw === "" ? "-" : raw;
+  };
+
+  const resolveCotizacion = (r: GuiaRemisionRow) => {
+    const raw = pickFirstNonEmpty(
+      getAnyValue(r as any, "IdCotizacion", "id_cotizacion", "NumCot", "num_cot", "Cotizacion", "cotizacion", "Cotiz", "cotiz"),
+    );
+    return raw === "" ? "-" : String(raw);
+  };
+
   const [sortBy, setSortBy] = useState<{ col: string; asc: boolean } | null>(null);
   const rowsView = useMemo(() => {
     const out = [...rows];
@@ -1997,7 +2407,7 @@ export function GuiaRemisionList() {
         case "fec_doc":
           return r.fec_doc ? new Date(r.fec_doc).getTime() : 0;
         case "reference":
-          return r.num_job || r.pto_llegada || r.pto_partida || "";
+          return resolveReferencia(r);
         case "cliente":
           return r.cliente_nombre ?? clientById[r.id_cliente]?.name ?? `Cliente #${r.id_cliente}`;
         case "cod_mon":
@@ -2217,6 +2627,8 @@ export function GuiaRemisionList() {
             <option value="APROBADO">APROBADO</option>
             <option value="CREDITOS">CREDITOS</option>
             <option value="ANULADO">ANULADO</option>
+            <option value="FACTURADO">FACTURADO</option>
+            <option value="TRANSFERIDO">TRANSFERIDO</option>
           </select>
         </Field>
         <Field label="N° Doc" className="w-20">
@@ -2258,10 +2670,11 @@ export function GuiaRemisionList() {
               ) : rowsView.map((r, i) => {
                 const isSel = selected?.id === r.id;
                 const customerName = r.cliente_nombre ?? clientById[r.id_cliente]?.name ?? `Cliente #${r.id_cliente}`;
-                const reference = r.num_job || r.pto_llegada || r.pto_partida || "-";
+                const reference = getReferenceValue(r) === "" ? "-" : getReferenceValue(r);
                 const estadoSunat = r.estado_sunat ?? (r.estado === "ANULADO" ? "BAJA" : r.estado === "APROBADO" ? "ACEPTADO" : "PENDIENTE");
                 const estadoText = r.estado === "GENERADO" && !isSel ? "" : r.estado;
                 const codSerie = r.cod_serie ?? (r.id_serie_doc !== undefined ? String(r.id_serie_doc) : "-");
+                const cotizacion = resolveCotizacion(r);
                 return (
                   <tr
                     key={r.id}
@@ -2281,8 +2694,16 @@ export function GuiaRemisionList() {
                     <td className="px-2 py-1 text-right border-r border-slate-200 font-mono">{r.tot_venta.toFixed(2)}</td>
                     <td className="px-2 py-1 text-center border-r border-slate-200 font-mono">{estadoText}</td>
                     <td className="px-2 py-1 text-center border-r border-slate-200">{estadoSunat}</td>
-                    <td className="px-2 py-1 border-r border-slate-200 max-w-[180px] truncate">{r.observacion ?? "-"}</td>
-                    <td className="px-2 py-1 text-center border-r border-slate-200 font-mono">{r.id_cotizacion ?? "-"}</td>
+                    <td className="px-2 py-1 text-center border-r border-slate-200">
+                      <input
+                        type="checkbox"
+                        checked={Boolean(r.tiene_notas ?? (r.observacion && String(r.observacion).trim()))}
+                        readOnly
+                        className="h-3.5 w-3.5 accent-blue-700 cursor-default pointer-events-none rounded-sm border border-slate-400 bg-white"
+                        title={r.tiene_notas ? "Tiene nota" : "Sin nota"}
+                      />
+                    </td>
+                    <td className="px-2 py-1 text-center border-r border-slate-200 font-mono">{cotizacion}</td>
                     <td className="px-2 py-1 text-center border-r border-slate-200">{r.num_orden ?? "-"}</td>
                     <td className="px-2 py-1 text-right border-r border-slate-200 font-mono font-bold text-blue-800">{(r.tot_neto_sug ?? r.tot_neto).toFixed(2)}</td>
                     <td className="px-2 py-1 text-center border-r border-slate-200">{codSerie}</td>

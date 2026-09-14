@@ -4,6 +4,8 @@ from datetime import date
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 
+from legacy_adapter import fetch_tipo_cambio_legacy
+
 router = APIRouter()
 
 
@@ -43,6 +45,14 @@ class SessionInfo(BaseModel):
     tipo_cambio_venta: float
     empresa_actual: EmpresaAsignada | None = None
     empresas: list[EmpresaAsignada] = []
+
+
+def _fetch_legacy_tipo_cambio(moneda: str, fecha: str):
+    values = fetch_tipo_cambio_legacy(moneda=moneda, fecha=fecha)
+    if values is None:
+        return None
+    compra, venta = values
+    return float(compra), float(venta)
 
 
 def _get_empresas_asignadas(username: str) -> list[EmpresaAsignada]:
@@ -99,26 +109,29 @@ def login(payload: LoginRequest):
 
     empresas = _get_empresas_asignadas(user)
     empresa_actual = empresas[0] if empresas else None
+    fecha = date.today().strftime("%d/%m/%Y")
+    tipo_cambio = _fetch_legacy_tipo_cambio("US", fecha) or (
+        DEFAULT_TIPO_CAMBIO_COMPRA,
+        DEFAULT_TIPO_CAMBIO_VENTA,
+    )
 
     if user == LEGACY_USERNAME:
-        fecha = date.today().strftime("%d/%m/%Y")
         return SessionInfo(
             username=LEGACY_USERNAME,
             perfil="Consultor",
             fecha_transaccion=fecha,
-            tipo_cambio_compra=DEFAULT_TIPO_CAMBIO_COMPRA,
-            tipo_cambio_venta=DEFAULT_TIPO_CAMBIO_VENTA,
+            tipo_cambio_compra=tipo_cambio[0],
+            tipo_cambio_venta=tipo_cambio[1],
             empresa_actual=empresa_actual,
             empresas=empresas,
         )
 
-    fecha = date.today().strftime("%d/%m/%Y")
     return SessionInfo(
         username=payload.username,
         perfil="Usuario",
         fecha_transaccion=fecha,
-        tipo_cambio_compra=DEFAULT_TIPO_CAMBIO_COMPRA,
-        tipo_cambio_venta=DEFAULT_TIPO_CAMBIO_VENTA,
+        tipo_cambio_compra=tipo_cambio[0],
+        tipo_cambio_venta=tipo_cambio[1],
         empresa_actual=empresa_actual,
         empresas=empresas,
     )
@@ -131,12 +144,16 @@ def get_session():
     username = os.getenv("SIGECOM_LOGGED_IN_USER", LEGACY_USERNAME).strip().lower()
     empresas = _get_empresas_asignadas(username)
     perfil = "Consultor" if username == LEGACY_USERNAME else "Usuario"
+    tipo_cambio = _fetch_legacy_tipo_cambio("US", fecha) or (
+        DEFAULT_TIPO_CAMBIO_COMPRA,
+        DEFAULT_TIPO_CAMBIO_VENTA,
+    )
     return SessionInfo(
         username=username,
         perfil=perfil,
         fecha_transaccion=fecha,
-        tipo_cambio_compra=DEFAULT_TIPO_CAMBIO_COMPRA,
-        tipo_cambio_venta=DEFAULT_TIPO_CAMBIO_VENTA,
+        tipo_cambio_compra=tipo_cambio[0],
+        tipo_cambio_venta=tipo_cambio[1],
         empresa_actual=empresas[0] if empresas else None,
         empresas=empresas,
     )

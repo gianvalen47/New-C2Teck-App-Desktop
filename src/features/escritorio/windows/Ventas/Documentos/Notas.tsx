@@ -30,7 +30,9 @@ import { toast } from "sonner";
 import {
   createNota,
   fetchNotas,
+  fetchSession,
   fetchSigecoomLocations,
+  getSessionTipoCambioCompra,
   type FacturaRow,
   type Location,
   updateNota,
@@ -206,7 +208,31 @@ export function NotaForm({ nota, idNota, idLocacion = 1, onClose, onSaved, detai
   const [moneda, setMoneda] = useState(String((nota?.extra_data?.moneda as string | undefined) ?? "PEN"));
   const [tipoNota, setTipoNota] = useState(String((nota?.extra_data?.tipo_nota as string | undefined) ?? "Crédito"));
   const [igv, setIgv] = useState(String(nota?.extra_data?.igv ?? "18.00"));
-  const [tipoCambio, setTipoCambio] = useState(String(nota?.extra_data?.tipo_cambio ?? "3.402"));
+  const [tipoCambio, setTipoCambio] = useState<string>(() => {
+    const valueFromNota = nota?.extra_data?.tipo_cambio;
+    const valueFromSession = getSessionTipoCambioCompra();
+    return String(valueFromNota ?? valueFromSession ?? 3.402);
+  });
+
+  useEffect(() => {
+    if (nota?.extra_data?.tipo_cambio != null) return;
+    const sessionValue = getSessionTipoCambioCompra();
+    if (sessionValue != null) {
+      setTipoCambio(String(sessionValue));
+      return;
+    }
+
+    fetchSession()
+      .then((session) => {
+        if (session.tipo_cambio_compra != null) {
+          setTipoCambio(String(session.tipo_cambio_compra));
+        }
+      })
+      .catch(() => {
+        setTipoCambio("3.402");
+      });
+  }, [nota?.extra_data?.tipo_cambio]);
+
   const [direccionFiscal, setDireccionFiscal] = useState(String(nota?.extra_data?.direccion_fiscal ?? ""));
   const [locCliente, setLocCliente] = useState(String(nota?.extra_data?.loc_cliente ?? ""));
   const [motivo, setMotivo] = useState(String(nota?.extra_data?.motivo ?? "Venta"));

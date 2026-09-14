@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { stdToolbar5 } from "@/features/escritorio/windows/shared/toolbarPresets";
 import { actionBtn, btn, btnPrimary, iconBtn, inp, squareIconBtn, tbSep } from "@/features/escritorio/windows/uiStyles";
+import { fetchSession, getSessionTipoCambioCompra } from "@/lib/sigecoom-api";
 
 type BoletaRow = {
   id: string;
@@ -218,7 +219,26 @@ function BoletaEditor({
   onSave: (next: BoletaRow) => void;
 }) {
   const [form, setForm] = useState<BoletaRow>(row);
+  const [tipoCambio, setTipoCambio] = useState<string>(() => String(getSessionTipoCambioCompra() ?? "3.402"));
   const editable = mode === "edit" || mode === "new";
+
+  useEffect(() => {
+    const sessionValue = getSessionTipoCambioCompra();
+    if (sessionValue != null) {
+      setTipoCambio(String(sessionValue));
+      return;
+    }
+
+    fetchSession()
+      .then((session) => {
+        if (session.tipo_cambio_compra != null) {
+          setTipoCambio(String(session.tipo_cambio_compra));
+        }
+      })
+      .catch(() => {
+        setTipoCambio("3.402");
+      });
+  }, []);
 
   return (
     <div className="h-full flex flex-col overflow-hidden bg-[#F3F6FA] text-[11px] select-none">
@@ -272,7 +292,12 @@ function BoletaEditor({
                 <input className={`${inp} font-mono`} value={form.total} onChange={(e) => setForm((p) => ({ ...p, total: e.target.value }))} readOnly={!editable} />
               </InlineField>
               <InlineField label="T.Cambio" labelWidth="w-[60px]">
-                <input className={`${inp} font-mono`} value="3.402" readOnly />
+                <input
+                  className={`${inp} font-mono`}
+                  value={tipoCambio}
+                  readOnly
+                  placeholder="Tipo de cambio"
+                />
               </InlineField>
             </div>
 

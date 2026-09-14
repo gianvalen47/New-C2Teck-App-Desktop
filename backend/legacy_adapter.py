@@ -112,6 +112,33 @@ def _coerce_wcf_guia_row(raw: dict) -> dict:
     if not raw:
         return {}
 
+    num_job = (
+        raw.get("NumJob")
+        or raw.get("num_job")
+        or raw.get("NumFac")
+        or raw.get("num_fac")
+        or raw.get("Referencia")
+        or raw.get("referencia")
+        or raw.get("Ref")
+        or raw.get("ref")
+    )
+    id_cotizacion = (
+        raw.get("IdCotizacion")
+        or raw.get("id_cotizacion")
+        or raw.get("NumCot")
+        or raw.get("num_cot")
+        or raw.get("Cotizacion")
+        or raw.get("cotizacion")
+        or raw.get("Cotiz")
+        or raw.get("cotiz")
+    )
+    num_orden = (
+        raw.get("NumOrden")
+        or raw.get("num_orden")
+        or raw.get("Orden")
+        or raw.get("orden")
+    )
+
     return {
         "id": raw.get("IdGuia") or raw.get("id"),
         "id_locacion": raw.get("IdLocacion") or raw.get("id_locacion"),
@@ -120,7 +147,12 @@ def _coerce_wcf_guia_row(raw: dict) -> dict:
         "num_doc": raw.get("NumDoc") or raw.get("num_doc"),
         "id_cliente": raw.get("IdCliente") or raw.get("id_cliente"),
         "cod_mot": raw.get("CodMot") or raw.get("cod_mot") or "1",
-        "num_job": raw.get("NumJob") or raw.get("num_job"),
+        "num_job": num_job,
+        "num_orden": num_orden,
+        "pto_partida": raw.get("PtoPartida") or raw.get("pto_partida"),
+        "pto_llegada": raw.get("PtoLlegada") or raw.get("pto_llegada"),
+        "id_cotizacion": id_cotizacion,
+        "observacion": raw.get("Observacion") or raw.get("observacion"),
         "cod_mon": raw.get("CodMon") or raw.get("cod_mon") or "US",
         "igv": 0.0,
         "tip_cambio": 3.36,
@@ -245,6 +277,96 @@ def legacy_health() -> bool:
     except Exception as e:
         logger.warning(f"Legacy adapter health check failed: {e}")
         return False
+
+
+def _coerce_float_value(value):
+    if value is None:
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    if isinstance(value, str):
+        candidate = value.strip().replace(" ", "")
+        if not candidate:
+            return None
+        try:
+            return float(candidate.replace(",", "."))
+        except ValueError:
+            return None
+    return None
+
+
+def _extract_tipo_cambio_from_payload(payload):
+    if payload is None:
+        return None
+    if isinstance(payload, dict):
+        for key in ("tipo_cambio_compra", "tipoCambioCompra", "compra", "buy", "purchase"):
+            if key in payload:
+                compra = _coerce_float_value(payload[key])
+                if compra is not None:
+                    break
+        else:
+            compra = None
+
+        for key in ("tipo_cambio_venta", "tipoCambioVenta", "venta", "sell", "sale"):
+            if key in payload:
+                venta = _coerce_float_value(payload[key])
+                if venta is not None:
+                    break
+        else:
+            venta = None
+
+        if compra is not None and venta is not None:
+            return compra, venta
+
+        if "data" in payload and isinstance(payload["data"], (dict, list)):
+            nested = _extract_tipo_cambio_from_payload(payload["data"])
+            if nested:
+                return nested
+
+        if isinstance(payload.get("resultado"), (dict, list)):
+            nested = _extract_tipo_cambio_from_payload(payload["resultado"])
+            if nested:
+                return nested
+
+    elif isinstance(payload, list):
+        for item in payload:
+            nested = _extract_tipo_cambio_from_payload(item)
+            if nested:
+                return nested
+
+    return None
+
+
+def fetch_tipo_cambio_legacy(moneda: str = "US", fecha: str | None = None) -> tuple[float, float] | None:
+    """Fetch the real exchange rate from the legacy SIGECOM adapter when available."""
+    if not LEGACY_ADAPTER_BASE_URL:
+        return None
+
+    if fecha is None:
+        fecha = datetime.now().strftime("%d/%m/%Y")
+
+    moneda = (moneda or "US").strip().upper() or "US"
+    candidates = [
+        f"{LEGACY_ADAPTER_BASE_URL}/api/v1/tipo-cambio?moneda={moneda}&fecha={fecha}",
+        f"{LEGACY_ADAPTER_BASE_URL}/api/v1/tipocambio?moneda={moneda}&fecha={fecha}",
+        f"{LEGACY_ADAPTER_BASE_URL}/api/tipo-cambio?moneda={moneda}&fecha={fecha}",
+        f"{LEGACY_ADAPTER_BASE_URL}/api/tipocambio?moneda={moneda}&fecha={fecha}",
+    ]
+
+    for url in candidates:
+        try:
+            payload = _read_json(url, timeout=5)
+        except Exception:
+            continue
+
+        values = _extract_tipo_cambio_from_payload(payload)
+        if values is not None:
+            compra, venta = values
+            if compra is not None and venta is not None:
+                return float(compra), float(venta)
+
+    logger.warning("No real exchange rate returned by the legacy SIGECOM adapter for %s on %s.", moneda, fecha)
+    return None
 
 
 # ============================================================================
@@ -549,6 +671,19 @@ def _normalize_guia(guia: dict) -> dict:
     if not guia:
         return {}
 
+    num_fac_value = _lookup_value(guia, "num_fac", "NumFac", "Referencia", "referencia", "Ref", "ref", "num_job", "NumJob")
+    num_cot_value = _lookup_value(guia, "num_cot", "NumCot", "Cotizacion", "cotizacion", "Cotiz", "cotiz", "id_cotizacion", "IdCotizacion")
+    num_job_value = _lookup_value(guia, "num_job", "NumJob", "NumFac", "num_fac", "Referencia", "referencia", "Ref", "ref")
+    id_cotizacion_value = _lookup_value(guia, "id_cotizacion", "IdCotizacion", "NumCot", "num_cot", "Cotizacion", "cotizacion", "Cotiz", "cotiz")
+
+    num_job = str(num_job_value or num_fac_value or "")
+    num_fac = str(num_fac_value or "")
+    num_cot = _normalize_id(num_cot_value)
+    id_cotizacion = _normalize_id(id_cotizacion_value)
+    observacion_value = _lookup_value(guia, "observacion", "Observacion", "ObservacionSunat")
+    tiene_notas_raw = _lookup_value(guia, "tiene_notas", "TieneNotas", "TieneNota", "TieneObservacion", "tiene_observacion")
+    tiene_notas = _normalize_boolean(tiene_notas_raw) if tiene_notas_raw is not None else bool((observacion_value or "").strip())
+
     normalized = {
         "id": _normalize_id(_lookup_value(guia, "id", "Id")),
         "id_locacion": _normalize_id(_lookup_value(guia, "id_locacion", "IdLocacion")),
@@ -559,7 +694,11 @@ def _normalize_guia(guia: dict) -> dict:
         "id_loc_cli": _normalize_id(_lookup_value(guia, "id_loc_cli", "IdLocCli")),
         "id_fiscal": _normalize_id(_lookup_value(guia, "id_fiscal", "IdFiscal")),
         "cod_mot": str(_lookup_value(guia, "cod_mot", "CodMot") or ""),
-        "num_job": str(_lookup_value(guia, "num_job", "NumJob") or ""),
+        "num_job": num_job,
+        "num_fac": num_fac,
+        "num_cot": num_cot,
+        "referencia": num_fac,
+        "cotizacion": id_cotizacion,
         "pto_partida": str(_lookup_value(guia, "pto_partida", "PtoPartida") or ""),
         "pto_llegada": str(_lookup_value(guia, "pto_llegada", "PtoLlegada") or ""),
         "cod_mon": str(_lookup_value(guia, "cod_mon", "CodMon") or "US"),
@@ -576,9 +715,10 @@ def _normalize_guia(guia: dict) -> dict:
         "estado_sunat": str(_lookup_value(guia, "estado_sunat", "EstadoSunat") or ""),
         "cod_serie": str(_lookup_value(guia, "cod_serie", "CodSerie") or ""),
         "tot_neto_sug": _normalize_decimal(_lookup_value(guia, "tot_neto_sug", "TotNetoSug", "TotNeto")),
-        "num_orden": str(_lookup_value(guia, "num_orden", "NumOrden") or ""),
-        "id_cotizacion": _normalize_id(_lookup_value(guia, "id_cotizacion", "IdCotizacion")),
-        "observacion": str(_lookup_value(guia, "observacion", "Observacion") or ""),
+        "num_orden": str(_lookup_value(guia, "num_orden", "NumOrden", "Orden", "orden") or ""),
+        "id_cotizacion": id_cotizacion,
+        "observacion": str(observacion_value or ""),
+        "tiene_notas": tiene_notas,
         "peso_bruto": _normalize_decimal(_lookup_value(guia, "peso_bruto", "PesoBruto")),
         "cod_uni_med_peso": str(_lookup_value(guia, "cod_uni_med_peso", "CodUniMedPeso") or "KGM"),
         "numero_bultos": _normalize_id(_lookup_value(guia, "numero_bultos", "NumeroBultos")),

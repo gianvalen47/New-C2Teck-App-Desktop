@@ -965,10 +965,15 @@ function DesktopAppInner() {
         if (!mounted) return;
         setUser(session.username || "");
         setFecha(session.fecha_transaccion || "");
-        setTc(session.tipo_cambio_compra != null ? String(session.tipo_cambio_compra) : "");
+        if (session.tipo_cambio_compra != null && Number.isFinite(session.tipo_cambio_compra)) {
+          setTc(String(session.tipo_cambio_compra));
+        } else {
+          setTc("");
+        }
       })
       .catch(() => {
-        // Se mantiene el valor por defecto del Systeck si el backend no está listo.
+        if (!mounted) return;
+        setTc("");
       });
 
     setDesktopReady(true);
@@ -1012,7 +1017,13 @@ function DesktopAppInner() {
       localStorage.setItem("sigecoom_session", JSON.stringify(session));
       setUser(session.username || "");
       setFecha(session.fecha_transaccion || fecha);
-      setTc(String(session.tipo_cambio_compra ?? tc));
+
+      if (session.tipo_cambio_compra != null && Number.isFinite(session.tipo_cambio_compra)) {
+        setTc(String(session.tipo_cambio_compra));
+      } else {
+        setTc("");
+      }
+
       setDesktopAuthenticated(true);
       toast.success("Bienvenido a Systeck", { description: `Usuario ${session.username} · Perfil ${session.perfil}` });
       window.c2teckDesktop?.loginSuccess?.();

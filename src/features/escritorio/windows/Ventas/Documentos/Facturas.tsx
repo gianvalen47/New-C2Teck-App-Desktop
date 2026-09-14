@@ -38,6 +38,8 @@ import {
   emitirFactura,
   enviarFacturaCorreo,
   fetchFacturas,
+  fetchSession,
+  getSessionTipoCambioCompra,
   type FacturaRow,
   updateFactura,
 } from "@/lib/sigecoom-api";
@@ -213,7 +215,31 @@ function FacturaForm({ factura, onClose, onSaved }: FacturaFormProps) {
   const [precio] = useState(String(factura?.items?.[0]?.price ?? 0));
   const [moneda, setMoneda] = useState(factura?.extra_data?.moneda ?? "USD");
   const [igv, setIgv] = useState(String(factura?.extra_data?.igv ?? "18.00"));
-  const [tipoCambio, setTipoCambio] = useState(String(factura?.extra_data?.tipo_cambio ?? "3.402"));
+  const [tipoCambio, setTipoCambio] = useState<string>(() => {
+    const valueFromFactura = factura?.extra_data?.tipo_cambio;
+    const valueFromSession = getSessionTipoCambioCompra();
+    return String(valueFromFactura ?? valueFromSession ?? 3.402);
+  });
+
+  useEffect(() => {
+    if (factura?.extra_data?.tipo_cambio != null) return;
+    const sessionValue = getSessionTipoCambioCompra();
+    if (sessionValue != null) {
+      setTipoCambio(String(sessionValue));
+      return;
+    }
+
+    fetchSession()
+      .then((session) => {
+        if (session.tipo_cambio_compra != null) {
+          setTipoCambio(String(session.tipo_cambio_compra));
+        }
+      })
+      .catch(() => {
+        setTipoCambio("3.402");
+      });
+  }, [factura?.extra_data?.tipo_cambio]);
+
   const [direccionFiscal, setDireccionFiscal] = useState(String(factura?.extra_data?.direccion_fiscal ?? ""));
   const [locCliente, setLocCliente] = useState(String(factura?.extra_data?.loc_cliente ?? ""));
   const [motivo, setMotivo] = useState(String(factura?.extra_data?.motivo ?? "Venta"));

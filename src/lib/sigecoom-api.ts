@@ -228,6 +228,31 @@ export async function fetchSession(): Promise<SessionInfo> {
   return response.json();
 }
 
+export function getSessionTipoCambioCompra(): number | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem("sigecoom_session");
+    if (!raw) return null;
+    const session = JSON.parse(raw) as Partial<SessionInfo>;
+    const value = Number(session.tipo_cambio_compra ?? 0);
+    return Number.isFinite(value) && value > 0 ? value : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function syncSessionTipoCambio(): Promise<number | null> {
+  try {
+    const session = await fetchSession();
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("sigecoom_session", JSON.stringify(session));
+    }
+    return Number(session.tipo_cambio_compra ?? 0) || null;
+  } catch {
+    return getSessionTipoCambioCompra();
+  }
+}
+
 export async function login(username: string, password: string): Promise<SessionInfo> {
   const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/auth/login`, {
     method: "POST",
@@ -1274,6 +1299,10 @@ export type GuiaRemisionRow = {
   id_fiscal?: number;
   cod_mot: string;
   num_job?: string;
+  num_fac?: string;
+  num_cot?: number | string;
+  referencia?: string;
+  cotizacion?: number | string;
   pto_partida?: string;
   pto_llegada?: string;
   cod_mon: string;
@@ -1293,6 +1322,7 @@ export type GuiaRemisionRow = {
   num_orden?: string;
   id_cotizacion?: number;
   observacion?: string;
+  tiene_notas?: boolean;
   peso_bruto: number;
   cod_uni_med_peso: string;
   numero_bultos: number;
