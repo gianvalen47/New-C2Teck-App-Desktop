@@ -18,7 +18,7 @@ export const Route = createFileRoute("/login")({
 function LoginPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [username, setUsername] = useState("grios");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -85,6 +85,7 @@ function LoginPage() {
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                placeholder="Ingrese usuario"
                 className="mt-1 w-full h-11 rounded-md bg-muted px-3 border border-transparent focus:border-primary outline-none"
               />
             </label>
@@ -92,13 +93,12 @@ function LoginPage() {
               <span className="text-xs uppercase tracking-widest text-muted-foreground">Contraseña</span>
               <input
                 type="password"
-                inputMode="numeric"
-                pattern="[0-9]*"
-                maxLength={3}
                 required
+                autoComplete="current-password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value.replace(/\D/g, "").slice(0, 3))}
+                onChange={(e) => setPassword(e.target.value)}
                 className="mt-1 w-full h-11 rounded-md bg-muted px-3 border border-transparent focus:border-primary outline-none"
+                placeholder="Ingrese su contraseña SIGECOM"
               />
             </label>
             <div className="flex items-center justify-between text-xs">

@@ -31,7 +31,7 @@ import {
   Eye, EyeOff, Key, User, Zap,
 } from "lucide-react";
 
-import { fetchSession, login, type SessionInfo } from "@/lib/sigecoom-api";
+import { fetchSession, login, type SessionInfo, fetchAdapterTipoCambio } from "@/lib/sigecoom-api";
 import { CompanyPickerModal, type Company } from "@/features/escritorio/windows/Logueo/CambiarEmpresa";
 
 export const Route = createFileRoute("/escritorio")({
@@ -927,7 +927,7 @@ function DesktopAppInner() {
   const [recover, setRecover] = useState(false);
   const popupLabel = params.get("popup");
   const loginMode = params.get("login") === "1";
-  const [desktopAuthenticated, setDesktopAuthenticated] = useState(!loginMode);
+  const [desktopAuthenticated, setDesktopAuthenticated] = useState(false);
   const [desktopReady, setDesktopReady] = useState(false);
   const [busy, setBusy] = useState(false);
   const [user, setUser] = useState("");
@@ -960,28 +960,77 @@ function DesktopAppInner() {
 
   useEffect(() => {
     let mounted = true;
-    fetchSession()
-      .then((session) => {
-        if (!mounted) return;
-        setUser(session.username || "");
-        setFecha(session.fecha_transaccion || "");
-        if (session.tipo_cambio_compra != null && Number.isFinite(session.tipo_cambio_compra)) {
-          setTc(String(session.tipo_cambio_compra));
-        } else {
-          setTc("");
-        }
-      })
-      .catch(() => {
-        if (!mounted) return;
-        setTc("");
-      });
 
-    setDesktopReady(true);
-    if (isDesktop && loginMode) {
+    if (isDesktop) {
       setDesktopAuthenticated(false);
+      setDesktopReady(false);
     } else {
       setDesktopAuthenticated(true);
+      setDesktopReady(true);
     }
+
+    // Try to fetch tipo de cambio directly from legacy adapter first (avoids backend dependency)
+    (async () => {
+      try {
+        const today = new Date().toLocaleDateString("es-PE");
+        const adapterTc = await fetchAdapterTipoCambio("US", today);
+        if (mounted && adapterTc) {
+          // adapterTc is [compra, venta] — show venta in the login window
+          setTc(String(adapterTc[1]));
+        }
+      } catch (e) {
+        // ignore
+      }
+
+      // Then fetch session as before (this may override tc if session contains a value)
+      try {
+        const session = await fetchSession();
+        if (!mounted) return;
+        if (loginMode) {
+          setUser("");
+        } else {
+          setUser(session.username || "");
+        }
+        setFecha(session.fecha_transaccion || "");
+
+        // Set selected company from session if provided by backend
+        if (session.empresa_actual) {
+          setSelectedCompany({
+            codigo: session.empresa_actual.codigo || "",
+            nombre: session.empresa_actual.nombre || session.empresa_actual.descripcion || "",
+            ruc: session.empresa_actual.ruc ?? null,
+            descripcion: session.empresa_actual.descripcion ?? null,
+          });
+        }
+
+        if (Array.isArray(session.empresas) && session.empresas.length > 1) {
+          setCompanyPickerOpen(true);
+        }
+
+        // If backend reports an active session, mark desktop as authenticated
+        // but do NOT automatically authenticate when we're rendering the
+        // small login window (loginMode). The small window should always
+        // show the login UI so the user can enter credentials there.
+        if (session && session.username && !loginMode) {
+          setDesktopAuthenticated(true);
+        }
+
+        // Prefer venta on the login window, otherwise use compra
+        const sessionTc = loginMode ? session.tipo_cambio_venta : session.tipo_cambio_compra;
+        if (sessionTc != null && Number.isFinite(sessionTc)) {
+          setTc(String(sessionTc));
+        } else {
+          // if adapter already set tc, keep it; otherwise clear
+          setTc((prev) => (prev ? prev : ""));
+        }
+      } catch (e) {
+        if (!mounted) return;
+        setTc("");
+      } finally {
+        if (!mounted) return;
+        setDesktopReady(true);
+      }
+    })();
 
     return () => {
       mounted = false;
@@ -1018,8 +1067,23 @@ function DesktopAppInner() {
       setUser(session.username || "");
       setFecha(session.fecha_transaccion || fecha);
 
-      if (session.tipo_cambio_compra != null && Number.isFinite(session.tipo_cambio_compra)) {
-        setTc(String(session.tipo_cambio_compra));
+      // Set selected company from session if provided
+      if (session.empresa_actual) {
+        setSelectedCompany({
+          codigo: session.empresa_actual.codigo || "",
+          nombre: session.empresa_actual.nombre || session.empresa_actual.descripcion || "",
+          ruc: session.empresa_actual.ruc ?? null,
+          descripcion: session.empresa_actual.descripcion ?? null,
+        });
+      }
+
+      if (Array.isArray(session.empresas) && session.empresas.length > 1) {
+        setCompanyPickerOpen(true);
+      }
+
+      const loginTc = session.tipo_cambio_venta ?? session.tipo_cambio_compra;
+      if (loginTc != null && Number.isFinite(loginTc)) {
+        setTc(String(loginTc));
       } else {
         setTc("");
       }
@@ -1029,7 +1093,7 @@ function DesktopAppInner() {
       window.c2teckDesktop?.loginSuccess?.();
     } catch (error: any) {
       toast.error("Credenciales inválidas", {
-        description: error?.message ?? "La contraseña del servidor SIGECOM es de 3 dígitos.",
+        description: error?.message ?? "No se pudo validar el usuario en el servicio SIGECOM original.",
       });
     } finally {
       setBusy(false);
@@ -1047,7 +1111,15 @@ function DesktopAppInner() {
     return <DesktopPopoutWindow label={popupLabel} onClose={close} />;
   }
 
-  if (loginMode && isDesktop && !desktopAuthenticated) {
+  // When running inside the native desktop host we should allow the
+  // React UI to render normally so session/login flows work. Previously
+  // this returned a blank full-screen div which prevented the login
+  // and main UI from ever appearing in desktop mode.
+
+  // Do not block rendering while `desktopReady` is false — rendering
+  // the app immediately avoids a blank screen during startup/login.
+
+  if (isDesktop && !desktopAuthenticated) {
     return (
       <DesktopLogin
         busy={busy}
@@ -1134,7 +1206,16 @@ function DesktopAppInner() {
               setCompanyPickerOpen(true);
               toast.success("Empresa", { description: "Se abrió la selección de empresa." });
             }}
-            onCloseApp={() => { toast.success("Cerrando aplicación…"); setTimeout(() => { window.location.href = "/"; }, 300); }}
+            onCloseApp={() => {
+              if (isDesktop) {
+                toast.success("Cerrando aplicación…");
+                setTimeout(() => close(), 250);
+                return;
+              }
+
+              toast.success("Volviendo al sitio…");
+              setTimeout(() => { window.location.href = "/"; }, 300);
+            }}
           />
           <div className="flex-1 min-w-0">
             <TabsCarousel 
@@ -1285,7 +1366,7 @@ function DesktopAppInner() {
         </div>
       </div>
 
-      {loginMode && isDesktop && desktopReady && !desktopAuthenticated && (
+      {isDesktop && desktopReady && !desktopAuthenticated && (
         <DesktopLogin
           busy={busy}
           user={user}
@@ -1374,7 +1455,12 @@ function DesktopLogin({
               <label className="flex items-center gap-3">
                 <User className="h-3.5 w-3.5 text-slate-500 shrink-0" />
                 <span className="text-[11.5px] text-slate-700 w-20 shrink-0">Usuario</span>
-                <input value={user} onChange={(e) => onUserChange(e.target.value)} className={inputCls} />
+                <input
+                  value={user}
+                  onChange={(e) => onUserChange(e.target.value)}
+                  className={inputCls}
+                  placeholder="Ingrese usuario"
+                />
               </label>
               <label className="flex items-start gap-3">
                 <Key className="h-3.5 w-3.5 text-slate-500 shrink-0 mt-1.5" />

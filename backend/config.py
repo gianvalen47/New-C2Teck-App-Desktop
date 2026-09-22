@@ -56,7 +56,7 @@ PROJECT_VERSION = "0.1.0"
 # SIGECOM original product environment. The adapter that translates HTTP/API
 # requests into the WCF service needs to be published under that VPN host.
 SIGECOM_DATA_SOURCE = os.getenv("SIGECOM_DATA_SOURCE", "legacy").lower()
-SIGECOM_COD_EMP = os.getenv("SIGECOM_COD_EMP", "08").strip()
+SIGECOM_COD_EMP = os.getenv("SIGECOM_COD_EMP", "").strip()  # empty by default: prefer per-user assigned companies
 SIGECOM_LEGACY_ADAPTER_BASE_URL = os.getenv(
     "SIGECOM_LEGACY_ADAPTER_BASE_URL",
     "http://localhost:5041",

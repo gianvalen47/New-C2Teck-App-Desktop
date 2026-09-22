@@ -16,6 +16,7 @@ import time
 from datetime import datetime
 from pathlib import Path
 from urllib.error import URLError
+from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
 
 # Setup logging
@@ -337,7 +338,7 @@ def _extract_tipo_cambio_from_payload(payload):
     return None
 
 
-def fetch_tipo_cambio_legacy(moneda: str = "US", fecha: str | None = None) -> tuple[float, float] | None:
+def fetch_tipo_cambio_legacy(moneda: str = "US", fecha: str | None = None, company_code: str | None = None) -> tuple[float, float] | None:
     """Fetch the real exchange rate from the legacy SIGECOM adapter when available."""
     if not LEGACY_ADAPTER_BASE_URL:
         return None
@@ -346,11 +347,16 @@ def fetch_tipo_cambio_legacy(moneda: str = "US", fecha: str | None = None) -> tu
         fecha = datetime.now().strftime("%d/%m/%Y")
 
     moneda = (moneda or "US").strip().upper() or "US"
+    # Candidate endpoints — include company_code variants if provided
+    base_q = f"moneda={moneda}&fecha={fecha}"
+    if company_code:
+        base_q += f"&empresa={company_code}"
+
     candidates = [
-        f"{LEGACY_ADAPTER_BASE_URL}/api/v1/tipo-cambio?moneda={moneda}&fecha={fecha}",
-        f"{LEGACY_ADAPTER_BASE_URL}/api/v1/tipocambio?moneda={moneda}&fecha={fecha}",
-        f"{LEGACY_ADAPTER_BASE_URL}/api/tipo-cambio?moneda={moneda}&fecha={fecha}",
-        f"{LEGACY_ADAPTER_BASE_URL}/api/tipocambio?moneda={moneda}&fecha={fecha}",
+        f"{LEGACY_ADAPTER_BASE_URL}/api/v1/tipo-cambio?{base_q}",
+        f"{LEGACY_ADAPTER_BASE_URL}/api/v1/tipocambio?{base_q}",
+        f"{LEGACY_ADAPTER_BASE_URL}/api/tipo-cambio?{base_q}",
+        f"{LEGACY_ADAPTER_BASE_URL}/api/tipocambio?{base_q}",
     ]
 
     for url in candidates:
@@ -363,10 +369,210 @@ def fetch_tipo_cambio_legacy(moneda: str = "US", fecha: str | None = None) -> tu
         if values is not None:
             compra, venta = values
             if compra is not None and venta is not None:
+                # If adapter returns a single identical value for compra/venta
+                # it's often because the adapter is using env-configured defaults.
+                # Prefer the public SUNAT API when the adapter returns identical
+                # compra/venta so the desktop matches the original VB.NET client.
+                try:
+                    if float(compra) == float(venta):
+                        # Try public SUNAT API before accepting adapter's identical value
+                        try:
+                            fecha_iso = datetime.strptime(fecha, "%d/%m/%Y").strftime("%Y-%m-%d")
+                        except Exception:
+                            try:
+                                fecha_iso = datetime.fromisoformat(fecha).strftime("%Y-%m-%d")
+                            except Exception:
+                                fecha_iso = datetime.now().strftime("%Y-%m-%d")
+
+                        sunat_url = f"https://api.apis.net.pe/v1/tipo-cambio-sunat?fecha={fecha_iso}"
+                        try:
+                            data = _read_json(sunat_url, timeout=6)
+                            sc = _coerce_float_value(data.get("compra") if isinstance(data, dict) else None)
+                            sv = _coerce_float_value(data.get("venta") if isinstance(data, dict) else None)
+                            if sc is not None and sv is not None and (sc != float(compra) or sv != float(venta)):
+                                logger.info("Prefer public SUNAT tipo cambio over adapter identical value: %s/%s", sc, sv)
+                                return float(sc), float(sv)
+                        except Exception:
+                            # proceed to return adapter values
+                            pass
+                except Exception:
+                    pass
+
                 return float(compra), float(venta)
 
     logger.warning("No real exchange rate returned by the legacy SIGECOM adapter for %s on %s.", moneda, fecha)
+
+    # Fallback: try public SUNAT API (used by the original VB.NET client)
+    try:
+        # The public API expects YYYY-MM-DD
+        try:
+            fecha_iso = datetime.strptime(fecha, "%d/%m/%Y").strftime("%Y-%m-%d")
+        except Exception:
+            # If fecha already in ISO or other format, attempt to parse gracefully
+            try:
+                fecha_iso = datetime.fromisoformat(fecha).strftime("%Y-%m-%d")
+            except Exception:
+                fecha_iso = datetime.now().strftime("%Y-%m-%d")
+
+        sunat_url = f"https://api.apis.net.pe/v1/tipo-cambio-sunat?fecha={fecha_iso}"
+        try:
+            data = _read_json(sunat_url, timeout=6)
+            # Expected shape: { "compra": 3.361, "venta": 3.372 }
+            compra = _coerce_float_value(data.get("compra") if isinstance(data, dict) else None)
+            venta = _coerce_float_value(data.get("venta") if isinstance(data, dict) else None)
+            if compra is not None and venta is not None:
+                logger.info("Tipo cambio obtenido desde SUNAT público: %s/%s", compra, venta)
+                return float(compra), float(venta)
+        except Exception as e:
+            logger.debug("Public SUNAT API fallback failed: %s", e)
+    except Exception:
+        pass
+
     return None
+
+
+def validate_user(username: str, password: str, company_code: str | None = None) -> dict | None:
+    """Canonical helper to validate a SIGECOM user against the legacy adapter/WCF."""
+    return validate_user_legacy(username=username, password=password, company_code=company_code)
+
+
+def validate_user_legacy(username: str, password: str, company_code: str | None = None) -> dict | None:
+    """Attempt to validate a user against the legacy SIGECOM adapter or WCF.
+
+    Returns a dictionary with at least {'username': str, 'perfil': str} on success,
+    or None if validation couldn't be performed or failed.
+
+    The function tries multiple HTTP endpoints on the configured adapter and
+    falls back to attempting a SOAP call via `zeep` if available.
+    """
+    if not LEGACY_ADAPTER_BASE_URL:
+        return None
+
+    user = (username or "").strip()
+    pwd = (password or "").strip()
+    if not user or not pwd:
+        return None
+
+    qs_value = lambda value: quote(str(value or ""), safe="")
+
+    candidates = [
+        f"{LEGACY_ADAPTER_BASE_URL}/api/v1/auth/validate?{urlencode({'username': user, 'password': pwd})}",
+        f"{LEGACY_ADAPTER_BASE_URL}/api/v1/auth/login?{urlencode({'username': user, 'password': pwd})}",
+        f"{LEGACY_ADAPTER_BASE_URL}/api/v1/usuarios/validar?{urlencode({'user': user, 'pass': pwd})}",
+        f"{LEGACY_ADAPTER_BASE_URL}/api/v1/usuarios/validate?{urlencode({'user': user, 'password': pwd})}",
+        f"{LEGACY_ADAPTER_BASE_URL}/api/v1/users/validate?{urlencode({'username': user, 'password': pwd})}",
+    ]
+
+    # Try HTTP candidates
+    for url in candidates:
+        try:
+            payload = _read_json(url, timeout=5)
+        except Exception:
+            continue
+
+        # Interpret common success shapes
+        if payload is True or payload == "ok" or payload == "OK":
+            return {"username": user, "perfil": "Usuario", "source": "adapter"}
+
+        if isinstance(payload, dict):
+            # If adapter returns a session-like object, normalize minimal fields
+            if payload.get("username") or payload.get("user") or payload.get("usuario"):
+                uname = payload.get("username") or payload.get("user") or payload.get("usuario")
+                perfil = payload.get("perfil") or payload.get("role") or "Usuario"
+                result = {"username": uname, "perfil": perfil, "source": "adapter", **payload}
+                # If adapter provides assigned companies, include them
+                if payload.get("empresas") or payload.get("companies") or payload.get("assignedCompanies"):
+                    result["empresas"] = payload.get("empresas") or payload.get("companies") or payload.get("assignedCompanies")
+                return result
+
+            # Some adapters return { ok: true }
+            if payload.get("ok") is True or payload.get("valid") is True:
+                return {"username": user, "perfil": payload.get("perfil", "Usuario"), "source": "adapter"}
+
+    # If adapter didn't return empresas during validate, try the empresas endpoint
+    try:
+        empresas_url = build_legacy_url(f"/api/v1/auth/empresas?{urlencode({'username': user})}")
+        payload = _read_json(empresas_url, timeout=5)
+        if isinstance(payload, (list, dict)):
+            return {"username": user, "perfil": "Usuario", "source": "adapter", "empresas": payload}
+    except Exception:
+        pass
+    # As a best-effort fallback, attempt SOAP WSDL inspection + call if zeep is present
+    try:
+        from zeep import Client as ZeepClient
+        from zeep.exceptions import Error as ZeepError
+    except Exception:
+        ZeepClient = None  # type: ignore
+
+    if ZeepClient is None:
+        return None
+
+    # Try a few likely WSDL endpoints and method names
+    base = os.getenv("SIGECOM_WCF_BASE_URL") or LEGACY_ADAPTER_BASE_URL
+    wsdl_candidates = [
+        f"{base.rstrip('/')}/ServicioBLL/UsuarioService?wsdl",
+        f"{base.rstrip('/')}/ServicioBLL/UsuarioService?singleWsdl",
+        f"{base.rstrip('/')}/UsuarioService?wsdl",
+        f"{base.rstrip('/')}/ws/UsuarioService?wsdl",
+    ]
+    method_names = ["ValidateUser", "ValidarUsuario", "Login", "AutenticarUsuario", "Autenticar"]
+
+    last_exc = None
+    for wsdl in wsdl_candidates:
+        try:
+            client = ZeepClient(wsdl)
+            service = None
+            for svc in client.wsdl.services.values():
+                for port in svc.ports.values():
+                    # try to call methods on this port
+                    for method in method_names:
+                        try:
+                            fn = getattr(client.service, method, None)
+                            if fn is None:
+                                continue
+                            # Many legacy methods accept (username, password, company)
+                            try:
+                                result = fn(user, pwd, company_code) if company_code else fn(user, pwd)
+                            except TypeError:
+                                # Try only username/password
+                                try:
+                                    result = fn(user, pwd)
+                                except Exception:
+                                    result = fn(user)
+
+                            if result:
+                                # Normalize result into dict
+                                if isinstance(result, dict):
+                                    out = {"username": user, "perfil": result.get("perfil", "Usuario"), "source": "wcf", **result}
+                                    # Some WCF methods return user session with companies
+                                    if result.get("Empresas") or result.get("empresas"):
+                                        out["empresas"] = result.get("Empresas") or result.get("empresas")
+                                    return out
+                                return {"username": user, "perfil": "Usuario", "source": "wcf", "raw": result}
+                        except Exception:
+                            continue
+            # if we get here, try next WSDL
+        except Exception as e:
+            last_exc = e
+            continue
+
+    return None
+
+
+def _legacy_list_payload(endpoint: str, page_size: int | None = None, skip: int = 0):
+    """Fetch and normalize a list-like payload from the adapter without assuming a schema."""
+    url = build_legacy_url(endpoint)
+    data = _read_json(url, timeout=5)
+
+    if isinstance(data, dict) and "items" in data:
+        items = data["items"]
+        total = data.get("total", len(items) if isinstance(items, list) else 0)
+        return {"items": items, "total": total}
+    if isinstance(data, list):
+        return {"items": data, "total": len(data)}
+    if data is None:
+        return {"items": [], "total": 0}
+    return {"items": [data], "total": 1}
 
 
 # ============================================================================
@@ -428,6 +634,57 @@ def get_client_legacy(client_id: str):
     except Exception as e:
         logger.error(f"Failed to get client {client_id} from legacy adapter: {e}")
         raise
+
+
+def list_boletas_legacy(skip: int = 0, limit: int = 100, **filters):
+    """List boletas from the legacy adapter."""
+    params = [f"skip={skip}", f"limit={max(1, limit) if limit and limit > 0 else 100}"]
+    for key, value in filters.items():
+        if value is not None:
+            params.append(f"{key}={value}")
+    return _legacy_list_payload(f"/api/v1/boletas?{'&'.join(params)}")
+
+
+def get_boleta_legacy(boleta_id: str):
+    """Fetch a single boleta from the legacy adapter."""
+    return _read_json(build_legacy_url(f"/api/v1/boletas/{boleta_id}"), timeout=5)
+
+
+def list_sunat_legacy(skip: int = 0, limit: int = 100, **filters):
+    """List SUNAT-related records from the legacy adapter."""
+    params = [f"skip={skip}", f"limit={max(1, limit) if limit and limit > 0 else 100}"]
+    for key, value in filters.items():
+        if value is not None:
+            params.append(f"{key}={value}")
+    return _legacy_list_payload(f"/api/v1/sunat?{'&'.join(params)}")
+
+
+def consultar_sunat_legacy(documento: str | None = None, **filters):
+    """Consult a SUNAT document state using the adapter if present."""
+    params = []
+    if documento is not None:
+        params.append(f"documento={documento}")
+    for key, value in filters.items():
+        if value is not None:
+            params.append(f"{key}={value}")
+    query = f"{'&'.join(params)}"
+    path = f"/api/v1/sunat/consultar?{query}" if query else "/api/v1/sunat/consultar"
+    return _read_json(build_legacy_url(path), timeout=5)
+
+
+def list_seguridad_legacy(skip: int = 0, limit: int = 100, **filters):
+    """List security-related records/metadata from the legacy adapter."""
+    params = [f"skip={skip}", f"limit={max(1, limit) if limit and limit > 0 else 100}"]
+    for key, value in filters.items():
+        if value is not None:
+            params.append(f"{key}={value}")
+    return _legacy_list_payload(f"/api/v1/seguridad?{'&'.join(params)}")
+
+
+def get_seguridad_legacy(service: str | None = None):
+    """Get a security/status payload from the legacy adapter."""
+    path = f"/api/v1/seguridad/{service}" if service else "/api/v1/seguridad"
+    return _read_json(build_legacy_url(path), timeout=5)
 
 
 def _normalize_client(client: dict) -> dict:

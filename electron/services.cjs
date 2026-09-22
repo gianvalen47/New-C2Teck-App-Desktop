@@ -248,9 +248,15 @@ async function startFrontend() {
     }
   } else {
     const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
-    spawnManaged("frontend", npmCommand, ["run", "dev", "--", "--port", String(FRONTEND_PORT), "--host", "127.0.0.1"], {
-      cwd: PROJECT_ROOT,
-    });
+    spawnManaged(
+      "frontend",
+      npmCommand,
+      ["run", "dev", "--", "--port", String(FRONTEND_PORT), "--host", "127.0.0.1"],
+      {
+        cwd: PROJECT_ROOT,
+        env: { ...process.env, BROWSER: "none" }, // prevent Vite from auto-opening a browser window
+      },
+    );
   }
 
   await waitForUrl(`http://127.0.0.1:${FRONTEND_PORT}/`);

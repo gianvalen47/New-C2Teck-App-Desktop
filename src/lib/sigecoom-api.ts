@@ -253,13 +253,93 @@ export async function syncSessionTipoCambio(): Promise<number | null> {
   }
 }
 
+export async function fetchAdapterTipoCambio(moneda: string = "US", fecha: string | null = null): Promise<[number, number] | null> {
+  // Try to read the real tipo de cambio directly from the legacy adapter HTTP API.
+  try {
+    if (!SIGECOOM_ADAPTER_URL) return null;
+    const q = new URLSearchParams();
+    q.set("moneda", (moneda || "US").toUpperCase());
+    if (fecha) q.set("fecha", fecha);
+    const url = `${SIGECOOM_ADAPTER_URL}/api/v1/tipo-cambio${q.toString() ? `?${q.toString()}` : ""}`;
+    const resp = await fetch(url, { headers: { Accept: "application/json" } });
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    // adapter may return { tipo_cambio_compra, tipo_cambio_venta } or { compra, venta }
+    const compra = Number(data.tipo_cambio_compra ?? data.compra ?? data.tipoCambioCompra ?? 0);
+    const venta = Number(data.tipo_cambio_venta ?? data.venta ?? data.tipoCambioVenta ?? 0);
+    if (Number.isFinite(compra) && Number(compra) > 0 && Number.isFinite(venta) && Number(venta) > 0) {
+      return [Number(compra), Number(venta)];
+    }
+    return null;
+  } catch (err) {
+    return null;
+  }
+}
+
 export async function login(username: string, password: string): Promise<SessionInfo> {
   const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),
   });
-  if (!response.ok) throw new Error("Credenciales inválidas");
+
+  if (!response.ok) {
+    let message = "Credenciales inválidas";
+    try {
+      const payload = await response.json();
+      if (payload && typeof payload.detail === "string") {
+        message = payload.detail;
+      } else if (payload && typeof payload.message === "string") {
+        message = payload.message;
+      }
+    } catch {
+      // Ignore JSON parsing issues and keep the default message.
+    }
+    throw new Error(message);
+  }
+
+  return response.json();
+}
+
+export async function fetchEmpresas(username?: string): Promise<EmpresaAsignada[]> {
+  const params = new URLSearchParams();
+  if (username) params.set("username", username);
+  const url = `${API_BASE_URL}${API_V1_PREFIX}/auth/empresas${params.toString() ? `?${params.toString()}` : ""}`;
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error("No se pudo cargar las empresas asignadas");
+  }
+  return response.json();
+}
+
+export async function fetchMultiempresa(username?: string): Promise<SessionInfo> {
+  const params = new URLSearchParams();
+  if (username) params.set("username", username);
+  const url = `${API_BASE_URL}${API_V1_PREFIX}/auth/multiempresa${params.toString() ? `?${params.toString()}` : ""}`;
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error("No se pudo consultar multiempresa");
+  }
+  return response.json();
+}
+
+export async function cambiarEmpresa(codigo: string): Promise<SessionInfo> {
+  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/auth/cambiar-empresa`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ codigo }),
+  });
+  if (!response.ok) {
+    throw new Error("No se pudo cambiar de empresa");
+  }
+  return response.json();
+}
+
+export async function logoutSession(): Promise<{ ok: boolean; message?: string }> {
+  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/auth/logout`, { method: "POST" });
+  if (!response.ok) {
+    throw new Error("No se pudo cerrar la sesión");
+  }
   return response.json();
 }
 

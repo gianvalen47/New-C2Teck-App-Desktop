@@ -25,7 +25,7 @@ from routers.caja_chica import router as caja_chica_router
 from routers.guias_remision import router as guias_remision_router
 from routers.guias_devolucion import router as guias_devolucion_router
 from routers.admin import router as admin_router
-from routers import productos, proveedores, facturas, ordenes_compra
+from routers import productos, proveedores, facturas, ordenes_compra, boletas, sunat, seguridad
 from models import ClientModel, GuiaRemisionModel, GuiaRemisionDetModel
 from legacy_adapter import is_legacy_source_enabled, legacy_health
 
@@ -93,6 +93,9 @@ app.include_router(purchases_router, prefix=API_V1_STR)
 app.include_router(caja_chica_router, prefix=API_V1_STR)
 app.include_router(guias_remision_router, prefix=API_V1_STR)
 app.include_router(guias_devolucion_router, prefix=API_V1_STR)
+app.include_router(boletas.router, prefix=API_V1_STR)
+app.include_router(sunat.router, prefix=API_V1_STR)
+app.include_router(seguridad.router, prefix=API_V1_STR)
 
 # ============================================================================
 # API V1 ROUTES - Extended (from SIGECOM VB.NET forms analysis)

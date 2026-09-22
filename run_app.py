@@ -5,6 +5,7 @@ import subprocess
 import sys
 import threading
 import time
+from pathlib import Path
 from typing import Optional
 
 
@@ -106,6 +107,8 @@ def get_available_port(start_port: int = 8000) -> int:
 
 
 def main():
+    project_root = Path(__file__).resolve().parent
+    backend_dir = project_root / "backend"
     backend_port = get_available_port(8000)
     uvicorn_cmd = [
         sys.executable,
@@ -123,8 +126,8 @@ def main():
     # Environment for frontend: ensure npm in PATH
     env = os.environ.copy()
 
-    backend = ManagedProcess(uvicorn_cmd, cwd=os.path.join(os.getcwd(), "backend"), env=env, name="backend")
-    frontend = ManagedProcess(npm_cmd, cwd=os.getcwd(), env=env, name="frontend")
+    backend = ManagedProcess(uvicorn_cmd, cwd=str(backend_dir), env=env, name="backend")
+    frontend = ManagedProcess(npm_cmd, cwd=str(project_root), env=env, name="frontend")
 
     # Start both
     backend.start()

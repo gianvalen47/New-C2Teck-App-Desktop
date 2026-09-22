@@ -81,6 +81,8 @@ def get_system_info():
                 "SIGECOM_DATA_SOURCE": os.getenv("SIGECOM_DATA_SOURCE", "not set"),
                 "SIGECOM_LEGACY_ADAPTER_BASE_URL": os.getenv("SIGECOM_LEGACY_ADAPTER_BASE_URL", "not set"),
                 "SIGECOM_WCF_BASE_URL": os.getenv("SIGECOM_WCF_BASE_URL", "not set"),
+                "SIGECOM_ENABLE_LOCAL_FALLBACK": os.getenv("SIGECOM_ENABLE_LOCAL_FALLBACK", "not set"),
+                "SIGECOM_LOCAL_USERS_FILE": os.getenv("SIGECOM_LOCAL_USERS_FILE", "not set"),
             }
         }
     }
@@ -101,6 +103,58 @@ def get_api_routes():
         "redoc_url": "/redoc",
         "openapi_schema_url": "/openapi.json"
     }
+
+
+@router.get("/debug/local-fallback", response_model=dict)
+def debug_local_fallback():
+    """
+    Debug endpoint: report whether local fallback is enabled and show loaded local users.
+    """
+    try:
+        # Import lazily to avoid circular imports at module import time
+        from routers import auth as auth_router
+        enabled = auth_router._local_fallback_enabled()
+        users = auth_router._load_local_users() if enabled else []
+        return {"enabled": enabled, "users": users}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@router.get("/debug/local-fallback-detailed", response_model=dict)
+def debug_local_fallback_detailed():
+    """
+    Debug endpoint: show candidate paths for local_users.json and file existence/readability.
+    """
+    import os
+    try:
+        from routers import auth as auth_router
+        env_path = (os.getenv("SIGECOM_LOCAL_USERS_FILE") or "").strip()
+        candidates = []
+        if env_path:
+            candidates.append(env_path)
+        candidates.extend([
+            os.path.join(os.path.dirname(os.path.dirname(auth_router.__file__)), "sigecoom-wcf-adapter", "local_users.json"),
+            os.path.join(os.getcwd(), "sigecoom-wcf-adapter", "local_users.json"),
+        ])
+        details = []
+        for path in candidates:
+            try:
+                exists = os.path.exists(path)
+                size = os.path.getsize(path) if exists else None
+                sample = None
+                if exists:
+                    try:
+                        with open(path, 'r', encoding='utf-8') as f:
+                            sample = f.read(1024)
+                    except Exception as e:
+                        sample = f"<read error: {e}>"
+                details.append({"path": path, "exists": exists, "size": size, "sample": sample})
+            except Exception as e:
+                details.append({"path": path, "error": str(e)})
+
+        return {"candidates": details}
+    except Exception as e:
+        return {"error": str(e)}
 
 
 @router.post("/reset-cache", response_model=dict)

@@ -26,6 +26,15 @@ function createWindow(appUrl, options = {}) {
     resizable = true,
     title,
   } = options;
+
+  if (!isLogin && mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.close();
+  }
+
+  if (isLogin && loginWindow && !loginWindow.isDestroyed()) {
+    loginWindow.close();
+  }
+
   const win = new BrowserWindow({
     width,
     height,
@@ -84,10 +93,17 @@ function createWindow(appUrl, options = {}) {
 }
 
 function openDesktopLoginWindow() {
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.close();
+    mainWindow = null;
+  }
+
   const appUrl = STANDALONE_URL || getAppUrl();
   const loginUrl = new URL(appUrl);
   loginUrl.searchParams.set("login", "1");
   loginUrl.searchParams.set("desktop", "1");
+  // Mark as new login to force the updated desktop login UI in the renderer
+  loginUrl.searchParams.set("newLogin", "1");
   createWindow(loginUrl.toString(), {
     width: 580,
     height: 540,
@@ -132,6 +148,16 @@ ipcMain.on("desktop:login-success", () => {
 
 async function bootstrap() {
   Menu.setApplicationMenu(null);
+
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.close();
+    mainWindow = null;
+  }
+
+  if (loginWindow && !loginWindow.isDestroyed()) {
+    loginWindow.close();
+    loginWindow = null;
+  }
 
   try {
     if (AUTO_START_SERVICES) {

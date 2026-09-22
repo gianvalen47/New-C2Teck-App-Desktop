@@ -1,29 +1,36 @@
 using System.Data;
 using System.Net;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text.Json;
 
 namespace SigecoomWcfClient;
 
-[ServiceContract(Name = "IGuiaRemisionService", Namespace = "http://tempuri.org/")]
-public interface IGuiaRemisionService
+[ServiceContract(Name = "ISeguridad", Namespace = "http://tempuri.org/")]
+public interface ISeguridadService
 {
-    [OperationContract]
-    DataSet Filtrar(int Anio, int Mes, int pIdLocacion, int pIdSerieDoc, int pIdCliente, string? pEstado, int pNumDoc);
+    [OperationContract(Action = "http://tempuri.org/ISeguridad/ValidarAccesoUsuario", ReplyAction = "http://tempuri.org/ISeguridad/ValidarAccesoUsuarioResponse")]
+    int ValidarAccesoUsuario(string pCodUsu, string pClave, int pIdSistema);
+
+    [OperationContract(Action = "http://tempuri.org/ISeguridad/MostrarMultiEmpresa", ReplyAction = "http://tempuri.org/ISeguridad/MostrarMultiEmpresaResponse")]
+    DataSet MostrarMultiEmpresa(string pCodUsu);
 }
 
-public class GuiaRemisionServiceClient : ClientBase<IGuiaRemisionService>, IGuiaRemisionService
+public class SeguridadServiceClient : ClientBase<ISeguridadService>, ISeguridadService
 {
-    public GuiaRemisionServiceClient(Binding binding, EndpointAddress endpoint)
+    public SeguridadServiceClient(Binding binding, EndpointAddress endpoint)
         : base(binding, endpoint)
     {
     }
 
-    public DataSet Filtrar(int Anio, int Mes, int pIdLocacion, int pIdSerieDoc, int pIdCliente, string? pEstado, int pNumDoc)
+    public int ValidarAccesoUsuario(string pCodUsu, string pClave, int pIdSistema)
     {
-        return Channel.Filtrar(Anio, Mes, pIdLocacion, pIdSerieDoc, pIdCliente, pEstado, pNumDoc);
+        return Channel.ValidarAccesoUsuario(pCodUsu, pClave, pIdSistema);
+    }
+
+    public DataSet MostrarMultiEmpresa(string pCodUsu)
+    {
+        return Channel.MostrarMultiEmpresa(pCodUsu);
     }
 }
 
@@ -31,8 +38,8 @@ public static class Program
 {
     public static void Main()
     {
-        Console.WriteLine("SIGECOM WCF probe");
-        Console.WriteLine("Endpoint: net.tcp://192.168.10.252/ServicioBLL/GuiaRemisionService/");
+        Console.WriteLine("SIGECOM WCF SECURITY probe");
+        Console.WriteLine("Endpoint: net.tcp://192.168.10.252/ServicioBLL/SeguridadService/");
 
         var binding = new NetTcpBinding(SecurityMode.Transport)
         {
@@ -49,18 +56,20 @@ public static class Program
             }
         };
 
-        var endpoint = new EndpointAddress("net.tcp://192.168.10.252/ServicioBLL/GuiaRemisionService/");
+        var endpoint = new EndpointAddress("net.tcp://192.168.10.252/ServicioBLL/SeguridadService/");
 
-        using var client = new GuiaRemisionServiceClient(binding, endpoint);
+        using var client = new SeguridadServiceClient(binding, endpoint);
 
         try
         {
-            // Windows auth uses the current session identity. The VPN must be active and the network path must be reachable.
-            var ds = client.Filtrar(0, 0, 0, 0, 0, null, 0);
-            Console.WriteLine($"Tables: {ds.Tables.Count}");
+            Console.WriteLine("Validating user ...");
+            var code = client.ValidarAccesoUsuario("crios", "Master$5050", 1);
+            Console.WriteLine($"ValidarAccesoUsuario returned: {code}");
 
-            var payload = DataSetToJson(ds);
-            Console.WriteLine(payload);
+            Console.WriteLine("Fetching assigned companies ...");
+            var ds = client.MostrarMultiEmpresa("crios");
+            Console.WriteLine($"Tables: {ds.Tables.Count}");
+            Console.WriteLine(DataSetToJson(ds));
         }
         catch (Exception ex)
         {
