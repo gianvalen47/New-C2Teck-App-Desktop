@@ -110,7 +110,7 @@ import {
   type WindowPos,
   type OpenWindow,
 } from "@/context/WindowsContext";
-import c2teckWatermark from "@/assets/logos/LogoC2teck02.png";
+import c2teckWatermark from "@/assets/Logos/LogoC2teck02.png";
 import { toast } from "sonner";
 
 function downloadBlob(blob: Blob, filename: string) {

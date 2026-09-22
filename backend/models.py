@@ -230,6 +230,7 @@ class GuiaRemisionModel(Base):
     cod_usu = Column(String, nullable=True)                         # Usuario que registró
     nom_pc = Column(String, nullable=True)                          # Nombre del equipo
     dir_ip = Column(String, nullable=True)                          # Dirección IP
+    cod_emp = Column(String, nullable=True)                          # Código de empresa (si aplica)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
 

@@ -25,9 +25,11 @@ import {
   LookupDialog,
 } from "@/components/ui/desktop-primitives";
 import { Glyph } from "@/features/escritorio/glyphs";
-import c2teckWatermark from "@/assets/logos/LogoC2teck02.png";
+import c2teckWatermark from "@/assets/Logos/LogoC2teck02.png";
 import { toast } from "sonner";
 import { ReporteContainerList } from "./windows/Reportes/ReporteContainer";
+import { getLogoUrl } from "@/lib/company-logos";
+import { useSession } from "@/context/SessionContext";
 // Legacy monolith renderer fallback
 import {
   WindowsProvider,
@@ -339,9 +341,9 @@ variants.forEach(v => {
   }
 });
 
-export function hasWindowForLabel(label: string): boolean {
+export const hasWindowForLabel = (label: string): boolean => {
   return !!registry[normalizeWindowLabel(label)];
-}
+};
 
 export function registerWindow(label: string, comp: WindowComponent) {
   add(label, comp);
@@ -1506,7 +1508,60 @@ export function renderWindow(label: string): ReactNode {
 export function Workspace() {
   const { windows, active, open, close, focus, move, toggleMaximize, minimize, restore } = useWindows();
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // company logo state — updates when session changes
+  const { session } = useSession();
+  const [empresaLogoUrl, setEmpresaLogoUrl] = useState<string | null>(() => {
+    try {
+      const initCode = session?.empresa_actual?.codigo ? String(session.empresa_actual.codigo).trim() : null;
+      return initCode ? getLogoUrl(initCode) || null : null;
+    } catch (_) {
+      return null;
+    }
+  });
 
+  useEffect(() => {
+    const onSessionUpdated = (ev: Event) => {
+      try {
+        const custom = ev as CustomEvent | undefined;
+        const sess = custom && custom.detail ? (custom.detail as any) : null;
+        if (sess && sess.empresa_actual && sess.empresa_actual.codigo) {
+          const code = String(sess.empresa_actual.codigo).trim();
+          setEmpresaLogoUrl(code ? getLogoUrl(code) || null : null);
+          try {
+            // user-visible feedback for debugging: show a toast with the new code
+            const newCode = String(sess.empresa_actual.codigo).trim();
+            if (newCode) toast.success(`Logo cambiado a empresa ${newCode}`);
+            try { console.info('[Workspace] session-updated detail:', sess); } catch (_) {}
+          } catch (_) {}
+          return;
+        }
+
+        // fallback to localStorage when event.detail isn't present
+        const raw = window.localStorage.getItem("sigecoom_session");
+        if (!raw) {
+          setEmpresaLogoUrl(null);
+          return;
+        }
+        const s = JSON.parse(raw as string);
+        const code = (s?.empresa_actual?.codigo || "").toString().trim();
+        setEmpresaLogoUrl(code ? getLogoUrl(code) || null : null);
+      } catch (e) {
+        setEmpresaLogoUrl(null);
+      }
+    };
+    window.addEventListener('systeck-session-updated', onSessionUpdated as EventListener);
+    return () => window.removeEventListener('systeck-session-updated', onSessionUpdated as EventListener);
+  }, []);
+  // keep session-driven update as well in case context changes
+  useEffect(() => {
+    try {
+      if (session && session.empresa_actual && session.empresa_actual.codigo) {
+        const code = String(session.empresa_actual.codigo).trim();
+        setEmpresaLogoUrl(code ? getLogoUrl(code) || null : null);
+      }
+    } catch (_) {}
+  }, [session]);
   const DESKTOP_SMOKE_LABELS = [
     "Factura",
     "Ctas x Cobrar",
@@ -1583,6 +1638,8 @@ export function Workspace() {
     };
   }, [open]);
 
+  // No session/logo logic here — keep `Workspace` focused on window rendering.
+
   const visible = windows.filter(w => !w.isMinimized);
   const minimized = windows.filter(w => w.isMinimized);
 
@@ -1597,13 +1654,15 @@ export function Workspace() {
       <div className={["absolute inset-0 grid place-items-center select-none pointer-events-none px-8 transition-opacity duration-300", windows.length > 0 ? "opacity-30" : "opacity-100"].join(" ")}>
         <div className="text-center">
           <img
-              src={c2teckWatermark}
+              src={empresaLogoUrl || c2teckWatermark}
               alt="C2TECK"
               className="max-w-[70vw] max-h-[60vh] w-auto h-auto object-contain opacity-90 drop-shadow-[0_10px_30px_rgba(58,85,115,0.25)]"
             />
             <div className="text-slate-400 text-[11px] mt-6 font-mono">// abre un módulo desde el ribbon superior</div>
           </div>
       </div>
+
+      {/* Company logo top-left removed — central watermark shows company logo instead */}
 
       {/* Floating windows */}
       {visible.map(w => (

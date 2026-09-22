@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 
 import { fetchSession, login, type SessionInfo, fetchAdapterTipoCambio } from "@/lib/sigecoom-api";
+import { SessionProvider, useSession } from "@/context/SessionContext";
 import { CompanyPickerModal, type Company } from "@/features/escritorio/windows/Logueo/CambiarEmpresa";
 
 export const Route = createFileRoute("/escritorio")({
@@ -57,7 +58,21 @@ function SessionStatus() {
     fetchSession()
       .then((res) => { if (mounted) setS(res); })
       .catch(() => { /* ignore */ });
-    return () => { mounted = false; };
+    const onSessionUpdated = (ev: Event) => {
+      try {
+        const custom = ev as CustomEvent | undefined;
+        const sess = custom && custom.detail ? (custom.detail as SessionInfo) : null;
+        if (sess) {
+          if (mounted) setS(sess);
+          return;
+        }
+      } catch (_) {}
+      // fallback: re-fetch session
+      fetchSession().then((res) => { if (mounted) setS(res); }).catch(() => {});
+    };
+    window.addEventListener('systeck-session-updated', onSessionUpdated as EventListener);
+
+    return () => { mounted = false; window.removeEventListener('systeck-session-updated', onSessionUpdated as EventListener); };
   }, []);
 
   const formatExchangeRate = (value: number) =>
@@ -911,7 +926,9 @@ const ALL_RIBBON_LABELS = collectRibbonLabels(RIBBONS);
 function DesktopApp() {
   return (
     <WindowsProvider>
-      <DesktopAppInner />
+      <SessionProvider>
+        <DesktopAppInner />
+      </SessionProvider>
     </WindowsProvider>
   );
 }
@@ -942,6 +959,7 @@ function DesktopAppInner() {
   const [capsOn, setCapsOn] = useState(false);
   const [companyPickerOpen, setCompanyPickerOpen] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+  const sessionCtx = useSession();
 
   useEffect(() => {
     setNow(new Date().toLocaleDateString("es-PE"));
@@ -1154,9 +1172,14 @@ function DesktopAppInner() {
         <CompanyPickerModal
           current={selectedCompany}
           onCancel={() => setCompanyPickerOpen(false)}
-          onAccept={(company) => {
+          onAccept={async (company) => {
             setSelectedCompany(company);
             setCompanyPickerOpen(false);
+            try {
+              if (sessionCtx && sessionCtx.changeCompany) {
+                await sessionCtx.changeCompany(company.codigo);
+              }
+            } catch (_) {}
             toast.success("Empresa actualizada", { description: `${company.nombre} (${company.codigo})` });
           }}
         />

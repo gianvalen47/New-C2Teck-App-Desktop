@@ -45,21 +45,61 @@ def get_active_company_code() -> str | None:
     return None
 
 
+def _company_to_locaciones(company_code: str | None) -> list[int]:
+    """Map SIGECOM company codes to the legacy `id_locacion` values used by the DB.
+
+    The original SIGECOM snapshots do not carry a `cod_emp` field on each guia row,
+    but they do expose `IdLocacion`. In this project, the known mapping is:
+    - 08 -> 87 (C2TECK)
+    - 05 -> 72 (example for EQUIMAP / other company branch)
+    """
+    if not company_code:
+        return []
+
+    normalized = str(company_code).strip()
+    mapping = {
+        "08": [87],
+        "8": [87],
+        "05": [72],
+        "5": [72],
+        "30": [30],
+        "31": [31],
+        "72": [72],
+        "73": [73],
+        "75": [75],
+        "80": [80],
+        "81": [81],
+        "83": [83],
+        "87": [87],
+    }
+    if normalized in mapping:
+        return mapping[normalized]
+    return []
+
+
 def _row_matches_company(row: dict, company_code: str | None) -> bool:
     """Filter rows to the active company when the record exposes a company code."""
     if not company_code:
         return True
     if not isinstance(row, dict):
         return True
-    found_any = False
+
+    locaciones = _company_to_locaciones(company_code)
+    if locaciones:
+        loc = row.get("id_locacion")
+        if loc is None:
+            loc = row.get("IdLocacion")
+        if loc is not None and int(str(loc).strip()) in locaciones:
+            return True
+
     for key in ("CodEmp", "cod_emp", "CodEmpresa", "cod_empresa", "Empresa", "empresa"):
         if key in row:
-            found_any = True
             value = row.get(key)
             if value is not None:
                 return str(value).strip() == str(company_code).strip()
-    # If the row doesn't contain any company metadata, treat it as NOT matching
-    # when an explicit company_code is requested (prevents returning global rows).
+
+    # If the row lacks any explicit company metadata, use the known `id_locacion`
+    # mapping as the definitive fallback for SIGECOM.
     return False
 
 
@@ -766,6 +806,7 @@ def list_guias_legacy(
     num_doc: int | None = None,
     skip: int = 0,
     limit: int = 100,
+    company_codes: list[str] | None = None,
 ):
     """List guías de remisión from legacy adapter."""
     params = []
@@ -803,8 +844,27 @@ def list_guias_legacy(
         else:
             items = [data] if data else []
 
-        company_code = get_active_company_code()
-        filtered_items = [g for g in items if _row_matches_company(g, company_code)]
+        # company_codes (list) takes precedence; if not provided fall back to env
+        if company_codes:
+            # normalize codes
+            codes = [str(c).strip() for c in company_codes if c]
+            def matches_any(g):
+                for key in ("CodEmp", "cod_emp", "CodEmpresa", "cod_empresa", "Empresa", "empresa"):
+                    if key in g:
+                        val = g.get(key)
+                        if val is None:
+                            continue
+                        if str(val).strip() in codes:
+                            return True
+                        else:
+                            return False
+                # no metadata -> exclude when explicit codes requested
+                return False
+
+            filtered_items = [g for g in items if matches_any(g)]
+        else:
+            company_code = get_active_company_code()
+            filtered_items = [g for g in items if _row_matches_company(g, company_code)]
         normalized = [_normalize_guia(g) for g in filtered_items]
         return normalized if isinstance(data, list) else {"items": normalized, "total": len(normalized)}
     except Exception as e:

@@ -72,7 +72,8 @@ def _validate_local_user_credentials(username: str, password: str) -> dict | Non
         entry_user = str(entry.get("username") or "").strip().lower()
         entry_password = str(entry.get("password") or "").strip()
         if entry_user == user and entry_password == pwd:
-            perfil = str(entry.get("perfil") or "Usuario").strip() or "Usuario"
+            perfil_val = entry.get("perfil")
+            perfil = str(perfil_val).strip() if perfil_val is not None and str(perfil_val).strip() else None
             empresas = entry.get("empresas") or []
             return {"username": user, "perfil": perfil, "empresas": empresas, "source": "local"}
     return None
@@ -189,7 +190,7 @@ def _effective_session_state() -> dict:
 
     username = (os.getenv("SIGECOM_LOGGED_IN_USER") or LEGACY_USERNAME or "").strip().lower()
     empresas = _get_empresas_asignadas(username)
-    perfil = "Consultor" if username == LEGACY_USERNAME and username else "Usuario"
+    perfil = "Consultor"
     fecha = date.today().strftime("%d/%m/%Y")
     tipo_cambio = _fetch_legacy_tipo_cambio("US", fecha, company_code=empresas[0].codigo if empresas else None) or (
         DEFAULT_TIPO_CAMBIO_COMPRA,
@@ -228,7 +229,11 @@ def _persist_session(session_payload: dict):
     if isinstance(empresa_actual, dict):
         codigo = str(empresa_actual.get("codigo") or "").strip()
         if codigo:
+            # Persist both legacy and current env keys so other modules
+            # reading either `SIGECOM_COD_EMP` or `SIGECOM_EMPRESA_ACTIVA`
+            # will observe the active company selected by the user.
             os.environ["SIGECOM_EMPRESA_ACTIVA"] = codigo
+            os.environ["SIGECOM_COD_EMP"] = codigo
 
 
 def _fetch_legacy_tipo_cambio(moneda: str, fecha: str, company_code: str | None = None):
@@ -276,6 +281,44 @@ def _get_empresas_asignadas(username: str) -> list[EmpresaAsignada]:
     return []
 
 
+def _normalize_perfil(raw_perfil: str | None, username: str) -> str:
+    """Normalize various perfil strings returned by legacy adapter into a
+    canonical value used by the frontend: 'Consultor' or 'Administrador'.
+
+    Also respects the environment variable SIGECOM_ADMIN_USERS which can list
+    usernames (comma-separated) that must always be treated as 'Administrador'.
+    """
+    # Explicit admin list from env
+    try:
+        admins_raw = (os.getenv("SIGECOM_ADMIN_USERS") or "").strip()
+        if admins_raw:
+            admins = {a.strip().lower() for a in re.split(r"[;,\s]+", admins_raw) if a.strip()}
+            if username.strip().lower() in admins:
+                return "Administrador"
+    except Exception:
+        pass
+
+    # Special legacy consultor username
+    if username and username.strip().lower() == LEGACY_USERNAME:
+        return "Consultor"
+
+    if not raw_perfil:
+        return "Consultor"
+
+    p = str(raw_perfil).strip().lower()
+    if not p:
+        return "Consultor"
+
+    # Direct matches
+    if any(k in p for k in ("consultor", "consult", "consulting")):
+        return "Consultor"
+    if any(k in p for k in ("admin", "administrador", "administration", "super", "root")):
+        return "Administrador"
+
+    # Fallback default
+    return "Consultor"
+
+
 @router.post("/auth/login", response_model=SessionInfo)
 def login(payload: LoginRequest):
     """Validate a user against the real legacy SIGECOM backend using the original credentials.
@@ -321,7 +364,7 @@ def login(payload: LoginRequest):
                 detail="Credenciales SIGECOM inválidas o el servicio legacy no está disponible.",
             )
         else:
-            perfil = validated.get("perfil", "Usuario")
+            perfil = _normalize_perfil(validated.get("perfil"), user)
             user = (validated.get("username") or user).strip().lower()
             if isinstance(validated.get("empresas"), (list, tuple)) and validated.get("empresas"):
                 empresas = []
@@ -351,7 +394,7 @@ def login(payload: LoginRequest):
                 detail="Credenciales SIGECOM inválidas o el servicio legacy no está disponible.",
             )
         else:
-            perfil = validated.get("perfil", "Usuario")
+            perfil = _normalize_perfil(validated.get("perfil"), user)
             if isinstance(validated.get("empresas"), (list, tuple)) and validated.get("empresas"):
                 empresas = []
                 for item in validated.get("empresas"):
@@ -373,9 +416,8 @@ def login(payload: LoginRequest):
         DEFAULT_TIPO_CAMBIO_VENTA,
     )
 
-    # If the username is the special LEGACY_USERNAME, present as Consultor
-    if user == LEGACY_USERNAME:
-        perfil = "Consultor"
+    # Do not override perfil based on username; prefer the real value returned
+    # by the legacy adapter/service when available.
 
     session_obj = SessionInfo(
         username=user,
@@ -425,7 +467,7 @@ def get_multiempresa(username: str | None = None):
         actual = _normalize_empresa(session.get("empresa_actual"))
     else:
         actual = empresas[0] if empresas else None
-    perfil = str(session.get("perfil") or "Usuario")
+    perfil = str(session.get("perfil") or "Consultor")
     if not session.get("username") and target_username:
         session["username"] = target_username
     return _build_session_from_state(
@@ -468,7 +510,9 @@ def logout():
     global _CURRENT_SESSION
     _CURRENT_SESSION = None
     os.environ.pop("SIGECOM_LOGGED_IN_USER", None)
+    # Remove both env vars we may have set when persisting session
     os.environ.pop("SIGECOM_EMPRESA_ACTIVA", None)
+    os.environ.pop("SIGECOM_COD_EMP", None)
     return {"ok": True, "message": "Sesión cerrada"}
 
 
@@ -490,7 +534,7 @@ def get_session():
         username = str(session.get("username") or os.getenv("SIGECOM_LOGGED_IN_USER") or LEGACY_USERNAME or "").strip().lower()
         empresas = _get_empresas_asignadas(username)
     empresa_actual = _normalize_empresa(session.get("empresa_actual")) if session.get("empresa_actual") else (empresas[0] if empresas else None)
-    perfil = str(session.get("perfil") or "Usuario")
+    perfil = str(session.get("perfil") or "Consultor")
     return _build_session_from_state(
         username=str(session.get("username") or os.getenv("SIGECOM_LOGGED_IN_USER") or LEGACY_USERNAME or "").strip().lower(),
         perfil=perfil,

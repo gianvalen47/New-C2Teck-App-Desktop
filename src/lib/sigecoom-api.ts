@@ -222,10 +222,21 @@ export type SessionInfo = {
   empresas: EmpresaAsignada[];
 };
 
+import { apiFetch } from "./fetch-client";
+
+// Alias module-local `fetch` to `apiFetch` so all internal calls get the
+// company header injection when available. We cast to the global fetch type
+// to satisfy TypeScript call signatures.
+const fetch = apiFetch as unknown as typeof globalThis.fetch;
+
 export async function fetchSession(): Promise<SessionInfo> {
-  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/auth/session`);
+  const response = await apiFetch(`${API_BASE_URL}${API_V1_PREFIX}/auth/session`);
   if (!response.ok) throw new Error("No se pudo obtener la sesión");
-  return response.json();
+  const session = await response.json();
+  try {
+    if (typeof window !== "undefined") window.localStorage.setItem("sigecoom_session", JSON.stringify(session));
+  } catch (_) {}
+  return session;
 }
 
 export function getSessionTipoCambioCompra(): number | null {
@@ -324,7 +335,7 @@ export async function fetchMultiempresa(username?: string): Promise<SessionInfo>
 }
 
 export async function cambiarEmpresa(codigo: string): Promise<SessionInfo> {
-  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/auth/cambiar-empresa`, {
+  const response = await apiFetch(`${API_BASE_URL}${API_V1_PREFIX}/auth/cambiar-empresa`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ codigo }),
@@ -332,7 +343,26 @@ export async function cambiarEmpresa(codigo: string): Promise<SessionInfo> {
   if (!response.ok) {
     throw new Error("No se pudo cambiar de empresa");
   }
-  return response.json();
+  const session = await response.json();
+  try {
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("sigecoom_session", JSON.stringify(session));
+      // Notify UI that session changed so components refresh immediately
+      try {
+        // include the returned session in the event detail for immediate UI consumption
+        (window as any).__lastSessionFromApi = session;
+        try { console.info('[sigecoom-api] dispatching systeck-session-updated', session); } catch (_) {}
+        window.dispatchEvent(new CustomEvent('systeck-session-updated', { detail: session }));
+        // Also set a global quick-access var and log for debugging in running app
+        try { (window as any).__systeck_last_session = session; } catch (_) {}
+      } catch (_) {
+        // ignore
+      }
+    }
+  } catch (e) {
+    // ignore storage errors
+  }
+  return session;
 }
 
 export async function logoutSession(): Promise<{ ok: boolean; message?: string }> {
@@ -1485,6 +1515,22 @@ export async function fetchGuiasRemision(params: {
     }
   } catch (e) {
     // ignore localStorage parsing errors
+  }
+
+  // Also include full list of empresas assigned to user when available
+  try {
+    const raw = localStorage.getItem('sigecoom_session');
+    if (raw) {
+      const sess = JSON.parse(raw);
+      const empresas = sess?.empresas || sess?.assigned_companies || null;
+      if (Array.isArray(empresas) && empresas.length > 0) {
+        // expect each item to have a 'codigo' or be a string
+        const codes = empresas.map((e:any) => (e && e.codigo) ? String(e.codigo) : String(e)).filter((c:any) => c);
+        if (codes.length > 0) headers['X-Sigecoom-Empresas'] = codes.join(',');
+      }
+    }
+  } catch (e) {
+    // ignore
   }
 
   const response = await fetch(url, { headers });

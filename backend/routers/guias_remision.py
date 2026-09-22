@@ -21,6 +21,7 @@ import os
 from fastapi import APIRouter, Depends, HTTPException, Query, status, Header
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 
 from config import SessionLocal, SIGECOM_DATA_SOURCE
 from legacy_adapter import (
@@ -62,6 +63,36 @@ def _company_matches(row: dict, company_code: Optional[str]) -> bool:
     return not bool(company_code) if not found else False
 
 
+def _company_to_locaciones(company_code: Optional[str]) -> List[int]:
+    """Map SIGECOM company codes to the specific legacy `id_locacion` values.
+
+    This is needed because the guías dataset does not carry `cod_emp` per row.
+    The known mapping for the active project is:
+    - 08 -> 87 (C2TECK)
+    - 05 -> 72
+    """
+    if not company_code:
+        return []
+
+    normalized = str(company_code).strip()
+    mapping = {
+        "08": [87],
+        "8": [87],
+        "05": [72],
+        "5": [72],
+        "30": [30],
+        "31": [31],
+        "72": [72],
+        "73": [73],
+        "75": [75],
+        "80": [80],
+        "81": [81],
+        "83": [83],
+        "87": [87],
+    }
+    return mapping.get(normalized, [])
+
+
 def _filter_active_company(items: List[dict], company_code: Optional[str]) -> List[dict]:
     """Filter items by active company code.
 
@@ -73,23 +104,32 @@ def _filter_active_company(items: List[dict], company_code: Optional[str]) -> Li
     if not company_code:
         return items
 
-    # If company_code equals the env default, tolerate rows lacking explicit
-    # company metadata (treat them as belonging to the active company) so the
-    # UI doesn't become empty when the dataset lacks CodEmp fields.
     env_default = (os.getenv("SIGECOM_COD_EMP", "08") or "08").strip()
+    locaciones = _company_to_locaciones(company_code)
     allow_missing_metadata = str(company_code).strip() == env_default
 
     def matches(item: dict) -> bool:
         if not isinstance(item, dict):
             return False
-        # If item has company metadata, enforce match
+
+        # Prefer the legacy `id_locacion` field because the guías snapshot has this
+        # information even when `cod_emp` is absent on each row.
+        for key in ("id_locacion", "IdLocacion"):
+            if key in item and item.get(key) is not None:
+                try:
+                    if int(str(item.get(key)).strip()) in locaciones:
+                        return True
+                except Exception:
+                    pass
+
+        # Secondary fallback: explicit company metadata if present in the payload.
         for key in ("CodEmp", "cod_emp", "CodEmpresa", "cod_empresa", "Empresa", "empresa"):
             if key in item:
                 value = item.get(key)
                 if value is None:
                     return False
                 return str(value).strip() == str(company_code).strip()
-        # No metadata present: include only if allowed by env default fallback
+
         return allow_missing_metadata
 
     return [item for item in items if matches(item)]
@@ -194,6 +234,7 @@ def list_guias(
     limit: int = 100,
     db: Session = Depends(get_db),
     x_sigecoom_codemp: Optional[str] = Header(None, alias="X-Sigecoom-CodEmp"),
+    x_sigecoom_empresas: Optional[str] = Header(None, alias="X-Sigecoom-Empresas"),
 ):
     """
     Listar Guías de Remisión: equivalente a `GuiaRemisionService.Filtrar(...)` en SIGECOM VB.NET.
@@ -201,6 +242,16 @@ def list_guias(
     Cuando SIGECOM_DATA_SOURCE=legacy: consulta el adaptador HTTP SIGECOM original.
     Si el adaptador no responde: devuelve HTTP 503 (no fallback a SQLite en modo legacy).
     """
+    # Build allowed company codes list from headers (used by legacy adapter branch too)
+    allowed_codes = []
+    if x_sigecoom_empresas:
+        try:
+            allowed_codes = [c.strip() for c in x_sigecoom_empresas.split(',') if c.strip()]
+        except Exception:
+            allowed_codes = []
+    elif x_sigecoom_codemp:
+        allowed_codes = [str(x_sigecoom_codemp).strip()]
+
     if is_legacy_source_enabled():
         try:
             data = list_guias_legacy(
@@ -213,6 +264,7 @@ def list_guias(
                 num_doc=num_doc,
                 skip=skip,
                 limit=limit,
+                company_codes=allowed_codes or None,
             )
             # Normalize possible shapes from legacy adapter and keep only records
             # from the active SIGECOM company when that metadata is present.
@@ -245,6 +297,7 @@ def list_guias(
                         num_doc=num_doc,
                         skip=0,
                         limit=0,
+                        company_codes=allowed_codes or None,
                     )
                     full_items = full.get("items") if isinstance(full, dict) else (full if isinstance(full, list) else [])
                     total_amount = sum(float(x.get("tot_venta") or x.get("tot_neto") or 0) for x in full_items)
@@ -287,6 +340,32 @@ def list_guias(
         query = query.filter(GuiaRemisionModel.estado == estado.upper())
     if num_doc is not None:
         query = query.filter(GuiaRemisionModel.num_doc == num_doc)
+
+    # Filter by the actual SIGECOM company-to-location mapping. The local SQLite
+    # dataset does not carry a `cod_emp` field on each row, so the only reliable
+    # discriminator is the legacy `id_locacion` value. In particular, company 08
+    # maps to `id_locacion = 87` (C2TECK).
+    if allowed_codes:
+        locaciones = []
+        for code in allowed_codes:
+            locaciones.extend(_company_to_locaciones(code))
+
+        if locaciones:
+            query = query.filter(GuiaRemisionModel.id_locacion.in_(locaciones))
+        else:
+            env_default = (os.getenv("SIGECOM_COD_EMP", "08") or "08").strip()
+            permit_missing = env_default in allowed_codes
+            if permit_missing:
+                query = query.filter(or_(GuiaRemisionModel.cod_emp == None, GuiaRemisionModel.cod_emp.in_(allowed_codes)))
+            else:
+                query = query.filter(GuiaRemisionModel.cod_emp.in_(allowed_codes))
+    else:
+        env_default = (os.getenv("SIGECOM_COD_EMP", "08") or "08").strip()
+        locaciones = _company_to_locaciones(env_default)
+        if locaciones:
+            query = query.filter(GuiaRemisionModel.id_locacion.in_(locaciones))
+        else:
+            query = query.filter(or_(GuiaRemisionModel.cod_emp == None, GuiaRemisionModel.cod_emp == env_default))
 
     guias = query.order_by(GuiaRemisionModel.fec_doc.desc()).offset(skip).limit(limit).all()
     return [_build_list_row(guia, db) for guia in guias]

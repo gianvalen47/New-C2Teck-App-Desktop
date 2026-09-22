@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Check, Search, X } from "lucide-react";
-import { fetchSession, type EmpresaAsignada } from "@/lib/sigecoom-api";
+import { fetchSession, type EmpresaAsignada, cambiarEmpresa } from "@/lib/sigecoom-api";
+import { useSession } from "@/context/SessionContext";
+import { toast } from "sonner";
 
 export type Company = {
   codigo: string;
@@ -22,6 +24,7 @@ export function CompanyPickerModal({
   const [selected, setSelected] = useState<Company | null>(current ?? null);
   const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
+  const sessionCtx = useSession();
 
   useEffect(() => {
     let mounted = true;
@@ -50,8 +53,41 @@ export function CompanyPickerModal({
         if (mounted) setLoading(false);
       });
 
+    const onSessionUpdated = (ev: Event) => {
+      try {
+        const custom = ev as CustomEvent | undefined;
+        const sess = custom && custom.detail ? custom.detail as any : null;
+        const normalized: Company[] = ((sess?.empresas ?? sess?.empresas) || []).map((empresa: EmpresaAsignada) => ({
+          codigo: empresa.codigo || "",
+          nombre: empresa.nombre || empresa.descripcion || "",
+          ruc: empresa.ruc ?? null,
+          descripcion: empresa.descripcion ?? null,
+        }));
+        if (mounted && Array.isArray(normalized) && normalized.length > 0) {
+          setCompanies(normalized);
+          const active = normalized.find((item) => item.codigo === (sess?.empresa_actual?.codigo)) ?? normalized[0] ?? null;
+          setSelected(active);
+        } else {
+          // fallback: re-fetch
+          fetchSession().then((session) => {
+            if (!mounted) return;
+            const normalized2: Company[] = (session.empresas ?? []).map((empresa: EmpresaAsignada) => ({
+              codigo: empresa.codigo || "",
+              nombre: empresa.nombre || empresa.descripcion || "",
+              ruc: empresa.ruc ?? null,
+              descripcion: empresa.descripcion ?? null,
+            }));
+            setCompanies(normalized2);
+            const active2 = normalized2.find((item) => item.codigo === session.empresa_actual?.codigo) ?? normalized2[0] ?? null;
+            setSelected(active2);
+          }).catch(() => {});
+        }
+      } catch (_) {}
+    };
+    window.addEventListener('systeck-session-updated', onSessionUpdated as EventListener);
     return () => {
       mounted = false;
+      window.removeEventListener('systeck-session-updated', onSessionUpdated as EventListener);
     };
   }, []);
 
@@ -172,9 +208,27 @@ export function CambiarEmpresaList() {
     <CompanyPickerModal
       current={selected}
       onCancel={() => setIsOpen(false)}
-      onAccept={(company) => {
+      onAccept={async (company) => {
         setSelected(company);
-        setIsOpen(false);
+        try {
+          // Prefer context-based change to ensure UI updates across app
+          if (sessionCtx && sessionCtx.changeCompany) {
+            await sessionCtx.changeCompany(company.codigo);
+            toast.success(`Empresa ${company.codigo} seleccionada`);
+            setIsOpen(false);
+            return;
+          }
+        } catch (err) {
+          // fallback: call API directly
+          try {
+            await cambiarEmpresa(company.codigo);
+            toast.success(`Empresa ${company.codigo} seleccionada`);
+            setIsOpen(false);
+          } catch (e) {
+            console.error('cambiarEmpresa failed', e);
+            toast.error('No se pudo cambiar la empresa. Verifique permisos o conexión.');
+          }
+        }
       }}
     />
   );
