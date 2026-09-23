@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Check, Search, X } from "lucide-react";
-import { fetchSession, type EmpresaAsignada, cambiarEmpresa } from "@/lib/sigecoom-api";
+import { fetchEmpresas, fetchSession, type EmpresaAsignada, cambiarEmpresa } from "@/lib/sigecoom-api";
 import { useSession } from "@/context/SessionContext";
 import { toast } from "sonner";
 
@@ -27,61 +27,107 @@ export function CompanyPickerModal({
   const sessionCtx = useSession();
 
   useEffect(() => {
+    const normalizeCompanies = (items: unknown[] | undefined | null): Company[] => {
+      const rawItems = Array.isArray(items)
+        ? items
+        : (items && typeof items === "object")
+          ? [items]
+          : [];
+
+      return rawItems.flatMap((empresa: any) => {
+        if (empresa && typeof empresa === "object" && ("empresas" in empresa || "items" in empresa || "data" in empresa || "result" in empresa || "rows" in empresa || "list" in empresa || "lista" in empresa || "companies" in empresa || "companyList" in empresa || "empresa" in empresa)) {
+          const nestedKey = Object.keys(empresa).find((key) => ["empresas", "items", "data", "result", "rows", "list", "lista", "companies", "companyList", "empresa"].includes(key));
+          const nested = nestedKey ? empresa[nestedKey] : [];
+          if (Array.isArray(nested)) {
+            return nested.map((child: any) => ({
+              codigo: child?.codigo || "",
+              nombre: child?.nombre || child?.descripcion || "",
+              ruc: child?.ruc ?? null,
+              descripcion: child?.descripcion ?? null,
+            }));
+          }
+        }
+
+        if (!empresa || typeof empresa !== "object") return [];
+        return [{
+          codigo: empresa?.codigo || "",
+          nombre: empresa?.nombre || empresa?.descripcion || "",
+          ruc: empresa?.ruc ?? null,
+          descripcion: empresa?.descripcion ?? null,
+        }];
+      }).filter((item) => item && item.codigo);
+    };
+
+    const applyCompanies = (items: unknown[] | undefined | null, activeCode?: string) => {
+      const normalized = normalizeCompanies(items);
+      setCompanies(normalized);
+      const active = normalized.find((item) => item.codigo === activeCode) ?? normalized[0] ?? null;
+      setSelected(active);
+    };
+
     let mounted = true;
 
-    fetchSession()
-      .then((session) => {
+    const loadCompanies = async () => {
+      try {
+        const session = await fetchSession();
         if (!mounted) return;
 
-        const normalized: Company[] = (session.empresas ?? []).map((empresa: EmpresaAsignada) => ({
-          codigo: empresa.codigo || "",
-          nombre: empresa.nombre || empresa.descripcion || "",
-          ruc: empresa.ruc ?? null,
-          descripcion: empresa.descripcion ?? null,
-        }));
+        const companiesFromSession = normalizeCompanies(session.empresas ?? []);
+        if (companiesFromSession.length > 0) {
+          applyCompanies(session.empresas ?? [], session.empresa_actual?.codigo);
+          return;
+        }
 
-        setCompanies(normalized);
-        const active = normalized.find((item) => item.codigo === session.empresa_actual?.codigo) ?? normalized[0] ?? null;
-        setSelected(active);
-      })
-      .catch(() => {
+        const empresas = await fetchEmpresas();
         if (!mounted) return;
-        setCompanies([]);
-        setSelected(null);
-      })
-      .finally(() => {
+        applyCompanies(empresas, session.empresa_actual?.codigo);
+      } catch {
+        if (!mounted) return;
+        try {
+          const empresas = await fetchEmpresas();
+          if (!mounted) return;
+          applyCompanies(empresas);
+        } catch {
+          if (!mounted) return;
+          setCompanies([]);
+          setSelected(null);
+        }
+      } finally {
         if (mounted) setLoading(false);
-      });
+      }
+    };
+
+    loadCompanies();
 
     const onSessionUpdated = (ev: Event) => {
       try {
         const custom = ev as CustomEvent | undefined;
         const sess = custom && custom.detail ? custom.detail as any : null;
-        const normalized: Company[] = ((sess?.empresas ?? sess?.empresas) || []).map((empresa: EmpresaAsignada) => ({
-          codigo: empresa.codigo || "",
-          nombre: empresa.nombre || empresa.descripcion || "",
-          ruc: empresa.ruc ?? null,
-          descripcion: empresa.descripcion ?? null,
-        }));
+        const normalized: Company[] = normalizeCompanies(sess?.empresas ?? []);
         if (mounted && Array.isArray(normalized) && normalized.length > 0) {
           setCompanies(normalized);
           const active = normalized.find((item) => item.codigo === (sess?.empresa_actual?.codigo)) ?? normalized[0] ?? null;
           setSelected(active);
-        } else {
-          // fallback: re-fetch
-          fetchSession().then((session) => {
-            if (!mounted) return;
-            const normalized2: Company[] = (session.empresas ?? []).map((empresa: EmpresaAsignada) => ({
-              codigo: empresa.codigo || "",
-              nombre: empresa.nombre || empresa.descripcion || "",
-              ruc: empresa.ruc ?? null,
-              descripcion: empresa.descripcion ?? null,
-            }));
+          return;
+        }
+
+        fetchSession().then((session) => {
+          if (!mounted) return;
+          const normalized2 = normalizeCompanies(session.empresas ?? []);
+          if (normalized2.length > 0) {
             setCompanies(normalized2);
             const active2 = normalized2.find((item) => item.codigo === session.empresa_actual?.codigo) ?? normalized2[0] ?? null;
             setSelected(active2);
+            return;
+          }
+
+          fetchEmpresas().then((empresas) => {
+            if (!mounted) return;
+            const normalized3 = normalizeCompanies(empresas);
+            setCompanies(normalized3);
+            setSelected(normalized3[0] ?? null);
           }).catch(() => {});
-        }
+        }).catch(() => {});
       } catch (_) {}
     };
     window.addEventListener('systeck-session-updated', onSessionUpdated as EventListener);
@@ -201,6 +247,7 @@ export function CompanyPickerModal({
 export function CambiarEmpresaList() {
   const [selected, setSelected] = useState<Company | null>(null);
   const [isOpen, setIsOpen] = useState(true);
+  const sessionCtx = useSession();
 
   if (!isOpen) return null;
 

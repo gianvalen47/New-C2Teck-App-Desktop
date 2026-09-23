@@ -44,7 +44,17 @@ const MESES = [
   "DICIEMBRE",
 ];
 
-const NOW = new Date();
+function getTodayDateParts() {
+  const today = new Date();
+  return {
+    year: String(today.getFullYear()),
+    month: String(today.getMonth() + 1),
+  };
+}
+
+function getTodayISODate() {
+  return new Date().toISOString().slice(0, 10);
+}
 
 type GuiaDevolucionEstado = "GENERADO" | "IMPRESO" | "PROCESADO" | "ANULADO" | "PENDIENTE";
 
@@ -266,7 +276,7 @@ function GuiaDevolucionForm({ initialId, onClose }: { initialId?: number | null;
   const emptyForm: GuiaDevolucionFormState = {
     id: initialId ?? null,
     numero: "GD-2026-0008",
-    fecha: NOW.toISOString().slice(0, 10),
+    fecha: getTodayISODate(),
     clienteId: "0",
     clienteNombre: "",
     ruc: "",
@@ -460,11 +470,12 @@ export function GuiaDevolucionList() {
   const [filtroEstado, setFiltroEstado] = useState("TODOS");
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [anio, setAnio] = useState(String(NOW.getFullYear()));
-  const [mes, setMes] = useState(String(NOW.getMonth() + 1));
+  const [anio, setAnio] = useState(() => getTodayDateParts().year);
+  const [mes, setMes] = useState(() => getTodayDateParts().month);
 
   const refreshRows = useCallback(() => {
-    fetchGuiasDevolucion({ anio: Number(anio || NOW.getFullYear()), mes: Number(mes || NOW.getMonth() + 1) })
+    const today = getTodayDateParts();
+    fetchGuiasDevolucion({ anio: Number(anio || today.year), mes: Number(mes || today.month) })
       .then((data) => setRows(data.map((row) => ({
         ...row,
         ruc: row.ruc ?? "",

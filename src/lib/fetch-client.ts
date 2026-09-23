@@ -24,6 +24,11 @@ export async function apiFetch(input: RequestInfo | URL, init?: RequestInit) {
     const exists = Object.keys(headers).find(h => h.toLowerCase() === 'x-sigecoom-codemp');
     if (!exists) headers['X-Sigecoom-CodEmp'] = String(codigo);
   }
+  try {
+    if (typeof window !== 'undefined' && (window as any).console && codigo) {
+      try { console.info(`[apiFetch] Injecting X-Sigecoom-CodEmp=${String(codigo)}`); } catch (_) {}
+    }
+  } catch (_) {}
   myInit.headers = headers;
   return fetch(input, myInit);
 }

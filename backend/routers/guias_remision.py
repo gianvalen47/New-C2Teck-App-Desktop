@@ -80,6 +80,10 @@ def _company_to_locaciones(company_code: Optional[str]) -> List[int]:
         "8": [87],
         "05": [72],
         "5": [72],
+        "02": [30],
+        "2": [30],
+        "07": [81],
+        "7": [81],
         "30": [30],
         "31": [31],
         "72": [72],
@@ -98,6 +102,10 @@ def _filter_active_company(items: List[dict], company_code: Optional[str]) -> Li
 
     `company_code` is expected to come from a request header `X-Sigecoom-CodEmp`
     (preferred) or fall back to `SIGECOM_COD_EMP` when the header is not present.
+
+    IMPORTANT: unknown company codes must not collapse the dataset to empty. When
+    the legacy mapping does not know this company, we must preserve rows unless the
+    payload itself contains an explicit company match that disagrees.
     """
     if not company_code:
         company_code = os.getenv("SIGECOM_COD_EMP", "08").strip() or None
@@ -112,17 +120,8 @@ def _filter_active_company(items: List[dict], company_code: Optional[str]) -> Li
         if not isinstance(item, dict):
             return False
 
-        # Prefer the legacy `id_locacion` field because the guías snapshot has this
-        # information even when `cod_emp` is absent on each row.
-        for key in ("id_locacion", "IdLocacion"):
-            if key in item and item.get(key) is not None:
-                try:
-                    if int(str(item.get(key)).strip()) in locaciones:
-                        return True
-                except Exception:
-                    pass
-
-        # Secondary fallback: explicit company metadata if present in the payload.
+        # If an explicit company code exists in the payload, trust it over the
+        # legacy location fallback. This keeps filters precise for real rows.
         for key in ("CodEmp", "cod_emp", "CodEmpresa", "cod_empresa", "Empresa", "empresa"):
             if key in item:
                 value = item.get(key)
@@ -130,7 +129,21 @@ def _filter_active_company(items: List[dict], company_code: Optional[str]) -> Li
                     return False
                 return str(value).strip() == str(company_code).strip()
 
-        return allow_missing_metadata
+        # Prefer the legacy `id_locacion` field when a known mapping exists.
+        for key in ("id_locacion", "IdLocacion"):
+            if key in item and item.get(key) is not None:
+                try:
+                    val = int(str(item.get(key)).strip())
+                    if locaciones:
+                        return val in locaciones
+                    return True
+                except Exception:
+                    pass
+
+        # Unknown company codes are a valid state; if we cannot map the company to
+        # a legacy location, do not empty the result set just because the code is
+        # new or not in the old compatibility table.
+        return allow_missing_metadata or not locaciones
 
     return [item for item in items if matches(item)]
 

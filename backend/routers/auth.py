@@ -157,11 +157,36 @@ def _normalize_empresa(item) -> EmpresaAsignada | None:
     return None
 
 
+def _coerce_empresa_items(raw_empresas):
+    if raw_empresas is None:
+        return []
+    if isinstance(raw_empresas, dict):
+        for key in ("empresas", "items", "data", "result", "rows", "list", "lista", "companies", "companyList"):
+            if key in raw_empresas:
+                return _coerce_empresa_items(raw_empresas[key])
+        if "empresa" in raw_empresas:
+            return _coerce_empresa_items(raw_empresas["empresa"])
+        return [raw_empresas]
+    if isinstance(raw_empresas, (list, tuple)):
+        return list(raw_empresas)
+    if isinstance(raw_empresas, str):
+        value = raw_empresas.strip()
+        if not value:
+            return []
+        try:
+            parsed = json.loads(value)
+            if parsed is not None:
+                return _coerce_empresa_items(parsed)
+        except Exception:
+            pass
+        return [value]
+    return [raw_empresas]
+
+
 def _normalize_empresa_list(raw_empresas) -> list[EmpresaAsignada]:
     empresas: list[EmpresaAsignada] = []
-    if not isinstance(raw_empresas, (list, tuple)):
-        return empresas
-    for item in raw_empresas:
+    candidates = _coerce_empresa_items(raw_empresas)
+    for item in candidates:
         empresa = _normalize_empresa(item)
         if empresa and empresa.codigo not in {e.codigo for e in empresas}:
             empresas.append(empresa)
@@ -282,11 +307,12 @@ def _get_empresas_asignadas(username: str) -> list[EmpresaAsignada]:
 
 
 def _normalize_perfil(raw_perfil: str | None, username: str) -> str:
-    """Normalize various perfil strings returned by legacy adapter into a
-    canonical value used by the frontend: 'Consultor' or 'Administrador'.
+    """Normalize various perfil strings returned by legacy adapter into the
+    canonical values used by the app session contract: 'Usuario',
+    'Consultor', or 'Administrador'.
 
-    Also respects the environment variable SIGECOM_ADMIN_USERS which can list
-    usernames (comma-separated) that must always be treated as 'Administrador'.
+    We prefer 'Usuario' for the ordinary user case, and only use 'Consultor'
+    for the specific legacy consultor account or explicit consultor markers.
     """
     # Explicit admin list from env
     try:
@@ -303,20 +329,22 @@ def _normalize_perfil(raw_perfil: str | None, username: str) -> str:
         return "Consultor"
 
     if not raw_perfil:
-        return "Consultor"
+        return "Usuario"
 
     p = str(raw_perfil).strip().lower()
     if not p:
-        return "Consultor"
+        return "Usuario"
 
     # Direct matches
     if any(k in p for k in ("consultor", "consult", "consulting")):
         return "Consultor"
     if any(k in p for k in ("admin", "administrador", "administration", "super", "root")):
         return "Administrador"
+    if any(k in p for k in ("usuario", "user", "usuario_sigecoom", "normal")):
+        return "Usuario"
 
-    # Fallback default
-    return "Consultor"
+    # Fallback default for standard users
+    return "Usuario"
 
 
 @router.post("/auth/login", response_model=SessionInfo)
@@ -366,19 +394,10 @@ def login(payload: LoginRequest):
         else:
             perfil = _normalize_perfil(validated.get("perfil"), user)
             user = (validated.get("username") or user).strip().lower()
-            if isinstance(validated.get("empresas"), (list, tuple)) and validated.get("empresas"):
-                empresas = []
-                for item in validated.get("empresas"):
-                    try:
-                        if isinstance(item, dict):
-                            codigo = str(item.get("codigo") or item.get("Codigo") or item.get("cod") or item.get("cod_emp") or item.get("CodEmp") or item.get("codigoEmpresa") or "").strip()
-                            nombre = str(item.get("nombre") or item.get("Nombre") or item.get("razon") or item.get("Des") or codigo).strip()
-                            ruc = item.get("ruc") or item.get("RUC") or item.get("rucEmpresa")
-                            empresas.append(EmpresaAsignada(codigo=codigo, nombre=nombre, ruc=ruc, descripcion=None))
-                        else:
-                            empresas.append(EmpresaAsignada(codigo=str(item), nombre=str(item), descripcion=None))
-                    except Exception:
-                        continue
+            empresas_candidate = validated.get("empresas") if isinstance(validated, dict) and "empresas" in validated else validated
+            empresas_norm = _normalize_empresa_list(empresas_candidate)
+            if empresas_norm:
+                empresas = empresas_norm
                 empresa_actual = empresas[0] if empresas else empresa_actual
 
     else:
@@ -395,19 +414,10 @@ def login(payload: LoginRequest):
             )
         else:
             perfil = _normalize_perfil(validated.get("perfil"), user)
-            if isinstance(validated.get("empresas"), (list, tuple)) and validated.get("empresas"):
-                empresas = []
-                for item in validated.get("empresas"):
-                    try:
-                        if isinstance(item, dict):
-                            codigo = str(item.get("codigo") or item.get("Codigo") or item.get("cod") or item.get("cod_emp") or item.get("CodEmp") or item.get("codigoEmpresa") or "").strip()
-                            nombre = str(item.get("nombre") or item.get("Nombre") or item.get("razon") or item.get("Des") or codigo).strip()
-                            ruc = item.get("ruc") or item.get("RUC") or item.get("rucEmpresa")
-                            empresas.append(EmpresaAsignada(codigo=codigo, nombre=nombre, ruc=ruc, descripcion=None))
-                        else:
-                            empresas.append(EmpresaAsignada(codigo=str(item), nombre=str(item), descripcion=None))
-                    except Exception:
-                        continue
+            empresas_candidate = validated.get("empresas") if isinstance(validated, dict) and "empresas" in validated else validated
+            empresas_norm = _normalize_empresa_list(empresas_candidate)
+            if empresas_norm:
+                empresas = empresas_norm
                 empresa_actual = empresas[0] if empresas else empresa_actual
 
     # Prefer fetching tipo cambio with the active company context when available
@@ -444,11 +454,11 @@ def list_empresas(username: str | None = None):
     if target_username:
         empresas = _get_empresas_asignadas(target_username)
         if not empresas and session.get("empresas"):
-            empresas = _normalize_empresa_list(session.get("empresas"))
+            empresas = _normalize_empresa_list(session.get("empresas") if isinstance(session, dict) and "empresas" in session else session)
     else:
-        empresas = _normalize_empresa_list(session.get("empresas"))
+        empresas = _normalize_empresa_list(session.get("empresas") if isinstance(session, dict) and "empresas" in session else session)
     if not empresas and _CURRENT_SESSION:
-        empresas = _normalize_empresa_list(_CURRENT_SESSION.get("empresas"))
+        empresas = _normalize_empresa_list(_CURRENT_SESSION.get("empresas") if isinstance(_CURRENT_SESSION, dict) and "empresas" in _CURRENT_SESSION else _CURRENT_SESSION)
     return empresas
 
 
@@ -460,9 +470,9 @@ def get_multiempresa(username: str | None = None):
     if target_username:
         empresas = _get_empresas_asignadas(target_username)
         if not empresas and session.get("empresas"):
-            empresas = _normalize_empresa_list(session.get("empresas"))
+            empresas = _normalize_empresa_list(session.get("empresas") if isinstance(session, dict) and "empresas" in session else session)
     else:
-        empresas = _normalize_empresa_list(session.get("empresas"))
+        empresas = _normalize_empresa_list(session.get("empresas") if isinstance(session, dict) and "empresas" in session else session)
     if session.get("empresa_actual") and isinstance(session.get("empresa_actual"), dict):
         actual = _normalize_empresa(session.get("empresa_actual"))
     else:
@@ -489,7 +499,7 @@ def cambiar_empresa(payload: CompanySwitchRequest):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Debe indicar el código de empresa a seleccionar.")
 
     session = _effective_session_state()
-    empresas = _normalize_empresa_list(session.get("empresas"))
+    empresas = _normalize_empresa_list(session.get("empresas") if isinstance(session, dict) and "empresas" in session else session)
     if not empresas:
         empresas = _get_empresas_asignadas(str(session.get("username") or "").strip().lower())
 
@@ -529,7 +539,7 @@ def get_session():
             pass
 
     session = _effective_session_state()
-    empresas = _normalize_empresa_list(session.get("empresas"))
+    empresas = _normalize_empresa_list(session.get("empresas") if isinstance(session, dict) and "empresas" in session else session)
     if not empresas:
         username = str(session.get("username") or os.getenv("SIGECOM_LOGGED_IN_USER") or LEGACY_USERNAME or "").strip().lower()
         empresas = _get_empresas_asignadas(username)

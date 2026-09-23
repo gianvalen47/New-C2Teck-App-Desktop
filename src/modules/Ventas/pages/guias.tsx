@@ -21,9 +21,34 @@ export default function VentasGuiasPage() {
   const loadGuias = async () => {
     setLoading(true)
     try {
+      // Infer id_locacion from session company when not explicitly set
+      let inferredIdLocacion: number | undefined = undefined;
+      try {
+        const raw = typeof window !== 'undefined' ? window.localStorage.getItem('sigecoom_session') : null;
+        if (raw) {
+          const sess = JSON.parse(raw);
+          const explicit = Number(sess?.empresa_actual?.id_locacion ?? sess?.empresa_actual?.locacion ?? sess?.id_locacion ?? NaN);
+          if (Number.isFinite(explicit) && explicit > 0) {
+            inferredIdLocacion = explicit;
+          } else {
+            const codigo = (sess?.empresa_actual?.codigo || '').toString().trim();
+            const map: Record<string, number> = {
+              '08': 87, '8': 87,
+              '05': 72, '5': 72,
+              '30': 30, '31': 31,
+              '72': 72, '73': 73, '75': 75,
+              '80': 80, '81': 81, '83': 83,
+              '87': 87,
+            };
+            if (codigo && map[codigo]) inferredIdLocacion = map[codigo];
+          }
+        }
+      } catch (_) {}
+
       const data = await fetchGuiasRemision({
         anio: Number(anio) || undefined,
         mes: Number(mes) || undefined,
+        id_locacion: inferredIdLocacion,
       })
       setRows(data)
     } catch (error: any) {
@@ -37,6 +62,13 @@ export default function VentasGuiasPage() {
   useEffect(() => {
     loadGuias()
   }, [])
+
+  // Reload when active company changes
+  useEffect(() => {
+    const onSessionUpdated = () => loadGuias();
+    window.addEventListener('systeck-session-updated', onSessionUpdated as EventListener);
+    return () => window.removeEventListener('systeck-session-updated', onSessionUpdated as EventListener);
+  }, [anio, mes]);
 
   const handleSearch = () => {
     loadGuias()

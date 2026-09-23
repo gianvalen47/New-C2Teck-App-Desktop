@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import type { SessionInfo } from "@/lib/sigecoom-api";
-import { fetchSession, cambiarEmpresa } from "@/lib/sigecoom-api";
+import { fetchSession, cambiarEmpresa, hydrateSessionSnapshot } from "@/lib/sigecoom-api";
 
 type SessionContextValue = {
   session: SessionInfo | null;
@@ -23,7 +23,8 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       if (typeof window === "undefined") return null;
       const raw = window.localStorage.getItem("sigecoom_session");
       if (!raw) return null;
-      return JSON.parse(raw) as SessionInfo;
+      const parsed = JSON.parse(raw);
+      return hydrateSessionSnapshot(parsed);
     } catch (_) {
       return null;
     }
@@ -34,8 +35,9 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     setLoading(true);
     try {
       const s = await fetchSession();
-      setSession(s);
-      try { if (typeof window !== "undefined") window.localStorage.setItem("sigecoom_session", JSON.stringify(s)); } catch(_){}
+      const hydrated = hydrateSessionSnapshot(s) ?? s;
+      setSession(hydrated as SessionInfo);
+      try { if (typeof window !== "undefined") window.localStorage.setItem("sigecoom_session", JSON.stringify(hydrated)); } catch(_){ }
     } catch (e) {
       // ignore
     } finally {
@@ -50,11 +52,12 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     } catch (_) {}
     const s = await cambiarEmpresa(codigo);
     try { console.info('[SessionProvider] changeCompany response', s); } catch (_) {}
-    setSession(s as SessionInfo);
-    try { if (typeof window !== "undefined") window.localStorage.setItem("sigecoom_session", JSON.stringify(s)); } catch(_){ }
+    const hydrated = hydrateSessionSnapshot(s) ?? s;
+    setSession(hydrated as SessionInfo);
+    try { if (typeof window !== "undefined") window.localStorage.setItem("sigecoom_session", JSON.stringify(hydrated)); } catch(_){ }
     // also dispatch event for backwards compat
-    try { window.dispatchEvent(new CustomEvent('systeck-session-updated', { detail: s })); } catch(_){ }
-    return s as SessionInfo;
+    try { window.dispatchEvent(new CustomEvent('systeck-session-updated', { detail: hydrated })); } catch(_){ }
+    return hydrated as SessionInfo;
   };
 
   useEffect(() => {
@@ -69,15 +72,17 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         if (s) {
           if (!mounted) return;
           try { console.info('[SessionProvider] event session-updated received', s?.empresa_actual?.codigo); } catch(_){}
-          setSession(s);
-          try { if (typeof window !== "undefined") window.localStorage.setItem("sigecoom_session", JSON.stringify(s)); } catch(_){}
+          const hydrated = hydrateSessionSnapshot(s) ?? s;
+          setSession(hydrated as SessionInfo);
+          try { if (typeof window !== "undefined") window.localStorage.setItem("sigecoom_session", JSON.stringify(hydrated)); } catch(_){}
         } else {
           // try reading from localStorage fallback
           try {
             const raw = window.localStorage.getItem("sigecoom_session");
             if (raw) {
               const parsed = JSON.parse(raw) as SessionInfo;
-              if (mounted) setSession(parsed);
+              const hydrated = hydrateSessionSnapshot(parsed) ?? parsed;
+              if (mounted) setSession(hydrated as SessionInfo);
             }
           } catch(_){}
         }

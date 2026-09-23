@@ -12,8 +12,10 @@ import { createPortal } from "react-dom";
 import {
   Printer, Plus, Search, Trash2, X, Save, RefreshCw, LogOut,
   Car, CreditCard, Receipt, Package, Filter, Wrench, Clock,
-  DollarSign, ArrowDown, FileSpreadsheet, Send, Mail,
-  ChevronDown, ChevronRight, ChevronUp, Pencil, Check, Trash
+  DollarSign, ArrowDown, FileSpreadsheet, Send,
+  ChevronDown, ChevronRight, ChevronUp, Pencil, Check, Trash, Eye,
+  Warehouse, UploadCloud, Percent, Download, List, FilePlus2,
+  RotateCw, Loader2, FolderOpen
 } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -27,6 +29,12 @@ import {
   updateGuiaRemisionDet,
   deleteGuiaRemisionDet,
   upsertTransportistaGuia,
+  transferirGuiaRemision,
+  fetchAtencionJob,
+  ingresarConsumoJob,
+  fetchGuiaRemisionDigital,
+  type JobConsumoItem,
+  type GuiaRemisionDigital,
   fetchSigecoomClients,
   fetchSigecoomLocations,
   getSigecoomClient,
@@ -84,6 +92,17 @@ const GUIA_ESTADO_DESCRIPCIONES: Record<string, string> = {
   TRANSFERIDO: "TRANSFERIDO",
 };
 
+// Mismas 6 opciones que antes tenía el <select> de Estado, con su abreviatura real
+// (columna "EST" del listado) como código para el selector Código/Descripción.
+const ESTADO_FILTER_OPTIONS: CodeDescOption[] = [
+  { code: "GN", label: "GENERADO", value: "GENERADO" },
+  { code: "AP", label: "APROBADO", value: "APROBADO" },
+  { code: "CR", label: "CREDITOS", value: "CREDITOS" },
+  { code: "AN", label: "ANULADO", value: "ANULADO" },
+  { code: "FC", label: "FACTURADO", value: "FACTURADO" },
+  { code: "TR", label: "TRANSFERIDO", value: "TRANSFERIDO" },
+];
+
 function getGuideEstadoDisplay(value: string | null | undefined) {
   const raw = String(value ?? "").trim();
   if (!raw) return "";
@@ -103,7 +122,14 @@ function EstadoBadge({ estado }: { estado: string }) {
 }
 
 const MESES = ["ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SETIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE"];
-const NOW = new Date();
+
+function getTodayDateParts() {
+  const today = new Date();
+  return {
+    year: String(today.getFullYear()),
+    month: String(today.getMonth() + 1),
+  };
+}
 
 function pickFirstNonEmpty(...values: Array<string | number | null | undefined>) {
   for (const value of values) {
@@ -321,47 +347,84 @@ function resolveLegacyGuideDisplayFields(g: any) {
   };
 }
 
-function MonthSelector({ value, onChange }: { value: string; onChange: (next: string) => void }) {
+// Selector genérico "Código / Descripción" (mismo patrón visual y de orden que MonthSelector),
+// reutilizado en Oficina, Almacén y Estado para que todos los casilleros se vean/comporten igual.
+type CodeDescOption = { code: string; label: string; value: string; extra?: string };
+
+function CodeDescSelector({
+  value,
+  onChange,
+  options,
+  allLabel = "Todos",
+  width = "w-[220px]",
+  extraHeader,
+}: {
+  value: string;
+  onChange: (next: string) => void;
+  options: CodeDescOption[];
+  allLabel?: string;
+  width?: string;
+  /** Encabezado de una 3ª columna opcional (ej. "CodAlm" en el combo de Almacén de frmGuiasRemision.vb) */
+  extraHeader?: string;
+}) {
+  const gridCols = extraHeader ? "grid-cols-[46px_1fr_64px]" : "grid-cols-[58px_1fr]";
   const [open, setOpen] = useState(false);
-  const [sortMode, setSortMode] = useState<"code" | "month">("code");
+  const [sortMode, setSortMode] = useState<"code" | "label">("code");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const ref = useRef<HTMLDivElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const [panelPos, setPanelPos] = useState({ top: 0, left: 0 });
+
+  // El panel se pinta con un portal a document.body y posición "fixed" calculada desde el
+  // botón, para que NO quede recortado por el overflow/tamaño de la ventana flotante que lo
+  // contiene (frmGuiaRemision) — se ve "afuera" de la ventana, igual que en el VB original.
+  const updatePanelPos = useCallback(() => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    setPanelPos({ top: rect.bottom + 2, left: rect.left });
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    updatePanelPos();
+    window.addEventListener("scroll", updatePanelPos, true);
+    window.addEventListener("resize", updatePanelPos);
+    return () => {
+      window.removeEventListener("scroll", updatePanelPos, true);
+      window.removeEventListener("resize", updatePanelPos);
+    };
+  }, [open, updatePanelPos]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (!ref.current) return;
-      if (!ref.current.contains(event.target as Node)) {
-        setOpen(false);
-      }
+      const target = event.target as Node;
+      if (ref.current?.contains(target)) return;
+      if (panelRef.current?.contains(target)) return;
+      setOpen(false);
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const selectedLabel = value ? MESES[Number(value) - 1] ?? "Todos" : "Todos";
+  const selected = options.find((o) => o.value === value);
+  const selectedLabel = value ? (selected?.label ?? value) : allLabel;
 
-  const monthRows = useMemo(() => {
-    return MESES.map((month, index) => ({
-      code: String(index + 1).padStart(2, "0"),
-      value: String(index + 1),
-      month,
-    })).sort((a, b) => {
-      if (sortMode === "code") {
-        const diff = Number(a.value) - Number(b.value);
-        return sortDirection === "asc" ? diff : -diff;
-      }
-      const diff = a.month.localeCompare(b.month, "es");
+  const rows = useMemo(() => {
+    return [...options].sort((a, b) => {
+      const diff =
+        sortMode === "code"
+          ? a.code.localeCompare(b.code, "es")
+          : a.label.localeCompare(b.label, "es");
       return sortDirection === "asc" ? diff : -diff;
     });
-  }, [sortMode, sortDirection]);
+  }, [options, sortMode, sortDirection]);
 
-  const handleSortToggle = (mode: "code" | "month") => {
+  const handleSortToggle = (mode: "code" | "label") => {
     if (sortMode === mode) {
       setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
       return;
     }
-
     setSortMode(mode);
     setSortDirection("asc");
   };
@@ -377,64 +440,80 @@ function MonthSelector({ value, onChange }: { value: string; onChange: (next: st
         <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
       </button>
 
-      {open && (
-        <div className="absolute z-40 mt-1 w-[220px] overflow-hidden rounded-sm border border-slate-300 bg-white shadow-lg">
+      {open && createPortal(
+        <div
+          ref={panelRef}
+          style={{ position: "fixed", top: panelPos.top, left: panelPos.left }}
+          className={`z-[10050] ${width} overflow-hidden rounded-sm border border-slate-300 bg-white shadow-2xl`}
+        >
           <div className="max-h-64 overflow-auto">
-            <div className="grid grid-cols-[58px_1fr] items-center border-b border-slate-200 bg-slate-100 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-600">
+            <div className={`grid ${gridCols} items-center border-b border-slate-200 bg-slate-100 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-600`}>
               <button
                 type="button"
                 onClick={() => handleSortToggle("code")}
                 className="flex items-center justify-center gap-1 text-center transition-colors duration-150 hover:bg-slate-200/80 rounded-sm px-1 focus:outline-none"
               >
-                <span>Codigo</span>
-                {sortMode === "code" && (
-                  <span className="text-[9px]">{sortDirection === "asc" ? "▲" : "▼"}</span>
-                )}
+                <span>Código</span>
+                {sortMode === "code" && <span className="text-[9px]">{sortDirection === "asc" ? "▲" : "▼"}</span>}
               </button>
               <button
                 type="button"
-                onClick={() => handleSortToggle("month")}
+                onClick={() => handleSortToggle("label")}
                 className="flex items-center justify-center gap-1 border-l border-slate-300 pl-2 text-center transition-colors duration-150 hover:bg-slate-200/80 rounded-sm px-1 focus:outline-none"
               >
-                <span>Mes</span>
-                {sortMode === "month" && (
-                  <span className="text-[9px]">{sortDirection === "asc" ? "▲" : "▼"}</span>
-                )}
+                <span>Descripción</span>
+                {sortMode === "label" && <span className="text-[9px]">{sortDirection === "asc" ? "▲" : "▼"}</span>}
               </button>
+              {extraHeader && (
+                <span className="border-l border-slate-300 pl-2 text-center">{extraHeader}</span>
+              )}
             </div>
             <button
               type="button"
-              className="grid w-full grid-cols-[58px_1fr] items-center border-b border-slate-200 px-2 py-1 text-[11px] text-slate-700 transition-colors duration-150 hover:bg-slate-200/80"
-              onClick={() => {
-                onChange("");
-                setOpen(false);
-              }}
+              className={`grid w-full ${gridCols} items-center border-b border-slate-200 px-2 py-1 text-[11px] text-slate-700 transition-colors duration-150 hover:bg-slate-200/80`}
+              onClick={() => { onChange(""); setOpen(false); }}
             >
               <span className="text-center font-mono">--</span>
-              <span className="border-l border-slate-300 pl-2 text-center">Todos</span>
+              <span className="border-l border-slate-300 pl-2 text-center">{allLabel}</span>
+              {extraHeader && <span className="border-l border-slate-300 pl-2 text-center">--</span>}
             </button>
-            {monthRows.map(({ code, value: monthValue, month }) => {
-              const active = value === monthValue;
+            {rows.map((row) => {
+              const active = value === row.value;
               return (
                 <button
-                  key={month}
+                  key={row.value}
                   type="button"
-                  className={`grid w-full grid-cols-[58px_1fr] items-center border-b border-slate-200 px-2 py-1 text-[11px] transition-colors duration-150 ${active ? "bg-[#EAF2FF] text-[#1F3E68] font-semibold" : "text-slate-700 hover:bg-slate-200/80"}`}
-                  onClick={() => {
-                    onChange(monthValue);
-                    setOpen(false);
-                  }}
+                  className={`grid w-full ${gridCols} items-center border-b border-slate-200 px-2 py-1 text-[11px] transition-colors duration-150 ${active ? "bg-[#EAF2FF] text-[#1F3E68] font-semibold" : "text-slate-700 hover:bg-slate-200/80"}`}
+                  onClick={() => { onChange(row.value); setOpen(false); }}
                 >
-                  <span className="text-center font-mono text-slate-600">{code}</span>
-                  <span className="border-l border-slate-300 pl-2 text-center">{month}</span>
+                  <span className="text-center font-mono text-slate-600">{row.code}</span>
+                  <span className="border-l border-slate-300 pl-2 text-center">{row.label}</span>
+                  {extraHeader && (
+                    <span className="border-l border-slate-300 pl-2 text-center font-mono text-slate-600">{row.extra ?? "-"}</span>
+                  )}
                 </button>
               );
             })}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
+}
+
+// "Mes" reutiliza el mismo CodeDescSelector (con su portal a document.body) que Oficina/
+// Almacén/Estado, para que se comporte y se vea exactamente igual en los 4 casilleros.
+function MonthSelector({ value, onChange }: { value: string; onChange: (next: string) => void }) {
+  const options = useMemo<CodeDescOption[]>(
+    () => MESES.map((month, index) => ({
+      code: String(index + 1).padStart(2, "0"),
+      label: month,
+      value: String(index + 1),
+    })),
+    []
+  );
+  return <CodeDescSelector value={value} onChange={onChange} options={options} allLabel="Todos" width="w-[220px]" />;
 }
 
 function YearSpinner({ value, onChange }: { value: string; onChange: (next: string) => void }) {
@@ -705,7 +784,32 @@ function TransportistaModal({
   const [conIns, setConIns] = useState(initial?.con_ins ?? "");
   const [saving, setSaving] = useState(false);
 
+  // Réplica de ValidaCampos() en frmGuiaRemision_Transportista.vb
+  const validar = () => {
+    const tieneEmpresa = empresa.trim() || ruc.trim();
+    const tienePropio = placa.trim() || chofer.trim() || licencia.trim();
+    if (tieneEmpresa) {
+      if (empresa.trim().length < 5) { toast.error("Debe Ingresar una Razón Social válida."); return false; }
+      if (ruc.trim().length < 11) { toast.error("Debe Ingresar un número de RUC válido."); return false; }
+    }
+    if (tienePropio) {
+      if (!placa.trim()) { toast.error("Debe Ingresar la Placa del vehículo"); return false; }
+      if (!numDocChofer.trim()) { toast.error("Debe Ingresar el Número de Documento del Transportista."); return false; }
+      if (numDocChofer.trim().length < 8) { toast.error("Debe Ingresar un Número de Documento Válido"); return false; }
+      if (!chofer.trim()) { toast.error("Debe Ingresar el nombre del chofer."); return false; }
+      if (!licencia.trim()) { toast.error("Debe Ingresar el Número de Licencia de conducir."); return false; }
+      if (licencia.trim().length < 9) { toast.error("Debe Ingresar un Número de Licencia Válido."); return false; }
+    }
+    if (!tieneEmpresa && !tienePropio) {
+      toast.error("Ingrese los datos de la Empresa Transportista o del vehículo/chofer propio.");
+      return false;
+    }
+    return true;
+  };
+
   const handleSave = async () => {
+    if (!validar()) return;
+    if (!confirm("¿Está seguro de GUARDAR los datos?")) return;
     setSaving(true);
     try {
       const guiaId = Number(idGuia);
@@ -959,7 +1063,7 @@ function SugerirFactorModal({ onClose }: { onClose: () => void }) {
   );
 }
 
-type GuiaToolKind = "electronica" | "xcliente" | "factor" | "estados" | "precios" | "imprimirGuia" | "imprimirTicket" | "enviarCreditos" | "generarFactBoleta" | "trasladarGuia" | "enviarB2Mining" | "consumoOT" | "bajarNivel" | "enviarCorreo";
+type GuiaToolKind = "electronica" | "xcliente" | "factor" | "estados" | "precios" | "imprimirGuia" | "imprimirTicket" | "enviarCreditos" | "generarFactBoleta" | "trasladarGuia" | "enviarB2Mining" | "consumoOT" | "bajarNivel" | "enviarCorreo" | "obsSunat" | "actualizarCDR" | "actProceso";
 type GuiaToolWindow = {
   id: string;
   kind: GuiaToolKind;
@@ -974,6 +1078,7 @@ type GuiaToolWindow = {
 type GuiaFormWindow = {
   id: string;
   idGuia?: number | string;
+  idLocacion?: number;
   detailOnly?: boolean;
   title: string;
   x: number;
@@ -982,6 +1087,30 @@ type GuiaFormWindow = {
   h: number;
   z: number;
 };
+
+function inferIdLocacionFromSession(): number | undefined {
+  try {
+    const raw = typeof window !== "undefined" ? window.localStorage.getItem("sigecoom_session") : null;
+    if (!raw) return undefined;
+    const sess = JSON.parse(raw);
+
+    const explicit = Number(sess?.empresa_actual?.id_locacion ?? sess?.empresa_actual?.locacion ?? sess?.id_locacion ?? NaN);
+    if (Number.isFinite(explicit) && explicit > 0) return explicit;
+
+    const codigo = String(sess?.empresa_actual?.codigo ?? "").trim();
+    const map: Record<string, number> = {
+      "08": 87, "8": 87,
+      "05": 72, "5": 72,
+      "30": 30, "31": 31,
+      "72": 72, "73": 73, "75": 75,
+      "80": 80, "81": 81, "83": 83,
+      "87": 87,
+    };
+    return codigo ? map[codigo] : undefined;
+  } catch {
+    return undefined;
+  }
+}
 
 const TOOL_WINDOW_META: Record<GuiaToolKind, { title: string; w: number; h: number }> = {
   electronica: { title: "Generar Guia Electronica", w: 430, h: 315 },
@@ -995,9 +1124,12 @@ const TOOL_WINDOW_META: Record<GuiaToolKind, { title: string; w: number; h: numb
   generarFactBoleta: { title: "Generar Factura / Boleta", w: 360, h: 260 },
   trasladarGuia: { title: "Trasladar Guía", w: 410, h: 290 },
   enviarB2Mining: { title: "Enviar a B2Mining", w: 360, h: 260 },
-  consumoOT: { title: "Agregar Consumo OT", w: 420, h: 320 },
+  consumoOT: { title: "Agregar Consumo OT", w: 640, h: 460 },
   bajarNivel: { title: "Bajar de Nivel", w: 320, h: 220 },
   enviarCorreo: { title: "Enviar por Correo", w: 420, h: 320 },
+  obsSunat: { title: "Observaciones SUNAT", w: 420, h: 300 },
+  actualizarCDR: { title: "Actualizar CDR", w: 380, h: 220 },
+  actProceso: { title: "Actualizar Guía Electrónica en Proceso", w: 420, h: 260 },
 };
 
 const FLOAT_DESKTOP_STATUS_BAR_H = 56;
@@ -1132,6 +1264,240 @@ function ToolEstadosBody({ selected }: { selected: GuiaRemisionRow | null }) {
             )}
           </tbody>
         </table>
+      </div>
+    </div>
+  );
+}
+
+// Réplica de frmGuiaRemision_Electronica_ObsSunat.vb (solo lectura: Ticket, Estado, Observación, Notas, UrlLink)
+function ToolObsSunatBody({ selected }: { selected: GuiaRemisionRow | null }) {
+  const [digital, setDigital] = useState<GuiaRemisionDigital | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!selected) { setDigital(null); return; }
+    setLoading(true);
+    setErrorMsg(null);
+    fetchGuiaRemisionDigital(selected.id)
+      .then(setDigital)
+      .catch((e: any) => setErrorMsg(e.message ?? "No se pudo consultar la información SUNAT"))
+      .finally(() => setLoading(false));
+  }, [selected?.id]);
+
+  if (!selected) {
+    return <div className="h-full p-6 text-center text-slate-500 text-[12px] bg-[#F8FBFF]">Seleccione una guía</div>;
+  }
+  if (loading) {
+    return <div className="h-full p-6 text-center text-slate-500 text-[12px] bg-[#F8FBFF]">Cargando…</div>;
+  }
+
+  // Ticket/Estado/Observación/Notas/UrlLink vienen de GuiaRemisionDigitalService.Obtener(IdGuia)
+  // (fetchGuiaRemisionDigital); si el endpoint aún no está desplegado, se cae a estado_sunat/
+  // observacion ya disponibles en el listado.
+  const rows: Array<[string, string]> = [
+    ["Ticket", digital?.num_ticket ?? "-"],
+    ["Estado", digital?.estado ?? selected.estado_sunat ?? "-"],
+    ["Observación", digital?.observacion ?? selected.observacion ?? "-"],
+    ["Notas", digital?.notas ?? "-"],
+    ["Url Link", digital?.url_link ?? "-"],
+  ];
+  return (
+    <div className="h-full p-3 text-[12px] text-slate-800 bg-[#F8FBFF] space-y-2">
+      {errorMsg && <div className="text-[11px] text-amber-700">{errorMsg} — mostrando lo disponible del listado.</div>}
+      {rows.map(([label, value]) => (
+        <InlineField key={label} label={label} labelWidth="w-[90px]">
+          <input className={inp} readOnly value={value} />
+        </InlineField>
+      ))}
+    </div>
+  );
+}
+
+// Réplica de frmGuiaRemision_AgregarConsumoJob.vb
+// Columnas del grid: JobConsumoItem (sigecoom-api.ts), tomadas de OrigenDatos/ConsumoJob.xml
+function ToolAgregarConsumoJobBody({
+  selected,
+  locationById,
+  onClose,
+  onSaved,
+}: {
+  selected: GuiaRemisionRow | null;
+  locationById: Record<number, Location>;
+  onClose: () => void;
+  onSaved: () => void;
+}) {
+  const loc = selected ? locationById[Number(selected.id_locacion)] : undefined;
+  const [locacion] = useState(loc ? `${loc.code} - ${loc.warehouse}` : "");
+  const [almacen] = useState(loc?.warehouse ?? "");
+  const [fecDoc, setFecDoc] = useState(() => new Date().toISOString().slice(0, 10));
+  const [numDoc, setNumDoc] = useState(selected ? String(selected.num_doc) : "");
+  const [numJob, setNumJob] = useState("");
+  const [rows, setRows] = useState<JobConsumoItem[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  // Réplica de oJobService.Buscar + oTransferenciaService.MostrarAtencionJob
+  const buscarJob = async () => {
+    const job = numJob.trim();
+    if (!job) {
+      toast.error("Debe Ingresar el Nº de la OT, Verifique");
+      setRows([]);
+      return;
+    }
+    setLoading(true);
+    try {
+      const data = await fetchAtencionJob(job);
+      setRows(data);
+    } catch (e: any) {
+      toast.error(e.message ?? "Número de OT no existente, Verifique");
+      setRows([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const validarData = () => {
+    if (!numJob.trim()) { toast.info("Debe ingresar el número de la OT.."); return false; }
+    if (!numDoc.trim()) { toast.info("Debe ingresar el número del Documento.."); return false; }
+    if (!fecDoc) { toast.info("Debe ingresar la Fecha.."); return false; }
+    return true;
+  };
+
+  const handleAceptar = async () => {
+    if (!validarData()) return;
+    if (!selected) return;
+    if (!confirm("¿Está seguro de GENERAR las Guías?")) return;
+    setSaving(true);
+    try {
+      // Réplica de oGuiaRemisionService.IngresarConsumoJob(CodAlmacen, NumJob, NumDoc, FecDoc, usuario)
+      await ingresarConsumoJob(selected.id, { num_job: numJob.trim(), num_doc: numDoc.trim(), fec_doc: fecDoc });
+      toast.success("Se registró el consumo de la OT");
+      onSaved();
+    } catch (e: any) {
+      toast.error(e.message ?? "Error en el proceso, comuníquese con el departamento de sistemas...!");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="h-full flex flex-col text-[12px] text-slate-800 bg-[#F8FBFF]">
+      <div className="p-3 space-y-1.5">
+        <InlineField label="Locación" labelWidth="w-[80px]"><input className={inp} readOnly value={locacion} /></InlineField>
+        <InlineField label="Almacén" labelWidth="w-[80px]"><input className={inp} readOnly value={almacen} /></InlineField>
+        <div className="grid grid-cols-[80px_1fr_80px_1fr] gap-1 items-center">
+          <span className="text-right font-semibold">Fec. Doc :</span>
+          <input type="date" className={inp} value={fecDoc} onChange={(e) => setFecDoc(e.target.value)} />
+          <span className="text-right font-semibold">N° Doc :</span>
+          <input className={`${inp} font-mono`} value={numDoc} onChange={(e) => setNumDoc(e.target.value)} />
+        </div>
+        <div className="grid grid-cols-[80px_1fr_auto] gap-1 items-center">
+          <span className="text-right font-semibold">N° OT :</span>
+          <input
+            className={`${inp} font-mono`}
+            value={numJob}
+            onChange={(e) => setNumJob(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") buscarJob(); }}
+          />
+          <button className={btn} onClick={buscarJob} title="Buscar OT (F12)"><Search className="h-3.5 w-3.5" />Buscar</button>
+        </div>
+      </div>
+
+      <div className="flex-1 min-h-0 px-3">
+        <div className="border border-slate-300 bg-white h-full overflow-auto">
+          <table className="w-full text-[11px]">
+            <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] text-slate-800 sticky top-0">
+              <tr>
+                {"Item|Código|Descripción|Cant.|Marca|Modelo|Importado".split("|").map((h) => (
+                  <th key={h} className="px-2 py-1 border-r border-slate-300 text-center font-semibold">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.length === 0 ? (
+                <tr><td colSpan={7} className="text-center text-slate-400 py-6">{loading ? "Cargando…" : "Ingrese un N° de OT y presione Enter"}</td></tr>
+              ) : rows.map((r, i) => (
+                <tr key={i} className={i % 2 ? "bg-[#F6F9FC]" : "bg-white"}>
+                  <td className="px-2 py-1 text-center border-r border-slate-200">{r.item}</td>
+                  <td className="px-2 py-1 border-r border-slate-200 font-mono">{r.cod_mer}</td>
+                  <td className="px-2 py-1 border-r border-slate-200">{r.des_mer}</td>
+                  <td className="px-2 py-1 text-right border-r border-slate-200 font-mono">{r.can_mer}</td>
+                  <td className="px-2 py-1 border-r border-slate-200">{r.cod_mar}</td>
+                  <td className="px-2 py-1 border-r border-slate-200">{r.modelo}</td>
+                  <td className="px-2 py-1 text-center">{r.importado ? "Sí" : "No"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="p-3 flex items-center justify-between gap-2">
+        <button className={btn} disabled={rows.length < 1} onClick={() => toast.info("Reporte pendiente de conectar (MostrarAtencionJob)")}>
+          <Printer className="h-3.5 w-3.5" />Imprimir
+        </button>
+        <div className="flex gap-2">
+          <button className={btnPrimary} disabled={saving} onClick={handleAceptar}><Check className="h-3.5 w-3.5" />Aceptar</button>
+          <button className={btn} onClick={onClose}><X className="h-3.5 w-3.5" />Cancelar</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Réplica de frmGuiaRemision_Transferir.vb
+function ToolTransferirGuiaBody({
+  selected,
+  locations,
+  onClose,
+  onSaved,
+}: {
+  selected: GuiaRemisionRow | null;
+  locations: Location[];
+  onClose: () => void;
+  onSaved: () => void;
+}) {
+  const [idLocacion, setIdLocacion] = useState<string>("");
+  const [saving, setSaving] = useState(false);
+
+  if (!selected) {
+    return <div className="h-full p-6 text-center text-slate-500 text-[12px] bg-[#F8FBFF]">Seleccione una guía</div>;
+  }
+
+  const handleGuardar = async () => {
+    // Réplica de ValidaCampos(): exige almacén destino
+    if (!idLocacion) {
+      toast.error("Debe ingresar el almacén a transferir");
+      return;
+    }
+    if (!confirm(`¿Está seguro de TRANSFERIR la G/R Nº: ${selected.num_doc} ?`)) return;
+    setSaving(true);
+    try {
+      await transferirGuiaRemision(selected.id, Number(idLocacion));
+      toast.success(`Se transfirió la Guía de Remisión Nº: ${selected.num_doc}`);
+      onSaved();
+    } catch (e: any) {
+      toast.error(e.message ?? "Error en el proceso, comuníquese con el departamento de sistemas...!");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="h-full p-4 space-y-3 text-[12px] text-slate-800 bg-[#F8FBFF]">
+      <InlineField label="Guía" labelWidth="w-[90px]"><input className={inp} readOnly value={String(selected.num_doc)} /></InlineField>
+      <InlineField label="Almacén" labelWidth="w-[90px]">
+        <select className={inp} value={idLocacion} onChange={(e) => setIdLocacion(e.target.value)}>
+          <option value="">Seleccione…</option>
+          {locations.map((loc) => (
+            <option key={String(loc.id)} value={String(loc.id)}>{loc.code} - {loc.warehouse}</option>
+          ))}
+        </select>
+      </InlineField>
+      <div className="flex justify-end gap-2 pt-2">
+        <button className={btn} onClick={onClose}><X className="h-3.5 w-3.5" />Cancelar</button>
+        <button className={btnPrimary} disabled={saving} onClick={handleGuardar}><Save className="h-3.5 w-3.5" />Guardar</button>
       </div>
     </div>
   );
@@ -2201,8 +2567,8 @@ export function GuiaRemisionList() {
   const [locationById, setLocationById] = useState<Record<number, Location>>({});
 
   // Filtros
-  const [anio, setAnio] = useState("2026");
-  const [mes, setMes] = useState("");
+  const [anio, setAnio] = useState(() => getTodayDateParts().year);
+  const [mes, setMes] = useState(() => getTodayDateParts().month);
   const [estado, setEstado] = useState("");
   const [numDoc, setNumDoc] = useState("");
   const [clientFilterId, setClientFilterId] = useState<number | "">("");
@@ -2212,6 +2578,9 @@ export function GuiaRemisionList() {
   const [locationFilterId, setLocationFilterId] = useState<number | "">("");
   const [showClientLookup, setShowClientLookup] = useState(false);
   const [showPrintModal, setShowPrintModal] = useState(false);
+  const [motivoBajaRow, setMotivoBajaRow] = useState<GuiaRemisionRow | null>(null);
+  const [modificarObsRow, setModificarObsRow] = useState<GuiaRemisionRow | null>(null);
+  const [obsSunatRow, setObsSunatRow] = useState<GuiaRemisionRow | null>(null);
 
   const [selected, setSelected] = useState<GuiaRemisionRow | null>(null);
   const [formWindows, setFormWindows] = useState<GuiaFormWindow[]>([]);
@@ -2222,15 +2591,28 @@ export function GuiaRemisionList() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await fetchGuiasRemision({
+      // If no explicit location filter is set, try to infer id_locacion from
+      // the currently selected company in session (legacy mapping). This
+      // ensures users on company 08 immediately see guías for id_locacion=87
+      // without restarting the app.
+      let inferredIdLocacion: number | undefined = undefined;
+      if (locationFilterId === "") {
+        inferredIdLocacion = inferIdLocacionFromSession();
+      }
+
+      const queryParams = {
         anio: anio ? parseInt(anio) : undefined,
         mes: mes ? parseInt(mes) : undefined,
-        id_locacion: locationFilterId !== "" ? Number(locationFilterId) : undefined,
+        id_locacion: locationFilterId !== "" ? Number(locationFilterId) : inferredIdLocacion,
         id_cliente: clientFilterId !== "" ? Number(clientFilterId) : undefined,
         estado: estado || undefined,
         num_doc: numDoc ? parseInt(numDoc) : undefined,
         limit: 500,
-      });
+      };
+      try { console.info('[GuiasRemision] fetching with params', queryParams); } catch (_) {}
+
+      const data = await fetchGuiasRemision(queryParams as any);
+      try { const d:any = data; console.info('[GuiasRemision] fetched rows count', Array.isArray(d) ? d.length : (d && (d as any).items ? (d as any).items.length : null)); } catch (_) {}
       setRows(data);
       setSearched(true);
     } catch (e: any) {
@@ -2267,8 +2649,29 @@ export function GuiaRemisionList() {
       .catch((e: any) => console.warn("No se pudo cargar locaciones", e));
   }, []);
 
+  // Reload list when session (empresa) changes so headers/allowed codes are updated
+  useEffect(() => {
+    const onSessionUpdated = (ev: Event) => {
+      try {
+        // call load to refresh guías for the newly selected company
+        load();
+      } catch (_) {}
+    };
+    window.addEventListener('systeck-session-updated', onSessionUpdated as EventListener);
+    return () => window.removeEventListener('systeck-session-updated', onSessionUpdated as EventListener);
+  }, [load]);
+
   const officeOptions = Array.from(new Set(locations.map((loc) => loc.code))).filter(Boolean);
   const warehouseOptions = Array.from(new Set(locations.map((loc) => loc.warehouse))).filter(Boolean);
+  // frmGuiasRemision.vb arma cmbIdLocacion con 4 columnas (IdLocacion, DesAlm, AproDoc, CodAlm)
+  // desde oMaestroService.MostrarLocaciones(CodEmp, CodOfi, CodUsu). El backend actual (Location,
+  // /locations) todavía no expone un cod_alm propio — "code" ya se usa como agrupador de Oficina y
+  // "warehouse" es la descripción — así que por ahora se muestra el id interno como referencia hasta
+  // que se agregue cod_alm al modelo Location.
+  const warehouseCodAlm: Record<string, string> = {};
+  locations.forEach((loc) => {
+    if (loc.warehouse && !(loc.warehouse in warehouseCodAlm)) warehouseCodAlm[loc.warehouse] = loc.cod_alm ?? String(loc.id);
+  });
 
   useEffect(() => {
     if (!officeFilter && !warehouseFilter) {
@@ -2285,7 +2688,7 @@ export function GuiaRemisionList() {
     }
   }, [officeFilter, warehouseFilter, locations]);
 
-  const openFormWindow = useCallback((idGuia?: number | string, detailOnly = false) => {
+  const openFormWindow = useCallback((idGuia?: number | string, detailOnly = false, defaultIdLocacion?: number) => {
     const maxW = typeof window !== "undefined" ? window.innerWidth : 1280;
     const maxH = typeof window !== "undefined" ? Math.max(320, window.innerHeight - FLOAT_DESKTOP_STATUS_BAR_H) : 720;
     const isNewForm = !idGuia;
@@ -2303,11 +2706,13 @@ export function GuiaRemisionList() {
     const initialY = (isNewForm ? 18 : 32) + offset;
     const x = Math.max(0, Math.min(initialX, Math.max(0, maxW - w)));
     const y = Math.max(0, Math.min(initialY, Math.max(0, maxH - h)));
+    const resolvedIdLocacion = defaultIdLocacion ?? inferIdLocacionFromSession() ?? 1;
     setFormWindows((prev) => [
       ...prev,
       {
         id,
         idGuia,
+        idLocacion: resolvedIdLocacion,
         detailOnly,
         title: idGuia ? detailOnly ? `Editar guía N° ${idGuia}` : `GUIAS DE REMISION N° ${idGuia}` : "Registrar nueva GUIA DE REMISION",
         x,
@@ -2321,12 +2726,12 @@ export function GuiaRemisionList() {
 
   const handleNuevo = () => {
     setSelected(null);
-    openFormWindow(undefined);
+    openFormWindow(undefined, false, inferIdLocacionFromSession() ?? 1);
   };
 
   const handleMostrar = (row: GuiaRemisionRow, detailOnly = true) => {
     setSelected(row);
-    openFormWindow(String(row.id), detailOnly);
+    openFormWindow(String(row.id), detailOnly, Number(row.id_locacion) || inferIdLocacionFromSession() || 1);
   };
 
   const handleEliminar = (row: GuiaRemisionRow, detailOnly = true) => {
@@ -2342,14 +2747,24 @@ export function GuiaRemisionList() {
     })();
   };
 
-  const handleAnular = async (row: GuiaRemisionRow) => {
-    if (!confirm(`¿Anular la Guía N° ${row.num_doc}?`)) return;
+  // Réplica de frmGuiaRemision_MotivoBaja.vb: exige una observación antes de anular.
+  // La confirmación amistosa ("¿Está seguro de ANULAR...?") vive dentro de MotivoBajaModal.
+  const handleAnular = (row: GuiaRemisionRow) => {
+    setMotivoBajaRow(row);
+  };
+
+  const submitAnular = async (row: GuiaRemisionRow, observacion: string) => {
     try {
+      // sigecoom-api.ts: anularGuiaRemision(id) solo cambia el estado a ANULADO
+      // (no acepta observación). Se guarda primero la observación con updateGuiaRemision
+      // — igual que el motivo que pedía frmGuiaRemision_MotivoBaja.vb — y luego se anula.
+      await updateGuiaRemision(row.id, { observacion });
       await anularGuiaRemision(row.id);
       toast.success(`Guía N° ${row.num_doc} anulada`);
+      setMotivoBajaRow(null);
       await load();
     } catch (e: any) {
-      toast.error(e.message);
+      toast.error(e.message ?? "Error al anular la guía");
     }
   };
 
@@ -2527,14 +2942,17 @@ export function GuiaRemisionList() {
     <div className="relative h-full min-h-0 flex flex-col overflow-hidden bg-[#F3F6FA]">
       {/* Toolbar principal */}
       <div className="flex items-center gap-1 px-2 py-1.5 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] border-b border-slate-400/50 shrink-0 overflow-x-auto">
+        {/* Imprimir | Ticket */}
         <button className={iconBtn} title="Imprimir Guía" onClick={() => setShowPrintModal(true)}><Printer className="h-4 w-4" /></button>
         <button className={iconBtn} title="Imprimir Ticket" onClick={() => openToolWindow("imprimirTicket")}><Receipt className="h-4 w-4" /></button>
         {tbSep}
+        {/* Enviar | Generar | Trasladar | B2Mining */}
         <button className={iconBtn} title="Enviar a Créditos" onClick={() => openToolWindow("enviarCreditos")}><CreditCard className="h-4 w-4" /></button>
-        <button className={iconBtn} title="Generar Fac/Bol" onClick={() => openToolWindow("generarFactBoleta")}><Receipt className="h-4 w-4" /></button>
-        <button className={iconBtn} title="Trasladar Guía" onClick={() => openToolWindow("trasladarGuia")}><Car className="h-4 w-4" /></button>
-        <button className={iconBtn} title="Enviar B2Mining" onClick={() => openToolWindow("enviarB2Mining")}><Package className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Generar Fac/Bol" onClick={() => openToolWindow("generarFactBoleta")}><FilePlus2 className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Trasladar Guía" onClick={() => openToolWindow("trasladarGuia")}><Warehouse className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Enviar a B2Mining" onClick={() => openToolWindow("enviarB2Mining")}><UploadCloud className="h-4 w-4" /></button>
         {tbSep}
+        {/* Nuevo | Mostrar */}
         <button className={iconBtn} title="Nueva Guía" onClick={handleNuevo}><Plus className="h-4 w-4" /></button>
         <button
           className={iconBtn}
@@ -2542,9 +2960,10 @@ export function GuiaRemisionList() {
           disabled={!selected}
           onClick={() => selected && handleMostrar(selected)}
         >
-          <Search className="h-4 w-4" />
+          <FolderOpen className="h-4 w-4" />
         </button>
         {tbSep}
+        {/* Eliminar | Anular | Sugerir */}
         <button className={iconBtn} title="Eliminar Guía" onClick={() => selected && handleEliminar(selected)}><Trash className="h-4 w-4" /></button>
         <button
           className={iconBtn}
@@ -2554,20 +2973,36 @@ export function GuiaRemisionList() {
         >
           <X className="h-4 w-4" />
         </button>
+        <button className={iconBtn} title="Sugerir Factor/Descuento" onClick={() => openToolWindow("factor")}><Percent className="h-4 w-4" /></button>
+        <button
+          className={iconBtn}
+          title="Modificar Observación"
+          disabled={!selected}
+          onClick={() => selected && setModificarObsRow(selected)}
+        >
+          <Pencil className="h-4 w-4" />
+        </button>
         {tbSep}
-        <button className={iconBtn} title="Sugerir Factor/Descuento" onClick={() => openToolWindow("factor")}><Filter className="h-4 w-4" /></button>
+        {/* Agregar Consumo OT | Estados | Consultar Sugeridos | Enviar G/R Electrónica | Actualizar */}
         <button className={iconBtn} title="Agregar Consumo OT" onClick={() => openToolWindow("consumoOT")}><Wrench className="h-4 w-4" /></button>
-        <button className={iconBtn} title="Mostrar Estados" onClick={() => openToolWindow("estados")}><Clock className="h-4 w-4" /></button>
-        <button className={iconBtn} title="Precios Sugeridos" onClick={() => openToolWindow("precios")}><DollarSign className="h-4 w-4" /></button>
-        <button className={iconBtn} title="Bajar de Nivel" onClick={() => openToolWindow("bajarNivel")}><ArrowDown className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Estados" onClick={() => openToolWindow("estados")}><Clock className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Consultar Sugeridos" onClick={() => openToolWindow("precios")}><DollarSign className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Enviar Guía Remisión Electrónica" onClick={() => openToolWindow("enviarCorreo")}><Send className="h-4 w-4" /></button>
         <button className={iconBtn} title="Actualizar" onClick={load}><RefreshCw className="h-4 w-4" /></button>
-        <button className={iconBtn} title="Enviar por Correo" onClick={() => openToolWindow("enviarCorreo")}><Mail className="h-4 w-4" /></button>
         {tbSep}
-        <button className={iconBtn} title="Guia x Cliente" onClick={() => openToolWindow("xcliente")}><Search className="h-4 w-4" /></button>
-        {tbSep}
+        {/* Generar | Descargar | Listar Guías Electrónicas | Observaciones Sunat | Actualizar CDR | Actualizar en Proceso */}
         <button className={iconBtn} title="Generar Guía Electrónica" onClick={() => openToolWindow("electronica")}><FileSpreadsheet className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Descargar Guía Electrónica" onClick={() => openToolWindow("electronica")}><Download className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Listar Guías Electrónicas" onClick={() => openToolWindow("electronica")}><List className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Observaciones SUNAT" onClick={() => openToolWindow("obsSunat")}><Eye className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Actualizar CDR" onClick={() => openToolWindow("actualizarCDR")}><RotateCw className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Actualizar Guía Electrónica en Proceso" onClick={() => openToolWindow("actProceso")}><Loader2 className="h-4 w-4" /></button>
         {tbSep}
-        <button className={iconBtn} title="Cerrar Formulario" onClick={() => toast.info("Use el botón X de la ventana para cerrar")}><LogOut className="h-4 w-4" /></button>
+        {/* Bajar de Nivel (utilidad interna, sin equivalente directo en el menú SUNAT) */}
+        <button className={iconBtn} title="Bajar de Nivel" onClick={() => openToolWindow("bajarNivel")}><ArrowDown className="h-4 w-4" /></button>
+        {tbSep}
+        {/* Salir */}
+        <button className={iconBtn} title="Salir" onClick={() => toast.info("Use el botón X de la ventana para cerrar")}><LogOut className="h-4 w-4" /></button>
       </div>
 
       {/* Filtros */}
@@ -2579,28 +3014,27 @@ export function GuiaRemisionList() {
           <MonthSelector value={mes} onChange={setMes} />
         </Field>
         <Field label="Oficina" className="w-28">
-          <select
-            className={inp}
+          <CodeDescSelector
             value={officeFilter}
-            onChange={(e) => setOfficeFilter(e.target.value)}
-          >
-            <option value="">(Todas)</option>
-            {officeOptions.map((code) => (
-              <option key={code} value={code}>{code}</option>
-            ))}
-          </select>
+            onChange={setOfficeFilter}
+            allLabel="(Todas)"
+            options={officeOptions.map((code) => ({ code, label: code, value: code }))}
+          />
         </Field>
         <Field label="Almacén" className="w-32">
-          <select
-            className={inp}
+          <CodeDescSelector
             value={warehouseFilter}
-            onChange={(e) => setWarehouseFilter(e.target.value)}
-          >
-            <option value="">(Todos)</option>
-            {warehouseOptions.map((warehouse) => (
-              <option key={warehouse} value={warehouse}>{warehouse}</option>
-            ))}
-          </select>
+            onChange={setWarehouseFilter}
+            allLabel="(Todos)"
+            width="w-[280px]"
+            extraHeader="CodAlm"
+            options={warehouseOptions.map((warehouse) => ({
+              code: warehouse,
+              label: warehouse,
+              value: warehouse,
+              extra: warehouseCodAlm[warehouse],
+            }))}
+          />
         </Field>
         <Field label="Cliente" className="w-52">
           <div className="flex gap-1">
@@ -2621,15 +3055,12 @@ export function GuiaRemisionList() {
           </div>
         </Field>
         <Field label="Estado" className="w-28">
-          <select className={inp} value={estado} onChange={e => setEstado(e.target.value)}>
-            <option value="">(Todos)</option>
-            <option value="GENERADO">GENERADO</option>
-            <option value="APROBADO">APROBADO</option>
-            <option value="CREDITOS">CREDITOS</option>
-            <option value="ANULADO">ANULADO</option>
-            <option value="FACTURADO">FACTURADO</option>
-            <option value="TRANSFERIDO">TRANSFERIDO</option>
-          </select>
+          <CodeDescSelector
+            value={estado}
+            onChange={setEstado}
+            allLabel="(Todos)"
+            options={ESTADO_FILTER_OPTIONS}
+          />
         </Field>
         <Field label="N° Doc" className="w-20">
           <input className={`${inp} font-mono`} value={numDoc} onChange={e => setNumDoc(e.target.value)} />
@@ -2742,14 +3173,31 @@ export function GuiaRemisionList() {
           {w.kind === "xcliente" && <ToolGuiaClienteBody selected={selected} />}
           {w.kind === "factor" && <ToolSugerirFactorBody onClose={() => closeToolWindow(w.id)} />}
           {w.kind === "estados" && <ToolEstadosBody selected={selected} />}
+          {w.kind === "obsSunat" && <ToolObsSunatBody selected={selected} />}
           {w.kind === "precios" && <ToolPreciosSugeridosBody />}
           {w.kind === "imprimirGuia" && <ToolPlaceholderBody title="Imprimir Guía" description="Seleccione el formato y genere la impresión de la guía." actionLabel="Imprimir" onClose={() => closeToolWindow(w.id)} />}
+          {w.kind === "actualizarCDR" && <ToolPlaceholderBody title="Actualizar CDR" description="Consulta a SUNAT el CDR (Constancia de Recepción) más reciente de esta guía electrónica." actionLabel="Actualizar" onClose={() => closeToolWindow(w.id)} />}
+          {w.kind === "actProceso" && <ToolPlaceholderBody title="Actualizar Guía Electrónica en Proceso" description="Revisa el estado de las guías que quedaron en proceso de envío a SUNAT." actionLabel="Actualizar" onClose={() => closeToolWindow(w.id)} />}
           {w.kind === "imprimirTicket" && <ToolPlaceholderBody title="Imprimir Ticket" description="Seleccione el tipo de ticket y genere la impresión." actionLabel="Imprimir" onClose={() => closeToolWindow(w.id)} />}
           {w.kind === "enviarCreditos" && <ToolPlaceholderBody title="Enviar a Créditos" description="Prepare la guía para ser enviada al módulo de créditos." actionLabel="Enviar" onClose={() => closeToolWindow(w.id)} />}
           {w.kind === "generarFactBoleta" && <ToolPlaceholderBody title="Generar Factura / Boleta" description="Configure la factura o boleta relacionada con esta guía." actionLabel="Generar" onClose={() => closeToolWindow(w.id)} />}
-          {w.kind === "trasladarGuia" && <ToolPlaceholderBody title="Trasladar Guía" description="Seleccione la nueva ubicación o almacén de traslado." actionLabel="Trasladar" onClose={() => closeToolWindow(w.id)} />}
+          {w.kind === "trasladarGuia" && (
+            <ToolTransferirGuiaBody
+              selected={selected}
+              locations={locations}
+              onClose={() => closeToolWindow(w.id)}
+              onSaved={() => { closeToolWindow(w.id); load(); }}
+            />
+          )}
           {w.kind === "enviarB2Mining" && <ToolPlaceholderBody title="Enviar a B2Mining" description="Envíe esta guía al servicio B2Mining para procesamiento externo." actionLabel="Enviar" onClose={() => closeToolWindow(w.id)} />}
-          {w.kind === "consumoOT" && <ToolPlaceholderBody title="Agregar Consumo OT" description="Registre el consumo de OT asociado a esta guía." actionLabel="Agregar" onClose={() => closeToolWindow(w.id)} />}
+          {w.kind === "consumoOT" && (
+            <ToolAgregarConsumoJobBody
+              selected={selected}
+              locationById={locationById}
+              onClose={() => closeToolWindow(w.id)}
+              onSaved={() => { closeToolWindow(w.id); load(); }}
+            />
+          )}
           {w.kind === "bajarNivel" && <ToolPlaceholderBody title="Bajar de Nivel" description="Ajuste el nivel de esta guía en la jerarquía del sistema." actionLabel="Bajar" onClose={() => closeToolWindow(w.id)} />}
           {w.kind === "enviarCorreo" && <ToolPlaceholderBody title="Enviar por Correo" description="Envía la guía por correo electrónico al cliente o al usuario responsable." actionLabel="Enviar" onClose={() => closeToolWindow(w.id)} />}
         </DraggableToolWindow>
@@ -2769,9 +3217,27 @@ export function GuiaRemisionList() {
       {showPrintModal && (
         <PrintGuiaModal
           onClose={() => setShowPrintModal(false)}
-          onPrint={(mostrarPrecio) => {
-            toast.success(`Imprimiendo guía${mostrarPrecio ? ' (mostrando precios)' : ''}`);
+          onPrint={({ detalle, mostrarPrecio }) => {
+            toast.success(
+              `Imprimiendo guía (${detalle ? "Detalle" : "Resumen"})${mostrarPrecio ? " — mostrando precios" : ""}`
+            );
           }}
+        />
+      )}
+
+      {motivoBajaRow && (
+        <MotivoBajaModal
+          row={motivoBajaRow}
+          onClose={() => setMotivoBajaRow(null)}
+          onConfirm={submitAnular}
+        />
+      )}
+
+      {modificarObsRow && (
+        <ModificarObservacionModal
+          row={modificarObsRow}
+          onClose={() => setModificarObsRow(null)}
+          onSaved={() => { setModificarObsRow(null); load(); }}
         />
       )}
 
@@ -2786,6 +3252,7 @@ export function GuiaRemisionList() {
         >
           <GuiaRemisionForm
             idGuia={w.idGuia}
+            idLocacion={w.idLocacion ?? 1}
             onClose={() => closeFormWindow(w.id)}
             onSaved={() => {
               closeFormWindow(w.id);
@@ -2798,7 +3265,125 @@ export function GuiaRemisionList() {
   );
 }
 
-function PrintGuiaModal({ onClose, onPrint }: { onClose: () => void; onPrint: (mostrarPrecio: boolean) => void }) {
+// Réplica de frmGuiaRemision_MotivoBaja.vb
+function MotivoBajaModal({
+  row,
+  onClose,
+  onConfirm,
+}: {
+  row: GuiaRemisionRow;
+  onClose: () => void;
+  onConfirm: (row: GuiaRemisionRow, observacion: string) => void;
+}) {
+  const [observacion, setObservacion] = useState("");
+
+  const handleAnularClick = () => {
+    if (!observacion.trim()) {
+      toast.error("Debe ingresar la Observación");
+      return;
+    }
+    if (!confirm(`¿Está seguro de ANULAR la Guía Nº ${row.num_doc} ?`)) return;
+    onConfirm(row, observacion.trim());
+  };
+
+  return (
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/35">
+      <div className="w-[420px] bg-[#F1F3F8] border border-slate-500 shadow-2xl rounded-sm overflow-hidden">
+        <div className="flex items-center justify-between px-3 py-1.5 bg-gradient-to-b from-[#3E5B7A] to-[#2A3F55] text-white text-[12px]">
+          <span className="font-medium">Anular la Guia de Remision N°: {row.num_doc}</span>
+          <button onClick={onClose} className="hover:bg-white/20 rounded px-1"><X className="h-3.5 w-3.5" /></button>
+        </div>
+        <div className="p-4 text-[12px] text-slate-800 space-y-2">
+          <span className="text-[11px] font-semibold text-slate-700">Observación :</span>
+          <textarea
+            className={`${inp} w-full h-20 resize-none`}
+            value={observacion}
+            onChange={(e) => setObservacion(e.target.value)}
+            autoFocus
+          />
+          <div className="flex justify-end gap-2 pt-1">
+            <button className={btn} onClick={onClose}><X className="h-3.5 w-3.5" />Salir</button>
+            <button className={btnPrimary} onClick={handleAnularClick}><Check className="h-3.5 w-3.5" />Anular</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Réplica de frmGuiaRemision_ModificarObservacion.vb
+function ModificarObservacionModal({
+  row,
+  onClose,
+  onSaved,
+}: {
+  row: GuiaRemisionRow;
+  onClose: () => void;
+  onSaved: () => void;
+}) {
+  const [observacion, setObservacion] = useState(String((row as any).observacion ?? ""));
+  const [saving, setSaving] = useState(false);
+  // Estados que en VB habilitan btnGuardar: GENERADO, APROBADO, CREDITOS.
+  const puedeGuardar = ["GENERADO", "APROBADO", "CREDITOS"].includes(row.estado);
+
+  const handleGuardar = async () => {
+    setSaving(true);
+    try {
+      // GuiaRemisionUpdate ya trae "observacion" (equivale a
+      // oGuiaRemisionService.ActualizarObservacion(IdGuia, Observacion, Usuario) del VB).
+      await updateGuiaRemision(row.id, { observacion });
+      toast.success("Observación actualizada");
+      onSaved();
+    } catch (e: any) {
+      toast.error(e.message ?? "Error al actualizar la observación");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/35">
+      <div className="w-[420px] bg-[#F1F3F8] border border-slate-500 shadow-2xl rounded-sm overflow-hidden">
+        <div className="flex items-center justify-between px-3 py-1.5 bg-gradient-to-b from-[#3E5B7A] to-[#2A3F55] text-white text-[12px]">
+          <span className="font-medium">Modificar Observación — Guía N° {row.num_doc}</span>
+          <button onClick={onClose} className="hover:bg-white/20 rounded px-1"><X className="h-3.5 w-3.5" /></button>
+        </div>
+        <div className="p-4 text-[12px] text-slate-800 space-y-2">
+          <span className="text-[11px] font-semibold text-slate-700">Observación :</span>
+          <textarea
+            className={`${inp} w-full h-24 resize-none`}
+            value={observacion}
+            onChange={(e) => setObservacion(e.target.value)}
+            disabled={!puedeGuardar}
+            autoFocus
+          />
+          {!puedeGuardar && (
+            <div className="text-[11px] text-amber-700">
+              Esta guía está en estado {row.estado}; en SIGECOM solo se puede modificar la observación en GENERADO, APROBADO o CREDITOS.
+            </div>
+          )}
+          <div className="flex justify-end gap-2 pt-1">
+            <button className={btn} onClick={onClose}><X className="h-3.5 w-3.5" />Cancelar</button>
+            <button className={btnPrimary} disabled={!puedeGuardar || saving} onClick={handleGuardar}>
+              <Save className="h-3.5 w-3.5" />Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Fusión de frmGuiaRemision_Imprimir.vb (radio Detalle/Resumen) +
+// frmGuiaRemision_ImprimirPrecio.vb (checkbox Mostrar Precio)
+function PrintGuiaModal({
+  onClose,
+  onPrint,
+}: {
+  onClose: () => void;
+  onPrint: (opts: { detalle: boolean; mostrarPrecio: boolean }) => void;
+}) {
+  const [detalle, setDetalle] = useState(true); // true = Generar Detalle, false = Generar Resumen
   const [mostrarPrecio, setMostrarPrecio] = useState(true);
   return (
     <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/35">
@@ -2808,14 +3393,24 @@ function PrintGuiaModal({ onClose, onPrint }: { onClose: () => void; onPrint: (m
           <button onClick={onClose} className="hover:bg-white/20 rounded px-1"><X className="h-3.5 w-3.5" /></button>
         </div>
         <div className="p-4 text-[12px] text-slate-800">
-          <div className="mb-3 text-[11px]">Impresión</div>
+          <div className="mb-2 text-[11px] font-semibold text-slate-700">Impresión</div>
+          <div className="space-y-1 mb-3">
+            <label className="flex items-center gap-2">
+              <input type="radio" checked={detalle} onChange={() => setDetalle(true)} />
+              <span className="text-[12px]">Generar Detalle</span>
+            </label>
+            <label className="flex items-center gap-2">
+              <input type="radio" checked={!detalle} onChange={() => setDetalle(false)} />
+              <span className="text-[12px]">Generar Resumen</span>
+            </label>
+          </div>
           <label className="flex items-center gap-2 mb-4">
             <input type="checkbox" checked={mostrarPrecio} onChange={(e) => setMostrarPrecio(e.target.checked)} />
             <span className="text-[12px]">Mostrar Precio</span>
           </label>
           <div className="flex justify-end gap-2">
             <button className={btn} onClick={onClose}><X className="h-3.5 w-3.5" /> Cancelar</button>
-            <button className={btnPrimary} onClick={() => { onPrint(mostrarPrecio); onClose(); }}><Check className="h-3.5 w-3.5" /> Aceptar</button>
+            <button className={btnPrimary} onClick={() => { onPrint({ detalle, mostrarPrecio }); onClose(); }}><Check className="h-3.5 w-3.5" /> Aceptar</button>
           </div>
         </div>
       </div>

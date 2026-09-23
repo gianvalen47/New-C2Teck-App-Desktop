@@ -62,6 +62,10 @@ def _company_to_locaciones(company_code: str | None) -> list[int]:
         "8": [87],
         "05": [72],
         "5": [72],
+        "02": [30],
+        "2": [30],
+        "07": [81],
+        "7": [81],
         "30": [30],
         "31": [31],
         "72": [72],
@@ -78,7 +82,12 @@ def _company_to_locaciones(company_code: str | None) -> list[int]:
 
 
 def _row_matches_company(row: dict, company_code: str | None) -> bool:
-    """Filter rows to the active company when the record exposes a company code."""
+    """Filter rows to the active company when metadata is available.
+
+    SIGECOM guia rows often omit `CodEmp`; in those cases the `id_locacion`
+    mapping is the authoritative fallback. Rows without metadata must not be
+    dropped just because the adapter cannot see a company code on the row itself.
+    """
     if not company_code:
         return True
     if not isinstance(row, dict):
@@ -89,8 +98,14 @@ def _row_matches_company(row: dict, company_code: str | None) -> bool:
         loc = row.get("id_locacion")
         if loc is None:
             loc = row.get("IdLocacion")
-        if loc is not None and int(str(loc).strip()) in locaciones:
-            return True
+        if loc is not None:
+            try:
+                loc_value = int(str(loc).strip())
+                if loc_value in locaciones:
+                    return True
+                return False
+            except (TypeError, ValueError):
+                pass
 
     for key in ("CodEmp", "cod_emp", "CodEmpresa", "cod_empresa", "Empresa", "empresa"):
         if key in row:
@@ -98,9 +113,9 @@ def _row_matches_company(row: dict, company_code: str | None) -> bool:
             if value is not None:
                 return str(value).strip() == str(company_code).strip()
 
-    # If the row lacks any explicit company metadata, use the known `id_locacion`
-    # mapping as the definitive fallback for SIGECOM.
-    return False
+    # Rows without explicit company metadata are not evidence of a mismatch.
+    # Preserve them unless the row itself says otherwise.
+    return True
 
 
 def is_legacy_source_enabled() -> bool:
@@ -856,10 +871,23 @@ def list_guias_legacy(
                             continue
                         if str(val).strip() in codes:
                             return True
-                        else:
-                            return False
-                # no metadata -> exclude when explicit codes requested
-                return False
+                        return False
+
+                loc = g.get("id_locacion")
+                if loc is None:
+                    loc = g.get("IdLocacion")
+                if loc is not None:
+                    try:
+                        loc_value = int(str(loc).strip())
+                        for code in codes:
+                            if loc_value in _company_to_locaciones(code):
+                                return True
+                        return False
+                    except (TypeError, ValueError):
+                        pass
+
+                # Rows without metadata are not evidence of mismatch; preserve them.
+                return True
 
             filtered_items = [g for g in items if matches_any(g)]
         else:

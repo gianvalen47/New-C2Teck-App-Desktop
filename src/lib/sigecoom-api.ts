@@ -1,3 +1,5 @@
+import { apiFetch } from './fetch-client';
+
 export type SigecoomClient = {
   id: string;
   name: string;
@@ -64,6 +66,14 @@ export type Location = {
   active: number;
   created_at: string;
   updated_at?: string;
+  /**
+   * PENDIENTE en backend: frmGuiasRemision.vb arma su combo de Almacén (cmbIdLocacion) con
+   * columnas IdLocacion/DesAlm/AproDoc/CodAlm desde oMaestroService.MostrarLocaciones(CodOfi).
+   * Este modelo Location todavía no trae un "cod_alm" propio (distinto de "code", que hoy se usa
+   * para agrupar por Oficina) — agregarlo aquí para que el filtro de Almacén en GuiasRemision.tsx
+   * pueda mostrar el código real en vez del id interno.
+   */
+  cod_alm?: string;
 };
 
 export type BankAccount = {
@@ -222,21 +232,151 @@ export type SessionInfo = {
   empresas: EmpresaAsignada[];
 };
 
-import { apiFetch } from "./fetch-client";
+export function coerceEmpresaList(value: unknown): EmpresaAsignada[] {
+  const seen = new Set<unknown>();
+
+  const walk = (current: unknown): EmpresaAsignada[] => {
+    if (current == null) return [];
+    if (Array.isArray(current)) {
+      return current.flatMap((item) => {
+        if (seen.has(item)) return [];
+        seen.add(item);
+        return walk(item);
+      });
+    }
+    if (typeof current === "string") {
+      const trimmed = current.trim();
+      if (!trimmed) return [];
+      try {
+        const parsed = JSON.parse(trimmed);
+        if (parsed !== null && parsed !== undefined) {
+          return walk(parsed);
+        }
+      } catch {
+        // leave as single-company fallback below
+      }
+      return [{ codigo: trimmed, nombre: trimmed, descripcion: null, ruc: null }];
+    }
+    if (typeof current === "object") {
+      const record = current as Record<string, unknown>;
+      for (const key of ["empresas", "items", "data", "result", "rows", "list", "lista", "companies", "companyList", "empresa"]) {
+        if (key in record) {
+          return walk(record[key]);
+        }
+      }
+      if (record.codigo || record.Codigo || record.cod || record.cod_emp || record.CodEmp || record.codigoEmpresa) {
+        const codigo = String(record.codigo ?? record.Codigo ?? record.cod ?? record.cod_emp ?? record.CodEmp ?? record.codigoEmpresa ?? "").trim();
+        if (codigo) {
+          return [{
+            codigo,
+            nombre: String(record.nombre ?? record.Nombre ?? record.razon ?? record.descripcion ?? record.Des ?? codigo),
+            ruc: (record.ruc ?? record.RUC ?? record.rucEmpresa) as string | null | undefined,
+            descripcion: (record.descripcion ?? record.descripcionEmpresa ?? record.Des) as string | null | undefined,
+          }];
+        }
+      }
+      return [];
+    }
+    return [];
+  };
+
+  return walk(value);
+}
 
 // Alias module-local `fetch` to `apiFetch` so all internal calls get the
 // company header injection when available. We cast to the global fetch type
 // to satisfy TypeScript call signatures.
 const fetch = apiFetch as unknown as typeof globalThis.fetch;
 
+export function hydrateSessionSnapshot(raw: unknown): SessionInfo | null {
+  if (!raw || typeof raw !== "object") return null;
+
+  const session = raw as Record<string, any>;
+  const empresas = coerceEmpresaList(
+    session.empresas ??
+    session.companyList ??
+    session.companies ??
+    session.items ??
+    session.result ??
+    session.data ??
+    session.list ??
+    session.lista ??
+    session.empresa ??
+    session
+  );
+
+  const active = session.empresa_actual ?? session.empresaActual ?? session.currentCompany ?? null;
+  const empresa_actual = active && typeof active === "object" && (active.codigo || active.Codigo || active.cod || active.cod_emp || active.CodEmp)
+    ? {
+        codigo: String(active.codigo ?? active.Codigo ?? active.cod ?? active.cod_emp ?? active.CodEmp ?? ""),
+        nombre: String(active.nombre ?? active.Nombre ?? active.descripcion ?? active.Des ?? active.codigo ?? active.Codigo ?? ""),
+        ruc: active.ruc ?? active.RUC ?? active.rucEmpresa ?? null,
+        descripcion: active.descripcion ?? active.descripcionEmpresa ?? active.Des ?? null,
+      }
+    : (empresas[0] ?? null);
+
+  const normalized: SessionInfo = {
+    username: String(session.username ?? ""),
+    perfil: String(session.perfil ?? "Consultor"),
+    fecha_transaccion: String(session.fecha_transaccion ?? new Date().toLocaleDateString("es-PE")),
+    tipo_cambio_compra: Number(session.tipo_cambio_compra ?? session.tipoCambioCompra ?? 0),
+    tipo_cambio_venta: Number(session.tipo_cambio_venta ?? session.tipoCambioVenta ?? 0),
+    empresas,
+    empresa_actual: empresa_actual,
+  };
+
+  if (!normalized.empresas.length && normalized.empresa_actual) {
+    normalized.empresas = [normalized.empresa_actual];
+  }
+
+  if (normalized.empresa_actual && !normalized.empresas.some((item) => String(item.codigo).trim() === String(normalized.empresa_actual?.codigo ?? "").trim())) {
+    normalized.empresas = [normalized.empresa_actual, ...normalized.empresas];
+  }
+
+  return normalized;
+}
+
 export async function fetchSession(): Promise<SessionInfo> {
   const response = await apiFetch(`${API_BASE_URL}${API_V1_PREFIX}/auth/session`);
   if (!response.ok) throw new Error("No se pudo obtener la sesión");
   const session = await response.json();
+  const normalized = hydrateSessionSnapshot(session) ?? {
+    username: "",
+    perfil: "Consultor",
+    fecha_transaccion: new Date().toLocaleDateString("es-PE"),
+    tipo_cambio_compra: 0,
+    tipo_cambio_venta: 0,
+    empresas: [],
+    empresa_actual: null,
+  };
   try {
-    if (typeof window !== "undefined") window.localStorage.setItem("sigecoom_session", JSON.stringify(session));
+    if (typeof window !== "undefined") {
+      // Preserve any existing multiempresa snapshot stored locally when the
+      // backend returns a session payload without an empresas list. Some
+      // legacy adapters or intermittent auth checks may return minimal
+      // session objects; avoid wiping the user's saved companies in that
+      // case so the multiempresa selector remains persistent until the user
+      // explicitly logs out or their local VPN/auth session changes.
+      const raw = window.localStorage.getItem("sigecoom_session");
+      if (raw) {
+        try {
+          const existing = JSON.parse(raw) as Partial<SessionInfo>;
+          // If backend didn't return empresas, reuse the locally stored list
+          if ((!normalized.empresas || normalized.empresas.length === 0) && existing.empresas && existing.empresas.length > 0) {
+            normalized.empresas = existing.empresas as any;
+          }
+          // If backend didn't return empresa_actual but localStorage has one, preserve it
+          if ((!normalized.empresa_actual || !normalized.empresa_actual.codigo) && existing.empresa_actual) {
+            normalized.empresa_actual = existing.empresa_actual as any;
+          }
+        } catch (_e) {
+          // ignore parse errors and continue with normalized as-is
+        }
+      }
+      window.localStorage.setItem("sigecoom_session", JSON.stringify(normalized));
+    }
   } catch (_) {}
-  return session;
+  return normalized;
 }
 
 export function getSessionTipoCambioCompra(): number | null {
@@ -320,7 +460,8 @@ export async function fetchEmpresas(username?: string): Promise<EmpresaAsignada[
   if (!response.ok) {
     throw new Error("No se pudo cargar las empresas asignadas");
   }
-  return response.json();
+  const payload = await response.json();
+  return coerceEmpresaList(payload);
 }
 
 export async function fetchMultiempresa(username?: string): Promise<SessionInfo> {
@@ -1482,6 +1623,31 @@ export type GuiaRemisionUpdate = Partial<Omit<GuiaRemisionCreate, 'id_locacion' 
 };
 
 /** Listar guías con filtros — equivale a GuiaRemisionService.Filtrar */
+function inferIdLocacionFromSessionCompany(): number | undefined {
+  try {
+    if (typeof localStorage === 'undefined') return undefined;
+    const raw = localStorage.getItem('sigecoom_session');
+    if (!raw) return undefined;
+
+    const sess = JSON.parse(raw);
+    const explicit = Number(sess?.empresa_actual?.id_locacion ?? sess?.empresa_actual?.locacion ?? sess?.id_locacion);
+    if (Number.isFinite(explicit) && explicit > 0) return explicit;
+
+    const codigo = (sess?.empresa_actual?.codigo || '').toString().trim();
+    const legacyMap: Record<string, number> = {
+      '08': 87, '8': 87,
+      '05': 72, '5': 72,
+      '30': 30, '31': 31,
+      '72': 72, '73': 73, '75': 75,
+      '80': 80, '81': 81, '83': 83,
+      '87': 87,
+    };
+    return codigo ? legacyMap[codigo] : undefined;
+  } catch (_) {
+    return undefined;
+  }
+}
+
 export async function fetchGuiasRemision(params: {
   anio?: number;
   mes?: number;
@@ -1493,6 +1659,15 @@ export async function fetchGuiasRemision(params: {
   skip?: number;
   limit?: number;
 } = {}): Promise<GuiaRemisionRow[]> {
+  // If caller did not provide id_locacion, try to infer it from the active
+  // company in the session. If the company is not in the legacy compatibility map,
+  // leave it undefined instead of forcing an empty dataset.
+  try {
+    if (params.id_locacion === undefined) {
+      params.id_locacion = inferIdLocacionFromSessionCompany();
+    }
+  } catch (_) {}
+
   const qs = new URLSearchParams();
   if (params.anio) qs.set("anio", String(params.anio));
   if (params.mes) qs.set("mes", String(params.mes));
@@ -1533,9 +1708,22 @@ export async function fetchGuiasRemision(params: {
     // ignore
   }
 
-  const response = await fetch(url, { headers });
-  if (!response.ok) throw new Error("Error al obtener guías de remisión");
-  return response.json();
+  // Debug: log headers being sent
+  try { console.info('[sigecoom-api] fetchGuiasRemision request', { url, headers }); } catch (_) {}
+
+  const response = await apiFetch(url, { headers });
+  let text = await response.text();
+  try {
+    const parsed = JSON.parse(text || 'null');
+    try { console.info('[sigecoom-api] fetchGuiasRemision response', { status: response.status, ok: response.ok, length: Array.isArray(parsed) ? parsed.length : (parsed && parsed.items ? (parsed.items.length) : null) }); } catch (_) {}
+    if (!response.ok) throw new Error("Error al obtener guías de remisión");
+    return parsed;
+  } catch (err) {
+    try { console.warn('[sigecoom-api] fetchGuiasRemision could not parse JSON response', { status: response.status, text: text?.slice?.(0, 200) }); } catch (_) {}
+    if (!response.ok) throw new Error("Error al obtener guías de remisión");
+    // If it's not JSON but OK, return empty array as fallback
+    return [] as any;
+  }
 }
 
 
@@ -1553,14 +1741,14 @@ export async function fetchGuiaRemision(id: number | string): Promise<GuiaRemisi
   } catch (e) {
     // ignore
   }
-  const response = await fetch(url, { headers });
+  const response = await apiFetch(url, { headers });
   if (!response.ok) throw new Error("Guía no encontrada");
   return response.json();
 }
 
 /** Crear guía — equivale a GuiaRemisionService.Insertar */
 export async function createGuiaRemision(data: GuiaRemisionCreate): Promise<GuiaRemisionFull> {
-  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision`, {
+  const response = await apiFetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -1574,7 +1762,7 @@ export async function createGuiaRemision(data: GuiaRemisionCreate): Promise<Guia
 
 /** Actualizar cabecera — equivale a GuiaRemisionService.Actualizar */
 export async function updateGuiaRemision(id: number | string, data: GuiaRemisionUpdate): Promise<GuiaRemisionFull> {
-  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${encodeURIComponent(String(id))}`, {
+  const response = await apiFetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${encodeURIComponent(String(id))}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -1588,7 +1776,7 @@ export async function updateGuiaRemision(id: number | string, data: GuiaRemision
 
 /** Anular guía — equivale a cambiar estado ANULADO */
 export async function anularGuiaRemision(id: number | string): Promise<GuiaRemisionRow> {
-  const response = await fetch(
+  const response = await apiFetch(
     `${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${encodeURIComponent(String(id))}/estado?nuevo_estado=ANULADO`,
     { method: "PATCH" }
   );
@@ -1601,7 +1789,7 @@ export async function anularGuiaRemision(id: number | string): Promise<GuiaRemis
 
 /** Eliminar físicamente la guía (borrado forzado) */
 export async function deleteGuiaRemision(id: number | string): Promise<void> {
-  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${encodeURIComponent(String(id))}/borrar`, {
+  const response = await apiFetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${encodeURIComponent(String(id))}/borrar`, {
     method: "DELETE",
   });
   if (!response.ok) {
@@ -1615,7 +1803,7 @@ export async function addGuiaRemisionDet(
   idGuia: number,
   det: Omit<GuiaRemisionDet, 'id' | 'id_guia' | 'total_fila' | 'created_at' | 'updated_at'>
 ): Promise<GuiaRemisionDet> {
-  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${idGuia}/detalles`, {
+  const response = await apiFetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${idGuia}/detalles`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(det),
@@ -1633,7 +1821,7 @@ export async function updateGuiaRemisionDet(
   idDet: number,
   data: Partial<Pick<GuiaRemisionDet, 'des_mer' | 'cod_uni_med' | 'can_mer' | 'pre_mer' | 'dsc_mer' | 'regalo' | 'no_core'>>
 ): Promise<GuiaRemisionDet> {
-  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${idGuia}/detalles/${idDet}`, {
+  const response = await apiFetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${idGuia}/detalles/${idDet}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -1644,7 +1832,7 @@ export async function updateGuiaRemisionDet(
 
 /** Eliminar ítem del detalle — equivale a GuiaRemisionDetService.Borrar */
 export async function deleteGuiaRemisionDet(idGuia: number, idDet: number): Promise<void> {
-  const response = await fetch(
+  const response = await apiFetch(
     `${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${idGuia}/detalles/${idDet}`,
     { method: "DELETE" }
   );
@@ -1656,11 +1844,126 @@ export async function upsertTransportistaGuia(
   idGuia: number,
   data: Omit<GuiaRemisionTransportista, 'id' | 'id_guia' | 'created_at' | 'updated_at'>
 ): Promise<GuiaRemisionTransportista> {
-  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${idGuia}/transportista`, {
+  const response = await apiFetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${idGuia}/transportista`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
   if (!response.ok) throw new Error("Error al guardar transportista");
+  return response.json();
+}
+
+/**
+ * Trasladar guía a otro almacén — equivale a frmGuiaRemision_Transferir.vb
+ * (oGuiaRemisionService.Transferir(IdGuia, IdLocacion, usuario)).
+ * NOTA: endpoint propuesto — falta implementarlo en el backend (PATCH
+ * /guias-remision/{id}/transferir recibiendo { id_locacion }).
+ */
+export async function transferirGuiaRemision(
+  idGuia: number | string,
+  idLocacionDestino: number
+): Promise<GuiaRemisionRow> {
+  const response = await apiFetch(
+    `${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${encodeURIComponent(String(idGuia))}/transferir`,
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id_locacion: idLocacionDestino }),
+    }
+  );
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error((err as any).detail ?? "Error al transferir la guía");
+  }
+  return response.json();
+}
+
+/**
+ * Ítem de consumo de una OT/Job — columnas tomadas de OrigenDatos/ConsumoJob.xml
+ * (dataset real devuelto por oTransferenciaService.MostrarAtencionJob).
+ */
+export type JobConsumoItem = {
+  item: number;
+  cod_mer: string;
+  des_mer?: string;
+  can_mer: number;
+  cod_mar?: string;
+  modelo?: string;
+  importado?: boolean;
+  cod_emp?: string;
+  ruc_emp?: string;
+  des_emp?: string;
+  num_job?: string;
+};
+
+/**
+ * Buscar y traer los ítems consumidos de una OT — equivale a
+ * oJobService.Buscar(NumJob) + oTransferenciaService.MostrarAtencionJob(CodEmp, NumJob)
+ * de frmGuiaRemision_AgregarConsumoJob.vb.
+ * NOTA: endpoint propuesto — falta implementarlo en el backend
+ * (GET /jobs/{num_job}/consumo, 404 si el Nº de OT no existe).
+ */
+export async function fetchAtencionJob(numJob: string): Promise<JobConsumoItem[]> {
+  const response = await apiFetch(`${API_BASE_URL}${API_V1_PREFIX}/jobs/${encodeURIComponent(numJob)}/consumo`);
+  if (response.status === 404) {
+    throw new Error("Número de OT no existente, Verifique");
+  }
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error((err as any).detail ?? "Error al consultar la OT");
+  }
+  return response.json();
+}
+
+/**
+ * Registrar el consumo de una OT sobre la guía — equivale a
+ * oGuiaRemisionService.IngresarConsumoJob(CodAlmacen, NumJob, NumDoc, FecDoc, usuario)
+ * de frmGuiaRemision_AgregarConsumoJob.vb.
+ * NOTA: endpoint propuesto — falta implementarlo en el backend
+ * (POST /guias-remision/{id}/consumo-job).
+ */
+export async function ingresarConsumoJob(
+  idGuia: number | string,
+  data: { num_job: string; num_doc: string; fec_doc: string }
+): Promise<GuiaRemisionFull> {
+  const response = await apiFetch(
+    `${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${encodeURIComponent(String(idGuia))}/consumo-job`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    }
+  );
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error((err as any).detail ?? "Error al ingresar el consumo de la OT");
+  }
+  return response.json();
+}
+
+/**
+ * Datos digitales/SUNAT de la guía — equivale a
+ * GuiaRemisionDigitalService.Obtener(IdGuia), usado por
+ * frmGuiaRemision_Electronica_ObsSunat.vb (Ticket/Estado/Observación/Notas/UrlLink).
+ * NOTA: endpoint propuesto — falta implementarlo en el backend
+ * (GET /guias-remision/{id}/digital).
+ */
+export type GuiaRemisionDigital = {
+  id_guia: number;
+  num_ticket?: string;
+  estado?: string;
+  observacion?: string;
+  notas?: string;
+  url_link?: string;
+};
+
+export async function fetchGuiaRemisionDigital(idGuia: number | string): Promise<GuiaRemisionDigital> {
+  const response = await apiFetch(
+    `${API_BASE_URL}${API_V1_PREFIX}/guias-remision/${encodeURIComponent(String(idGuia))}/digital`
+  );
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error((err as any).detail ?? "Error al consultar los datos SUNAT de la guía");
+  }
   return response.json();
 }

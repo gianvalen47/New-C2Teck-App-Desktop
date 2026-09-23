@@ -29,6 +29,8 @@ import {
   FileEdit,
   FolderOpen,
   FolderPlus,
+  ChevronUp,
+  ChevronDown,
 } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -59,7 +61,14 @@ const MESES = [
   "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO",
   "JULIO", "AGOSTO", "SETIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE",
 ];
-const NOW = new Date();
+
+function getTodayDateParts() {
+  const today = new Date();
+  return {
+    year: String(today.getFullYear()),
+    month: String(today.getMonth() + 1),
+  };
+}
 
 type FacturaFormProps = {
   factura?: FacturaRow;
@@ -200,6 +209,163 @@ function etiquetaEstado(status: string): string {
   if (status === "cancelled") return "ANULADO";
   if (status === "sent") return "ENVIADO";
   return status.toUpperCase();
+}
+
+function YearSpinner({ value, onChange }: { value: string; onChange: (next: string) => void }) {
+  const currentYear = Number(value || new Date().getFullYear());
+  const stepYear = (delta: number) => {
+    const next = Math.max(2000, currentYear + delta);
+    onChange(String(next));
+  };
+
+  return (
+    <div className="flex h-7 w-[82px] items-stretch overflow-hidden rounded border border-slate-300 bg-white shadow-xs">
+      <input
+        type="number"
+        min={2000}
+        value={value}
+        onChange={(e) => {
+          const next = e.target.value;
+          onChange(next === "" ? String(new Date().getFullYear()) : next);
+        }}
+        className="w-[58px] border-0 bg-transparent px-2 py-0 text-[11px] font-mono text-slate-800 outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+      />
+      <div className="flex w-[18px] flex-col border-l border-slate-300">
+        <button
+          type="button"
+          className="flex h-1/2 w-full items-center justify-center bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200"
+          title="Subir año"
+          onClick={() => stepYear(1)}
+        >
+          <ChevronUp className="h-3 w-3" />
+        </button>
+        <button
+          type="button"
+          className="flex h-1/2 w-full items-center justify-center border-t border-slate-300 bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200"
+          title="Bajar año"
+          onClick={() => stepYear(-1)}
+        >
+          <ChevronDown className="h-3 w-3" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function MonthSelector({ value, onChange }: { value: string; onChange: (next: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const [sortMode, setSortMode] = useState<"code" | "month">("code");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!ref.current) return;
+      if (!ref.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const selectedLabel = value ? MESES[Number(value) - 1] ?? "Todos" : "Todos";
+
+  const monthRows = useMemo(() => {
+    return MESES.map((month, index) => ({
+      code: String(index + 1).padStart(2, "0"),
+      value: String(index + 1),
+      month,
+    })).sort((a, b) => {
+      if (sortMode === "code") {
+        const diff = Number(a.value) - Number(b.value);
+        return sortDirection === "asc" ? diff : -diff;
+      }
+      const diff = a.month.localeCompare(b.month, "es");
+      return sortDirection === "asc" ? diff : -diff;
+    });
+  }, [sortMode, sortDirection]);
+
+  const handleSortToggle = (mode: "code" | "month") => {
+    if (sortMode === mode) {
+      setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+      return;
+    }
+
+    setSortMode(mode);
+    setSortDirection("asc");
+  };
+
+  return (
+    <div ref={ref} className="relative w-full">
+      <button
+        type="button"
+        className={`${inp} flex w-full items-center justify-between gap-2 px-2 text-left`}
+        onClick={() => setOpen((prev) => !prev)}
+      >
+        <span className="truncate text-[11px] text-slate-700">{selectedLabel}</span>
+        <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
+      </button>
+
+      {open && (
+        <div className="absolute z-40 mt-1 w-[220px] overflow-hidden rounded-sm border border-slate-300 bg-white shadow-lg">
+          <div className="max-h-64 overflow-auto">
+            <div className="grid grid-cols-[58px_1fr] items-center border-b border-slate-200 bg-slate-100 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-600">
+              <button
+                type="button"
+                onClick={() => handleSortToggle("code")}
+                className="flex items-center justify-center gap-1 text-center transition-colors duration-150 hover:bg-slate-200/80 rounded-sm px-1 focus:outline-none"
+              >
+                <span>Codigo</span>
+                {sortMode === "code" && (
+                  <span className="text-[9px]">{sortDirection === "asc" ? "▲" : "▼"}</span>
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSortToggle("month")}
+                className="flex items-center justify-center gap-1 border-l border-slate-300 pl-2 text-center transition-colors duration-150 hover:bg-slate-200/80 rounded-sm px-1 focus:outline-none"
+              >
+                <span>Mes</span>
+                {sortMode === "month" && (
+                  <span className="text-[9px]">{sortDirection === "asc" ? "▲" : "▼"}</span>
+                )}
+              </button>
+            </div>
+            <button
+              type="button"
+              className="grid w-full grid-cols-[58px_1fr] items-center border-b border-slate-200 px-2 py-1 text-[11px] text-slate-700 transition-colors duration-150 hover:bg-slate-200/80"
+              onClick={() => {
+                onChange("");
+                setOpen(false);
+              }}
+            >
+              <span className="text-center font-mono">--</span>
+              <span className="border-l border-slate-300 pl-2 text-center">Todos</span>
+            </button>
+            {monthRows.map(({ code, value: monthValue, month }) => {
+              const active = value === monthValue;
+              return (
+                <button
+                  key={month}
+                  type="button"
+                  className={`grid w-full grid-cols-[58px_1fr] items-center border-b border-slate-200 px-2 py-1 text-[11px] transition-colors duration-150 ${active ? "bg-[#EAF2FF] text-[#1F3E68] font-semibold" : "text-slate-700 hover:bg-slate-200/80"}`}
+                  onClick={() => {
+                    onChange(monthValue);
+                    setOpen(false);
+                  }}
+                >
+                  <span className="text-center font-mono text-slate-600">{code}</span>
+                  <span className="border-l border-slate-300 pl-2 text-center">{month}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function FacturaForm({ factura, onClose, onSaved }: FacturaFormProps) {
@@ -524,8 +690,8 @@ export function FacturaVentaList() {
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
 
-  const [anio, setAnio] = useState(String(NOW.getFullYear()));
-  const [mes, setMes] = useState(String(NOW.getMonth() + 1));
+  const [anio, setAnio] = useState(() => getTodayDateParts().year);
+  const [mes, setMes] = useState(() => getTodayDateParts().month);
   const [estado, setEstado] = useState("");
   const [numDoc, setNumDoc] = useState("");
   const [cliente, setCliente] = useState("");
@@ -798,18 +964,11 @@ export function FacturaVentaList() {
 
       {/* Filtros */}
       <div className="flex flex-wrap items-end gap-2 px-2 py-1.5 bg-[#F0F4F8] border-b border-slate-300">
-        <Field label="Año" className="w-14">
-          <input className={`${inp} font-mono`} value={anio} onChange={(e) => setAnio(e.target.value)} />
+        <Field label="Año" className="w-[84px]">
+          <YearSpinner value={anio} onChange={setAnio} />
         </Field>
-        <Field label="Mes" className="w-24">
-          <select className={inp} value={mes} onChange={(e) => setMes(e.target.value)}>
-            <option value="">Todos</option>
-            {MESES.map((m, i) => (
-              <option key={m} value={String(i + 1)}>
-                {m}
-              </option>
-            ))}
-          </select>
+        <Field label="Mes" className="w-32">
+          <MonthSelector value={mes} onChange={setMes} />
         </Field>
         <Field label="Cliente" className="w-52">
           <input className={inp} value={cliente} onChange={(e) => setCliente(e.target.value)} placeholder="(Todos)" />

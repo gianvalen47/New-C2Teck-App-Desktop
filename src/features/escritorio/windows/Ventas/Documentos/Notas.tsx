@@ -529,8 +529,14 @@ export function NotaVentaList() {
   const [searched, setSearched] = useState(false);
   const [locations, setLocations] = useState<Location[]>([]);
   const [loading, setLoading] = useState(false);
-  const [anio, setAnio] = useState(String(new Date().getFullYear()));
-  const [mes, setMes] = useState(String(new Date().getMonth() + 1));
+  const [anio, setAnio] = useState(() => {
+    const today = new Date();
+    return String(today.getFullYear());
+  });
+  const [mes, setMes] = useState(() => {
+    const today = new Date();
+    return String(today.getMonth() + 1);
+  });
   const [estado, setEstado] = useState("");
   const [numDoc, setNumDoc] = useState("");
   const [cliente, setCliente] = useState("");
