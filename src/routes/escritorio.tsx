@@ -1,5 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useRef, useEffect, useLayoutEffect, FormEvent } from "react";
+import {
+  motion,
+  AnimatePresence,
+  EASE_OUT,
+  EASE_FAST,
+} from "@/features/escritorio/motion";
 import { toast } from "sonner";
 import { useDesktopMode } from "@/hooks/use-desktop";
 import { createPortal } from "react-dom";
@@ -29,6 +35,7 @@ import {
   FileDown, PiggyBank, BookCheck, FileWarning,
   Smartphone, Signal, Phone, Target, IdCard, LogOut, Info, KeyRound, Handshake,
   Eye, EyeOff, Key, User, Zap,
+  ChevronRight,
 } from "lucide-react";
 
 import { fetchSession, login, type SessionInfo, fetchAdapterTipoCambio } from "@/lib/sigecoom-api";
@@ -1283,22 +1290,32 @@ function DesktopAppInner() {
           </div>
         </div>
 
-        {/* Ribbon (in-flow, keeps the normal top position) */}
-        <div
-          className={[
-            "shrink-0 overflow-hidden bg-gradient-to-b from-[#F8FAFC] to-[#EEF2F7] transition-[height,opacity] duration-300 ease-out",
-            ribbonMode === "expanded" && !ribbonMinimized ? "h-[104px] opacity-100 border-b border-slate-300" : "h-0 opacity-0",
-          ].join(" ")}
+        {/* Ribbon animado (in-flow, mantiene el comportamiento original) */}
+<div
+  className={[
+    "shrink-0 overflow-hidden bg-gradient-to-b from-[#F8FAFC] to-[#EEF2F7] transition-[height,opacity] duration-300 ease-out",
+    ribbonMode === "expanded" && !ribbonMinimized ? "h-[104px] opacity-100 border-b border-slate-300" : "h-0 opacity-0",
+  ].join(" ")}
+>
+  {!ribbonMinimized && (
+    <div
+      onContextMenu={(e) => { e.preventDefault(); setRibbonMenu({ x: e.clientX, y: e.clientY }); }}
+      className={`px-2 py-1 h-[104px] ${ribbonBelow ? "order-last border-t border-b-0" : ""}`}
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={active}
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0, transition: EASE_OUT }}
+          exit={{ opacity: 0, transition: EASE_FAST }}
+          className="h-full w-full"
         >
-          {!ribbonMinimized && (
-            <div
-              onContextMenu={(e) => { e.preventDefault(); setRibbonMenu({ x: e.clientX, y: e.clientY }); }}
-              className={`px-2 py-1 h-[104px] ${ribbonBelow ? "order-last border-t border-b-0" : ""}`}
-            >
-              <RibbonContent ribbon={ribbon} openDesktopWindow={openDesktopWindow} />
-            </div>
-          )}
-        </div>
+          <RibbonContent ribbon={ribbon} openDesktopWindow={openDesktopWindow} />
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  )}
+</div>
 
         {ribbonMenu && (
           <div
@@ -1333,60 +1350,81 @@ function DesktopAppInner() {
 
 
         {/* Status bar / MDI strip */}
-        <div className="shrink-0 border-t border-slate-900/60 bg-gradient-to-b from-[#243B55] to-[#141E30]">
-          <div className="h-7 border-b border-slate-700/70 px-2 flex items-center gap-2 overflow-x-auto text-[10px] text-slate-300 font-mono">
-            <span className="inline-flex items-center gap-1.5 shrink-0">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#10B981]" />
-              SYSTECK MDI
-            </span>
-            <span className="text-slate-500 shrink-0">|</span>
-            {windows.length === 0 ? (
-              <span className="text-slate-400 shrink-0">sin ventanas abiertas</span>
-            ) : (
-              <div className="flex items-center gap-1.5">
-                {windows.slice(0, 5).map((w) => (
-                  <button
-                    key={w.id}
-                    type="button"
-                    onClick={() => focusWindow(w.id)}
-                    className={[
-                      "inline-flex items-center gap-1.5 h-5 px-2 rounded border shrink-0",
-                      w.id === activeWindowId
-                        ? "border-cyan-500/60 bg-cyan-500/15 text-cyan-200"
-                        : "border-slate-600/80 bg-slate-800/60 text-slate-300 hover:bg-slate-700/70",
-                    ].join(" ")}
-                  >
-                    <span className="truncate max-w-[140px]">{w.label}</span>
-                    <span
-                      className="text-slate-400 hover:text-red-300"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        closeWindow(w.id);
-                      }}
-                    >
-                      x
-                    </span>
-                  </button>
-                ))}
-                {windows.length > 5 && (
-                  <span className="text-slate-400 shrink-0">+{windows.length - 5} más</span>
-                )}
-              </div>
-            )}
-            <span className="ml-auto text-slate-400 shrink-0">{windows.length} ventana{windows.length === 1 ? "" : "s"} • 0 min.</span>
-          </div>
+        <div className="shrink-0 border-t border-slate-900/80 bg-[#060B13]">
+  <div className="h-8 border-b border-cyan-950/80 px-2.5 flex items-center gap-2.5 overflow-x-auto text-[10.5px] font-mono">
+    <span className="inline-flex items-center gap-2 shrink-0 font-bold tracking-wider text-cyan-200">
+      <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10B981]" />
+      SYSTECK MDI
+    </span>
+    <span className="text-slate-700 shrink-0">|</span>
 
-          <div className="h-7 px-2 flex items-center gap-2 overflow-x-auto text-[10.5px] text-slate-200 font-mono">
-            <SessionStatus />
-            <span className="text-slate-500 shrink-0">|</span>
-            <span className="shrink-0 inline-flex items-center gap-1.5 px-1.5 h-5 rounded border border-indigo-400/40 bg-indigo-500/10 text-indigo-200">
-              <Zap className="h-2.5 w-2.5 text-cyan-300 animate-pulse" />
-              <span>Systeck-AI Core: <b className="text-emerald-300">ONLINE</b></span>
-            </span>
-            <span className="shrink-0 inline-flex items-center gap-1 px-1.5 h-5 rounded border border-cyan-400/40 bg-cyan-500/10 text-cyan-200">GPU Usage: <b className="text-cyan-100">24%</b></span>
-            <span className="shrink-0 inline-flex items-center gap-1 px-1.5 h-5 rounded border border-cyan-400/40 bg-cyan-500/10 text-cyan-200">Model Latency: <b className="text-cyan-100">12ms</b></span>
-          </div>
-        </div>
+    {windows.length === 0 ? (
+      <span className="text-slate-600 shrink-0 text-[10px]">sin ventanas abiertas</span>
+    ) : (
+      <div className="flex items-center gap-2">
+        {windows.map((w) => {
+          const isActive = w.id === activeWindowId && !w.isMinimized;
+          return (
+            <div
+              key={w.id}
+              onClick={() => focusWindow(w.id)}
+              className={[
+                "group relative shrink-0 inline-flex items-center gap-2 h-6 px-3 rounded-full border text-[11px] font-mono cursor-pointer transition-all duration-150 select-none",
+                isActive
+                  ? "bg-[#061C28] border-[#00E5FF] text-cyan-200 shadow-[0_0_12px_rgba(0,229,255,0.4),inset_0_0_6px_rgba(0,229,255,0.2)]"
+                  : w.isMinimized
+                    ? "bg-slate-900/60 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-300"
+                    : "bg-[#0A1320] border-cyan-900/80 text-cyan-400/90 hover:bg-[#0E1C2E] hover:border-cyan-700",
+              ].join(" ")}
+            >
+              <span
+                className={[
+                  "h-1.5 w-1.5 rounded-full shrink-0 transition-colors",
+                  isActive
+                    ? "bg-[#00E5FF] shadow-[0_0_6px_#00E5FF]"
+                    : w.isMinimized
+                      ? "bg-amber-400"
+                      : "bg-slate-500",
+                ].join(" ")}
+              />
+              <span className="truncate max-w-[150px]">{w.label}</span>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  closeWindow(w.id);
+                }}
+                className="ml-0.5 text-slate-400 hover:text-cyan-100 grid place-items-center rounded-full h-3.5 w-3.5 hover:bg-cyan-500/20 text-[10px]"
+                title="Cerrar"
+              >
+                ✕
+              </button>
+            </div>
+          );
+        })}
+      </div>
+    )}
+
+    <span className="ml-auto text-slate-500 shrink-0 text-[10px]">
+      {windows.length} ventana{windows.length === 1 ? "" : "s"} • {windows.filter((w) => w.isMinimized).length} min.
+    </span>
+  </div>
+
+  <div className="h-7 px-2 flex items-center gap-2 overflow-x-auto text-[10.5px] text-slate-200 font-mono">
+    <SessionStatus />
+    <span className="text-slate-500 shrink-0">|</span>
+    <span className="shrink-0 inline-flex items-center gap-1.5 px-1.5 h-5 rounded border border-indigo-400/40 bg-indigo-500/10 text-indigo-200">
+      <Zap className="h-2.5 w-2.5 text-cyan-300 animate-pulse" />
+      <span>Systeck-AI Core: <b className="text-emerald-300">ONLINE</b></span>
+    </span>
+    <span className="shrink-0 inline-flex items-center gap-1 px-1.5 h-5 rounded border border-cyan-400/40 bg-cyan-500/10 text-cyan-200">
+      GPU Usage: <b className="text-cyan-100">24%</b>
+    </span>
+    <span className="shrink-0 inline-flex items-center gap-1 px-1.5 h-5 rounded border border-cyan-400/40 bg-cyan-500/10 text-cyan-200">
+      Model Latency: <b className="text-cyan-100">12ms</b>
+    </span>
+  </div>
+</div>
       </div>
 
       {isDesktop && desktopReady && !desktopAuthenticated && (
@@ -1756,7 +1794,7 @@ function CollapsedGroupButton({ group, onOpen }: { group: RibbonGroup; onOpen: (
           onClick={toggle}
           title={label}
           className={[
-            "flex flex-col items-center justify-center gap-1 rounded border w-[72px] h-[72px] px-1.5",
+            "flex flex-col items-center justify-center gap-1 rounded border w-[72px] h-[72px] px-1.5 press-fx active:scale-95",
             open
               ? "bg-gradient-to-b from-[#FCE9A8] to-[#F5C86A] border-[#B8892E] shadow-inner"
               : "border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6]",
@@ -1885,8 +1923,19 @@ function AppOrb({ onSwitchCompany, onCloseApp }: { onSwitchCompany: () => void; 
   );
 }
 
-function TabsCarousel({ tabs, active, onSelect, onTabClick }: { tabs: string[]; active: string; onSelect: (tab: string) => void; onTabClick?: (e: React.MouseEvent, t: string) => void }) {
-  const handleTabClick = (e: React.MouseEvent, t: string) => {
+// Carrusel de Pestañas Animado con el prop onTabClick tipado
+function TabsCarousel({
+  tabs,
+  active,
+  onSelect,
+  onTabClick,
+}: {
+  tabs: string[];
+  active: string;
+  onSelect: (tab: string) => void;
+  onTabClick?: (e: React.MouseEvent<HTMLButtonElement>, t: string) => void;
+}) {
+  const handleTabClick = (e: React.MouseEvent<HTMLButtonElement>, t: string) => {
     if (onTabClick) {
       onTabClick(e, t);
     } else {
@@ -1897,25 +1946,36 @@ function TabsCarousel({ tabs, active, onSelect, onTabClick }: { tabs: string[]; 
   return (
     <div className="flex items-center px-2 pt-1 gap-0 overflow-x-auto">
       <div className="flex items-center gap-1 pr-1 shrink-0">
-        <button className="h-5 w-5 rounded hover:bg-white/60 grid place-items-center flex-shrink-0">
+        <button type="button" className="h-5 w-5 rounded hover:bg-white/60 grid place-items-center flex-shrink-0">
           <ChevronDown className="h-3 w-3" />
         </button>
         <div className="w-px h-4 bg-slate-400/30"></div>
       </div>
-      {tabs.map((t) => (
-        <button
-          key={t}
-          onClick={(e) => handleTabClick(e, t)}
-          className={[
-            "flex-1 px-2 py-2 text-[11px] font-medium rounded-t border-x border-t transition-colors text-center whitespace-nowrap",
-            active === t
-              ? "bg-[#F3F6FA] border-slate-400/60 text-slate-900 font-semibold -mb-px"
-              : "bg-transparent border-transparent text-slate-600 hover:bg-white/40 hover:text-slate-800",
-          ].join(" ")}
-        >
-          {t}
-        </button>
-      ))}
+      {tabs.map((t) => {
+        const isActive = active === t;
+        return (
+          <button
+            key={t}
+            type="button"
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleTabClick(e, t)}
+            className={[
+              "relative flex-1 px-2.5 py-1.5 text-[11px] font-medium rounded-t border-x border-t transition-colors text-center whitespace-nowrap select-none",
+              isActive
+                ? "bg-[#F3F6FA] border-slate-400/60 text-slate-900 font-semibold -mb-px z-10"
+                : "bg-transparent border-transparent text-slate-600 hover:bg-white/40 hover:text-slate-800",
+            ].join(" ")}
+          >
+            <span className="relative z-10">{t}</span>
+            {isActive && (
+  <motion.div
+    layoutId="activeTabLine"
+    className="absolute bottom-0 left-3 right-3 h-[1.5px] bg-[#1E3A8A]/80 rounded-full"
+    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+  />
+)}
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -1942,9 +2002,12 @@ function RibbonBigButton({ icon: Icon, label, dropdown, menu, onOpen }: RibbonBt
 
   return (
     <>
-      <button
+      <motion.button
         ref={btnRef}
         onClick={toggle}
+        whileHover={{ scale: 1.03, y: -1 }}
+        whileTap={{ scale: 0.97, y: 0 }}
+        transition={{ duration: 0.12 }}
         className={[
           "flex flex-col items-center gap-1 px-1.5 py-0.5 rounded border w-[64px]",
           open
@@ -1955,7 +2018,7 @@ function RibbonBigButton({ icon: Icon, label, dropdown, menu, onOpen }: RibbonBt
         <Glyph name={cleanLabel} size={30} className="drop-shadow-[0_1px_1px_rgba(15,23,42,0.15)] group-hover/rb:scale-105 transition-transform" />
         <span className="text-[10.5px] leading-tight text-center whitespace-pre text-slate-800 font-medium">{label}</span>
         {dropdown && <ChevronDown className="h-2.5 w-2.5 text-slate-500 -mt-1" />}
-      </button>
+      </motion.button>
       {open && menu && pos && createPortal(
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
@@ -2029,11 +2092,14 @@ function RibbonSmallButton({ icon: Icon, label, dropdown, menu, onOpen }: Ribbon
 
   return (
     <>
-      <button
+      <motion.button
         ref={btnRef}
         onClick={toggle}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.96 }}
+        transition={{ duration: 0.1 }}
         className={[
-          "flex items-center gap-1 px-1 py-0.5 rounded border text-left text-[10px]",
+          "flex items-center gap-1 px-1 py-0.5 rounded border text-left text-[10px] press-fx hover:-translate-y-[1px] active:scale-95",
           open
             ? "bg-gradient-to-b from-[#FCE9A8] to-[#F5C86A] border-[#B8892E]"
             : "border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6]",
@@ -2042,7 +2108,7 @@ function RibbonSmallButton({ icon: Icon, label, dropdown, menu, onOpen }: Ribbon
         <Glyph name={label} size={19} className="shrink-0 group-hover/rs:scale-105 transition-transform" />
         <span className="text-slate-800 truncate">{label}</span>
         {dropdown && <ChevronDown className="h-2 w-2 text-slate-600" />}
-      </button>
+      </motion.button>
       {open && menu && pos && createPortal(
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />

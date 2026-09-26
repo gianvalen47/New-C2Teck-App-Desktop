@@ -182,6 +182,9 @@ import { LabRowList } from "./windows/shared/LegacySupport";
 import { ProcesoLoteList } from "./windows/shared/LegacySupport";
 import { MantenimientoCRUDList } from "./windows/shared/LegacySupport";
 import { ConfigTablaList } from "./windows/shared/LegacySupport";
+import {
+  motion, AnimatePresence, mdiWindowVariants, MotionTBody, MotionRow, Spinner, GlowPulse,
+} from "./motion";
 
 
 // The goal of this file is to act as the single registry for all "windows" used
@@ -1735,25 +1738,30 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
 
   const closeContextMenu = () => setContextMenu(null);
 
-  const onDragStart = (e: ReactMouseEvent) => {
+  const onDragStart = (e: ReactMouseEvent<HTMLDivElement>) => {
     if (win.isMaximized) return;
     if ((e.target as HTMLElement).closest("[data-window-control]")) return;
     onFocus();
     dragRef.current = {
-      sx: e.clientX, sy: e.clientY,
-      ox: posRef.current.x, oy: posRef.current.y,
+      sx: e.clientX,
+      sy: e.clientY,
+      ox: posRef.current.x,
+      oy: posRef.current.y,
     };
     document.body.style.userSelect = "none";
     e.preventDefault();
   };
 
-  const onResizeStart = (e: ReactMouseEvent, dir: string) => {
+  const onResizeStart = (e: ReactMouseEvent<HTMLDivElement>, dir: string) => {
     if (win.isMaximized) return;
     onFocus();
     resizeRef.current = {
-      sx: e.clientX, sy: e.clientY,
-      ox: posRef.current.x, oy: posRef.current.y,
-      ow: sizeRef.current.w, oh: sizeRef.current.h,
+      sx: e.clientX,
+      sy: e.clientY,
+      ox: posRef.current.x,
+      oy: posRef.current.y,
+      ow: sizeRef.current.w,
+      oh: sizeRef.current.h,
       dir,
     };
     document.body.style.userSelect = "none";
@@ -1890,7 +1898,7 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
   return (
     <div
       className={[
-        "flex flex-col bg-white border border-slate-400/60 shadow-2xl overflow-hidden",
+        "flex flex-col bg-white border border-slate-400/60 shadow-2xl overflow-hidden win-open transition-shadow duration-200",
         win.isMaximized ? "rounded-none" : "rounded-lg",
         isActive
           ? "ring-2 ring-[#3B5998]/40"

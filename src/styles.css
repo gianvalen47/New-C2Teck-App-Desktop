@@ -102,3 +102,73 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
 }
+
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--muted-foreground) 40%, transparent) transparent;
+  &::-webkit-scrollbar { width: 8px; height: 8px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--muted-foreground) 35%, transparent);
+    border-radius: 8px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklab, var(--muted-foreground) 55%, transparent);
+  }
+}
+
+/* Systeck desktop — global icon microinteractions, including portaled MDI windows. */
+@keyframes systeck-icon-sync {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes systeck-icon-alert {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.12); filter: brightness(1.25); }
+}
+
+.systeck-desktop-motion :is(button, a, [role="button"]):not(:disabled) svg {
+  transform-origin: center;
+  transition: transform 140ms ease-out, filter 140ms ease-out, opacity 140ms ease-out;
+  will-change: transform;
+}
+
+.systeck-desktop-motion :is(button, a, [role="button"]):not(:disabled):hover svg {
+  transform: translateY(-2px) scale(1.08);
+  filter: brightness(1.12) drop-shadow(0 2px 2px rgb(15 23 42 / 18%));
+}
+
+.systeck-desktop-motion :is(button, a, [role="button"]):not(:disabled):active svg {
+  transform: translateY(0) scale(0.93);
+  filter: brightness(0.96);
+  transition-duration: 90ms;
+}
+
+.systeck-desktop-motion :is(
+  [title*="Actualizar" i], [aria-label*="Actualizar" i],
+  [title*="Sincronizar" i], [aria-label*="Sincronizar" i],
+  [title*="Procesar" i], [aria-label*="Procesar" i],
+  [title*="Recargar" i], [aria-label*="Recargar" i]
+):not(:disabled):hover svg {
+  animation: systeck-icon-sync 560ms linear infinite;
+  filter: brightness(1.12);
+}
+
+.systeck-desktop-motion :is([data-icon-state="alert"], [aria-current="true"]) svg {
+  animation: systeck-icon-alert 1.5s ease-in-out infinite;
+}
+
+.systeck-desktop-motion button:disabled svg {
+  opacity: 0.48;
+  transform: none;
+  filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .systeck-desktop-motion :is(button, a, [role="button"]) svg {
+    animation: none !important;
+    transition-duration: 1ms !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
