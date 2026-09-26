@@ -45,6 +45,7 @@ import {
   type FacturaRow,
   updateFactura,
 } from "@/lib/sigecoom-api";
+import { Field, InlineField, YearMonthFields, DraggableFormWindow } from "@/features/escritorio/windows/shared/uiComponents";
 
 // Estilos base responsivos y estilizados
 const inp =
@@ -76,42 +77,6 @@ type FacturaFormProps = {
   onSaved: () => void;
 };
 
-function Field({
-  label,
-  className = "",
-  children,
-}: {
-  label: string;
-  className?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <label className={`flex flex-col gap-0.5 ${className}`}>
-      <span className="text-[10.5px] text-slate-600 font-medium">{label}</span>
-      {children}
-    </label>
-  );
-}
-
-function InlineField({
-  label,
-  children,
-  className = "",
-  labelWidth = "w-[74px]",
-}: {
-  label: string;
-  children: React.ReactNode;
-  className?: string;
-  labelWidth?: string;
-}) {
-  return (
-    <div className={`flex items-center gap-1 ${className} hover:bg-slate-50 hover:rounded-sm`}>
-      <span className={`${labelWidth} shrink-0 text-right text-[11px] font-semibold text-slate-800`}>{label} :</span>
-      <div className="min-w-0 flex-1">{children}</div>
-    </div>
-  );
-}
-
 type FacturaFormWindow = {
   id: string;
   idFactura?: string;
@@ -122,78 +87,6 @@ type FacturaFormWindow = {
   h: number;
   z: number;
 };
-
-function DraggableFormWindow({
-  win,
-  onFocus,
-  onMove,
-  onClose,
-  children,
-}: {
-  win: FacturaFormWindow;
-  onFocus: () => void;
-  onMove: (id: string, x: number, y: number) => void;
-  onClose: () => void;
-  children: React.ReactNode;
-}) {
-  const DESKTOP_STATUS_BAR_H = 56;
-  const dragRef = useRef<{ dx: number; dy: number } | null>(null);
-
-  useEffect(() => {
-    const onMouseMove = (e: MouseEvent) => {
-      if (!dragRef.current) return;
-      const maxW = window.innerWidth;
-      const maxH = Math.max(320, window.innerHeight - DESKTOP_STATUS_BAR_H);
-      const nextXRaw = e.clientX - dragRef.current.dx;
-      const nextYRaw = e.clientY - dragRef.current.dy;
-      const nextX = Math.max(0, Math.min(nextXRaw, Math.max(0, maxW - win.w)));
-      const nextY = Math.max(0, Math.min(nextYRaw, Math.max(0, maxH - win.h)));
-      onMove(win.id, nextX, nextY);
-    };
-    const onMouseUp = () => {
-      dragRef.current = null;
-      document.body.style.userSelect = "";
-    };
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
-    return () => {
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
-      document.body.style.userSelect = "";
-    };
-  }, [onMove, win.id, win.w, win.h]);
-
-  if (typeof document === "undefined") return null;
-
-  return createPortal(
-    <div
-      className="fixed bg-[#EFEFEF] border border-slate-400 shadow-2xl rounded-md overflow-hidden pointer-events-auto flex flex-col font-sans"
-      style={{ left: win.x, top: win.y, width: win.w, height: win.h, zIndex: win.z }}
-      onMouseDown={onFocus}
-    >
-      <div
-        className="flex items-center justify-between px-3 py-1 bg-[#2C4053] text-[12px] text-white cursor-move select-none shrink-0"
-        onMouseDown={(e) => {
-          onFocus();
-          dragRef.current = { dx: e.clientX - win.x, dy: e.clientY - win.y };
-          document.body.style.userSelect = "none";
-          e.preventDefault();
-        }}
-      >
-        <span className="font-semibold text-[12px] tracking-wide">{win.title}</span>
-        <button
-          onClick={onClose}
-          className="hover:bg-white/20 rounded p-0.5 transition-colors"
-          title="Cerrar"
-        >
-          <X className="h-4 w-4" />
-        </button>
-      </div>
-      <div className="flex-1 overflow-auto bg-[#EFEFEF] text-slate-800">{children}</div>
-    </div>,
-    document.body
-  );
-}
 
 function estadoSunat(row: FacturaRow): string {
   if (row.extra_data?.sunat_status) return String(row.extra_data.sunat_status);
@@ -964,12 +857,7 @@ export function FacturaVentaList() {
 
       {/* Filtros */}
       <div className="flex flex-wrap items-end gap-2 px-2 py-1.5 bg-[#F0F4F8] border-b border-slate-300">
-        <Field label="Año" className="w-[84px]">
-          <YearSpinner value={anio} onChange={setAnio} />
-        </Field>
-        <Field label="Mes" className="w-32">
-          <MonthSelector value={mes} onChange={setMes} />
-        </Field>
+        <YearMonthFields anio={anio} setAnio={setAnio} mes={mes} setMes={setMes} />
         <Field label="Cliente" className="w-52">
           <input className={inp} value={cliente} onChange={(e) => setCliente(e.target.value)} placeholder="(Todos)" />
         </Field>

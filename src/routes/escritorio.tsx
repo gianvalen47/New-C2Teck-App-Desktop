@@ -1733,8 +1733,10 @@ function RibbonContent({ ribbon, openDesktopWindow }: { ribbon: RibbonGroup[]; o
 
 function CollapsedGroupButton({ group, onOpen }: { group: RibbonGroup; onOpen: (label: string) => void }) {
   const [open, setOpen] = useState(false);
+  const [expandedItem, setExpandedItem] = useState<string | null>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
+  const { open: openWindow } = useWindows();
 
   const label = group.title || group.items[0]?.label || "Grupo";
 
@@ -1767,21 +1769,49 @@ function CollapsedGroupButton({ group, onOpen }: { group: RibbonGroup; onOpen: (
       </div>
       {open && pos && createPortal(
         <>
-          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+          <div className="fixed inset-0 z-40" onClick={() => { setOpen(false); setExpandedItem(null); }} />
           <div
-            className="fixed z-[2147483646] bg-[#F3F6FA] border border-slate-400/70 shadow-xl rounded-sm p-2 min-w-[220px] max-h-[60vh] overflow-y-auto"
-            style={{ left: pos.left, top: pos.top }}
+            className="fixed z-50 bg-[#F3F6FA] border border-slate-400/70 shadow-xl rounded-sm p-2 min-w-[220px] max-w-[calc(100vw-16px)] max-h-[calc(100vh-16px)] overflow-y-auto"
+            style={{ left: Math.min(pos.left, window.innerWidth - 236), top: Math.min(pos.top, window.innerHeight - 120) }}
           >
-            <div className="flex flex-col gap-0.5">
+            <div className="flex flex-col gap-0.5 px-1 py-1">
               {group.items.map((item) => (
+                <div key={item.label}>
+                  <button
+                    onClick={() => {
+                      if (item.menu) {
+                        setExpandedItem(current => current === item.label ? null : item.label);
+                      } else {
+                        openWindow(item.openLabel ?? item.label.replace(/\n/g, " "));
+                        setOpen(false);
+                        setExpandedItem(null);
+                      }
+                    }}
+                    aria-expanded={item.menu ? expandedItem === item.label : undefined}
+                    className={[
+                      "flex w-full items-center gap-2 px-1.5 py-1 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border text-left",
+                      expandedItem === item.label ? "bg-gradient-to-b from-[#FCE9A8] to-[#F5C86A] border-[#B8892E]" : "border-transparent",
+                    ].join(" ")}
+                  >
+                    <item.icon className="h-4 w-4 text-amber-600 shrink-0" strokeWidth={1.5} />
+                    <span className="text-[11.5px] text-slate-800 whitespace-nowrap flex-1">{item.label.replace(/\n/g, " ")}</span>
+                    {item.menu && <ChevronDown className="h-3 w-3 text-slate-600 shrink-0" />}
+                  </button>
+                  {expandedItem === item.label && item.menu?.map(section => (
+                    <div key={section.title} className="ml-3 pl-2 border-l border-slate-300 py-0.5">
+                      {section.items.map(subitem => (
                 <button
-                  key={item.label}
-                  onClick={() => { onOpen(item.label); setOpen(false); }}
-                  className="flex items-center gap-2 px-1.5 py-1 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border border-transparent text-left"
-                >
-                  <Glyph name={item.label} size={18} className="shrink-0" />
-                  <span className="text-[11.5px] text-slate-800 whitespace-nowrap">{item.label}</span>
-                </button>
+                          key={subitem.label}
+                          onClick={() => { openWindow(subitem.label); setOpen(false); setExpandedItem(null); }}
+                          className="flex w-full items-center gap-2 px-1.5 py-1 rounded border border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6] text-left"
+                        >
+                          <subitem.icon className="h-4 w-4 text-amber-600 shrink-0" strokeWidth={1.5} />
+                          <span className="text-[11.5px] text-slate-800 whitespace-nowrap">{subitem.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  ))}
+                </div>
               ))}
             </div>
           </div>

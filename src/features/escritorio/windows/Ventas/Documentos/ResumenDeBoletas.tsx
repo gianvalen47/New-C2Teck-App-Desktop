@@ -17,6 +17,7 @@ import {
   X,
 } from "lucide-react";
 import { actionBtn, btn, btnPrimary, iconBtn, inp, squareIconBtn, tbSep } from "@/features/escritorio/windows/uiStyles";
+import { Field, YearMonthFields, EstadoBadge } from "@/features/escritorio/windows/shared/uiComponents";
 
 type ResumenBoletaRow = {
   id: string;
@@ -50,15 +51,6 @@ const ESTADO_COLORS: Record<string, string> = {
   ANULADO: "text-red-700 bg-red-50 border-red-200",
 };
 
-function Field({ label, className = "", children }: { label: string; className?: string; children: ReactNode }) {
-  return (
-    <label className={`flex flex-col gap-0.5 ${className}`}>
-      <span className="text-[10.5px] text-slate-600 font-medium leading-tight">{label}</span>
-      {children}
-    </label>
-  );
-}
-
 function InlineField({
   label,
   children,
@@ -76,11 +68,6 @@ function InlineField({
       <div className="min-w-0 flex-1 flex items-center">{children}</div>
     </div>
   );
-}
-
-function EstadoBadge({ estado }: { estado: string }) {
-  const cls = ESTADO_COLORS[estado] ?? "text-slate-600 bg-slate-50 border-slate-200";
-  return <span className={`inline-block px-1.5 py-0 text-[10px] font-bold rounded border ${cls}`}>{estado}</span>;
 }
 
 type ResumenBoletaFormWindow = {
@@ -180,31 +167,6 @@ function ResumenEditor({
 
   return (
     <div className="h-full flex flex-col overflow-hidden bg-[#F3F6FA] text-[11px] select-none">
-      <div className="flex items-center gap-1 px-2 py-1.5 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] border-b border-slate-300 shrink-0 overflow-x-auto">
-        <button className={iconBtn} title="Editar cabecera">
-          <Pencil className="h-4 w-4" />
-        </button>
-        {tbSep}
-        <button className={iconBtn} title="Grabar" onClick={() => { onSave(form); onClose(); }}>
-          <Save className="h-4 w-4 text-emerald-700" />
-        </button>
-        {tbSep}
-        <button className={iconBtn} title="Reiniciar" onClick={onClose}>
-          <RefreshCw className="h-4 w-4 text-blue-600" />
-        </button>
-        {tbSep}
-        <button className={iconBtn} title="Enviar XML">
-          <Send className="h-4 w-4" />
-        </button>
-        {tbSep}
-        <button className={iconBtn} title="Imprimir documento">
-          <Printer className="h-4 w-4" />
-        </button>
-        {tbSep}
-        <button className={iconBtn} title="Salir" onClick={onClose}>
-          <LogOut className="h-4 w-4 text-red-600" />
-        </button>
-      </div>
 
       <div className="text-center text-[11px] font-semibold text-slate-800 py-1 bg-[#EEF2F7] border-b border-slate-300 shrink-0">
         OFICINA: {form.oficina} &nbsp;-&nbsp; ALMACEN: {form.almacen}
@@ -297,12 +259,55 @@ export function ResumenDeBoletasList() {
   const [selectedId, setSelectedId] = useState(initialRows[0].id);
   const [showEditor, setShowEditor] = useState(false);
   const [mode, setMode] = useState<"view" | "edit" | "new">("view");
+  const [sortBy, setSortBy] = useState<{ col: string; asc: boolean } | null>(null);
+  const [anio, setAnio] = useState(() => String(new Date().getFullYear()));
+  const [mes, setMes] = useState(() => String(new Date().getMonth() + 1));
+  const [codResumen, setCodResumen] = useState("");
   const [window, setWindow] = useState<ResumenBoletaFormWindow>({ id: "resumen-boletas-editor", title: "Resumen de Boleta", x: 180, y: 120, w: 920, h: 480, z: 35 });
 
   const selectedRow = useMemo(
     () => rows.find((row) => row.id === selectedId) ?? rows[0],
     [rows, selectedId]
   );
+
+  const sortedRows = useMemo(() => {
+    const out = [...rows];
+    if (!sortBy) return out;
+
+    const { col, asc } = sortBy;
+    out.sort((a, b) => {
+      const av = (() => {
+        switch (col) {
+          case "codigo": return a.codigo;
+          case "fecha": return a.fecha;
+          case "ticket": return a.ticket;
+          case "cliente": return a.cliente;
+          case "observacion": return a.observacion;
+          case "notas": return a.notas;
+          case "sunat": return a.sunat;
+          default: return "";
+        }
+      })();
+
+      const bv = (() => {
+        switch (col) {
+          case "codigo": return b.codigo;
+          case "fecha": return b.fecha;
+          case "ticket": return b.ticket;
+          case "cliente": return b.cliente;
+          case "observacion": return b.observacion;
+          case "notas": return b.notas;
+          case "sunat": return b.sunat;
+          default: return "";
+        }
+      })();
+
+      const result = String(av).localeCompare(String(bv), undefined, { numeric: true, sensitivity: "base" });
+      return asc ? result : -result;
+    });
+
+    return out;
+  }, [rows, sortBy]);
 
   const openNew = () => {
     const next: ResumenBoletaRow = {
@@ -346,33 +351,25 @@ export function ResumenDeBoletasList() {
   return (
     <div className="relative h-full min-h-0 flex flex-col overflow-hidden bg-[#F3F6FA]">
       <div className="flex items-center gap-1 px-2 py-1.5 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] border-b border-slate-400/50 shrink-0 overflow-x-auto">
-        <button className={iconBtn} title="Imprimir resumen"><Printer className="h-4 w-4" /></button>
-        {tbSep}
         <button className={iconBtn} title="Crear nuevo registro" onClick={openNew}><Plus className="h-4 w-4" /></button>
         {tbSep}
-        <button className={iconBtn} title="Ver registro seleccionado" onClick={openEdit} disabled={!selectedRow}><Search className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Mostrar los datos del registro seleccionado" onClick={openEdit} disabled={!selectedRow}><Search className="h-4 w-4" /></button>
         {tbSep}
-        <button className={iconBtn} title="Eliminar registro seleccionado" disabled={!selectedRow}><Trash2 className="h-4 w-4" /></button>
-        {tbSep}
-        <button className={iconBtn} title="Enviar resumen"><Send className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Obtener Estado Sunat"><Send className="h-4 w-4" /></button>
         {tbSep}
         <button className={iconBtn} title="Actualizar" onClick={() => setRows((prev) => [...prev])}><RefreshCw className="h-4 w-4" /></button>
         {tbSep}
-        <button className={iconBtn} title="Gestión"><Wrench className="h-4 w-4" /></button>
-        {tbSep}
-        <button className={iconBtn} title="Mensajería"><Mail className="h-4 w-4" /></button>
-        {tbSep}
-        <button className={iconBtn} title="Cerrar ventana"><LogOut className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Cerrar la ventana actual"><LogOut className="h-4 w-4" /></button>
       </div>
 
-      <div className="flex flex-wrap items-end gap-2 px-2 py-1.5 bg-[#F0F4F8] border-b border-slate-300">
-        <Field label="Año" className="w-14"><input className={`${inp} font-mono`} defaultValue="2026" /></Field>
-        <Field label="Mes" className="w-24"><select className={inp} defaultValue="SEPTIEMBRE"><option>SEPTIEMBRE</option><option>AGOSTO</option><option>JULIO</option></select></Field>
-        <Field label="Oficina" className="w-28"><select className={inp} defaultValue="LIMA"><option>LIMA</option><option>AREQUIPA</option></select></Field>
-        <Field label="Cliente" className="w-52"><div className="flex gap-1"><input className={inp} defaultValue="(Todos)" /><button className={btn} type="button" title="Buscar cliente"><Search className="h-3 w-3" /></button></div></Field>
-        <Field label="Estado" className="w-28"><select className={inp} defaultValue="(Todos)"><option>(Todos)</option><option>GENERADO</option><option>APROBADO</option><option>ANULADO</option></select></Field>
-        <Field label="Número" className="w-20"><input className={`${inp} font-mono`} /></Field>
-        <button className={btnPrimary}><Search className="h-3.5 w-3.5" />Buscar</button>
+      <div className="w-full px-2 py-1.5 bg-[#F0F4F8] border-b border-slate-300">
+        <div className="flex flex-wrap items-end justify-center gap-2">
+          <YearMonthFields anio={anio} setAnio={setAnio} mes={mes} setMes={setMes} />
+          <Field label="Cod. Resumen" className="w-24">
+            <input className={`${inp} font-mono`} value={codResumen} onChange={(e) => setCodResumen(e.target.value)} />
+          </Field>
+          <button className={btnPrimary}><Search className="h-3.5 w-3.5" />Buscar</button>
+        </div>
       </div>
 
       <div className="flex-1 min-h-0 overflow-auto p-1.5">
@@ -382,22 +379,29 @@ export function ResumenDeBoletasList() {
               <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0 z-10">
                 <tr>
                   {[
-                    "Cod. Resumen",
-                    "Fecha",
-                    "N° Ticket",
-                    "Cliente",
-                    "Observación",
-                    "Notas",
-                    "Estado Sunat",
-                  ].map((header) => (
-                    <th key={header} className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap">
-                      {header}
+                    { key: "codigo", label: "Cod. Resumen" },
+                    { key: "fecha", label: "Fecha" },
+                    { key: "ticket", label: "N° Ticket" },
+                    { key: "cliente", label: "Cliente" },
+                    { key: "observacion", label: "Observación" },
+                    { key: "notas", label: "Notas" },
+                    { key: "sunat", label: "Estado Sunat" },
+                  ].map(({ key, label }) => (
+                    <th
+                      key={key}
+                      className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]"
+                      onClick={() => setSortBy((prev) => prev?.col === key ? { col: key, asc: !prev.asc } : { col: key, asc: true })}
+                    >
+                      <span className="inline-flex items-center gap-1">
+                        {label}
+                        {sortBy?.col === key ? (sortBy.asc ? "▲" : "▼") : ""}
+                      </span>
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {rows.map((row, index) => (
+                {sortedRows.map((row, index) => (
                   <tr
                     key={row.id}
                     onClick={() => setSelectedId(row.id)}

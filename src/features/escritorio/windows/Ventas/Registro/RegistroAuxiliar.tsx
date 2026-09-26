@@ -15,9 +15,9 @@ export function RegistroAuxiliarList() {
       <div className="max-w-[520px] mx-auto p-3 space-y-3">
         <Fs legend="Fechas">
           <div className="grid grid-cols-[auto_auto_auto_auto] items-center gap-2">
-            <span className="text-[11px] font-semibold text-slate-700">Del :</span>
+            <span className="text-[13px] font-semibold text-slate-700">Del :</span>
             <input className={inp} type="date" defaultValue="2026-08-01" />
-            <span className="text-[11px] font-semibold text-slate-700">Al</span>
+            <span className="text-[13px] font-semibold text-slate-700">Al</span>
             <input className={inp} type="date" defaultValue="2026-08-07" />
           </div>
         </Fs>

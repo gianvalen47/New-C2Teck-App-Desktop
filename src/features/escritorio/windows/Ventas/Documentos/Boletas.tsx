@@ -1,5 +1,4 @@
-import { createPortal } from "react-dom";
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CalendarDays,
   ChevronDown,
@@ -23,6 +22,7 @@ import {
 import { stdToolbar5 } from "@/features/escritorio/windows/shared/toolbarPresets";
 import { actionBtn, btn, btnPrimary, iconBtn, inp, squareIconBtn, tbSep } from "@/features/escritorio/windows/uiStyles";
 import { fetchSession, getSessionTipoCambioCompra } from "@/lib/sigecoom-api";
+import { Field, InlineField, YearSpinner, EstadoBadge, DraggableFormWindow, type BoletaFormWindow, FiltersPanel, ESTADO_FILTER_OPTIONS } from "@/features/escritorio/windows/shared/uiComponents";
 
 type BoletaRow = {
   id: string;
@@ -45,167 +45,7 @@ const initialRows: BoletaRow[] = [
   { id: "B-1005", numero: "B001-1005", fecha: "2026-09-05", cliente: "COSTA BRAVA EIRL", moneda: "PEN", total: "820.00", estado: "GENERADO", sunat: "PENDIENTE", codigo: "B001", observacion: "Venta normal" },
 ];
 
-const ESTADO_COLORS: Record<string, string> = {
-  GENERADO: "text-blue-700 bg-blue-50 border-blue-200",
-  APROBADO: "text-green-700 bg-green-50 border-green-200",
-  CREDITOS: "text-amber-700 bg-amber-50 border-amber-200",
-  ANULADO: "text-red-700 bg-red-50 border-red-200",
-};
 
-function Field({ label, className = "", children }: { label: string; className?: string; children: ReactNode }) {
-  return (
-    <label className={`flex flex-col gap-0.5 ${className}`}>
-      <span className="text-[10.5px] text-slate-600 font-medium leading-tight">{label}</span>
-      {children}
-    </label>
-  );
-}
-
-function InlineField({
-  label,
-  children,
-  className = "",
-  labelWidth = "w-[74px]",
-}: {
-  label: string;
-  children: ReactNode;
-  className?: string;
-  labelWidth?: string;
-}) {
-  return (
-    <div className={`flex items-center gap-1 ${className} hover:bg-slate-50 hover:rounded-sm`}>
-      <span className={`${labelWidth} shrink-0 text-right text-[11px] font-semibold text-slate-800 leading-tight`}>{label} :</span>
-      <div className="min-w-0 flex-1 flex items-center">{children}</div>
-    </div>
-  );
-}
-
-function EstadoBadge({ estado }: { estado: string }) {
-  const cls = ESTADO_COLORS[estado] ?? "text-slate-600 bg-slate-50 border-slate-200";
-  return <span className={`inline-block px-1.5 py-0 text-[10px] font-bold rounded border ${cls}`}>{estado}</span>;
-}
-
-function YearSpinner({ value, onChange }: { value: string; onChange: (next: string) => void }) {
-  const currentYear = Number(value || new Date().getFullYear());
-  const stepYear = (delta: number) => {
-    const next = Math.max(2000, currentYear + delta);
-    onChange(String(next));
-  };
-
-  return (
-    <div className="flex h-7 w-[82px] items-stretch overflow-hidden rounded border border-slate-300 bg-white shadow-xs">
-      <input
-        type="number"
-        min={2000}
-        value={value}
-        onChange={(e) => {
-          const next = e.target.value;
-          onChange(next === "" ? String(new Date().getFullYear()) : next);
-        }}
-        className="w-[58px] border-0 bg-transparent px-2 py-0 text-[11px] font-mono text-slate-800 outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-      />
-      <div className="flex w-[18px] flex-col border-l border-slate-300">
-        <button
-          type="button"
-          className="flex h-1/2 w-full items-center justify-center bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200"
-          title="Subir año"
-          onClick={() => stepYear(1)}
-        >
-          <ChevronUp className="h-3 w-3" />
-        </button>
-        <button
-          type="button"
-          className="flex h-1/2 w-full items-center justify-center border-t border-slate-300 bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200"
-          title="Bajar año"
-          onClick={() => stepYear(-1)}
-        >
-          <ChevronDown className="h-3 w-3" />
-        </button>
-      </div>
-    </div>
-  );
-}
-
-type BoletaFormWindow = {
-  id: string;
-  title: string;
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  z: number;
-};
-
-function DraggableFormWindow({
-  win,
-  onFocus,
-  onMove,
-  onClose,
-  children,
-}: {
-  win: BoletaFormWindow;
-  onFocus: () => void;
-  onMove: (id: string, x: number, y: number) => void;
-  onClose: () => void;
-  children: ReactNode;
-}) {
-  const dragRef = useRef<{ dx: number; dy: number } | null>(null);
-
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      if (!dragRef.current) return;
-      const maxW = window.innerWidth;
-      const maxH = Math.max(320, window.innerHeight - 56);
-      const nextXRaw = event.clientX - dragRef.current.dx;
-      const nextYRaw = event.clientY - dragRef.current.dy;
-      const nextX = Math.max(0, Math.min(nextXRaw, Math.max(0, maxW - win.w)));
-      const nextY = Math.max(0, Math.min(nextYRaw, Math.max(0, maxH - win.h)));
-      onMove(win.id, nextX, nextY);
-    };
-
-    const handleMouseUp = () => {
-      dragRef.current = null;
-      document.body.style.userSelect = "";
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-      document.body.style.userSelect = "";
-    };
-  }, [onMove, win.id, win.w, win.h]);
-
-  if (typeof document === "undefined") return null;
-
-  return createPortal(
-    <div
-      className="fixed bg-[#F1F3F8] border border-slate-500 shadow-2xl rounded-sm overflow-hidden pointer-events-auto"
-      style={{ left: win.x, top: win.y, width: win.w, height: win.h, zIndex: win.z }}
-      onMouseDown={onFocus}
-      role="dialog"
-      aria-modal="true"
-    >
-      <div
-        className="flex items-center justify-between px-3 py-1.5 bg-gradient-to-b from-[#3E5B7A] to-[#2A3F55] border-b border-[#1F2E3F] text-[12px] text-white cursor-move"
-        onMouseDown={(e) => {
-          onFocus();
-          dragRef.current = { dx: e.clientX - win.x, dy: e.clientY - win.y };
-          document.body.style.userSelect = "none";
-          e.preventDefault();
-        }}
-      >
-        <span className="font-medium">{win.title}</span>
-        <button className="hover:bg-white/20 rounded px-1" onClick={onClose} title="Cerrar ventana">
-          <X className="h-3.5 w-3.5 text-white" />
-        </button>
-      </div>
-      <div className="h-[calc(100%-31px)] overflow-hidden bg-[#F8FBFF] text-slate-800">{children}</div>
-    </div>,
-    document.body
-  );
-}
 
 function BoletaEditor({
   row,
@@ -387,6 +227,8 @@ function BoletaEditor({
 
 export function BoletaList() {
   const [rows, setRows] = useState<BoletaRow[]>(initialRows);
+  const [loading, setLoading] = useState(false);
+  const [showClientLookup, setShowClientLookup] = useState(false);
   const [selectedId, setSelectedId] = useState(initialRows[0].id);
   const [showEditor, setShowEditor] = useState(false);
   const [mode, setMode] = useState<"view" | "edit" | "new">("view");
@@ -420,6 +262,12 @@ export function BoletaList() {
     if (!selectedRow) return;
     setMode("edit");
     setShowEditor(true);
+  };
+
+  const load = async () => {
+    setLoading(true);
+    // placeholder: integrate real fetch logic here
+    setTimeout(() => setLoading(false), 400);
   };
 
   const saveRow = (next: BoletaRow) => {
@@ -475,17 +323,15 @@ export function BoletaList() {
         <button className={iconBtn} title="Cerrar la ventana actual"><LogOut className="h-4 w-4" /></button>
       </div>
 
-      <div className="flex flex-wrap items-end gap-2 px-2 py-1.5 bg-[#F0F4F8] border-b border-slate-300">
-        <Field label="Año" className="w-[84px]">
-          <YearSpinner value="2026" onChange={() => {}} />
-        </Field>
-        <Field label="Mes" className="w-24"><select className={inp} defaultValue="SEPTIEMBRE"><option>SEPTIEMBRE</option><option>AGOSTO</option><option>JULIO</option></select></Field>
-        <Field label="Oficina" className="w-28"><select className={inp} defaultValue="LIMA"><option>LIMA</option><option>AREQUIPA</option></select></Field>
-        <Field label="Cliente" className="w-52"><div className="flex gap-1"><input className={inp} defaultValue="(Todos)" /><button className={btn} type="button" title="Buscar cliente"><Search className="h-3 w-3" /></button></div></Field>
-        <Field label="Estado" className="w-28"><select className={inp} defaultValue="(Todos)"><option>(Todos)</option><option>GENERADO</option><option>APROBADO</option><option>ANULADO</option></select></Field>
-        <Field label="Número" className="w-20"><input className={`${inp} font-mono`} /></Field>
-        <button className={btnPrimary}><Search className="h-3.5 w-3.5" />Buscar</button>
-      </div>
+      {/* Filtros */}
+      <FiltersPanel
+        officeOptions={[]}
+        warehouseOptions={[]}
+        warehouseCodAlm={{}}
+        onShowClientLookup={() => setShowClientLookup(true)}
+        onSearch={load}
+        loading={loading}
+      />
 
       <div className="flex-1 min-h-0 overflow-auto p-1.5">
         <div className="border border-slate-400/60 bg-white rounded-sm h-full overflow-auto">
@@ -503,7 +349,7 @@ export function BoletaList() {
                     "Estado Sunat",
                     "C",
                     "Tot. Neto Sug.",
-                    "Observación",
+                    "ObservaciónSunat",
                   ].map((header) => (
                     <th key={header} className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap">
                       {header}

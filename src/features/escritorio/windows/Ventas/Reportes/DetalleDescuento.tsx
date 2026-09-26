@@ -14,10 +14,6 @@ import {
 export function ReporteDetalleDescuentoList() {
   return (
     <WindowShell title="Reporte de Venta Detallado con Descuento"
-      toolbar={<>
-        <button className={btn}><Filter className="h-3.5 w-3.5" />Filtros</button>
-        <button className={btnPrimary}><RefreshCw className="h-3.5 w-3.5" />Generar</button>
-      </>}
     >
       <div className="p-3 space-y-3 max-w-2xl mx-auto text-[11.5px] text-slate-800">
         <div className="grid grid-cols-[auto_1fr_auto_1fr] items-center gap-x-2 gap-y-2">
@@ -31,10 +27,8 @@ export function ReporteDetalleDescuentoList() {
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          <Fs legend="Localización">
             <Field label="Oficina"><select className={inp}><option>(Todos)</option></select></Field>
             <Field label="Almacén"><select className={inp}><option>(Todos)</option></select></Field>
-          </Fs>
           <div />
         </div>
 
