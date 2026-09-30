@@ -83,6 +83,11 @@ const GUIA_ESTADO_DESCRIPCIONES: Record<string, string> = {
   AN: "ANULADO",
   FC: "FACTURADO",
   TR: "TRANSFERIDO",
+  DP: "DESPACHADO",
+  DV: "DEVUELTO",
+  PR: "PROCESADO",
+  IN: "INGRESADO",
+  CO: "CONSULTA",
   GENERADO: "GENERADO",
   CREDITOS: "CREDITOS",
   APROBADO: "APROBADO",
@@ -90,6 +95,11 @@ const GUIA_ESTADO_DESCRIPCIONES: Record<string, string> = {
   ANULADO: "ANULADO",
   FACTURADO: "FACTURADO",
   TRANSFERIDO: "TRANSFERIDO",
+  DESPACHADO: "DESPACHADO",
+  DEVUELTO: "DEVUELTO",
+  PROCESADO: "PROCESADO",
+  INGRESADO: "INGRESADO",
+  CONSULTA: "CONSULTA",
 };
 
 // Mismas 6 opciones que antes tenía el <select> de Estado, con su abreviatura real
@@ -98,9 +108,15 @@ const ESTADO_FILTER_OPTIONS: CodeDescOption[] = [
   { code: "GN", label: "GENERADO", value: "GENERADO" },
   { code: "AP", label: "APROBADO", value: "APROBADO" },
   { code: "CR", label: "CREDITOS", value: "CREDITOS" },
+  { code: "IM", label: "IMPRESO", value: "IMPRESO" },
   { code: "AN", label: "ANULADO", value: "ANULADO" },
   { code: "FC", label: "FACTURADO", value: "FACTURADO" },
   { code: "TR", label: "TRANSFERIDO", value: "TRANSFERIDO" },
+  { code: "DP", label: "DESPACHADO", value: "DESPACHADO" },
+  { code: "DV", label: "DEVUELTO", value: "DEVUELTO" },
+  { code: "PR", label: "PROCESADO", value: "PROCESADO" },
+  { code: "IN", label: "INGRESADO", value: "INGRESADO" },
+  { code: "CO", label: "CONSULTA", value: "CONSULTA" },
 ];
 
 function getGuideEstadoDisplay(value: string | null | undefined) {

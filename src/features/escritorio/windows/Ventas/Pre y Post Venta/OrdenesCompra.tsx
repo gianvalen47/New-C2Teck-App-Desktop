@@ -16,16 +16,6 @@ export function OrdenesCompraList() {
     <MasterDetailForm
       title="Órdenes de Compra de Venta"
       toolbar={stdToolbar10}
-      header={
-        <div className="grid grid-cols-6 gap-2">
-          <Field label="Número"><input className={`${inp} font-mono`} defaultValue="000123" /></Field>
-          <Field label="Fecha"><input className={inp} type="date" defaultValue="2026-07-25" /></Field>
-          <Field label="Estado"><select className={inp}><option>PENDIENTE</option><option>ATENDIDO</option><option>ANULADO</option></select></Field>
-          <Field label="Moneda"><select className={inp}><option>PEN</option><option>USD</option></select></Field>
-          <Field label="Vendedor"><input className={inp} defaultValue="(Asignar)" /></Field>
-          <Field label="Prioridad"><select className={inp}><option>NORMAL</option><option>URGENTE</option></select></Field>
-        </div>
-      }
       filters={
         <SearchBar>
           <Field label="Cliente" className="w-64">
@@ -40,9 +30,8 @@ export function OrdenesCompraList() {
           <button className={`${btn} h-[28px]`}><Search className="h-3.5 w-3.5" />Buscar</button>
         </SearchBar>
       }
-      columns={["Ítem", "Código", "Descripción", "Cant.", "P.Unit", "Desc.", "SubTotal", "IGV", "Total"]}
-      rows={8}
-      summary={<CalculationSummaryBlock values={{ subtotal: 0, discount: 0, igv: 0, total: 0 }} />}
+      columns={["Número", "Fecha", "Cliente", "Mon.", "Total", "Estado", "TotNetoSug"]}
+      rows={7}
     />
   );
 }

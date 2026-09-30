@@ -42,21 +42,16 @@ import {
   fetchFacturas,
   fetchSession,
   getSessionTipoCambioCompra,
+  fetchSigecoomClients,
+  fetchSigecoomLocations,
+  type Location,
+  type SigecoomClient,
   type FacturaRow,
   updateFactura,
 } from "@/lib/sigecoom-api";
-import { Field, InlineField, YearMonthFields, DraggableFormWindow } from "@/features/escritorio/windows/shared/uiComponents";
+import { Field, InlineField, YearMonthFields, DraggableFormWindow, CodeDescSelector, ESTADO_FILTER_OPTIONS } from "@/features/escritorio/windows/shared/uiComponents";
+import { inp, btn, btnPrimary, iconBtn, actionBtn, squareIconBtn, tbSep } from "@/features/escritorio/windows/uiStyles";
 
-// Estilos base responsivos y estilizados
-const inp =
-  "h-7 px-2 text-[11px] bg-white border border-slate-300 rounded outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-400/50 w-full text-slate-800 shadow-xs transition-all";
-const btnPrimary =
-  "inline-flex items-center justify-center gap-1.5 h-7 px-3 text-[11px] rounded bg-slate-700 hover:bg-slate-800 text-white font-medium shrink-0 shadow-xs transition-all cursor-pointer";
-const iconBtn =
-  "inline-flex items-center justify-center h-7 w-7 rounded text-slate-600 hover:text-slate-900 hover:bg-slate-200/70 active:bg-slate-300/60 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer";
-const actionBtn =
-  "inline-flex items-center justify-center h-7 w-7 border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded shadow-xs active:bg-slate-200 transition-all cursor-pointer shrink-0";
-const tbSep = <span className="mx-0.5 h-4 w-px bg-slate-300 inline-block" aria-hidden="true" />;
 
 const MESES = [
   "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO",
@@ -88,20 +83,75 @@ type FacturaFormWindow = {
   z: number;
 };
 
-function estadoSunat(row: FacturaRow): string {
-  if (row.extra_data?.sunat_status) return String(row.extra_data.sunat_status);
-  if (row.status === "issued") return "ACEPTADO";
-  if (row.status === "cancelled") return "BAJA";
-  if (row.status === "sent") return "ENVIADO";
-  return "PENDIENTE";
+const FACTURA_ESTADO_LABELS: Record<string, string> = {
+  GN: "GENERADO",
+  AP: "APROBADO",
+  CR: "CREDITOS",
+  AN: "ANULADO",
+  IM: "IMPRESO",
+  GENERADO: "GENERADO",
+  APROBADO: "APROBADO",
+  CREDITOS: "CREDITOS",
+  ANULADO: "ANULADO",
+  IMPRESO: "IMPRESO",
+};
+
+function facturaNumero(row: FacturaRow): string {
+  const num = row.num_doc ?? row.number;
+  return num != null ? String(num) : "";
 }
 
-function etiquetaEstado(status: string): string {
-  if (status === "draft") return "GENERADO";
-  if (status === "issued") return "APROBADO";
-  if (status === "cancelled") return "ANULADO";
-  if (status === "sent") return "ENVIADO";
-  return status.toUpperCase();
+function facturaFecha(row: FacturaRow): string {
+  const raw = row.fec_doc || row.date;
+  if (!raw) return "";
+  try {
+    const d = new Date(raw);
+    if (isNaN(d.getTime())) return String(raw).slice(0, 10);
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
+  } catch (_) {
+    return String(raw).slice(0, 10);
+  }
+}
+
+function facturaCliente(row: FacturaRow): string {
+  return row.cliente_nombre || row.client_id || "(Sin cliente)";
+}
+
+function facturaMoneda(row: FacturaRow): string {
+  const m = String(row.cod_mon || row.extra_data?.moneda || "").trim().toUpperCase();
+  if (m.includes("SOL") || m === "01" || m === "MN" || m === "S" || m === "NS") return "NS";
+  if (m.includes("DOL") || m.includes("USA") || m === "02" || m === "ME" || m === "D" || m === "USD" || m === "US") return "US";
+  return m || "NS";
+}
+
+function facturaTotal(row: FacturaRow): number {
+  return Number(row.tot_neto ?? row.total ?? 0);
+}
+
+function facturaTotNetoSug(row: FacturaRow): number {
+  return Number(row.tot_neto_sug ?? 0);
+}
+
+function facturaEst(row: FacturaRow): string {
+  const raw = String(row.estado || row.status || "").trim().toUpperCase();
+  if (raw === "GENERADO") return "GN";
+  if (raw === "APROBADO") return "AP";
+  if (raw === "CREDITOS") return "CR";
+  if (raw === "IMPRESO") return "IM";
+  if (raw === "ANULADO") return "AN";
+  return raw;
+}
+
+function facturaEstadoSunat(row: FacturaRow): string {
+  if (row.estado_sunat && String(row.estado_sunat).trim()) return String(row.estado_sunat).trim().toUpperCase();
+  if (row.extra_data?.sunat_status) return String(row.extra_data.sunat_status).trim().toUpperCase();
+  const est = facturaEst(row);
+  if (est === "AN" || est === "ANULADO") return "BAJA";
+  if (est === "AP" || est === "IM" || est === "APROBADO" || est === "IMPRESO") return "ACEPTADO";
+  return "PENDIENTE";
 }
 
 function YearSpinner({ value, onChange }: { value: string; onChange: (next: string) => void }) {
@@ -272,7 +322,7 @@ function FacturaForm({ factura, onClose, onSaved }: FacturaFormProps) {
   const [descripcion] = useState(factura?.items?.[0]?.description ?? "VENTA DE PRODUCTOS");
   const [cantidad] = useState(String(factura?.items?.[0]?.quantity ?? 1));
   const [precio] = useState(String(factura?.items?.[0]?.price ?? 0));
-  const [moneda, setMoneda] = useState(factura?.extra_data?.moneda ?? "USD");
+  const [moneda, setMoneda] = useState(String(factura?.extra_data?.moneda ?? "USD"));
   const [igv, setIgv] = useState(String(factura?.extra_data?.igv ?? "18.00"));
   const [tipoCambio, setTipoCambio] = useState<string>(() => {
     const valueFromFactura = factura?.extra_data?.tipo_cambio;
@@ -371,7 +421,7 @@ function FacturaForm({ factura, onClose, onSaved }: FacturaFormProps) {
         await createFactura(payload);
         toast.success("Factura registrada");
       } else {
-        await updateFactura(factura.id, payload);
+        await updateFactura(String(factura.id), payload);
         toast.success("Factura actualizada");
       }
       onSaved();
@@ -578,33 +628,208 @@ function FacturaForm({ factura, onClose, onSaved }: FacturaFormProps) {
   );
 }
 
+function ClienteLookupModal({ onClose, onSelect }: { onClose: () => void; onSelect: (c: SigecoomClient) => void }) {
+  const [rows, setRows] = useState<SigecoomClient[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [desc, setDesc] = useState("");
+  const [doc, setDoc] = useState("");
+
+  useEffect(() => {
+    let active = true;
+    fetchSigecoomClients(0, 100)
+      .then((res) => {
+        if (!active) return;
+        setRows(res.items);
+      })
+      .catch(() => toast.error("No se pudo cargar clientes"))
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const filtered = useMemo(() => {
+    return rows.filter((row) => {
+      const qDesc = desc.trim().toLowerCase();
+      const qDoc = doc.trim().toLowerCase();
+      const docNum = row.ruc || row.document_number || "";
+      const byDesc = !qDesc || (row.name && row.name.toLowerCase().includes(qDesc));
+      const byDoc = !qDoc || docNum.toLowerCase().includes(qDoc);
+      return byDesc && byDoc;
+    });
+  }, [rows, desc, doc]);
+
+  const selectedClient = useMemo(() => rows.find((r) => Number(r.id) === selectedId), [rows, selectedId]);
+
+  return (
+    <div className="fixed inset-0 z-[10060] flex items-center justify-center bg-black/40">
+      <div className="flex h-[420px] w-[620px] flex-col overflow-hidden rounded-sm border border-slate-400 bg-white shadow-2xl text-[11px]">
+        <div className="flex items-center justify-between border-b border-slate-300 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] px-3 py-1.5">
+          <span className="font-semibold text-slate-800">Buscar Cliente</span>
+          <button type="button" className={actionBtn} onClick={onClose}>
+            <X className="h-3.5 w-3.5" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-[1fr_120px] gap-2 border-b border-slate-200 bg-[#F8FBFF] p-2">
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[10px] text-slate-600 font-medium">Descripción / Razón Social</span>
+            <input
+              className={inp}
+              placeholder="Buscar por nombre..."
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
+              autoFocus
+            />
+          </div>
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[10px] text-slate-600 font-medium">N° Documento</span>
+            <input
+              className={`${inp} font-mono`}
+              placeholder="RUC / DNI"
+              value={doc}
+              onChange={(e) => setDoc(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="flex-1 overflow-auto p-1">
+          <table className="w-full text-[11px] border-collapse">
+            <thead className="sticky top-0 bg-[#EEF2F7] text-slate-700">
+              <tr>
+                <th className="border-b border-r border-slate-300 px-2 py-1 text-left">Documento</th>
+                <th className="border-b border-slate-300 px-2 py-1 text-left">Razón Social / Nombre</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr><td colSpan={2} className="py-8 text-center text-slate-400">Cargando clientes...</td></tr>
+              ) : filtered.length === 0 ? (
+                <tr><td colSpan={2} className="py-8 text-center text-slate-400">No se encontraron clientes</td></tr>
+              ) : (
+                filtered.map((c) => {
+                  const isSel = Number(c.id) === selectedId;
+                  return (
+                    <tr
+                      key={c.id}
+                      className={`cursor-pointer border-b border-slate-100 ${isSel ? "bg-[#D6E4F4] font-medium" : "hover:bg-[#E8F0F8]/60"}`}
+                      onClick={() => setSelectedId(Number(c.id))}
+                      onDoubleClick={() => {
+                        onSelect(c);
+                        onClose();
+                      }}
+                    >
+                      <td className="border-r border-slate-100 px-2 py-1 font-mono text-slate-600">{c.ruc || c.document_number || "-"}</td>
+                      <td className="px-2 py-1 text-slate-800">{c.name}</td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="flex items-center justify-end gap-2 border-t border-slate-300 bg-[#EEF2F7] px-3 py-1.5">
+          <button
+            type="button"
+            className={btnPrimary}
+            disabled={!selectedClient}
+            onClick={() => {
+              if (selectedClient) {
+                onSelect(selectedClient);
+                onClose();
+              }
+            }}
+          >
+            Seleccionar
+          </button>
+          <button type="button" className={btn} onClick={onClose}>
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function FacturaVentaList() {
   const [rows, setRows] = useState<FacturaRow[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
 
+  // Lookups
+  const [locations, setLocations] = useState<Location[]>([]);
+
+  // Filtros principales (idénticos a frmFacturas.vb)
   const [anio, setAnio] = useState(() => getTodayDateParts().year);
-  const [mes, setMes] = useState(() => getTodayDateParts().month);
+  const [mes, setMes] = useState("");
+  const [officeFilter, setOfficeFilter] = useState("");
+  const [warehouseFilter, setWarehouseFilter] = useState("");
+  const [locationFilterId, setLocationFilterId] = useState<number | "">("");
+  const [tipFac, setTipFac] = useState("1"); // 1 = Credito, 2 = Contado
+  const [serieFilter, setSerieFilter] = useState("");
+  const [clientFilterId, setClientFilterId] = useState<number | "">("");
+  const [clientFilterLabel, setClientFilterLabel] = useState("(Todos)");
+  const [showClientLookup, setShowClientLookup] = useState(false);
   const [estado, setEstado] = useState("");
   const [numDoc, setNumDoc] = useState("");
-  const [cliente, setCliente] = useState("");
 
   const [selected, setSelected] = useState<FacturaRow | null>(null);
   const [formWindows, setFormWindows] = useState<FacturaFormWindow[]>([]);
   const zRef = useRef(9990);
   const cascadeRef = useRef(0);
 
+  useEffect(() => {
+    fetchSigecoomLocations()
+      .then((locs) => setLocations(locs))
+      .catch(() => {});
+  }, []);
+
+  const officeOptions = useMemo(
+    () => Array.from(new Set(locations.map((loc) => loc.code))).filter(Boolean),
+    [locations]
+  );
+  const warehouseOptions = useMemo(
+    () => Array.from(new Set(locations.map((loc) => loc.warehouse))).filter(Boolean),
+    [locations]
+  );
+
+  useEffect(() => {
+    if (!officeFilter && !warehouseFilter) {
+      setLocationFilterId("");
+      return;
+    }
+    const candidate = locations.find((loc) => {
+      const officeMatch = officeFilter ? loc.code === officeFilter : true;
+      const warehouseMatch = warehouseFilter ? loc.warehouse === warehouseFilter : true;
+      return officeMatch && warehouseMatch;
+    });
+    if (candidate) {
+      setLocationFilterId(Number(candidate.id));
+    }
+  }, [officeFilter, warehouseFilter, locations]);
+
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await fetchFacturas({
+      const queryParams = {
         anio: anio ? Number(anio) : undefined,
         mes: mes ? Number(mes) : undefined,
-        status: estado || undefined,
-        number: numDoc ? Number(numDoc) : undefined,
-        search: cliente || undefined,
+        id_locacion: locationFilterId !== "" ? Number(locationFilterId) : undefined,
+        tip_fac: tipFac || undefined,
+        id_serie_doc: undefined,
+        id_cliente: clientFilterId !== "" ? Number(clientFilterId) : undefined,
+        estado: estado || undefined,
+        num_doc: numDoc ? Number(numDoc) : undefined,
+        search: clientFilterId === "" && clientFilterLabel !== "(Todos)" ? clientFilterLabel : undefined,
         limit: 500,
-      });
+      };
+
+      const data = await fetchFacturas(queryParams);
       setRows(data);
       setSearched(true);
     } catch (e: any) {
@@ -612,7 +837,7 @@ export function FacturaVentaList() {
     } finally {
       setLoading(false);
     }
-  }, [anio, mes, estado, numDoc, cliente]);
+  }, [anio, mes, locationFilterId, tipFac, clientFilterId, clientFilterLabel, estado, numDoc]);
 
   useEffect(() => {
     load();
@@ -621,7 +846,7 @@ export function FacturaVentaList() {
   const handleEmitir = async () => {
     if (!selected) return;
     try {
-      await emitirFactura(selected.id);
+      await emitirFactura(String(selected.id));
       toast.success("Factura emitida");
       await load();
     } catch (e: any) {
@@ -633,7 +858,7 @@ export function FacturaVentaList() {
     if (!selected) return;
     if (!confirm(`¿Anular ${selected.series || "F001"}-${selected.number || ""}?`)) return;
     try {
-      await anularFactura(selected.id);
+      await anularFactura(String(selected.id));
       toast.success("Factura anulada");
       await load();
     } catch (e: any) {
@@ -645,7 +870,7 @@ export function FacturaVentaList() {
     if (!selected) return;
     if (!confirm("¿Eliminar la factura seleccionada?")) return;
     try {
-      await deleteFactura(selected.id);
+      await deleteFactura(String(selected.id));
       toast.success("Factura eliminada");
       setSelected(null);
       await load();
@@ -694,13 +919,13 @@ export function FacturaVentaList() {
 
   const handleMostrar = (row: FacturaRow) => {
     setSelected(row);
-    openFormWindow(row.id);
+    openFormWindow(String(row.id));
   };
 
   const handleEnviarCorreo = async () => {
     if (!selected) return;
     try {
-      await enviarFacturaCorreo(selected.id);
+      await enviarFacturaCorreo(String(selected.id));
       toast.success("Factura enviada por correo");
       await load();
     } catch (e: any) {
@@ -737,17 +962,23 @@ export function FacturaVentaList() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  const [sortBy, setSortBy] = useState<{ col: string; asc: boolean }>({ col: "number", asc: false });
+  // Ordenamiento exacto por columnas
+  const [sortBy, setSortBy] = useState<{ col: string; asc: boolean }>({ col: "num_doc", asc: false });
   const rowsView = useMemo(() => {
     const arr = [...rows];
     const col = sortBy.col;
     arr.sort((a: any, b: any) => {
-      const va = a[col];
-      const vb = b[col];
+      let va = a[col];
+      let vb = b[col];
+      if (col === "fec_doc") {
+        va = a.fec_doc ? new Date(a.fec_doc).getTime() : 0;
+        vb = b.fec_doc ? new Date(b.fec_doc).getTime() : 0;
+      }
       if (va == null && vb == null) return 0;
       if (va == null) return sortBy.asc ? -1 : 1;
       if (vb == null) return sortBy.asc ? 1 : -1;
       if (typeof va === "number" && typeof vb === "number") return sortBy.asc ? va - vb : vb - va;
+      if (typeof va === "boolean" && typeof vb === "boolean") return sortBy.asc ? (va === vb ? 0 : va ? 1 : -1) : (va === vb ? 0 : va ? -1 : 1);
       return sortBy.asc ? String(va).localeCompare(String(vb)) : String(vb).localeCompare(String(va));
     });
     return arr;
@@ -758,7 +989,7 @@ export function FacturaVentaList() {
   }, []);
 
   const findFacturaForWindow = useCallback(
-    (idFactura?: string) => (idFactura ? rows.find((r) => r.id === idFactura) : undefined),
+    (idFactura?: string) => (idFactura ? rows.find((r) => String(r.id) === idFactura) : undefined),
     [rows]
   );
 
@@ -781,37 +1012,9 @@ export function FacturaVentaList() {
     </DraggableFormWindow>
   ));
 
-  const rowsViewElements = rowsView.map((r, i) => {
-    const isSel = selected?.id === r.id;
-    const estadoText = r.status === "draft" && !isSel ? "" : etiquetaEstado(r.status);
-    return (
-      <tr
-        key={r.id}
-        onClick={() => setSelected(r)}
-        onDoubleClick={() => handleMostrar(r)}
-        className={[
-          "cursor-pointer transition-colors",
-          i % 2 === 0 ? "bg-white" : "bg-[#F6F9FC]",
-          isSel ? "!bg-[#D6E4F4] font-medium" : "hover:bg-[#E8F0F8]/70",
-        ].join(" ")}
-      >
-        <td className="px-3 py-2 border-r border-slate-100 font-mono font-medium">{`${r.series || "F001"}-${String(r.number || "").padStart(6, "0")}`}</td>
-        <td className="px-3 py-2 border-r border-slate-100 whitespace-nowrap">{r.date ? new Date(r.date).toLocaleDateString("es-PE") : ""}</td>
-        <td className="px-3 py-2 border-r border-slate-100 max-w-[200px] truncate">{r.client_id || "(Sin cliente)"}</td>
-        <td className="px-3 py-2 border-r border-slate-100">{r.extra_data?.moneda || "PEN"}</td>
-        <td className="px-3 py-2 border-r border-slate-100 font-mono text-right">{r.total.toFixed(2)}</td>
-        <td className="px-3 py-2 border-r border-slate-100 font-semibold">{estadoText}</td>
-        <td className="px-3 py-2 border-r border-slate-100">{estadoSunat(r)}</td>
-        <td className="px-3 py-2 border-r border-slate-100 max-w-[150px] truncate">{String(r.extra_data?.nota || "")}</td>
-        <td className="px-3 py-2 border-r border-slate-100 font-mono text-right font-semibold text-slate-700">{r.total.toFixed(2)}</td>
-        <td className="px-3 py-2 border-r border-slate-100 font-mono">{String(r.extra_data?.num_orden || "")}</td>
-      </tr>
-    );
-  });
-
   return (
     <div className="relative h-full min-h-0 flex flex-col overflow-hidden bg-[#F3F6FA]">
-      {/* Toolbar principal */}
+      {/* Toolbar principal fiel a frmFacturas.vb */}
       <div className="flex items-center gap-1 px-2 py-1.5 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] border-b border-slate-400/50 shrink-0 overflow-x-auto">
         <button className={iconBtn} title="Imprimir"><Printer className="h-4 w-4" /></button>
         {tbSep}
@@ -855,66 +1058,271 @@ export function FacturaVentaList() {
         <button className={iconBtn} title="Salir"><LogOut className="h-4 w-4" /></button>
       </div>
 
-      {/* Filtros */}
-      <div className="flex flex-wrap items-end gap-2 px-2 py-1.5 bg-[#F0F4F8] border-b border-slate-300">
-        <YearMonthFields anio={anio} setAnio={setAnio} mes={mes} setMes={setMes} />
-        <Field label="Cliente" className="w-52">
-          <input className={inp} value={cliente} onChange={(e) => setCliente(e.target.value)} placeholder="(Todos)" />
-        </Field>
-        <Field label="Estado" className="w-28">
-          <select className={inp} value={estado} onChange={(e) => setEstado(e.target.value)}>
+      {/* Datos de Búsqueda fiel a frmFacturas.vb */}
+      <div className="flex items-center gap-1.5 flex-wrap px-2 py-1.5 bg-[#F0F4F8] border-b border-slate-300 text-[11px]">
+        {/* Año */}
+        <div className="flex flex-col gap-0.5">
+          <span className="text-[10px] text-slate-600 font-medium">Año</span>
+          <YearSpinner value={anio} onChange={setAnio} />
+        </div>
+        {/* Mes */}
+        <div className="flex flex-col gap-0.5 w-[110px]">
+          <span className="text-[10px] text-slate-600 font-medium">Mes</span>
+          <MonthSelector value={mes} onChange={setMes} />
+        </div>
+        {/* Oficina */}
+        <div className="flex flex-col gap-0.5 w-[110px]">
+          <span className="text-[10px] text-slate-600 font-medium">Oficina</span>
+          <select
+            className={inp}
+            value={officeFilter}
+            onChange={(e) => setOfficeFilter(e.target.value)}
+          >
             <option value="">(Todos)</option>
-            <option value="draft">GENERADO</option>
-            <option value="issued">APROBADO</option>
-            <option value="sent">ENVIADO</option>
-            <option value="cancelled">ANULADO</option>
+            {officeOptions.map((o) => (
+              <option key={o} value={o}>{o}</option>
+            ))}
           </select>
-        </Field>
-        <Field label="N° Doc" className="w-20">
-          <input className={`${inp} font-mono`} value={numDoc} onChange={(e) => setNumDoc(e.target.value)} />
-        </Field>
-        <button className={btnPrimary} onClick={load} disabled={loading}>
+        </div>
+        {/* Almacén */}
+        <div className="flex flex-col gap-0.5 w-[120px]">
+          <span className="text-[10px] text-slate-600 font-medium">Almacén</span>
+          <select
+            className={inp}
+            value={warehouseFilter}
+            onChange={(e) => setWarehouseFilter(e.target.value)}
+          >
+            <option value="">(Todos)</option>
+            {warehouseOptions.map((w) => (
+              <option key={w} value={w}>{w}</option>
+            ))}
+          </select>
+        </div>
+        {/* Tipo */}
+        <div className="flex flex-col gap-0.5 w-[90px]">
+          <span className="text-[10px] text-slate-600 font-medium">Tipo</span>
+          <select
+            className={inp}
+            value={tipFac}
+            onChange={(e) => setTipFac(e.target.value)}
+          >
+            <option value="1">Credito</option>
+            <option value="2">Contado</option>
+            <option value="">(Todos)</option>
+          </select>
+        </div>
+        {/* Serie */}
+        <div className="flex flex-col gap-0.5 w-[85px]">
+          <span className="text-[10px] text-slate-600 font-medium">Serie</span>
+          <select
+            className={inp}
+            value={serieFilter}
+            onChange={(e) => setSerieFilter(e.target.value)}
+          >
+            <option value="">(Todos)</option>
+            <option value="F001">F001</option>
+            <option value="F002">F002</option>
+            <option value="F003">F003</option>
+            <option value="F005">F005</option>
+            <option value="F008">F008</option>
+          </select>
+        </div>
+        {/* Cliente */}
+        <div className="flex flex-col gap-0.5 w-[180px]">
+          <span className="text-[10px] text-slate-600 font-medium">Cliente</span>
+          <div className="flex gap-1">
+            <input
+              className={inp}
+              value={clientFilterLabel}
+              placeholder="(Todos)"
+              readOnly
+            />
+            <button
+              type="button"
+              className={actionBtn}
+              title="Limpiar Cliente"
+              onClick={() => {
+                setClientFilterId("");
+                setClientFilterLabel("(Todos)");
+              }}
+            >
+              <X className="h-3.5 w-3.5 text-amber-700" />
+            </button>
+            <button
+              type="button"
+              className={actionBtn}
+              title="Buscar Cliente"
+              onClick={() => setShowClientLookup(true)}
+            >
+              <Search className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        </div>
+        {/* Estado */}
+        <div className="flex flex-col gap-0.5 w-[100px]">
+          <span className="text-[10px] text-slate-600 font-medium">Estado</span>
+          <select
+            className={inp}
+            value={estado}
+            onChange={(e) => setEstado(e.target.value)}
+          >
+            <option value="">(Todos)</option>
+            <option value="GN">GENERADO</option>
+            <option value="AP">APROBADO</option>
+            <option value="CR">CREDITOS</option>
+            <option value="IM">IMPRESO</option>
+            <option value="AN">ANULADO</option>
+          </select>
+        </div>
+        {/* Número */}
+        <div className="flex flex-col gap-0.5 w-[70px]">
+          <span className="text-[10px] text-slate-600 font-medium">Número</span>
+          <input
+            className={`${inp} font-mono text-center`}
+            value={numDoc}
+            onChange={(e) => setNumDoc(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && load()}
+          />
+        </div>
+        {/* Buscar */}
+        <button
+          type="button"
+          className={`${btnPrimary} mt-auto h-7`}
+          onClick={load}
+          disabled={loading}
+        >
           <Search className="h-3.5 w-3.5" />
-          {loading ? "Buscando..." : "Buscar"}
+          <span>{loading ? "Buscando..." : "Buscar"}</span>
         </button>
       </div>
 
-      {/* Grid */}
+      {/* Grid: Columnas exactas de Facturas de Venta */}
       <div className="flex-1 min-h-0 overflow-auto p-1.5">
         <div className="border border-slate-400/60 bg-white rounded-sm h-full overflow-auto">
-          <div className="overflow-auto flex-1">
-            <table className="w-full text-[11.5px]">
-              <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0 z-10">
+          <div className="overflow-auto flex-1 h-full">
+            <table className="w-full text-[11.5px] border-collapse">
+              <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0 z-10 select-none shadow-xs">
                 <tr>
-                  <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy('series')}>
-                    Número {sortBy.col === 'series' ? (sortBy.asc ? '▲' : '▼') : ''}
+                  <th className="w-6 px-1 py-1 text-center border-r border-slate-300 font-semibold"></th>
+                  <th className="px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy('num_doc')}>
+                    Número {sortBy.col === 'num_doc' ? (sortBy.asc ? '▲' : '▼') : ''}
                   </th>
-                  <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy('date')}>
-                    Fecha {sortBy.col === 'date' ? (sortBy.asc ? '▲' : '▼') : ''}
+                  <th className="px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy('fec_doc')}>
+                    Fecha {sortBy.col === 'fec_doc' ? (sortBy.asc ? '▲' : '▼') : ''}
                   </th>
-                  <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy('client_id')}>
-                    Cliente {sortBy.col === 'client_id' ? (sortBy.asc ? '▲' : '▼') : ''}
+                  <th className="px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy('cliente_nombre')}>
+                    Cliente {sortBy.col === 'cliente_nombre' ? (sortBy.asc ? '▲' : '▼') : ''}
                   </th>
-                  <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]">Mon.</th>
-                  <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy('total')}>
-                    Total {sortBy.col === 'total' ? (sortBy.asc ? '▲' : '▼') : ''}
+                  <th className="px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy('cod_mon')}>
+                    Mon. {sortBy.col === 'cod_mon' ? (sortBy.asc ? '▲' : '▼') : ''}
                   </th>
-                  <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]">EST</th>
-                  <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]">Estado Sunat</th>
-                  <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]">Nota</th>
-                  <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]">TotNetoSug</th>
-                  <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]">NumOrden</th>
+                  <th className="px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy('tot_neto')}>
+                    Total {sortBy.col === 'tot_neto' ? (sortBy.asc ? '▲' : '▼') : ''}
+                  </th>
+                  <th className="px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy('estado')}>
+                    EST {sortBy.col === 'estado' ? (sortBy.asc ? '▲' : '▼') : ''}
+                  </th>
+                  <th className="px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy('estado_sunat')}>
+                    Estado Sunat {sortBy.col === 'estado_sunat' ? (sortBy.asc ? '▲' : '▼') : ''}
+                  </th>
+                  <th className="w-8 px-1 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy('contabilizado')}>
+                    C {sortBy.col === 'contabilizado' ? (sortBy.asc ? '▲' : '▼') : ''}
+                  </th>
+                  <th className="w-10 px-1 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy('tiene_notas')}>
+                    Nota {sortBy.col === 'tiene_notas' ? (sortBy.asc ? '▲' : '▼') : ''}
+                  </th>
+                  <th className="px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy('tot_neto_sug')}>
+                    TotNetoSug {sortBy.col === 'tot_neto_sug' ? (sortBy.asc ? '▲' : '▼') : ''}
+                  </th>
+                  <th className="px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy('num_orden')}>
+                    NumOrden {sortBy.col === 'num_orden' ? (sortBy.asc ? '▲' : '▼') : ''}
+                  </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-200">
                 {rowsView.length === 0 ? (
                   <tr>
-                    <td colSpan={10} className="text-center py-12 text-slate-400 text-[12px]">
-                      {loading ? "Cargando..." : searched ? "Sin registros para los filtros seleccionados" : "Use los filtros y pulse Buscar"}
+                    <td colSpan={12} className="text-center py-8 text-slate-400 text-[11px]">
+                      {loading ? "Cargando facturas..." : searched ? "Sin registros para los filtros seleccionados" : "Use los filtros y pulse Buscar"}
                     </td>
                   </tr>
                 ) : (
-                  rowsViewElements
+                  rowsView.map((r, i) => {
+                    const isSel = selected?.id === r.id;
+                    return (
+                      <tr
+                        key={r.id}
+                        onClick={() => setSelected(r)}
+                        onDoubleClick={() => handleMostrar(r)}
+                        className={[
+                          "cursor-pointer border-b border-slate-200 transition-colors",
+                          i % 2 === 0 ? "bg-white" : "bg-[#F6F9FC]",
+                          isSel ? "!bg-[#D6E4F4] outline outline-1 outline-[#3E5B7A] font-medium" : "hover:bg-[#E8F0F8]/70",
+                        ].join(" ")}
+                      >
+                        {/* Selector arrow indicator */}
+                        <td className="w-6 px-1 py-1 text-center border-r border-slate-200 text-[#2D5A88] text-[10px] select-none font-bold">
+                          {isSel ? "▶" : ""}
+                        </td>
+                        {/* Número */}
+                        <td className="px-2 py-1 border-r border-slate-200 font-mono text-center font-semibold text-slate-800">
+                          {facturaNumero(r)}
+                        </td>
+                        {/* Fecha */}
+                        <td className="px-2 py-1 border-r border-slate-200 text-center whitespace-nowrap font-mono text-slate-700">
+                          {facturaFecha(r)}
+                        </td>
+                        {/* Cliente */}
+                        <td className="px-2 py-1 border-r border-slate-200 max-w-[280px] truncate text-slate-800" title={facturaCliente(r)}>
+                          {facturaCliente(r)}
+                        </td>
+                        {/* Mon. */}
+                        <td className="px-2 py-1 border-r border-slate-200 text-center font-mono text-slate-700">
+                          {facturaMoneda(r)}
+                        </td>
+                        {/* Total */}
+                        <td className="px-2 py-1 border-r border-slate-200 font-mono text-right font-semibold text-slate-800">
+                          {facturaTotal(r).toFixed(2)}
+                        </td>
+                        {/* EST */}
+                        <td className="px-2 py-1 border-r border-slate-200 text-center font-mono font-bold text-slate-800">
+                          {facturaEst(r)}
+                        </td>
+                        {/* Estado Sunat */}
+                        <td className="px-2 py-1 border-r border-slate-200 text-center font-medium text-slate-700">
+                          {facturaEstadoSunat(r)}
+                        </td>
+                        {/* C (Contabilizado) */}
+                        <td className="w-8 px-1 py-1 border-r border-slate-200 text-center">
+                          <input
+                            type="checkbox"
+                            checked={Boolean(r.contabilizado)}
+                            readOnly
+                            className="h-3.5 w-3.5 accent-blue-700 pointer-events-none rounded-sm border border-slate-400 bg-white"
+                            title={r.contabilizado ? "Contabilizado" : "No contabilizado"}
+                          />
+                        </td>
+                        {/* Nota (TieneNotas) */}
+                        <td className="w-10 px-1 py-1 border-r border-slate-200 text-center">
+                          <input
+                            type="checkbox"
+                            checked={Boolean(r.tiene_notas)}
+                            readOnly
+                            className="h-3.5 w-3.5 accent-blue-700 pointer-events-none rounded-sm border border-slate-400 bg-white"
+                            title={r.tiene_notas ? "Tiene nota" : "Sin nota"}
+                          />
+                        </td>
+                        {/* TotNetoSug */}
+                        <td className="px-2 py-1 border-r border-slate-200 font-mono text-right font-semibold text-slate-700">
+                          {facturaTotNetoSug(r).toFixed(2)}
+                        </td>
+                        {/* NumOrden */}
+                        <td className="px-2 py-1 border-r border-slate-200 font-mono text-slate-700">
+                          {String(r.num_orden || r.extra_data?.num_orden || "")}
+                        </td>
+                      </tr>
+                    );
+                  })
                 )}
               </tbody>
             </table>
@@ -922,10 +1330,21 @@ export function FacturaVentaList() {
         </div>
       </div>
 
-      {/* Footer */}
+      {/* Footer fiel a frmFacturas.vb */}
       <div className="shrink-0 border-t border-slate-400/50 bg-gradient-to-b from-[#D6DEE8] to-[#C0CCDB] px-3 py-0.5 text-[11px] text-slate-700 text-center font-medium flex items-center justify-center whitespace-nowrap overflow-hidden">
         Registros : {rows.length}
       </div>
+
+      {showClientLookup && (
+        <ClienteLookupModal
+          onClose={() => setShowClientLookup(false)}
+          onSelect={(c) => {
+            setClientFilterId(Number(c.id));
+            setClientFilterLabel(c.name);
+            setShowClientLookup(false);
+          }}
+        />
+      )}
 
       {formWindowElements}
     </div>

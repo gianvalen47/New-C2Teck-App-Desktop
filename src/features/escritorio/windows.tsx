@@ -50,7 +50,10 @@ import { ConsultaPreciosDialogList } from "./windows/Precios/ConsultaPreciosDial
 // Additional window components referenced in legacy monolith
 import { NewGuideWindow } from "./NewGuideWindow";
 import { GuiaRemisionList, GuiaRemisionForm } from "./windows/Ventas/Documentos/GuiasRemision";
+import { FacturaVentaList } from "./windows/Ventas/Documentos/Facturas";
+import { NotaVentaList, NotaForm as NotaVentaForm } from "./windows/Ventas/Documentos/Notas";
 import { GuiaDevolucionList } from "./windows/Ventas/Documentos/GuiasDevolucion";
+import { BoletaList } from "./windows/Ventas/Documentos/Boletas";
 import { ResumenDeBoletasList } from "./windows/Ventas/Documentos/ResumenDeBoletas";
 import { CotizacionesList } from "./windows/Ventas/Pre y Post Venta/Cotizaciones";
 import { ReclamoGarantiaList } from "./windows/Ventas/Pre y Post Venta/ReclamoGarantia";
@@ -60,9 +63,6 @@ import { ActualizarVendedorList } from "./windows/Ventas/Pre y Post Venta/Actual
 import { EnviarCorreosList } from "./windows/Ventas/Pre y Post Venta/EnviarCorreos";
 import { CarteraList } from "./windows/Ventas/Clientes/Cartera";
 import { DespachoList } from "./windows/Ventas/Requisiciones/Despacho";
-import { BoletaList } from "./windows/Ventas/Documentos/Boletas";
-import { FacturaVentaList } from "./windows/Ventas/Documentos/Facturas";
-import { NotaVentaList, NotaForm as NotaVentaForm } from "./windows/Ventas/Documentos/Notas";
 import { ClientesList } from "./windows/Clientes";
 import { UbicacionesList as UbicacionesWindow } from "./windows/Ubicaciones";
 import { ProductosList } from "./windows/Productos";
@@ -1076,12 +1076,12 @@ const REGISTRY: Record<string, (label: string) => ReactNode> = {
   "Boleta": () => <Boleta />,
   "Resumen de Boletas": () => <ResumenBoletas />,
   // Pre y Post
-  "Cotizaciones": () => <ReporteCotizaciones />,
+  "Cotizaciones": () => <Cotizaciones />,
   "Cotizacion": () => <ReporteCotizaciones />,
   "Reclamo Garantía": () => <ReclamoGarantia />,
   "Separar Orden": () => <SepararOrden />,
   "Ordenes Compra": () => <ReporteOrdenCompra />,
-  "Órdenes Compra": () => <ReporteOrdenCompra />,
+  "Órdenes Compra": () => <OrdenesCompraList />,
   "Actualizar Vendedor": () => <ActualizarVendedor />,
   "Enviar Correos": () => <EnviarCorreos />,
   "Pre y Post Venta": () => <ReporteCotizaciones />,

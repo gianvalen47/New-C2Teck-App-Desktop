@@ -4,6 +4,7 @@ export type SigecoomClient = {
   id: string;
   name: string;
   ruc?: string;
+  document_number?: string;
   address?: string;
   phone?: string;
   email?: string;
@@ -773,34 +774,110 @@ export async function linkSigecoomSalePurchase(
   return response.json();
 }
 
-export type FacturaRow = SigecoomSale;
+/** Fila del listado (frmFacturas) — equivale a FacturaService.Filtrar */
+export type FacturaRow = {
+  id: number | string;
+  id_locacion?: number;
+  fec_doc?: string;
+  id_serie_doc?: number;
+  num_doc?: number;
+  id_cliente?: number;
+  cliente_nombre?: string;
+  cod_mon?: string;
+  igv?: number;
+  tip_cambio?: number;
+  tot_bruto?: number;
+  tot_dscto?: number;
+  tot_venta?: number;
+  tot_igv?: number;
+  tot_neto?: number;
+  tot_neto_sug?: number;
+  cod_serie?: string;
+  estado?: string;
+  estado_sunat?: string;
+  observacion?: string;
+  num_orden?: string;
+  num_guias?: string;
+  tip_fac?: string;
+  contabilizado?: boolean;
+  tiene_notas?: boolean;
+  created_at?: string;
+  updated_at?: string;
+  /** Campos legacy del módulo /sales (formularios mock) */
+  series?: string;
+  number?: number;
+  date?: string;
+  client_id?: string;
+  total?: number;
+  status?: string;
+  items?: SigecoomSale["items"];
+  extra_data?: Record<string, unknown>;
+};
 
 export async function fetchFacturas(params: {
   search?: string;
+  estado?: string;
   status?: string;
-  series?: string;
+  tip_fac?: string;
+  id_locacion?: number;
+  id_serie_doc?: number;
+  id_cliente?: number;
+  num_doc?: number;
   number?: number;
   anio?: number;
   mes?: number;
   skip?: number;
   limit?: number;
 } = {}): Promise<FacturaRow[]> {
+  try {
+    if (params.id_locacion === undefined) {
+      params.id_locacion = inferIdLocacionFromSessionCompany();
+    }
+  } catch (_) {}
+
   const qs = new URLSearchParams();
-  qs.set("type", "factura");
-  if (params.search) qs.set("search", params.search);
-  if (params.status) qs.set("status", params.status);
-  if (params.series) qs.set("series", params.series);
-  if (params.number !== undefined) qs.set("number", String(params.number));
   if (params.anio !== undefined) qs.set("anio", String(params.anio));
   if (params.mes !== undefined) qs.set("mes", String(params.mes));
+  if (params.id_locacion !== undefined) qs.set("id_locacion", String(params.id_locacion));
+  if (params.tip_fac) qs.set("tip_fac", params.tip_fac);
+  if (params.id_serie_doc !== undefined) qs.set("id_serie_doc", String(params.id_serie_doc));
+  if (params.id_cliente !== undefined) qs.set("id_cliente", String(params.id_cliente));
+  const estado = params.estado ?? params.status;
+  if (estado) qs.set("estado", estado);
+  const numDoc = params.num_doc ?? params.number;
+  if (numDoc !== undefined) qs.set("num_doc", String(numDoc));
+  if (params.search) qs.set("search", params.search);
   if (params.skip !== undefined) qs.set("skip", String(params.skip));
   if (params.limit !== undefined) qs.set("limit", String(params.limit));
 
-  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/sales?${qs.toString()}`);
-  if (!response.ok) {
-    throw new Error("No se pudo cargar facturas");
+  const url = `${API_BASE_URL}${API_V1_PREFIX}/facturas${qs.toString() ? `?${qs.toString()}` : ""}`;
+  const headers: Record<string, string> = {};
+  try {
+    const raw = localStorage.getItem("sigecoom_session");
+    if (raw) {
+      const sess = JSON.parse(raw);
+      const codigo = sess?.empresa_actual?.codigo;
+      if (codigo) headers["X-Sigecoom-CodEmp"] = String(codigo);
+      const empresas = sess?.empresas || sess?.assigned_companies || null;
+      if (Array.isArray(empresas) && empresas.length > 0) {
+        const codes = empresas
+          .map((e: { codigo?: string }) => (e && e.codigo ? String(e.codigo) : String(e)))
+          .filter(Boolean);
+        if (codes.length > 0) headers["X-Sigecoom-Empresas"] = codes.join(",");
+      }
+    }
+  } catch (_) {}
+
+  const response = await apiFetch(url, { headers });
+  const text = await response.text();
+  try {
+    const parsed = JSON.parse(text || "null");
+    if (!response.ok) throw new Error("No se pudo cargar facturas");
+    return parsed;
+  } catch (err) {
+    if (!response.ok) throw new Error("No se pudo cargar facturas");
+    return [];
   }
-  return response.json();
 }
 
 export async function fetchNotas(params: {

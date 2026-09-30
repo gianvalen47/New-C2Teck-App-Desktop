@@ -40,9 +40,66 @@ export function InlineField({
   );
 }
 
+export const ESTADO_DESCRIPCIONES: Record<string, string> = {
+  GN: "GENERADO",
+  CR: "CREDITOS",
+  AP: "APROBADO",
+  IM: "IMPRESO",
+  AN: "ANULADO",
+  FC: "FACTURADO",
+  TR: "TRANSFERIDO",
+  DP: "DESPACHADO",
+  DV: "DEVUELTO",
+  PR: "PROCESADO",
+  IN: "INGRESADO",
+  CO: "CONSULTA",
+  GENERADO: "GENERADO",
+  CREDITOS: "CREDITOS",
+  APROBADO: "APROBADO",
+  IMPRESO: "IMPRESO",
+  ANULADO: "ANULADO",
+  FACTURADO: "FACTURADO",
+  TRANSFERIDO: "TRANSFERIDO",
+  DESPACHADO: "DESPACHADO",
+  DEVUELTO: "DEVUELTO",
+  PROCESADO: "PROCESADO",
+  INGRESADO: "INGRESADO",
+  CONSULTA: "CONSULTA",
+};
+
+// Mismas 6 opciones que antes tenía el <select> de Estado, con su abreviatura real
+// (columna "EST" del listado) como código para el selector Código/Descripción.
+export const ESTADO_FILTER_OPTIONS: CodeDescOption[] = [
+  { code: "GN", label: "GENERADO", value: "GENERADO" },
+  { code: "AP", label: "APROBADO", value: "APROBADO" },
+  { code: "CR", label: "CREDITOS", value: "CREDITOS" },
+  { code: "IM", label: "IMPRESO", value: "IMPRESO" },
+  { code: "AN", label: "ANULADO", value: "ANULADO" },
+  { code: "FC", label: "FACTURADO", value: "FACTURADO" },
+  { code: "TR", label: "TRANSFERIDO", value: "TRANSFERIDO" },
+  { code: "DP", label: "DESPACHADO", value: "DESPACHADO" },
+  { code: "DV", label: "DEVUELTO", value: "DEVUELTO" },
+  { code: "PR", label: "PROCESADO", value: "PROCESADO" },
+  { code: "IN", label: "INGRESADO", value: "INGRESADO" },
+  { code: "CO", label: "CONSULTA", value: "CONSULTA" },
+];
+
+export function getEstadoDisplay(value: string | null | undefined) {
+  const raw = String(value ?? "").trim();
+  if (!raw) return "";
+  const key = raw.toUpperCase();
+  const label = ESTADO_DESCRIPCIONES[key];
+  if (label) {
+    return label;
+  }
+  return raw;
+}
+
 export function EstadoBadge({ estado }: { estado: string }) {
   const cls = ESTADO_COLORS[estado] ?? "text-slate-600 bg-slate-50 border-slate-200";
-  return <span className={`inline-block px-1.5 py-0 text-[10px] font-bold rounded border ${cls}`}>{estado}</span>;
+  return (
+    <span className={`inline-block px-1.5 py-0 text-[10px] font-bold rounded border ${cls}`}>{estado}</span>
+  );
 }
 
 export function YearSpinner({ value, onChange }: { value: string; onChange: (next: string) => void }) {
@@ -246,15 +303,6 @@ export function YearMonthFields({
     </div>
   );
 }
-
-export const ESTADO_FILTER_OPTIONS: CodeDescOption[] = [
-  { code: "GN", label: "GENERADO", value: "GENERADO" },
-  { code: "AP", label: "APROBADO", value: "APROBADO" },
-  { code: "CR", label: "CREDITOS", value: "CREDITOS" },
-  { code: "AN", label: "ANULADO", value: "ANULADO" },
-  { code: "FC", label: "FACTURADO", value: "FACTURADO" },
-  { code: "TR", label: "TRANSFERIDO", value: "TRANSFERIDO" },
-];
 
 export function FiltersPanel({
   anio: anioProp,

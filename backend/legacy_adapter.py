@@ -1108,6 +1108,284 @@ def _normalize_guia(guia: dict) -> dict:
 
 
 # ============================================================================
+# FACTURAS / INVOICES
+# ============================================================================
+
+def _local_wcf_facturas_snapshot_path() -> Path:
+    return Path(__file__).resolve().parent / "tmp" / "facturas_snapshot.json"
+
+
+def _load_real_wcf_factura_rows() -> list[dict]:
+    snapshot_path = _local_wcf_facturas_snapshot_path()
+    if not snapshot_path.exists():
+        return []
+    try:
+        with open(snapshot_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        logger.warning(f"Could not load facturas snapshot: {e}")
+        return []
+
+
+def _save_real_wcf_factura_rows(rows: list[dict]) -> None:
+    try:
+        snapshot_path = _local_wcf_facturas_snapshot_path()
+        snapshot_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(snapshot_path, "w", encoding="utf-8") as f:
+            json.dump(rows, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        logger.warning(f"Could not save facturas snapshot: {e}")
+
+
+def _normalize_factura(factura: dict) -> dict:
+    if not factura:
+        return {}
+
+    id_factura = factura.get("IdFactura") or factura.get("id") or factura.get("id_factura")
+    fec_doc = _normalize_datetime(_lookup_value(factura, "fec_doc", "FecDoc"))
+    num_doc = _normalize_id(_lookup_value(factura, "num_doc", "NumDoc"))
+    cod_serie = str(_lookup_value(factura, "cod_serie", "CodSerie") or "")
+    id_serie_doc = _normalize_id(_lookup_value(factura, "id_serie_doc", "IdSerieDoc"))
+    id_locacion = _normalize_id(_lookup_value(factura, "id_locacion", "IdLocacion"))
+    id_cliente = _normalize_id(_lookup_value(factura, "id_cliente", "IdCliente"))
+
+    cliente_obj = factura.get("Cliente") or factura.get("cliente")
+    des_cli_nested = ""
+    if isinstance(cliente_obj, dict):
+        des_cli_nested = str(cliente_obj.get("DesCli") or cliente_obj.get("des_cli") or cliente_obj.get("Nombre") or "").strip()
+
+    cliente_nombre = str(_lookup_value(factura, "cliente_nombre", "DesCli", "ClienteNombre", "des_cli") or des_cli_nested or "").strip()
+
+    des_mon = str(_lookup_value(factura, "DesMon", "des_mon", "CodMon", "cod_mon") or "").strip().upper()
+    if any(s in des_mon for s in ("SOL", "01", "MN")) or des_mon in ("S", ""):
+        cod_mon = "NS"
+    elif any(s in des_mon for s in ("DOL", "USA", "02", "ME")) or des_mon in ("D", "USD"):
+        cod_mon = "US"
+    else:
+        cod_mon = des_mon
+
+    tot_neto = _normalize_decimal(_lookup_value(factura, "tot_neto", "TotNeto"))
+    tot_neto = tot_neto if tot_neto is not None else 0.0
+
+    tot_bruto = _normalize_decimal(_lookup_value(factura, "tot_bruto", "TotBruto", "TotVenta"))
+    tot_bruto = tot_bruto if tot_bruto is not None else tot_neto
+
+    tot_dscto = _normalize_decimal(_lookup_value(factura, "tot_dscto", "TotDscto"))
+    tot_dscto = tot_dscto if tot_dscto is not None else 0.0
+
+    tot_venta = _normalize_decimal(_lookup_value(factura, "tot_venta", "TotVenta"))
+    tot_venta = tot_venta if tot_venta is not None else tot_neto
+
+    tot_igv = _normalize_decimal(_lookup_value(factura, "tot_igv", "TotIGV", "TotIgv"))
+    tot_igv = tot_igv if tot_igv is not None else 0.0
+
+    raw_sug = _normalize_decimal(_lookup_value(factura, "tot_neto_sug", "TotNetoSug"))
+    tot_neto_sug = raw_sug if raw_sug is not None else 0.0
+
+    estado = str(_lookup_value(factura, "estado", "Estado") or "").strip()
+    estado_sunat = str(_lookup_value(factura, "estado_sunat", "EstadoSunat") or "").strip()
+    observacion = str(_lookup_value(factura, "observacion", "Observacion", "ObservacionSunat") or "").strip()
+    num_orden = str(_lookup_value(factura, "num_orden", "NumOrden", "Orden") or "").strip()
+    num_job = str(_lookup_value(factura, "num_job", "NumJob") or "").strip()
+    tip_fac = str(_lookup_value(factura, "tip_fac", "TipFac") or "1").strip()
+    cod_pag = str(_lookup_value(factura, "cod_pag", "CodPag") or "").strip()
+
+    raw_contab = _lookup_value(factura, "contabilizado", "Contabilizado")
+    if isinstance(raw_contab, bool):
+        contabilizado = raw_contab
+    else:
+        contabilizado = str(raw_contab or "").strip().lower() in ("true", "1", "s", "si")
+
+    raw_notas = _lookup_value(factura, "tiene_notas", "TieneNotas")
+    if isinstance(raw_notas, bool):
+        tiene_notas = raw_notas
+    else:
+        tiene_notas = str(raw_notas or "").strip().lower() in ("true", "1", "s", "si")
+
+    detalles = factura.get("Detalles") or factura.get("detalles") or []
+
+    normalized = {
+        "id": id_factura,
+        "id_locacion": id_locacion,
+        "fec_doc": fec_doc,
+        "date": fec_doc,
+        "id_serie_doc": id_serie_doc,
+        "cod_serie": cod_serie,
+        "series": cod_serie or "F001",
+        "num_doc": num_doc,
+        "number": num_doc,
+        "id_cliente": id_cliente,
+        "client_id": str(id_cliente) if id_cliente else "",
+        "cliente_nombre": cliente_nombre,
+        "cod_mon": cod_mon,
+        "igv": 18.0,
+        "tip_cambio": 3.7,
+        "tot_bruto": tot_bruto,
+        "tot_dscto": tot_dscto,
+        "tot_venta": tot_venta,
+        "tot_igv": tot_igv,
+        "tot_neto": tot_neto,
+        "total": tot_neto,
+        "tot_neto_sug": tot_neto_sug,
+        "estado": estado,
+        "status": estado,
+        "estado_sunat": estado_sunat,
+        "observacion": observacion,
+        "num_orden": num_orden,
+        "num_job": num_job,
+        "tip_fac": tip_fac,
+        "cod_pag": cod_pag,
+        "contabilizado": contabilizado,
+        "tiene_notas": tiene_notas,
+        "created_at": fec_doc,
+        "updated_at": fec_doc,
+    }
+    if detalles:
+        normalized["detalles"] = detalles
+        normalized["items"] = detalles
+    if cliente_obj:
+        normalized["cliente"] = cliente_obj
+
+    return {k: v for k, v in normalized.items() if v is not None}
+
+
+def list_facturas_legacy(
+    *,
+    anio: int | None = None,
+    mes: int | None = None,
+    id_locacion: int | None = None,
+    tip_fac: str | None = None,
+    id_serie_doc: int | None = None,
+    id_cliente: int | None = None,
+    estado: str | None = None,
+    num_doc: int | None = None,
+    search: str | None = None,
+    skip: int = 0,
+    limit: int = 100,
+    company_codes: list[str] | None = None,
+):
+    """List facturas from legacy adapter (WCF)."""
+    target_locations = []
+    if id_locacion is not None and id_locacion > 0:
+        target_locations = [id_locacion]
+    elif company_codes:
+        for c in company_codes:
+            target_locations.extend(_company_to_locaciones(c))
+    else:
+        active_comp = get_active_company_code()
+        target_locations = _company_to_locaciones(active_comp)
+
+    if not target_locations:
+        target_locations = [87]
+
+    all_raw_items = []
+    adapter_error = None
+
+    for loc in set(target_locations):
+        params = [("id_locacion", str(loc))]
+        if anio is not None:
+            params.append(("anio", str(anio)))
+        if mes is not None:
+            params.append(("mes", str(mes)))
+        if tip_fac is not None and str(tip_fac).strip() != "":
+            params.append(("tip_fac", str(tip_fac).strip()))
+        if id_serie_doc is not None and id_serie_doc > 0:
+            params.append(("id_serie_doc", str(id_serie_doc)))
+        if id_cliente is not None and id_cliente > 0:
+            params.append(("id_cliente", str(id_cliente)))
+        if estado:
+            params.append(("estado", estado))
+        if num_doc is not None and num_doc > 0:
+            params.append(("num_doc", str(num_doc)))
+
+        query = "&".join(f"{k}={v}" for k, v in params)
+        endpoint = f"/api/v1/facturas?{query}"
+
+        try:
+            data = _read_json(build_legacy_url(endpoint))
+            if isinstance(data, list):
+                all_raw_items.extend(data)
+            elif isinstance(data, dict) and "items" in data:
+                all_raw_items.extend(data["items"])
+        except Exception as e:
+            adapter_error = e
+            logger.warning(f"Legacy adapter call failed for locacion {loc}: {e}")
+
+    if all_raw_items:
+        _save_real_wcf_factura_rows(all_raw_items)
+        items = all_raw_items
+    else:
+        logger.info("Attempting to load facturas from local snapshot cache...")
+        snapshot_rows = _load_real_wcf_factura_rows()
+        if snapshot_rows:
+            items = snapshot_rows
+        elif adapter_error:
+            raise adapter_error
+        else:
+            items = []
+
+    normalized = [_normalize_factura(f) for f in items]
+
+    seen = set()
+    deduped = []
+    for item in normalized:
+        fid = item.get("id")
+        if fid not in seen:
+            seen.add(fid)
+            deduped.append(item)
+
+    filtered = []
+    for item in deduped:
+        if anio is not None and item.get("fec_doc"):
+            try:
+                if datetime.strptime(str(item["fec_doc"])[:10], "%Y-%m-%d").year != anio:
+                    continue
+            except Exception:
+                pass
+        if mes is not None and item.get("fec_doc"):
+            try:
+                if datetime.strptime(str(item["fec_doc"])[:10], "%Y-%m-%d").month != mes:
+                    continue
+            except Exception:
+                pass
+        if estado and str(item.get("estado", "")).upper() != estado.upper():
+            continue
+        if num_doc and item.get("num_doc") != num_doc:
+            continue
+        if id_cliente and item.get("id_cliente") != id_cliente:
+            continue
+        if search:
+            s = search.lower()
+            cliente_n = str(item.get("cliente_nombre", "")).lower()
+            num_d = str(item.get("num_doc", "")).lower()
+            serie = str(item.get("cod_serie", "")).lower()
+            if s not in cliente_n and s not in num_d and s not in serie:
+                continue
+        filtered.append(item)
+
+    if limit and limit > 0:
+        return filtered[skip : skip + limit]
+    return filtered[skip:]
+
+
+def get_factura_legacy(id_factura: int | str) -> dict:
+    """Fetch single factura from legacy adapter (WCF)."""
+    try:
+        endpoint = f"/api/v1/facturas/{id_factura}"
+        data = _read_json(build_legacy_url(endpoint))
+        if isinstance(data, list):
+            data = data[0] if data else {}
+        return _normalize_factura(data)
+    except Exception as e:
+        logger.error(f"Failed to get factura {id_factura} from legacy adapter: {e}")
+        snapshot = _load_real_wcf_factura_rows()
+        for row in snapshot:
+            if str(row.get("IdFactura") or row.get("id")) == str(id_factura):
+                return _normalize_factura(row)
+        raise
+
+
+# ============================================================================
 # VENTAS / SALES
 # ============================================================================
 

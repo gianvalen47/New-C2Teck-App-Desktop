@@ -13,8 +13,8 @@ var serviceUrl = Environment.GetEnvironmentVariable($"SIGECOM_{serviceName.ToUpp
     ?? BuildDefaultUrl(serviceName);
 
 var company = Environment.GetEnvironmentVariable("SIGECOM_COD_EMP") ?? "08";
-var username = Environment.GetEnvironmentVariable("SIGECOM_USERNAME") ?? "grios";
-var password = Environment.GetEnvironmentVariable("SIGECOM_PASSWORD") ?? "123";
+var username = Environment.GetEnvironmentVariable("SIGECOM_USERNAME");
+var password = Environment.GetEnvironmentVariable("SIGECOM_PASSWORD");
 var domain = Environment.GetEnvironmentVariable("SIGECOM_DOMAIN");
 
 Console.WriteLine($"Family probe: service={serviceName}, url={serviceUrl}, company={company}, user={username}");
@@ -158,10 +158,53 @@ static void ProbeFactura(string serviceUrl, string company, string username, str
     ApplyWindowsCredentials(factory, username, password, domain);
     var channel = factory.CreateChannel();
 
-    Console.WriteLine("Calling FacturaService.Filtrar(...)");
-    var ds = channel.Filtrar(company, new Factura());
-    DumpDataset(ds, "FacturaService.Filtrar");
+    try
+    {
+        Console.WriteLine("Calling MostrarTipo...");
+        var dtTipos = channel.MostrarTipo("crios");
+        Console.WriteLine($"MostrarTipo rows: {dtTipos?.Rows.Count}");
+        if (dtTipos != null)
+        {
+            foreach (DataRow r in dtTipos.Rows)
+            {
+                Console.WriteLine("Tipo: " + string.Join(" | ", dtTipos.Columns.Cast<DataColumn>().Select(c => $"{c.ColumnName}={r[c]}")));
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("MostrarTipo error: " + ex.Message);
+    }
 
+    foreach (var tipFac in new[] { "1", "2", "3", "0", "" })
+    {
+        foreach (var loc in new[] { -1, 87, 72, 0 })
+        {
+            Console.WriteLine($"Calling Filtrar(2026, 0, {loc}, '{tipFac}', 0, 0, '', 0)...");
+            var ds = channel.Filtrar(2026, 0, loc, tipFac, 0, 0, "", 0);
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                Console.WriteLine($"SUCCESS! Found {ds.Tables[0].Rows.Count} rows with tipFac='{tipFac}', loc={loc}!");
+                DumpDataset(ds, $"FacturaService.Filtrar(tipFac={tipFac}, loc={loc})");
+                goto done;
+            }
+        }
+    }
+
+    // Try without year (0, 0)
+    foreach (var tipFac in new[] { "1", "" })
+    {
+        Console.WriteLine($"Calling Filtrar(0, 0, -1, '{tipFac}', 0, 0, '', 0)...");
+        var ds = channel.Filtrar(0, 0, -1, tipFac, 0, 0, "", 0);
+        if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+        {
+            Console.WriteLine($"SUCCESS! Found {ds.Tables[0].Rows.Count} rows with anio=0, tipFac='{tipFac}'!");
+            DumpDataset(ds, $"FacturaService.Filtrar(anio=0, tipFac={tipFac})");
+            goto done;
+        }
+    }
+
+done:
     ((ICommunicationObject)channel).Close();
     factory.Close();
 }
@@ -207,6 +250,7 @@ static void DumpDataset(DataSet? ds, string label)
     {
         var table = ds.Tables[i];
         Console.WriteLine($"  Table[{i}] rows={table.Rows.Count}, columns={table.Columns.Count}");
+        Console.WriteLine("  Columns: " + string.Join(", ", table.Columns.Cast<DataColumn>().Select(c => c.ColumnName)));
         for (var rowIndex = 0; rowIndex < Math.Min(3, table.Rows.Count); rowIndex++)
         {
             var row = table.Rows[rowIndex];
@@ -264,7 +308,10 @@ public class Factura
 public interface IFacturaService
 {
     [OperationContract(Action = "http://tempuri.org/IFacturaService/Filtrar", ReplyAction = "http://tempuri.org/IFacturaService/FiltrarResponse")]
-    DataSet Filtrar(string pCodEmp, Factura Clase);
+    DataSet Filtrar(int Anio, int Mes, int pIdLocacion, string pTipFac, int pIdSerieDoc, int pIdCliente, string pEstado, int pNumDoc);
+
+    [OperationContract(Action = "http://tempuri.org/IFacturaService/MostrarTipo", ReplyAction = "http://tempuri.org/IFacturaService/MostrarTipoResponse")]
+    DataTable MostrarTipo(string pCodUsu);
 }
 
 [DataContract(Name = "Boleta", Namespace = "http://schemas.datacontract.org/2004/07/Models")]
