@@ -12,9 +12,10 @@ import { createPortal } from "react-dom";
 import { WindowsProvider, useWindows} from "@/context/WindowsContext";
 import { Workspace, renderWindow } from "@/features/escritorio/windows";
 import { Glyph } from "@/features/escritorio/glyphs";
+import { ICONOS_COLOR } from "@/assets/new-logos/iconos-sigecom-color";
 import systeckIcon from "@/assets/Systeck.ico";
 import {
-  Minus, Square, X, ChevronDown, Circle, ArrowLeft,
+  Minus, Square, X, ChevronDown, Bell, ShieldCheck, Cpu as CpuIcon, HelpCircle, Circle, ArrowLeft,
   FileText, ShoppingBag, Users, ClipboardList, Search, BarChart3,
   Tag, Tags, Percent, Factory, Layers, DollarSign, Package,
   Contact, Briefcase, MonitorSmartphone, Cpu, ListOrdered, ScanLine,
@@ -114,6 +115,72 @@ type MenuItem = { icon: any; label: string };
 type MenuSection = { title: string; items: MenuItem[] };
 type RibbonBtn = { icon: any; label: string; big?: boolean; dropdown?: boolean; menu?: MenuSection[]; openLabel?: string  };
 type RibbonGroup = { title?: string; items: RibbonBtn[] };
+
+const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
+  "documentos": "doc",
+  "guia remision": "GuiaRemision",
+  "guia de devolucion": "GuiaDevolucion",
+  "boleta": "Boleta",
+  "notas": "Notas",
+  "factura": "Factura",
+  "registro de venta": "Factura",
+  "registro": "Factura",
+  "registro auxiliar": "Factura",
+  "resumen de boletas": "Boleta",
+  "precios": "cotizacion",
+  "precios cliente": "cotizacion",
+  "precio oferta": "cotizacion",
+  "precio lista": "lista",
+  "precio fabricantes": "compras",
+  "reclamos": "doc",
+  "consignaciones": "doc",
+  "presupuesto venta": "doc",
+  "detalle": "detalle",
+  "g r pendiente": "GuiaRemision",
+  "vale requisicion": "doc",
+  "detalle descuento": "detalle",
+  "ordenes compra": "ordenesCompra",
+  "guias remision": "GuiaRemision",
+  "comisiones": "comision_ico",
+  "doc ingresos": "Ingresos",
+  "doc salidas": "Ingresos",
+  "chequeo f i": "Check",
+  "t i": "doc",
+  "m t i": "detalle",
+  "vales": "doc",
+  "atender ot": "doc",
+  "despachos": "despacho",
+  "datos despacho clientes": "despacho",
+  "clientes": "cliente",
+  "cartera": "cartera__2_",
+  "requisiciones": "doc",
+  "despacho": "despacho",
+  "consultas": "buscar",
+  "indicadores": "indicadores1",
+  "tablero": "indicadores1",
+  "empresa": "Empresa",
+  "cerrar aplicacion": "Cerrar",
+};
+
+const normalizeSmallColorIconKey = (value: string) =>
+  value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+
+const SMALL_COLOR_ICON_LOOKUP: Record<string, any> = Object.fromEntries(
+  Object.entries(ICONOS_COLOR).map(([name, icon]) => [normalizeSmallColorIconKey(name), icon]),
+);
+
+function SmallColorIcon({ label, className, size = 19 }: { label: string; className?: string; size?: number }) {
+  const normalizedLabel = normalizeSmallColorIconKey(label);
+  const mappedKey = SMALL_COLOR_ICON_ALIASES[normalizedLabel] ?? normalizedLabel;
+  const Icon = SMALL_COLOR_ICON_LOOKUP[normalizeSmallColorIconKey(mappedKey)] ?? SMALL_COLOR_ICON_LOOKUP.doc ?? ICONOS_COLOR.doc;
+
+  return <Icon size={size} className={className} strokeWidth={1.8} />;
+}
 
 const RIBBONS: Record<string, RibbonGroup[]> = {
   Ventas: [
@@ -940,6 +1007,36 @@ function DesktopApp() {
   );
 }
 
+function useNow() {
+  const [now, setNow] = useState(new Date());
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(t);
+  }, []);
+  return now;
+}
+
+const TAB_ACCENTS: Record<string, string> = {
+  Ventas: "from-[#0F5FAA] to-[#0A3F73]",
+  Almacenes: "from-[#0E7E52] to-[#08553A]",
+  "Créditos": "from-[#A44900] to-[#6F3000]",
+  "Importaciones": "from-[#1D4ED8] to-[#0B255F]",
+  Costos: "from-[#7C3AED] to-[#4C1D95]",
+  Gerencia: "from-[#0F172A] to-[#020617]",
+  Servicios: "from-[#0891B2] to-[#164E63]",
+  Compras: "from-[#B45309] to-[#78350F]",
+  Personal: "from-[#DB2777] to-[#831843]",
+  Rondas: "from-[#059669] to-[#064E3B]",
+  Contabilidad: "from-[#4338CA] to-[#1E1B4B]",
+  "Telefonía": "from-[#0284C7] to-[#0C4A6E]",
+  CRM: "from-[#E11D48] to-[#881337]",
+  Activos: "from-[#65A30D] to-[#365314]",
+  Tablas: "from-[#525252] to-[#171717]",
+  Logueo: "from-[#7C2D12] to-[#431407]",
+  "Administración": "from-[#334155] to-[#0F172A]",
+  Ayuda: "from-[#0369A1] to-[#075985]",
+};
+
 function DesktopAppInner() {
   const [active, setActive] = useState("Ventas");
   const ribbon = RIBBONS[active] ?? RIBBONS.Ventas;
@@ -949,6 +1046,10 @@ function DesktopAppInner() {
   const { open: openWindow, windows, active: activeWindowId, close: closeWindow, focus: focusWindow } = useWindows();
   const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
   const [recover, setRecover] = useState(false);
+  const [starred, setStarred] = useState(false);
+  const [cpuLoad, setCpuLoad] = useState(23);
+  const [memLoad, setMemLoad] = useState(48);
+  const accent = TAB_ACCENTS[active] ?? "from-[#3A5573] to-[#243B55]";
   const popupLabel = params.get("popup");
   const loginMode = params.get("login") === "1";
   const [desktopAuthenticated, setDesktopAuthenticated] = useState(false);
@@ -967,6 +1068,7 @@ function DesktopAppInner() {
   const [companyPickerOpen, setCompanyPickerOpen] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const sessionCtx = useSession();
+
 
   useEffect(() => {
     setNow(new Date().toLocaleDateString("es-PE"));
@@ -1198,33 +1300,62 @@ function DesktopAppInner() {
           ? "h-screen rounded-none shadow-none border-0"
           : "max-w-[1400px] rounded-lg shadow-2xl border border-slate-700",
       ].join(" ")}>
-        {!isDesktop && (
-          <div className="relative z-30 h-8 bg-gradient-to-b from-[#3E5B7A] to-[#2A3F55] flex items-center justify-between px-2 text-white text-xs select-none">
-            <div className="flex items-center gap-2">
-              <div className="h-5 w-5 rounded-sm bg-white/10 grid place-items-center">
-                <Circle className="h-3 w-3" />
-              </div>
-              <span className="opacity-80">Systeck (Versión 10.6.3.0) — C2TECK S.A.C.</span>
+        <div
+          className="relative z-30 h-8 bg-gradient-to-b from-[#3E5B7A] to-[#2A3F55] flex items-center justify-between px-2 text-white text-xs select-none"
+          style={{ ["WebkitAppRegion" as any]: "drag" } as React.CSSProperties}
+          onDoubleClick={() => {
+            if (isDesktop) {
+              void maximize();
+            }
+          }}
+        >
+          <div className="flex items-center gap-2 min-w-0" style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}>
+            <div className="h-6 w-6 rounded-md bg-white/10 grid place-items-center ring-1 ring-white/15 shrink-0 shadow-inner">
+              <Circle className="h-3.5 w-3.5" strokeWidth={2.5} />
             </div>
-            <div className="flex items-center">
-              <button
-                type="button"
-                onClick={isDesktop ? minimize : undefined}
-                className="h-8 w-11 hover:bg-white/10 grid place-items-center"
-              ><Minus className="h-3.5 w-3.5" /></button>
-              <button
-                type="button"
-                onClick={isDesktop ? maximize : undefined}
-                className="h-8 w-11 hover:bg-white/10 grid place-items-center"
-              ><Square className="h-3 w-3" /></button>
-              <button
-                type="button"
-                onClick={isDesktop ? close : undefined}
-                className="h-8 w-11 hover:bg-red-600 grid place-items-center"
-              ><X className="h-3.5 w-3.5" /></button>
+            <div className="flex flex-col leading-tight min-w-0">
+              <span className="font-semibold tracking-tight truncate text-[12px]">Systeck ERP <span className="opacity-70 font-normal">v10.6.3.0</span></span>
+              <span className="text-[9.5px] opacity-70 truncate flex items-center gap-1">
+                C2TECK S.A.C. <ChevronRight className="h-2.5 w-2.5" /> {active} <ChevronRight className="h-2.5 w-2.5" /> Módulo activo
+              </span>
             </div>
           </div>
-        )}
+          <div className="hidden md:flex items-center gap-1 mx-3 flex-1 justify-center max-w-[420px]" style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}>
+            <div className="flex items-center gap-1.5 w-full bg-black/25 hover:bg-black/35 focus-within:bg-black/35 border border-white/10 rounded-md px-2 py-1 transition-colors">
+              <Search className="h-3.5 w-3.5 opacity-70" />
+              <input
+                placeholder="Buscar comandos, documentos, RUC, SKU…   Ctrl + K"
+                className="bg-transparent outline-none text-[11px] placeholder:text-white/50 flex-1 min-w-0"
+              />
+              <kbd className="text-[9px] opacity-60 border border-white/20 rounded px-1">⌘K</kbd>
+            </div>
+          </div>
+          <div className="flex items-center" style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}>
+            <button title="Notificaciones" className="h-9 w-9 hover:bg-white/10 grid place-items-center relative transition-colors">
+              <Bell className="h-3.5 w-3.5" />
+              <span className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_#F59E0B]" />
+            </button>
+            <button title="Ayuda" className="h-9 w-9 hover:bg-white/10 grid place-items-center transition-colors">
+              <HelpCircle className="h-3.5 w-3.5" />
+            </button>
+            <div className="h-5 w-px bg-white/15 mx-1" />
+            <button
+              type="button"
+              onClick={isDesktop ? minimize : undefined}
+              className="h-8 w-11 hover:bg-white/10 grid place-items-center"
+            ><Minus className="h-3.5 w-3.5" /></button>
+            <button
+              type="button"
+              onClick={isDesktop ? maximize : undefined}
+              className="h-8 w-11 hover:bg-white/10 grid place-items-center"
+            ><Square className="h-3 w-3" /></button>
+            <button
+              type="button"
+              onClick={isDesktop ? close : undefined}
+              className="h-8 w-11 hover:bg-red-600 grid place-items-center"
+            ><X className="h-3.5 w-3.5" /></button>
+          </div>
+        </div>
 
         {/* Quick access + tabs */}
         <div
@@ -1789,21 +1920,24 @@ function CollapsedGroupButton({ group, onOpen }: { group: RibbonGroup; onOpen: (
   return (
     <div className="flex flex-col shrink-0 border-r border-slate-200 last:border-r-0">
       <div className="flex items-start px-1.5 pt-1 pb-0.5 min-h-[78px]">
-        <button
+        <motion.button
           ref={btnRef}
           onClick={toggle}
           title={label}
+          whileHover={{ scale: 1.02, y: -1 }}
+          whileTap={{ scale: 0.97, y: 0 }}
+          transition={{ duration: 0.12 }}
           className={[
-            "flex flex-col items-center justify-center gap-1 rounded border w-[72px] h-[72px] px-1.5 press-fx active:scale-95",
+            "flex flex-col items-center justify-center gap-1 rounded border w-[64px] h-[72px] px-1.5 press-fx",
             open
               ? "bg-gradient-to-b from-[#FCE9A8] to-[#F5C86A] border-[#B8892E] shadow-inner"
               : "border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6]",
           ].join(" ")}
         >
-          <Glyph name={label} size={24} className="shrink-0" />
-          <span className="text-[9.5px] leading-tight text-center whitespace-pre text-slate-800 font-medium">{label}</span>
+          <Glyph name={label} size={30} className="shrink-0 drop-shadow-[0_1px_1px_rgba(15,23,42,0.15)] transition-transform" />
+          <span className="text-[10.5px] leading-tight text-center whitespace-pre text-slate-800 font-bold">{label}</span>
           <ChevronDown className="h-2.5 w-2.5 text-slate-600" />
-        </button>
+        </motion.button>
       </div>
       {open && pos && createPortal(
         <>
@@ -1831,7 +1965,7 @@ function CollapsedGroupButton({ group, onOpen }: { group: RibbonGroup; onOpen: (
                       expandedItem === item.label ? "bg-gradient-to-b from-[#FCE9A8] to-[#F5C86A] border-[#B8892E]" : "border-transparent",
                     ].join(" ")}
                   >
-                    <item.icon className="h-4 w-4 text-amber-600 shrink-0" strokeWidth={1.5} />
+                    <SmallColorIcon label={item.label} className="h-4 w-4 shrink-0" size={16} />
                     <span className="text-[11.5px] text-slate-800 whitespace-nowrap flex-1">{item.label.replace(/\n/g, " ")}</span>
                     {item.menu && <ChevronDown className="h-3 w-3 text-slate-600 shrink-0" />}
                   </button>
@@ -1843,8 +1977,8 @@ function CollapsedGroupButton({ group, onOpen }: { group: RibbonGroup; onOpen: (
                           onClick={() => { openWindow(subitem.label); setOpen(false); setExpandedItem(null); }}
                           className="flex w-full items-center gap-2 px-1.5 py-1 rounded border border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6] text-left"
                         >
-                          <subitem.icon className="h-4 w-4 text-amber-600 shrink-0" strokeWidth={1.5} />
-                          <span className="text-[11.5px] text-slate-800 whitespace-nowrap">{subitem.label}</span>
+                          <SmallColorIcon label={subitem.label} className="h-4 w-4 shrink-0" size={16} />
+                          <span className="text-[11.5px] text-slate-800 whitespace-nowrap font-bold">{subitem.label}</span>
                         </button>
                       ))}
                     </div>
@@ -2016,7 +2150,7 @@ function RibbonBigButton({ icon: Icon, label, dropdown, menu, onOpen }: RibbonBt
         ].join(" ")}
       >
         <Glyph name={cleanLabel} size={30} className="drop-shadow-[0_1px_1px_rgba(15,23,42,0.15)] group-hover/rb:scale-105 transition-transform" />
-        <span className="text-[10.5px] leading-tight text-center whitespace-pre text-slate-800 font-medium">{label}</span>
+        <span className="text-[10.5px] leading-tight text-center whitespace-pre text-slate-800 font-bold">{label}</span>
         {dropdown && <ChevronDown className="h-2.5 w-2.5 text-slate-500 -mt-1" />}
       </motion.button>
       {open && menu && pos && createPortal(
@@ -2036,8 +2170,8 @@ function RibbonBigButton({ icon: Icon, label, dropdown, menu, onOpen }: RibbonBt
                         onClick={() => { onOpen(it.label); setOpen(false); }}
                         className="flex items-center gap-1.5 px-1.5 py-0.5 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border border-transparent text-left whitespace-nowrap"
                       >
-                        <Glyph name={it.label} size={22} className="shrink-0" />
-                      <span className="text-[11.5px] text-slate-800 whitespace-nowrap font-medium">{it.label}</span>
+                        <SmallColorIcon label={it.label} size={22} className="shrink-0" />
+                      <span className="text-[11.5px] text-slate-800 whitespace-nowrap font-bold">{it.label}</span>
                       </button>
                     ))}
                   </div>
@@ -2105,8 +2239,8 @@ function RibbonSmallButton({ icon: Icon, label, dropdown, menu, onOpen }: Ribbon
             : "border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6]",
         ].join(" ")}
       >
-        <Glyph name={label} size={19} className="shrink-0 group-hover/rs:scale-105 transition-transform" />
-        <span className="text-slate-800 truncate">{label}</span>
+        <SmallColorIcon label={label} size={19} className="shrink-0 group-hover/rs:scale-105 transition-transform" />
+        <span className="text-slate-800 truncate font-bold">{label}</span>
         {dropdown && <ChevronDown className="h-2 w-2 text-slate-600" />}
       </motion.button>
       {open && menu && pos && createPortal(
@@ -2126,8 +2260,8 @@ function RibbonSmallButton({ icon: Icon, label, dropdown, menu, onOpen }: Ribbon
                         onClick={() => { onOpen(it.label); setOpen(false); }}
                         className="flex items-center gap-1.5 px-1.5 py-0.5 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border border-transparent text-left whitespace-nowrap"
                       >
-                        <Glyph name={it.label} size={18} className="shrink-0" />
-                        <span className="text-[11px] text-slate-800 whitespace-nowrap font-medium">{it.label}</span>
+                        <SmallColorIcon label={it.label} size={18} className="shrink-0" />
+                        <span className="text-[11px] text-slate-800 whitespace-nowrap font-bold">{it.label}</span>
                       </button>
                     ))}
                   </div>
@@ -2141,4 +2275,3 @@ function RibbonSmallButton({ icon: Icon, label, dropdown, menu, onOpen }: Ribbon
     </>
   );
 }
-

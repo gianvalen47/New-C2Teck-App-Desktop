@@ -47,7 +47,7 @@ function createWindow(appUrl, options = {}) {
       ? path.join(__dirname, "icon.png")
       : undefined,
     autoHideMenuBar: true,
-    frame: true,
+    frame: false,
     resizable,
     show: false,
     webPreferences: {

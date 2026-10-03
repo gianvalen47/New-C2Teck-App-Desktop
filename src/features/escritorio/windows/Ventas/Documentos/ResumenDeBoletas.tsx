@@ -16,6 +16,8 @@ import {
   Wrench,
   X,
 } from "lucide-react";
+import { toast } from "sonner";
+import { fetchBoletas } from "@/lib/sigecoom-api";
 import { actionBtn, btn, btnPrimary, iconBtn, inp, squareIconBtn, tbSep } from "@/features/escritorio/windows/uiStyles";
 import { Field, YearMonthFields, EstadoBadge } from "@/features/escritorio/windows/shared/uiComponents";
 
@@ -33,13 +35,27 @@ type ResumenBoletaRow = {
   almacen: string;
 };
 
-const initialRows: ResumenBoletaRow[] = [
-  { id: "RB-1001", codigo: "R001-1001", fecha: "2026-09-08", ticket: "TKT-0001", cliente: "LUCY VENTAS S.A.C.", observacion: "Venta al contado", notas: "Entrega programada", sunat: "ACEPTADO", estado: "GENERADO", oficina: "LIMA", almacen: "COMERCIAL" },
-  { id: "RB-1002", codigo: "R001-1002", fecha: "2026-09-08", ticket: "TKT-0002", cliente: "MERCADOS DEL SUR", observacion: "Recarga de stock", notas: "Con ticket adjunto", sunat: "PENDIENTE", estado: "ENVIADO", oficina: "LIMA", almacen: "BODEGA 01" },
-  { id: "RB-1003", codigo: "R001-1003", fecha: "2026-09-07", ticket: "TKT-0003", cliente: "INVERSIONES PUNTO DOC", observacion: "Venta con tarjeta", notas: "No requiere seguimiento", sunat: "ENVIADO", estado: "APROBADO", oficina: "AREQUIPA", almacen: "PRINCIPAL" },
-  { id: "RB-1004", codigo: "R001-1004", fecha: "2026-09-06", ticket: "TKT-0004", cliente: "ALMACEN DEL NORTE", observacion: "Cargo por devolucion", notas: "Atender con cobranza", sunat: "BAJA", estado: "ANULADO", oficina: "TRUJILLO", almacen: "ALMACÉN" },
-  { id: "RB-1005", codigo: "R001-1005", fecha: "2026-09-05", ticket: "TKT-0005", cliente: "COSTA BRAVA EIRL", observacion: "Venta normal", notas: "Sin observación", sunat: "PENDIENTE", estado: "GENERADO", oficina: "LIMA", almacen: "COMERCIAL" },
-];
+const normalizeResumenBoletaRow = (item: any): ResumenBoletaRow => {
+  const idValue = item?.id ?? item?.Id ?? item?.numero ?? item?.num_doc ?? item?.serie ?? `rb-${Date.now()}`;
+  const fecha = String(item?.fecha ?? item?.date ?? item?.fec_emision ?? item?.created_at ?? "").slice(0, 10);
+  const codigo = String(item?.cod_serie ?? item?.serie ?? item?.codigo ?? "B001");
+  const ticket = String(item?.ticket ?? item?.numero ?? item?.num_doc ?? item?.id ?? "-");
+  const cliente = String(item?.cliente ?? item?.client_name ?? item?.nombre_cliente ?? item?.razon_social ?? "CLIENTE");
+
+  return {
+    id: String(idValue),
+    codigo: String(codigo),
+    fecha,
+    ticket,
+    cliente,
+    observacion: String(item?.observacion ?? item?.descripcion ?? item?.motivo ?? ""),
+    notas: String(item?.notas ?? item?.comentario ?? item?.observacion ?? ""),
+    sunat: String(item?.estado_sunat ?? item?.sunat ?? item?.estadoSunat ?? "PENDIENTE").toUpperCase(),
+    estado: String(item?.estado ?? item?.status ?? "GENERADO").toUpperCase(),
+    oficina: String(item?.oficina ?? item?.locacion ?? "LIMA"),
+    almacen: String(item?.almacen ?? item?.warehouse ?? "COMERCIAL"),
+  };
+};
 
 const ESTADO_COLORS: Record<string, string> = {
   ACEPTADO: "text-green-700 bg-green-50 border-green-200",
@@ -255,8 +271,8 @@ function ResumenEditor({
 }
 
 export function ResumenDeBoletasList() {
-  const [rows, setRows] = useState<ResumenBoletaRow[]>(initialRows);
-  const [selectedId, setSelectedId] = useState(initialRows[0].id);
+  const [rows, setRows] = useState<ResumenBoletaRow[]>([]);
+  const [selectedId, setSelectedId] = useState("");
   const [showEditor, setShowEditor] = useState(false);
   const [mode, setMode] = useState<"view" | "edit" | "new">("view");
   const [sortBy, setSortBy] = useState<{ col: string; asc: boolean } | null>(null);
@@ -335,6 +351,23 @@ export function ResumenDeBoletasList() {
     setShowEditor(true);
   };
 
+  const load = async () => {
+    try {
+      const payload = await fetchBoletas({ limit: 200 });
+      const mapped = payload.map(normalizeResumenBoletaRow);
+      setRows(mapped);
+      setSelectedId(mapped[0]?.id ?? "");
+    } catch (error: any) {
+      toast.error(error?.message ?? "No se pudieron cargar los resúmenes de boletas");
+      setRows([]);
+      setSelectedId("");
+    }
+  };
+
+  useEffect(() => {
+    void load();
+  }, []);
+
   const saveRow = (next: ResumenBoletaRow) => {
     setRows((prev) => {
       const idx = prev.findIndex((row) => row.id === next.id);
@@ -357,7 +390,7 @@ export function ResumenDeBoletasList() {
         {tbSep}
         <button className={iconBtn} title="Obtener Estado Sunat"><Send className="h-4 w-4" /></button>
         {tbSep}
-        <button className={iconBtn} title="Actualizar" onClick={() => setRows((prev) => [...prev])}><RefreshCw className="h-4 w-4" /></button>
+        <button className={iconBtn} title="Actualizar" onClick={() => void load()}><RefreshCw className="h-4 w-4" /></button>
         {tbSep}
         <button className={iconBtn} title="Cerrar la ventana actual"><LogOut className="h-4 w-4" /></button>
       </div>
@@ -368,7 +401,7 @@ export function ResumenDeBoletasList() {
           <Field label="Cod. Resumen" className="w-24">
             <input className={`${inp} font-mono`} value={codResumen} onChange={(e) => setCodResumen(e.target.value)} />
           </Field>
-          <button className={btnPrimary}><Search className="h-3.5 w-3.5" />Buscar</button>
+          <button className={btnPrimary} onClick={() => void load()}><Search className="h-3.5 w-3.5" />Buscar</button>
         </div>
       </div>
 

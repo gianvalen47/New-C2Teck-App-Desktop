@@ -19,9 +19,10 @@ import {
   Wrench,
   X,
 } from "lucide-react";
+import { toast } from "sonner";
 import { stdToolbar5 } from "@/features/escritorio/windows/shared/toolbarPresets";
 import { actionBtn, btn, btnPrimary, iconBtn, inp, squareIconBtn, tbSep } from "@/features/escritorio/windows/uiStyles";
-import { fetchSession, getSessionTipoCambioCompra } from "@/lib/sigecoom-api";
+import { fetchBoletas, fetchSession, getSessionTipoCambioCompra } from "@/lib/sigecoom-api";
 import { Field, InlineField, YearSpinner, EstadoBadge, DraggableFormWindow, type BoletaFormWindow, FiltersPanel, ESTADO_FILTER_OPTIONS } from "@/features/escritorio/windows/shared/uiComponents";
 
 type BoletaRow = {
@@ -35,6 +36,35 @@ type BoletaRow = {
   sunat: string;
   codigo: string;
   observacion: string;
+};
+
+const formatCurrency = (value: number) =>
+  new Intl.NumberFormat("es-PE", {
+    style: "currency",
+    currency: "PEN",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(Number.isFinite(value) ? value : 0);
+
+const normalizeBoletaRow = (item: any): BoletaRow => {
+  const idValue = item?.id ?? item?.Id ?? item?.numero ?? item?.num_doc ?? item?.serie ?? "boleta";
+  const numero = item?.numero ?? item?.num_doc ?? item?.number ?? item?.serie ?? "B001";
+  const fecha = String(item?.fecha ?? item?.date ?? item?.fec_emision ?? item?.created_at ?? "").slice(0, 10);
+  const cliente = item?.cliente ?? item?.client_name ?? item?.nombre_cliente ?? item?.razon_social ?? item?.cliente_nombre ?? "CLIENTE";
+  const totalValue = Number(item?.total ?? item?.tot_venta ?? item?.tot_neto ?? item?.monto_total ?? 0);
+
+  return {
+    id: String(idValue),
+    numero: String(numero),
+    fecha,
+    cliente: String(cliente),
+    moneda: String(item?.moneda ?? item?.currency ?? "PEN"),
+    total: formatCurrency(totalValue),
+    estado: String(item?.estado ?? item?.status ?? "GENERADO").toUpperCase(),
+    sunat: String(item?.estado_sunat ?? item?.sunat ?? item?.estadoSunat ?? "PENDIENTE").toUpperCase(),
+    codigo: String(item?.cod_serie ?? item?.serie ?? item?.codigo ?? "B001"),
+    observacion: String(item?.observacion ?? item?.descripcion ?? item?.motivo ?? ""),
+  };
 };
 
 const initialRows: BoletaRow[] = [
@@ -226,10 +256,10 @@ function BoletaEditor({
 }
 
 export function BoletaList() {
-  const [rows, setRows] = useState<BoletaRow[]>(initialRows);
+  const [rows, setRows] = useState<BoletaRow[]>([]);
   const [loading, setLoading] = useState(false);
   const [showClientLookup, setShowClientLookup] = useState(false);
-  const [selectedId, setSelectedId] = useState(initialRows[0].id);
+  const [selectedId, setSelectedId] = useState("");
   const [showEditor, setShowEditor] = useState(false);
   const [mode, setMode] = useState<"view" | "edit" | "new">("view");
   const [window, setWindow] = useState<BoletaFormWindow>({ id: "boleta-editor", title: "Boleta", x: 170, y: 110, w: 920, h: 560, z: 35 });
@@ -266,9 +296,23 @@ export function BoletaList() {
 
   const load = async () => {
     setLoading(true);
-    // placeholder: integrate real fetch logic here
-    setTimeout(() => setLoading(false), 400);
+    try {
+      const payload = await fetchBoletas({ limit: 200 });
+      const mapped = payload.map(normalizeBoletaRow);
+      setRows(mapped);
+      setSelectedId(mapped[0]?.id ?? "");
+    } catch (error: any) {
+      toast.error(error?.message ?? "No se pudieron cargar las boletas");
+      setRows([]);
+      setSelectedId("");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  useEffect(() => {
+    void load();
+  }, []);
 
   const saveRow = (next: BoletaRow) => {
     setRows((prev) => {
