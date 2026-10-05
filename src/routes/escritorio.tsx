@@ -117,49 +117,385 @@ type RibbonBtn = { icon: any; label: string; big?: boolean; dropdown?: boolean; 
 type RibbonGroup = { title?: string; items: RibbonBtn[] };
 
 const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
-  "documentos": "doc",
+  // Conjuntos principales de cada pestaña
+  documentos: "doc",
+  "pre y post venta": "compra",
+  clientes: "cliente",
+  requisiciones: "ValeRequisicion",
+  consultas: "doc_elec_lupa",
+  indicadores: "Indicadores1",
+  almacen: "inventario",
+  motores: "Motores",
+  transito: "detalle",
+  mantenimiento: "actualizarCostos",
+  reportes: "doc",
+  compras: "compra",
+  control: "detalle",
+  creditos: "creditos",
+  aprobaciones: "Check",
+  importaciones: "Importacion",
+  pedidos: "doc",
+  procesos: "Refresh",
+  gerencia: "Indicadores1",
+  servicios: "doc",
+  ventas: "cotizacion",
+  asignaciones: "calendar",
+  comunicaciones: "doc",
+  rondas: "detalle",
+  tesoreria: "bancos",
+  "caja chica": "bancos",
+  telefonia: "Phone",
+  asignacion: "cliente",
+  oportunidades: "cliente",
+  activos: "inventario",
+  tablas: "doc",
+  login: "KeyRound",
+  seguridad: "UserCog",
+  usuarios: "cliente",
+  encuestas: "doc",
+  "inventario admin": "inventario",
+  llamadas: "Phone",
+  "tablas generales": "doc",
+  usuario: "cliente",
+  ayuda: "Info",
+
+  // VENTAS
+
+  // Documentos
   "guia remision": "GuiaRemision",
   "guia de devolucion": "GuiaDevolucion",
-  "boleta": "Boleta",
-  "notas": "Notas",
-  "factura": "Factura",
-  "registro de venta": "Factura",
-  "registro": "Factura",
-  "registro auxiliar": "Factura",
+  factura: "Factura",
+  boleta: "Boleta",
+  notas: "Notas",
   "resumen de boletas": "Boleta",
+
+  // Pre y Post Venta
+  "cotizaciones": "cotizacion",
+  "reclamo garantia": "ReclamoGarantia",
+  "separar orden": "compra",
+  "ordenes compra": "ordenesCompra",
+  "actualizar vendedor": "actualizarCostos",
+  "enviar correos": "Enviar",
+
+  // Clientes
+  cartera: "cartera__2_",
+
+  // Requisiciones
+  "despacho": "despacho",
+
+  // Consultas
   "precios": "cotizacion",
+
+  // Indicadores
+  tablero: "Indicadores1",
+  // Precios
   "precios cliente": "cotizacion",
   "precio oferta": "cotizacion",
-  "precio lista": "lista",
-  "precio fabricantes": "compras",
-  "reclamos": "doc",
-  "consignaciones": "doc",
-  "presupuesto venta": "doc",
-  "detalle": "detalle",
-  "g r pendiente": "GuiaRemision",
-  "vale requisicion": "doc",
-  "detalle descuento": "detalle",
-  "ordenes compra": "ordenesCompra",
+  "precio lista": "cotizacion",
+  "precio fabricantes": "ordenesCompra",
+  "factores rubros": "compra",
+  // Reportes
+
+  "registro de venta": "RegistroAuxiliar",
+  registro: "Factura",
+  "registro auxiliar": "RegistroAuxiliar",
+  "resumen registro": "Factura",
+
+  reclamos: "ReclamoGarantia",
   "guias remision": "GuiaRemision",
-  "comisiones": "comision_ico",
+  "cotiz taller": "cotizacionTaller",
+  "ordenes de compra": "ordenesCompra",
+  "mensuales x cliente": "cliente",
+  "presupuesto venta": "presupuesto_venta",
+  detalle: "detalle",
+  "detalle descuento": "detalle",
+  "g r pendiente": "GuiaRemision",
+  "gr pendiente": "GuiaRemision",
+  "vale requisicion": "ValeRequisicion",
+  vales: "ValeRequisicion",
+  comisiones: "comision_ico",
   "doc ingresos": "Ingresos",
   "doc salidas": "Ingresos",
   "chequeo f i": "Check",
-  "t i": "doc",
-  "m t i": "detalle",
-  "vales": "doc",
+  ti: "doc",
+  "m ti": "detalle",
   "atender ot": "doc",
-  "despachos": "despacho",
+  despachos: "despacho",
   "datos despacho clientes": "despacho",
-  "clientes": "cliente",
-  "cartera": "cartera__2_",
-  "requisiciones": "doc",
-  "despacho": "despacho",
-  "consultas": "buscar",
-  "indicadores": "indicadores1",
-  "tablero": "indicadores1",
-  "empresa": "Empresa",
-  "cerrar aplicacion": "Cerrar",
+  acumulada: "acumulada",
+  "documentos emitidos": "doc",
+  "resumen boletas": "Boleta",
+  "cuentas x cobrar": "cuentasCobrar",
+  anticipos: "compra",
+  créditos: "creditos",
+
+  // Almacenes
+  transferencias: "detalle",
+  anulacion: "Anular",
+  "anulacion en consulta": "Anular",
+  "anulación en consulta": "Anular",
+  productos: "inventario",
+  "liqui gastos": "gastos",
+  "act min max": "detalle",
+  ubicaciones: "detalle",
+  tarjetas: "doc",
+  calendario: "calendar",
+  "procesar cobertura": "Refresh",
+  inventario: "inventario",
+  movimientos: "detalle",
+  "sin movimiento": "doc",
+  "toma de inventario": "detalle",
+  "vale materiales": "ValeRequisicion",
+  "inv perm valorizado": "inventario",
+
+  // Créditos
+  "ctas x cobrar": "cuentasCobrar",
+  letras: "credito",
+  planillas: "doc",
+  "recepcion doc": "doc",
+  "factores y descuentos": "compra",
+  "saldo bancos": "bancos",
+  "visitas cobrador": "cliente",
+  "procesar job": "Refresh",
+  "vincular g r": "GuiaRemision",
+  feriados: "calendar",
+  "tipo cambio ventas": "doc",
+  "renueva tipo cambio": "Refresh",
+  "mantenimiento tipo de cambio": "doc",
+  "permiso usuario": "UserCog",
+  "detalle vencimientos": "detalle",
+  "acumulado vencimientos": "acumulada",
+  "diario de pagos": "detalle",
+  "letras aceptadas": "credito",
+  "notas debito credito": "Notas",
+  "visita cobrador": "cliente",
+  "vencimientos": "detalle",
+  "cuentas corrientes": "cuentasCorrientes",
+
+  // Importaciones
+  embarque: "Embarque",
+  "embarques de importacion": "Embarque",
+  "orden importacion": "Importacion",
+  internos: "doc",
+  "pedido interno": "doc",
+  "ordenes de importacion": "Importacion",
+  "orden de importacion": "Importacion",
+
+  // Costos
+  "valorizar f i": "doc",
+  recalcular: "Refresh",
+  "ajustar costos": "actualizarCostos",
+  "cerrar mes": "Cerrar",
+  consolidado: "consolidado",
+  "trasladar costos": "detalle",
+  "generar periodo": "calendar",
+  "inv rotativo": "inventario",
+  "actualizar costos": "actualizarCostos",
+  "diario de almacen": "detalle",
+  "stock valorizado": "inventario",
+  "cuadrar cierre": "Check",
+  kardex: "doc",
+  "costo de venta": "costoVenta",
+  condensados: "condensados",
+  "resumen general": "doc",
+  sobregiro: "detalle",
+  gmroi: "Indicadores1",
+
+  // Gerencia
+  "000 ventas": "doc",
+  "010 importaciones": "Importacion",
+  "020 inventario y costos": "inventario",
+  "030 contabilidad": "doc",
+  "040 creditos y cobranzas": "creditos",
+  "datos para indicadores": "Indicadores1",
+  tarjeta: "credito",
+  "contenedor reportes": "doc",
+  "estados financieros": "Indicadores1",
+
+  // Servicios
+  "pedir repuestos": "compra",
+  cotizacion: "cotizacion",
+  "orden de trabajo": "doc",
+  "solicitud ot": "doc",
+  ot: "doc",
+  marcaciones: "Check",
+  "gastos reales": "detalle",
+  "pre marcacion": "calendar",
+  "marcar ot": "Check",
+  garantia: "ReclamoGarantia",
+  "orden reparacion": "doc",
+  "reclamo cliente": "ReclamoGarantia",
+  "control vehicular": "despacho",
+  kilometraje: "despacho",
+  "oficina usuario": "cliente",
+  actividades: "Check",
+  programacion: "calendar",
+  plantilla: "doc",
+  productividad: "Indicadores1",
+  proyeccion: "Indicadores1",
+  "movimiento repuestos": "detalle",
+  "horas escalon": "calendar",
+  "horas de trabajo": "clock",
+  "gastos detalle": "detalle",
+  "gastos por rubros": "detalle",
+  "pendiente facturacion": "PendienteFacturacion",
+  "liquidacion x garantia": "ReclamoGarantia",
+  "tiempo reparacion": "calendar",
+  "solicitud garantia": "ReclamoGarantia",
+  "horas muertas": "calendar",
+  "horas de motores": "doc",
+  seguimientos: "doc",
+  "motores a dar de baja": "doc",
+  "disponibilidad del motor": "doc",
+  "repuestos a importar": "compra",
+  "ventas por mantenimiento": "cotizacion",
+  "proyeccion de reparaciones": "Indicadores1",
+  "gastos detallado": "detalle",
+
+  // Compras
+  "solicitud de compra": "ValeRequisicion",
+  "orden de compra": "ordenesCompra",
+  "solicitud gasto": "doc",
+  "planilla viatico": "doc",
+  "tarifa gasto viaje": "detalle",
+  "tarifa taxis casa": "detalle",
+  "tarifas taxi destino": "detalle",
+  "cuentas x pagar": "cuentasCobrar",
+  "compras y o gastos": "compra",
+  "solicitud gastos": "doc",
+  "pagos cuentas x pagar": "cuentasCobrar",
+  "cuentas x pagar por unidad": "cuentasCobrar",
+
+  // Personal
+  informacion: "doc_elec_lupa",
+  "ficha general": "doc",
+  vacaciones: "calendar",
+  capacitaciones: "calendar",
+  evaluaciones: "Check",
+  "planilla sueldos": "doc",
+  "quinta categoria": "doc",
+  faltas: "doc",
+  marcacion: "Check",
+  "asigna h extra": "calendar",
+  horarios: "calendar",
+  "horas extras": "calendar",
+  ingresos: "Ingresos",
+  descuentos: "detalle",
+  "jefe area": "cliente",
+  recursos: "cliente",
+  "cronograma mina": "calendar",
+  "marcacion online": "Check",
+  "admin lector": "doc",
+  "procesar marcas": "Refresh",
+  asistencia: "Check",
+  "asig h extra": "calendar",
+  tardanzas: "calendar",
+  personal: "cliente",
+  contratos: "doc",
+  onomasticos: "detalle",
+  "asignacion horario": "calendar",
+  "puntos control rutas": "detalle",
+  "lista de personal": "cliente",
+
+  // Rondas
+  "puntos control rondas": "detalle",
+
+  // Contabilidad
+  asientos: "doc",
+  "movimiento bancos": "detalle",
+  "registro compra": "compra",
+  "recibo honorario": "doc",
+  diario: "doc",
+  provisional: "detalle",
+  reembolso: "detalle",
+  "arqueo caja": "bancos",
+  "cuenta destino": "doc",
+  "cierre mes": "Cerrar",
+  "dif tipo cambio": "Refresh",
+  "generar txt libros": "doc",
+  "flujo de caja": "Indicadores1",
+  "ctas x pagar": "cuentasCobrar",
+  reembolsos: "detalle",
+  "libros oficiales": "doc",
+  "libro diario": "doc",
+  "libro mayor": "doc",
+  "caja y bancos": "bancos",
+  "registro de compras": "compra",
+  "ctas ctes": "cuentasCobrar",
+  "ctas ctes pendiente": "cuentasCobrar",
+  "mayor auxiliar": "doc",
+  "estado financiero": "Indicadores1",
+  "cheques girados": "Check",
+  provisionales: "detalle",
+
+  // Telefonía
+  planes: "doc",
+  equipos: "doc",
+  lineas: "doc",
+  "asigna persona": "cliente",
+
+  // CRM
+  "oportunidad negocio": "cliente",
+  "tarjeta cliente": "cliente",
+  "cuota vendedor": "detalle",
+  ocurrencias: "doc",
+  "visita clientes": "cliente",
+
+  // Activos
+  "activos fijos": "inventario",
+  "reporte activos fijos": "doc",
+
+  // Tablas
+  "condicion de pago": "detalle",
+  "tipo motores": "detalle",
+  categorias: "detalle",
+  partidas: "detalle",
+  marcas: "detalle",
+  "plantilla repuestos": "compra",
+  "plantilla repuestos cliente": "compra",
+  "ubicacion servicio": "detalle",
+  vehiculos: "detalle",
+  proveedores: "compra",
+  "cuenta contable": "doc",
+  "cuentas destino": "doc",
+  "rubro planilla": "doc",
+  "rubro planilla ctas": "doc",
+  afp: "bancos",
+  cargos: "doc",
+  areas: "doc",
+  "motivos faltas": "doc",
+  "equipo lector": "doc",
+  "tipo hora extra": "calendar",
+  ruteador: "detalle",
+  rutas: "detalle",
+  "puntos control": "detalle",
+
+  // Logueo
+  "cerrar sesion": "Cerrar",
+  "cambiar contraseña": "KeyRound",
+  "cambiar empresa": "Empresa",
+
+  // Administración
+  perfiles: "UserCog",
+  sesiones: "doc",
+  "atender solicitud": "Check",
+  encuesta: "doc",
+  resultado: "doc",
+  "asignar computadora": "MonitorSmartphone",
+  computadora: "Cpu",
+  "equipos marcacion personal": "doc",
+  empresas: "Empresa",
+  "series documentos": "doc",
+  locaciones: "detalle",
+  "rubros de productos": "detalle",
+  "parametros locaciones": "detalle",
+  "parametros planilla sueldos": "doc",
+  "rubros x empresa": "detalle",
+
+  // Ayuda
+  solicitud: "Mail",
+  "informacion cambios": "doc",
+  acerca: "Info",
 };
 
 const normalizeSmallColorIconKey = (value: string) =>
@@ -574,7 +910,17 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
         { icon: FileSignature, label: "Solicitud OT" },
         { icon: Wrench, label: "OT" },
         { icon: AlarmClock, label: "Horas Muertas" },
-        { icon: LineChart, label: "Proyección", dropdown: true },
+        { icon: LineChart, label: "Proyección", dropdown: true, menu: [
+          { title: "Proyección", items: [
+            { icon: FileText, label: "Horas de Motores" },
+            { icon: FileText, label: "Seguimientos" },
+            { icon: FileText, label: "Motores a dar de Baja" },
+            { icon: FileText, label: "Disponibilidad del Motor" },
+            { icon: FileSpreadsheet, label: "Repuestos a Importar" },
+            { icon: FileCheck, label: "Ventas por mantenimiento" },
+            { icon: FileCheck, label: "Proyección de Reparaciones" },
+          ]},
+        ] },
       ],
     },
   ],
@@ -1041,6 +1387,31 @@ function DesktopAppInner() {
   const [active, setActive] = useState("Ventas");
   const ribbon = RIBBONS[active] ?? RIBBONS.Ventas;
   const [ribbonMode, setRibbonMode] = useState<"expanded" | "hidden" | "overlay">("expanded");
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [notificationsClosing, setNotificationsClosing] = useState(false);
+  const [notifications, setNotifications] = useState([
+    { id: 1, title: "Factura aceptada por SUNAT", detail: "F001-000488 recibió CDR código 0.", time: "Hace 5 min", kind: "ok", read: false, target: "Factura" },
+    { id: 2, title: "Stock por debajo del mínimo", detail: "SKU-3390 tiene 2 unidades disponibles.", time: "Hace 18 min", kind: "warn", read: false, target: "Guía Remisión" },
+    { id: 3, title: "Resumen diario pendiente", detail: "128 boletas están listas para consolidar.", time: "Hace 1 h", kind: "info", read: false, target: "Resumen de Boletas" },
+    { id: 4, title: "Guía entregada", detail: "T001-000842 fue confirmada por almacén.", time: "Ayer", kind: "ok", read: true, target: "Guía Remisión" },
+  ]);
+  const unreadCount = notifications.filter(notification => !notification.read).length;
+  const closeNotifications = () => {
+    if (!notificationsOpen || notificationsClosing) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setNotificationsOpen(false);
+      return;
+    }
+    setNotificationsClosing(true);
+  };
+  const toggleNotifications = () => {
+    if (notificationsOpen) {
+      closeNotifications();
+      return;
+    }
+    setNotificationsClosing(false);
+    setNotificationsOpen(true);
+  };
   const [now, setNow] = useState("");
   const { isDesktop, minimize, maximize, close } = useDesktopMode();
   const { open: openWindow, windows, active: activeWindowId, close: closeWindow, focus: focusWindow } = useWindows();
@@ -1274,7 +1645,7 @@ function DesktopAppInner() {
     <div className={[
       "min-h-screen font-sans",
       isDesktop
-        ? "bg-[#DDE4EC] p-0 flex items-stretch justify-stretch"
+        ? "bg-[#DDE4EC] p-0 m-0 flex items-stretch justify-stretch"
         : "bg-slate-900 p-2 sm:p-6 flex items-center justify-center",
     ].join(" ")}>
       {companyPickerOpen && (
@@ -1301,7 +1672,7 @@ function DesktopAppInner() {
           : "max-w-[1400px] rounded-lg shadow-2xl border border-slate-700",
       ].join(" ")}>
         <div
-          className="relative z-30 h-8 bg-gradient-to-b from-[#3E5B7A] to-[#2A3F55] flex items-center justify-between px-2 text-white text-xs select-none"
+          className="relative z-30 h-8 bg-white flex items-center justify-between px-0 text-white text-xs select-none"
           style={{ ["WebkitAppRegion" as any]: "drag" } as React.CSSProperties}
           onDoubleClick={() => {
             if (isDesktop) {
@@ -1310,50 +1681,53 @@ function DesktopAppInner() {
           }}
         >
           <div className="flex items-center gap-2 min-w-0" style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}>
-            <div className="h-6 w-6 rounded-md bg-white/10 grid place-items-center ring-1 ring-white/15 shrink-0 shadow-inner">
-              <Circle className="h-3.5 w-3.5" strokeWidth={2.5} />
+            <div className="h-7 w-7 rounded-lg bg-slate-900 grid place-items-center ring-1 ring-slate-300 shrink-0 shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_2px_6px_rgba(15,23,42,0.18)]">
+              <span className="font-black text-[11px] tracking-tighter text-white">C2</span>
             </div>
             <div className="flex flex-col leading-tight min-w-0">
-              <span className="font-semibold tracking-tight truncate text-[12px]">Systeck ERP <span className="opacity-70 font-normal">v10.6.3.0</span></span>
-              <span className="text-[9.5px] opacity-70 truncate flex items-center gap-1">
-                C2TECK S.A.C. <ChevronRight className="h-2.5 w-2.5" /> {active} <ChevronRight className="h-2.5 w-2.5" /> Módulo activo
+              <span className="font-semibold tracking-tight truncate text-[12px] text-slate-900">Systeck ERP <span className="opacity-60 font-normal">v10.6.3.0</span> <span className="ml-1 px-1 rounded bg-slate-900 text-white text-[9px] tracking-widest font-bold">ENTERPRISE</span></span>
+              <span className="text-[9.5px] text-slate-500 truncate flex items-center gap-1">
+                C2TECK S.A.C. <ChevronRight className="h-2.5 w-2.5" /> <b className="text-slate-900">{active}</b> <ChevronRight className="h-2.5 w-2.5" /> Módulo activo
               </span>
             </div>
           </div>
           <div className="hidden md:flex items-center gap-1 mx-3 flex-1 justify-center max-w-[420px]" style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}>
-            <div className="flex items-center gap-1.5 w-full bg-black/25 hover:bg-black/35 focus-within:bg-black/35 border border-white/10 rounded-md px-2 py-1 transition-colors">
-              <Search className="h-3.5 w-3.5 opacity-70" />
+            <div className="flex items-center gap-1.5 w-full bg-slate-100 hover:bg-slate-200/70 focus-within:bg-white focus-within:ring-1 focus-within:ring-slate-400 border border-slate-300 rounded-lg px-2.5 py-1.5 transition-all shadow-[inset_0_1px_2px_rgba(15,23,42,0.06)]">
+              <Search className="h-3.5 w-3.5 text-slate-400" />
               <input
                 placeholder="Buscar comandos, documentos, RUC, SKU…   Ctrl + K"
-                className="bg-transparent outline-none text-[11px] placeholder:text-white/50 flex-1 min-w-0"
+                className="bg-transparent outline-none text-[11px] text-slate-900 placeholder:text-slate-400 flex-1 min-w-0"
               />
               <kbd className="text-[9px] opacity-60 border border-white/20 rounded px-1">⌘K</kbd>
             </div>
           </div>
           <div className="flex items-center" style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}>
-            <button title="Notificaciones" className="h-9 w-9 hover:bg-white/10 grid place-items-center relative transition-colors">
-              <Bell className="h-3.5 w-3.5" />
-              <span className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_#F59E0B]" />
+            <button onClick={toggleNotifications} aria-expanded={notificationsOpen && !notificationsClosing} title="Notificaciones" className={`group/notice h-10 w-10 grid place-items-center relative text-slate-700 transition-all duration-200 active:scale-90 ${notificationsOpen && !notificationsClosing ? "bg-slate-900/10" : "hover:bg-slate-900/5"}`}>
+              <Bell className={`h-3.5 w-3.5 group-hover/notice:desktop-bell-ring ${notificationsOpen && !notificationsClosing ? "desktop-bell-ring" : ""}`} />
+              {unreadCount > 0 && <span className="desktop-badge-pulse absolute right-1.5 top-1 flex h-4 min-w-4 items-center justify-center rounded-full border border-white bg-red-500 px-1 text-[8px] font-bold text-white shadow-lg">{unreadCount}</span>}
             </button>
-            <button title="Ayuda" className="h-9 w-9 hover:bg-white/10 grid place-items-center transition-colors">
+            <button title="Ayuda" className="h-10 w-10 text-slate-700 hover:bg-slate-900/5 grid place-items-center transition-all duration-200 active:scale-90">
               <HelpCircle className="h-3.5 w-3.5" />
             </button>
             <div className="h-5 w-px bg-white/15 mx-1" />
             <button
               type="button"
               onClick={isDesktop ? minimize : undefined}
-              className="h-8 w-11 hover:bg-white/10 grid place-items-center"
-            ><Minus className="h-3.5 w-3.5" /></button>
+              style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}
+              className="h-10 w-11 text-slate-700 hover:bg-slate-900/10 grid place-items-center transition-all duration-150 active:scale-90"
+              ><Minus className="h-3.5 w-3.5" /></button>
             <button
               type="button"
               onClick={isDesktop ? maximize : undefined}
-              className="h-8 w-11 hover:bg-white/10 grid place-items-center"
-            ><Square className="h-3 w-3" /></button>
+              style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}
+              className="h-10 w-11 text-slate-700 hover:bg-slate-900/10 grid place-items-center transition-all duration-150 active:scale-90"
+              ><Square className="h-3 w-3" /></button>
             <button
               type="button"
               onClick={isDesktop ? close : undefined}
-              className="h-8 w-11 hover:bg-red-600 grid place-items-center"
-            ><X className="h-3.5 w-3.5" /></button>
+              style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}
+              className="h-10 w-11 text-slate-700 hover:bg-red-600 hover:text-white grid place-items-center transition-all duration-150 active:scale-90"
+              ><X className="h-4 w-4" /></button>
           </div>
         </div>
 
@@ -1631,9 +2005,52 @@ function DesktopLogin({
   return (
     <div className={`h-screen w-screen overflow-hidden bg-[#F1F4F9] ${busy ? "cursor-wait" : ""}`}>
       <form onSubmit={onSubmit} className="flex h-full w-full flex-col rounded-none overflow-hidden border-0 shadow-none bg-[#F1F4F9]">
-        <div className="h-10 bg-gradient-to-b from-[#4A6789] via-[#3A5573] to-[#243B55] flex items-center justify-between px-3 text-white text-xs">
-          <span className="font-semibold tracking-tight flex items-center gap-2"><Lock className="h-3.5 w-3.5 text-amber-300" /> Acceso al Sistema — Systeck v10.6.3.0</span>
-          <span className="opacity-70 font-mono">C2TECK S.A.C.</span>
+        <div
+          className="relative z-30 h-10 bg-white flex items-center justify-between pl-2.5 pr-0 text-slate-900 text-xs select-none border-b border-slate-300"
+          style={{ ["WebkitAppRegion" as any]: "drag" } as React.CSSProperties}
+          onDoubleClick={() => {
+            if (typeof window !== "undefined") {
+              window.c2teckDesktop?.maximize?.();
+            }
+          }}
+        >
+          <div className="flex items-center gap-2 min-w-0" style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}>
+            <div className="h-8 w-8 rounded-lg bg-slate-900 grid place-items-center ring-1 ring-slate-300 shrink-0 shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_2px_6px_rgba(15,23,42,0.18)]">
+              <span className="font-black text-[11px] tracking-tighter text-white">C2</span>
+            </div>
+            <div className="flex flex-col leading-tight min-w-0">
+              <span className="font-semibold tracking-tight truncate text-[12px] text-slate-900">Systeck ERP <span className="opacity-60 font-normal">v10.6.3.0</span> <span className="ml-1 px-1 rounded bg-slate-900 text-white text-[9px] tracking-widest font-bold">ENTERPRISE</span></span>
+              <span className="text-[9.5px] text-slate-500 truncate flex items-center gap-1">
+                C2TECK S.A.C. <ChevronRight className="h-2.5 w-2.5" /> Acceso al Sistema <ChevronRight className="h-2.5 w-2.5" /> Inicio de sesión
+              </span>
+            </div>
+          </div>
+          <div className="flex items-center" style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}>
+            <button
+              type="button"
+              onClick={() => window.c2teckDesktop?.minimize?.()}
+              className="h-10 w-11 text-slate-700 hover:bg-slate-900/10 grid place-items-center transition-all duration-150 active:scale-90"
+              title="Minimizar"
+            >
+              <Minus className="h-3.5 w-3.5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => window.c2teckDesktop?.maximize?.()}
+              className="h-10 w-11 text-slate-700 hover:bg-slate-900/10 grid place-items-center transition-all duration-150 active:scale-90"
+              title="Maximizar"
+            >
+              <Square className="h-3 w-3" />
+            </button>
+            <button
+              type="button"
+              onClick={() => window.c2teckDesktop?.close?.() ?? window.close()}
+              className="h-10 w-11 text-slate-700 hover:bg-red-600 hover:text-white grid place-items-center transition-all duration-150 active:scale-90"
+              title="Cerrar"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
         </div>
         <div className="flex h-full overflow-hidden">
           <div className="w-[170px] bg-gradient-to-b from-[#DDE7F3] to-[#B7C7DC] grid place-items-center border-r border-slate-400/50 min-h-full">
@@ -2004,7 +2421,7 @@ function AppOrb({ onSwitchCompany, onCloseApp }: { onSwitchCompany: () => void; 
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
   return (
-    <div ref={ref} className="relative shrink-0 flex items-center pl-1.5 pr-2">
+    <div ref={ref} className="relative shrink-0 flex items-center pl-0 pr-0">
       <button
         onClick={() => setOpen(v => !v)}
         title="Menú de aplicación"
@@ -2078,7 +2495,7 @@ function TabsCarousel({
   };
 
   return (
-    <div className="flex items-center px-2 pt-1 gap-0 overflow-x-auto">
+    <div className="flex items-center px-2 pt-1 gap-0 overflow-hidden">
       <div className="flex items-center gap-1 pr-1 shrink-0">
         <button type="button" className="h-5 w-5 rounded hover:bg-white/60 grid place-items-center flex-shrink-0">
           <ChevronDown className="h-3 w-3" />
