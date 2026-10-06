@@ -64,6 +64,26 @@ const crearColor = (nombre: string, nodos: Nodo[], pal: Paleta) =>
 
 /* ---------- diseños (f = relleno, k = trazo; P/S/T = colores de la paleta, W = blanco, K = tinta) ---------- */
 const D: Record<string, Nodo[]> = {
+  Separar: [
+    ['path', { d: 'M8 4H2.5M2.5 4 5 1.5M2.5 4 5 6.5' }],
+    ['path', { d: 'M16 4h5.5m0 0L19 1.5M21.5 4 19 6.5' }],
+    ['path', { d: 'M2 9h9v4.3a2.2 2.2 0 0 1 0 4.5V20H2Z', f: 'P' }],
+    ['path', { d: 'M11 10h11v11H11v-3.3a2.2 2.2 0 0 0 0-4.5Z', f: 'T' }],
+  ],
+  RegistroResumen: [
+    ['rect', { x: 9, y: 2.5, width: 11, height: 15, rx: 1.5, f: 'T' }],
+    ['rect', { x: 6.5, y: 5, width: 11, height: 15, rx: 1.5, f: 'T' }],
+    ['path', { d: 'M12 9h2.5M12 12h2.5M12 15h2.5' }],
+    ['path', { d: 'M2 12.5A1.5 1.5 0 0 1 3.5 11H7l1.6 1.6H13a1.5 1.5 0 0 1 1.5 1.5v6.4A1.5 1.5 0 0 1 13 22H3.5A1.5 1.5 0 0 1 2 20.5Z', f: 'P' }],
+  ],
+  Registro: [
+    ['rect', { x: 4, y: 2, width: 16, height: 19, rx: 2, f: 'P' }],
+    ['rect', { x: 6.5, y: 4.5, width: 11, height: 5.5, rx: 0.8 }],
+    ['path', { d: 'M10 7.2h4' }],
+    ['path', { d: 'M7.5 15 8.8 9.8 17.8 11.6 17 15Z', f: 'T' }],
+    ['rect', { x: 5, y: 15, width: 14, height: 7, rx: 1, f: 'S' }],
+    ['path', { d: 'M10 18.5h4' }],
+  ],
   PendienteFacturacion: [
     ['path', { d: 'M7 2.5h7l5 5V19a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 19V4A1.5 1.5 0 0 1 7 2.5Z', f: 'P' }],
     ['path', { d: 'M14 2.5V7a.5.5 0 0 0 .5.5H19' }],
@@ -1324,6 +1344,9 @@ export const PendienteFacturacionColorIcon = crearColor('PendienteFacturacion', 
 export const ReclamoGarantiaColorIcon = crearColor('ReclamoGarantia', D.ReclamoGarantia, { p: '#e0983c', s: '#d62f2f', t: '#f6c97a' });
 export const ValeRequisicionColorIcon = crearColor('ValeRequisicion', D.ValeRequisicion, { p: '#ececec', s: '#8f8f8f' });
 export const RegistroAuxiliarColorIcon = crearColor('RegistroAuxiliar', D.RegistroAuxiliar, { p: '#e8c987', s: '#a3792a', t: '#e4ebf1' });
+export const SepararColorIcon = crearColor('Separar', D.Separar, { p: '#fdd270', t: '#ffffff' });
+export const RegistroResumenColorIcon = crearColor('RegistroResumen', D.RegistroResumen, { p: '#56b9f7', t: '#e3ecec' });
+export const RegistroColorIcon = crearColor('Registro', D.Registro, { p: '#b39a6a', s: '#a3865a', t: '#f1f2fb' });
 
 export const ICONOS_COLOR = {
   ACTIVITL: ActivitlColorIcon,
@@ -1381,6 +1404,7 @@ export const ICONOS_COLOR = {
   Embarque: EmbarqueColorIcon,
   Empresa: EmpresaColorIcon,
   Enviar: EnviarColorIcon,
+  EnviarCorreos: EnviarPrColorIcon,
   Enviar_Pr: EnviarPrColorIcon,
   Equipos: EquiposColorIcon,
   Factura: FacturaColorIcon,
@@ -1562,9 +1586,14 @@ export const ICONOS_COLOR = {
   precioCore: PrecioCoreColorIcon,
   presupuesto_venta: PendienteFacturacionColorIcon,
   pendiente_facturacion: PendienteFacturacionColorIcon,
+  precios: DolarColorIcon,
   reclamoGarantia: ReclamoGarantiaColorIcon,
+  resumenBoletas: EnviarPrColorIcon,
   valeRequisicion: ValeRequisicionColorIcon,
   registroAuxiliar: RegistroAuxiliarColorIcon,
+  Separar__: SepararColorIcon,
+  registroResumen: RegistroResumenColorIcon,
+  registro: RegistroColorIcon,
 } as const;
 
 export type NombreIconoColor = keyof typeof ICONOS_COLOR;

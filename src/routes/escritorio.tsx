@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useRef, useEffect, useLayoutEffect, FormEvent } from "react";
+import { useState, useRef, useEffect, useLayoutEffect, FormEvent, type CSSProperties } from "react";
 import {
   motion,
   AnimatePresence,
@@ -36,7 +36,7 @@ import {
   FileDown, PiggyBank, BookCheck, FileWarning,
   Smartphone, Signal, Phone, Target, IdCard, LogOut, Info, KeyRound, Handshake,
   Eye, EyeOff, Key, User, Zap,
-  ChevronRight,
+  ChevronRight, AlertTriangle as AlertIcon, PackageCheck as PackageAlert, CheckCheck, X as CloseIcon
 } from "lucide-react";
 
 import { fetchSession, login, type SessionInfo, fetchAdapterTipoCambio } from "@/lib/sigecoom-api";
@@ -163,11 +163,11 @@ const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
 
   // Documentos
   "guia remision": "GuiaRemision",
-  "guia de devolucion": "GuiaDevolucion",
+  "guia devolucion": "GuiaDevolucion",
   factura: "Factura",
   boleta: "Boleta",
   notas: "Notas",
-  "resumen de boletas": "Boleta",
+  "resumen de boletas": "resumenBoletas",
 
   // Pre y Post Venta
   "cotizaciones": "cotizacion",
@@ -175,7 +175,7 @@ const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
   "separar orden": "compra",
   "ordenes compra": "ordenesCompra",
   "actualizar vendedor": "actualizarCostos",
-  "enviar correos": "Enviar",
+  "enviar correos": "EnviarCorreos",
 
   // Clientes
   cartera: "cartera__2_",
@@ -184,7 +184,7 @@ const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
   "despacho": "despacho",
 
   // Consultas
-  "precios": "cotizacion",
+  "precios": "precios",
 
   // Indicadores
   tablero: "Indicadores1",
@@ -1389,6 +1389,7 @@ function DesktopAppInner() {
   const [ribbonMode, setRibbonMode] = useState<"expanded" | "hidden" | "overlay">("expanded");
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [notificationsClosing, setNotificationsClosing] = useState(false);
+  const notificationCloseTimer = useRef<number | null>(null);
   const [notifications, setNotifications] = useState([
     { id: 1, title: "Factura aceptada por SUNAT", detail: "F001-000488 recibió CDR código 0.", time: "Hace 5 min", kind: "ok", read: false, target: "Factura" },
     { id: 2, title: "Stock por debajo del mínimo", detail: "SKU-3390 tiene 2 unidades disponibles.", time: "Hace 18 min", kind: "warn", read: false, target: "Guía Remisión" },
@@ -1396,25 +1397,56 @@ function DesktopAppInner() {
     { id: 4, title: "Guía entregada", detail: "T001-000842 fue confirmada por almacén.", time: "Ayer", kind: "ok", read: true, target: "Guía Remisión" },
   ]);
   const unreadCount = notifications.filter(notification => !notification.read).length;
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = notificationsOpen ? "hidden" : prevOverflow;
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [notificationsOpen]);
+
+  useEffect(() => {
+    return () => {
+      if (notificationCloseTimer.current !== null) {
+        window.clearTimeout(notificationCloseTimer.current);
+      }
+    };
+  }, []);
+
   const closeNotifications = () => {
     if (!notificationsOpen || notificationsClosing) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setNotificationsClosing(false);
       setNotificationsOpen(false);
       return;
     }
     setNotificationsClosing(true);
+    if (notificationCloseTimer.current !== null) {
+      window.clearTimeout(notificationCloseTimer.current);
+    }
+    notificationCloseTimer.current = window.setTimeout(() => {
+      setNotificationsOpen(false);
+      setNotificationsClosing(false);
+      notificationCloseTimer.current = null;
+    }, 220);
   };
   const toggleNotifications = () => {
     if (notificationsOpen) {
       closeNotifications();
       return;
     }
+    if (notificationCloseTimer.current !== null) {
+      window.clearTimeout(notificationCloseTimer.current);
+      notificationCloseTimer.current = null;
+    }
     setNotificationsClosing(false);
     setNotificationsOpen(true);
   };
   const [now, setNow] = useState("");
   const { isDesktop, minimize, maximize, close } = useDesktopMode();
-  const { open: openWindow, windows, active: activeWindowId, close: closeWindow, focus: focusWindow } = useWindows();
+  const { open: openWindow, windows, active: activeWindowId, close: closeWindow, focus: focusWindow, toggleFromTaskbar } = useWindows();
   const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
   const [recover, setRecover] = useState(false);
   const [starred, setStarred] = useState(false);
@@ -1731,6 +1763,33 @@ function DesktopAppInner() {
           </div>
         </div>
 
+        {notificationsOpen && (
+          <>
+            <button aria-label="Cerrar notificaciones" className={`${notificationsClosing ? "desktop-overlay-out" : "desktop-overlay-in"} fixed inset-0 z-40 cursor-default bg-slate-950/5 backdrop-blur-[1px]`} onClick={closeNotifications} />
+            <aside className={`${notificationsClosing ? "desktop-notification-out" : "desktop-notification-in"} absolute right-2 top-12 z-50 flex max-h-[min(560px,calc(100vh-100px))] w-[360px] max-w-[calc(100vw-24px)] flex-col overflow-hidden rounded-xl border border-white/70 bg-white/90 backdrop-blur-xl shadow-[0_28px_80px_-22px_rgba(2,8,23,0.65),0_0_0_1px_rgba(148,163,184,0.18)]`}>
+              <div className="flex items-start gap-3 border-b border-slate-200 bg-[#0B1220] px-4 py-4 text-white">
+                <div className="grid h-9 w-9 place-items-center rounded-lg border border-cyan-300/30 bg-cyan-300/10 text-cyan-300"><Bell className="h-4 w-4" /></div>
+                <div><h2 className="text-sm font-bold">Centro de notificaciones</h2><p className="mt-0.5 text-[10px] text-slate-400">Alertas operativas en tiempo real</p></div>
+                <button title="Cerrar" onClick={closeNotifications} className="ml-auto grid h-8 w-8 place-items-center rounded-md text-slate-400 hover:bg-white/10 hover:text-white"><CloseIcon className="h-4 w-4" /></button>
+              </div>
+              <div className="flex items-center gap-2 border-b border-slate-200 bg-slate-50 px-4 py-2.5">
+                <span className="rounded-md bg-cyan-100 px-2 py-1 text-[10px] font-bold text-cyan-800">{unreadCount} NUEVAS</span>
+                <button onClick={() => setNotifications(items => items.map(item => ({ ...item, read: true })))} className="ml-auto inline-flex items-center gap-1.5 text-[10px] font-semibold text-slate-600 hover:text-cyan-700"><CheckCheck className="h-3.5 w-3.5" />Marcar todas como leídas</button>
+              </div>
+              <div className="no-scrollbar min-h-0 overflow-y-auto">
+                {notifications.map(notification => {
+                  const NoticeIcon = notification.kind === "warn" ? AlertIcon : notification.kind === "ok" ? CheckCircle2 : PackageAlert;
+                  return <button key={notification.id} style={{ "--notice-index": notification.id - 1 } as CSSProperties} onClick={() => { setNotifications(items => items.map(item => item.id === notification.id ? { ...item, read: true } : item)); openWindow(notification.target); closeNotifications(); }} className={`desktop-notice-row group flex w-full gap-3 border-b border-slate-100 p-4 text-left transition duration-300 hover:translate-x-0.5 hover:bg-cyan-50/70 ${notification.read ? "bg-white opacity-70" : "bg-cyan-50/25"}`}>
+                    <div className={`grid h-9 w-9 shrink-0 place-items-center rounded-lg transition-transform duration-300 group-hover:scale-110 ${notification.kind === "warn" ? "bg-amber-100 text-amber-700" : notification.kind === "ok" ? "bg-emerald-100 text-emerald-700" : "bg-cyan-100 text-cyan-700"}`}><NoticeIcon className="h-4 w-4" /></div>
+                    <div className="min-w-0 flex-1"><div className="flex items-start gap-2"><span className="text-[11px] font-bold text-slate-900">{notification.title}</span>{!notification.read && <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-500" />}</div><p className="mt-1 text-[10px] leading-relaxed text-slate-600">{notification.detail}</p><span className="mt-2 block text-[9px] font-semibold uppercase text-slate-400">{notification.time} · Abrir operación</span></div>
+                  </button>;
+                })}
+              </div>
+              <div className="border-t border-slate-200 bg-slate-50 p-3 text-center text-[10px] font-medium text-slate-500">Sistema actualizado · monitoreo activo</div>
+            </aside>
+          </>
+        )}
+
         {/* Quick access + tabs */}
         <div
           onContextMenu={(e) => { e.preventDefault(); setRibbonMenu({ x: e.clientX, y: e.clientY }); }}
@@ -1813,6 +1872,7 @@ function DesktopAppInner() {
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0, transition: EASE_OUT }}
           exit={{ opacity: 0, transition: EASE_FAST }}
+          transition={{ duration: 0.18 }}
           className="h-full w-full"
         >
           <RibbonContent ribbon={ribbon} openDesktopWindow={openDesktopWindow} />
@@ -1853,83 +1913,74 @@ function DesktopAppInner() {
         {/* Workspace MDI */}
         <Workspace />
 
-
-        {/* Status bar / MDI strip */}
         <div className="shrink-0 border-t border-slate-900/80 bg-[#060B13]">
-  <div className="h-8 border-b border-cyan-950/80 px-2.5 flex items-center gap-2.5 overflow-x-auto text-[10.5px] font-mono">
-    <span className="inline-flex items-center gap-2 shrink-0 font-bold tracking-wider text-cyan-200">
-      <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10B981]" />
-      SYSTECK MDI
-    </span>
-    <span className="text-slate-700 shrink-0">|</span>
-
-    {windows.length === 0 ? (
-      <span className="text-slate-600 shrink-0 text-[10px]">sin ventanas abiertas</span>
-    ) : (
-      <div className="flex items-center gap-2">
-        {windows.map((w) => {
-          const isActive = w.id === activeWindowId && !w.isMinimized;
-          return (
-            <div
-              key={w.id}
-              onClick={() => focusWindow(w.id)}
-              className={[
-                "group relative shrink-0 inline-flex items-center gap-2 h-6 px-3 rounded-full border text-[11px] font-mono cursor-pointer transition-all duration-150 select-none",
-                isActive
-                  ? "bg-[#061C28] border-[#00E5FF] text-cyan-200 shadow-[0_0_12px_rgba(0,229,255,0.4),inset_0_0_6px_rgba(0,229,255,0.2)]"
-                  : w.isMinimized
-                    ? "bg-slate-900/60 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-300"
-                    : "bg-[#0A1320] border-cyan-900/80 text-cyan-400/90 hover:bg-[#0E1C2E] hover:border-cyan-700",
-              ].join(" ")}
-            >
-              <span
-                className={[
-                  "h-1.5 w-1.5 rounded-full shrink-0 transition-colors",
-                  isActive
-                    ? "bg-[#00E5FF] shadow-[0_0_6px_#00E5FF]"
-                    : w.isMinimized
-                      ? "bg-amber-400"
-                      : "bg-slate-500",
-                ].join(" ")}
-              />
-              <span className="truncate max-w-[150px]">{w.label}</span>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  closeWindow(w.id);
-                }}
-                className="ml-0.5 text-slate-400 hover:text-cyan-100 grid place-items-center rounded-full h-3.5 w-3.5 hover:bg-cyan-500/20 text-[10px]"
-                title="Cerrar"
-              >
-                ✕
-              </button>
+          <div className="shrink-0 h-9 bg-gradient-to-b from-[#0a1220] to-[#060911] border-t border-[#00E5FF]/20 flex items-center gap-1 px-2 overflow-x-auto">
+            <div className="flex items-center gap-1.5 mr-2 pr-2 border-r border-slate-700/60">
+              <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#10B981]" />
+              <span className="text-[10px] font-mono text-slate-400 tracking-wider uppercase">Systeck MDI</span>
             </div>
-          );
-        })}
-      </div>
-    )}
+            {windows.length === 0 && (
+              <span className="text-[10.5px] font-mono text-slate-600">— sin ventanas abiertas —</span>
+            )}
+            {windows.map((w) => {
+              const isActive = w.id === activeWindowId && !w.isMinimized;
+              return (
+                <div
+                  key={w.id}
+                  onClick={() => focusWindow(w.id)}
+                  className={[
+                    "group shrink-0 flex items-center h-7 rounded-sm border overflow-hidden transition-colors",
+                    isActive
+                      ? "bg-[#00E5FF]/15 border-[#00E5FF]/50 shadow-[inset_0_-2px_0_0_#00E5FF]"
+                      : w.isMinimized
+                        ? "bg-slate-800/60 border-slate-700/50 opacity-70 hover:opacity-100"
+                        : "bg-slate-800/40 border-slate-700/60 hover:bg-slate-700/60",
+                  ].join(" ")}
+                >
+                  <button
+                    onClick={() => toggleFromTaskbar(w.id)}
+                    className="flex items-center gap-1.5 px-2 h-full text-[11px] font-mono text-slate-200 max-w-[180px]"
+                    title={w.isMinimized ? "Restaurar" : (isActive ? "Minimizar" : "Traer al frente")}
+                  >
+                    <span className={`h-1.5 w-1.5 rounded-full ${isActive ? "bg-[#00E5FF]" : w.isMinimized ? "bg-amber-400" : "bg-slate-400"}`} />
+                    <span className="truncate">{w.label}</span>
+                    {w.isMinimized && <span className="ml-1 text-[9px] px-1 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">MIN</span>}
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      closeWindow(w.id);
+                    }}
+                    className="h-full w-6 grid place-items-center text-slate-500 hover:bg-red-600/80 hover:text-white"
+                    title="Cerrar"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </div>
+              );
+            })}
+            <div className="ml-auto flex items-center gap-2 pl-2 border-l border-slate-700/60 shrink-0">
+              <span className="text-[10px] font-mono text-slate-500">
+                {windows.length} ventana{windows.length === 1 ? "" : "s"} • {windows.filter((w) => w.isMinimized).length} min.
+              </span>
+            </div>
+          </div>
 
-    <span className="ml-auto text-slate-500 shrink-0 text-[10px]">
-      {windows.length} ventana{windows.length === 1 ? "" : "s"} • {windows.filter((w) => w.isMinimized).length} min.
-    </span>
-  </div>
-
-  <div className="h-7 px-2 flex items-center gap-2 overflow-x-auto text-[10.5px] text-slate-200 font-mono">
-    <SessionStatus />
-    <span className="text-slate-500 shrink-0">|</span>
-    <span className="shrink-0 inline-flex items-center gap-1.5 px-1.5 h-5 rounded border border-indigo-400/40 bg-indigo-500/10 text-indigo-200">
-      <Zap className="h-2.5 w-2.5 text-cyan-300 animate-pulse" />
-      <span>Systeck-AI Core: <b className="text-emerald-300">ONLINE</b></span>
-    </span>
-    <span className="shrink-0 inline-flex items-center gap-1 px-1.5 h-5 rounded border border-cyan-400/40 bg-cyan-500/10 text-cyan-200">
-      GPU Usage: <b className="text-cyan-100">24%</b>
-    </span>
-    <span className="shrink-0 inline-flex items-center gap-1 px-1.5 h-5 rounded border border-cyan-400/40 bg-cyan-500/10 text-cyan-200">
-      Model Latency: <b className="text-cyan-100">12ms</b>
-    </span>
-  </div>
-</div>
+          <div className="h-7 px-2 flex items-center gap-2 overflow-x-auto text-[10.5px] text-slate-200 font-mono">
+            <SessionStatus />
+            <span className="text-slate-500 shrink-0">|</span>
+            <span className="shrink-0 inline-flex items-center gap-1.5 px-1.5 h-5 rounded border border-indigo-400/40 bg-indigo-500/10 text-indigo-200">
+              <Zap className="h-2.5 w-2.5 text-cyan-300 animate-pulse" />
+              <span>Systeck-AI Core: <b className="text-emerald-300">ONLINE</b></span>
+            </span>
+            <span className="shrink-0 inline-flex items-center gap-1 px-1.5 h-5 rounded border border-cyan-400/40 bg-cyan-500/10 text-cyan-200">
+              GPU Usage: <b className="text-cyan-100">24%</b>
+            </span>
+            <span className="shrink-0 inline-flex items-center gap-1 px-1.5 h-5 rounded border border-cyan-400/40 bg-cyan-500/10 text-cyan-200">
+              Model Latency: <b className="text-cyan-100">12ms</b>
+            </span>
+          </div>
+        </div>
       </div>
 
       {isDesktop && desktopReady && !desktopAuthenticated && (

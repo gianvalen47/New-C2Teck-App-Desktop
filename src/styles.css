@@ -37,12 +37,16 @@
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-border: var(--sidebar-border);
-  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
   --radius: 0.75rem;
+  --desktop-window-motion-duration: 260ms;
+  --desktop-motion-fast: 150ms;
+  --desktop-motion-base: 220ms;
+  --desktop-motion-panel: 300ms;
   /* Dark corporate scheme (forced dark) */
   --background: oklch(0.16 0.01 260);         /* #121214-ish */
   --foreground: oklch(0.97 0.005 260);
@@ -77,16 +81,55 @@
   --sidebar: oklch(0.14 0.01 260);
   --sidebar-foreground: oklch(0.90 0.01 260);
   --sidebar-border: oklch(0.28 0.015 260 / 60%);
+  --doc-canvas: oklch(0.965 0.006 245);
+  --doc-surface: oklch(0.995 0.002 245);
+  --doc-line: oklch(0.86 0.018 245);
+  --doc-ink: oklch(0.22 0.026 250);
+  --doc-muted: oklch(0.5 0.025 245);
+  --doc-header: oklch(0.18 0.035 248);
+  --doc-header-panel: oklch(0.25 0.04 248);
+  --doc-header-line: oklch(0.4 0.05 240);
+  --doc-header-ink: oklch(0.98 0.004 245);
+  --doc-header-muted: oklch(0.74 0.025 235);
+  --doc-accent: oklch(0.79 0.145 205);
+  --doc-accent-strong: oklch(0.7 0.14 205);
+  --doc-accent-ink: oklch(0.17 0.025 245);
+  --doc-accent-soft: oklch(0.93 0.035 210);
+  --doc-success: oklch(0.55 0.15 155);
+  --doc-success-soft: oklch(0.94 0.035 155);
+  --doc-warning: oklch(0.62 0.15 75);
+  --doc-warning-soft: oklch(0.95 0.04 75);
+  --doc-table-head: oklch(0.94 0.012 245);
+}
+
+@theme inline {
+  --color-doc-canvas: var(--doc-canvas);
+  --color-doc-surface: var(--doc-surface);
+  --color-doc-line: var(--doc-line);
+  --color-doc-ink: var(--doc-ink);
+  --color-doc-muted: var(--doc-muted);
+  --color-doc-header: var(--doc-header);
+  --color-doc-header-panel: var(--doc-header-panel);
+  --color-doc-header-line: var(--doc-header-line);
+  --color-doc-header-ink: var(--doc-header-ink);
+  --color-doc-header-muted: var(--doc-header-muted);
+  --color-doc-accent: var(--doc-accent);
+  --color-doc-accent-strong: var(--doc-accent-strong);
+  --color-doc-accent-ink: var(--doc-accent-ink);
+  --color-doc-accent-soft: var(--doc-accent-soft);
+  --color-doc-success: var(--doc-success);
+  --color-doc-success-soft: var(--doc-success-soft);
+  --color-doc-warning: var(--doc-warning);
+  --color-doc-warning-soft: var(--doc-warning-soft);
+  --color-doc-table-head: var(--doc-table-head);
 }
 
 @layer base {
   * { border-color: var(--color-border); }
   html, body {
-    margin: 0;
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    overflow-x: hidden;
   }
   h1, h2, h3, h4, h5 { font-family: var(--font-display); letter-spacing: -0.01em; }
 }
@@ -104,72 +147,207 @@
   border-radius: var(--radius);
 }
 
-@utility scrollbar-thin {
-  scrollbar-width: thin;
-  scrollbar-color: color-mix(in oklab, var(--muted-foreground) 40%, transparent) transparent;
-  &::-webkit-scrollbar { width: 8px; height: 8px; }
-  &::-webkit-scrollbar-track { background: transparent; }
-  &::-webkit-scrollbar-thumb {
-    background: color-mix(in oklab, var(--muted-foreground) 35%, transparent);
-    border-radius: 8px;
-  }
-  &::-webkit-scrollbar-thumb:hover {
-    background: color-mix(in oklab, var(--muted-foreground) 55%, transparent);
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
   }
 }
 
-/* Systeck desktop — global icon microinteractions, including portaled MDI windows. */
-@keyframes systeck-icon-sync {
-  to { transform: rotate(360deg); }
+/* Enterprise desktop motion system */
+@keyframes desktop-window-enter {
+  0% { opacity: 0; transform: translateY(10px) scale(0.975); filter: saturate(0.75); }
+  70% { opacity: 1; transform: translateY(-1px) scale(1.002); filter: saturate(1); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: saturate(1); }
 }
 
-@keyframes systeck-icon-alert {
-  0%, 100% { transform: scale(1); filter: brightness(1); }
-  50% { transform: scale(1.12); filter: brightness(1.25); }
+@keyframes desktop-window-exit {
+  0% { opacity: 1; transform: translateY(0) scale(1); filter: saturate(1); }
+  30% { opacity: 1; transform: translateY(-1px) scale(1.002); filter: saturate(1); }
+  100% { opacity: 0; transform: translateY(10px) scale(0.975); filter: saturate(0.75); }
 }
 
-.systeck-desktop-motion :is(button, a, [role="button"]):not(:disabled) svg {
+@keyframes desktop-window-minimize {
+  0% { opacity: 1; transform: translateY(0) scale(1); filter: saturate(1); }
+  45% { opacity: 0.92; transform: translateY(4px) scale(0.985); filter: saturate(0.92); }
+  100% { opacity: 0; transform: translateY(34px) scale(0.88); filter: saturate(0.7); }
+}
+
+@keyframes desktop-menu-enter {
+  0% { opacity: 0; transform: translateY(-7px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes desktop-ribbon-enter {
+  0% { opacity: 0; transform: translateY(-4px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes desktop-tab-indicator {
+  0% { opacity: 0; transform: scaleX(0.2); }
+  100% { opacity: 1; transform: scaleX(1); }
+}
+
+@keyframes desktop-task-enter {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes desktop-notification-in {
+  0% { opacity: 0; transform: translate3d(18px, -8px, 0) scale(0.965); filter: blur(3px) saturate(0.85); }
+  65% { opacity: 1; transform: translate3d(-1px, 0, 0) scale(1.002); filter: blur(0) saturate(1.03); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0) saturate(1); }
+}
+
+@keyframes desktop-notification-out {
+  0% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: translate3d(18px, -8px, 0) scale(0.965); filter: blur(3px); }
+}
+
+@keyframes desktop-notice-row-in {
+  0% { opacity: 0; transform: translateX(12px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes desktop-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes desktop-overlay-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes desktop-bell-ring {
+  0%, 100% { transform: rotate(0); }
+  22% { transform: rotate(12deg); }
+  44% { transform: rotate(-10deg); }
+  66% { transform: rotate(6deg); }
+  82% { transform: rotate(-3deg); }
+}
+
+@keyframes desktop-badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--destructive) 38%, transparent); }
+  50% { box-shadow: 0 0 0 4px color-mix(in oklab, var(--destructive) 0%, transparent); }
+}
+
+@utility desktop-window-enter {
+  animation: desktop-window-enter var(--desktop-window-motion-duration) cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: 50% 24px;
+}
+
+@utility desktop-window-exit {
+  animation: desktop-window-exit var(--desktop-window-motion-duration) cubic-bezier(0.7, 0, 0.84, 0) both;
+  transform-origin: 50% 24px;
+  pointer-events: none;
+}
+
+@utility desktop-window-minimize {
+  animation: desktop-window-minimize var(--desktop-window-motion-duration) cubic-bezier(0.7, 0, 0.84, 0) both;
+  transform-origin: 50% 100%;
+  pointer-events: none;
+}
+
+@utility desktop-menu-enter {
+  animation: desktop-menu-enter 180ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: top left;
+}
+
+@utility desktop-ribbon-enter {
+  animation: desktop-ribbon-enter 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility desktop-tab-indicator {
+  animation: desktop-tab-indicator 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
   transform-origin: center;
-  transition: transform 140ms ease-out, filter 140ms ease-out, opacity 140ms ease-out;
-  will-change: transform;
 }
 
-.systeck-desktop-motion :is(button, a, [role="button"]):not(:disabled):hover svg {
-  transform: translateY(-2px) scale(1.08);
-  filter: brightness(1.12) drop-shadow(0 2px 2px rgb(15 23 42 / 18%));
+@utility desktop-task-enter {
+  animation: desktop-task-enter 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.systeck-desktop-motion :is(button, a, [role="button"]):not(:disabled):active svg {
-  transform: translateY(0) scale(0.93);
-  filter: brightness(0.96);
-  transition-duration: 90ms;
+@utility desktop-notification-in {
+  animation: desktop-notification-in var(--desktop-motion-panel) cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: top right;
 }
 
-.systeck-desktop-motion :is(
-  [title*="Actualizar" i], [aria-label*="Actualizar" i],
-  [title*="Sincronizar" i], [aria-label*="Sincronizar" i],
-  [title*="Procesar" i], [aria-label*="Procesar" i],
-  [title*="Recargar" i], [aria-label*="Recargar" i]
-):not(:disabled):hover svg {
-  animation: systeck-icon-sync 560ms linear infinite;
-  filter: brightness(1.12);
+@utility desktop-notification-out {
+  animation: desktop-notification-out var(--desktop-motion-panel) cubic-bezier(0.7, 0, 0.84, 0) both;
+  transform-origin: top right;
+  pointer-events: none;
 }
 
-.systeck-desktop-motion :is([data-icon-state="alert"], [aria-current="true"]) svg {
-  animation: systeck-icon-alert 1.5s ease-in-out infinite;
+@utility desktop-overlay-in {
+  animation: desktop-overlay-in var(--desktop-motion-base) ease-out both;
 }
 
-.systeck-desktop-motion button:disabled svg {
-  opacity: 0.48;
-  transform: none;
-  filter: none;
+@utility desktop-overlay-out {
+  animation: desktop-overlay-out var(--desktop-motion-base) ease-in both;
+  pointer-events: none;
+}
+
+@utility desktop-notice-row {
+  animation: desktop-notice-row-in 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--notice-index, 0) * 42ms + 70ms);
+}
+
+@utility desktop-bell-ring {
+  animation: desktop-bell-ring 480ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: 50% 15%;
+}
+
+@utility desktop-badge-pulse {
+  animation: desktop-badge-pulse 1.8s ease-out infinite;
+}
+
+.desktop-motion-root button,
+.desktop-motion-root a,
+.desktop-motion-root input,
+.desktop-motion-root select,
+.desktop-motion-root textarea {
+  transition-property: color, background-color, border-color, box-shadow, opacity, transform, filter;
+  transition-duration: var(--desktop-motion-fast);
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.desktop-motion-root button:not(:disabled):active,
+.desktop-motion-root a:active {
+  transform: scale(0.97);
+}
+
+.desktop-motion-root input:focus,
+.desktop-motion-root select:focus,
+.desktop-motion-root textarea:focus {
+  transition-duration: var(--desktop-motion-base);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .systeck-desktop-motion :is(button, a, [role="button"]) svg {
+  .desktop-window-enter,
+  .desktop-window-exit,
+  .desktop-window-minimize,
+  .desktop-menu-enter,
+  .desktop-ribbon-enter,
+  .desktop-tab-indicator,
+  .desktop-task-enter,
+  .desktop-notification-in,
+  .desktop-notification-out,
+  .desktop-overlay-in,
+  .desktop-overlay-out,
+  .desktop-notice-row,
+  .desktop-bell-ring,
+  .desktop-badge-pulse {
     animation: none !important;
-    transition-duration: 1ms !important;
-    transform: none !important;
-    filter: none !important;
+  }
+
+  .desktop-motion-root *,
+  .desktop-motion-root *::before,
+  .desktop-motion-root *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

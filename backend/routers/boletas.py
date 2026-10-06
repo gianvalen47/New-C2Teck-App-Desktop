@@ -1,4 +1,17 @@
+"""
+API router for handling boletas (receipts) in the SIGECOM system.}
+This router provides endpoints to list and retrieve boletas,
+leveraging a legacy adapter if enabled.
+If the legacy adapter is not available,
+it returns a fallback response indicating that boletas are not implemented in local mode.
+
+"""
+
 import logging
+from datetime import datetime
+from typing import List, Optional
+
+import os
 
 from fastapi import APIRouter, HTTPException, Query, status
 

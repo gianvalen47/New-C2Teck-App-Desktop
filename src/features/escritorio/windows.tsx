@@ -7,7 +7,7 @@ import {
   X, Check, Save, Printer, Search, Plus, Trash2, FileDown, FileSpreadsheet,
   Mail, Send, RefreshCw, Filter, Calendar, DollarSign, User, Package,
   Wrench, Clock, Car, MapPin, Phone, Users, GraduationCap, Fingerprint, Play, Square,
-  Minus, Maximize2, Minimize2, Copy, Zap, Receipt, LogOut, Settings, ArrowDown, ArrowRight, FileSearch, Percent, CreditCard, Pencil, BarChart3, TrendingUp, TrendingDown, Activity, Brain, Server, ShieldAlert, Sparkles
+  Minus, Maximize2, Minimize2, Copy, Zap, Receipt, LogOut, Settings, ArrowDown, ArrowRight, FileSearch, Percent, CreditCard, Pencil, BarChart3, TrendingUp, TrendingDown, Activity, Brain, Server, ShieldAlert, Sparkles, FileText
 } from "lucide-react";
 import {
   inp,
@@ -1668,6 +1668,7 @@ export function Workspace() {
       {/* Company logo top-left removed — central watermark shows company logo instead */}
 
       {/* Floating windows */}
+      <AnimatePresence initial={false}>
       {visible.map(w => (
         <FloatingWindow
           key={w.id}
@@ -1681,6 +1682,7 @@ export function Workspace() {
           onMinimize={() => minimize(w.id)}
         />
       ))}
+      </AnimatePresence>
 
       {/* Taskbar for minimized windows */}
       {minimized.length > 0 && (
@@ -1689,7 +1691,7 @@ export function Workspace() {
             <button
               key={w.id}
               onClick={() => restore(w.id)}
-              className="h-6 px-2 max-w-[180px] flex items-center gap-1.5 text-[11px] text-white bg-white/10 hover:bg-white/20 rounded-sm border border-white/10 truncate"
+              className="desktop-task-enter h-6 px-2 max-w-[180px] flex items-center gap-1.5 text-[11px] text-white bg-white/10 hover:bg-white/20 rounded-sm border border-white/10 truncate transition-all duration-150 active:scale-[0.96]"
               title={w.title}
             >
               <Square className="h-2.5 w-2.5 shrink-0" />
@@ -1713,7 +1715,22 @@ type FWProps = {
   onMinimize: () => void;
 };
 
-const STATUS_BAR_H = DESKTOP_STATUS_BAR_H; // two h-7 rows in escritorio status bar
+type ResizeDirection = "n" | "s" | "e" | "w" | "ne" | "nw" | "se" | "sw";
+
+const RESIZE_HANDLES: { direction: ResizeDirection; className: string }[] = [
+  { direction: "n", className: "absolute top-0 left-3 right-3 h-2 cursor-n-resize z-10" },
+  { direction: "s", className: "absolute bottom-0 left-3 right-3 h-2 cursor-s-resize z-10" },
+  { direction: "w", className: "absolute left-0 top-3 bottom-3 w-2 cursor-w-resize z-10" },
+  { direction: "e", className: "absolute right-0 top-3 bottom-3 w-2 cursor-e-resize z-10" },
+  { direction: "nw", className: "absolute top-0 left-0 h-3 w-3 cursor-nw-resize z-10" },
+  { direction: "ne", className: "absolute top-0 right-0 h-3 w-3 cursor-ne-resize z-10" },
+  { direction: "sw", className: "absolute bottom-0 left-0 h-3 w-3 cursor-sw-resize z-10" },
+  { direction: "se", className: "absolute bottom-0 right-0 h-3 w-3 cursor-se-resize z-10" },
+];
+
+const isDiagonalResize = (direction: ResizeDirection) => ["ne", "nw", "se", "sw"].includes(direction);
+
+const STATUS_BAR_H = DESKTOP_STATUS_BAR_H;
 
 function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove, onToggleMaximize, onMinimize }: FWProps) {
   const [pos, setPos] = useState({ x: win.position.x, y: win.position.y });
@@ -1724,8 +1741,7 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
   const pendingSizeRef = useRef(localSize);
   const rafRef = useRef<number | null>(null);
   const dragRef = useRef<{ sx: number; sy: number; ox: number; oy: number } | null>(null);
-  const resizeRef = useRef<{ sx: number; sy: number; ox: number; oy: number; ow: number; oh: number; dir: string } | null>(null);
-  const [contextMenu, setContextMenu] = useState<{ left: number; top: number } | null>(null);
+  const resizeRef = useRef<{ sx: number; sy: number; ox: number; oy: number; ow: number; oh: number; dir: ResizeDirection } | null>(null);
 
   const scheduleVisualUpdate = useCallback(() => {
     if (rafRef.current !== null) return;
@@ -1735,8 +1751,6 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
       setLocalSize(pendingSizeRef.current);
     });
   }, []);
-
-  const closeContextMenu = () => setContextMenu(null);
 
   const onDragStart = (e: ReactMouseEvent<HTMLDivElement>) => {
     if (win.isMaximized) return;
@@ -1752,8 +1766,9 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
     e.preventDefault();
   };
 
-  const onResizeStart = (e: ReactMouseEvent<HTMLDivElement>, dir: string) => {
+  const onResizeStart = (direction: ResizeDirection, e: ReactMouseEvent<HTMLDivElement>) => {
     if (win.isMaximized) return;
+    if (isDiagonalResize(direction) && !e.shiftKey) return;
     onFocus();
     resizeRef.current = {
       sx: e.clientX,
@@ -1762,42 +1777,33 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
       oy: posRef.current.y,
       ow: sizeRef.current.w,
       oh: sizeRef.current.h,
-      dir,
+      dir: direction,
     };
     document.body.style.userSelect = "none";
     e.preventDefault();
     e.stopPropagation();
   };
 
-  const onContextMenu = (e: ReactMouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    onFocus();
-    setContextMenu({ left: e.clientX, top: e.clientY });
-  };
-
-  useEffect(() => {
-    if (!contextMenu) return;
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeContextMenu();
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [contextMenu]);
-
   useEffect(() => {
     const onMouseMove = (e: MouseEvent) => {
-      const cw = containerRef.current?.offsetWidth ?? window.innerWidth;
-      const ch = containerRef.current?.offsetHeight ?? Math.max(320, window.innerHeight - STATUS_BAR_H);
+      const workspace = containerRef.current;
+      const workspaceRect = workspace?.getBoundingClientRect();
+      const originX = workspaceRect?.left ?? 0;
+      const originY = workspaceRect?.top ?? 0;
+      const cw = workspaceRect?.width ?? workspace?.clientWidth ?? window.innerWidth;
+      const ch = workspaceRect?.height ?? workspace?.clientHeight ?? Math.max(320, window.innerHeight - STATUS_BAR_H);
 
       const d = dragRef.current;
       if (d) {
         const dx = e.clientX - d.sx;
         const dy = e.clientY - d.sy;
-        const maxX = Math.max(0, cw - sizeRef.current.w);
-        const maxY = Math.max(0, ch - sizeRef.current.h);
+        const screenX = d.ox + dx;
+        const screenY = d.oy + dy;
+        const maxX = Math.max(originX, originX + cw - sizeRef.current.w);
+        const maxY = Math.max(originY, originY + ch - sizeRef.current.h);
         const next = {
-          x: Math.max(0, Math.min(d.ox + dx, maxX)),
-          y: Math.max(0, Math.min(d.oy + dy, maxY)),
+          x: Math.min(Math.max(screenX, originX), maxX),
+          y: Math.min(Math.max(screenY, originY), maxY),
         };
         pendingPosRef.current = next;
         pendingSizeRef.current = sizeRef.current;
@@ -1810,23 +1816,26 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
 
       const dx = e.clientX - r.sx;
       const dy = e.clientY - r.sy;
-      const MIN_W = 200;
-      const MIN_H = 120;
+      const MIN_W = 360;
+      const MIN_H = 220;
 
-      let nx = r.ox, ny = r.oy, nw = r.ow, nh = r.oh;
+      let nx = r.ox;
+      let ny = r.oy;
+      let nw = r.ow;
+      let nh = r.oh;
 
-      if (r.dir.includes('e')) {
+      if (r.dir.includes("e")) {
         nw = Math.min(cw - nx, Math.max(MIN_W, r.ow + dx));
       }
-      if (r.dir.includes('s')) {
+      if (r.dir.includes("s")) {
         nh = Math.min(ch - ny, Math.max(MIN_H, r.oh + dy));
       }
-      if (r.dir.includes('w')) {
+      if (r.dir.includes("w")) {
         const maxNx = r.ox + r.ow - MIN_W;
         nx = Math.max(0, Math.min(r.ox + dx, maxNx));
         nw = r.ow + (r.ox - nx);
       }
-      if (r.dir.includes('n')) {
+      if (r.dir.includes("n")) {
         const maxNy = r.oy + r.oh - MIN_H;
         ny = Math.max(0, Math.min(r.oy + dy, maxNy));
         nh = r.oh + (r.oy - ny);
@@ -1844,8 +1853,7 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
     };
 
     const onMouseUp = () => {
-      const wasDragging = Boolean(dragRef.current || resizeRef.current);
-      if (wasDragging) {
+      if (dragRef.current || resizeRef.current) {
         setPos(pendingPosRef.current);
         setLocalSize(pendingSizeRef.current);
         onMove(pendingPosRef.current);
@@ -1858,21 +1866,19 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
       }
       document.body.style.userSelect = "";
     };
+
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseup", onMouseUp);
-      if (rafRef.current !== null) {
-        window.cancelAnimationFrame(rafRef.current);
-        rafRef.current = null;
-      }
       document.body.style.userSelect = "";
     };
-  }, [onMove, containerRef, scheduleVisualUpdate]);
+  }, [containerRef, onMove, scheduleVisualUpdate]);
 
   useEffect(() => {
     setPos(win.position);
+    posRef.current = win.position;
     pendingPosRef.current = win.position;
   }, [win.position.x, win.position.y]);
 
@@ -1881,82 +1887,80 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
   }, [pos]);
 
   useEffect(() => {
-    sizeRef.current = localSize;
-  }, [localSize]);
-
-  useEffect(() => {
     setLocalSize(win.size);
+    sizeRef.current = win.size;
     pendingSizeRef.current = win.size;
   }, [win.size.w, win.size.h]);
 
-  // Use absolute positioning inside the workspace container (position:relative).
-  // This keeps windows correctly contained within the MDI area (below ribbon, above status bar).
+  useEffect(() => {
+    sizeRef.current = localSize;
+  }, [localSize]);
+
   const style: CSSProperties = win.isMaximized
-    ? { left: 0, top: 0, right: 0, bottom: 0, width: "auto", height: "auto", zIndex: win.zIndex, position: "absolute" }
-    : { left: pos.x, top: pos.y, width: localSize.w, height: localSize.h, zIndex: win.zIndex, position: "absolute" };
+    ? { left: 0, top: 0, right: 0, bottom: 0, width: "auto", height: "auto", zIndex: win.zIndex, position: "fixed" }
+    : { left: pos.x, top: pos.y, width: localSize.w, height: localSize.h, zIndex: win.zIndex, position: "fixed" };
 
   return (
     <div
       className={[
-        "flex flex-col bg-white border border-slate-400/60 shadow-2xl overflow-hidden win-open transition-shadow duration-200",
+        "flex flex-col overflow-hidden border border-slate-300/80 bg-white transition-[box-shadow,filter] duration-200",
         win.isMaximized ? "rounded-none" : "rounded-lg",
         isActive
-          ? "ring-2 ring-[#3B5998]/40"
-          : "ring-1 ring-slate-300/40",
+          ? "ring-2 ring-[#3B5998]/40 shadow-[0_24px_70px_-20px_rgba(15,23,42,0.48)]"
+          : "shadow-[0_12px_35px_-18px_rgba(15,23,42,0.32)]",
       ].join(" ")}
       style={style}
       onMouseDown={onFocus}
     >
-      {/* Resize handles */}
-      {!win.isMaximized && (
-        <>
-          <div className="absolute top-0 left-3 right-3 h-2 cursor-n-resize z-10" onMouseDown={(e) => onResizeStart(e, 'n')} />
-          <div className="absolute bottom-0 left-3 right-3 h-2 cursor-s-resize z-10" onMouseDown={(e) => onResizeStart(e, 's')} />
-          <div className="absolute left-0 top-3 bottom-3 w-2 cursor-w-resize z-10" onMouseDown={(e) => onResizeStart(e, 'w')} />
-          <div className="absolute right-0 top-3 bottom-3 w-2 cursor-e-resize z-10" onMouseDown={(e) => onResizeStart(e, 'e')} />
-          <div className="absolute top-0 left-0 h-3 w-3 cursor-nw-resize z-10" onMouseDown={(e) => onResizeStart(e, 'nw')} />
-          <div className="absolute top-0 right-0 h-3 w-3 cursor-ne-resize z-10" onMouseDown={(e) => onResizeStart(e, 'ne')} />
-          <div className="absolute bottom-0 left-0 h-3 w-3 cursor-sw-resize z-10" onMouseDown={(e) => onResizeStart(e, 'sw')} />
-          <div className="absolute bottom-0 right-0 h-3 w-3 cursor-se-resize z-10" onMouseDown={(e) => onResizeStart(e, 'se')} />
-        </>
-      )}
-      {/* Title bar */}
+      {!win.isMaximized && RESIZE_HANDLES.map((handle) => (
+        <div
+          key={handle.direction}
+          data-resize-handle={handle.direction}
+          className={handle.className}
+          onMouseDown={(event) => onResizeStart(handle.direction, event)}
+          aria-hidden="true"
+        />
+      ))}
+
       <div
         onMouseDown={onDragStart}
         onDoubleClick={onToggleMaximize}
-        onContextMenu={onContextMenu}
         className={[
           "h-9 px-3 flex items-center justify-between select-none shrink-0",
           win.isMaximized ? "cursor-default" : "cursor-move",
           isActive
-            ? "bg-gradient-to-b from-[#4C6E93] to-[#2A3F55] text-white"
-            : "bg-gradient-to-b from-slate-300 to-slate-400 text-slate-800",
+            ? "bg-gradient-to-r from-[#0B1220] via-[#162338] to-[#0B1220] text-white border-b border-cyan-300/30"
+            : "bg-gradient-to-r from-slate-300 to-slate-400 text-slate-800 border-b border-slate-400",
         ].join(" ")}
       >
         <div className="flex items-center gap-2 min-w-0">
-          <div className={["h-4 w-4 rounded-sm grid place-items-center shrink-0", isActive ? "bg-white/20" : "bg-white/40"].join(" ")}>
-            <Square className="h-2.5 w-2.5" />
+          <div className={["h-5 w-5 rounded-md grid place-items-center shrink-0", isActive ? "bg-cyan-300/15 text-cyan-300 ring-1 ring-cyan-300/25" : "bg-white/40 text-slate-700"].join(" ")}>
+            <FileText className="h-3 w-3" />
           </div>
           <span className="text-[12px] font-semibold truncate">{win.title}</span>
         </div>
+
         <div className="flex items-center gap-0.5" data-window-control>
           <button
+            type="button"
             onClick={(e) => { e.stopPropagation(); onMinimize(); }}
-            className="h-6 w-8 grid place-items-center rounded hover:bg-white/20"
+            className="h-6 w-8 grid place-items-center rounded hover:bg-white/20 transition-all duration-150 active:scale-90"
             title="Minimizar"
           >
             <Minus className="h-3.5 w-3.5" />
           </button>
           <button
+            type="button"
             onClick={(e) => { e.stopPropagation(); onToggleMaximize(); }}
-            className="h-6 w-8 grid place-items-center rounded hover:bg-white/20"
+            className="h-6 w-8 grid place-items-center rounded hover:bg-white/20 transition-all duration-150 active:scale-90"
             title={win.isMaximized ? "Restaurar" : "Maximizar"}
           >
             {win.isMaximized ? <Minimize2 className="h-3.5 w-3.5" /> : <Maximize2 className="h-3.5 w-3.5" />}
           </button>
           <button
+            type="button"
             onClick={(e) => { e.stopPropagation(); onClose(); }}
-            className="h-6 w-8 grid place-items-center rounded hover:bg-red-600 hover:text-white"
+            className="h-6 w-8 grid place-items-center rounded hover:bg-red-600 hover:text-white transition-all duration-150 active:scale-90"
             title="Cerrar"
           >
             <X className="h-3.5 w-3.5" />
@@ -1964,54 +1968,9 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
         </div>
       </div>
 
-      {/* Body */}
-      <div className="flex-1 min-h-0 overflow-hidden bg-white">
+      <div className="flex-1 min-h-0 overflow-hidden bg-slate-100">
         {renderWindow(win.label)}
       </div>
-      {contextMenu && createPortal(
-        <>
-          <div className="fixed inset-0 z-[2147483645]" onMouseDown={closeContextMenu} />
-          <div
-            className="fixed z-[2147483646] min-w-[220px] rounded-sm border border-slate-300/80 bg-white shadow-2xl p-2"
-            style={{ left: contextMenu.left, top: contextMenu.top }}
-          >
-            <div className="flex items-center gap-2 border-b border-slate-200 pb-2 mb-2">
-              <Glyph name={win.label} size={20} className="shrink-0" />
-              <div>
-                <div className="text-[12px] font-semibold truncate max-w-[170px]">{win.title}</div>
-                <div className="text-[10px] text-slate-500">Menú contextual de ventana</div>
-              </div>
-            </div>
-            <div className="flex flex-col gap-1">
-              <button
-                type="button"
-                onClick={() => { onToggleMaximize(); closeContextMenu(); }}
-                className="flex items-center gap-2 rounded px-2 py-1.5 text-sm text-slate-800 hover:bg-slate-100"
-              >
-                {win.isMaximized ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
-                <span>{win.isMaximized ? "Restaurar" : "Maximizar"}</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => { onMinimize(); closeContextMenu(); }}
-                className="flex items-center gap-2 rounded px-2 py-1.5 text-sm text-slate-800 hover:bg-slate-100"
-              >
-                <Minus className="h-4 w-4" />
-                <span>Minimizar</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => { onClose(); closeContextMenu(); }}
-                className="flex items-center gap-2 rounded px-2 py-1.5 text-sm text-slate-800 hover:bg-slate-100"
-              >
-                <X className="h-4 w-4" />
-                <span>Cerrar</span>
-              </button>
-            </div>
-          </div>
-        </>,
-        document.body,
-      )}
     </div>
   );
 }

@@ -23,6 +23,7 @@ type Ctx = {
   focus: (id: string) => void;
   move: (id: string, pos: WindowPos) => void;
   toggleMaximize: (id: string) => void;
+  toggleFromTaskbar: (id: string) => void;
   minimize: (id: string) => void;
   restore: (id: string) => void;
 };
@@ -36,6 +37,7 @@ const WINDOWS_FALLBACK_CTX: Ctx = {
   focus: () => {},
   move: () => {},
   toggleMaximize: () => {},
+  toggleFromTaskbar: () => {},
   minimize: () => {},
   restore: () => {},
 };
@@ -237,12 +239,15 @@ export const DESKTOP_STATUS_BAR_H = 56;
 
 function getWorkspaceBounds() {
   if (typeof window === "undefined") {
-    return { width: 1280, height: 720 };
+    return { left: 0, top: 0, width: 1280, height: 720 };
   }
   const workspace = document.querySelector('[data-mdi-workspace="true"]') as HTMLDivElement | null;
-  const width = workspace?.clientWidth ?? window.innerWidth;
-  const height = workspace?.clientHeight ?? Math.max(320, window.innerHeight - DESKTOP_STATUS_BAR_H);
-  return { width, height };
+  const rect = workspace?.getBoundingClientRect();
+  const left = rect?.left ?? 0;
+  const top = rect?.top ?? 0;
+  const width = rect?.width ?? workspace?.clientWidth ?? window.innerWidth;
+  const height = rect?.height ?? workspace?.clientHeight ?? Math.max(320, window.innerHeight - DESKTOP_STATUS_BAR_H);
+  return { left, top, width, height };
 }
 // ---------- Provider ----------
 export function WindowsProvider({ children }: { children: ReactNode }) {
@@ -279,10 +284,12 @@ export function WindowsProvider({ children }: { children: ReactNode }) {
         w: Math.min(rawSize.w, Math.max(220, bounds.width)),
         h: Math.min(rawSize.h, Math.max(140, bounds.height)),
       };
-      const initialX = 40 + offset;
-      const initialY = 20 + offset;
-      const x = Math.max(0, Math.min(initialX, Math.max(0, bounds.width - size.w)));
-      const y = Math.max(0, Math.min(initialY, Math.max(0, bounds.height - size.h)));
+      const initialX = bounds.left + 40 + offset;
+      const initialY = bounds.top + 20 + offset;
+      const maxX = Math.max(bounds.left, bounds.left + bounds.width - size.w);
+      const maxY = Math.max(bounds.top, bounds.top + bounds.height - size.h);
+      const x = Math.min(Math.max(initialX, bounds.left), maxX);
+      const y = Math.min(Math.max(initialY, bounds.top), maxY);
       const win: OpenWindow = {
         id, label: normalizedLabel,
         title: getWindowDisplayTitle(normalizedLabel),
@@ -321,6 +328,29 @@ export function WindowsProvider({ children }: { children: ReactNode }) {
     setActive(id);
   }, []);
 
+  const toggleFromTaskbar = (id: string) => {
+    setWindows(prev => {
+      const w = prev.find(x => x.id === id);
+      if (!w) return prev;
+      if (w.isMinimized) {
+        zRef.current += 1;
+        setActive(id);
+        return prev.map(x => x.id === id ? { ...x, isMinimized: false, zIndex: zRef.current } : x);
+      }
+      if (active === id) {
+        // minimize
+        const next = prev.map(x => x.id === id ? { ...x, isMinimized: true } : x);
+        const top = next.filter(x => !x.isMinimized).sort((a, b) => b.zIndex - a.zIndex)[0];
+        setActive(top?.id ?? null);
+        return next;
+      }
+      // just focus
+      zRef.current += 1;
+      setActive(id);
+      return prev.map(x => x.id === id ? { ...x, zIndex: zRef.current } : x);
+    });
+  };
+
   const minimize = useCallback((id: string) => {
     setWindows(prev => prev.map(w => w.id === id ? { ...w, isMinimized: true } : w));
     setActive(prev => {
@@ -334,7 +364,7 @@ export function WindowsProvider({ children }: { children: ReactNode }) {
   return (
     <WindowsCtx.Provider value={{
       windows, active, open, close,
-      focus: bringToFront, move, toggleMaximize, minimize, restore,
+      focus: bringToFront, move, toggleMaximize, toggleFromTaskbar, minimize, restore,
     }}>
       {children}
     </WindowsCtx.Provider>
