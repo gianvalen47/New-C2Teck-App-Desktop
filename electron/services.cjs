@@ -174,21 +174,39 @@ async function ensureBackendDeps() {
     });
   }
 
+  const python = getPythonExecutable();
+  const dependenciesReady = await new Promise((resolve, reject) => {
+    const proc = spawn(
+      python,
+      ["-c", "import fastapi, uvicorn, sqlalchemy, pydantic, pydantic_settings, dotenv, multipart, zeep"],
+      { cwd: PROJECT_ROOT, stdio: "ignore" },
+    );
+    proc.on("error", reject);
+    proc.on("exit", (code) => resolve(code === 0));
+  });
+
+  if (dependenciesReady) {
+    log("setup", "Dependencias del backend disponibles.");
+    return;
+  }
+
   const pip = process.platform === "win32"
     ? path.join(venvDir, "Scripts", "pip.exe")
     : path.join(venvDir, "bin", "pip");
 
-  if (fs.existsSync(pip)) {
-    log("setup", "Instalando dependencias del backend...");
-    await new Promise((resolve, reject) => {
-      const proc = spawn(pip, ["install", "-r", "backend/requirements.txt", "-q"], {
-        cwd: PROJECT_ROOT,
-        stdio: "inherit",
-      });
-      proc.on("error", reject);
-      proc.on("exit", (code) => (code === 0 ? resolve() : reject(new Error("pip install failed"))));
-    });
+  if (!fs.existsSync(pip)) {
+    throw new Error(`No se encontró pip en el entorno virtual: ${pip}`);
   }
+
+  log("setup", "Faltan dependencias; instalándolas desde backend/requirements.txt...");
+  await new Promise((resolve, reject) => {
+    const proc = spawn(pip, ["install", "-r", "backend/requirements.txt", "-q"], {
+      cwd: PROJECT_ROOT,
+      stdio: "inherit",
+    });
+    proc.on("error", reject);
+    proc.on("exit", (code) => (code === 0 ? resolve() : reject(new Error("pip install failed"))));
+  });
 }
 
 function getPythonExecutable() {
@@ -254,7 +272,10 @@ async function startFrontend() {
       ["run", "dev", "--", "--port", String(FRONTEND_PORT), "--host", "127.0.0.1"],
       {
         cwd: PROJECT_ROOT,
-        env: { ...process.env, BROWSER: "none" }, // prevent Vite from auto-opening a browser window
+        env: {
+          BROWSER: "none",
+          VITE_API_URL: `http://127.0.0.1:${BACKEND_PORT}`,
+        },
       },
     );
   }
@@ -286,7 +307,10 @@ function stopAllServices() {
 }
 
 function getAppUrl() {
-  return `http://127.0.0.1:${FRONTEND_PORT}/escritorio?desktop=1`;
+  const appUrl = new URL(`http://127.0.0.1:${FRONTEND_PORT}/escritorio`);
+  appUrl.searchParams.set("desktop", "1");
+  appUrl.searchParams.set("api", `http://127.0.0.1:${BACKEND_PORT}`);
+  return appUrl.toString();
 }
 
 module.exports = {

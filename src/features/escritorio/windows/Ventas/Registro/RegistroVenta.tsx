@@ -13,25 +13,25 @@ import {
 export function RegistroVentaList() {
   return (
     <WindowShell title="Registro de Ventas">
-      <div className="flex h-full w-full justify-start overflow-hidden p-1">
-        <div className="w-[640px] max-w-full">
-          <div className="grid grid-cols-3 gap-3">
-            <div className="space-y-3">
+      <div className="flex h-full w-full justify-center overflow-hidden p-1">
+        <div className="w-full max-w-[560px]">
+          <div className="grid grid-cols-1 gap-2">
+            <div className="space-y-2">
           {/* Ventas Section */}
         <Fs legend="Ventas">
           <div className="flex items-start gap-0 min-w-0">
             <div className="space-y-2 min-w-[220px]">
               <div className="flex items-center gap-2">
                 <span className="text-[11px] text-slate-600 w-12">Desde :</span>
-                <input className={inp} type="date" defaultValue="2026-08-01" />
+                <input className={`${inp} w-[110px]`} type="date" defaultValue="2026-08-01" />
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[11px] text-slate-600 w-12">Hasta :</span>
-                <input className={inp} type="date" defaultValue="2026-08-07" />
+                <input className={`${inp} w-[110px]`} type="date" defaultValue="2026-08-07" />
               </div>
             </div>
 
-            <div className="flex-1 min-w-[200px]">
+            <div className="min-w-0">
               <Fs legend="Impresión">
                 <div className="grid grid-cols-2 gap-2">
                   <label className="inline-flex items-center gap-2">
@@ -64,7 +64,7 @@ export function RegistroVentaList() {
           <div className="space-y-1">
             <div className="flex items-center gap-1">
               <span className="text-[11px] text-slate-600 w-12">Cliente</span>
-              <input className={inp} />
+              <input className={`${inp} w-[230px]`} />
               <button className={iconBtn}><Search className="h-3.5 w-3.5" /></button>
             </div>
           </div>
@@ -73,16 +73,16 @@ export function RegistroVentaList() {
         {/* Por Documento Section */}
         <Fs legend="Por Documento">
           <div className="space-y-1">
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4">
             <span className="text-[11px] text-slate-600 w-12">Documento</span>
-            <select className={inp}><option>(Todos)</option></select>
+            <select className={`${inp} w-[180px]`}><option>(Todos)</option></select>
           </div>
           </div>
         </Fs>
 
         {/* Moneda, Formato, Exportar in Grid */}
-        <div className="grid grid-cols-3 gap-2">
-          <Fs legend="Moneda">
+        <div className="grid grid-cols-3 gap-1">
+          <Fs legend="Moneda" className="w-full min-w-0">
             <div className="flex flex-col gap-1.5">
               <label className="inline-flex items-center gap-2">
                 <input type="radio" name="moneda_reg" defaultChecked className="accent-[#2A5590]" />
@@ -94,7 +94,7 @@ export function RegistroVentaList() {
               </label>
             </div>
           </Fs>
-          <Fs legend="Formato">
+          <Fs legend="Formato" className="w-full min-w-0">
             <div className="flex flex-col gap-1.5">
               <label className="inline-flex items-center gap-2">
                 <input type="radio" name="formato_reg" defaultChecked className="accent-[#2A5590]" />
@@ -106,7 +106,7 @@ export function RegistroVentaList() {
               </label>
             </div>
           </Fs>
-          <Fs legend="Exportar">
+          <Fs legend="Exportar" className="w-full min-w-0">
             <div className="flex flex-col gap-1.5">
               <label className="inline-flex items-center gap-2">
                 <input type="radio" name="exportar_reg" defaultChecked className="accent-[#2A5590]" />

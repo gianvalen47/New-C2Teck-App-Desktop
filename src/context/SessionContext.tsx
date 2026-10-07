@@ -18,18 +18,8 @@ export function useSession() {
 }
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
-  const [session, setSession] = useState<SessionInfo | null>(() => {
-    try {
-      if (typeof window === "undefined") return null;
-      const raw = window.localStorage.getItem("sigecoom_session");
-      if (!raw) return null;
-      const parsed = JSON.parse(raw);
-      return hydrateSessionSnapshot(parsed);
-    } catch (_) {
-      return null;
-    }
-  });
-  const [loading, setLoading] = useState<boolean>(!session);
+  const [session, setSession] = useState<SessionInfo | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const reloadSession = async () => {
     setLoading(true);
@@ -62,7 +52,20 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     let mounted = true;
-    if (!session) {
+    let savedSession: SessionInfo | null = null;
+    try {
+      const raw = window.localStorage.getItem("sigecoom_session");
+      if (raw) {
+        savedSession = hydrateSessionSnapshot(JSON.parse(raw));
+      }
+    } catch (_) {
+      savedSession = null;
+    }
+
+    if (savedSession) {
+      setSession(savedSession);
+      setLoading(false);
+    } else {
       reloadSession().catch(() => {});
     }
     const onEvent = (ev: Event) => {

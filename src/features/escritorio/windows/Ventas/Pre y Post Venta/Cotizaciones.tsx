@@ -13,10 +13,6 @@ import {
 export function CotizacionesList() {
   return (
     <WindowShell title="Cotizaciones"
-      toolbar={<>
-        <button className={btn}><Filter className="h-3.5 w-3.5" />Filtros</button>
-        <button className={btnPrimary}><RefreshCw className="h-3.5 w-3.5" />Generar</button>
-      </>}
     >
       <div className="p-3 space-y-3 max-w-xl mx-auto text-[11.5px] text-slate-800">
         <div className="grid grid-cols-[auto_1fr_auto_1fr] items-center gap-x-2 gap-y-2">

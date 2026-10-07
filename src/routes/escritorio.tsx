@@ -39,7 +39,7 @@ import {
   ChevronRight, AlertTriangle as AlertIcon, PackageCheck as PackageAlert, CheckCheck, X as CloseIcon
 } from "lucide-react";
 
-import { fetchSession, login, type SessionInfo, fetchAdapterTipoCambio } from "@/lib/sigecoom-api";
+import { fetchSession, login, type SessionInfo } from "@/lib/sigecoom-api";
 import { SessionProvider, useSession } from "@/context/SessionContext";
 import { CompanyPickerModal, type Company } from "@/features/escritorio/windows/Logueo/CambiarEmpresa";
 
@@ -111,14 +111,14 @@ function SessionStatus() {
   );
 }
 
-type MenuItem = { icon: any; label: string };
+type MenuItem = { icon: any; label: string; iconKey?: string };
 type MenuSection = { title: string; items: MenuItem[] };
-type RibbonBtn = { icon: any; label: string; big?: boolean; dropdown?: boolean; menu?: MenuSection[]; openLabel?: string  };
+type RibbonBtn = { icon: any; label: string; iconKey?: string; big?: boolean; dropdown?: boolean; menu?: MenuSection[]; openLabel?: string  };
 type RibbonGroup = { title?: string; items: RibbonBtn[] };
 
 const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
   // Conjuntos principales de cada pestaña
-  documentos: "doc",
+  documentos: "documentos",
   "pre y post venta": "compra",
   clientes: "cliente",
   requisiciones: "ValeRequisicion",
@@ -129,7 +129,7 @@ const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
   transito: "detalle",
   mantenimiento: "actualizarCostos",
   reportes: "doc",
-  compras: "compra",
+  compras: "Compras",
   control: "detalle",
   creditos: "creditos",
   aprobaciones: "Check",
@@ -172,7 +172,7 @@ const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
   // Pre y Post Venta
   "cotizaciones": "cotizacion",
   "reclamo garantia": "ReclamoGarantia",
-  "separar orden": "compra",
+  "separar orden": "separarOrden",
   "ordenes compra": "ordenesCompra",
   "actualizar vendedor": "actualizarCostos",
   "enviar correos": "EnviarCorreos",
@@ -192,8 +192,8 @@ const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
   "precios cliente": "cotizacion",
   "precio oferta": "cotizacion",
   "precio lista": "cotizacion",
-  "precio fabricantes": "ordenesCompra",
-  "factores rubros": "compra",
+  "precio fabricantes": "preciofabricantes",
+  "factores rubros": "factoresrubros",
   // Reportes
 
   "registro de venta": "RegistroAuxiliar",
@@ -205,21 +205,21 @@ const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
   "guias remision": "GuiaRemision",
   "cotiz taller": "cotizacionTaller",
   "ordenes de compra": "ordenesCompra",
-  "mensuales x cliente": "cliente",
+  "mensuales x cliente": "mensualesxcliente",
   "presupuesto venta": "presupuesto_venta",
   detalle: "detalle",
-  "detalle descuento": "detalle",
+  "detalle descuento": "detalledescuento",
   "g r pendiente": "GuiaRemision",
   "gr pendiente": "GuiaRemision",
   "vale requisicion": "ValeRequisicion",
   vales: "ValeRequisicion",
   comisiones: "comision_ico",
-  "doc ingresos": "Ingresos",
+  "doc ingresos": "doc_ingresos",
   "doc salidas": "Ingresos",
-  "chequeo f i": "Check",
+  "chequeo f i": "chequeo",
   ti: "doc",
-  "m ti": "detalle",
-  "atender ot": "doc",
+  "m t i": "mti",
+  "atender ot": "Material",
   despachos: "despacho",
   "datos despacho clientes": "despacho",
   acumulada: "acumulada",
@@ -263,13 +263,13 @@ const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
   "renueva tipo cambio": "Refresh",
   "mantenimiento tipo de cambio": "doc",
   "permiso usuario": "UserCog",
-  "detalle vencimientos": "detalle",
-  "acumulado vencimientos": "acumulada",
+  "detalle vencimientos": "vencimientoDetalle",
+  "acumulado vencimientos": "vencimientoAcumulada",
   "diario de pagos": "detalle",
   "letras aceptadas": "credito",
   "notas debito credito": "Notas",
   "visita cobrador": "cliente",
-  "vencimientos": "detalle",
+  "vencimientos": "vencimientos",
   "cuentas corrientes": "cuentasCorrientes",
 
   // Importaciones
@@ -510,9 +510,9 @@ const SMALL_COLOR_ICON_LOOKUP: Record<string, any> = Object.fromEntries(
   Object.entries(ICONOS_COLOR).map(([name, icon]) => [normalizeSmallColorIconKey(name), icon]),
 );
 
-function SmallColorIcon({ label, className, size = 19 }: { label: string; className?: string; size?: number }) {
+function SmallColorIcon({ label, iconKey, className, size = 19 }: { label: string; iconKey?: string; className?: string; size?: number }) {
   const normalizedLabel = normalizeSmallColorIconKey(label);
-  const mappedKey = SMALL_COLOR_ICON_ALIASES[normalizedLabel] ?? normalizedLabel;
+  const mappedKey = iconKey ?? SMALL_COLOR_ICON_ALIASES[normalizedLabel] ?? normalizedLabel;
   const Icon = SMALL_COLOR_ICON_LOOKUP[normalizeSmallColorIconKey(mappedKey)] ?? SMALL_COLOR_ICON_LOOKUP.doc ?? ICONOS_COLOR.doc;
 
   return <Icon size={size} className={className} strokeWidth={1.8} />;
@@ -556,7 +556,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
         { icon: Search, label: "Consultas", big: true, dropdown: true, menu: [
           { title: "Consultas", items: [
             { icon: DollarSign, label: "Precios" },
-            { icon: FileText, label: "Documentos" },
+            { icon: FileText, label: "Documentos", iconKey: "documentos" },
           ]},
         ]},
         { icon: BarChart3, label: "Indicadores", big: true, dropdown: true, menu: [
@@ -676,8 +676,9 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       title: "Documentos",
       items: [
         { icon: HandCoins, label: "Ctas x Cobrar" },
-        { icon: ScrollText, label: "Letras" },
         { icon: FileSpreadsheet, label: "Planillas" },
+        { icon: UserCheck, label: "Anticipos" },
+        { icon: ScrollText, label: "Letras" },
       ],
     },
     {
@@ -685,7 +686,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       items: [
         { icon: BadgeCheck, label: "Créditos" },
         { icon: FileEdit, label: "Cotiz. Taller" },
-        { icon: UserCheck, label: "Anticipos" },
+        { icon: Lock, label: "Permiso Usuario" },
         { icon: Mail, label: "Recepcion Doc." },
       ],
     },
@@ -701,7 +702,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
         { icon: DollarSign, label: "Tipo Cambio Ventas" },
         { icon: RefreshCcw, label: "Renueva Tipo Cambio" },
         { icon: Wrench, label: "Mantenimiento Tipo de Cambio" },
-        { icon: Lock, label: "Permiso Usuario" },
+
       ],
     },
     {
@@ -1499,20 +1500,7 @@ function DesktopAppInner() {
       setDesktopReady(true);
     }
 
-    // Try to fetch tipo de cambio directly from legacy adapter first (avoids backend dependency)
     (async () => {
-      try {
-        const today = new Date().toLocaleDateString("es-PE");
-        const adapterTc = await fetchAdapterTipoCambio("US", today);
-        if (mounted && adapterTc) {
-          // adapterTc is [compra, venta] — show venta in the login window
-          setTc(String(adapterTc[1]));
-        }
-      } catch (e) {
-        // ignore
-      }
-
-      // Then fetch session as before (this may override tc if session contains a value)
       try {
         const session = await fetchSession();
         if (!mounted) return;
@@ -2415,8 +2403,8 @@ function CollapsedGroupButton({ group, onOpen }: { group: RibbonGroup; onOpen: (
             style={{ left: Math.min(pos.left, window.innerWidth - 236), top: Math.min(pos.top, window.innerHeight - 120) }}
           >
             <div className="flex flex-col gap-0.5 px-1 py-1">
-              {group.items.map((item) => (
-                <div key={item.label}>
+              {group.items.map((item, itemIndex) => (
+                <div key={`${item.label}-${itemIndex}`}>
                   <button
                     onClick={() => {
                       if (item.menu) {
@@ -2433,19 +2421,19 @@ function CollapsedGroupButton({ group, onOpen }: { group: RibbonGroup; onOpen: (
                       expandedItem === item.label ? "bg-gradient-to-b from-[#FCE9A8] to-[#F5C86A] border-[#B8892E]" : "border-transparent",
                     ].join(" ")}
                   >
-                    <SmallColorIcon label={item.label} className="h-4 w-4 shrink-0" size={16} />
+                    <SmallColorIcon label={item.label} iconKey={item.iconKey} className="h-4 w-4 shrink-0" size={16} />
                     <span className="text-[11.5px] text-slate-800 whitespace-nowrap flex-1">{item.label.replace(/\n/g, " ")}</span>
                     {item.menu && <ChevronDown className="h-3 w-3 text-slate-600 shrink-0" />}
                   </button>
-                  {expandedItem === item.label && item.menu?.map(section => (
-                    <div key={section.title} className="ml-3 pl-2 border-l border-slate-300 py-0.5">
-                      {section.items.map(subitem => (
+                  {expandedItem === item.label && item.menu?.map((section, sectionIndex) => (
+                    <div key={`${section.title}-${sectionIndex}`} className="ml-3 pl-2 border-l border-slate-300 py-0.5">
+                      {section.items.map((subitem, subitemIndex) => (
                 <button
-                          key={subitem.label}
+                          key={`${subitem.label}-${subitemIndex}`}
                           onClick={() => { openWindow(subitem.label); setOpen(false); setExpandedItem(null); }}
                           className="flex w-full items-center gap-2 px-1.5 py-1 rounded border border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6] text-left"
                         >
-                          <SmallColorIcon label={subitem.label} className="h-4 w-4 shrink-0" size={16} />
+                          <SmallColorIcon label={subitem.label} iconKey={subitem.iconKey} className="h-4 w-4 shrink-0" size={16} />
                           <span className="text-[11.5px] text-slate-800 whitespace-nowrap font-bold">{subitem.label}</span>
                         </button>
                       ))}
@@ -2583,7 +2571,7 @@ function TabsCarousel({
 }
 
 
-function RibbonBigButton({ icon: Icon, label, dropdown, menu, onOpen }: RibbonBtn & { onOpen: (label: string) => void }) {
+function RibbonBigButton({ icon: Icon, label, iconKey, dropdown, menu, onOpen }: RibbonBtn & { onOpen: (label: string) => void }) {
   const [open, setOpen] = useState(false);
   const btnRef = useRef<HTMLButtonElement>(null);
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
@@ -2617,7 +2605,11 @@ function RibbonBigButton({ icon: Icon, label, dropdown, menu, onOpen }: RibbonBt
             : "border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6]",
         ].join(" ")}
       >
-        <Glyph name={cleanLabel} size={30} className="drop-shadow-[0_1px_1px_rgba(15,23,42,0.15)] group-hover/rb:scale-105 transition-transform" />
+        {iconKey ? (
+          <SmallColorIcon label={cleanLabel} iconKey={iconKey} size={30} className="drop-shadow-[0_1px_1px_rgba(15,23,42,0.15)] group-hover/rb:scale-105 transition-transform" />
+        ) : (
+          <Glyph name={cleanLabel} size={30} className="drop-shadow-[0_1px_1px_rgba(15,23,42,0.15)] group-hover/rb:scale-105 transition-transform" />
+        )}
         <span className="text-[10.5px] leading-tight text-center whitespace-pre text-slate-800 font-bold">{label}</span>
         {dropdown && <ChevronDown className="h-2.5 w-2.5 text-slate-500 -mt-1" />}
       </motion.button>
@@ -2629,16 +2621,16 @@ function RibbonBigButton({ icon: Icon, label, dropdown, menu, onOpen }: RibbonBt
             style={{ left: pos.left, top: pos.top, maxWidth: "700px" }}
           >
             <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${menu.length}, minmax(0, 1fr))` }}>
-              {menu.map((sec) => (
-                <div key={sec.title} className="flex flex-col">
+              {menu.map((sec, sectionIndex) => (
+                <div key={`${sec.title}-${sectionIndex}`} className="flex flex-col">
                   <div className="flex flex-col gap-0.5">
-                    {sec.items.map((it) => (
+                    {sec.items.map((it, itemIndex) => (
                       <button
-                        key={it.label}
+                        key={`${it.label}-${itemIndex}`}
                         onClick={() => { onOpen(it.label); setOpen(false); }}
                         className="flex items-center gap-1.5 px-1.5 py-0.5 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border border-transparent text-left whitespace-nowrap"
                       >
-                        <SmallColorIcon label={it.label} size={22} className="shrink-0" />
+                        <SmallColorIcon label={it.label} iconKey={it.iconKey} size={22} className="shrink-0" />
                       <span className="text-[11.5px] text-slate-800 whitespace-nowrap font-bold">{it.label}</span>
                       </button>
                     ))}
@@ -2675,7 +2667,7 @@ function DesktopPopoutWindow({ label, onClose }: { label: string; onClose: () =>
   );
 }
 
-function RibbonSmallButton({ icon: Icon, label, dropdown, menu, onOpen }: RibbonBtn & { onOpen: (label: string) => void }) {
+function RibbonSmallButton({ icon: Icon, label, iconKey, dropdown, menu, onOpen }: RibbonBtn & { onOpen: (label: string) => void }) {
   const [open, setOpen] = useState(false);
   const btnRef = useRef<HTMLButtonElement>(null);
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
@@ -2707,7 +2699,7 @@ function RibbonSmallButton({ icon: Icon, label, dropdown, menu, onOpen }: Ribbon
             : "border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6]",
         ].join(" ")}
       >
-        <SmallColorIcon label={label} size={19} className="shrink-0 group-hover/rs:scale-105 transition-transform" />
+        <SmallColorIcon label={label} iconKey={iconKey} size={19} className="shrink-0 group-hover/rs:scale-105 transition-transform" />
         <span className="text-slate-800 truncate font-bold">{label}</span>
         {dropdown && <ChevronDown className="h-2 w-2 text-slate-600" />}
       </motion.button>
@@ -2719,16 +2711,16 @@ function RibbonSmallButton({ icon: Icon, label, dropdown, menu, onOpen }: Ribbon
             style={{ left: pos.left, top: pos.top, maxWidth: "700px" }}
           >
             <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${menu.length}, minmax(0, 1fr))` }}>
-              {menu.map((sec) => (
-                <div key={sec.title} className="flex flex-col">
+              {menu.map((sec, sectionIndex) => (
+                <div key={`${sec.title}-${sectionIndex}`} className="flex flex-col">
                   <div className="flex flex-col gap-0.5">
-                    {sec.items.map((it) => (
+                    {sec.items.map((it, itemIndex) => (
                       <button
-                        key={it.label}
+                        key={`${it.label}-${itemIndex}`}
                         onClick={() => { onOpen(it.label); setOpen(false); }}
                         className="flex items-center gap-1.5 px-1.5 py-0.5 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border border-transparent text-left whitespace-nowrap"
                       >
-                        <SmallColorIcon label={it.label} size={18} className="shrink-0" />
+                        <SmallColorIcon label={it.label} iconKey={it.iconKey} size={18} className="shrink-0" />
                         <span className="text-[11px] text-slate-800 whitespace-nowrap font-bold">{it.label}</span>
                       </button>
                     ))}

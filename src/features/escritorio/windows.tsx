@@ -1752,6 +1752,8 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
     });
   }, []);
 
+  const canToggleMaximize = win.canMaximize !== false;
+
   const onDragStart = (e: ReactMouseEvent<HTMLDivElement>) => {
     if (win.isMaximized) return;
     if ((e.target as HTMLElement).closest("[data-window-control]")) return;
@@ -1818,6 +1820,10 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
       const dy = e.clientY - r.sy;
       const MIN_W = 360;
       const MIN_H = 220;
+      const leftLimit = originX;
+      const topLimit = originY;
+      const rightLimit = originX + cw;
+      const bottomLimit = originY + ch;
 
       let nx = r.ox;
       let ny = r.oy;
@@ -1825,27 +1831,27 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
       let nh = r.oh;
 
       if (r.dir.includes("e")) {
-        nw = Math.min(cw - nx, Math.max(MIN_W, r.ow + dx));
+        nw = Math.min(rightLimit - nx, Math.max(MIN_W, r.ow + dx));
       }
       if (r.dir.includes("s")) {
-        nh = Math.min(ch - ny, Math.max(MIN_H, r.oh + dy));
+        nh = Math.min(bottomLimit - ny, Math.max(MIN_H, r.oh + dy));
       }
       if (r.dir.includes("w")) {
         const maxNx = r.ox + r.ow - MIN_W;
-        nx = Math.max(0, Math.min(r.ox + dx, maxNx));
+        nx = Math.min(Math.max(r.ox + dx, leftLimit), maxNx);
         nw = r.ow + (r.ox - nx);
       }
       if (r.dir.includes("n")) {
         const maxNy = r.oy + r.oh - MIN_H;
-        ny = Math.max(0, Math.min(r.oy + dy, maxNy));
+        ny = Math.min(Math.max(r.oy + dy, topLimit), maxNy);
         nh = r.oh + (r.oy - ny);
       }
 
-      if (ny + nh > ch) nh = ch - ny;
-      if (nx + nw > cw) nw = cw - nx;
+      nx = Math.min(Math.max(nx, leftLimit), rightLimit - nw);
+      ny = Math.min(Math.max(ny, topLimit), bottomLimit - nh);
 
-      nw = Math.max(MIN_W, nw);
-      nh = Math.max(MIN_H, nh);
+      nw = Math.min(Math.max(nw, MIN_W), rightLimit - nx);
+      nh = Math.min(Math.max(nh, MIN_H), bottomLimit - ny);
 
       pendingPosRef.current = { x: nx, y: ny };
       pendingSizeRef.current = { w: nw, h: nh };
@@ -1896,12 +1902,20 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
     sizeRef.current = localSize;
   }, [localSize]);
 
+  const workspaceRect = containerRef.current?.getBoundingClientRect();
   const style: CSSProperties = win.isMaximized
-    ? { left: 0, top: 0, right: 0, bottom: 0, width: "auto", height: "auto", zIndex: win.zIndex, position: "fixed" }
+    ? {
+        left: workspaceRect?.left ?? 0,
+        top: workspaceRect?.top ?? 0,
+        width: workspaceRect?.width ?? localSize.w,
+        height: workspaceRect?.height ?? localSize.h,
+        zIndex: win.zIndex,
+        position: "fixed",
+      }
     : { left: pos.x, top: pos.y, width: localSize.w, height: localSize.h, zIndex: win.zIndex, position: "fixed" };
 
   return (
-    <div
+    <motion.div
       className={[
         "flex flex-col overflow-hidden border border-slate-300/80 bg-white transition-[box-shadow,filter] duration-200",
         win.isMaximized ? "rounded-none" : "rounded-lg",
@@ -1911,6 +1925,11 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
       ].join(" ")}
       style={style}
       onMouseDown={onFocus}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={mdiWindowVariants}
+      transition={{ duration: 0.18, ease: "easeOut" }}
     >
       {!win.isMaximized && RESIZE_HANDLES.map((handle) => (
         <div
@@ -1924,7 +1943,7 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
 
       <div
         onMouseDown={onDragStart}
-        onDoubleClick={onToggleMaximize}
+        onDoubleClick={canToggleMaximize ? onToggleMaximize : undefined}
         className={[
           "h-9 px-3 flex items-center justify-between select-none shrink-0",
           win.isMaximized ? "cursor-default" : "cursor-move",
@@ -1940,6 +1959,11 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
           <span className="text-[12px] font-semibold truncate">{win.title}</span>
         </div>
 
+        <div className="flex items-center gap-2 text-[10px] font-mono text-cyan-100/90" data-window-control>
+          <span className="rounded bg-white/10 px-1.5 py-0.5">w: {Math.round(localSize.w)}</span>
+          <span className="rounded bg-white/10 px-1.5 py-0.5">h: {Math.round(localSize.h)}</span>
+        </div>
+
         <div className="flex items-center gap-0.5" data-window-control>
           <button
             type="button"
@@ -1951,11 +1975,26 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
           </button>
           <button
             type="button"
-            onClick={(e) => { e.stopPropagation(); onToggleMaximize(); }}
-            className="h-6 w-8 grid place-items-center rounded hover:bg-white/20 transition-all duration-150 active:scale-90"
+            disabled={!canToggleMaximize}
+            onClick={(e) => {
+              if (!canToggleMaximize) return;
+              e.stopPropagation();
+              onToggleMaximize();
+            }}
+            className={[
+              "h-6 w-8 grid place-items-center rounded transition-all duration-150",
+              canToggleMaximize
+                ? "hover:bg-white/20 active:scale-90"
+                : "opacity-40 cursor-not-allowed",
+            ].join(" ")}
             title={win.isMaximized ? "Restaurar" : "Maximizar"}
+            aria-disabled={!canToggleMaximize}
           >
-            {win.isMaximized ? <Minimize2 className="h-3.5 w-3.5" /> : <Maximize2 className="h-3.5 w-3.5" />}
+            {win.isMaximized ? (
+              <Minimize2 className={"h-3.5 w-3.5"} />
+            ) : (
+              <Maximize2 className={"h-3.5 w-3.5"} />
+            )}
           </button>
           <button
             type="button"
@@ -1971,6 +2010,6 @@ function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove,
       <div className="flex-1 min-h-0 overflow-hidden bg-slate-100">
         {renderWindow(win.label)}
       </div>
-    </div>
+    </motion.div>
   );
 }

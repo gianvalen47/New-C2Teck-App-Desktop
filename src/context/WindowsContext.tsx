@@ -13,6 +13,7 @@ export type OpenWindow = {
   zIndex: number;
   isMaximized: boolean;
   isMinimized: boolean;
+  canMaximize?: boolean;
 };
 
 type Ctx = {
@@ -42,6 +43,19 @@ const WINDOWS_FALLBACK_CTX: Ctx = {
   restore: () => {},
 };
 
+function getWindowOptions(label: string) {
+  const normalized = normalizeWindowLabel(label);
+  const blocked = new Set([
+    "Registro",
+    "Registro Venta",
+    "Registro de Ventas",
+    "Registro Ventas",
+  ]);
+  return {
+    canMaximize: !blocked.has(normalized),
+  };
+}
+
 
 // ---------- Utilidades de Configuración y Cálculo ----------
 function getInitialSize(label: string): WindowSize {
@@ -57,8 +71,8 @@ function getInitialSize(label: string): WindowSize {
   // Tamaños específicos por ventana
   const windowSizes: Record<string, { w: number; h: number }> = {
     // Registros (usando los nombres exactos del REGISTRY)
-    "Registro": { w: 480, h: 630 },
-    "Registro Auxiliar": { w: 520, h: 550 },
+    "Registro": { w: 466, h: 488 },
+    "Registro Auxiliar": { w: 402, h: 478 },
     "Resumen Registro": { w: 900, h: 600 },
 
     // Guías y Documentos
@@ -265,6 +279,7 @@ export function WindowsProvider({ children }: { children: ReactNode }) {
 
   const open = useCallback((label: string) => {
     const normalizedLabel = normalizeWindowLabel(label);
+    const winOptions = getWindowOptions(normalizedLabel);
     setWindows(prev => {
       const existing = prev.find(w => w.label === normalizedLabel);
       if (existing) {
@@ -298,6 +313,7 @@ export function WindowsProvider({ children }: { children: ReactNode }) {
         zIndex: zRef.current,
         isMaximized: false,
         isMinimized: false,
+        canMaximize: winOptions.canMaximize,
       };
       setActive(id);
       return [...prev, win];
@@ -320,12 +336,17 @@ export function WindowsProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const toggleMaximize = useCallback((id: string) => {
-    zRef.current += 1;
-    const z = zRef.current;
-    setWindows(prev => prev.map(w => w.id === id
-      ? { ...w, isMaximized: !w.isMaximized, isMinimized: false, zIndex: z }
-      : w));
-    setActive(id);
+    setWindows(prev => {
+      const current = prev.find(w => w.id === id);
+      if (!current || current.canMaximize === false) return prev;
+      zRef.current += 1;
+      const z = zRef.current;
+      const next = prev.map(w => w.id === id
+        ? { ...w, isMaximized: !w.isMaximized, isMinimized: false, zIndex: z }
+        : w);
+      setActive(id);
+      return next;
+    });
   }, []);
 
   const toggleFromTaskbar = (id: string) => {

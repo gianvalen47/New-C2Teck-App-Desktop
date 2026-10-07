@@ -88,9 +88,9 @@ export function SearchBar6({ children }: { children: ReactNode }) {
   );
 }
 
-export function Fs({ legend, children }: { legend: string; children: ReactNode }) {
+export function Fs({ legend, children, className = "" }: { legend: string; children: ReactNode; className?: string }) {
   return (
-    <fieldset className="border border-[#7A96B4] px-2 pb-2 pt-1 bg-[#ECF1F7] rounded-sm">
+    <fieldset className={`border border-[#7A96B4] px-2 pb-2 pt-1 bg-[#ECF1F7] rounded-sm ${className}`}>
       <legend className="px-1 text-[10.5px] font-bold text-slate-700">{legend}</legend>
       <div className="mt-2 space-y-2">{children}</div>
     </fieldset>

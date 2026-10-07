@@ -175,13 +175,16 @@ export type Gasto = {
   updated_at?: string;
 };
 
-const API_BASE_URL =
-  (typeof import.meta !== "undefined" && import.meta.env?.VITE_API_URL) ||
-  // Backend run_app.py binds to 127.0.0.1:8001 in development; prefer that port
-  "http://127.0.0.1:8001";
-const SIGECOOM_ADAPTER_URL =
-  (typeof import.meta !== "undefined" && import.meta.env?.VITE_SIGECOOM_ADAPTER_URL) ||
-  "http://170.231.82.58:8443";
+const API_BASE_URL = (() => {
+  if (typeof window !== "undefined") {
+    const desktopApiUrl = new URLSearchParams(window.location.search).get("api");
+    if (desktopApiUrl) return desktopApiUrl;
+  }
+  return (
+    (typeof import.meta !== "undefined" && import.meta.env?.VITE_API_URL) ||
+    "http://127.0.0.1:8001"
+  );
+})();
 const API_V1_PREFIX = "/api/v1";
 
 // ============================================================================
@@ -402,60 +405,6 @@ export async function syncSessionTipoCambio(): Promise<number | null> {
     return Number(session.tipo_cambio_compra ?? 0) || null;
   } catch {
     return getSessionTipoCambioCompra();
-  }
-}
-
-export async function fetchAdapterTipoCambio(moneda: string = "US", fecha: string | null = null): Promise<[number, number] | null> {
-  // First try the configured legacy SIGECOM adapter. If it is unreachable or
-  // does not return a valid pair, fall back to the public SUNAT API, which is
-  // the same source used by the original legacy client when live values are needed.
-  try {
-    if (SIGECOOM_ADAPTER_URL) {
-      const q = new URLSearchParams();
-      q.set("moneda", (moneda || "US").toUpperCase());
-      if (fecha) q.set("fecha", fecha);
-      const url = `${SIGECOOM_ADAPTER_URL}/api/v1/tipo-cambio${q.toString() ? `?${q.toString()}` : ""}`;
-      const resp = await fetch(url, { headers: { Accept: "application/json" } });
-      if (resp.ok) {
-        const data = await resp.json();
-        const compra = Number(data.tipo_cambio_compra ?? data.compra ?? data.tipoCambioCompra ?? 0);
-        const venta = Number(data.tipo_cambio_venta ?? data.venta ?? data.tipoCambioVenta ?? 0);
-        if (Number.isFinite(compra) && compra > 0 && Number.isFinite(venta) && venta > 0) {
-          return [Number(compra), Number(venta)];
-        }
-      }
-    }
-  } catch (err) {
-    // ignore and try public fallback below
-  }
-
-  try {
-    const date = fecha ?? new Date().toLocaleDateString("es-PE");
-    const isoDate = (() => {
-      const match = date.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-      if (match) return `${match[3]}-${match[2]}-${match[1]}`;
-      const parsed = new Date(date);
-      if (!Number.isNaN(parsed.getTime())) {
-        return parsed.toISOString().slice(0, 10);
-      }
-      return new Date().toISOString().slice(0, 10);
-    })();
-
-    const resp = await fetch(`https://api.apis.net.pe/v1/tipo-cambio-sunat?fecha=${encodeURIComponent(isoDate)}`, {
-      headers: { Accept: "application/json" },
-    });
-    if (!resp.ok) return null;
-
-    const data = await resp.json();
-    const compra = Number(data.compra ?? data.tipo_cambio_compra ?? data.buy ?? 0);
-    const venta = Number(data.venta ?? data.tipo_cambio_venta ?? data.sell ?? 0);
-    if (Number.isFinite(compra) && compra > 0 && Number.isFinite(venta) && venta > 0) {
-      return [Number(compra), Number(venta)];
-    }
-
-    return null;
-  } catch (err) {
-    return null;
   }
 }
 

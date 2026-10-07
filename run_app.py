@@ -125,6 +125,7 @@ def main():
 
     # Environment for frontend: ensure npm in PATH
     env = os.environ.copy()
+    env.setdefault("VITE_API_URL", f"http://127.0.0.1:{backend_port}")
 
     backend = ManagedProcess(uvicorn_cmd, cwd=str(backend_dir), env=env, name="backend")
     frontend = ManagedProcess(npm_cmd, cwd=str(project_root), env=env, name="frontend")
