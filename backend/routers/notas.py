@@ -6,32 +6,32 @@ from fastapi import APIRouter, HTTPException, Query, Header, status
 
 from legacy_adapter import (
     is_legacy_source_enabled,
-    list_boletas_legacy,
-    get_boleta_legacy,
+    list_notas_legacy,
+    get_nota_legacy,
     _filter_active_company,
 )
 
 logger = logging.getLogger(__name__)
-router = APIRouter(prefix="/boletas", tags=["Boletas"])
+router = APIRouter(prefix="/notas", tags=["Notas de Crédito"])
 
 
-@router.get("", summary="Listar Boletas")
-def list_boletas(
+@router.get("", summary="Listar Notas de Crédito")
+def list_notas(
     anio: Optional[int] = Query(None, description="Año del documento"),
     mes: Optional[int] = Query(None, ge=1, le=12, description="Mes (1–12)"),
     id_locacion: Optional[int] = Query(None, description="ID de la oficina/almacén"),
-    tip_fac: Optional[str] = Query(None, description="Tipo de factura / boleta (1=Crédito, 2=Contado)"),
+    id_serie_doc: Optional[int] = Query(None, description="ID serie"),
     id_cliente: Optional[int] = Query(None, description="ID del cliente"),
     estado: Optional[str] = Query(None, description="Estado: GN | AP | CR | AN | IM"),
     num_doc: Optional[int] = Query(None, description="Número de documento"),
-    search: Optional[str] = Query(None, description="Búsqueda por texto"),
+    search: Optional[str] = Query(None, description="Búsqueda por texto (número o cliente)"),
     skip: int = 0,
     limit: int = 100,
     x_sigecoom_codemp: Optional[str] = Header(None, alias="X-Sigecoom-CodEmp"),
     x_sigecoom_empresas: Optional[str] = Header(None, alias="X-Sigecoom-Empresas"),
 ):
     """
-    Listar Boletas: equivalente a `BoletaService.Filtrar(...)` en SIGECOM VB.NET.
+    Listar Notas de Crédito: equivalente a `NotaCreditoService.Filtrar(...)` en SIGECOM VB.NET.
     """
     allowed_codes = []
     if x_sigecoom_empresas:
@@ -44,11 +44,11 @@ def list_boletas(
 
     if is_legacy_source_enabled():
         try:
-            items = list_boletas_legacy(
+            items = list_notas_legacy(
                 anio=anio,
                 mes=mes,
                 id_locacion=id_locacion,
-                tip_fac=tip_fac,
+                id_serie_doc=id_serie_doc,
                 id_cliente=id_cliente,
                 estado=estado,
                 num_doc=num_doc,
@@ -60,7 +60,7 @@ def list_boletas(
             items = _filter_active_company(items, x_sigecoom_codemp)
             return items
         except Exception as exc:
-            logger.error(f"Failed to fetch boletas from legacy adapter: {exc}")
+            logger.error(f"Failed to fetch notas from legacy adapter: {exc}")
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail=f"SIGECOM legacy adapter unavailable: {type(exc).__name__}. "
@@ -70,17 +70,17 @@ def list_boletas(
     return []
 
 
-@router.get("/{boleta_id}", summary="Obtener Boleta por ID")
-def get_boleta(boleta_id: str):
-    """Fetch a single boleta from the legacy SIGECOM adapter if enabled."""
+@router.get("/{nota_id}", summary="Obtener Nota por ID")
+def get_nota(nota_id: str):
+    """Fetch single nota from legacy adapter."""
     if is_legacy_source_enabled():
         try:
-            return get_boleta_legacy(boleta_id)
+            return get_nota_legacy(nota_id)
         except Exception as exc:
-            logger.exception("Failed to fetch boleta %s from legacy adapter", boleta_id)
+            logger.exception("Failed to fetch nota %s from legacy adapter", nota_id)
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail=f"Legacy adapter unavailable: {type(exc).__name__}",
             ) from exc
 
-    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Boleta detail lookup is not available in local fallback mode.")
+    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Nota detail lookup is not available in local fallback mode.")

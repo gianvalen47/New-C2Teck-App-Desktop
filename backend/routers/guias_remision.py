@@ -25,6 +25,7 @@ from sqlalchemy import or_
 
 from config import SessionLocal, SIGECOM_DATA_SOURCE
 from legacy_adapter import (
+    _filter_active_company,
     get_guia_legacy,
     is_legacy_source_enabled,
     list_guias_legacy,
@@ -95,57 +96,6 @@ def _company_to_locaciones(company_code: Optional[str]) -> List[int]:
         "87": [87],
     }
     return mapping.get(normalized, [])
-
-
-def _filter_active_company(items: List[dict], company_code: Optional[str]) -> List[dict]:
-    """Filter items by active company code.
-
-    `company_code` is expected to come from a request header `X-Sigecoom-CodEmp`
-    (preferred) or fall back to `SIGECOM_COD_EMP` when the header is not present.
-
-    IMPORTANT: unknown company codes must not collapse the dataset to empty. When
-    the legacy mapping does not know this company, we must preserve rows unless the
-    payload itself contains an explicit company match that disagrees.
-    """
-    if not company_code:
-        company_code = os.getenv("SIGECOM_COD_EMP", "08").strip() or None
-    if not company_code:
-        return items
-
-    env_default = (os.getenv("SIGECOM_COD_EMP", "08") or "08").strip()
-    locaciones = _company_to_locaciones(company_code)
-    allow_missing_metadata = str(company_code).strip() == env_default
-
-    def matches(item: dict) -> bool:
-        if not isinstance(item, dict):
-            return False
-
-        # If an explicit company code exists in the payload, trust it over the
-        # legacy location fallback. This keeps filters precise for real rows.
-        for key in ("CodEmp", "cod_emp", "CodEmpresa", "cod_empresa", "Empresa", "empresa"):
-            if key in item:
-                value = item.get(key)
-                if value is None:
-                    return False
-                return str(value).strip() == str(company_code).strip()
-
-        # Prefer the legacy `id_locacion` field when a known mapping exists.
-        for key in ("id_locacion", "IdLocacion"):
-            if key in item and item.get(key) is not None:
-                try:
-                    val = int(str(item.get(key)).strip())
-                    if locaciones:
-                        return val in locaciones
-                    return True
-                except Exception:
-                    pass
-
-        # Unknown company codes are a valid state; if we cannot map the company to
-        # a legacy location, do not empty the result set just because the code is
-        # new or not in the old compatibility table.
-        return allow_missing_metadata or not locaciones
-
-    return [item for item in items if matches(item)]
 
 
 # ---------------------------------------------------------------------------

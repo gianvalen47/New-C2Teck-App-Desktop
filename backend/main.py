@@ -25,7 +25,7 @@ from routers.caja_chica import router as caja_chica_router
 from routers.guias_remision import router as guias_remision_router
 from routers.guias_devolucion import router as guias_devolucion_router
 from routers.admin import router as admin_router
-from routers import productos, proveedores, facturas, ordenes_compra, boletas, sunat, seguridad
+from routers import productos, proveedores, facturas, ordenes_compra, boletas, sunat, seguridad, notas, resumen_boletas
 from models import ClientModel, GuiaRemisionModel, GuiaRemisionDetModel
 from legacy_adapter import is_legacy_source_enabled, legacy_health
 
@@ -110,6 +110,12 @@ app.include_router(proveedores.router, prefix=API_V1_STR)
 # Facturas (from frmFactura.vb)
 app.include_router(facturas.router, prefix=API_V1_STR)
 
+# Notas de Crédito (from frmNotasCredito.vb)
+app.include_router(notas.router, prefix=API_V1_STR)
+
+# Resumen de Boletas (from frmBoleta_BoletaElectronica_Resumen.vb)
+app.include_router(resumen_boletas.router, prefix=API_V1_STR)
+
 # Órdenes de Compra (from frmComOrdenCompra.vb)
 app.include_router(ordenes_compra.router, prefix=API_V1_STR)
 
@@ -166,35 +172,6 @@ def root():
         "docs": "/docs",
         "redoc": "/redoc",
         "openapi": "/openapi.json",
-    }
-
-
-
-# Include routers with API prefix
-app.include_router(clients.router, prefix=API_V1_STR)
-app.include_router(sales.router, prefix=API_V1_STR)
-app.include_router(inventory.router, prefix=API_V1_STR)
-app.include_router(locations_router, prefix=API_V1_STR)
-app.include_router(journals_router, prefix=API_V1_STR)
-app.include_router(banking_router, prefix=API_V1_STR)
-app.include_router(purchases_router, prefix=API_V1_STR)
-app.include_router(caja_chica_router, prefix=API_V1_STR)
-app.include_router(guias_remision_router, prefix=API_V1_STR)
-
-
-# ============================================================================
-# ROOT ENDPOINT
-# ============================================================================
-
-@app.get("/", tags=["Root"])
-def root():
-    """Root endpoint"""
-    return {
-        "message": "Welcome to SIGECOM Backend API",
-        "version": PROJECT_VERSION,
-        "docs": "/docs",
-        "api_prefix": API_V1_STR,
-        "timestamp": datetime.now().isoformat()
     }
 
 

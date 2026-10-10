@@ -570,10 +570,10 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       title: "Precios",
       items: [
         { icon: Tag, label: "Precios Cliente" },
-        { icon: Percent, label: "Precio Oferta" },
-        { icon: Factory, label: "Factores Rubros" },
         { icon: Layers, label: "Precio Lista" },
+        { icon: Percent, label: "Precio Oferta" },
         { icon: DollarSign, label: "Precio Fabricantes" },
+        { icon: Factory, label: "Factores Rubros" },
       ],
     },
     {
@@ -586,18 +586,18 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
             { icon: FileCheck, label: "Resumen Registro" },
           ]},
         ] },
-        { icon: FileCheck, label: "Acumulada" },
-        { icon: FileSearch, label: "Cotizaciones" },
-        { icon: Users, label: "Mensuales x Cliente" },
-        { icon: Receipt, label: "Reclamos" },
-        { icon: Package, label: "Consignaciones" },
-        { icon: Wallet, label: "Presupuesto Venta" },
         { icon: FileEdit, label: "Detalle" },
+        { icon: FileCheck, label: "Acumulada" },
         { icon: ScrollText, label: "G/R Pendiente" },
+        { icon: FileSearch, label: "Cotizaciones" },
         { icon: HandCoins, label: "Vale Requisición" },
+        { icon: Users, label: "Mensuales x Cliente" },
         { icon: Percent, label: "Detalle Descuento" },
+        { icon: Receipt, label: "Reclamos" },
         { icon: Boxes, label: "Órdenes Compra" },
+        { icon: Package, label: "Consignaciones" },
         { icon: Truck, label: "Guías Remisión" },
+        { icon: Wallet, label: "Presupuesto Venta" },
         { icon: Coins, label: "Comisiones" },
       ],
     },
@@ -652,20 +652,20 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       title: "Indicadores",
       items: [
         { icon: Calendar, label: "Calendario" },
-        { icon: LayoutGrid, label: "Tablero" },
         { icon: RefreshCw, label: "Procesar Cobertura" },
+        { icon: LayoutGrid, label: "Tablero" },
       ],
     },
     {
       title: "Reportes",
       items: [
         { icon: Archive, label: "Inventario" },
-        { icon: ArrowLeftRight, label: "Movimientos" },
-        { icon: FileText, label: "Documentos" },
-        { icon: FileMinus, label: "Sin Movimiento" },
         { icon: ClipboardCheck, label: "Toma de Inventario" },
+        { icon: ArrowLeftRight, label: "Movimientos" },
         { icon: HandCoins, label: "Vale Materiales" },
+        { icon: FileText, label: "Documentos" },
         { icon: PackageCheck, label: "Inv. Perm. Valorizado" },
+        { icon: FileMinus, label: "Sin Movimiento" },
         { icon: ArrowRightLeft, label: "Transferencias" },
       ],
     },
@@ -722,10 +722,10 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       items: [
         { icon: HandCoins, label: "Cuentas Corrientes" },
         { icon: BookText, label: "Diario de Pagos" },
-        { icon: BadgeCheck, label: "Letras Aceptadas" },
         { icon: FileText, label: "Documentos Emitidos" },
-        { icon: FileSpreadsheet, label: "Planillas" },
+        { icon: BadgeCheck, label: "Letras Aceptadas" },
         { icon: FileEdit, label: "Notas Debito/Credito" },
+        { icon: FileSpreadsheet, label: "Planillas" },
         { icon: UserSearch, label: "Visita Cobrador" },
         { icon: FileClock, label: "Vencimientos", dropdown: true, menu: [
           { title: "Vencimientos", items: [
@@ -1111,8 +1111,8 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       title: "Mantenimiento",
       items: [
         { icon: Smartphone, label: "Modelos" },
-        { icon: Signal, label: "Planes" },
         { icon: Phone, label: "Equipos" },
+        { icon: Signal, label: "Planes" },
       ],
     },
     {
@@ -1128,10 +1128,10 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       title: "Oportunidades",
       items: [
         { icon: Handshake, label: "Oportunidad Negocio" },
-        { icon: IdCard, label: "Tarjeta Cliente" },
-        { icon: Percent, label: "Cuota Vendedor" },
         { icon: AlertTriangle, label: "Ocurrencias" },
+        { icon: IdCard, label: "Tarjeta Cliente" },
         { icon: MapPin, label: "Visita Clientes" },
+        { icon: Percent, label: "Cuota Vendedor" },
       ],
     },
     {
@@ -1201,13 +1201,13 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       items: [
         { icon: BookOpen, label: "Cuenta Contable" },
         { icon: Landmark, label: "Cuentas Destino" },
-        { icon: FileSpreadsheet, label: "Rubro Planilla" },
-        { icon: FileBarChart, label: "Rubro Planilla Ctas" },
       ],
     },
     {
       title: "Personal",
       items: [
+        { icon: FileSpreadsheet, label: "Rubro Planilla" },
+        { icon: FileBarChart, label: "Rubro Planilla Ctas" },
         { icon: Clock, label: "Horarios" },
         { icon: CalendarCheck, label: "Feriados" },
         { icon: PiggyBank, label: "AFP" },
@@ -1243,12 +1243,12 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       items: [
         { icon: Users, label: "Usuarios" },
         { icon: UserCog, label: "Perfiles" },
+        { icon: Circle, label: "Sesiones" },
       ],
     },
     {
       title: "Usuarios",
       items: [
-        { icon: Circle, label: "Sesiones" },
         { icon: ClipboardCheck, label: "Atender Solicitud" },
       ],
     },

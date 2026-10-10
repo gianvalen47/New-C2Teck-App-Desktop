@@ -1066,7 +1066,7 @@ function InfoCambios() {
 const REGISTRY: Record<string, (label: string) => ReactNode> = {
   // Ventas > Documentos
   "Guía Remisión": () => <GuiaRemision />,
-  "Guías Remisión": () => <GuiaRemision />,
+  "Guías Remisión": () => <ReporteGuiasRemisionList />,
   "Guia Remision": () => <GuiaRemision />,
   "Nueva Guía": () => <NuevaGuia />,
   "Factura": () => <Factura />,

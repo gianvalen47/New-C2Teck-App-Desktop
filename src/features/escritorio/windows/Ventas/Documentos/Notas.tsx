@@ -1,4 +1,4 @@
-﻿import { createPortal } from "react-dom";
+import { createPortal } from "react-dom";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   ArrowRight,
@@ -524,8 +524,60 @@ export function NotaForm({ nota, idNota, idLocacion = 1, onClose, onSaved, detai
   );
 }
 
+function notaNumero(row: any): string {
+  const num = row.num_doc ?? row.number;
+  if (num === null || num === undefined || num === "") return "";
+  return String(num);
+}
+
+function notaFecha(row: any): string {
+  const f = row.fec_doc ?? row.date;
+  if (!f) return "";
+  const s = String(f);
+  if (s.includes("T")) {
+    const [d] = s.split("T");
+    const [yy, mm, dd] = d.split("-");
+    if (yy && mm && dd) return `${dd}/${mm}/${yy}`;
+  }
+  if (s.includes("-")) {
+    const [yy, mm, dd] = s.slice(0, 10).split("-");
+    if (yy && mm && dd) return `${dd}/${mm}/${yy}`;
+  }
+  return s;
+}
+
+function notaCliente(row: any): string {
+  return String(row.cliente_nombre ?? row.cliente?.nombre ?? row.client_id ?? "").trim();
+}
+
+function notaMoneda(row: any): string {
+  const m = String(row.cod_mon ?? row.moneda ?? "").trim().toUpperCase();
+  if (m === "US" || m === "USD" || m.includes("DOL")) return "US";
+  if (m === "NS" || m === "PEN" || m.includes("SOL")) return "NS";
+  return m || "NS";
+}
+
+function notaTotal(row: any): number {
+  const t = Number(row.tot_neto ?? row.total ?? 0);
+  return Number.isFinite(t) ? t : 0;
+}
+
+function notaEst(row: any): string {
+  const e = String(row.estado ?? row.status ?? "").trim().toUpperCase();
+  if (e === "GENERADO") return "GN";
+  if (e === "APROBADO") return "AP";
+  if (e === "CREDITOS") return "CR";
+  if (e === "ANULADO") return "AN";
+  if (e === "IMPRESO") return "IM";
+  return e.slice(0, 2);
+}
+
+function notaEstadoSunat(row: any): string {
+  return String(row.estado_sunat ?? "PENDIENTE").trim().toUpperCase();
+}
+
 export function NotaVentaList() {
-  const [rows, setRows] = useState<FacturaRow[]>([]);
+  const [rows, setRows] = useState<any[]>([]);
   const [searched, setSearched] = useState(false);
   const [locations, setLocations] = useState<Location[]>([]);
   const [loading, setLoading] = useState(false);
@@ -539,32 +591,44 @@ export function NotaVentaList() {
   });
   const [estado, setEstado] = useState("");
   const [numDoc, setNumDoc] = useState("");
-  const [cliente, setCliente] = useState("");
+  const [serieFilter, setSerieFilter] = useState("");
   const [officeFilter, setOfficeFilter] = useState("");
   const [warehouseFilter, setWarehouseFilter] = useState("");
-  const [selected, setSelected] = useState<FacturaRow | null>(null);
+  const [clientFilterLabel, setClientFilterLabel] = useState("(Todos)");
+  const [clientFilterId, setClientFilterId] = useState("");
+  const [selected, setSelected] = useState<any | null>(null);
   const [formWindows, setFormWindows] = useState<NotaFormWindow[]>([]);
+  const [sortBy, setSortBy] = useState<{ col: string; asc: boolean }>({ col: "num_doc", asc: false });
   const zRef = useRef(9990);
   const cascadeRef = useRef(0);
 
   const load = useCallback(async () => {
     setLoading(true);
+    setSearched(true);
     try {
       const data = await fetchNotas({
         anio: anio ? Number(anio) : undefined,
         mes: mes ? Number(mes) : undefined,
-        status: estado || undefined,
-        number: numDoc ? Number(numDoc) : undefined,
-        search: cliente || undefined,
+        estado: estado || undefined,
+        cod_serie: serieFilter || undefined,
+        num_doc: numDoc ? Number(numDoc) : undefined,
+        id_cliente: clientFilterId ? Number(clientFilterId) : undefined,
         limit: 500,
       });
       setRows(data);
+      if (data.length > 0) {
+        setSelected(data[0]);
+      } else {
+        setSelected(null);
+      }
     } catch (e: any) {
       toast.error(e.message ?? "Error al cargar notas");
+      setRows([]);
+      setSelected(null);
     } finally {
       setLoading(false);
     }
-  }, [anio, mes, estado, numDoc, cliente]);
+  }, [anio, mes, estado, serieFilter, numDoc, clientFilterId]);
 
   useEffect(() => {
     load();
@@ -623,7 +687,7 @@ export function NotaVentaList() {
     openFormWindow(undefined);
   };
 
-  const handleMostrar = (row: FacturaRow) => {
+  const handleMostrar = (row: any) => {
     setSelected(row);
     openFormWindow(row.id);
   };
@@ -641,29 +705,23 @@ export function NotaVentaList() {
     setFormWindows((prev) => prev.filter((w) => w.id !== id));
   }, []);
 
-  useEffect(() => {
-    const onResize = () => {
-      const maxW = window.innerWidth;
-      const maxH = Math.max(320, window.innerHeight - 56);
-      setFormWindows((prev) =>
-        prev.map((w) => {
-          const nx = Math.max(0, Math.min(w.x, Math.max(0, maxW - w.w)));
-          const ny = Math.max(0, Math.min(w.y, Math.max(0, maxH - w.h)));
-          return nx === w.x && ny === w.y ? w : { ...w, x: nx, y: ny };
-        })
-      );
-    };
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
+  const toggleSortBy = (col: string) => {
+    setSortBy((prev) => ({
+      col,
+      asc: prev.col === col ? !prev.asc : true,
+    }));
+  };
 
-  const [sortBy, setSortBy] = useState<{ col: string; asc: boolean }>({ col: "number", asc: false });
   const rowsView = useMemo(() => {
     const arr = [...rows];
     const col = sortBy.col;
     arr.sort((a: any, b: any) => {
-      const va = a[col];
-      const vb = b[col];
+      let va = a[col];
+      let vb = b[col];
+      if (col === "total" || col === "tot_neto") {
+        va = notaTotal(a);
+        vb = notaTotal(b);
+      }
       if (va == null && vb == null) return 0;
       if (va == null) return sortBy.asc ? -1 : 1;
       if (vb == null) return sortBy.asc ? 1 : -1;
@@ -674,60 +732,13 @@ export function NotaVentaList() {
   }, [rows, sortBy]);
 
   const findNotaForWindow = useCallback(
-    (idNota?: string) => (idNota ? rows.find((r) => r.id === idNota) : undefined),
+    (idNota?: string) => (idNota ? rows.find((r) => String(r.id) === String(idNota)) : undefined),
     [rows]
   );
 
-  const formWindowElements = formWindows.map((w) => (
-    <DraggableFormWindow
-      key={w.id}
-      win={w}
-      onFocus={() => focusFormWindow(w.id)}
-      onMove={moveFormWindow}
-      onClose={() => closeFormWindow(w.id)}
-    >
-      <NotaForm
-        nota={findNotaForWindow(w.idNota)}
-        idNota={w.idNota}
-        onClose={() => closeFormWindow(w.id)}
-        onSaved={() => {
-          closeFormWindow(w.id);
-          load();
-        }}
-      />
-    </DraggableFormWindow>
-  ));
-
-  const rowsViewElements = rowsView.map((r, i) => {
-    const isSel = selected?.id === r.id;
-    const estadoText = r.status === "draft" && !isSel ? "" : etiquetaEstado(r.status);
-    return (
-      <tr
-        key={r.id}
-        onClick={() => setSelected(r)}
-        onDoubleClick={() => handleMostrar(r)}
-        className={[
-          "cursor-pointer transition-colors",
-          i % 2 === 0 ? "bg-white" : "bg-[#F6F9FC]",
-          isSel ? "!bg-[#D6E4F4] font-medium" : "hover:bg-[#E8F0F8]/70",
-        ].join(" ")}
-      >
-        <td className="px-3 py-2 border-r border-slate-100 font-mono font-medium">{`${r.series || "N001"}-${String(r.number || "").padStart(6, "0")}`}</td>
-        <td className="px-3 py-2 border-r border-slate-100 whitespace-nowrap">{r.date ? new Date(r.date).toLocaleDateString("es-PE") : ""}</td>
-        <td className="px-3 py-2 border-r border-slate-100 max-w-[200px] truncate">{r.client_id || "(Sin cliente)"}</td>
-        <td className="px-3 py-2 border-r border-slate-100">{r.extra_data?.moneda || "PEN"}</td>
-        <td className="px-3 py-2 border-r border-slate-100 font-mono text-right">{r.total.toFixed(2)}</td>
-        <td className="px-3 py-2 border-r border-slate-100 font-semibold">{estadoText}</td>
-        <td className="px-3 py-2 border-r border-slate-100">{estadoSunat(r)}</td>
-        <td className="px-3 py-2 border-r border-slate-100">{String(r.extra_data?.tipo_nota || "")}</td>
-        <td className="px-3 py-2 border-r border-slate-100 max-w-[200px] truncate">{String(r.extra_data?.nota || "")}</td>
-        <td className="px-3 py-2 border-r border-slate-100 font-mono">{String(r.extra_data?.num_orden || "")}</td>
-      </tr>
-    );
-  });
-
   return (
     <div className="relative h-full min-h-0 flex flex-col overflow-hidden bg-[#F3F6FA]">
+      {/* Toolbar fiel a frmNotasCredito.vb */}
       <div className="flex items-center gap-1 px-2 py-1.5 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] border-b border-slate-400/50 shrink-0 overflow-x-auto">
         <button className={iconBtn} title="Imprimir Documento"><Printer className="h-4 w-4" /></button>
         {tbSep}
@@ -745,7 +756,7 @@ export function NotaVentaList() {
           <XCircle className="h-4 w-4" />
         </button>
         {tbSep}
-        <button className={iconBtn} title="Enviar Factura Electrónica" disabled={!selected}>
+        <button className={iconBtn} title="Enviar Nota Electrónica" disabled={!selected}>
           <Send className="h-4 w-4" />
         </button>
         {tbSep}
@@ -774,99 +785,266 @@ export function NotaVentaList() {
         </button>
       </div>
 
-          <div className="flex flex-wrap items-end gap-2 px-2 py-1.5 bg-[#F0F4F8] border-b border-slate-300">
-            <Field label="Año" className="w-14">
-              <input className={`${inp} font-mono`} value={anio} onChange={(e) => setAnio(e.target.value)} />
-            </Field>
-            <Field label="Mes" className="w-24">
-              <select className={inp} value={mes} onChange={(e) => setMes(e.target.value)}>
-                <option value="">Todos</option>
-                {MESES.map((m, i) => (
-                  <option key={m} value={String(i + 1)}>{m}</option>
-                ))}
-              </select>
-            </Field>
-            <Field label="Oficina" className="w-28">
-              <select className={inp} value={officeFilter} onChange={(e) => setOfficeFilter(e.target.value)}>
-                <option value="">(Todas)</option>
-                {officeOptions.map((code) => (
-                  <option key={code} value={code}>{code}</option>
-                ))}
-              </select>
-            </Field>
-            <Field label="Almacén" className="w-32">
-              <select className={inp} value={warehouseFilter} onChange={(e) => setWarehouseFilter(e.target.value)}>
-                <option value="">(Todos)</option>
-                {warehouseOptions.map((warehouse) => (
-                  <option key={warehouse} value={warehouse}>{warehouse}</option>
-                ))}
-              </select>
-            </Field>
-            <Field label="Cliente" className="w-52">
-              <div className="flex gap-1">
-                <input className={inp} value={cliente} onChange={(e) => setCliente(e.target.value)} placeholder="(Todos)" />
-                <button className={btn} type="button" title="Buscar cliente">
-                  <Search className="h-3 w-3" />
-                </button>
-              </div>
-            </Field>
-            <Field label="Estado" className="w-28">
-              <select className={inp} value={estado} onChange={(e) => setEstado(e.target.value)}>
-                <option value="">(Todos)</option>
-                <option value="draft">GENERADO</option>
-                <option value="issued">APROBADO</option>
-                <option value="sent">ENVIADO</option>
-                <option value="cancelled">ANULADO</option>
-              </select>
-            </Field>
-            <Field label="Número" className="w-20">
-              <input className={`${inp} font-mono`} value={numDoc} onChange={(e) => setNumDoc(e.target.value)} />
-            </Field>
-            <button className={btnPrimary} onClick={() => void load()} disabled={loading}>
-              <Search className="h-3.5 w-3.5" />{loading ? "Buscando…" : "Buscar"}
+      {/* Barra de Filtros fiel a frmNotasCredito.vb */}
+      <div className="flex items-center gap-1.5 flex-wrap px-2 py-1.5 bg-[#F0F4F8] border-b border-slate-300 text-[11px]">
+        {/* Año */}
+        <div className="flex flex-col gap-0.5">
+          <span className="text-[10px] text-slate-600 font-medium">Año</span>
+          <input className={`${inp} w-16 font-mono text-center`} value={anio} onChange={(e) => setAnio(e.target.value)} />
+        </div>
+        {/* Mes */}
+        <div className="flex flex-col gap-0.5 w-[110px]">
+          <span className="text-[10px] text-slate-600 font-medium">Mes</span>
+          <select className={inp} value={mes} onChange={(e) => setMes(e.target.value)}>
+            <option value="">(Todos)</option>
+            {MESES.map((m, i) => (
+              <option key={m} value={String(i + 1)}>{m}</option>
+            ))}
+          </select>
+        </div>
+        {/* Oficina */}
+        <div className="flex flex-col gap-0.5 w-[110px]">
+          <span className="text-[10px] text-slate-600 font-medium">Oficina</span>
+          <select className={inp} value={officeFilter} onChange={(e) => setOfficeFilter(e.target.value)}>
+            <option value="">(Todas)</option>
+            {officeOptions.map((code) => (
+              <option key={code} value={code}>{code}</option>
+            ))}
+          </select>
+        </div>
+        {/* Almacén */}
+        <div className="flex flex-col gap-0.5 w-[120px]">
+          <span className="text-[10px] text-slate-600 font-medium">Almacén</span>
+          <select className={inp} value={warehouseFilter} onChange={(e) => setWarehouseFilter(e.target.value)}>
+            <option value="">(Todos)</option>
+            {warehouseOptions.map((w) => (
+              <option key={w} value={w}>{w}</option>
+            ))}
+          </select>
+        </div>
+        {/* Serie */}
+        <div className="flex flex-col gap-0.5 w-[85px]">
+          <span className="text-[10px] text-slate-600 font-medium">Serie</span>
+          <select className={inp} value={serieFilter} onChange={(e) => setSerieFilter(e.target.value)}>
+            <option value="">(Todos)</option>
+            <option value="FN01">FN01</option>
+            <option value="BN01">BN01</option>
+            <option value="FC01">FC01</option>
+            <option value="BC01">BC01</option>
+          </select>
+        </div>
+        {/* Cliente */}
+        <div className="flex flex-col gap-0.5 w-[180px]">
+          <span className="text-[10px] text-slate-600 font-medium">Cliente</span>
+          <div className="flex gap-1">
+            <input className={inp} value={clientFilterLabel} placeholder="(Todos)" readOnly />
+            <button
+              type="button"
+              className={actionBtn}
+              title="Limpiar Cliente"
+              onClick={() => {
+                setClientFilterId("");
+                setClientFilterLabel("(Todos)");
+              }}
+            >
+              <X className="h-3.5 w-3.5 text-amber-700" />
             </button>
           </div>
+        </div>
+        {/* Estado */}
+        <div className="flex flex-col gap-0.5 w-[100px]">
+          <span className="text-[10px] text-slate-600 font-medium">Estado</span>
+          <select className={inp} value={estado} onChange={(e) => setEstado(e.target.value)}>
+            <option value="">(Todos)</option>
+            <option value="GN">GENERADO</option>
+            <option value="AP">APROBADO</option>
+            <option value="CR">CREDITOS</option>
+            <option value="AN">ANULADO</option>
+            <option value="IM">IMPRESO</option>
+          </select>
+        </div>
+        {/* Número */}
+        <div className="flex flex-col gap-0.5 w-[80px]">
+          <span className="text-[10px] text-slate-600 font-medium">Número</span>
+          <input className={`${inp} font-mono`} value={numDoc} onChange={(e) => setNumDoc(e.target.value)} placeholder="0" />
+        </div>
+        {/* Botón Buscar */}
+        <div className="flex flex-col justify-end">
+          <button className={btnPrimary} onClick={() => void load()} disabled={loading}>
+            <Search className="h-3.5 w-3.5" />
+            {loading ? "Buscando..." : "Buscar"}
+          </button>
+        </div>
+      </div>
 
-          <div className="flex-1 min-h-0 overflow-auto p-1.5">
-            <div className="border border-slate-400/60 bg-white rounded-sm h-full overflow-auto">
-              <div className="overflow-auto flex-1">
-              <table className="w-full text-[11.5px]">
-                <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0 z-10">
-                  <tr>
-                    <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]">Serie</th>
-                    <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev?.col === 'fec_doc' ? { col: 'fec_doc', asc: !prev.asc } : { col: 'fec_doc', asc: true })}>Fecha {sortBy?.col === 'fec_doc' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
-                    <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev?.col === 'cliente' ? { col: 'cliente', asc: !prev.asc } : { col: 'cliente', asc: true })}>Cliente {sortBy?.col === 'cliente' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
-                    <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev?.col === 'cod_mon' ? { col: 'cod_mon', asc: !prev.asc } : { col: 'cod_mon', asc: true })}>Mon. {sortBy?.col === 'cod_mon' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
-                    <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev?.col === 'tot_venta' ? { col: 'tot_venta', asc: !prev.asc } : { col: 'tot_venta', asc: false })}>Total {sortBy?.col === 'tot_venta' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
-                    <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev?.col === 'estado' ? { col: 'estado', asc: !prev.asc } : { col: 'estado', asc: true })}>EST {sortBy?.col === 'estado' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
-                    <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev?.col === 'estado_sunat' ? { col: 'estado_sunat', asc: !prev.asc } : { col: 'estado_sunat', asc: true })}>Estados Sunat {sortBy?.col === 'estado_sunat' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
-                    <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]">Tipo</th>
-                    <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev?.col === 'observacion' ? { col: 'observacion', asc: !prev.asc } : { col: 'observacion', asc: true })}>Nota {sortBy?.col === 'observacion' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
-                    <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]">Observacion...</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
+      {/* Grid fiel a dgvDatos de frmNotasCredito.vb */}
+      <div className="flex-1 min-h-0 overflow-auto p-1.5">
+        <div className="border border-slate-400/60 bg-white rounded-sm h-full overflow-auto">
+          <div className="overflow-auto flex-1 h-full">
+            <table className="w-full text-[11.5px] border-collapse">
+              <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0 z-10 select-none shadow-xs">
+                <tr>
+                  <th className="w-6 px-1 py-1 text-center border-r border-slate-300 font-semibold"></th>
+                  <th className="w-[55px] px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy("cod_serie")}>
+                    Serie {sortBy.col === "cod_serie" ? (sortBy.asc ? "▲" : "▼") : ""}
+                  </th>
+                  <th className="w-[76px] px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy("num_doc")}>
+                    Número {sortBy.col === "num_doc" ? (sortBy.asc ? "▲" : "▼") : ""}
+                  </th>
+                  <th className="w-[98px] px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy("fec_doc")}>
+                    Fecha {sortBy.col === "fec_doc" ? (sortBy.asc ? "▲" : "▼") : ""}
+                  </th>
+                  <th className="px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy("cliente_nombre")}>
+                    Cliente {sortBy.col === "cliente_nombre" ? (sortBy.asc ? "▲" : "▼") : ""}
+                  </th>
+                  <th className="w-[45px] px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy("cod_mon")}>
+                    Mon. {sortBy.col === "cod_mon" ? (sortBy.asc ? "▲" : "▼") : ""}
+                  </th>
+                  <th className="w-[99px] px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy("tot_neto")}>
+                    Total {sortBy.col === "tot_neto" ? (sortBy.asc ? "▲" : "▼") : ""}
+                  </th>
+                  <th className="w-[35px] px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy("estado")}>
+                    Est. {sortBy.col === "estado" ? (sortBy.asc ? "▲" : "▼") : ""}
+                  </th>
+                  <th className="px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy("estado_sunat")}>
+                    Estado Sunat {sortBy.col === "estado_sunat" ? (sortBy.asc ? "▲" : "▼") : ""}
+                  </th>
+                  <th className="w-[26px] px-1 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy("contabilizado")}>
+                    C {sortBy.col === "contabilizado" ? (sortBy.asc ? "▲" : "▼") : ""}
+                  </th>
+                  <th className="w-[39px] px-1 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy("tiene_notas")}>
+                    Nota {sortBy.col === "tiene_notas" ? (sortBy.asc ? "▲" : "▼") : ""}
+                  </th>
+                  <th className="px-2 py-1 text-center border-r border-slate-300 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => toggleSortBy("observacion_sunat")}>
+                    ObservacionSunat {sortBy.col === "observacion_sunat" ? (sortBy.asc ? "▲" : "▼") : ""}
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200">
                 {rowsView.length === 0 ? (
                   <tr>
-                    <td colSpan={10} className="text-center py-12 text-slate-400 text-[12px]">
-                      {loading ? "Cargando..." : searched ? "Sin registros para los filtros seleccionados" : "Use los filtros y pulse Buscar"}
+                    <td colSpan={12} className="text-center py-8 text-slate-400 text-[11px]">
+                      {loading ? "Cargando notas de crédito..." : searched ? "Sin registros para los filtros seleccionados" : "Use los filtros y pulse Buscar"}
                     </td>
                   </tr>
                 ) : (
-                  rowsViewElements
+                  rowsView.map((r, i) => {
+                    const isSel = selected?.id === r.id;
+                    return (
+                      <tr
+                        key={r.id}
+                        onClick={() => setSelected(r)}
+                        onDoubleClick={() => handleMostrar(r)}
+                        className={[
+                          "cursor-pointer border-b border-slate-200 transition-colors",
+                          i % 2 === 0 ? "bg-white" : "bg-[#F6F9FC]",
+                          isSel ? "!bg-[#D6E4F4] outline outline-1 outline-[#3E5B7A] font-medium" : "hover:bg-[#E8F0F8]/70",
+                        ].join(" ")}
+                      >
+                        {/* Indicador flecha ▶ */}
+                        <td className="w-6 px-1 py-1 text-center border-r border-slate-200 text-[#2D5A88] text-[10px] select-none font-bold">
+                          {isSel ? "▶" : ""}
+                        </td>
+                        {/* Serie */}
+                        <td className="w-[55px] px-2 py-1 border-r border-slate-200 text-center font-mono font-medium text-slate-800">
+                          {r.cod_serie || r.series || "FN01"}
+                        </td>
+                        {/* Número */}
+                        <td className="w-[76px] px-2 py-1 border-r border-slate-200 font-mono text-center font-semibold text-slate-800">
+                          {notaNumero(r)}
+                        </td>
+                        {/* Fecha */}
+                        <td className="w-[98px] px-2 py-1 border-r border-slate-200 text-center whitespace-nowrap font-mono text-slate-700">
+                          {notaFecha(r)}
+                        </td>
+                        {/* Cliente */}
+                        <td className="px-2 py-1 border-r border-slate-200 max-w-[330px] truncate text-slate-800" title={notaCliente(r)}>
+                          {notaCliente(r)}
+                        </td>
+                        {/* Mon. */}
+                        <td className="w-[45px] px-2 py-1 border-r border-slate-200 text-center font-mono text-slate-700">
+                          {notaMoneda(r)}
+                        </td>
+                        {/* Total */}
+                        <td className="w-[99px] px-2 py-1 border-r border-slate-200 font-mono text-right font-semibold text-slate-800">
+                          {notaTotal(r).toFixed(2)}
+                        </td>
+                        {/* Est. */}
+                        <td className="w-[35px] px-2 py-1 border-r border-slate-200 text-center font-mono font-bold text-slate-800">
+                          {notaEst(r)}
+                        </td>
+                        {/* Estado Sunat */}
+                        <td className="px-2 py-1 border-r border-slate-200 text-center font-medium text-slate-700">
+                          {notaEstadoSunat(r)}
+                        </td>
+                        {/* C (Contabilizado) */}
+                        <td className="w-[26px] px-1 py-1 border-r border-slate-200 text-center">
+                          <input
+                            type="checkbox"
+                            checked={Boolean(r.contabilizado)}
+                            readOnly
+                            className="h-3.5 w-3.5 accent-blue-700 pointer-events-none rounded-sm border border-slate-400 bg-white"
+                            title={r.contabilizado ? "Contabilizado" : "No contabilizado"}
+                          />
+                        </td>
+                        {/* Nota (TieneNotas) */}
+                        <td className="w-[39px] px-1 py-1 border-r border-slate-200 text-center">
+                          <input
+                            type="checkbox"
+                            checked={Boolean(r.tiene_notas)}
+                            readOnly
+                            className="h-3.5 w-3.5 accent-blue-700 pointer-events-none rounded-sm border border-slate-400 bg-white"
+                            title={r.tiene_notas ? "Tiene nota" : "Sin nota"}
+                          />
+                        </td>
+                        {/* ObservacionSunat */}
+                        <td className="px-2 py-1 border-r border-slate-200 text-slate-700 truncate max-w-[200px]" title={r.observacion_sunat || r.observacion || ""}>
+                          {r.observacion_sunat || r.observacion || ""}
+                        </td>
+                      </tr>
+                    );
+                  })
                 )}
               </tbody>
-              </table>
-              </div>
-            </div>
+            </table>
           </div>
-
-      {/* Footer */}
-      <div className="shrink-0 border-t border-slate-400/50 bg-gradient-to-b from-[#D6DEE8] to-[#C0CCDB] px-3 py-0.5 text-[11px] text-slate-700 text-center font-medium flex items-center justify-center whitespace-nowrap overflow-hidden">
-        Registros : {rows.length}
+        </div>
       </div>
 
-      {formWindowElements}
+      {/* Footer fiel a sslTotal: "Registros : {count}" */}
+      <div className="shrink-0 border-t border-slate-400/50 bg-gradient-to-b from-[#D6DEE8] to-[#C0CCDB] px-3 py-0.5 text-[11px] text-slate-700 font-medium flex items-center justify-between whitespace-nowrap overflow-hidden">
+        <div>Registros : {rowsView.length}</div>
+        <div className="text-[10.5px] text-slate-500">
+          Total Selección: {selected ? `${notaMoneda(selected)} ${notaTotal(selected).toFixed(2)}` : "-"}
+        </div>
+      </div>
+
+      {formWindows.map((w) => (
+        <DraggableFormWindow
+          key={w.id}
+          win={w}
+          onFocus={() => focusFormWindow(w.id)}
+          onMove={moveFormWindow}
+          onClose={() => closeFormWindow(w.id)}
+        >
+          <NotaForm
+            nota={findNotaForWindow(w.idNota)}
+            idNota={w.idNota}
+            onClose={() => closeFormWindow(w.id)}
+            onSaved={() => {
+              closeFormWindow(w.id);
+              load();
+            }}
+          />
+        </DraggableFormWindow>
+      ))}
     </div>
   );
 }
+
+export function Notas() {
+  return <NotaVentaList />;
+}
+
+export default Notas;
+

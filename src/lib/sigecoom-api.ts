@@ -617,26 +617,108 @@ export type GuiaDevolucionDetalle = {
 };
 
 export async function fetchGuiasDevolucion(params: Record<string, any> = {}): Promise<GuiaDevolucionRow[]> {
-  const qs = new URLSearchParams()
-  Object.entries(params).forEach(([k, v]) => { if (v !== undefined && v !== null) qs.append(k, String(v)) })
-  const url = `${API_BASE_URL}${API_V1_PREFIX}/guias-devolucion${qs.toString() ? `?${qs.toString()}` : ''}`
-  const response = await fetch(url)
-  if (!response.ok) throw new Error('No se pudo cargar las guías de devolución desde el backend')
-  return response.json()
+  try {
+    if (params.id_locacion === undefined) {
+      params.id_locacion = inferIdLocacionFromSessionCompany();
+    }
+  } catch (_) {}
+
+  const qs = new URLSearchParams();
+  Object.entries(params).forEach(([k, v]) => {
+    if (v !== undefined && v !== null && v !== "") qs.append(k, String(v));
+  });
+  const url = `${API_BASE_URL}${API_V1_PREFIX}/guias-devolucion${qs.toString() ? `?${qs.toString()}` : ""}`;
+  const headers: Record<string, string> = {};
+  try {
+    const raw = localStorage.getItem("sigecoom_session");
+    if (raw) {
+      const sess = JSON.parse(raw);
+      const codigo = sess?.empresa_actual?.codigo;
+      if (codigo) headers["X-Sigecoom-CodEmp"] = String(codigo);
+      const empresas = sess?.empresas || sess?.assigned_companies || null;
+      if (Array.isArray(empresas) && empresas.length > 0) {
+        const codes = empresas
+          .map((e: { codigo?: string }) => (e && e.codigo ? String(e.codigo) : String(e)))
+          .filter(Boolean);
+        if (codes.length > 0) headers["X-Sigecoom-Empresas"] = codes.join(",");
+      }
+    }
+  } catch (_) {}
+
+  const response = await apiFetch(url, { headers });
+  const text = await response.text();
+  try {
+    const parsed = JSON.parse(text || "null");
+    if (!response.ok) throw new Error("No se pudo cargar las guías de devolución");
+    if (Array.isArray(parsed)) return parsed;
+    if (parsed && Array.isArray(parsed.items)) return parsed.items;
+    return [];
+  } catch (err) {
+    if (!response.ok) throw new Error("No se pudo cargar las guías de devolución");
+    return [];
+  }
 }
 
 export async function fetchGuiaDevolucionDetalles(guiaId: number): Promise<GuiaDevolucionDetalle[]> {
-  const url = `${API_BASE_URL}${API_V1_PREFIX}/guias-devolucion/${guiaId}/detalles`
-  const response = await fetch(url)
-  if (!response.ok) throw new Error('No se pudo cargar los detalles de la guía')
-  return response.json()
+  const url = `${API_BASE_URL}${API_V1_PREFIX}/guias-devolucion/${guiaId}/detalles`;
+  const response = await fetch(url);
+  if (!response.ok) throw new Error("No se pudo cargar los detalles de la guía");
+  return response.json();
 }
 
 export async function fetchGuiaDevolucion(guiaId: number): Promise<GuiaDevolucionRow> {
-  const url = `${API_BASE_URL}${API_V1_PREFIX}/guias-devolucion/${guiaId}`
-  const response = await fetch(url)
-  if (!response.ok) throw new Error('No se pudo cargar la guía de devolución')
-  return response.json()
+  const url = `${API_BASE_URL}${API_V1_PREFIX}/guias-devolucion/${guiaId}`;
+  const response = await fetch(url);
+  if (!response.ok) throw new Error("No se pudo cargar la guía de devolución");
+  return response.json();
+}
+
+export async function fetchResumenBoletas(params: {
+  anio?: number;
+  mes?: number;
+  id_resumen?: string;
+  search?: string;
+  skip?: number;
+  limit?: number;
+} = {}): Promise<ResumenBoletaRow[]> {
+  const qs = new URLSearchParams();
+  if (params.anio !== undefined) qs.set("anio", String(params.anio));
+  if (params.mes !== undefined) qs.set("mes", String(params.mes));
+  if (params.id_resumen) qs.set("id_resumen", params.id_resumen);
+  if (params.search) qs.set("search", params.search);
+  if (params.skip !== undefined) qs.set("skip", String(params.skip));
+  if (params.limit !== undefined) qs.set("limit", String(params.limit));
+
+  const url = `${API_BASE_URL}${API_V1_PREFIX}/resumen-boletas${qs.toString() ? `?${qs.toString()}` : ""}`;
+  const headers: Record<string, string> = {};
+  try {
+    const raw = localStorage.getItem("sigecoom_session");
+    if (raw) {
+      const sess = JSON.parse(raw);
+      const codigo = sess?.empresa_actual?.codigo;
+      if (codigo) headers["X-Sigecoom-CodEmp"] = String(codigo);
+      const empresas = sess?.empresas || sess?.assigned_companies || null;
+      if (Array.isArray(empresas) && empresas.length > 0) {
+        const codes = empresas
+          .map((e: { codigo?: string }) => (e && e.codigo ? String(e.codigo) : String(e)))
+          .filter(Boolean);
+        if (codes.length > 0) headers["X-Sigecoom-Empresas"] = codes.join(",");
+      }
+    }
+  } catch (_) {}
+
+  const response = await apiFetch(url, { headers });
+  const text = await response.text();
+  try {
+    const parsed = JSON.parse(text || "null");
+    if (!response.ok) throw new Error("No se pudo cargar resumen de boletas");
+    if (Array.isArray(parsed)) return parsed;
+    if (parsed && Array.isArray(parsed.items)) return parsed.items;
+    return [];
+  } catch (err) {
+    if (!response.ok) throw new Error("No se pudo cargar resumen de boletas");
+    return [];
+  }
 }
 
 export async function createSigecoomSale(data: {
@@ -860,33 +942,133 @@ export async function fetchFacturas(params: {
   }
 }
 
+export type BoletaRow = {
+  id?: string | number;
+  id_locacion?: number;
+  fec_doc?: string;
+  date?: string;
+  id_serie_doc?: number;
+  cod_serie?: string;
+  num_doc?: number | string;
+  number?: number | string;
+  id_cliente?: number;
+  cliente_nombre?: string;
+  cod_mon?: string;
+  tot_neto?: number;
+  total?: number;
+  tot_neto_sug?: number;
+  estado?: string;
+  status?: string;
+  estado_sunat?: string;
+  observacion?: string;
+  num_orden?: string;
+  tip_fac?: string;
+  contabilizado?: boolean;
+  tiene_notas?: boolean;
+};
+
+export type NotaRow = {
+  id?: string | number;
+  id_locacion?: number;
+  fec_doc?: string;
+  date?: string;
+  id_serie_doc?: number;
+  cod_serie?: string;
+  num_doc?: number | string;
+  number?: number | string;
+  id_cliente?: number;
+  cliente_nombre?: string;
+  cod_mon?: string;
+  tot_neto?: number;
+  total?: number;
+  estado?: string;
+  status?: string;
+  estado_sunat?: string;
+  observacion?: string;
+  observacion_sunat?: string;
+  contabilizado?: boolean;
+  tiene_notas?: boolean;
+};
+
+export type ResumenBoletaRow = {
+  id?: string;
+  id_resumen?: string;
+  cod_emp?: string;
+  nombre_xml?: string;
+  fecha?: string;
+  num_ticket?: string;
+  observacion?: string;
+  notas?: string;
+  estado_sunat?: string;
+};
+
 export async function fetchBoletas(params: {
   estado?: string;
+  status?: string;
   serie?: string;
+  cod_serie?: string;
+  num_doc?: number | string;
   numero?: string | number;
+  number?: number;
+  anio?: number;
+  mes?: number;
+  id_locacion?: number;
+  tip_fac?: string;
+  id_cliente?: number;
   search?: string;
   skip?: number;
   limit?: number;
-} = {}): Promise<any[]> {
+} = {}): Promise<BoletaRow[]> {
+  try {
+    if (params.id_locacion === undefined) {
+      params.id_locacion = inferIdLocacionFromSessionCompany();
+    }
+  } catch (_) {}
+
   const qs = new URLSearchParams();
-  if (params.estado) qs.set("estado", params.estado);
-  if (params.serie) qs.set("serie", params.serie);
-  if (params.numero !== undefined && params.numero !== null) qs.set("numero", String(params.numero));
+  if (params.anio !== undefined) qs.set("anio", String(params.anio));
+  if (params.mes !== undefined) qs.set("mes", String(params.mes));
+  if (params.id_locacion !== undefined) qs.set("id_locacion", String(params.id_locacion));
+  if (params.tip_fac) qs.set("tip_fac", params.tip_fac);
+  if (params.id_cliente !== undefined) qs.set("id_cliente", String(params.id_cliente));
+  const estado = params.estado ?? params.status;
+  if (estado) qs.set("estado", estado);
+  const numDoc = params.num_doc ?? params.numero ?? params.number;
+  if (numDoc !== undefined && numDoc !== null && numDoc !== "") qs.set("num_doc", String(numDoc));
   if (params.search) qs.set("search", params.search);
   if (params.skip !== undefined) qs.set("skip", String(params.skip));
   if (params.limit !== undefined) qs.set("limit", String(params.limit));
 
   const url = `${API_BASE_URL}${API_V1_PREFIX}/boletas${qs.toString() ? `?${qs.toString()}` : ""}`;
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error("No se pudo cargar boletas desde el backend");
-  }
+  const headers: Record<string, string> = {};
+  try {
+    const raw = localStorage.getItem("sigecoom_session");
+    if (raw) {
+      const sess = JSON.parse(raw);
+      const codigo = sess?.empresa_actual?.codigo;
+      if (codigo) headers["X-Sigecoom-CodEmp"] = String(codigo);
+      const empresas = sess?.empresas || sess?.assigned_companies || null;
+      if (Array.isArray(empresas) && empresas.length > 0) {
+        const codes = empresas
+          .map((e: { codigo?: string }) => (e && e.codigo ? String(e.codigo) : String(e)))
+          .filter(Boolean);
+        if (codes.length > 0) headers["X-Sigecoom-Empresas"] = codes.join(",");
+      }
+    }
+  } catch (_) {}
 
-  const payload = await response.json();
-  if (Array.isArray(payload)) return payload;
-  if (payload && Array.isArray(payload.items)) return payload.items;
-  if (payload && Array.isArray(payload.data)) return payload.data;
-  return [];
+  const response = await apiFetch(url, { headers });
+  const text = await response.text();
+  try {
+    const parsed = JSON.parse(text || "null");
+    if (!response.ok) throw new Error("No se pudo cargar boletas");
+    if (Array.isArray(parsed)) return parsed;
+    if (parsed && Array.isArray(parsed.items)) return parsed.items;
+    return [];
+  } catch (err) {
+    if (!response.ok) throw new Error("No se pudo cargar boletas");
+    return [];
+  }
 }
 
 export async function fetchBoleta(boletaId: string | number): Promise<any> {
@@ -898,31 +1080,73 @@ export async function fetchBoleta(boletaId: string | number): Promise<any> {
 }
 
 export async function fetchNotas(params: {
-  search?: string;
+  estado?: string;
   status?: string;
+  serie?: string;
   series?: string;
+  cod_serie?: string;
+  id_serie_doc?: number;
+  num_doc?: number | string;
   number?: number;
+  numero?: string | number;
   anio?: number;
   mes?: number;
+  id_locacion?: number;
+  id_cliente?: number;
+  search?: string;
   skip?: number;
   limit?: number;
-} = {}): Promise<FacturaRow[]> {
+} = {}): Promise<NotaRow[]> {
+  try {
+    if (params.id_locacion === undefined) {
+      params.id_locacion = inferIdLocacionFromSessionCompany();
+    }
+  } catch (_) {}
+
   const qs = new URLSearchParams();
-  qs.set("type", "nota");
-  if (params.search) qs.set("search", params.search);
-  if (params.status) qs.set("status", params.status);
-  if (params.series) qs.set("series", params.series);
-  if (params.number !== undefined) qs.set("number", String(params.number));
   if (params.anio !== undefined) qs.set("anio", String(params.anio));
   if (params.mes !== undefined) qs.set("mes", String(params.mes));
+  if (params.id_locacion !== undefined) qs.set("id_locacion", String(params.id_locacion));
+  if (params.id_serie_doc !== undefined) qs.set("id_serie_doc", String(params.id_serie_doc));
+  if (params.id_cliente !== undefined) qs.set("id_cliente", String(params.id_cliente));
+  const estado = params.estado ?? params.status;
+  if (estado) qs.set("estado", estado);
+  const numDoc = params.num_doc ?? params.number ?? params.numero;
+  if (numDoc !== undefined && numDoc !== null && numDoc !== "") qs.set("num_doc", String(numDoc));
+  if (params.search) qs.set("search", params.search);
   if (params.skip !== undefined) qs.set("skip", String(params.skip));
   if (params.limit !== undefined) qs.set("limit", String(params.limit));
 
-  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/sales?${qs.toString()}`);
-  if (!response.ok) {
-    throw new Error("No se pudo cargar notas");
+  const url = `${API_BASE_URL}${API_V1_PREFIX}/notas${qs.toString() ? `?${qs.toString()}` : ""}`;
+  const headers: Record<string, string> = {};
+  try {
+    const raw = localStorage.getItem("sigecoom_session");
+    if (raw) {
+      const sess = JSON.parse(raw);
+      const codigo = sess?.empresa_actual?.codigo;
+      if (codigo) headers["X-Sigecoom-CodEmp"] = String(codigo);
+      const empresas = sess?.empresas || sess?.assigned_companies || null;
+      if (Array.isArray(empresas) && empresas.length > 0) {
+        const codes = empresas
+          .map((e: { codigo?: string }) => (e && e.codigo ? String(e.codigo) : String(e)))
+          .filter(Boolean);
+        if (codes.length > 0) headers["X-Sigecoom-Empresas"] = codes.join(",");
+      }
+    }
+  } catch (_) {}
+
+  const response = await apiFetch(url, { headers });
+  const text = await response.text();
+  try {
+    const parsed = JSON.parse(text || "null");
+    if (!response.ok) throw new Error("No se pudo cargar notas");
+    if (Array.isArray(parsed)) return parsed;
+    if (parsed && Array.isArray(parsed.items)) return parsed.items;
+    return [];
+  } catch (err) {
+    if (!response.ok) throw new Error("No se pudo cargar notas");
+    return [];
   }
-  return response.json();
 }
 
 export async function createNota(data: {

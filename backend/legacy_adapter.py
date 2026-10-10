@@ -118,6 +118,43 @@ def _row_matches_company(row: dict, company_code: str | None) -> bool:
     return True
 
 
+def _filter_active_company(items: list[dict], company_code: str | None) -> list[dict]:
+    """Filter items by active company code without discarding unknown-company rows."""
+    if not company_code:
+        company_code = os.getenv("SIGECOM_COD_EMP", "08").strip() or None
+    if not company_code:
+        return items
+
+    env_default = (os.getenv("SIGECOM_COD_EMP", "08") or "08").strip()
+    locaciones = _company_to_locaciones(company_code)
+    allow_missing_metadata = str(company_code).strip() == env_default
+
+    def matches(item: dict) -> bool:
+        if not isinstance(item, dict):
+            return False
+
+        for key in ("CodEmp", "cod_emp", "CodEmpresa", "cod_empresa", "Empresa", "empresa"):
+            if key in item:
+                value = item.get(key)
+                if value is None:
+                    return False
+                return str(value).strip() == str(company_code).strip()
+
+        for key in ("id_locacion", "IdLocacion"):
+            if key in item and item.get(key) is not None:
+                try:
+                    val = int(str(item.get(key)).strip())
+                    if locaciones:
+                        return val in locaciones
+                    return True
+                except Exception:
+                    pass
+
+        return allow_missing_metadata or not locaciones
+
+    return [item for item in items if matches(item)]
+
+
 def is_legacy_source_enabled() -> bool:
     return SIGECOM_DATA_SOURCE in {"legacy", "sigecoom", "adapter", "wcf", "original"}
 
@@ -691,18 +728,6 @@ def get_client_legacy(client_id: str):
         raise
 
 
-def list_boletas_legacy(skip: int = 0, limit: int = 100, **filters):
-    """List boletas from the legacy adapter."""
-    params = [f"skip={skip}", f"limit={max(1, limit) if limit and limit > 0 else 100}"]
-    for key, value in filters.items():
-        if value is not None:
-            params.append(f"{key}={value}")
-    return _legacy_list_payload(f"/api/v1/boletas?{'&'.join(params)}")
-
-
-def get_boleta_legacy(boleta_id: str):
-    """Fetch a single boleta from the legacy adapter."""
-    return _read_json(build_legacy_url(f"/api/v1/boletas/{boleta_id}"), timeout=5)
 
 
 def list_sunat_legacy(skip: int = 0, limit: int = 100, **filters):
@@ -1383,6 +1408,821 @@ def get_factura_legacy(id_factura: int | str) -> dict:
             if str(row.get("IdFactura") or row.get("id")) == str(id_factura):
                 return _normalize_factura(row)
         raise
+
+
+# ============================================================================
+# BOLETAS
+# ============================================================================
+
+def _local_wcf_boletas_snapshot_path() -> Path:
+    return Path(__file__).resolve().parent / "tmp" / "boletas_snapshot.json"
+
+
+def _load_real_wcf_boleta_rows() -> list[dict]:
+    snapshot_path = _local_wcf_boletas_snapshot_path()
+    if not snapshot_path.exists():
+        return []
+    try:
+        with open(snapshot_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        logger.warning(f"Could not load boletas snapshot: {e}")
+        return []
+
+
+def _save_real_wcf_boleta_rows(rows: list[dict]) -> None:
+    try:
+        snapshot_path = _local_wcf_boletas_snapshot_path()
+        snapshot_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(snapshot_path, "w", encoding="utf-8") as f:
+            json.dump(rows, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        logger.warning(f"Could not save boletas snapshot: {e}")
+
+
+def _normalize_boleta(boleta: dict) -> dict:
+    if not boleta:
+        return {}
+
+    id_boleta = boleta.get("IdBoleta") or boleta.get("id") or boleta.get("id_boleta")
+    fec_doc = _normalize_datetime(_lookup_value(boleta, "fec_doc", "FecDoc"))
+    num_doc = _normalize_id(_lookup_value(boleta, "num_doc", "NumDoc"))
+    cod_serie = str(_lookup_value(boleta, "cod_serie", "CodSerie") or "")
+    id_serie_doc = _normalize_id(_lookup_value(boleta, "id_serie_doc", "IdSerieDoc"))
+    id_locacion = _normalize_id(_lookup_value(boleta, "id_locacion", "IdLocacion"))
+    id_cliente = _normalize_id(_lookup_value(boleta, "id_cliente", "IdCliente"))
+
+    cliente_obj = boleta.get("Cliente") or boleta.get("cliente")
+    des_cli_nested = ""
+    if isinstance(cliente_obj, dict):
+        des_cli_nested = str(cliente_obj.get("DesCli") or cliente_obj.get("des_cli") or cliente_obj.get("Nombre") or "").strip()
+
+    cliente_nombre = str(_lookup_value(boleta, "cliente_nombre", "DesCli", "ClienteNombre", "des_cli") or des_cli_nested or "").strip()
+
+    des_mon = str(_lookup_value(boleta, "DesMon", "des_mon", "CodMon", "cod_mon") or "").strip().upper()
+    if any(s in des_mon for s in ("SOL", "01", "MN")) or des_mon in ("S", ""):
+        cod_mon = "NS"
+    elif any(s in des_mon for s in ("DOL", "USA", "02", "ME")) or des_mon in ("D", "USD"):
+        cod_mon = "US"
+    else:
+        cod_mon = des_mon
+
+    tot_neto = _normalize_decimal(_lookup_value(boleta, "tot_neto", "TotNeto"))
+    tot_neto = tot_neto if tot_neto is not None else 0.0
+
+    raw_sug = _normalize_decimal(_lookup_value(boleta, "tot_neto_sug", "TotNetoSug"))
+    tot_neto_sug = raw_sug if raw_sug is not None else 0.0
+
+    estado = str(_lookup_value(boleta, "estado", "Estado") or "").strip()
+    estado_sunat = str(_lookup_value(boleta, "estado_sunat", "EstadoSunat") or "").strip()
+    observacion = str(_lookup_value(boleta, "observacion", "Observacion", "ObservacionSunat") or "").strip()
+    num_orden = str(_lookup_value(boleta, "num_orden", "NumOrden", "Orden") or "").strip()
+    tip_fac = str(_lookup_value(boleta, "tip_fac", "TipFac") or "1").strip()
+
+    raw_contab = _lookup_value(boleta, "contabilizado", "Contabilizado")
+    if isinstance(raw_contab, bool):
+        contabilizado = raw_contab
+    else:
+        contabilizado = str(raw_contab or "").strip().lower() in ("true", "1", "s", "si")
+
+    raw_notas = _lookup_value(boleta, "tiene_notas", "TieneNotas")
+    if isinstance(raw_notas, bool):
+        tiene_notas = raw_notas
+    else:
+        tiene_notas = str(raw_notas or "").strip().lower() in ("true", "1", "s", "si")
+
+    normalized = {
+        "id": id_boleta,
+        "id_locacion": id_locacion,
+        "fec_doc": fec_doc,
+        "date": fec_doc,
+        "id_serie_doc": id_serie_doc,
+        "cod_serie": cod_serie,
+        "num_doc": num_doc,
+        "number": num_doc,
+        "id_cliente": id_cliente,
+        "client_id": str(id_cliente) if id_cliente else "",
+        "cliente_nombre": cliente_nombre,
+        "cod_mon": cod_mon,
+        "tot_neto": tot_neto,
+        "total": tot_neto,
+        "tot_neto_sug": tot_neto_sug,
+        "estado": estado,
+        "status": estado,
+        "estado_sunat": estado_sunat,
+        "observacion": observacion,
+        "num_orden": num_orden,
+        "tip_fac": tip_fac,
+        "contabilizado": contabilizado,
+        "tiene_notas": tiene_notas,
+        "created_at": fec_doc,
+        "updated_at": fec_doc,
+    }
+    return {k: v for k, v in normalized.items() if v is not None}
+
+
+def list_boletas_legacy(
+    *,
+    anio: int | None = None,
+    mes: int | None = None,
+    id_locacion: int | None = None,
+    tip_fac: str | None = None,
+    id_cliente: int | None = None,
+    estado: str | None = None,
+    num_doc: int | None = None,
+    search: str | None = None,
+    skip: int = 0,
+    limit: int = 100,
+    company_codes: list[str] | None = None,
+    **kwargs,
+):
+    target_locations = []
+    if id_locacion is not None and id_locacion > 0:
+        target_locations = [id_locacion]
+    elif company_codes:
+        for c in company_codes:
+            target_locations.extend(_company_to_locaciones(c))
+    else:
+        active_comp = get_active_company_code()
+        target_locations = _company_to_locaciones(active_comp)
+
+    if not target_locations:
+        target_locations = [87]
+
+    all_raw_items = []
+    adapter_error = None
+
+    for loc in set(target_locations):
+        params = [("id_locacion", str(loc))]
+        if anio is not None:
+            params.append(("anio", str(anio)))
+        if mes is not None:
+            params.append(("mes", str(mes)))
+        if tip_fac is not None and str(tip_fac).strip() != "":
+            params.append(("tip_fac", str(tip_fac).strip()))
+        if id_cliente is not None and id_cliente > 0:
+            params.append(("id_cliente", str(id_cliente)))
+        if estado:
+            params.append(("estado", estado))
+        if num_doc is not None and num_doc > 0:
+            params.append(("num_doc", str(num_doc)))
+
+        query = "&".join(f"{k}={v}" for k, v in params)
+        endpoint = f"/api/v1/boletas?{query}"
+
+        try:
+            data = _read_json(build_legacy_url(endpoint))
+            if isinstance(data, list):
+                all_raw_items.extend(data)
+            elif isinstance(data, dict) and "items" in data:
+                all_raw_items.extend(data["items"])
+        except Exception as e:
+            adapter_error = e
+            logger.warning(f"Legacy adapter call failed for boletas locacion {loc}: {e}")
+
+    if all_raw_items:
+        _save_real_wcf_boleta_rows(all_raw_items)
+        items = all_raw_items
+    else:
+        snapshot_rows = _load_real_wcf_boleta_rows()
+        if snapshot_rows:
+            items = snapshot_rows
+        elif adapter_error:
+            raise adapter_error
+        else:
+            items = []
+
+    normalized = [_normalize_boleta(b) for b in items]
+
+    seen = set()
+    deduped = []
+    for item in normalized:
+        bid = item.get("id")
+        if bid not in seen:
+            seen.add(bid)
+            deduped.append(item)
+
+    filtered = []
+    for item in deduped:
+        if anio is not None and item.get("fec_doc"):
+            try:
+                if datetime.strptime(str(item["fec_doc"])[:10], "%Y-%m-%d").year != anio:
+                    continue
+            except Exception:
+                pass
+        if mes is not None and item.get("fec_doc"):
+            try:
+                if datetime.strptime(str(item["fec_doc"])[:10], "%Y-%m-%d").month != mes:
+                    continue
+            except Exception:
+                pass
+        if estado and str(item.get("estado", "")).upper() != estado.upper():
+            continue
+        if num_doc and item.get("num_doc") != num_doc:
+            continue
+        if id_cliente and item.get("id_cliente") != id_cliente:
+            continue
+        if search:
+            s = search.lower()
+            cliente_n = str(item.get("cliente_nombre", "")).lower()
+            num_d = str(item.get("num_doc", "")).lower()
+            if s not in cliente_n and s not in num_d:
+                continue
+        filtered.append(item)
+
+    if limit and limit > 0:
+        return filtered[skip : skip + limit]
+    return filtered[skip:]
+
+
+def get_boleta_legacy(id_boleta: int | str) -> dict:
+    try:
+        endpoint = f"/api/v1/boletas/{id_boleta}"
+        data = _read_json(build_legacy_url(endpoint))
+        if isinstance(data, list):
+            data = data[0] if data else {}
+        return _normalize_boleta(data)
+    except Exception as e:
+        logger.error(f"Failed to get boleta {id_boleta} from legacy adapter: {e}")
+        snapshot = _load_real_wcf_boleta_rows()
+        for row in snapshot:
+            if str(row.get("IdBoleta") or row.get("id")) == str(id_boleta):
+                return _normalize_boleta(row)
+        raise
+
+
+# ============================================================================
+# NOTAS DE CRÉDITO
+# ============================================================================
+
+def _local_wcf_notas_snapshot_path() -> Path:
+    return Path(__file__).resolve().parent / "tmp" / "notas_snapshot.json"
+
+
+def _load_real_wcf_nota_rows() -> list[dict]:
+    snapshot_path = _local_wcf_notas_snapshot_path()
+    if not snapshot_path.exists():
+        return []
+    try:
+        with open(snapshot_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        logger.warning(f"Could not load notas snapshot: {e}")
+        return []
+
+
+def _save_real_wcf_nota_rows(rows: list[dict]) -> None:
+    try:
+        snapshot_path = _local_wcf_notas_snapshot_path()
+        snapshot_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(snapshot_path, "w", encoding="utf-8") as f:
+            json.dump(rows, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        logger.warning(f"Could not save notas snapshot: {e}")
+
+
+def _normalize_nota(nota: dict) -> dict:
+    if not nota:
+        return {}
+
+    id_nota = nota.get("IdNota") or nota.get("id") or nota.get("id_nota")
+    fec_doc = _normalize_datetime(_lookup_value(nota, "fec_doc", "FecDoc"))
+    num_doc = _normalize_id(_lookup_value(nota, "num_doc", "NumDoc"))
+    cod_serie = str(_lookup_value(nota, "cod_serie", "CodSerie") or "")
+    id_serie_doc = _normalize_id(_lookup_value(nota, "id_serie_doc", "IdSerieDoc"))
+    id_locacion = _normalize_id(_lookup_value(nota, "id_locacion", "IdLocacion"))
+    id_cliente = _normalize_id(_lookup_value(nota, "id_cliente", "IdCliente"))
+
+    cliente_obj = nota.get("Cliente") or nota.get("cliente")
+    des_cli_nested = ""
+    if isinstance(cliente_obj, dict):
+        des_cli_nested = str(cliente_obj.get("DesCli") or cliente_obj.get("des_cli") or cliente_obj.get("Nombre") or "").strip()
+
+    cliente_nombre = str(_lookup_value(nota, "cliente_nombre", "DesCli", "ClienteNombre", "des_cli") or des_cli_nested or "").strip()
+
+    des_mon = str(_lookup_value(nota, "DesMon", "des_mon", "CodMon", "cod_mon") or "").strip().upper()
+    if any(s in des_mon for s in ("SOL", "01", "MN")) or des_mon in ("S", ""):
+        cod_mon = "NS"
+    elif any(s in des_mon for s in ("DOL", "USA", "02", "ME")) or des_mon in ("D", "USD"):
+        cod_mon = "US"
+    else:
+        cod_mon = des_mon
+
+    tot_neto = _normalize_decimal(_lookup_value(nota, "tot_neto", "TotNeto"))
+    tot_neto = tot_neto if tot_neto is not None else 0.0
+
+    estado = str(_lookup_value(nota, "estado", "Estado") or "").strip()
+    estado_sunat = str(_lookup_value(nota, "estado_sunat", "EstadoSunat") or "").strip()
+    observacion_sunat = str(_lookup_value(nota, "observacion_sunat", "ObservacionSunat", "observacion", "Observacion") or "").strip()
+
+    raw_contab = _lookup_value(nota, "contabilizado", "Contabilizado")
+    if isinstance(raw_contab, bool):
+        contabilizado = raw_contab
+    else:
+        contabilizado = str(raw_contab or "").strip().lower() in ("true", "1", "s", "si")
+
+    raw_notas = _lookup_value(nota, "tiene_notas", "TieneNotas")
+    if isinstance(raw_notas, bool):
+        tiene_notas = raw_notas
+    else:
+        tiene_notas = str(raw_notas or "").strip().lower() in ("true", "1", "s", "si")
+
+    normalized = {
+        "id": id_nota,
+        "id_locacion": id_locacion,
+        "fec_doc": fec_doc,
+        "date": fec_doc,
+        "id_serie_doc": id_serie_doc,
+        "cod_serie": cod_serie,
+        "num_doc": num_doc,
+        "number": num_doc,
+        "id_cliente": id_cliente,
+        "client_id": str(id_cliente) if id_cliente else "",
+        "cliente_nombre": cliente_nombre,
+        "cod_mon": cod_mon,
+        "tot_neto": tot_neto,
+        "total": tot_neto,
+        "estado": estado,
+        "status": estado,
+        "estado_sunat": estado_sunat,
+        "observacion": observacion_sunat,
+        "observacion_sunat": observacion_sunat,
+        "contabilizado": contabilizado,
+        "tiene_notas": tiene_notas,
+        "created_at": fec_doc,
+        "updated_at": fec_doc,
+    }
+    return {k: v for k, v in normalized.items() if v is not None}
+
+
+def list_notas_legacy(
+    *,
+    anio: int | None = None,
+    mes: int | None = None,
+    id_locacion: int | None = None,
+    id_serie_doc: int | None = None,
+    id_cliente: int | None = None,
+    estado: str | None = None,
+    num_doc: int | None = None,
+    search: str | None = None,
+    skip: int = 0,
+    limit: int = 100,
+    company_codes: list[str] | None = None,
+    **kwargs,
+):
+    target_locations = []
+    if id_locacion is not None and id_locacion > 0:
+        target_locations = [id_locacion]
+    elif company_codes:
+        for c in company_codes:
+            target_locations.extend(_company_to_locaciones(c))
+    else:
+        active_comp = get_active_company_code()
+        target_locations = _company_to_locaciones(active_comp)
+
+    if not target_locations:
+        target_locations = [87]
+
+    all_raw_items = []
+    adapter_error = None
+
+    for loc in set(target_locations):
+        params = [("id_locacion", str(loc))]
+        if anio is not None:
+            params.append(("anio", str(anio)))
+        if mes is not None:
+            params.append(("mes", str(mes)))
+        if id_serie_doc is not None and id_serie_doc > 0:
+            params.append(("id_serie_doc", str(id_serie_doc)))
+        if id_cliente is not None and id_cliente > 0:
+            params.append(("id_cliente", str(id_cliente)))
+        if estado:
+            params.append(("estado", estado))
+        if num_doc is not None and num_doc > 0:
+            params.append(("num_doc", str(num_doc)))
+
+        query = "&".join(f"{k}={v}" for k, v in params)
+        endpoint = f"/api/v1/notas?{query}"
+
+        try:
+            data = _read_json(build_legacy_url(endpoint))
+            if isinstance(data, list):
+                all_raw_items.extend(data)
+            elif isinstance(data, dict) and "items" in data:
+                all_raw_items.extend(data["items"])
+        except Exception as e:
+            adapter_error = e
+            logger.warning(f"Legacy adapter call failed for notas locacion {loc}: {e}")
+
+    if all_raw_items:
+        _save_real_wcf_nota_rows(all_raw_items)
+        items = all_raw_items
+    else:
+        snapshot_rows = _load_real_wcf_nota_rows()
+        if snapshot_rows:
+            items = snapshot_rows
+        elif adapter_error:
+            raise adapter_error
+        else:
+            items = []
+
+    normalized = [_normalize_nota(n) for n in items]
+
+    seen = set()
+    deduped = []
+    for item in normalized:
+        nid = item.get("id")
+        if nid not in seen:
+            seen.add(nid)
+            deduped.append(item)
+
+    filtered = []
+    for item in deduped:
+        if anio is not None and item.get("fec_doc"):
+            try:
+                if datetime.strptime(str(item["fec_doc"])[:10], "%Y-%m-%d").year != anio:
+                    continue
+            except Exception:
+                pass
+        if mes is not None and item.get("fec_doc"):
+            try:
+                if datetime.strptime(str(item["fec_doc"])[:10], "%Y-%m-%d").month != mes:
+                    continue
+            except Exception:
+                pass
+        if estado and str(item.get("estado", "")).upper() != estado.upper():
+            continue
+        if num_doc and item.get("num_doc") != num_doc:
+            continue
+        if id_cliente and item.get("id_cliente") != id_cliente:
+            continue
+        if search:
+            s = search.lower()
+            cliente_n = str(item.get("cliente_nombre", "")).lower()
+            num_d = str(item.get("num_doc", "")).lower()
+            serie = str(item.get("cod_serie", "")).lower()
+            if s not in cliente_n and s not in num_d and s not in serie:
+                continue
+        filtered.append(item)
+
+    if limit and limit > 0:
+        return filtered[skip : skip + limit]
+    return filtered[skip:]
+
+
+def get_nota_legacy(id_nota: int | str) -> dict:
+    try:
+        endpoint = f"/api/v1/notas/{id_nota}"
+        data = _read_json(build_legacy_url(endpoint))
+        if isinstance(data, list):
+            data = data[0] if data else {}
+        return _normalize_nota(data)
+    except Exception as e:
+        logger.error(f"Failed to get nota {id_nota} from legacy adapter: {e}")
+        snapshot = _load_real_wcf_nota_rows()
+        for row in snapshot:
+            if str(row.get("IdNota") or row.get("id")) == str(id_nota):
+                return _normalize_nota(row)
+        raise
+
+
+# ============================================================================
+# GUÍAS DE DEVOLUCIÓN
+# ============================================================================
+
+def _local_wcf_guias_dev_snapshot_path() -> Path:
+    return Path(__file__).resolve().parent / "tmp" / "guias_devolucion_snapshot.json"
+
+
+def _load_real_wcf_guia_dev_rows() -> list[dict]:
+    snapshot_path = _local_wcf_guias_dev_snapshot_path()
+    if not snapshot_path.exists():
+        return []
+    try:
+        with open(snapshot_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        logger.warning(f"Could not load guias devolucion snapshot: {e}")
+        return []
+
+
+def _save_real_wcf_guia_dev_rows(rows: list[dict]) -> None:
+    try:
+        snapshot_path = _local_wcf_guias_dev_snapshot_path()
+        snapshot_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(snapshot_path, "w", encoding="utf-8") as f:
+            json.dump(rows, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        logger.warning(f"Could not save guias devolucion snapshot: {e}")
+
+
+def _normalize_guia_devolucion(guia: dict) -> dict:
+    if not guia:
+        return {}
+
+    id_guia = guia.get("IdGuiaDev") or guia.get("id") or guia.get("id_guia_dev")
+    fec_doc = _normalize_datetime(_lookup_value(guia, "fec_doc", "FecDoc"))
+    num_doc = _normalize_id(_lookup_value(guia, "num_doc", "NumDoc"))
+    num_fac = str(_lookup_value(guia, "num_fac", "NumFac", "referencia", "Referencia") or "")
+    id_locacion = _normalize_id(_lookup_value(guia, "id_locacion", "IdLocacion"))
+    id_cliente = _normalize_id(_lookup_value(guia, "id_cliente", "IdCliente"))
+    cliente_nombre = str(_lookup_value(guia, "cliente_nombre", "DesCli", "ClienteNombre", "des_cli") or "").strip()
+
+    des_mon = str(_lookup_value(guia, "DesMon", "des_mon", "CodMon", "cod_mon") or "").strip().upper()
+    if any(s in des_mon for s in ("SOL", "01", "MN")) or des_mon in ("S", ""):
+        cod_mon = "NS"
+    elif any(s in des_mon for s in ("DOL", "USA", "02", "ME")) or des_mon in ("D", "USD"):
+        cod_mon = "US"
+    else:
+        cod_mon = des_mon
+
+    tot_neto = _normalize_decimal(_lookup_value(guia, "tot_neto", "TotNeto"))
+    tot_neto = tot_neto if tot_neto is not None else 0.0
+
+    estado = str(_lookup_value(guia, "estado", "Estado") or "").strip()
+    documento = str(_lookup_value(guia, "documento", "Documento", "DocDevuelto") or "").strip()
+    tip_mov = str(_lookup_value(guia, "tip_mov", "TipMov") or "").strip()
+
+    normalized = {
+        "id": id_guia,
+        "id_locacion": id_locacion,
+        "fec_doc": fec_doc,
+        "date": fec_doc,
+        "num_doc": num_doc,
+        "number": num_doc,
+        "referencia": num_fac,
+        "num_fac": num_fac,
+        "id_cliente": id_cliente,
+        "cliente_nombre": cliente_nombre,
+        "cod_mon": cod_mon,
+        "tot_neto": tot_neto,
+        "total": tot_neto,
+        "estado": estado,
+        "documento": documento,
+        "tip_mov": tip_mov,
+        "created_at": fec_doc,
+        "updated_at": fec_doc,
+    }
+    return {k: v for k, v in normalized.items() if v is not None}
+
+
+def list_guias_devolucion_legacy(
+    *,
+    anio: int | None = None,
+    mes: int | None = None,
+    id_locacion: int | None = None,
+    id_cliente: int | None = None,
+    estado: str | None = None,
+    num_doc: int | None = None,
+    search: str | None = None,
+    skip: int = 0,
+    limit: int = 100,
+    company_codes: list[str] | None = None,
+    **kwargs,
+):
+    target_locations = []
+    if id_locacion is not None and id_locacion > 0:
+        target_locations = [id_locacion]
+    elif company_codes:
+        for c in company_codes:
+            target_locations.extend(_company_to_locaciones(c))
+    else:
+        active_comp = get_active_company_code()
+        target_locations = _company_to_locaciones(active_comp)
+
+    if not target_locations:
+        target_locations = [87]
+
+    all_raw_items = []
+    adapter_error = None
+
+    for loc in set(target_locations):
+        params = [("id_locacion", str(loc))]
+        if anio is not None:
+            params.append(("anio", str(anio)))
+        if mes is not None:
+            params.append(("mes", str(mes)))
+        if id_cliente is not None and id_cliente > 0:
+            params.append(("id_cliente", str(id_cliente)))
+        if estado:
+            params.append(("estado", estado))
+        if num_doc is not None and num_doc > 0:
+            params.append(("num_doc", str(num_doc)))
+
+        query = "&".join(f"{k}={v}" for k, v in params)
+        endpoint = f"/api/v1/guias-devolucion?{query}"
+
+        try:
+            data = _read_json(build_legacy_url(endpoint))
+            if isinstance(data, list):
+                all_raw_items.extend(data)
+            elif isinstance(data, dict) and "items" in data:
+                all_raw_items.extend(data["items"])
+        except Exception as e:
+            adapter_error = e
+            logger.warning(f"Legacy adapter call failed for guias-devolucion locacion {loc}: {e}")
+
+    if all_raw_items:
+        _save_real_wcf_guia_dev_rows(all_raw_items)
+        items = all_raw_items
+    else:
+        snapshot_rows = _load_real_wcf_guia_dev_rows()
+        if snapshot_rows:
+            items = snapshot_rows
+        elif adapter_error:
+            raise adapter_error
+        else:
+            items = []
+
+    normalized = [_normalize_guia_devolucion(g) for g in items]
+
+    seen = set()
+    deduped = []
+    for item in normalized:
+        gid = item.get("id")
+        if gid not in seen:
+            seen.add(gid)
+            deduped.append(item)
+
+    filtered = []
+    for item in deduped:
+        if anio is not None and item.get("fec_doc"):
+            try:
+                if datetime.strptime(str(item["fec_doc"])[:10], "%Y-%m-%d").year != anio:
+                    continue
+            except Exception:
+                pass
+        if mes is not None and item.get("fec_doc"):
+            try:
+                if datetime.strptime(str(item["fec_doc"])[:10], "%Y-%m-%d").month != mes:
+                    continue
+            except Exception:
+                pass
+        if estado and str(item.get("estado", "")).upper() != estado.upper():
+            continue
+        if num_doc and item.get("num_doc") != num_doc:
+            continue
+        if id_cliente and item.get("id_cliente") != id_cliente:
+            continue
+        if search:
+            s = search.lower()
+            cliente_n = str(item.get("cliente_nombre", "")).lower()
+            num_d = str(item.get("num_doc", "")).lower()
+            ref = str(item.get("referencia", "")).lower()
+            if s not in cliente_n and s not in num_d and s not in ref:
+                continue
+        filtered.append(item)
+
+    if limit and limit > 0:
+        return filtered[skip : skip + limit]
+    return filtered[skip:]
+
+
+def get_guia_devolucion_legacy(id_guia: int | str) -> dict:
+    try:
+        endpoint = f"/api/v1/guias-devolucion/{id_guia}"
+        data = _read_json(build_legacy_url(endpoint))
+        if isinstance(data, list):
+            data = data[0] if data else {}
+        return _normalize_guia_devolucion(data)
+    except Exception as e:
+        logger.error(f"Failed to get guia devolucion {id_guia} from legacy adapter: {e}")
+        snapshot = _load_real_wcf_guia_dev_rows()
+        for row in snapshot:
+            if str(row.get("IdGuiaDev") or row.get("id")) == str(id_guia):
+                return _normalize_guia_devolucion(row)
+        raise
+
+
+# ============================================================================
+# RESUMEN DE BOLETAS
+# ============================================================================
+
+def _local_wcf_resumen_boletas_snapshot_path() -> Path:
+    return Path(__file__).resolve().parent / "tmp" / "resumen_boletas_snapshot.json"
+
+
+def _load_real_wcf_resumen_boleta_rows() -> list[dict]:
+    snapshot_path = _local_wcf_resumen_boletas_snapshot_path()
+    if not snapshot_path.exists():
+        return []
+    try:
+        with open(snapshot_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        logger.warning(f"Could not load resumen boletas snapshot: {e}")
+        return []
+
+
+def _save_real_wcf_resumen_boleta_rows(rows: list[dict]) -> None:
+    try:
+        snapshot_path = _local_wcf_resumen_boletas_snapshot_path()
+        snapshot_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(snapshot_path, "w", encoding="utf-8") as f:
+            json.dump(rows, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        logger.warning(f"Could not save resumen boletas snapshot: {e}")
+
+
+def _normalize_resumen_boleta(resumen: dict) -> dict:
+    if not resumen:
+        return {}
+
+    id_resumen = str(_lookup_value(resumen, "id_resumen", "IdResumen", "id") or "")
+    cod_emp = str(_lookup_value(resumen, "cod_emp", "CodEmp") or "")
+    nombre_xml = str(_lookup_value(resumen, "nombre_xml", "NombreXml") or "")
+    fecha = _normalize_datetime(_lookup_value(resumen, "fecha", "Fecha", "fec_doc", "FecDoc"))
+    num_ticket = str(_lookup_value(resumen, "num_ticket", "NumTicket", "ticket") or "")
+    observacion = str(_lookup_value(resumen, "observacion", "Observacion") or "")
+    notas = str(_lookup_value(resumen, "notas", "Notas") or "")
+    estado_sunat = str(_lookup_value(resumen, "estado_sunat", "EstadoSunat") or "")
+
+    normalized = {
+        "id": id_resumen,
+        "id_resumen": id_resumen,
+        "cod_emp": cod_emp,
+        "nombre_xml": nombre_xml,
+        "fecha": fecha,
+        "num_ticket": num_ticket,
+        "observacion": observacion,
+        "notas": notas,
+        "estado_sunat": estado_sunat,
+    }
+    return {k: v for k, v in normalized.items() if v is not None}
+
+
+def list_resumen_boletas_legacy(
+    *,
+    anio: int | None = None,
+    mes: int | None = None,
+    id_resumen: str | None = None,
+    search: str | None = None,
+    skip: int = 0,
+    limit: int = 100,
+    company_codes: list[str] | None = None,
+    **kwargs,
+):
+    active_comp = company_codes[0] if (company_codes and len(company_codes) > 0) else get_active_company_code()
+    if not active_comp:
+        active_comp = "08"
+
+    params = [("cod_emp", str(active_comp))]
+    if anio is not None:
+        params.append(("anio", str(anio)))
+    if mes is not None:
+        params.append(("mes", str(mes)))
+    if id_resumen:
+        params.append(("id_resumen", str(id_resumen)))
+
+    query = "&".join(f"{k}={v}" for k, v in params)
+    endpoint = f"/api/v1/resumen-boletas?{query}"
+
+    all_raw_items = []
+    try:
+        data = _read_json(build_legacy_url(endpoint))
+        if isinstance(data, list):
+            all_raw_items.extend(data)
+        elif isinstance(data, dict) and "items" in data:
+            all_raw_items.extend(data["items"])
+    except Exception as e:
+        logger.warning(f"Legacy adapter call failed for resumen-boletas: {e}")
+        snapshot_rows = _load_real_wcf_resumen_boleta_rows()
+        if snapshot_rows:
+            all_raw_items = snapshot_rows
+        else:
+            all_raw_items = []
+
+    if all_raw_items:
+        _save_real_wcf_resumen_boleta_rows(all_raw_items)
+
+    normalized = [_normalize_resumen_boleta(r) for r in all_raw_items]
+
+    filtered = []
+    for item in normalized:
+        if anio is not None and item.get("fecha"):
+            try:
+                if datetime.strptime(str(item["fecha"])[:10], "%Y-%m-%d").year != anio:
+                    continue
+            except Exception:
+                pass
+        if mes is not None and item.get("fecha"):
+            try:
+                if datetime.strptime(str(item["fecha"])[:10], "%Y-%m-%d").month != mes:
+                    continue
+            except Exception:
+                pass
+        if search:
+            s = search.lower()
+            cod = str(item.get("id_resumen", "")).lower()
+            obs = str(item.get("observacion", "")).lower()
+            tick = str(item.get("num_ticket", "")).lower()
+            if s not in cod and s not in obs and s not in tick:
+                continue
+        filtered.append(item)
+
+    if limit and limit > 0:
+        return filtered[skip : skip + limit]
+    return filtered[skip:]
 
 
 # ============================================================================
