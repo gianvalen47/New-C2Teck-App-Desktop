@@ -1737,15 +1737,30 @@ Namespace HorarioService
         End Sub
         
         Public Sub New(ByVal endpointConfigurationName As String)
+            #If NETCOREAPP Then
+            MyBase.New()
+            Throw New System.NotSupportedException("Named endpoint configuration is not supported on .NET Core; use the constructor that accepts a Binding and EndpointAddress.")
+#Else
             MyBase.New(endpointConfigurationName)
+#End If
         End Sub
         
         Public Sub New(ByVal endpointConfigurationName As String, ByVal remoteAddress As String)
+            #If NETCOREAPP Then
+            MyBase.New()
+            Throw New System.NotSupportedException("Named endpoint configuration is not supported on .NET Core; use the constructor that accepts a Binding and EndpointAddress.")
+#Else
             MyBase.New(endpointConfigurationName, remoteAddress)
+#End If
         End Sub
         
         Public Sub New(ByVal endpointConfigurationName As String, ByVal remoteAddress As System.ServiceModel.EndpointAddress)
+            #If NETCOREAPP Then
+            MyBase.New()
+            Throw New System.NotSupportedException("Named endpoint configuration is not supported on .NET Core; use the constructor that accepts a Binding and EndpointAddress.")
+#Else
             MyBase.New(endpointConfigurationName, remoteAddress)
+#End If
         End Sub
         
         Public Sub New(ByVal binding As System.ServiceModel.Channels.Binding, ByVal remoteAddress As System.ServiceModel.EndpointAddress)

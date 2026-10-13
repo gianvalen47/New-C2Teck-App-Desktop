@@ -3,27 +3,46 @@ import {
   inp,
   btn,
   btnPrimary,
-  Field,
   WindowShell,
-  Fs
+  Fs,
 } from "@/components/ui/desktop-primitives";
+import { FileSpreadsheet, LogOut } from "lucide-react";
 
 export function ReporteComisionesList() {
   return (
-    <WindowShell title="Reporte de Comisiones"
-    >
-      <div className="p-3 space-y-2 max-w-2xl mx-auto text-[11.5px] text-slate-800">
+    <WindowShell title="Reporte de Comisiones">
+      <div className="flex h-full items-center justify-center p-3">
+      <div className="w-full max-w-md space-y-2 text-[11.5px] text-slate-800">
         <Fs legend="Tipo Reporte">
-          <div className="flex gap-2">
-            <label className="flex items-center gap-1"><input type="radio" name="tiprep" defaultChecked className="accent-[#2A5590]" />Comisiones de vendedor</label>
-            <label className="flex items-center gap-1"><input type="radio" name="tiprep" className="accent-[#2A5590]" />Compensación Allison</label>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">
+            <label className="inline-flex items-center gap-1">
+              <input type="radio" name="tiprep" defaultChecked className="accent-[#2A5590]" />
+              Comisiones de vendedor
+            </label>
+            <label className="inline-flex items-center gap-1">
+              <input type="radio" name="tiprep" className="accent-[#2A5590]" />
+              Compensación Allison
+            </label>
           </div>
         </Fs>
         <Fs legend="Rango de Fechas">
-          <Field label="Fechas Del"><input className={inp} type="date" defaultValue="2026-06-01" /></Field>
-          <Field label="Al"><input className={inp} type="date" defaultValue="2026-06-30" /></Field>
+          <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+            <span>Fechas</span>
+            <label className="inline-flex items-center gap-1">
+              Del
+              <input className={`${inp} w-[102px]`} type="date" defaultValue="2026-06-01" />
+            </label>
+            <label className="inline-flex items-center gap-1">
+              A:
+              <input className={`${inp} w-[102px]`} type="date" defaultValue="2026-06-30" />
+            </label>
+          </div>
         </Fs>
-        <div className="mt-2 flex justify-end gap-2"><button className={btn}>Cancelar</button><button className={btnPrimary}>Aceptar</button></div>
+        <div className="mt-2 flex justify-center gap-2">
+          <button className={btnPrimary}><FileSpreadsheet className="h-3.5 w-3.5" />Aceptar</button>
+          <button className={btn}><LogOut className="h-3.5 w-3.5" />Cancelar</button>
+        </div>
+      </div>
       </div>
     </WindowShell>
   );

@@ -15,11 +15,20 @@ export function ReportePresupuestoVentaList() {
     >
       <div className="p-3 space-y-2 max-w-2xl mx-auto text-[11.5px] text-slate-800">
         <Fs legend="Rango de Fechas">
-          <Field label="Fecha del"><input className={inp} type="date" defaultValue="2026-01-07" /></Field>
-          <Field label="Al"><input className={inp} type="date" defaultValue="2026-07-21" /></Field>
+          <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+            <span>Fechas</span>
+            <label className="inline-flex items-center gap-1">
+              Del
+              <input className={`${inp} w-[102px]`} type="date" defaultValue="2026-06-01" />
+            </label>
+            <label className="inline-flex items-center gap-1">
+              A:
+              <input className={`${inp} w-[102px]`} type="date" defaultValue="2026-06-30" />
+            </label>
+          </div>
         </Fs>
         <Fs legend="Tipo Reporte">
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">
             <Radio name="tiprep" label="Presupuesto Anual" defaultChecked />
             <Radio name="tiprep" label="Ventas vs Presupuesto" />
           </div>

@@ -274,7 +274,7 @@ add("Reporte Compras", ComprasReporteDialog);
 add("Reporte Contabilidad", ContabilidadReporteDialog);
 add("Reporte Almacen", AlmacenReporteDialog);
 add("Reporte Creditos", CreditosReporteDialog);
-add("Reporte Guias", ReporteGuiasList);
+add("Reporte Guias", ReporteGuiasRemision);
 add("Reporte Mensual Cliente", ReporteMensualClienteList);
 add("Reporte Orden Compra", ReporteOrdenCompraList);
 add("Reporte Presupuesto Venta", ReportePresupuestoVentaList);
@@ -1081,7 +1081,7 @@ const REGISTRY: Record<string, (label: string) => ReactNode> = {
   "Reclamo Garantía": () => <ReclamoGarantia />,
   "Separar Orden": () => <SepararOrden />,
   "Ordenes Compra": () => <ReporteOrdenCompra />,
-  "Órdenes Compra": () => <OrdenesCompraList />,
+  "Órdenes Compra": () => <ReporteOrdenCompraList />,
   "Actualizar Vendedor": () => <ActualizarVendedor />,
   "Enviar Correos": () => <EnviarCorreos />,
   "Pre y Post Venta": () => <ReporteCotizaciones />,
