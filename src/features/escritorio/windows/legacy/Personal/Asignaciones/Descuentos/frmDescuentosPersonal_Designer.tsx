@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function frmDescuentosPersonal_Designer() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: frmDescuentosPersonal_Designer</h2>
       <p>Original file copied to: <code>Personal/Asignaciones/Descuentos/frmDescuentosPersonal.Designer.vb</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>

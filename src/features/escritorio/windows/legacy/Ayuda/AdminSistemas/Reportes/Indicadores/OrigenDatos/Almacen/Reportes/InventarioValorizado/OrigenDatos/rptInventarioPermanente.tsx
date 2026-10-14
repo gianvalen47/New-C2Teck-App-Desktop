@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function rptInventarioPermanente() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: rptInventarioPermanente</h2>
       <p>Original file copied to: <code>Ayuda/AdminSistemas/Reportes/Indicadores/OrigenDatos/Almacen/Reportes/InventarioValorizado/OrigenDatos/rptInventarioPermanente.xml</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>

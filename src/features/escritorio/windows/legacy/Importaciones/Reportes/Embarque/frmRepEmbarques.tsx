@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function frmRepEmbarques() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: frmRepEmbarques</h2>
       <p>Original file copied to: <code>Importaciones/Reportes/Embarque/frmRepEmbarques.vb</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>

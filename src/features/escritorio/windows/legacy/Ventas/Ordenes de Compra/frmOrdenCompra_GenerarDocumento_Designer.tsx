@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function frmOrdenCompra_GenerarDocumento_Designer() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: frmOrdenCompra_GenerarDocumento_Designer</h2>
       <p>Original file copied to: <code>Ventas/Ordenes de Compra/frmOrdenCompra_GenerarDocumento.Designer.vb</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>

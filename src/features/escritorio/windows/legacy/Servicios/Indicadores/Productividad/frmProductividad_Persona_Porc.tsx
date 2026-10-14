@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function frmProductividad_Persona_Porc() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: frmProductividad_Persona_Porc</h2>
       <p>Original file copied to: <code>Servicios/Indicadores/Productividad/frmProductividad_Persona_Porc.vb</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>

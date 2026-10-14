@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function rpImprimirCotizacionSinPrecioC2Teck() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: rpImprimirCotizacionSinPrecioC2Teck</h2>
       <p>Original file copied to: <code>Ventas/Cotizaciones/Reportes/rpImprimirCotizacionSinPrecioC2Teck.vb</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>

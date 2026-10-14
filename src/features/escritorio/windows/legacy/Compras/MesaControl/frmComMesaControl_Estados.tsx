@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function frmComMesaControl_Estados() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: frmComMesaControl_Estados</h2>
       <p>Original file copied to: <code>Compras/MesaControl/frmComMesaControl_Estados.vb</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>

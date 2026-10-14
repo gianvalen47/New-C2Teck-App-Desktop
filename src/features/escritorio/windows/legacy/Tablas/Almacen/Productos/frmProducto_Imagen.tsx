@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function frmProducto_Imagen() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: frmProducto_Imagen</h2>
       <p>Original file copied to: <code>Tablas/Almacen/Productos/frmProducto_Imagen.vb</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>

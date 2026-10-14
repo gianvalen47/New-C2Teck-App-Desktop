@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function rpContCtasCtesPend() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: rpContCtasCtesPend</h2>
       <p>Original file copied to: <code>Contabilidad/Reportes/CtasCtesPend/OrigenDatos/rpContCtasCtesPend.xml</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>

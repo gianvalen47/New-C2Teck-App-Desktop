@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function rptProgramacionJob() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: rptProgramacionJob</h2>
       <p>Original file copied to: <code>Servicios/Indicadores/ProgramacionJob/Impresion/rptProgramacionJob.vb</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>

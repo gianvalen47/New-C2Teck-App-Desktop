@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function frmFactura_Cuotas() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: frmFactura_Cuotas</h2>
       <p>Original file copied to: <code>Ventas/Facturas/frmFactura_Cuotas.vb</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>

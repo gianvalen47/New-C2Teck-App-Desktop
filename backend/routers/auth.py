@@ -1,7 +1,7 @@
 import json
 import os
 import re
-from datetime import date
+from datetime import date, timedelta
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 
@@ -111,6 +111,7 @@ DEFAULT_TIPO_CAMBIO_VENTA = _get_default_float("SIGECOM_TIPO_CAMBIO_VENTA", "3.3
 class LoginRequest(BaseModel):
     username: str
     password: str
+    fecha: date | None = None
 
 
 class EmpresaAsignada(BaseModel):
@@ -134,6 +135,23 @@ class CompanySwitchRequest(BaseModel):
     codigo: str | None = None
     cod_emp: str | None = None
     empresa: str | None = None
+
+
+@router.get("/auth/tipo-cambio")
+def get_tipo_cambio(fecha: date, empresa: str | None = None):
+    resultado = _fetch_latest_tipo_cambio(fecha, company_code=empresa)
+    if resultado is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No se encontró un tipo de cambio reciente para la fecha seleccionada.",
+        )
+    tipo_cambio, fecha_tipo_cambio = resultado
+    return {
+        "fecha_transaccion": fecha.strftime("%d/%m/%Y"),
+        "fecha_tipo_cambio": fecha_tipo_cambio.strftime("%d/%m/%Y"),
+        "tipo_cambio_compra": tipo_cambio[0],
+        "tipo_cambio_venta": tipo_cambio[1],
+    }
 
 
 def _normalize_empresa(item) -> EmpresaAsignada | None:
@@ -269,6 +287,16 @@ def _fetch_legacy_tipo_cambio(moneda: str, fecha: str, company_code: str | None 
     return float(compra), float(venta)
 
 
+def _fetch_latest_tipo_cambio(fecha: date, company_code: str | None = None):
+    for days_ago in range(8):
+        fecha_candidata = fecha - timedelta(days=days_ago)
+        fecha_legacy = fecha_candidata.strftime("%d/%m/%Y")
+        tipo_cambio = _fetch_legacy_tipo_cambio("US", fecha_legacy, company_code=company_code)
+        if tipo_cambio and tipo_cambio[0] > 0 and tipo_cambio[1] > 0:
+            return tipo_cambio, fecha_candidata
+    return None
+
+
 def _get_empresas_asignadas(username: str) -> list[EmpresaAsignada]:
     raw = os.getenv("SIGECOM_EMPRESAS_ASIGNADAS", "").strip()
     if raw:
@@ -365,7 +393,7 @@ def login(payload: LoginRequest):
     local_validated = _validate_local_user_credentials(user, password)
     empresas = _get_empresas_asignadas(user)
     empresa_actual = empresas[0] if empresas else None
-    fecha = date.today().strftime("%d/%m/%Y")
+    fecha = (payload.fecha or date.today()).strftime("%d/%m/%Y")
 
     # Try to validate against legacy adapter / WCF if configured.
     if is_legacy_source_enabled():
@@ -421,10 +449,19 @@ def login(payload: LoginRequest):
                 empresa_actual = empresas[0] if empresas else empresa_actual
 
     # Prefer fetching tipo cambio with the active company context when available
-    tipo_cambio = _fetch_legacy_tipo_cambio("US", fecha, company_code=empresa_actual.codigo if empresa_actual else None) or (
-        DEFAULT_TIPO_CAMBIO_COMPRA,
-        DEFAULT_TIPO_CAMBIO_VENTA,
+    tipo_cambio_resultado = _fetch_latest_tipo_cambio(
+        payload.fecha or date.today(),
+        company_code=empresa_actual.codigo if empresa_actual else None,
     )
+    if tipo_cambio_resultado is None:
+        if payload.fecha:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="No existe Tipo de Cambio para esta fecha, no puede ingresar.",
+            )
+        tipo_cambio = (DEFAULT_TIPO_CAMBIO_COMPRA, DEFAULT_TIPO_CAMBIO_VENTA)
+    else:
+        tipo_cambio, _fecha_tipo_cambio = tipo_cambio_resultado
 
     # Do not override perfil based on username; prefer the real value returned
     # by the legacy adapter/service when available.

@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function rptMovAlmacenNumDoc() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: rptMovAlmacenNumDoc</h2>
       <p>Original file copied to: <code>Almacen/Movimientos/Documentos/Imprimir/rptMovAlmacenNumDoc.vb</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>

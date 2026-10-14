@@ -88,6 +88,103 @@ def test_session_uses_real_legacy_exchange_rate_when_adapter_provides_it(monkeyp
     assert payload["tipo_cambio_venta"] == 3.36
 
 
+def test_exchange_rate_lookup_uses_selected_date_and_company(monkeypatch):
+    import routers.auth as auth_module
+
+    requested = {}
+
+    def fake_fetch_tipo_cambio(moneda, fecha, company_code=None):
+        requested.update(moneda=moneda, fecha=fecha, company_code=company_code)
+        return 3.448, 3.457
+
+    monkeypatch.setattr(auth_module, "fetch_tipo_cambio_legacy", fake_fetch_tipo_cambio)
+
+    response = TestClient(app).get(
+        "/api/v1/auth/tipo-cambio",
+        params={"fecha": "2026-10-12", "empresa": "08"},
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "fecha_transaccion": "12/10/2026",
+        "fecha_tipo_cambio": "12/10/2026",
+        "tipo_cambio_compra": 3.448,
+        "tipo_cambio_venta": 3.457,
+    }
+    assert requested == {"moneda": "US", "fecha": "12/10/2026", "company_code": "08"}
+
+
+def test_exchange_rate_lookup_uses_the_latest_prior_available_date(monkeypatch):
+    import routers.auth as auth_module
+
+    requested_dates = []
+
+    def fake_fetch_tipo_cambio(moneda, fecha, company_code=None):
+        requested_dates.append(fecha)
+        if fecha in {"12/10/2026", "11/10/2026"}:
+            return 0, 0
+        return 3.448, 3.457
+
+    monkeypatch.setattr(auth_module, "fetch_tipo_cambio_legacy", fake_fetch_tipo_cambio)
+
+    response = TestClient(app).get(
+        "/api/v1/auth/tipo-cambio",
+        params={"fecha": "2026-10-12"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["fecha_transaccion"] == "12/10/2026"
+    assert response.json()["fecha_tipo_cambio"] == "10/10/2026"
+    assert response.json()["tipo_cambio_venta"] == 3.457
+    assert requested_dates == ["12/10/2026", "11/10/2026", "10/10/2026"]
+
+
+def test_login_persists_the_selected_process_date_and_exchange_rate(monkeypatch):
+    import routers.auth as auth_module
+
+    def fake_validate_user(username: str, password: str, company_code=None):
+        return {"username": username, "perfil": "Usuario", "empresas": [{"codigo": "08", "nombre": "Empresa 08"}]}
+
+    requests = []
+
+    def fake_fetch_tipo_cambio(moneda, fecha, company_code=None):
+        requests.append((moneda, fecha, company_code))
+        return 3.448, 3.457
+
+    monkeypatch.setattr(auth_module, "validate_user_legacy", fake_validate_user)
+    monkeypatch.setattr(auth_module, "fetch_tipo_cambio_legacy", fake_fetch_tipo_cambio)
+    monkeypatch.setattr(auth_module, "is_legacy_source_enabled", lambda: True)
+
+    response = TestClient(app).post(
+        "/api/v1/auth/login",
+        json={"username": "usuario_real", "password": "ClaveActual", "fecha": "2026-10-12"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["fecha_transaccion"] == "12/10/2026"
+    assert response.json()["tipo_cambio_venta"] == 3.457
+    assert requests == [("US", "12/10/2026", "08")]
+
+
+def test_login_rejects_selected_date_without_exchange_rate(monkeypatch):
+    import routers.auth as auth_module
+
+    def fake_validate_user(username: str, password: str, company_code=None):
+        return {"username": username, "perfil": "Usuario", "empresas": [{"codigo": "08", "nombre": "Empresa 08"}]}
+
+    monkeypatch.setattr(auth_module, "validate_user_legacy", fake_validate_user)
+    monkeypatch.setattr(auth_module, "fetch_tipo_cambio_legacy", lambda moneda, fecha, company_code=None: None)
+    monkeypatch.setattr(auth_module, "is_legacy_source_enabled", lambda: True)
+
+    response = TestClient(app).post(
+        "/api/v1/auth/login",
+        json={"username": "usuario_real", "password": "ClaveActual", "fecha": "2026-10-12"},
+    )
+
+    assert response.status_code == 400
+    assert response.json()["detail"] == "No existe Tipo de Cambio para esta fecha, no puede ingresar."
+
+
 def test_multiempresa_and_company_switch_endpoints_work(monkeypatch):
     import routers.auth as auth_module
 

@@ -408,11 +408,35 @@ export async function syncSessionTipoCambio(): Promise<number | null> {
   }
 }
 
-export async function login(username: string, password: string): Promise<SessionInfo> {
+export async function fetchTipoCambio(
+  fecha: string,
+  empresa?: string,
+): Promise<Pick<SessionInfo, "tipo_cambio_compra" | "tipo_cambio_venta">> {
+  const params = new URLSearchParams({ fecha });
+  if (empresa) params.set("empresa", empresa);
+  const url = `${API_BASE_URL}${API_V1_PREFIX}/auth/tipo-cambio?${params.toString()}`;
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error("No se pudo consultar el tipo de cambio para la fecha seleccionada.");
+  }
+  const payload = await response.json();
+  const compra = Number(payload.tipo_cambio_compra);
+  const venta = Number(payload.tipo_cambio_venta);
+  if (!Number.isFinite(compra) || !Number.isFinite(venta) || compra <= 0 || venta <= 0) {
+    throw new Error("El servicio devolvió un tipo de cambio no válido.");
+  }
+  return { tipo_cambio_compra: compra, tipo_cambio_venta: venta };
+}
+
+export async function login(
+  username: string,
+  password: string,
+  fecha?: string,
+): Promise<SessionInfo> {
   const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, password, ...(fecha ? { fecha } : {}) }),
   });
 
   if (!response.ok) {

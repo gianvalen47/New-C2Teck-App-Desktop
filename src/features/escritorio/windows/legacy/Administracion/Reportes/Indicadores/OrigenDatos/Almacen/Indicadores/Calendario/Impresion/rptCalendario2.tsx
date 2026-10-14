@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function rptCalendario2() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: rptCalendario2</h2>
       <p>Original file copied to: <code>Administracion/Reportes/Indicadores/OrigenDatos/Almacen/Indicadores/Calendario/Impresion/rptCalendario2.vb</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>

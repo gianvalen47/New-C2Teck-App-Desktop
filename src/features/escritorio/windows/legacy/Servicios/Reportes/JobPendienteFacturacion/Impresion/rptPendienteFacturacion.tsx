@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function rptPendienteFacturacion() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: rptPendienteFacturacion</h2>
       <p>Original file copied to: <code>Servicios/Reportes/JobPendienteFacturacion/Impresion/rptPendienteFacturacion.vb</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>

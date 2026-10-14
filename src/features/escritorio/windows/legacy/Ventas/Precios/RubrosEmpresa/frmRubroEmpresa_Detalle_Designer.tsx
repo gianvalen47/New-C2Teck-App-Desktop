@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function frmRubroEmpresa_Detalle_Designer() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: frmRubroEmpresa_Detalle_Designer</h2>
       <p>Original file copied to: <code>Ventas/Precios/RubrosEmpresa/frmRubroEmpresa_Detalle.Designer.vb</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>

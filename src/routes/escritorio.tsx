@@ -39,7 +39,7 @@ import {
   ChevronRight, AlertTriangle as AlertIcon, PackageCheck as PackageAlert, CheckCheck, X as CloseIcon
 } from "lucide-react";
 
-import { fetchSession, login, type SessionInfo } from "@/lib/sigecoom-api";
+import { fetchSession, fetchTipoCambio, login, type SessionInfo } from "@/lib/sigecoom-api";
 import { SessionProvider, useSession } from "@/context/SessionContext";
 import { CompanyPickerModal, type Company } from "@/features/escritorio/windows/Logueo/CambiarEmpresa";
 
@@ -58,6 +58,22 @@ const TABS = [
   "Servicios", "Compras", "Personal", "Rondas", "Contabilidad", "Telefonía",
   "CRM", "Activos", "Tablas", "Logueo", "Administración", "Ayuda",
 ];
+
+function toDateInputValue(value: string): string {
+  const legacyDate = value.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (legacyDate) {
+    const [, day, month, year] = legacyDate;
+    return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+  }
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
+
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return "";
+  const year = parsed.getFullYear();
+  const month = String(parsed.getMonth() + 1).padStart(2, "0");
+  const day = String(parsed.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
 
 function SessionStatus() {
   const [s, setS] = useState<SessionInfo | null>(null);
@@ -189,17 +205,17 @@ const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
   // Indicadores
   tablero: "Indicadores1",
   // Precios
-  "precios cliente": "cotizacion",
-  "precio oferta": "cotizacion",
-  "precio lista": "cotizacion",
+  "precios cliente": "precioCore",
+  "precio oferta": "Pagos",
+  "precio lista": "Maximun",
   "precio fabricantes": "preciofabricantes",
   "factores rubros": "factoresrubros",
   // Reportes
 
   "registro de venta": "RegistroAuxiliar",
-  registro: "Factura",
+  registro: "registro",
   "registro auxiliar": "RegistroAuxiliar",
-  "resumen registro": "Factura",
+  "resumen registro": "registroResumen",
 
   reclamos: "ReclamoGarantia",
   "guias remision": "GuiaRemision",
@@ -493,9 +509,9 @@ const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
   "rubros x empresa": "detalle",
 
   // Ayuda
-  solicitud: "Mail",
-  "informacion cambios": "doc",
-  acerca: "Info",
+  solicitud: "ImgSendReceive",
+  "informacion cambios": "observacion",
+  acerca: "about",
 };
 
 const normalizeSmallColorIconKey = (value: string) =>
@@ -1466,6 +1482,8 @@ function DesktopAppInner() {
   const [ribbonMenu, setRibbonMenu] = useState<{ x: number; y: number } | null>(null);
   const [fecha, setFecha] = useState("");
   const [tc, setTc] = useState("");
+  const [tcLoading, setTcLoading] = useState(false);
+  const tipoCambioRequestId = useRef(0);
   const [sucursal, setSucursal] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [capsOn, setCapsOn] = useState(false);
@@ -1509,7 +1527,7 @@ function DesktopAppInner() {
         } else {
           setUser(session.username || "");
         }
-        setFecha(session.fecha_transaccion || "");
+        setFecha(toDateInputValue(new Date().toLocaleDateString("es-PE")));
 
         // Set selected company from session if provided by backend
         if (session.empresa_actual) {
@@ -1536,7 +1554,7 @@ function DesktopAppInner() {
         // Prefer venta on the login window, otherwise use compra
         const sessionTc = loginMode ? session.tipo_cambio_venta : session.tipo_cambio_compra;
         if (sessionTc != null && Number.isFinite(sessionTc)) {
-          setTc(String(sessionTc));
+          setTc(sessionTc.toFixed(3));
         } else {
           // if adapter already set tc, keep it; otherwise clear
           setTc((prev) => (prev ? prev : ""));
@@ -1556,10 +1574,41 @@ function DesktopAppInner() {
   }, [isDesktop, loginMode]);
 
   useEffect(() => {
+    if (!isDesktop || desktopAuthenticated || !fecha) return;
+
+    let activeRequest = true;
+    const requestId = ++tipoCambioRequestId.current;
+    setTc("");
+    setTcLoading(true);
+
+    fetchTipoCambio(fecha, selectedCompany?.codigo)
+      .then((tipoCambio) => {
+        if (!activeRequest || requestId !== tipoCambioRequestId.current) return;
+        setTc(tipoCambio.tipo_cambio_venta.toFixed(3));
+      })
+      .catch((error: unknown) => {
+        if (!activeRequest || requestId !== tipoCambioRequestId.current) return;
+        setTc("");
+        toast.error("No se pudo consultar el tipo de cambio", {
+          description: error instanceof Error ? error.message : "Verifica la conexión con SIGECOM.",
+        });
+      })
+      .finally(() => {
+        if (activeRequest && requestId === tipoCambioRequestId.current) setTcLoading(false);
+      });
+
+    return () => {
+      activeRequest = false;
+      if (requestId === tipoCambioRequestId.current) tipoCambioRequestId.current++;
+    };
+  }, [desktopAuthenticated, fecha, isDesktop, selectedCompany?.codigo]);
+
+  useEffect(() => {
     if (!popupLabel) {
-      document.title = "Systeck (Versión 10.6.30) — C2TECK S.A.C.";
+      const companyName = selectedCompany?.nombre.trim() || "C2TECK S.A.C.";
+      document.title = `Systeck (Versión 10.6.30) — ${companyName}`;
     }
-  }, [popupLabel]);
+  }, [popupLabel, selectedCompany?.nombre]);
 
   useEffect(() => {
     if (!ribbonMenu) return;
@@ -1577,13 +1626,21 @@ function DesktopAppInner() {
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!fecha) {
+      toast.error("Selecciona la fecha de proceso.");
+      return;
+    }
+    if (tcLoading || !Number.isFinite(Number(tc)) || Number(tc) <= 0) {
+      toast.error("No existe Tipo de Cambio para esta fecha, no puede ingresar.");
+      return;
+    }
     setBusy(true);
 
     try {
-      const session = await login(user.trim(), pass);
+      const session = await login(user.trim(), pass, fecha);
       localStorage.setItem("sigecoom_session", JSON.stringify(session));
       setUser(session.username || "");
-      setFecha(session.fecha_transaccion || fecha);
+      setFecha(toDateInputValue(session.fecha_transaccion) || fecha);
 
       // Set selected company from session if provided
       if (session.empresa_actual) {
@@ -1601,7 +1658,7 @@ function DesktopAppInner() {
 
       const loginTc = session.tipo_cambio_venta ?? session.tipo_cambio_compra;
       if (loginTc != null && Number.isFinite(loginTc)) {
-        setTc(String(loginTc));
+        setTc(loginTc.toFixed(3));
       } else {
         setTc("");
       }
@@ -1610,7 +1667,7 @@ function DesktopAppInner() {
       toast.success("Bienvenido a Systeck", { description: `Usuario ${session.username} · Perfil ${session.perfil}` });
       window.c2teckDesktop?.loginSuccess?.();
     } catch (error: any) {
-      toast.error("Credenciales inválidas", {
+      toast.error("No se pudo iniciar sesión", {
         description: error?.message ?? "No se pudo validar el usuario en el servicio SIGECOM original.",
       });
     } finally {
@@ -1652,7 +1709,7 @@ function DesktopAppInner() {
         onUserChange={setUser}
         onPassChange={setPass}
         onFechaChange={setFecha}
-        onTcChange={setTc}
+        tcLoading={tcLoading}
         onSucursalChange={setSucursal}
         onToggleShowPass={() => setShowPass((v) => !v)}
         onCapsChange={setCapsOn}
@@ -1700,28 +1757,10 @@ function DesktopAppInner() {
             }
           }}
         >
-          <div className="flex items-center gap-2 min-w-0" style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}>
-            <div className="h-7 w-7 rounded-lg bg-slate-900 grid place-items-center ring-1 ring-slate-300 shrink-0 shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_2px_6px_rgba(15,23,42,0.18)]">
-              <span className="font-black text-[11px] tracking-tighter text-white">C2</span>
-            </div>
-            <div className="flex flex-col leading-tight min-w-0">
-              <span className="font-semibold tracking-tight truncate text-[12px] text-slate-900">Systeck ERP <span className="opacity-60 font-normal">v10.6.3.0</span> <span className="ml-1 px-1 rounded bg-slate-900 text-white text-[9px] tracking-widest font-bold">ENTERPRISE</span></span>
-              <span className="text-[9.5px] text-slate-500 truncate flex items-center gap-1">
-                C2TECK S.A.C. <ChevronRight className="h-2.5 w-2.5" /> <b className="text-slate-900">{active}</b> <ChevronRight className="h-2.5 w-2.5" /> Módulo activo
-              </span>
-            </div>
+          <div className="absolute left-1/2 -translate-x-1/2 font-semibold tracking-tight text-[12px] text-slate-900">
+            Systeck ERP
           </div>
-          <div className="hidden md:flex items-center gap-1 mx-3 flex-1 justify-center max-w-[420px]" style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}>
-            <div className="flex items-center gap-1.5 w-full bg-slate-100 hover:bg-slate-200/70 focus-within:bg-white focus-within:ring-1 focus-within:ring-slate-400 border border-slate-300 rounded-lg px-2.5 py-1.5 transition-all shadow-[inset_0_1px_2px_rgba(15,23,42,0.06)]">
-              <Search className="h-3.5 w-3.5 text-slate-400" />
-              <input
-                placeholder="Buscar comandos, documentos, RUC, SKU…   Ctrl + K"
-                className="bg-transparent outline-none text-[11px] text-slate-900 placeholder:text-slate-400 flex-1 min-w-0"
-              />
-              <kbd className="text-[9px] opacity-60 border border-white/20 rounded px-1">⌘K</kbd>
-            </div>
-          </div>
-          <div className="flex items-center" style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}>
+          <div className="ml-auto flex items-center" style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}>
             <button onClick={toggleNotifications} aria-expanded={notificationsOpen && !notificationsClosing} title="Notificaciones" className={`group/notice h-10 w-10 grid place-items-center relative text-slate-700 transition-all duration-200 active:scale-90 ${notificationsOpen && !notificationsClosing ? "bg-slate-900/10" : "hover:bg-slate-900/5"}`}>
               <Bell className={`h-3.5 w-3.5 group-hover/notice:desktop-bell-ring ${notificationsOpen && !notificationsClosing ? "desktop-bell-ring" : ""}`} />
               {unreadCount > 0 && <span className="desktop-badge-pulse absolute right-1.5 top-1 flex h-4 min-w-4 items-center justify-center rounded-full border border-white bg-red-500 px-1 text-[8px] font-bold text-white shadow-lg">{unreadCount}</span>}
@@ -1781,9 +1820,10 @@ function DesktopAppInner() {
         {/* Quick access + tabs */}
         <div
           onContextMenu={(e) => { e.preventDefault(); setRibbonMenu({ x: e.clientX, y: e.clientY }); }}
-          className="shrink-0 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] border-b border-slate-400/40 flex items-stretch relative z-30"
+          className="shrink-0 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] flex items-stretch relative z-30"
         >
           <AppOrb
+            companyName={selectedCompany?.nombre}
             onSwitchCompany={() => {
               setCompanyPickerOpen(true);
               toast.success("Empresa", { description: "Se abrió la selección de empresa." });
@@ -1985,7 +2025,7 @@ function DesktopAppInner() {
           onUserChange={setUser}
           onPassChange={setPass}
           onFechaChange={setFecha}
-          onTcChange={setTc}
+          tcLoading={tcLoading}
           onSucursalChange={setSucursal}
           onToggleShowPass={() => setShowPass((v) => !v)}
           onCapsChange={setCapsOn}
@@ -2017,7 +2057,7 @@ function DesktopLogin({
   onUserChange,
   onPassChange,
   onFechaChange,
-  onTcChange,
+  tcLoading,
   onSucursalChange,
   onToggleShowPass,
   onCapsChange,
@@ -2034,7 +2074,7 @@ function DesktopLogin({
   onUserChange: (value: string) => void;
   onPassChange: (value: string) => void;
   onFechaChange: (value: string) => void;
-  onTcChange: (value: string) => void;
+  tcLoading: boolean;
   onSucursalChange: (value: string) => void;
   onToggleShowPass: () => void;
   onCapsChange: (value: boolean) => void;
@@ -2053,18 +2093,10 @@ function DesktopLogin({
             }
           }}
         >
-          <div className="flex items-center gap-2 min-w-0" style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}>
-            <div className="h-8 w-8 rounded-lg bg-slate-900 grid place-items-center ring-1 ring-slate-300 shrink-0 shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_2px_6px_rgba(15,23,42,0.18)]">
-              <span className="font-black text-[11px] tracking-tighter text-white">C2</span>
-            </div>
-            <div className="flex flex-col leading-tight min-w-0">
-              <span className="font-semibold tracking-tight truncate text-[12px] text-slate-900">Systeck ERP <span className="opacity-60 font-normal">v10.6.3.0</span> <span className="ml-1 px-1 rounded bg-slate-900 text-white text-[9px] tracking-widest font-bold">ENTERPRISE</span></span>
-              <span className="text-[9.5px] text-slate-500 truncate flex items-center gap-1">
-                C2TECK S.A.C. <ChevronRight className="h-2.5 w-2.5" /> Acceso al Sistema <ChevronRight className="h-2.5 w-2.5" /> Inicio de sesión
-              </span>
-            </div>
+          <div className="absolute left-1/2 -translate-x-1/2 font-semibold tracking-tight text-[12px] text-slate-900">
+            Systeck ERP
           </div>
-          <div className="flex items-center" style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}>
+          <div className="ml-auto flex items-center" style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}>
             <button
               type="button"
               onClick={() => window.c2teckDesktop?.minimize?.()}
@@ -2130,12 +2162,19 @@ function DesktopLogin({
               <label className="flex items-center gap-3">
                 <Calendar className="h-3.5 w-3.5 text-slate-500 shrink-0" />
                 <span className="text-[11.5px] text-slate-700 w-20 shrink-0">Fecha Proceso</span>
-                <input value={fecha} onChange={(e) => onFechaChange(e.target.value)} className={inputCls} />
+                <input
+                  type="date"
+                  lang="es-PE"
+                  required
+                  value={fecha}
+                  onChange={(e) => onFechaChange(e.target.value)}
+                  className={inputCls}
+                />
               </label>
               <label className="flex items-center gap-3">
                 <DollarSign className="h-3.5 w-3.5 text-slate-500 shrink-0" />
                 <span className="text-[11.5px] text-slate-700 w-20 shrink-0">Tipo de Cambio</span>
-                <input value={tc} onChange={(e) => onTcChange(e.target.value)} className={inputCls} />
+                <input value={tc} readOnly aria-busy={tcLoading} placeholder={tcLoading ? "Consultando..." : "0.000"} className={inputCls} />
               </label>
               <label className="flex items-center gap-3">
                 <MapPin className="h-3.5 w-3.5 text-slate-500 shrink-0" />
@@ -2450,7 +2489,7 @@ function CollapsedGroupButton({ group, onOpen }: { group: RibbonGroup; onOpen: (
   );
 }
 
-function AppOrb({ onSwitchCompany, onCloseApp }: { onSwitchCompany: () => void; onCloseApp: () => void }) {
+function AppOrb({ companyName, onSwitchCompany, onCloseApp }: { companyName?: string; onSwitchCompany: () => void; onCloseApp: () => void }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -2460,32 +2499,23 @@ function AppOrb({ onSwitchCompany, onCloseApp }: { onSwitchCompany: () => void; 
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
   return (
-    <div ref={ref} className="relative shrink-0 flex items-center pl-0 pr-0">
+    <div ref={ref} className="relative z-40 shrink-0 flex items-center pl-0 pr-0">
       <button
         onClick={() => setOpen(v => !v)}
         title="Menú de aplicación"
-        className={`group relative h-9 w-9 rounded-full grid place-items-center transition-all duration-200
-          ring-1 ring-slate-900/40
-          bg-[radial-gradient(circle_at_32%_28%,#FFFFFF_0%,#E4ECF5_35%,#A9B8CB_70%,#6B7C93_100%)]
-          shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.9),inset_0_-3px_5px_rgba(30,45,70,0.45),inset_0_0_0_1px_rgba(255,255,255,0.15),0_2px_3px_rgba(0,0,0,0.35),0_4px_10px_rgba(0,0,0,0.25)]
-          hover:bg-[radial-gradient(circle_at_32%_28%,#FFF9D6_0%,#FFD966_35%,#C9962A_72%,#7A5A10_100%)]
-          hover:ring-amber-700/60
-          hover:shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.95),inset_0_-3px_6px_rgba(90,55,5,0.55),inset_0_0_0_1px_rgba(255,220,120,0.35),0_0_14px_rgba(245,196,64,0.6),0_2px_4px_rgba(0,0,0,0.4)]
-          active:translate-y-[1px] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.4),0_1px_2px_rgba(0,0,0,0.3)]
-          ${open ? "ring-2 ring-amber-500 bg-[radial-gradient(circle_at_32%_28%,#FFF9D6_0%,#FFD966_35%,#C9962A_72%,#7A5A10_100%)]" : ""}`}
+        style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}
+        className={`group relative -translate-y-4.5 grid h-9 w-9 place-items-center rounded-full ring-1 ring-slate-900/40 bg-[radial-gradient(circle_at_32%_28%,#FFFFFF_0%,#E4ECF5_35%,#A9B8CB_70%,#6B7C93_100%)] shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.9),inset_0_-3px_5px_rgba(30,45,70,0.45),inset_0_0_0_1px_rgba(255,255,255,0.15),0_2px_3px_rgba(0,0,0,0.35),0_4px_10px_rgba(0,0,0,0.25)] transition-all duration-200 hover:bg-[radial-gradient(circle_at_32%_28%,#FFF9D6_0%,#FFD966_35%,#C9962A_72%,#7A5A10_100%)] hover:ring-amber-700/60 hover:shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.95),inset_0_-3px_6px_rgba(90,55,5,0.55),inset_0_0_0_1px_rgba(255,220,120,0.35),0_0_14px_rgba(245,196,64,0.6),0_2px_4px_rgba(0,0,0,0.4)] ${open ? "ring-2 ring-amber-500 bg-[radial-gradient(circle_at_32%_28%,#FFF9D6_0%,#FFD966_35%,#C9962A_72%,#7A5A10_100%)]" : ""}`}
       >
         <img src={systeckIcon} alt="Systeck" className="relative z-10 h-6 w-6 object-contain drop-shadow-[0_1px_1px_rgba(0,0,0,0.55)]" />
-        {/* Specular top highlight (glassy sheen) */}
-        <span aria-hidden className="pointer-events-none absolute inset-0 rounded-full overflow-hidden">
+        <span aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden rounded-full">
           <span className="absolute left-[14%] right-[14%] top-[6%] h-[42%] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.85)_0%,rgba(255,255,255,0.35)_45%,rgba(255,255,255,0)_75%)] blur-[0.5px]" />
         </span>
-        {/* Bottom inner rim reflection */}
         <span aria-hidden className="pointer-events-none absolute inset-0 rounded-full shadow-[inset_0_-1px_0_rgba(255,255,255,0.25)]" />
       </button>
       {open && (
-        <div className="absolute top-full left-1 mt-1 z-[100] w-60 rounded-md border border-slate-400/70 bg-[#F8FAFC] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+        <div className="absolute top-[calc(100%-1.1rem)] left-1 mt-1 z-[100] w-60 rounded-md border border-slate-400/70 bg-[#F8FAFC] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
           <div className="px-3 py-2 bg-gradient-to-b from-[#4A6789] to-[#243B55] text-white text-[11px] font-semibold tracking-wide flex items-center gap-2">
-            <Cpu className="h-3.5 w-3.5 text-amber-300" /> Systeck — C2TECK S.A.C.
+            <Cpu className="h-3.5 w-3.5 text-amber-300" /> Systeck — {companyName?.trim() || "C2TECK S.A.C."}
           </div>
           <button
             onClick={() => { setOpen(false); onSwitchCompany(); }}
@@ -2534,8 +2564,8 @@ function TabsCarousel({
   };
 
   return (
-    <div className="flex items-center px-2 pt-1 gap-0 overflow-hidden">
-      <div className="flex items-center gap-1 pr-1 shrink-0">
+    <div className="flex h-full items-center px-2 pt-1 gap-0 overflow-hidden">
+      <div className="flex h-full items-center gap-1 pr-1 shrink-0">
         <button type="button" className="h-5 w-5 rounded hover:bg-white/60 grid place-items-center flex-shrink-0">
           <ChevronDown className="h-3 w-3" />
         </button>
@@ -2551,7 +2581,7 @@ function TabsCarousel({
             className={[
               "relative flex-1 px-2.5 py-1.5 text-[11px] font-medium rounded-t border-x border-t transition-colors text-center whitespace-nowrap select-none",
               isActive
-                ? "bg-[#F3F6FA] border-slate-400/60 text-slate-900 font-semibold -mb-px z-10"
+                ? "bg-[#F3F6FA] border-slate-400/60 text-slate-900 font-semibold -mb-[2px] z-10"
                 : "bg-transparent border-transparent text-slate-600 hover:bg-white/40 hover:text-slate-800",
             ].join(" ")}
           >

@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function frmRepContabilidad_Designer() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: frmRepContabilidad_Designer</h2>
       <p>Original file copied to: <code>Gerencia/Contabilidad/frmRepContabilidad.Designer.vb</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>

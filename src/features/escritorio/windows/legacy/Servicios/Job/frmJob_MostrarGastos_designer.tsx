@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function frmJob_MostrarGastos_designer() {
   return (
-    <div style={padding:20}>
+    <div style={{ padding: 20 }}>
       <h2>Legacy form: frmJob_MostrarGastos_designer</h2>
       <p>Original file copied to: <code>Servicios/Job/frmJob_MostrarGastos.designer.vb</code></p>
       <p>This component is a placeholder. Implement React UI here.</p>
