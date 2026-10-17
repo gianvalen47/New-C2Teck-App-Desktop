@@ -68,3 +68,7 @@ export function ReporteMensualClienteList() {
     </WindowShell>
   );
 }
+
+export function ReporteMensualCliente() {
+  return <ReporteMensualClienteList />;
+}

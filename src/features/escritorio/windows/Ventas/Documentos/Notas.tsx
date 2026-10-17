@@ -1048,3 +1048,6 @@ export function Notas() {
 
 export default Notas;
 
+export function NuevaNota() {
+  return <NotaVentaForm onClose={() => {}} onSaved={() => {}} />;
+}

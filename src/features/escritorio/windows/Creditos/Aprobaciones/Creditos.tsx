@@ -46,3 +46,7 @@ export function AprobacionCreditosList() {
     </WindowShell>
   );
 }
+
+export function AprobacionCreditos() {
+  return <AprobacionCreditosList />;
+}

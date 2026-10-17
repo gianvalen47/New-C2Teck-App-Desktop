@@ -1,7 +1,7 @@
 
 
 
-export function ValeMaterialesReport() {
+export function ValeMaterialesReportList() {
     return <ReportFrame>
         <fieldset className="border border-slate-400 p-3">
             <legend className="text-[11px] font-bold">Datos de Reporte</legend>
@@ -27,3 +27,7 @@ export function ValeMaterialesReport() {
         </div>
     </fieldset>
 </ReportFrame>; }
+
+export function ValeMaterialesReport() {
+  return <ValeMaterialesReportList />;
+}

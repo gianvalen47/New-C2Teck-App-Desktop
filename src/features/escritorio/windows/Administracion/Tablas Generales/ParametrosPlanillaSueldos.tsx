@@ -4,3 +4,7 @@ import { ConfigTabla } from "@/features/escritorio/windows/shared/LegacySupport"
 export function ParametrosPlanillaSueldosList() {
   return <ConfigTabla title="Parámetros Planilla de Sueldos" columns={["Parámetro", "Valor", "Vigente desde", "Descripción"]} />;
 }
+
+export function ParametrosPlanillaSueldosWindow() {
+  return <ParametrosPlanillaSueldosList />;
+}

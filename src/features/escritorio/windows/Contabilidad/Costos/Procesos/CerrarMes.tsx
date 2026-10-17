@@ -4,3 +4,7 @@ import { ProcesoLoteList } from "@/features/escritorio/windows/shared/LegacySupp
 export function CerrarMesList() {
   return <ProcesoLoteList label="Cerrar Mes" subtitle="Congela el mes comercial: bloquea documentos y libera datos para auditoría." />;
 }
+
+export function CerrarMesCostosWindow() {
+  return <CerrarMesList />;
+}

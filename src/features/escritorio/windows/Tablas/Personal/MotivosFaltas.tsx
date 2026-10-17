@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function MotivosFaltasList() {
   return <MantenimientoCRUDList label="Motivos de Faltas" columns={["Código", "Motivo", "Justificada", "Descuenta", "Estado"]} />;
 }
+
+export function MotivosFaltasWindow() {
+  return <MotivosFaltasList />;
+}

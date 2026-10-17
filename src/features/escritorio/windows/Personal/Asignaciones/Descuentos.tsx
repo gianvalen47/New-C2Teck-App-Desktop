@@ -4,3 +4,7 @@ import { PersonalTiempoList } from "@/features/escritorio/windows/Personal/Asign
 export function DescuentosList() {
   return <PersonalTiempoList title="Descuentos" />;
 }
+
+export function DescuentosWindow() {
+  return <DescuentosList />;
+}

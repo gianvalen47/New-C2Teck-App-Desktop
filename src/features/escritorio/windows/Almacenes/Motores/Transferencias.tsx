@@ -113,3 +113,7 @@ export function MemosTransferenciasInternasList() {
     </div>
   );
 }
+
+export function MemosTransferenciasInternas() {
+  return <MemosTransferenciasInternasList />;
+}

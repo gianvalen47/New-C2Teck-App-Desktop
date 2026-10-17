@@ -4,3 +4,7 @@ import { PersonalTiempoList } from "@/features/escritorio/windows/Personal/Asign
 export function CronogramaMinaList() {
   return <PersonalTiempoList title="Cronograma Mina" />;
 }
+
+export function CronogramaMinaWindow() {
+  return <CronogramaMinaList />;
+}

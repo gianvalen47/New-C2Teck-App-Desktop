@@ -51,6 +51,7 @@ export function ProductosList() {
     } finally {
       setLoading(false);
     }
+
   };
 
   useEffect(() => {
@@ -278,3 +279,10 @@ export function ProductosList() {
   );
 }
 
+export function MantenimientoProductosList() {
+  return <ProductosList />;
+}
+
+export function MantenimientoProductos() {
+  return <MantenimientoProductosList />;
+}

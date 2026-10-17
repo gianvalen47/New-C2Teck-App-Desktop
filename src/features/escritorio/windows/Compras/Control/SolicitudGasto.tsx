@@ -57,3 +57,7 @@ export function SolicitudGastoList() {
     />
   );
 }
+
+export function SolicitudGasto() {
+  return <SolicitudGastoList />;
+}

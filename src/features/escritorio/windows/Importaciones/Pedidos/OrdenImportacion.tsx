@@ -197,3 +197,9 @@ export function OrdenImportacionList() {
     </WindowShell>
   );
 }
+
+export function OrdenImportacion() {
+  return (
+    <OrdenImportacionList />
+  );
+}

@@ -4,3 +4,7 @@ import { EncuestaWin } from "@/features/escritorio/windows/Administracion/Encues
 export function IndicadoresEncuesta() {
   return <EncuestaWin title="Indicadores de Encuesta" />;
 }
+
+export function IndicadoresEncuestaWindow() {
+  return <IndicadoresEncuesta />;
+}

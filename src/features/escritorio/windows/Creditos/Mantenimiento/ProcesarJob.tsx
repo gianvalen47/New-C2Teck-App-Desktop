@@ -4,3 +4,7 @@ import { ProcesoLoteList } from "@/features/escritorio/windows/shared/LegacySupp
 export function ProcesarJobList() {
   return <ProcesoLoteList label="Procesar Job" subtitle="Procesa y vincula documentos pendientes asociados a créditos." />;
 }
+
+export function ProcesarJobWindow() {
+  return <ProcesarJobList />;
+}

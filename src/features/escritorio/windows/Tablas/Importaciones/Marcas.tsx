@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function MarcasList() {
   return <MantenimientoCRUDList label="Marcas" columns={["Código", "Marca", "Origen", "Estado"]} />;
 }
+
+export function MarcasWindow() {
+  return <MarcasList />;
+}

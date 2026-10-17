@@ -26,4 +26,6 @@ export function EncuestaWinList({ title }: { title: string }) {
   );
 }
 
-export const EncuestaWin = EncuestaWinList;
+export function EncuestaWin({ title }: { title: string }) {
+  return <EncuestaWinList title={title} />;
+}

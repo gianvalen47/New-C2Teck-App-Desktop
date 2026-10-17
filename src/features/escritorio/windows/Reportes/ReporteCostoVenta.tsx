@@ -29,3 +29,9 @@ export function ReporteCostoVentaList() {
     </WindowShell>
   );
 }
+
+export function ReporteCostoVenta() {
+  return (
+    <ReporteCostoVentaList />
+  );
+}

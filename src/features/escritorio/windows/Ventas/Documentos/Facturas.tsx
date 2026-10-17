@@ -52,7 +52,6 @@ import {
 import { Field, InlineField, YearMonthFields, DraggableFormWindow, CodeDescSelector, ESTADO_FILTER_OPTIONS } from "@/features/escritorio/windows/shared/uiComponents";
 import { inp, btn, btnPrimary, iconBtn, actionBtn, squareIconBtn, tbSep } from "@/features/escritorio/windows/uiStyles";
 
-
 const MESES = [
   "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO",
   "JULIO", "AGOSTO", "SETIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE",
@@ -1349,4 +1348,8 @@ export function FacturaVentaList() {
       {formWindowElements}
     </div>
   );
+}
+
+export function Factura() {
+  return <FacturaVentaList />;
 }

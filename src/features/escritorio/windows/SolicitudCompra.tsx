@@ -366,3 +366,7 @@ export function SolicitudCompraList() {
     </div>
   );
 }
+
+export function SolicitudCompra() {
+  return <SolicitudCompraList />;
+}

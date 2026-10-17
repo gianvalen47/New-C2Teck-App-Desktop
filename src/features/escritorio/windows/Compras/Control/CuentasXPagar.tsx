@@ -37,3 +37,7 @@ export function CtasXPagarList() {
     />
   );
 }
+
+export function CtasXPagar() {
+  return <CtasXPagarList />;
+}

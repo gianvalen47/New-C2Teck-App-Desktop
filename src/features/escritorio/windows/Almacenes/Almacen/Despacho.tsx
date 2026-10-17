@@ -1,3 +1,4 @@
+import { RegistryWindowList } from "@/features/escritorio/windows/shared/RegistryWindowList";
 import type { ReactNode } from "react";
 import {
   ArrowUpDown,
@@ -135,4 +136,8 @@ export function DespachoList2() {
       </div>
     </div>
   );
+}
+
+export function DespachoWindow({ title = "Despacho" }: { title?: string }) {
+  return <RegistryWindowList title={title} />;
 }

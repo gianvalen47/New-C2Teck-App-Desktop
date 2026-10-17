@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function CondicionDePagoList() {
   return <MantenimientoCRUDList label="Condición de Pago" columns={["Código", "Descripción", "Días", "Tipo", "Estado"]} />;
 }
+
+export function CondicionDePagoWindow() {
+  return <CondicionDePagoList />;
+}

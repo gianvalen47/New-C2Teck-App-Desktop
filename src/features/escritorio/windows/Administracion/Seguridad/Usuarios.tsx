@@ -51,3 +51,9 @@ export function UsuariosAdminList() {
     />
   );
 }
+
+export function UsuariosAdmin() {
+  return (
+    <UsuariosAdminList />
+  );
+}

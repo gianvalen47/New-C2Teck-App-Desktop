@@ -38,3 +38,9 @@ export function SesionesList() {
     />
   );
 }
+
+export function Sesiones() {
+  return (
+    <SesionesList />
+  );
+}

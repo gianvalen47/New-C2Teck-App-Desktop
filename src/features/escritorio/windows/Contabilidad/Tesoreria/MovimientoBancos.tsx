@@ -310,3 +310,7 @@ export function MovimientoBancosList() {
     </WindowShell>
   );
 }
+
+export function MovimientoBancos() {
+  return <MovimientoBancosList />;
+}

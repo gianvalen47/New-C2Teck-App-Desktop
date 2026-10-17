@@ -125,3 +125,7 @@ export function ChequeoFIList() {
     </div>
   );
 }
+
+export function ChequeoFI() {
+  return <ChequeoFIList />;
+}

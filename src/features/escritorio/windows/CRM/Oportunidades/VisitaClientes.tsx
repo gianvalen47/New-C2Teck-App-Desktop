@@ -4,3 +4,7 @@ import { CrmReporteDialog } from "@/features/escritorio/windows/Reportes/CrmRepo
 export function VisitaClientes() {
   return <CrmReporteDialog label="Visita Clientes" />;
 }
+
+export function VisitaClientesWindow() {
+  return <VisitaClientes />;
+}

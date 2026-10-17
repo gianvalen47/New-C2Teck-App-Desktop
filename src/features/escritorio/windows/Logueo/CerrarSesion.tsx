@@ -18,3 +18,9 @@ export function CerrarSesionList() {
     </WindowShell>
   );
 }
+
+export function CerrarSesion() {
+  return (
+    <CerrarSesionList />
+  );
+}

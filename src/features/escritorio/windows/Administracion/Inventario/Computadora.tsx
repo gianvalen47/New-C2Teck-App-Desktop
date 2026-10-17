@@ -18,3 +18,9 @@ export function ComputadoraInvList() {
     </WindowShell>
   );
 }
+
+export function ComputadoraInv() {
+  return (
+    <ComputadoraInvList />
+  );
+}

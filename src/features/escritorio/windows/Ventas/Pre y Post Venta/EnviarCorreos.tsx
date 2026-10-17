@@ -57,3 +57,9 @@ export function EnviarCorreosList() {
     </WindowShell>
   );
 }
+
+export function EnviarCorreos() {
+  return (
+    <EnviarCorreosList />
+  );
+}

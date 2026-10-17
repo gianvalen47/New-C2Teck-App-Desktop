@@ -1,3 +1,4 @@
+import { RegistryWindowList } from "@/features/escritorio/windows/shared/RegistryWindowList";
 import type { ReactNode } from "react";
 import { iconBtn, inp, btn, btnPrimary, tbSep } from "@/features/escritorio/windows/uiStyles";
 import {
@@ -137,4 +138,18 @@ export function DocumentosList() {
       </div>
     </div>
   );
+}
+
+export function ConsultaDocumentosVentaWindow() {
+  return <ConsultaDocumentosVentaList />;
+}
+
+export function DocumentoConsulta({ title = "Documento Consulta" }: { title?: string }) {
+  return <DocumentoConsultaList title={title} />;
+}
+export function DocumentoConsultaList({ title = "Documento Consulta " }: { title?: string }) {
+  return <RegistryWindowList title={title} />;
+}
+export function ConsultaDocumentosVentaList({ title = "Consulta Documentos Venta" }: { title?: string }) {
+  return <DocumentosList />;
 }

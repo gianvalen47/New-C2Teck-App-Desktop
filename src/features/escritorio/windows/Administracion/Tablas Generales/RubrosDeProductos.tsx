@@ -4,3 +4,7 @@ import { ConfigTabla } from "@/features/escritorio/windows/shared/LegacySupport"
 export function RubrosDeProductosList() {
   return <ConfigTabla title="Rubros de Productos" columns={["Código", "Rubro", "Cuenta contable", "Estado"]} />;
 }
+
+export function RubrosDeProductosWindow() {
+  return <RubrosDeProductosList />;
+}

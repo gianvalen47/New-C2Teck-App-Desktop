@@ -4,3 +4,7 @@ import { PuntosControlList } from "@/features/escritorio/windows/Rondas/Asignaci
 export function Rondas() {
   return <PuntosControlList title="Rondas" />;
 }
+
+export function RondasWindow() {
+  return <Rondas />;
+}

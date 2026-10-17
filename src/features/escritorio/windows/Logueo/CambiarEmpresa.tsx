@@ -282,3 +282,9 @@ export function CambiarEmpresaList() {
 }
 
 export default CambiarEmpresaList;
+
+export function CambiarEmpresa() {
+  return (
+    <CambiarEmpresaList />
+  );
+}

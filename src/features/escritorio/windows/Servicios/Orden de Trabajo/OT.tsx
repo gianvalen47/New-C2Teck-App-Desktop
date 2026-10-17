@@ -49,3 +49,9 @@ export function OrdenTrabajoList() {
     </WindowShell>
   );
 }
+
+export function OrdenTrabajo() {
+  return (
+    <OrdenTrabajoList />
+  );
+}

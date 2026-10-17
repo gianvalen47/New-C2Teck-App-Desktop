@@ -40,3 +40,7 @@ export function MarcacionOnlineList() {
     />
   );
 }
+
+export function MarcacionOnline() {
+  return <MarcacionOnlineList />;
+}

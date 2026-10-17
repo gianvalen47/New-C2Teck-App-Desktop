@@ -4,3 +4,7 @@ import { ProcesoLoteList } from "@/features/escritorio/windows/shared/LegacySupp
 export function DifTipoCambioList() {
   return <ProcesoLoteList label="Diferencia de Tipo de Cambio" subtitle="Calcula pérdidas / ganancias por diferencia en tipo de cambio del periodo." />;
 }
+
+export function DiferenciaTipoCambioWindow() {
+  return <DifTipoCambioList />;
+}

@@ -29,3 +29,7 @@ export function ReporteCtasXPagarUnidadList() {
     </WindowShell>
   );
 }
+
+export function ReporteCtasXPagarUnidad() {
+  return <ReporteCtasXPagarUnidadList />;
+}

@@ -24,3 +24,9 @@ export function ComputadoraAsignarList() {
     </WindowShell>
   );
 }
+
+export function ComputadoraAsignar() {
+  return (
+    <ComputadoraAsignarList />
+  );
+}

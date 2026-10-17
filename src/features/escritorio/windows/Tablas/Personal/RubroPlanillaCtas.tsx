@@ -4,3 +4,7 @@ import { ConfigTablaList } from "@/features/escritorio/windows/shared/LegacySupp
 export function RubroPlanillaCtasList() {
   return <ConfigTablaList title="Rubro Planilla Ctas" columns={["Rubro", "Cuenta Debe", "Cuenta Haber", "Estado"]} />;
 }
+
+export function RubroPlanillaCtasWindow() {
+  return <RubroPlanillaCtasList />;
+}

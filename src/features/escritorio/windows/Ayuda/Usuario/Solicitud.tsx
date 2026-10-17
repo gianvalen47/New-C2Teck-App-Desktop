@@ -22,3 +22,9 @@ export function SolicitudSoporteList() {
     </WindowShell>
   );
 }
+
+export function SolicitudSoporte() {
+  return (
+    <SolicitudSoporteList />
+  );
+}

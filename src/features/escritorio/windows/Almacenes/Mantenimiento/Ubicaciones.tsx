@@ -211,3 +211,6 @@ export function UbicacionesList() {
   );
 }
 
+export function Ubicaciones() {
+  return <UbicacionesList />;
+}

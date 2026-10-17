@@ -138,3 +138,9 @@ export function ReclamoGarantiaList() {
     </div>
   );
 }
+
+export function ReclamoGarantia() {
+  return (
+    <ReclamoGarantiaList />
+  );
+}

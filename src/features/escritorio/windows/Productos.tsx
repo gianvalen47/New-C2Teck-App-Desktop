@@ -318,3 +318,7 @@ export function ProductosList() {
     </div>
   );
 }
+
+export function Productos() {
+  return <ProductosList />;
+}

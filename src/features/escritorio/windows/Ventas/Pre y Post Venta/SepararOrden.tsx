@@ -142,3 +142,9 @@ export function SepararOrdenList() {
     </div>
   );
 }
+
+export function SepararOrden() {
+  return (
+    <SepararOrdenList />
+  );
+}

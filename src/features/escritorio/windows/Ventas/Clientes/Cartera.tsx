@@ -132,3 +132,9 @@ export function CarteraList() {
     </div>
   );
 }
+
+export function Cartera() {
+  return (
+    <CarteraList />
+  );
+}

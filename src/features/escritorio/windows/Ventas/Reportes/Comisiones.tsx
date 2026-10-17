@@ -8,6 +8,10 @@ import {
 } from "@/components/ui/desktop-primitives";
 import { FileSpreadsheet, LogOut } from "lucide-react";
 
+export function ReporteComisiones() {
+  return <ReporteComisionesList />;
+}
+
 export function ReporteComisionesList() {
   return (
     <WindowShell title="Reporte de Comisiones">

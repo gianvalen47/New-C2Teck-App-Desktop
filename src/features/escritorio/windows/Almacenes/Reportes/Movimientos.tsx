@@ -1,6 +1,6 @@
 
 
-export function MovimientosAlmacenReport() { 
+export function MovimientosAlmacenReportList() { 
     return <ReportFrame>
         <fieldset className="border border-slate-400 p-2">
             <legend className="text-[11px] font-bold">Tipo Reporte</legend>
@@ -24,3 +24,7 @@ export function MovimientosAlmacenReport() {
                     <Check label="Bajo el Máximo"/>
                 </div>
             </ReportFrame>; }
+
+export function MovimientosAlmacenReport() {
+  return <MovimientosAlmacenReportList />;
+}

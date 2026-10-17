@@ -102,3 +102,8 @@ export function CalendarioList() {
   );
 }
 
+export function Calendario() {
+  return (
+    <CalendarioList />
+  );
+}

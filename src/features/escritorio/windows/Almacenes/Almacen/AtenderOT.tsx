@@ -28,3 +28,7 @@ export function AtenderOTList() {
     />
   );
 }
+
+export function AtenderOT() {
+  return <AtenderOTList />;
+}

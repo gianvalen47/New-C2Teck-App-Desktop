@@ -78,3 +78,7 @@ export function RegistroAuxiliarList() {
     </WindowShell>
   );
 }
+
+export function RegistroAuxiliar() {
+  return <RegistroAuxiliarList />;
+}

@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function VehiculosList() {
   return <MantenimientoCRUDList label="Vehículos" columns={["Placa", "Marca", "Modelo", "Año", "Cliente", "Estado"]} />;
 }
+
+export function VehiculosWindow() {
+  return <VehiculosList />;
+}

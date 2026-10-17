@@ -1,3 +1,4 @@
+import { RegistryWindowList } from "@/features/escritorio/windows/shared/RegistryWindowList";
 // Auto-extraido de windows (1).tsx (monolito legacy) — revisar antes de usar en produccion.
 import { Save, Search, Plus, FileSpreadsheet } from "lucide-react";
 import {
@@ -52,4 +53,11 @@ export function SolicitudCompraList() {
       footer={<div className="px-1.5 pb-1.5"><Field label="Justificación" className="w-full"><textarea className={`${inp} h-14 py-1`} /></Field></div>}
     />
   );
+}
+
+export function SolicitudCompraCompras({ title = "Solicitud Compra Compras" }: { title?: string }) {
+  return <SolicitudCompraComprasList title={title} />;
+}
+export function SolicitudCompraComprasList({ title = "Solicitud Compra Compras " }: { title?: string }) {
+  return <RegistryWindowList title={title} />;
 }

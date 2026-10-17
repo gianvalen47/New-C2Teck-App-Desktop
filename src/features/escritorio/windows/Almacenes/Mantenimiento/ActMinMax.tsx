@@ -93,3 +93,9 @@ export function ActMinMaxList() {
     </div>
   );
 }
+
+export function ActMinMax() {
+  return (
+    <ActMinMaxList />
+  );
+}

@@ -411,3 +411,7 @@ export function CajaChicaList() {
     </WindowShell>
   );
 }
+
+export function CajaChica() {
+  return <CajaChicaList />;
+}

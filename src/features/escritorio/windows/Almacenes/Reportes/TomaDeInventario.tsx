@@ -1,6 +1,6 @@
 
 
-export function TomaInventarioReport() { 
+export function TomaInventarioReportList() { 
     return <ReportFrame>
         <fieldset className="border border-slate-400 p-2">
             <legend className="text-[11px] font-bold">INVENTARIO</legend>
@@ -41,3 +41,7 @@ export function TomaInventarioReport() {
                                                 </div>
                                                 </fieldset>
                                                 </ReportFrame>; }
+
+export function TomaInventarioReport() {
+  return <TomaInventarioReportList />;
+}

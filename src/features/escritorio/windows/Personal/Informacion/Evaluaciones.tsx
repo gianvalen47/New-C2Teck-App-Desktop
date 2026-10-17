@@ -4,3 +4,7 @@ import { CapacitacionesWinList } from "@/features/escritorio/windows/Personal/In
 export function EvaluacionesList() {
   return <CapacitacionesWinList title="Evaluaciones de Desempeño" />;
 }
+
+export function EvaluacionesWindow() {
+  return <EvaluacionesList />;
+}

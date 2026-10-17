@@ -20,3 +20,9 @@ export function CambiarContrasenaList() {
     </WindowShell>
   );
 }
+
+export function CambiarContrasena() {
+  return (
+    <CambiarContrasenaList />
+  );
+}

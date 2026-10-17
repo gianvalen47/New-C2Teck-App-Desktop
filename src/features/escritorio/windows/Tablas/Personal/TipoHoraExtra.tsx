@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function TipoHoraExtraList() {
   return <MantenimientoCRUDList label="Tipo Hora Extra" columns={["Código", "Tipo", "Factor", "Máximo", "Estado"]} />;
 }
+
+export function TipoHoraExtraWindow() {
+  return <TipoHoraExtraList />;
+}

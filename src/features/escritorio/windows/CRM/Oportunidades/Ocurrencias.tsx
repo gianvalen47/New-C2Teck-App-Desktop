@@ -4,3 +4,7 @@ import { CrmReporteDialog } from "@/features/escritorio/windows/Reportes/CrmRepo
 export function Ocurrencias() {
   return <CrmReporteDialog label="Ocurrencias" />;
 }
+
+export function OcurrenciasWindow() {
+  return <Ocurrencias />;
+}

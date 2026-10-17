@@ -29,3 +29,7 @@ export function CotizTallerCreditoList() {
     />
   );
 }
+
+export function CotizTallerCredito() {
+  return <CotizTallerCreditoList />;
+}

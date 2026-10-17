@@ -9,6 +9,10 @@ import {
   Radio
 } from "@/components/ui/desktop-primitives";
 
+export function ReportePresupuestoVenta() {
+  return <ReportePresupuestoVentaList />;
+}
+
 export function ReportePresupuestoVentaList() {
   return (
     <WindowShell title="Presupuesto Venta"

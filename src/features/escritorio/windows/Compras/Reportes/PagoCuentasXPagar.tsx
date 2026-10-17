@@ -30,3 +30,7 @@ export function ReportePagosCuentasXPagarList() {
     </WindowShell>
   );
 }
+
+export function ReportePagosCuentasXPagar() {
+  return <ReportePagosCuentasXPagarList />;
+}

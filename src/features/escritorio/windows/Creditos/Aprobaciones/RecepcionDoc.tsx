@@ -37,3 +37,7 @@ export function RecepcionDocCreditosList() {
     />
   );
 }
+
+export function RecepcionDocCreditos() {
+  return <RecepcionDocCreditosList />;
+}

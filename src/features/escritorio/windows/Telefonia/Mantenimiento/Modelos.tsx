@@ -19,3 +19,9 @@ export function TelefoniaInvList({ title }: { title: string }) {
     </WindowShell>
   );
 }
+
+export function TelefoniaInv({ title }: { title: string }) {
+  return (
+    <TelefoniaInvList title={title} />
+  );
+}

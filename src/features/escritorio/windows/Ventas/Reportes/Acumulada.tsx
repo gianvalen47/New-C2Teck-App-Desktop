@@ -9,6 +9,12 @@ import {
   Radio,
 } from "@/components/ui/desktop-primitives";
 
+export function ReporteAcumulada() {
+  return (
+    <ReporteAcumuladaList />
+  );
+}
+
 export function ReporteAcumuladaList() {
   return (
     <WindowShell title="Reporte de Ventas Acumuladas">

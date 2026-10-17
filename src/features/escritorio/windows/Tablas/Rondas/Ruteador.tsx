@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function RuteadorList() {
   return <MantenimientoCRUDList label="Ruteadores de Rondas" columns={["Código", "Ruteador", "Zona", "Estado"]} />;
 }
+
+export function RuteadorWindow() {
+  return <RuteadorList />;
+}

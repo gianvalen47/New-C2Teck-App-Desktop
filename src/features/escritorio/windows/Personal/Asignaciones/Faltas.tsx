@@ -41,3 +41,7 @@ export function PersonalTiempoList({ title }: { title: string }) {
     />
   );
 }
+
+export function PersonalTiempo({ title }: { title: string }) {
+  return <PersonalTiempoList title={title} />;
+}

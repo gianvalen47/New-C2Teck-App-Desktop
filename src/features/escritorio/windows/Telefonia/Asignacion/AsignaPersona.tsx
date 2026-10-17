@@ -26,3 +26,9 @@ export function AsignaPersonaList() {
     </WindowShell>
   );
 }
+
+export function AsignaPersona() {
+  return (
+    <AsignaPersonaList />
+  );
+}

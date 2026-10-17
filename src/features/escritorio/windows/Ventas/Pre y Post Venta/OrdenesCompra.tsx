@@ -11,6 +11,12 @@ import {
 } from "@/components/ui/desktop-primitives";
 import { stdToolbar10 } from "@/features/escritorio/windows/shared/toolbarPresets";
 
+export function OrdenesCompra() {
+  return (
+    <OrdenesCompraList />
+  );
+}
+
 export function OrdenesCompraList() {
   return (
     <MasterDetailForm

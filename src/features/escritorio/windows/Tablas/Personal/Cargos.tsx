@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function CargosList() {
   return <MantenimientoCRUDList label="Cargos" columns={["Código", "Cargo", "Área", "Nivel", "Estado"]} />;
 }
+
+export function CargosWindow() {
+  return <CargosList />;
+}

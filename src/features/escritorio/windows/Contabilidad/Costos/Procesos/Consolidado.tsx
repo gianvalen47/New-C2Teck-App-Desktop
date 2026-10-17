@@ -4,3 +4,7 @@ import { ProcesoLoteList } from "@/features/escritorio/windows/shared/LegacySupp
 export function ConsolidadoList() {
   return <ProcesoLoteList label="Consolidado" subtitle="Consolida movimientos y saldos de todos los almacenes." />;
 }
+
+export function ConsolidadoCostosWindow() {
+  return <ConsolidadoList />;
+}

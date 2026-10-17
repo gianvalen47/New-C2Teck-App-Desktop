@@ -62,3 +62,7 @@ export function TipoCambioList() {
     </WindowShell>
   );
 }
+
+export function TipoCambio() {
+  return <TipoCambioList />;
+}

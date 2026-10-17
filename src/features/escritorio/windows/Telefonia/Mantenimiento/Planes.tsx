@@ -4,3 +4,7 @@ import { TelefoniaInvList } from "@/features/escritorio/windows/Telefonia/Manten
 export function PlanesList() {
   return <TelefoniaInvList title="Planes" />;
 }
+
+export function TelefoniaPlanesWindow() {
+  return <PlanesList />;
+}

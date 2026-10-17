@@ -120,3 +120,7 @@ export function ReporteDetalleDescuentoList() {
     </WindowShell>
   );
 }
+
+export function ReporteDetalleDescuento() {
+  return <ReporteDetalleDescuentoList />;
+}

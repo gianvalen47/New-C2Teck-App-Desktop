@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function TarifaGastoViajeList() {
   return <MantenimientoCRUDList label="Tarifa Gasto Viaje" columns={["Ruta", "Categoría", "Moneda", "Tarifa", "Estado"]} />;
 }
+
+export function TarifaGastoViajeWindow() {
+  return <TarifaGastoViajeList />;
+}

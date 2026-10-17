@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function ProveedoresList() {
   return <MantenimientoCRUDList label="Proveedores" columns={["RUC", "Razón Social", "Dirección", "Contacto", "Teléfono", "Estado"]} />;
 }
+
+export function ProveedoresWindow() {
+  return <ProveedoresList />;
+}

@@ -26,3 +26,7 @@ export function KilometrajeList() {
     </WindowShell>
   );
 }
+
+export function Kilometraje() {
+  return <KilometrajeList />;
+}

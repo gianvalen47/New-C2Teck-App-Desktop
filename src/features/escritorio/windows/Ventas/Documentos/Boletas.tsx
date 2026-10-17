@@ -686,3 +686,8 @@ export function Boletas() {
 
 export default Boletas;
 
+export function Boleta() {
+  return (
+    <BoletaList />
+  );
+}

@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function RutasList() {
   return <MantenimientoCRUDList label="Rutas" columns={["Código", "Ruta", "Zona", "Nº puntos", "Estado"]} />;
 }
+
+export function RutasWindow() {
+  return <RutasList />;
+}

@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function TarifaTaxiDestinoList() {
   return <MantenimientoCRUDList label="Tarifas Taxi Destino" columns={["Destino", "Tipo", "Moneda", "Tarifa", "Estado"]} />;
 }
+
+export function TarifaTaxiDestinoWindow() {
+  return <TarifaTaxiDestinoList />;
+}

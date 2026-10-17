@@ -4,3 +4,7 @@ import { PersonalTiempoList } from "@/features/escritorio/windows/Personal/Asign
 export function JefeAreaList() {
   return <PersonalTiempoList title="Jefe de Área" />;
 }
+
+export function JefeAreaWindow() {
+  return <JefeAreaList />;
+}

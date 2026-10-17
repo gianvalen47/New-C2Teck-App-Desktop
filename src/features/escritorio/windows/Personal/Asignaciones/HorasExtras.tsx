@@ -4,3 +4,7 @@ import { PersonalTiempoList } from "@/features/escritorio/windows/Personal/Asign
 export function HorasExtrasList() {
   return <PersonalTiempoList title="Horas Extras" />;
 }
+
+export function HorasExtrasWindow() {
+  return <HorasExtrasList />;
+}

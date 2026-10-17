@@ -188,3 +188,9 @@ export function ActivosFijosList() {
     </WindowShell>
   );
 }
+
+export function ActivosFijos() {
+  return (
+    <ActivosFijosList />
+  );
+}

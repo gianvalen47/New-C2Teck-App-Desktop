@@ -19,3 +19,7 @@ export function FlujoCajaList() {
     </WindowShell>
   );
 }
+
+export function FlujoCaja() {
+  return <FlujoCajaList />;
+}

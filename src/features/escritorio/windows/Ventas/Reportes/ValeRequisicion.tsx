@@ -40,3 +40,7 @@ export function ReporteValeRequisicionList() {
     </WindowShell>
   );
 }
+
+export function ReporteValeRequisicion() {
+  return <ReporteValeRequisicionList />;
+}

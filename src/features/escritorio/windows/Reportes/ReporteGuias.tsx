@@ -47,3 +47,7 @@ export function ReporteGuiasList() {
     </WindowShell>
   );
 }
+
+export function ReporteGuias() {
+  return <ReporteGuiasList />;
+}

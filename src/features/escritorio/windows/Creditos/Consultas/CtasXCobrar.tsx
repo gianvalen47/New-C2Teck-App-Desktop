@@ -67,3 +67,7 @@ export function CtasXCobrarList() {
     </WindowShell>
   );
 }
+
+export function CtasXCobrar() {
+  return <CtasXCobrarList />;
+}

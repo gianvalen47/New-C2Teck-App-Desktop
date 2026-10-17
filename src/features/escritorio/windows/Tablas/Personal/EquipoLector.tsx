@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function EquipoLectorList() {
   return <MantenimientoCRUDList label="Equipos Lectores (Biométricos)" columns={["Serie", "Marca", "IP", "Sede", "Estado"]} />;
 }
+
+export function EquipoLectorWindow() {
+  return <EquipoLectorList />;
+}

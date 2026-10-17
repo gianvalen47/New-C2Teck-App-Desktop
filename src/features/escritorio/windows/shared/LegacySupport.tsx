@@ -339,3 +339,33 @@ export function ConfigTablaList({ title, columns }: { title: string; columns: st
 }
 
 export const ConfigTabla = ConfigTablaList;
+
+export function FsLegacy({ legend, children }: { legend: string; children: ReactNode }) {
+  return (
+    <FsLegacyList  legend={legend} children={children}  />
+  );
+}
+
+export function RadioLegacy({ name, label, defaultChecked }: { name: string; label: string; defaultChecked?: boolean }) {
+  return (
+    <RadioLegacyList name={name} label={label} defaultChecked={defaultChecked} />
+  );
+}
+
+export function DialogFooter({ onOk, onCancel }: { onOk: () => void; onCancel: () => void }) {
+  return (
+    <DialogFooterList onOk={onOk} onCancel={onCancel} />
+  );
+}
+
+export function ProcesoLote({ label, subtitle }: { label: string; subtitle: string }) {
+  return (
+    <ProcesoLoteList label={label} subtitle={subtitle} />
+  );
+}
+
+export function MantenimientoCRUD({ label, columns }: { label: string; columns: string[] }) {
+  return (
+    <MantenimientoCRUDList label={label} columns={columns} />
+  );
+}

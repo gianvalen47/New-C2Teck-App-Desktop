@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function RubroPlanillaList() {
   return <MantenimientoCRUDList label="Rubros de Planilla" columns={["Código", "Rubro", "Tipo", "Afecta", "Estado"]} />;
 }
+
+export function RubroPlanillaWindow() {
+  return <RubroPlanillaList />;
+}

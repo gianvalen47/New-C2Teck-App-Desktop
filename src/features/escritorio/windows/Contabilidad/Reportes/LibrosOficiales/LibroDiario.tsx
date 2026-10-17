@@ -4,3 +4,7 @@ import { ReporteContainerList } from "@/features/escritorio/windows/Reportes/Rep
 export function LibroDiarioList() {
   return <ReporteContainerList label="Libro Diario" />;
 }
+
+export function LibroDiarioWindow() {
+  return <LibroDiarioList />;
+}

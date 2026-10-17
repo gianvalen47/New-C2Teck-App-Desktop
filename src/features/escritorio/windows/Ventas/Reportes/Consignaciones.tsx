@@ -83,3 +83,7 @@ export function ReporteConsignacionList() {
     </WindowShell>
   );
 }
+
+export function ReporteConsignacion() {
+  return <ReporteConsignacionList />;
+}

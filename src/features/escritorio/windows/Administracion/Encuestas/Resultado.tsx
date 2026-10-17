@@ -4,3 +4,7 @@ import { ReporteContainer } from "@/features/escritorio/windows/Reportes/Reporte
 export function Resultado() {
   return <ReporteContainer label="Resultados de Encuesta" />;
 }
+
+export function ResultadoEncuestaWindow() {
+  return <Resultado />;
+}

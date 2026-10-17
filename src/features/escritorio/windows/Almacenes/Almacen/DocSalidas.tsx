@@ -135,3 +135,9 @@ export function DocSalidasList() {
     </div>
   );
 }
+
+export function DocSalidas() {
+  return (
+    <DocSalidasList />
+  );
+}

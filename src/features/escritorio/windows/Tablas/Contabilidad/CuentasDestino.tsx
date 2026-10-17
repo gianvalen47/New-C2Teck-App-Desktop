@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function CuentasDestinoList() {
   return <MantenimientoCRUDList label="Cuentas Destino" columns={["Cuenta", "Destino", "Módulo", "Estado"]} />;
 }
+
+export function CuentasDestinoTablaWindow() {
+  return <CuentasDestinoList />;
+}

@@ -1,3 +1,4 @@
+import { RegistryWindowList } from "@/features/escritorio/windows/shared/RegistryWindowList";
 // Auto-extraido de windows (1).tsx (monolito legacy) — revisar antes de usar en produccion.
 import { Save, Printer, Search, FileSpreadsheet, Mail } from "lucide-react";
 import {
@@ -50,4 +51,11 @@ export function OrdenCompraList() {
       summary={<CalculationSummaryBlock values={{ subtotal: 0, discount: 0, igv: 0, total: 0 }} />}
     />
   );
+}
+
+export function OrdenCompraCompras({ title = "Orden Compra Compras" }: { title?: string }) {
+  return <OrdenCompraComprasList title={title} />;
+}
+export function OrdenCompraComprasList({ title = "Orden Compra Compras " }: { title?: string }) {
+  return <RegistryWindowList title={title} />;
 }

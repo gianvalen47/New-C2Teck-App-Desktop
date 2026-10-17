@@ -91,3 +91,7 @@ export function PlanillaSueldosList() {
     </WindowShell>
   );
 }
+
+export function PlanillaSueldos() {
+  return <PlanillaSueldosList />;
+}

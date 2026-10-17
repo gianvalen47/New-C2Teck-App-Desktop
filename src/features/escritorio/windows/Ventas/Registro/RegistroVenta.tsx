@@ -10,6 +10,10 @@ import {
   Fs
 } from "@/components/ui/desktop-primitives";
 
+export function RegistroVenta() {
+  return <RegistroVentaList />;
+}
+
 export function RegistroVentaList() {
   return (
     <WindowShell title="Registro de Ventas">

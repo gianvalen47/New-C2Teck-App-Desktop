@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function PartidasList() {
   return <MantenimientoCRUDList label="Partidas Arancelarias" columns={["Partida", "Descripción", "Ad Valorem", "Estado"]} />;
 }
+
+export function PartidasWindow() {
+  return <PartidasList />;
+}

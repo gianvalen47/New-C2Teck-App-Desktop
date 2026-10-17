@@ -14,3 +14,7 @@ export function InfoCambiosList({
     </WindowShell>
   );
 }
+
+export function InfoCambios() {
+  return <InfoCambiosList />;
+}

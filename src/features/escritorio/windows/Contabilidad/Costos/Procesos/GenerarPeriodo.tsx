@@ -4,3 +4,7 @@ import { ProcesoLoteList } from "@/features/escritorio/windows/shared/LegacySupp
 export function GenerarPeriodoList() {
   return <ProcesoLoteList label="Generar Periodo" subtitle="Crea el nuevo periodo contable / comercial." />;
 }
+
+export function GenerarPeriodoCostosWindow() {
+  return <GenerarPeriodoList />;
+}

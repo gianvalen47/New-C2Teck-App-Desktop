@@ -84,3 +84,8 @@ export function ProcesarCoberturaList() {
   );
 }
 
+export function ProcesarCobertura() {
+  return (
+    <ProcesarCoberturaList />
+  );
+}

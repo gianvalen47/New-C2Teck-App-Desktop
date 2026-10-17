@@ -53,4 +53,6 @@ export function GarantiaWinList({ title }: { title: string }) {
   );
 }
 
-export const GarantiaWin = GarantiaWinList;
+export function GarantiaWin({ title }: { title: string }) {
+  return <GarantiaWinList title={title} />;
+}

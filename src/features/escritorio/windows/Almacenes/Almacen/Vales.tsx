@@ -135,3 +135,9 @@ export function ValesList() {
     </div>
   );
 }
+
+export function Vales() {
+  return (
+    <ValesList />
+  );
+}

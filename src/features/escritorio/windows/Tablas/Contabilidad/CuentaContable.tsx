@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function CuentaContableList() {
   return <MantenimientoCRUDList label="Cuentas Contables" columns={["Cuenta", "Descripción", "Naturaleza", "Nivel", "Estado"]} />;
 }
+
+export function CuentaContableWindow() {
+  return <CuentaContableList />;
+}

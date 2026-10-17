@@ -4,3 +4,7 @@ import { ConfigTabla } from "@/features/escritorio/windows/shared/LegacySupport"
 export function LocacionesList() {
   return <ConfigTabla title="Locaciones / Sedes" columns={["Código", "Locación", "Dirección", "Ubigeo", "Estado"]} />;
 }
+
+export function LocacionesWindow() {
+  return <LocacionesList />;
+}

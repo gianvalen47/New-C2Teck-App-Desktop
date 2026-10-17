@@ -26,3 +26,9 @@ export function MarcacionesList({ title = "Marcación de Tareas OT" }: { title?:
     </WindowShell>
   );
 }
+
+export function Marcaciones({ title = "Marcación de Tareas OT" }: { title?: string }) {
+  return (
+    <MarcacionesList title={title} />
+  );
+}

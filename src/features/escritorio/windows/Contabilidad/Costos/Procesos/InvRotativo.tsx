@@ -4,3 +4,7 @@ import { ProcesoLoteList } from "@/features/escritorio/windows/shared/LegacySupp
 export function InvRotativoList() {
   return <ProcesoLoteList label="Inventario Rotativo" subtitle="Genera muestras de conteo rotativo por categoría / ubicación." />;
 }
+
+export function InventarioRotativoWindow() {
+  return <InvRotativoList />;
+}

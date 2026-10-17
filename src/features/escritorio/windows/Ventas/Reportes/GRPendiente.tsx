@@ -10,6 +10,10 @@ import {
   Radio,
 } from "@/components/ui/desktop-primitives";
 
+export function ReporteGRPendiente() {
+  return <ReporteGRPendienteList />;
+}
+
 export function ReporteGRPendienteList() {
   const [locacion, setLocacion] = useState<"todos" | "uno">("todos");
 

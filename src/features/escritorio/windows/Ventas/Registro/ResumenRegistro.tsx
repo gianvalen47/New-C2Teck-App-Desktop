@@ -89,3 +89,7 @@ export function ResumenRegistroList() {
     </WindowShell>
   );
 }
+
+export function ResumenRegistro() {
+  return <ResumenRegistroList />;
+}

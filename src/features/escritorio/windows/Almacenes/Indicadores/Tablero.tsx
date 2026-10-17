@@ -136,3 +136,9 @@ export function IndicadoresVentaDialogList() {
     </div>
   );
 }
+
+export function IndicadoresVentaDialog() {
+  return (
+    <IndicadoresVentaDialogList />
+  );
+}

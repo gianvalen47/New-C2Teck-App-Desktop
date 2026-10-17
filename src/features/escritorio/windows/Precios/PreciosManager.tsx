@@ -35,3 +35,9 @@ export function PreciosManagerList({ initial }: { initial: string }) {
     </WindowShell>
   );
 }
+
+export function PreciosManager({ initial }: { initial: string }) {
+  return (
+    <PreciosManagerList initial={initial} />
+  );
+}

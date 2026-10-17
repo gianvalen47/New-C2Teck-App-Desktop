@@ -140,3 +140,7 @@ export function LetrasList() {
     </WindowShell>
   );
 }
+
+export function Letras() {
+  return <LetrasList />;
+}

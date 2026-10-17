@@ -329,3 +329,11 @@ export function ReporteVentasDetalladoList() {
     </WindowShell>
   );
 }
+
+export function ReporteVentasDetallado() {
+  return <ReporteVentasDetalladoList />;
+}
+
+export function ReporteDetalle() {
+  return <ReporteVentasDetalladoList />;
+}

@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function FeriadosList() {
   return <MantenimientoCRUDList label="Feriados" columns={["Fecha", "Descripción", "Tipo", "Ámbito", "Estado"]} />;
 }
+
+export function FeriadosWindow() {
+  return <FeriadosList />;
+}

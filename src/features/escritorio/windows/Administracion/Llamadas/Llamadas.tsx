@@ -26,3 +26,9 @@ export function LlamadasWinList() {
     </WindowShell>
   );
 }
+
+export function LlamadasWin() {
+  return (
+    <LlamadasWinList />
+  );
+}

@@ -4,3 +4,7 @@ import { PersonalTiempoList } from "@/features/escritorio/windows/Personal/Asign
 export function RecursosList() {
   return <PersonalTiempoList title="Recursos" />;
 }
+
+export function RecursosWindow() {
+  return <RecursosList />;
+}

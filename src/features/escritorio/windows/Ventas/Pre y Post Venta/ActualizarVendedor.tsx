@@ -44,3 +44,9 @@ export function ActualizarVendedorList() {
     />
   );
 }
+
+export function ActualizarVendedor() {
+  return (
+    <ActualizarVendedorList />
+  );
+}

@@ -68,3 +68,7 @@ export function ReporteReclamosList() {
     </WindowShell>
   );
 }
+
+export function ReporteReclamos() {
+  return <ReporteReclamosList />;
+}

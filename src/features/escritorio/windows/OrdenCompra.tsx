@@ -348,3 +348,7 @@ export function OrdenCompraList() {
     </div>
   );
 }
+
+export function OrdenCompra() {
+  return <OrdenCompraList />;
+}

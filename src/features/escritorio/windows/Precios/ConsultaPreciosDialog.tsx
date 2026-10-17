@@ -56,3 +56,9 @@ export function ConsultaPreciosDialogList() {
     </WindowShell>
   );
 }
+
+export function ConsultaPreciosDialog() {
+  return (
+    <ConsultaPreciosDialogList />
+  );
+}

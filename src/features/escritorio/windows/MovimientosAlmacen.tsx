@@ -236,3 +236,7 @@ export function DocSalidasList2() {
 export function TransferenciasList() {
   return <MovimientosAlmacenList initialTipo="transferencia" />;
 }
+
+export function DocIngresos() {
+  return <DocIngresosList />;
+}

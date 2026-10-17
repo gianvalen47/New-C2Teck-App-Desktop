@@ -404,3 +404,7 @@ export function SolicitudGastoList() {
     </div>
   );
 }
+
+export function SolicitudGasto() {
+  return <SolicitudGastoList />;
+}

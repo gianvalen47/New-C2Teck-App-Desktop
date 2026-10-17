@@ -41,3 +41,9 @@ export function PrecioClienteList() {
     />
   );
 }
+
+export function PrecioCliente() {
+  return (
+    <PrecioClienteList />
+  );
+}

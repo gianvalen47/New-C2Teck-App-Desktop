@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function UbicacionServicioList() {
   return <MantenimientoCRUDList label="Ubicación de Servicio" columns={["Código", "Ubicación", "Sede", "Responsable", "Estado"]} />;
 }
+
+export function UbicacionServicioWindow() {
+  return <UbicacionServicioList />;
+}

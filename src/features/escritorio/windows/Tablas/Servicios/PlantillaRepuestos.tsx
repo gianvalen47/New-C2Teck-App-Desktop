@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function PlantillaRepuestosList() {
   return <MantenimientoCRUDList label="Plantillas de Repuestos" columns={["Código", "Plantilla", "Modelo", "Nº items", "Estado"]} />;
 }
+
+export function PlantillaRepuestosWindow() {
+  return <PlantillaRepuestosList />;
+}

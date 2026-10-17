@@ -18,3 +18,9 @@ export function AtenderSolicitudList() {
     </WindowShell>
   );
 }
+
+export function AtenderSolicitud() {
+  return (
+    <AtenderSolicitudList />
+  );
+}

@@ -4,3 +4,7 @@ import { CrmReporteDialog } from "@/features/escritorio/windows/Reportes/CrmRepo
 export function OportunidadNegocio() {
   return <CrmReporteDialog label="Oportunidad Negocio" />;
 }
+
+export function OportunidadNegocioWindow() {
+  return <OportunidadNegocio />;
+}

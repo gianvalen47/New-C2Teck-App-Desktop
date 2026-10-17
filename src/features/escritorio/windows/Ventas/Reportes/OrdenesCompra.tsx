@@ -11,6 +11,10 @@ import {
   Radio,
 } from "@/components/ui/desktop-primitives";
 
+export function ReporteOrdenCompra() {
+  return <ReporteOrdenCompraList />;
+}
+
 export function ReporteOrdenCompraList() {
   const [tipoReporte, setTipoReporte] = useState<"totalizado" | "detallado" | "atendidos">("totalizado");
   const isDetallado = tipoReporte === "detallado";

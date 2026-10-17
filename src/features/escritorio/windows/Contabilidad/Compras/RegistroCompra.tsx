@@ -192,3 +192,7 @@ export function RegistroCompraList() {
     </WindowShell>
   );
 }
+
+export function RegistroCompra() {
+  return <RegistroCompraList />;
+}

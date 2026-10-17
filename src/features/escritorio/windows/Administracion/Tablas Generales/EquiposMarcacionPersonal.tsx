@@ -4,3 +4,7 @@ import { ConfigTabla } from "@/features/escritorio/windows/shared/LegacySupport"
 export function EquiposMarcacionPersonalList() {
   return <ConfigTabla title="Equipos Marcación Personal" columns={["Serie", "IP", "Sede", "Modelo", "Estado"]} />;
 }
+
+export function EquiposMarcacionPersonalWindow() {
+  return <EquiposMarcacionPersonalList />;
+}

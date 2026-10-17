@@ -4,3 +4,7 @@ import { ReporteContainer } from "@/features/escritorio/windows/Reportes/Reporte
 export function ReporteActivosFijos() {
   return <ReporteContainer label="Reporte Activos Fijos" />;
 }
+
+export function ReporteActivosFijosWindow() {
+  return <ReporteActivosFijos />;
+}

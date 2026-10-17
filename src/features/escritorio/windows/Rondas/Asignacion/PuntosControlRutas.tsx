@@ -26,3 +26,9 @@ export function PuntosControlList({ title }: { title: string }) {
     </WindowShell>
   );
 }
+
+export function PuntosControl({ title }: { title: string }) {
+  return (
+    <PuntosControlList title={title} />
+  );
+}

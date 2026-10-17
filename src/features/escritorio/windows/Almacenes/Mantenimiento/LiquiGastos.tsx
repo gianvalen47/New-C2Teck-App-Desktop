@@ -89,3 +89,7 @@ export function LiquiGastosList() {
     </div>
   );
 }
+
+export function LiquiGastos() {
+  return <LiquiGastosList />;
+}

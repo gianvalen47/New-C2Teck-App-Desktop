@@ -4,3 +4,7 @@ import { PuntosControlList } from "@/features/escritorio/windows/Rondas/Asignaci
 export function RuteadorRutas() {
   return <PuntosControlList title="Ruteador de Rutas" />;
 }
+
+export function RuteadorRutasWindow() {
+  return <RuteadorRutas />;
+}

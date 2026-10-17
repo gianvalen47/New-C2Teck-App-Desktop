@@ -34,3 +34,9 @@ export function AcercaList() {
     </WindowShell>
   );
 }
+
+export function Acerca() {
+  return (
+    <AcercaList />
+  );
+}

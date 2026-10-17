@@ -4,3 +4,7 @@ import { PersonalTiempoList } from "@/features/escritorio/windows/Personal/Asign
 export function IngresosList() {
   return <PersonalTiempoList title="Ingresos" />;
 }
+
+export function IngresosWindow() {
+  return <IngresosList />;
+}

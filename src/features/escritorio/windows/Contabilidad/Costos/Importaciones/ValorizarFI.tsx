@@ -165,3 +165,7 @@ export function ValorizarFIList() {
     </WindowShell>
   );
 }
+
+export function ValorizarFI() {
+  return <ValorizarFIList />;
+}

@@ -59,3 +59,9 @@ export function CotizacionesList() {
     </WindowShell>
   );
 }
+
+export function Cotizaciones() {
+  return (
+    <CotizacionesList />
+  );
+}

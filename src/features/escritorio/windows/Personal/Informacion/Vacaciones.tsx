@@ -4,3 +4,7 @@ import { CapacitacionesWinList } from "@/features/escritorio/windows/Personal/In
 export function VacacionesList() {
   return <CapacitacionesWinList title="Vacaciones" />;
 }
+
+export function VacacionesWindow() {
+  return <VacacionesList />;
+}

@@ -47,3 +47,7 @@ export function CapacitacionesWinList({ title }: { title: string }) {
     />
   );
 }
+
+export function CapacitacionesWin({ title }: { title: string }) {
+  return <CapacitacionesWinList title={title} />;
+}

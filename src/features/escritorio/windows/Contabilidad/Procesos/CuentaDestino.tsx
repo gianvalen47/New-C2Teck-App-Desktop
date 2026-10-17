@@ -4,3 +4,7 @@ import { ProcesoLoteList } from "@/features/escritorio/windows/shared/LegacySupp
 export function CuentaDestinoList() {
   return <ProcesoLoteList label="Cuenta Destino" subtitle="Reasigna asientos entre cuentas contables destino." />;
 }
+
+export function CuentaDestinoWindow() {
+  return <CuentaDestinoList />;
+}

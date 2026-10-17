@@ -4,3 +4,7 @@ import { ProcesoLoteList } from "@/features/escritorio/windows/shared/LegacySupp
 export function RecalcularList() {
   return <ProcesoLoteList label="Recalcular Costos" subtitle="Recalcula el costo promedio ponderado de todos los productos del periodo seleccionado." />;
 }
+
+export function RecalcularCostosWindow() {
+  return <RecalcularList />;
+}

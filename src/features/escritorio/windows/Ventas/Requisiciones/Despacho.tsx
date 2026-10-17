@@ -145,3 +145,9 @@ export function DespachoList() {
     </div>
   );
 }
+
+export function Despacho() {
+  return (
+    <DespachoList />
+  );
+}

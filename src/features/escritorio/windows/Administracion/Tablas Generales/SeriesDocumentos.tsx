@@ -4,3 +4,7 @@ import { ConfigTabla } from "@/features/escritorio/windows/shared/LegacySupport"
 export function SeriesDocumentosList() {
   return <ConfigTabla title="Series de Documentos" columns={["Tipo Doc.", "Serie", "Correlativo", "Sede", "Estado"]} />;
 }
+
+export function SeriesDocumentosWindow() {
+  return <SeriesDocumentosList />;
+}

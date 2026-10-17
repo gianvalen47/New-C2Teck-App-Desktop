@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function TipoMotoresList() {
   return <MantenimientoCRUDList label="Tipo Motores" columns={["Código", "Tipo", "Marca", "Estado"]} />;
 }
+
+export function TipoMotoresWindow() {
+  return <TipoMotoresList />;
+}

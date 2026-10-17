@@ -4,3 +4,7 @@ import { ConfigTabla } from "@/features/escritorio/windows/shared/LegacySupport"
 export function ParametrosLocacionesList() {
   return <ConfigTabla title="Parámetros de Locaciones" columns={["Locación", "Parámetro", "Valor", "Descripción"]} />;
 }
+
+export function ParametrosLocacionesWindow() {
+  return <ParametrosLocacionesList />;
+}

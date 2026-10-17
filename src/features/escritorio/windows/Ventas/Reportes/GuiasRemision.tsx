@@ -8,6 +8,10 @@ import {
   WindowShell,
 } from "@/components/ui/desktop-primitives";
 
+export function ReporteGuiasRemision() {
+  return <ReporteGuiasRemisionList />;
+}
+
 export function ReporteGuiasRemisionList() {
   return (
     <WindowShell title="Reporte de Guías Remisión">

@@ -39,3 +39,7 @@ export function OficinaUsuarioList() {
     />
   );
 }
+
+export function OficinaUsuario() {
+  return <OficinaUsuarioList />;
+}

@@ -118,3 +118,7 @@ export function PlanillasList() {
     </WindowShell>
   );
 }
+
+export function Planillas() {
+  return <PlanillasList />;
+}

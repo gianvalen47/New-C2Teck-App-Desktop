@@ -117,3 +117,7 @@ export function AnticiposList() {
     </WindowShell>
   );
 }
+
+export function Anticipos() {
+  return <AnticiposList />;
+}

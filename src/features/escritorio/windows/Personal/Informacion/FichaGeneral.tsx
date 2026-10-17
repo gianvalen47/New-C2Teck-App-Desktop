@@ -39,3 +39,7 @@ export function FichaGeneralList() {
     </WindowShell>
   );
 }
+
+export function FichaGeneral() {
+  return <FichaGeneralList />;
+}

@@ -30,3 +30,7 @@ export function ReporteSolicitudGastosList() {
     </WindowShell>
   );
 }
+
+export function ReporteSolicitudGastos() {
+  return <ReporteSolicitudGastosList />;
+}

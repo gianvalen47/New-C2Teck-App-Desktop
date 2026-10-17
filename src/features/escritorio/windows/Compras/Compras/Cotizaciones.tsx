@@ -49,3 +49,7 @@ export function CotizacionesCompraList() {
     />
   );
 }
+
+export function CotizacionesCompra() {
+  return <CotizacionesCompraList />;
+}

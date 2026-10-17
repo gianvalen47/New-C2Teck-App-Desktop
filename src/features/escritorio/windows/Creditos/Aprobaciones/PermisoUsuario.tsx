@@ -35,3 +35,7 @@ export function PermisoUsuarioCreditosList() {
     />
   );
 }
+
+export function PermisoUsuarioCreditos() {
+  return <PermisoUsuarioCreditosList />;
+}

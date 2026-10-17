@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function HorariosList() {
   return <MantenimientoCRUDList label="Horarios" columns={["Código", "Horario", "Entrada", "Salida", "Tolerancia", "Estado"]} />;
 }
+
+export function HorariosWindow() {
+  return <HorariosList />;
+}

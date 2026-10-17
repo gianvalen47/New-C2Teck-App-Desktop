@@ -4,3 +4,7 @@ import { ProcesoLoteList } from "@/features/escritorio/windows/shared/LegacySupp
 export function TrasladarCostosList() {
   return <ProcesoLoteList label="Trasladar Costos" subtitle="Transfiere costos calculados hacia contabilidad y kardex valorizado." />;
 }
+
+export function TrasladarCostosWindow() {
+  return <TrasladarCostosList />;
+}

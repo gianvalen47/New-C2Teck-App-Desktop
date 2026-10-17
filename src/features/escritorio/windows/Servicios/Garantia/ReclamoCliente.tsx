@@ -4,3 +4,7 @@ import { GarantiaWin } from "@/features/escritorio/windows/Servicios/Garantia/Or
 export function ReclamoCliente() {
   return <GarantiaWin title="Reclamo Cliente" />;
 }
+
+export function ReclamoClienteWindow() {
+  return <ReclamoCliente />;
+}

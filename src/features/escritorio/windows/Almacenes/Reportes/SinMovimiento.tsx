@@ -1,6 +1,6 @@
 
 
-export function SinMovimientoReport() { 
+export function SinMovimientoReportList() { 
     return <ReportFrame>
         <div className="space-y-3">
             <DateRange/>
@@ -35,3 +35,7 @@ export function SinMovimientoReport() {
             </fieldset>
         </div>
     </ReportFrame>; }
+
+export function SinMovimientoReport() {
+  return <SinMovimientoReportList />;
+}

@@ -35,3 +35,9 @@ export function PerfilesList() {
     />
   );
 }
+
+export function Perfiles() {
+  return (
+    <PerfilesList />
+  );
+}

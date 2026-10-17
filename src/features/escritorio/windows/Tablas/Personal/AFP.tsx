@@ -4,3 +4,7 @@ import { MantenimientoCRUDList } from "@/features/escritorio/windows/shared/Lega
 export function AFPList() {
   return <MantenimientoCRUDList label="AFP" columns={["Código", "AFP", "Comisión %", "Prima %", "Aporte %", "Estado"]} />;
 }
+
+export function AFPWindow() {
+  return <AFPList />;
+}

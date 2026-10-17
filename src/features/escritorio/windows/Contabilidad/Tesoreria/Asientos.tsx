@@ -219,3 +219,7 @@ export function AsientosList() {
     </WindowShell>
   );
 }
+
+export function Asientos() {
+  return <AsientosList />;
+}

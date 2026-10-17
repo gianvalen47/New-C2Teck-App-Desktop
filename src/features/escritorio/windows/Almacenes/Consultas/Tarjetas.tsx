@@ -104,3 +104,9 @@ export function TarjetasList() {
     </div>
   );
 }
+
+export function Tarjetas() {
+  return (
+    <TarjetasList />
+  );
+}

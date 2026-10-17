@@ -24,3 +24,7 @@ export function GenerarTXTList() {
     </WindowShell>
   );
 }
+
+export function GenerarTXT() {
+  return <GenerarTXTList />;
+}

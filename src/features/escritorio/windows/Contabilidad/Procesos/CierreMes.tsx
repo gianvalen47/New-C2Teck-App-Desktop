@@ -4,3 +4,7 @@ import { ProcesoLoteList } from "@/features/escritorio/windows/shared/LegacySupp
 export function CierreMesList() {
   return <ProcesoLoteList label="Cierre Mes" subtitle="Cierre contable mensual con validación de saldos cuadrados." />;
 }
+
+export function CierreMesContableWindow() {
+  return <CierreMesList />;
+}

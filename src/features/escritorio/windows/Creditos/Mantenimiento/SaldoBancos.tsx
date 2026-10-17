@@ -95,3 +95,7 @@ export function SaldoBancosCreditosList() {
     </WindowShell>
   );
 }
+
+export function SaldoBancosCreditos() {
+  return <SaldoBancosCreditosList />;
+}

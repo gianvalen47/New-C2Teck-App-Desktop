@@ -4,3 +4,7 @@ import { CrmReporteDialog } from "@/features/escritorio/windows/Reportes/CrmRepo
 export function CuotaVendedor() {
   return <CrmReporteDialog label="Cuota Vendedor" />;
 }
+
+export function CuotaVendedorWindow() {
+  return <CuotaVendedor />;
+}

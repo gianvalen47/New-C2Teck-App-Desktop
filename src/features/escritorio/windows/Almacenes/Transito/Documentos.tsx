@@ -115,3 +115,7 @@ export function TransitoDocsList() {
     </div>
   );
 }
+
+export function TransitoDocs() {
+  return <TransitoDocsList />;
+}

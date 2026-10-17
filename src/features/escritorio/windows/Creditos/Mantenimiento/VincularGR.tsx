@@ -4,3 +4,7 @@ import { ProcesoLoteList } from "@/features/escritorio/windows/shared/LegacySupp
 export function VincularGRList() {
   return <ProcesoLoteList label="Vincular G/R" subtitle="Relaciona guías de remisión con documentos comerciales y de cobranza." />;
 }
+
+export function VincularGRWindow() {
+  return <VincularGRList />;
+}
