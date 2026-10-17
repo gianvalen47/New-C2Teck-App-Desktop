@@ -1,0 +1,1 @@
+export function FactoresDescuentosWindow() { return <div className={frame}><Tools /><Box title="Datos de Búsqueda"><Line><Sel name="Rubro" options={["REPUESTOS MTU", "MOTORES", "SERVICIOS"]} /><Lookup name="Cliente" value="(Todos)" /><Find /></Line></Box><Grid names={["Cliente", "Factor", "Dscto.", "D.N."]} /></div>; }

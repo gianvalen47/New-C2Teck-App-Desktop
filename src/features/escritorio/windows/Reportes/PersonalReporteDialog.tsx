@@ -48,3 +48,5 @@ export function PersonalReporteDialogList({ label }: { label: string }) {
     </WindowShell>
   );
 }
+
+export const PersonalReporteDialog = PersonalReporteDialogList;

@@ -41,3 +41,5 @@ export function GerenciaReporteDialogList({ label }: { label: string }) {
     </WindowShell>
   );
 }
+
+export const GerenciaReporteDialog = GerenciaReporteDialogList;

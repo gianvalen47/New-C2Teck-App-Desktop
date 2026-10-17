@@ -31,3 +31,5 @@ export function ReporteContainerList({ label }: { label: string }) {
     </WindowShell>
   );
 }
+
+export const ReporteContainer = ReporteContainerList;

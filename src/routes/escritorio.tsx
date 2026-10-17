@@ -127,7 +127,7 @@ function SessionStatus() {
   );
 }
 
-type MenuItem = { icon: any; label: string; iconKey?: string };
+type MenuItem = { icon: any; label: string; iconKey?: string; openLabel?: string };
 type MenuSection = { title: string; items: MenuItem[] };
 type RibbonBtn = { icon: any; label: string; iconKey?: string; big?: boolean; dropdown?: boolean; menu?: MenuSection[]; openLabel?: string  };
 type RibbonGroup = { title?: string; items: RibbonBtn[] };
@@ -551,10 +551,10 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
         ]},
         { icon: ShoppingBag, label: "Pre y Post\nVenta", big: true, dropdown: true, menu: [
           { title: "Pre y Post Venta", items: [
-            { icon: FileEdit, label: "Cotizaciones" },
+            { icon: FileEdit, label: "Cotizaciones", openLabel: "Cotizaciones Ventas" },
             { icon: Award, label: "Reclamo Garantía" },
             { icon: ArrowRightLeft, label: "Separar Orden" },
-            { icon: ShoppingCart, label: "Ordenes Compra" },
+            { icon: ShoppingCart, label: "Ordenes Compra", openLabel: "Ordenes Compra Venta" },
             { icon: UserCog, label: "Actualizar Vendedor" },
             { icon: Mail, label: "Enviar Correos" },
           ]},
@@ -572,7 +572,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
         { icon: Search, label: "Consultas", big: true, dropdown: true, menu: [
           { title: "Consultas", items: [
             { icon: DollarSign, label: "Precios" },
-            { icon: FileText, label: "Documentos", iconKey: "documentos" },
+            { icon: FileText, label: "Documentos", iconKey: "documentos", openLabel: "Documentos de Ventas" },
           ]},
         ]},
         { icon: BarChart3, label: "Indicadores", big: true, dropdown: true, menu: [
@@ -638,13 +638,13 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       title: "Motores",
       items: [
         { icon: ArrowRightLeft, label: "Transferencias" },
-        { icon: ShoppingCart, label: "Compras" },
+        { icon: ShoppingCart, label: "Compras", openLabel: "Compras Motores" },
       ],
     },
     {
       title: "Tránsito",
       items: [
-        { icon: FileText, label: "Documentos" },
+        { icon: FileText, label: "Documentos", openLabel: "Documentos de Tránsito" },
         { icon: XCircle, label: "Anulación en Consulta" },
       ],
     },
@@ -661,7 +661,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       title: "Consultas",
       items: [
         { icon: Tag, label: "Tarjetas" },
-        { icon: FileText, label: "Documentos" },
+        { icon: FileText, label: "Documentos", openLabel: "Documentos de Importación" },
       ],
     },
     {
@@ -849,7 +849,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Ventas",
       items: [
-        { icon: FileEdit, label: "Cotizacion" },
+        { icon: FileEdit, label: "Cotizacion", openLabel: "Cotizacion Servicio" },
       ],
     },
     {
@@ -1126,7 +1126,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Mantenimiento",
       items: [
-        { icon: Smartphone, label: "Modelos" },
+        { icon: Smartphone, label: "Modelos", openLabel: "Modelos Telefonía" },
         { icon: Phone, label: "Equipos" },
         { icon: Signal, label: "Planes" },
       ],
@@ -1185,7 +1185,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       items: [
         { icon: Package, label: "Productos" },
         { icon: Factory, label: "Tipo Motores" },
-        { icon: Layers, label: "Modelos" },
+        { icon: Layers, label: "Modelos", openLabel: "Modelos Almacenes" },
         { icon: Tags, label: "Categorias" },
       ],
     },
@@ -2469,7 +2469,7 @@ function CollapsedGroupButton({ group, onOpen }: { group: RibbonGroup; onOpen: (
                       {section.items.map((subitem, subitemIndex) => (
                 <button
                           key={`${subitem.label}-${subitemIndex}`}
-                          onClick={() => { openWindow(subitem.label); setOpen(false); setExpandedItem(null); }}
+                          onClick={() => { openWindow(subitem.openLabel ?? subitem.label); setOpen(false); setExpandedItem(null); }}
                           className="flex w-full items-center gap-2 px-1.5 py-1 rounded border border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6] text-left"
                         >
                           <SmallColorIcon label={subitem.label} iconKey={subitem.iconKey} className="h-4 w-4 shrink-0" size={16} />

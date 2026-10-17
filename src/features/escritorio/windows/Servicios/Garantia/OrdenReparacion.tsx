@@ -52,3 +52,5 @@ export function GarantiaWinList({ title }: { title: string }) {
     />
   );
 }
+
+export const GarantiaWin = GarantiaWinList;

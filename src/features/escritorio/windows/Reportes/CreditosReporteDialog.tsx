@@ -29,3 +29,5 @@ export function CreditosReporteDialogList({ label }: { label: string }) {
     </WindowShell>
   );
 }
+
+export const CreditosReporteDialog = CreditosReporteDialogList;

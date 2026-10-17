@@ -25,3 +25,5 @@ export function EncuestaWinList({ title }: { title: string }) {
     </WindowShell>
   );
 }
+
+export const EncuestaWin = EncuestaWinList;

@@ -29,3 +29,5 @@ export function AlmacenReporteDialogList({ label }: { label: string }) {
     </WindowShell>
   );
 }
+
+export const AlmacenReporteDialog = AlmacenReporteDialogList;

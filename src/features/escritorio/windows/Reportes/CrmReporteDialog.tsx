@@ -44,3 +44,5 @@ export function CrmReporteDialogList({ label }: { label: string }) {
     </WindowShell>
   );
 }
+
+export const CrmReporteDialog = CrmReporteDialogList;

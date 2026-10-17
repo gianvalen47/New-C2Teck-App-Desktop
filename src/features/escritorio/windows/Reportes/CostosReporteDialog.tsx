@@ -29,3 +29,5 @@ export function CostosReporteDialogList({ label }: { label: string }) {
     </WindowShell>
   );
 }
+
+export const CostosReporteDialog = CostosReporteDialogList;

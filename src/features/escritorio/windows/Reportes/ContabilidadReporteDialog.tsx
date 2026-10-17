@@ -29,3 +29,5 @@ export function ContabilidadReporteDialogList({ label }: { label: string }) {
     </WindowShell>
   );
 }
+
+export const ContabilidadReporteDialog = ContabilidadReporteDialogList;

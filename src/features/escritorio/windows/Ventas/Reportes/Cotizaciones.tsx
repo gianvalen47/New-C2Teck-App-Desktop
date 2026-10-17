@@ -1,58 +1,122 @@
-// Auto-extraido de windows (1).tsx (monolito legacy) — revisar antes de usar en produccion.
 import { Search } from "lucide-react";
 import {
   inp,
   btn,
   btnPrimary,
   iconBtn,
-  Field,
   WindowShell,
-  Fs
+  Fs,
+  Radio,
 } from "@/components/ui/desktop-primitives";
-import { Cotizaciones } from "@/features/escritorio/windows/Ventas/Pre y Post Venta/Cotizaciones";
 
 export function ReporteCotizacionesList() {
   return (
-    <WindowShell title="Cotizaciones"
-    >
-      <div className="p-3 space-y-3 max-w-2xl mx-auto text-[11.5px] text-slate-800">
-        <Fs legend="Rango de Fechas">
-          <Field label="Del"><input className={inp} type="date" defaultValue="2026-07-01" /></Field>
-          <Field label="Al"><input className={inp} type="date" defaultValue="2026-07-21" /></Field>
-        </Fs>
-
-        <div className="grid grid-cols-2 gap-3">
-          <Field label="Oficina"><select className={inp}><option>(Todos)</option></select></Field>
-          <Field label="Almacén"><select className={inp}><option>(Todos)</option></select></Field>
-        </div>
-
-        <Fs legend="Buscar Cliente">
-          <label className="flex items-center gap-2"><input type="checkbox" defaultChecked className="accent-[#2A5590]" />Todo Cliente</label>
-          <Field label="Cliente"><div className="flex gap-1"><input className={`${inp} flex-1`} /><button className={iconBtn}><Search className="h-3.5 w-3.5" /></button></div></Field>
-        </Fs>
-
-        <Fs legend="Buscar Vendedor">
-          <label className="flex items-center gap-2"><input type="checkbox" defaultChecked className="accent-[#2A5590]" />Todo Vendedor</label>
-          <Field label="Vendedor"><select className={inp}><option>(Todos)</option></select></Field>
-        </Fs>
-
-        <div className="grid grid-cols-[1.3fr_0.9fr] gap-3">
-          <Fs legend="Opciones">
-            <Field label="Estado"><select className={inp}><option>(Todos)</option><option>Generados</option><option>Vencidos</option><option>Atendidos</option><option>Rechazados</option></select></Field>
-            <Field label="Tipo de Rechazo"><select className={inp}><option>(Todos)</option></select></Field>
-          </Fs>
-          <Fs legend="Mostrar">
-            <div className="flex flex-col gap-1 text-[11px] text-slate-800">
-              <label className="inline-flex items-center gap-2"><input type="radio" name="cot_op" defaultChecked className="accent-[#2A5590]" />Todos</label>
-              <label className="inline-flex items-center gap-2"><input type="radio" name="cot_op" className="accent-[#2A5590]" />Generados</label>
-              <label className="inline-flex items-center gap-2"><input type="radio" name="cot_op" className="accent-[#2A5590]" />Vencidos</label>
-              <label className="inline-flex items-center gap-2"><input type="radio" name="cot_op" className="accent-[#2A5590]" />Atendidos</label>
-              <label className="inline-flex items-center gap-2"><input type="radio" name="cot_op" className="accent-[#2A5590]" />Rechazados</label>
+    <WindowShell title="Reporte de Cotizaciones">
+      <div className="flex h-full items-center justify-center overflow-auto p-2 text-[11.5px] text-slate-800">
+        <div className="w-full max-w-[430px] space-y-2 px-1 py-2">
+          <div className="flex items-center justify-center gap-4">
+            <div className="flex items-center gap-2">
+              <label htmlFor="cotizaciones-desde" className="font-bold">Del :</label>
+              <input
+                id="cotizaciones-desde"
+                className={`${inp} h-6 w-[100px] px-1`}
+                type="date"
+                defaultValue="2026-10-01"
+              />
             </div>
-          </Fs>
-        </div>
+            <div className="flex items-center gap-2">
+              <label htmlFor="cotizaciones-hasta" className="font-bold">Al</label>
+              <input
+                id="cotizaciones-hasta"
+                className={`${inp} h-6 w-[100px] px-1`}
+                type="date"
+                defaultValue="2026-10-15"
+              />
+            </div>
+          </div>
 
-        <div className="mt-2 flex justify-end gap-2"><button className={btn}>Cancelar</button><button className={btnPrimary}>Aceptar</button></div>
+          <div className="mx-auto w-[225px] space-y-1">
+            <label className="grid grid-cols-[68px_152px] items-center gap-1">
+              <span className="font-bold">Oficinas:</span>
+              <select className={`${inp} h-6 w-[152px] px-1`}>
+                <option>(Todos)</option>
+              </select>
+            </label>
+            <label className="grid grid-cols-[68px_152px] items-center gap-1">
+              <span className="font-bold">Almacén:</span>
+              <select className={`${inp} h-6 w-[152px] px-1`}>
+                <option>(Todos)</option>
+              </select>
+            </label>
+          </div>
+
+          <Fs legend="Buscar Vendedor" className="px-2 pb-1 pt-0">
+            <div className="flex justify-center">
+              <label className="inline-flex items-center gap-1.5 font-bold">
+                <input type="checkbox" defaultChecked className="accent-[#2A5590]" />
+                Todo Cliente
+              </label>
+            </div>
+            <label className="grid grid-cols-[62px_minmax(0,1fr)_28px] items-center gap-1">
+              <span className="font-bold">Cliente:</span>
+              <input className={`${inp} h-6 min-w-0 px-1`} />
+              <button type="button" className={iconBtn} aria-label="Buscar cliente">
+                <Search className="h-3.5 w-3.5" />
+              </button>
+            </label>
+          </Fs>
+
+          <Fs legend="Buscar Cliente" className="px-2 pb-1 pt-0">
+            <div className="flex justify-center">
+              <label className="inline-flex items-center gap-1.5 font-bold">
+                <input type="checkbox" defaultChecked className="accent-[#2A5590]" />
+                Todo Vendedor
+              </label>
+            </div>
+            <label className="grid grid-cols-[68px_minmax(0,1fr)] items-center gap-1">
+              <span className="font-bold">Vendedor:</span>
+              <select className={`${inp} h-6 min-w-0 px-1`}>
+                <option></option>
+                <option>(Todos)</option>
+              </select>
+            </label>
+          </Fs>
+
+          <div className="grid grid-cols-[minmax(0,1fr)_138px] items-center gap-1.5">
+            <div className="space-y-2">
+              <label className="grid grid-cols-[132px_114px] items-center gap-1">
+                <span className="font-bold">Estado:</span>
+                <select className={`${inp} h-6 w-[114px] px-1`}>
+                  <option>(Todos)</option>
+                  <option>Generados</option>
+                  <option>Vencidos</option>
+                  <option>Atendidos</option>
+                  <option>Rechazados</option>
+                </select>
+              </label>
+              <label className="grid grid-cols-[132px_114px] items-center gap-1">
+                <span className="font-bold">Tipo de Rechazo:</span>
+                <select className={`${inp} h-6 w-[114px] px-1`}>
+                  <option>(Todos)</option>
+                </select>
+              </label>
+            </div>
+            <Fs legend="Opciones" className="px-2 pb-1 pt-0">
+              <div className="flex flex-col gap-0.5">
+                <Radio name="cotizaciones-opcion" label="Todos" defaultChecked />
+                <Radio name="cotizaciones-opcion" label="Generados" />
+                <Radio name="cotizaciones-opcion" label="Vencidos" />
+                <Radio name="cotizaciones-opcion" label="Atendidos" />
+                <Radio name="cotizaciones-opcion" label="Rechazados" />
+              </div>
+            </Fs>
+          </div>
+
+          <div className="flex justify-center gap-2 pt-1">
+            <button type="button" className={btnPrimary}>Aceptar</button>
+            <button type="button" className={btn}>Cancelar</button>
+          </div>
+        </div>
       </div>
     </WindowShell>
   );

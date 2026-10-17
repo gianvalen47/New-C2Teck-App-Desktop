@@ -12,8 +12,6 @@ import {
   WindowShell,
   SearchBar
 } from "@/components/ui/desktop-primitives";
-import { Factura } from "@/features/escritorio/windows/Ventas/Documentos/Facturas";
-
 export function downloadBlob(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
@@ -339,3 +337,5 @@ export function ConfigTablaList({ title, columns }: { title: string; columns: st
     </WindowShell>
   );
 }
+
+export const ConfigTabla = ConfigTablaList;

@@ -50,3 +50,5 @@ export function ServicioReporteDialogList({ label }: { label: string }) {
     </WindowShell>
   );
 }
+
+export const ServicioReporteDialog = ServicioReporteDialogList;

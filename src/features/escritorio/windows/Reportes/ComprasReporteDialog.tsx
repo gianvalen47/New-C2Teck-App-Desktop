@@ -29,3 +29,5 @@ export function ComprasReporteDialogList({ label }: { label: string }) {
     </WindowShell>
   );
 }
+
+export const ComprasReporteDialog = ComprasReporteDialogList;

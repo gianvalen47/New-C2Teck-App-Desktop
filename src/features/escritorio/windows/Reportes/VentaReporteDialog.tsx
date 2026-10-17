@@ -213,3 +213,5 @@ export function VentaReporteDialogList({ label }: { label: string }) {
     </WindowShell>
   );
 }
+
+export const VentaReporteDialog = VentaReporteDialogList;

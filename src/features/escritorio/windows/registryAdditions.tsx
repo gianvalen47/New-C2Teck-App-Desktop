@@ -99,7 +99,7 @@ import { GarantiaWin } from "@/features/escritorio/windows/Servicios/Garantia/Or
 import { Kilometraje } from "@/features/escritorio/windows/Servicios/Control Vehicular/Kilometraje";
 import { OficinaUsuario } from "@/features/escritorio/windows/Servicios/Mantenimiento/OficinaUsuario";
 import { ServicioReporteDialog } from "@/features/escritorio/windows/Reportes/ServicioReporteDialog";
-import { PuntosControl } from "@/features/escritorio/windows/Rondas Asignacion/PuntosControlRutas";
+import { PuntosControlList as PuntosControl } from "@/features/escritorio/windows/Rondas/Asignacion/PuntosControlRutas";
 import { TelefoniaInv } from "@/features/escritorio/windows/Telefonia/Mantenimiento/Modelos";
 import { AsignaPersona } from "@/features/escritorio/windows/Telefonia/Asignacion/AsignaPersona";
 import { PersonalTiempo } from "@/features/escritorio/windows/Personal/Asignaciones/Faltas";
