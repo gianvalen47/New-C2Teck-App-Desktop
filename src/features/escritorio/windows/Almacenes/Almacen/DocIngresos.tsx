@@ -128,3 +128,7 @@ export function DocIngresosList() {
     </div>
   );
 }
+
+export function DocIngresos() {
+  return <DocIngresosList />;
+}

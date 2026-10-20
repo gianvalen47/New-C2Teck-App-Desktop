@@ -15,7 +15,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("sigecoom-wcf-proxies"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9285cb6ca29e0babea602051a11e0cff51aca753"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0017fd90d6f85329f76df1168a75d88fa01f705c"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("sigecoom-wcf-proxies"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("sigecoom-wcf-proxies"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")> 

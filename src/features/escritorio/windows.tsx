@@ -79,8 +79,8 @@ import { Cartera, CarteraList } from "./windows/Ventas/Clientes/Cartera";
 import { Despacho, DespachoList } from "./windows/Ventas/Requisiciones/Despacho";
 
 // Consultas
-import { ConsultaDocumentosVentaWindow, ConsultaDocumentosVentaList } from "./windows/Ventas/Consultas/Documentos";
 import { PrecioConsulta, PrecioConsultaList } from "./windows/Ventas/Consultas/Precios";
+import { ConsultaDocumentosVentaWindow, ConsultaDocumentosVentaList } from "./windows/Ventas/Consultas/Documentos";
 
 // Indicadores
 import { TableroIndicador, TableroIndicadorList } from "./windows/Ventas/Indicadores/Tablero";
@@ -98,8 +98,10 @@ import { RegistroVenta, RegistroVentaList } from "./windows/Ventas/Registro/Regi
 import { RegistroAuxiliarList, RegistroAuxiliar } from "./windows/Ventas/Registro/RegistroAuxiliar";
 import { ResumenRegistroList, ResumenRegistro } from "./windows/Ventas/Registro/ResumenRegistro";
 
-import { ReporteCotizaciones, ReporteCotizacionesList } from "./windows/Ventas/Reportes/Cotizaciones";
 import { ReporteVentasDetalladoList, ReporteVentasDetallado, ReporteDetalle } from "./windows/Ventas/Reportes/Detalle";
+import { ReporteAcumulada, ReporteAcumuladaList } from "./windows/Ventas/Reportes/Acumulada";
+import { ReporteGRPendiente, ReporteGRPendienteList } from "./windows/Ventas/Reportes/GRPendiente";
+import { ReporteCotizaciones, ReporteCotizacionesList } from "./windows/Ventas/Reportes/Cotizaciones";
 import { ReporteValeRequisicionList, ReporteValeRequisicion } from "./windows/Ventas/Reportes/ValeRequisicion";
 import { ReporteMensualClienteList, ReporteMensualCliente } from "./windows/Ventas/Reportes/MensualesXCliente";
 import { ReporteDetalleDescuentoList, ReporteDetalleDescuento } from "./windows/Ventas/Reportes/DetalleDescuento";
@@ -107,21 +109,19 @@ import { ReporteReclamosList, ReporteReclamos } from "./windows/Ventas/Reportes/
 import { ReporteOrdenCompra, ReporteOrdenCompraList } from "./windows/Ventas/Reportes/OrdenesCompra";
 import { ReporteConsignacionList, ReporteConsignacion } from "./windows/Ventas/Reportes/Consignaciones";
 import { ReporteGuiasRemision, ReporteGuiasRemisionList } from "./windows/Ventas/Reportes/GuiasRemision";
-import { ReporteGRPendiente, ReporteGRPendienteList } from "./windows/Ventas/Reportes/GRPendiente";
 import { ReportePresupuestoVenta, ReportePresupuestoVentaList } from "./windows/Ventas/Reportes/PresupuestoVenta";
 import { ReporteComisiones, ReporteComisionesList } from "./windows/Ventas/Reportes/Comisiones";
-import { ReporteAcumulada, ReporteAcumuladaList } from "./windows/Ventas/Reportes/Acumulada";
 
 // ALMACENES
 // Almacén
-import { DespachoWindow, DespachoList2 } from "./windows/Almacenes/Almacen/Despacho";
+import { DocIngresos, DocIngresosList } from "./windows/Almacenes/Almacen/DocIngresos";
 import { DocSalidas, DocSalidasList } from "./windows/Almacenes/Almacen/DocSalidas";
 import { ChequeoFI, ChequeoFIList } from "./windows/Almacenes/Almacen/ChequeoFI";
-import { AtenderOT, AtenderOTList } from "./windows/Almacenes/Almacen/AtenderOT";
-import { DatosDespachoWindow, DatosDespachoList } from "./windows/Almacenes/Almacen/DatosDespachoClientes";
-import { Vales, ValesList } from "./windows/Almacenes/Almacen/Vales";
 import { AlmacenTI, AlmacenTIList } from "./windows/Almacenes/Almacen/TI";
 import { AlmacenMTI, AlmacenMTIList } from "./windows/Almacenes/Almacen/MTI";
+import { AtenderOT, AtenderOTList } from "./windows/Almacenes/Almacen/AtenderOT";
+import { DespachoWindow, DespachoList2 } from "./windows/Almacenes/Almacen/Despacho";
+import { Vales, ValesList } from "./windows/Almacenes/Almacen/Vales";
 
 // Motores
 import { MemosTransferenciasInternas, MemosTransferenciasInternasList } from "./windows/Almacenes/Motores/Transferencias";
@@ -242,15 +242,15 @@ import { TrasladarCostosWindow } from "./windows/Contabilidad/Costos/Procesos/Tr
 
 // GERENCIA
 // Reportes
-import { ReporteVentas, ReporteVentasList } from "./windows/Gerencia/Reportes/000Ventas";
-import { ReporteImportacion, ReporteImportacionList } from "./windows/Gerencia/Reportes/010Importaciones";
-import { ReporteInvencos, ReporteInvencosList } from "./windows/Gerencia/Reportes/020InventarioYCostos";
-import { ReporteContabilidad, ReporteContabilidadList } from "./windows/Gerencia/Reportes/030Contabilidad";
-import { ReporteCreco, ReporteCrecoList } from "./windows/Gerencia/Reportes/040CreditosYCobranzas";
-import { ReporteContenedor, ReporteContenedorList } from "./windows/Gerencia/Reportes/ContenedorReportes";
-import { ReporteIndicador, ReporteIndicadorList } from "./windows/Gerencia/Reportes/DatosParaIndicadores";
-import { ReporteFinanciero, ReporteFinancieroList } from "./windows/Gerencia/Reportes/EstadosFinancieros";
-import { ReporteTarjeta, ReporteTarjetaList } from "./windows/Gerencia/Reportes/Tarjeta";
+import { GerenciaVentasWindow } from "./windows/Gerencia/Reportes/000Ventas";
+import { GerenciaImportacionesWindow } from "./windows/Gerencia/Reportes/010Importaciones";
+import { GerenciaInventarioCostosWindow } from "./windows/Gerencia/Reportes/020InventarioYCostos";
+import { GerenciaContabilidadWindow } from "./windows/Gerencia/Reportes/030Contabilidad";
+import { GerenciaCreditosWindow } from "./windows/Gerencia/Reportes/040CreditosYCobranzas";
+import { ContenedorReportes, ContenedorReportesWindow } from "./windows/Gerencia/Reportes/ContenedorReportes";
+import { DatosParaIndicadores ,DatosParaIndicadoresWindow } from "./windows/Gerencia/Reportes/DatosParaIndicadores";
+import { EstadosFinancieros, EstadosFinancierosWindow } from "./windows/Gerencia/Reportes/EstadosFinancieros";
+import { Tarjeta, TarjetaGerenciaWindow } from "./windows/Gerencia/Reportes/Tarjeta";
 
 // SERVICIOS
 // Almacen
@@ -516,15 +516,6 @@ import { IndicadoresEncuesta, IndicadoresEncuestaWindow } from "./windows/Admini
 
 // Encuestas
 import { EncuestaWin, EncuestaWinList } from "./windows/Administracion/Encuestas/Encuesta";
-import { GerenciaVentasWindow } from "./windows/Gerencia/Reportes/000Ventas";
-import { GerenciaImportacionesWindow } from "./windows/Gerencia/Reportes/010Importaciones";
-import { GerenciaInventarioCostosWindow } from "./windows/Gerencia/Reportes/020InventarioYCostos";
-import { GerenciaContabilidadWindow } from "./windows/Gerencia/Reportes/030Contabilidad";
-import { GerenciaCreditosWindow } from "./windows/Gerencia/Reportes/040CreditosYCobranzas";
-import { ContenedorReportes, ContenedorReportesWindow } from "./windows/Gerencia/Reportes/ContenedorReportes";
-import { DatosParaIndicadores ,DatosParaIndicadoresWindow } from "./windows/Gerencia/Reportes/DatosParaIndicadores";
-import { EstadosFinancieros, EstadosFinancierosWindow } from "./windows/Gerencia/Reportes/EstadosFinancieros";
-import { Tarjeta, TarjetaGerenciaWindow } from "./windows/Gerencia/Reportes/Tarjeta";
 import { Resultado, ResultadoEncuestaWindow } from "./windows/Administracion/Encuestas/Resultado";
 
 // Inventario
@@ -535,14 +526,14 @@ import { ComputadoraInv, ComputadoraInvList } from "./windows/Administracion/Inv
 import { LlamadasWin, LlamadasWinList } from "./windows/Administracion/Llamadas/Llamadas";
 
 // Tablas Generales
-import { EmpresasWindow, EmpresasList } from "./windows/Administracion/Tablas Generales/Empresas";
 import { EquiposMarcacionPersonalWindow, EquiposMarcacionPersonalList } from "./windows/Administracion/Tablas Generales/EquiposMarcacionPersonal";
+import { EmpresasWindow, EmpresasList } from "./windows/Administracion/Tablas Generales/Empresas";
+import { SeriesDocumentosWindow, SeriesDocumentosList } from "./windows/Administracion/Tablas Generales/SeriesDocumentos";
 import { LocacionesWindow, LocacionesList } from "./windows/Administracion/Tablas Generales/Locaciones";
+import { RubrosDeProductosWindow, RubrosDeProductosList } from "./windows/Administracion/Tablas Generales/RubrosDeProductos";
 import { ParametrosLocacionesWindow, ParametrosLocacionesList } from "./windows/Administracion/Tablas Generales/ParametrosLocaciones";
 import { ParametrosPlanillaSueldosWindow, ParametrosPlanillaSueldosList } from "./windows/Administracion/Tablas Generales/ParametrosPlanillaSueldos";
-import { RubrosDeProductosWindow, RubrosDeProductosList } from "./windows/Administracion/Tablas Generales/RubrosDeProductos";
 import { RubrosXEmpresaWindow, RubrosXEmpresaList } from "./windows/Administracion/Tablas Generales/RubrosXEmpresa";
-import { SeriesDocumentosWindow, SeriesDocumentosList } from "./windows/Administracion/Tablas Generales/SeriesDocumentos";
 
 // AYUDA
 // Usuario
@@ -557,7 +548,6 @@ import { ClientesList } from "./windows/Clientes";
 import { UbicacionesList as UbicacionesWindow } from "./windows/Ubicaciones";
 import { ProductosList, Productos } from "./windows/Productos";
 import { RegistroComprasList } from "./windows/ComprasRegistro";
-import { MovimientosAlmacenList, DocIngresosList, DocSalidasList2, TransferenciasList, DocIngresos } from "./windows/MovimientosAlmacen";
 import { SolicitudCompraList, SolicitudCompra } from "./windows/SolicitudCompra";
 import { OrdenCompraList, OrdenCompra } from "./windows/OrdenCompra";
 import { CuentasPagarList } from "./windows/CuentasPagar";
@@ -612,84 +602,405 @@ function addAliases(baseLabel: string, aliases: string[], component: WindowCompo
   aliases.forEach(a => add(a, component));
 }
 
-// --- Precios group ---
-addAliases("Precios", ["Precios y Tarifas", "Gestor Precios"], PreciosManagerList);
-addAliases("Precios Cliente", ["Precio por Cliente", "Precios-Cliente"], PrecioClienteList);
-addAliases("Precio Oferta", ["Ofertas", "Precios Oferta"], PrecioOfertaList);
-add("Factores Rubros", FactoresRubrosList);
+// --- Precios ---
+add("Consulta Precios", ConsultaPreciosDialogList);
+add("Precios Cliente", PrecioClienteList);
+add("Precio Oferta", PrecioOfertaList);
 add("Precio Lista", PrecioListaList);
 add("Precio Fabricantes", PrecioFabricantesList);
-add("Consulta Precios", ConsultaPreciosDialogList);
+add("Factores Rubros", FactoresRubrosList);
 
-// --- Ventas / Registro ---
-add("Registro Venta", RegistroVentaList);
-addAliases("Registro Auxiliar", ["Registro-Aux", "Auxiliar Registro"], RegistroAuxiliarList);
+// --- General / Base ---
+add("New Guide", NewGuideWindow);
+add("Reporte Container", ReporteContainer);
+add("Reporte Activos Fijos", ReporteActivosFijosWindow);
+
+// --- Ventas ---
+add("Guía Remisión", GuiaRemision);
+add("Factura de Venta", FacturaVentaList);
+add("Nota de Venta", NotaVentaList);
+add("Guía Devolución", GuiaDevolucion);
+add("Boleta", Boleta);
+add("Resumen de Boletas", ResumenBoletas);
+
+add("Cotizaciones", Cotizaciones);
+add("Reclamo Garantía", ReclamoGarantia);
+add("Separar Orden", SepararOrden);
+add("Órdenes Compra", OrdenesCompra);
+add("Actualizar Vendedor", ActualizarVendedor);
+add("Enviar Correos", EnviarCorreos);
+
+add("Cartera", Cartera);
+add("Despacho", Despacho);
+add("Precio Consulta", PrecioConsulta);
+add("Consulta Documentos Venta", ConsultaDocumentosVentaWindow);
+add("Tablero Indicador", TableroIndicador);
+
+add("Registro Venta", RegistroVenta);
+add("Registro Auxiliar", RegistroAuxiliarList);
 add("Resumen Registro", ResumenRegistroList);
-
-// Documentos de ventas y listas relacionadas
-addAliases("Guías de Remisión", ["Guia Remision", "Guía Remisión", "Guias Remision"], GuiaRemisionList);
-addAliases("Nueva Guía Remisión", ["Nueva Guia Remision", "New Guide", "Guia Remision - Nuevo"], NewGuideWindow);
-addAliases("Factura de Venta", ["Facturas", "Factura Venta", "Factura de Ventas"], FacturaVentaList);
-addAliases("Nota de Venta", ["Notas", "Nota Venta", "Nota de Ventas"], NotaVentaList);
-addAliases("Clientes", ["Clientes - Lista", "Clientes - Gestión", "Clientes - Gestión"], ClientesList);
-addAliases("Productos", ["Inventario", "Productos - Lista", "Productos - Gestión"], ProductosList);
-
-// --- Almacén ---
-add("Despacho", DespachoList2);
-add("Doc Salidas", DocSalidas);
-add("Vales", Vales);
-add("Tarjetas", Tarjetas);
-add("Calendario", Calendario);
-add("Procesar Cobertura", ProcesarCobertura);
-add("Liqui Gastos", LiquiGastos);
-
-// Movimientos de almacén y entradas/salidas
-addAliases("Documentos Ingreso", ["Doc Ingresos", "Ingresos"], DocIngresosList);
-addAliases("Documentos Salida", ["Doc Salidas", "Salidas", "Salidas Almacen"], DocSalidasList2);
-addAliases("Transferencias", ["Transferencias Almacen", "Traslados"], TransferenciasList);
-
-// Compras / Cuentas por pagar / Solicitudes
-addAliases("Registro Compras", ["Compras Registro", "Registro de Compras"], RegistroComprasList);
-addAliases("Solicitudes de Compra", ["Solicitud Compra", "Solicitudes Compra"], SolicitudCompraList);
-addAliases("Ordenes de Compra", ["Orden Compra", "Ordenes Compra", "O.C."], OrdenCompraList);
-addAliases("Cuentas por Pagar", ["Cuentas Pagar", "Proveedores - Cuentas"], CuentasPagarList);
-addAliases("Solicitudes de Gasto", ["Solicitud Gasto", "Gastos Solicitud"], SolicitudGastoList);
-addAliases("Planilla Viaticos", ["Planilla Viaticos", "Viaticos"], PlanillaViaticosList);
-
-// Ubicaciones y movimientos
-addAliases("Ubicaciones", ["Ubicaciones - Lista", "Localizaciones"], UbicacionesWindow);
-addAliases("Movimientos Almacen", ["Movimientos", "Mov. Almacen"], MovimientosAlmacenList);
-addAliases("Documentos Ingreso", ["Ingresos"], DocIngresosList);
-addAliases("Transferencias Almacen", ["Transferencias"], TransferenciasList);
-
-// Forms and detail windows
-addAliases("Guia Remision Form", ["Guia Remision - Form", "Guía Remisión - Form"], GuiaRemisionForm);
-addAliases("Nota Venta Form", ["Nota Venta - Form", "Nota - Form"], NotaVentaForm);
-
-// --- Reportes (grouped examples) ---
-addAliases(
-  "Reporte de Ventas Detallado",
-  ["Reporte Venta Detallado", "Venta Detallada", "Rpt Venta Detallado"],
-  ReporteVentasDetalladoList,
-);
-add("Reporte Costos", CostosReporteDialog);
-add("Reporte Compras", ComprasReporteDialog);
-add("Reporte Contabilidad", ContabilidadReporteDialog);
-add("Reporte Almacen", AlmacenReporteDialog);
-add("Reporte Creditos", CreditosReporteDialog);
-add("Reporte Guias", ReporteGuiasRemision);
+add("Reporte Ventas Detallado", ReporteVentasDetalladoList);
+add("Reporte Acumulada", ReporteAcumulada);
+add("Reporte GR Pendiente", ReporteGRPendiente);
+add("Reporte Cotizaciones", ReporteCotizaciones);
+add("Reporte Vale Requisición", ReporteValeRequisicionList);
 add("Reporte Mensual Cliente", ReporteMensualClienteList);
-add("Reporte Orden Compra", ReporteOrdenCompraList);
-add("Reporte Presupuesto Venta", ReportePresupuestoVentaList);
-add("Reporte Reclamos", ReporteReclamosList);
-add("Reporte Vale Requisicion", ReporteValeRequisicionList);
-add("Reporte GR Pendiente", ReporteGRPendienteList);
 add("Reporte Detalle Descuento", ReporteDetalleDescuentoList);
-add("Reporte Cotizaciones", ReporteCotizacionesList);
+add("Reporte Reclamos", ReporteReclamosList);
+add("Reporte Orden Compra", ReporteOrdenCompra);
 add("Reporte Consignacion", ReporteConsignacionList);
-add("Consignaciones", ReporteConsignacionList);
-add("Reporte Comisiones", ReporteComisionesList);
-add("Reporte Acumulada", ReporteAcumuladaList);
+add("Reporte Guías Remisión", ReporteGuiasRemision);
+add("Reporte Presupuesto Venta", ReportePresupuestoVenta);
+add("Reporte Comisiones", ReporteComisiones);
+
+// --- Almacenes ---
+add("Doc. Ingresos", DocIngresos);
+add("Doc. Salidas", DocSalidas);
+add("Chequeo F/I", ChequeoFI);
+add("Almacén T/I", AlmacenTI);
+add("Almacén MTI", AlmacenMTI);
+add("Atender OT", AtenderOT);
+add("Despacho Almacén", DespachoWindow);
+add("Vales", Vales);
+
+add("Memos Transferencias Internas", MemosTransferenciasInternas);
+add("Compra Motores", CompraMotores);
+
+add("Tránsito Docs", TransitoDocs);
+add("Anulación Consulta", AnulacionConsulta);
+
+add("Liqui Gastos", LiquiGastos);
+add("Act. Min Max", ActMinMax);
+add("Ubicaciones", UbicacionesList);
+add("Mantenimiento Productos", MantenimientoProductos);
+
+add("Tarjetas", Tarjetas);
+add("Documento Consulta", DocumentoConsulta);
+
+add("Procesar Cobertura", ProcesarCobertura);
+add("Calendario", Calendario);
+add("Indicadores Venta Dialog", IndicadoresVentaDialog);
+
+add("Vale Materiales Report", ValeMaterialesReport);
+add("Toma Inventario Report", TomaInventarioReport);
+add("Sin Movimiento Report", SinMovimientoReport);
+add("Movimientos Almacen Report", MovimientosAlmacenReport);
+add("Documento Reporte", DocumentoReporte);
+add("Reporte Valorizado", ReporteValorizado);
+add("Reporte Inventario", ReporteInventario);
+add("Reporte Transferencia", ReporteTransferencia);
+
+// --- Créditos ---
+add("Anticipos", Anticipos);
+add("Planillas", Planillas);
+add("Letras", Letras);
+add("Doc Ctas x Cobrar", DocCtasXCobrar);
+
+add("Aprobación Créditos", AprobacionCreditos);
+add("Permiso Usuario Créditos", PermisoUsuarioCreditos);
+add("Cotiz Taller Crédito", CotizTallerCredito);
+add("Recepción Doc Créditos", RecepcionDocCreditos);
+
+add("Saldo Bancos Créditos", SaldoBancosCreditos);
+add("Tipo Cambio", TipoCambio);
+add("Factores Descuentos Window", FactoresDescuentosWindow);
+add("Feriados Window", FeriadosWindow);
+add("Procesar Job Window", ProcesarJobWindow);
+add("Vincular GR Window", VincularGRWindow);
+add("Mantenimiento Tipo de Cambio", MantenimientoTipoDeCambio);
+add("Tipo Cambios Ventas", TipoCambiosVentas);
+
+add("Ctas x Cobrar", CtasXCobrar);
+add("Vencimientos Créditos Report", VencimientosCreditosReport);
+add("Tarjeta Cliente", TarjetaCliente);
+
+add("Acumulado", Acumulado);
+add("Detalle", Detalle);
+add("Reporte Clientes", ReporteClientes);
+add("Cuentas Corrientes", CuentasCorrientes);
+add("Reporte Diario", ReporteDiario);
+add("Reporte Doc Emi", ReporteDocEmi);
+add("Letras Aceptadas", LetrasAceptadas);
+add("Reporte Not Deb Cred", ReporteNotDebCred);
+add("Reporte Planillas", ReportePlanillas);
+add("Reporte Vis Co", ReporteVisCo);
+
+// --- Importaciones ---
+add("Import Doc", ImportDoc);
+add("Import Embarque", ImportEmbarque);
+add("Orden Importacion", OrdenImportacion);
+add("Internos", Internos);
+add("Embarque Importacion", EmbarqueImportacion);
+add("Reporte Orden Importacion", ReporteOrdenImportacion);
+add("Pedido Interno", PedidoInterno);
+
+// --- Costos ---
+add("Import Valorizar FI", ImportValorizarFI);
+add("Ajustar Costos", AjustarCostos);
+add("Cerrar Mes", CerrarMes);
+add("Consolidado", Consolidado);
+add("Generar Periodo", GenerarPeriodo);
+add("Inv Rotativo", InvRotativo);
+add("Recalcular", Recalcular);
+add("Trasladar Costos", TrasladarCostos);
+add("Actualizar Costos", ActualizarCostos);
+
+add("Costo Venta Costos Report", CostoVentaCostosReport);
+add("Cuadrar Cierre Costos Window", CuadrarCierreCostosWindow);
+add("Diario Almacen Costos Report", DiarioAlmacenCostosReport);
+add("Stock Valorizado Costos Report", StockValorizadoCostosReport);
+add("Gmroi Costos Report", GmroiCostosReport);
+
+add("Cerrar Mes Costos Window", CerrarMesCostosWindow);
+add("Consolidado Costos Window", ConsolidadoCostosWindow);
+add("Generar Periodo Costos Window", GenerarPeriodoCostosWindow);
+add("Inventario Rotativo Window", InventarioRotativoWindow);
+add("Recalcular Costos Window", RecalcularCostosWindow);
+add("Trasladar Costos Window", TrasladarCostosWindow);
+
+// --- Gerencia ---
+add("Gerencia Ventas Window", GerenciaVentasWindow);
+add("Gerencia Importaciones Window", GerenciaImportacionesWindow);
+add("Gerencia Inventario Costos Window", GerenciaInventarioCostosWindow);
+add("Gerencia Contabilidad Window", GerenciaContabilidadWindow);
+add("Gerencia Creditos Window", GerenciaCreditosWindow);
+add("Contenedor Reportes", ContenedorReportes);
+add("Datos Para Indicadores", DatosParaIndicadores);
+add("Estados Financieros", EstadosFinancieros);
+add("Tarjeta", Tarjeta);
+
+// --- Servicios ---
+add("Pedir Repuestos", PedirRepuestos);
+add("Venta Cotizacion", VentaCotizacion);
+add("Orden Trabajo", OrdenTrabajo);
+add("Marcaciones", Marcaciones);
+add("Gastos Reales", GastosReales);
+add("Marcar OT", MarcarOT);
+add("Pre Marcacion", PreMarcacion);
+add("Solicitud OT", SolicitudOT);
+
+add("Garantia Win", GarantiaWin);
+add("Reclamo Cliente", ReclamoCliente);
+add("Kilometraje", Kilometraje);
+add("Oficina Usuario", OficinaUsuario);
+
+add("Consultas Gastos Reales", ConsultasGastosReales);
+add("Consultas Marcaciones", ConsultasMarcaciones);
+add("OT", OT);
+
+add("Actividades", Actividades);
+add("Plantilla", Plantilla);
+add("Productividad", Productividad);
+add("Programacion", Programacion);
+add("Tablero", Tablero);
+
+add("Generar Pedido", GenerarPedido);
+add("Horas Motor", HorasMotor);
+add("Motores", Motores);
+add("Repuestos", Repuestos);
+add("Seguimiento", Seguimiento);
+
+add("Disponibilidad Del Motor", DisponibilidadDelMotor);
+add("Horas De Motores", HorasDeMotores);
+add("Motores A Dar De Baja", MotoresADarDeBaja);
+add("Proyeccion De Reparaciones", ProyeccionDeReparaciones);
+add("Repuestos A Importar", RepuestosAImportar);
+add("Seguimientos", Seguimientos);
+add("Ventas Por Mantenimientos", VentasPorMantenimientos);
+
+add("Reportes Cotizaciones", ReportesCotizaciones);
+add("Gastos Detallado", GastosDetallado);
+add("Gastos Por Rubros", GastosPorRubros);
+add("Horas De Trabajo", HorasDeTrabajo);
+add("Horas Escalon", HorasEscalon);
+add("Horas Muertas", HorasMuertas);
+add("Liquidacion X Garantia", LiquidacionXGarantia);
+add("Movimiento Repuestos", MovimientoRepuestos);
+add("Reporte OT", ReporteOT);
+add("Pendiente Facturacion", PendienteFacturacion);
+add("Solicitud Garantia", SolicitudGarantia);
+add("Reporte Solicitud OT", ReporteSolicitudOT);
+add("Tiempo Reparacion", TiempoReparacion);
+
+// --- Compras ---
+add("Cotizaciones Compra", CotizacionesCompra);
+add("Orden Compra Compras", OrdenCompraCompras);
+add("Solicitud Compra Compras", SolicitudCompraCompras);
+
+add("Planilla Viaticos", PlanillaViaticos);
+add("Ctas X Pagar", CtasXPagar);
+add("Solicitud Gasto", SolicitudGasto);
+add("Tarifa Gasto Viaje Window", TarifaGastoViajeWindow);
+add("Tarifa Taxis Casa Window", TarifaTaxisCasaWindow);
+add("Tarifa Taxi Destino Window", TarifaTaxiDestinoWindow);
+
+add("Compra Y O Gastos", CompraYOGastos);
+add("Reporte Pagos Cuentas X Pagar", ReportePagosCuentasXPagar);
+add("Reporte Solicitud Gastos", ReporteSolicitudGastos);
+add("Reporte Ctas X Pagar Unidad", ReporteCtasXPagarUnidad);
+
+// --- Personal ---
+add("Ficha General", FichaGeneral);
+add("Capacitaciones Win", CapacitacionesWin);
+add("Planilla Sueldos", PlanillaSueldos);
+add("Personal Tiempo", PersonalTiempo);
+add("Marcacion Online", MarcacionOnline);
+add("Asigna Horas Extra Window", AsignaHorasExtraWindow);
+add("Cronograma Mina Window", CronogramaMinaWindow);
+add("Descuentos Window", DescuentosWindow);
+add("Horarios Window", HorariosWindow);
+add("Horas Extras Window", HorasExtrasWindow);
+add("Ingresos Window", IngresosWindow);
+add("Jefe Area Window", JefeAreaWindow);
+add("Recursos Window", RecursosWindow);
+add("Evaluaciones Window", EvaluacionesWindow);
+add("Vacaciones Window", VacacionesWindow);
+
+add("Procesar Marcas List", ProcesarMarcasList);
+add("Admin Lector", AdminLector);
+
+add("Asig H Extra", AsigHExtra);
+add("Asignacion Horario", AsignacionHorario);
+add("Asistencia", Asistencia);
+add("Capacitaciones", Capacitaciones);
+add("Contratos", Contratos);
+add("Reporte Cronograma Mina", ReporteCronogramaMina);
+add("Reporte Descuentos", ReporteDescuentos);
+add("Faltas", Faltas);
+add("Horas Extra", HorasExtra);
+add("Reporte Ingresos", ReporteIngresos);
+add("Onomasticos", Onomasticos);
+add("Personal", Personal);
+add("Reporte Planilla Sueldos", ReportePlanillaSueldos);
+add("Reporte Recursos", ReporteRecursos);
+add("Tardanzas", Tardanzas);
+add("Reporte Vacaciones", ReporteVacaciones);
+
+// --- Rondas ---
+add("Puntos Control", PuntosControl);
+add("Rondas", Rondas);
+add("Ruteador Rutas Window", RuteadorRutasWindow);
+
+// --- Contabilidad ---
+add("Valorizar FI", ValorizarFI);
+add("Asientos", Asientos);
+add("Movimiento Bancos", MovimientoBancos);
+add("Registro Compra", RegistroCompra);
+add("Diario Compras", DiarioCompras);
+add("Caja Chica", CajaChica);
+add("Generar TXT", GenerarTXT);
+add("Flujo Caja", FlujoCaja);
+add("Diferencia Tipo Cambio Window", DiferenciaTipoCambioWindow);
+add("Cierre Mes Contable Window", CierreMesContableWindow);
+add("Cuenta Destino Window", CuentaDestinoWindow);
+
+add("Caja Y Bancos", CajaYBancos);
+add("Libro Diario Window", LibroDiarioWindow);
+add("Libro Mayor", LibroMayor);
+add("Registro De Compras", RegistroDeCompras);
+
+add("Cheques Girados", ChequesGirados);
+add("Ctas Ctes", CtasCtes);
+add("Ctas Ctes Pendiente", CtasCtesPendiente);
+add("Report Ctas X Pagar", ReportCtasXPagar);
+add("Estado Financiero", EstadoFinanciero);
+add("Report Auxiliar", ReportAuxiliar);
+add("Report Provisionales", ReportProvisionales);
+add("Reporte Reembolso", ReporteReembolso);
+add("ReporteVencimiento", ReporteVencimiento);
+
+// --- Telefonía ---
+add("Telefonia Inv", TelefoniaInv);
+add("Telefonia Equipos Window", TelefoniaEquiposWindow);
+add("Telefonia Planes Window", TelefoniaPlanesWindow);
+add("Asigna Persona", AsignaPersona);
+add("Telefonia Lineas Window", TelefoniaLineasWindow);
+
+// --- CRM ---
+add("Cuota Vendedor", CuotaVendedor);
+add("Ocurrencias", Ocurrencias);
+add("Oportunidad Negocio Window", OportunidadNegocioWindow);
+add("CRMTarjetaCliente", CRMTarjetaCliente);
+add("Visita Clientes", VisitaClientes);
+add("Oportunidad Negocio", OportunidadNegocio);
+add("Reporte Visita Clientes", ReporteVisitaClientes);
+
+// --- Tablas ---
+add("Categorias Window", CategoriasWindow);
+add("Modelos Almacenes Window", ModelosAlmacenesWindow);
+add("Tipo Motores Window", TipoMotoresWindow);
+add("Marcas Window", MarcasWindow);
+add("Partidas Window", PartidasWindow);
+add("Plantilla Repuestos Window", PlantillaRepuestosWindow);
+add("Plantilla Repuestos Cliente Window", PlantillaRepuestosClienteWindow);
+add("Ubicacion Servicio Window", UbicacionServicioWindow);
+add("VehiculosWindow", VehiculosWindow);
+add("Condicion De Pago Window", CondicionDePagoWindow);
+add("ProveedoresWindow", ProveedoresWindow);
+add("Cuenta Contable Window", CuentaContableWindow);
+add("Cuentas Destino Tabla Window", CuentasDestinoTablaWindow);
+add("AFPWindow", AFPWindow);
+add("AreasWindow", AreasWindow);
+add("CargosWindow", CargosWindow);
+add("Equipo Lector Window", EquipoLectorWindow);
+add("Motivos FaltasWindow", MotivosFaltasWindow);
+add("Rubro Planilla Window", RubroPlanillaWindow);
+add("Rubro Planilla Ctas Window", RubroPlanillaCtasWindow);
+add("Tipo Hora Extra Window", TipoHoraExtraWindow);
+add("RutasWindow", RutasWindow);
+add("RuteadorWindow", RuteadorWindow);
+
+// --- Logueo ---
+add("Cambiar Empresa", CambiarEmpresa);
+add("Cerrar Sesion", CerrarSesion);
+add("Cambiar Contrasena", CambiarContrasena);
+
+// --- Administración ---
+add("Usuarios Admin", UsuariosAdmin);
+add("Perfiles", Perfiles);
+add("Sesiones", Sesiones);
+add("Atender Solicitud", AtenderSolicitud);
+add("Indicadores Encuesta", IndicadoresEncuesta);
+add("Encuesta Win", EncuestaWin);
+add("Resultado", Resultado);
+add("Computadora Asignar", ComputadoraAsignar);
+add("Computadora Inv", ComputadoraInv);
+add("Llamadas Win", LlamadasWin);
+add("Equipos Marcacion Personal Window", EquiposMarcacionPersonalWindow);
+add("Empresas Window", EmpresasWindow);
+add("Series Documentos Window", SeriesDocumentosWindow);
+add("Locaciones Window", LocacionesWindow);
+add("Rubros De Productos Window", RubrosDeProductosWindow);
+add("Parametros Locaciones Window", ParametrosLocacionesWindow);
+add("Parametros Planilla Sueldos Window", ParametrosPlanillaSueldosWindow);
+add("Rubros X Empresa Window", RubrosXEmpresaWindow);
+
+// --- Ayuda ---
+add("Solicitud Soporte", SolicitudSoporte);
+add("Acerca", Acerca);
+add("Info Cambios", InfoCambios);
+
+add("Reporte Guias", ReporteGuias);
+add("ClientesList", ClientesList);
+add("UbicacionesWindow", UbicacionesWindow);
+add("ProductosList", ProductosList);
+add("RegistroComprasList", RegistroComprasList);
+add("SolicitudCompraList", SolicitudCompraList);
+add("OrdenCompraList", OrdenCompraList);
+add("CuentasPagarList", CuentasPagarList);
+add("VentaReporteDialog", VentaReporteDialog);
+add("CostosReporteDialog", CostosReporteDialog);
+add("ComprasReporteDialog", ComprasReporteDialog);
+add("ContabilidadReporteDialog", ContabilidadReporteDialog);
+add("AlmacenReporteDialog", AlmacenReporteDialog);
+add("CreditosReporteDialog", CreditosReporteDialog);
+add("Reporte Costo Venta", ReporteCostoVenta);
+add("PreciosManagerList", PreciosManagerList);
+add("Servicio Reporte Dialog", ServicioReporteDialog);
+add("Personal Reporte Dialog", PersonalReporteDialog);
+add("Gerencia Reporte Dialog", GerenciaReporteDialog);
+add("Crm Reporte Dialog", CrmReporteDialog);
+add("Activos Fijos", ActivosFijos);
 
 // --- Backwards-compatibility: many labels in the legacy `windows.tsx` were
 // used by other subsystems. To avoid regressions we add common variants here.
@@ -782,411 +1093,40 @@ function ProcesarMarcas() {
 
 // ---------- Registry ----------
 const REGISTRY: Record<string, (label: string) => ReactNode> = {
-  // === Ventas ===
-  // Ventas > Documentos
   "Guía Remisión": () => <GuiaRemision />,
   "Guia Remision": () => <GuiaRemision />,
-  "Factura": () => <Factura />,
-  "Notas": () => <Notas />,
+  "Factura": () => <FacturaVentaList />,
+  "Notas": () => <NotaVentaList />,
   "Guía Devolución": () => <GuiaDevolucion />,
   "Boleta": () => <Boleta />,
   "Resumen de Boletas": () => <ResumenBoletas />,
   "Pre y Post Venta": () => <ReporteCotizaciones />,
-  // Pre y Post
   "Cotizaciones": () => <ReporteCotizaciones />,
   "Reclamo Garantía": () => <ReclamoGarantia />,
   "Separar Orden": () => <SepararOrden />,
   "Ordenes Compra": () => <ReporteOrdenCompra />,
-  "Órdenes Compra": () => <ReporteOrdenCompraList />,
+  "Órdenes Compra": () => <ReporteOrdenCompra />,
   "Actualizar Vendedor": () => <ActualizarVendedor />,
   "Enviar Correos": () => <EnviarCorreos />,
-  // Clientes / Requisiciones
   "Cartera": () => <Cartera />,
   "Requisiciones": () => <Despacho />,
   "Despacho": () => <Despacho />,
-  "Precios": () => <PreciosManager initial="Precio Lista" />,
-  // Precios
-  "Precios Cliente": () => <PrecioCliente />,
-  "Precio Lista": () => <PrecioLista />,
-  "Precio Oferta": () => <PrecioOferta />,
-  "Precio Fabricantes": () => <PrecioFabricantes />,
-  "Factores Rubros": () => <FactoresRubros />,
-  // Registro de Venta windows
+  "Precios": () => <PrecioConsulta />,
+  "Precios Cliente": () => <PrecioClienteList />,
+  "Precio Lista": () => <PrecioListaList />,
+  "Precio Oferta": () => <PrecioOfertaList />,
+  "Precio Fabricantes": () => <PrecioFabricantesList />,
+  "Factores Rubros": () => <FactoresRubrosList />,
   "Registro": () => <RegistroVenta />,
-  "Registro Auxiliar": () => <RegistroAuxiliar />,
-  "Resumen Registro": () => <ResumenRegistro />,
-  "Detalle": () => <ReporteDetalle />,
-  "Guías Remisión": () => <ReporteGuiasRemisionList />,
-  "Nueva Guía": () => <NuevaGuia />,
-  "Nueva Nota": () => <NuevaNota />,
-  "Reporte de Ventas Detallado": () => <ReporteVentasDetallado />,
-  "Reporte Venta Detallado": () => <ReporteVentasDetallado />,
-
-  // === Almacenes ===
-  "Doc.Ingresos": () => <DocIngresos />,
-  "Doc. Ingresos": () => <DocIngresosList />,
-  "Doc.Salidas": () => <DocSalidasList />,
-  "Doc. Salidas": () => <DocSalidas />,
-  "Chequeo F/I": () => <ChequeoFI />,
-  "T / I": () => <TransitoDocs />,
-  "T/I": () => <TransitoDocs />,
-  "M T I": () => <TransitoDocs />,
-  "MTI": () => <TransitoDocs />,
-  "Vales": () => <Vales />,
-  "Atender OT": () => <AtenderOT />,
-  "Despachos": () => <Despacho />,
-  "Datos Despacho Clientes": () => <Despacho />,
-  "Transferencias": () => <TransferenciasList />,
-  "Compras": () => <TransitoDocs />,
-  "Documentos": () => <TransitoDocs />,
-  "Anulación en Consulta": () => <TransitoDocs />,
-  "Productos": () => <ProductosList />,
-  "Liqui. Gastos": () => <LiquiGastos />,
-  "Act. Min Max": () => <ActMinMax />,
-  "Ubicaciones": () => <UbicacionesWindow />,
-  "Tarjetas": () => <Tarjetas />,
-  "Calendario": () => <Calendario />,
-  "Procesar Cobertura": () => <ProcesarCobertura />,
-  "Vales / Despachos": () => <AtenderOT />,
-
-  // === Créditos ===
-  "Ctas x Cobrar": () => <CtasXCobrar />,
-  "Cuentas x Cobrar": () => <CtasXCobrar />,
-  "Planillas": () => <Planillas />,
-  "Anticipos": () => <Anticipos />,
-  "Letras": () => <Letras />,
-  "Créditos": () => <AprobacionCreditos />,
-  "Creditos": () => <AprobacionCreditos />,
-  "Cotiz. Taller": () => <CotizTallerCredito />,
-  "Permiso Usuario": () => <PermisoUsuarioCreditos />,
-  "Recepcion Doc.": () => <RecepcionDocCreditos />,
-  "Recepción Doc.": () => <RecepcionDocCreditos />,
-  "Factores y Descuentos": () => <FactoresRubros />,
-  "Saldo Bancos": () => <SaldoBancosCreditos />,
-  "Visitas Cobrador": () => <CreditosReporteDialog label="Visitas Cobrador" />,
-  "Procesar Job": () => <ProcesoLote label="Procesar Job" subtitle="Procesa y vincula documentos pendientes asociados a créditos." />,
-  "Vincular G/R": () => <ProcesoLote label="Vincular G/R" subtitle="Relaciona guías de remisión con documentos comerciales y de cobranza." />,
-  "Tipo Cambio Ventas": () => <TipoCambio />,
-  "Renueva Tipo Cambio": () => <TipoCambio />,
-  "Mantenimiento Tipo de Cambio": () => <TipoCambio />,
-  "Consultas": () => <LookupDialog title="Consultas" columns={["Código", "Descripción", "Estado", "Referencia"]} rows={10} />,
-  "Ctas. x Cobrar": () => <CtasXCobrar />,
-  "Notas Debito/Credito": () => <CreditosReporteDialog label="Notas Debito/Credito" />,
-  "Visita Cobrador": () => <CreditosReporteDialog label="Visita Cobrador" />,
-  "Detalle Vencimientos": () => <CreditosReporteDialog label="Detalle Vencimientos" />,
-  "Acumulado Vencimientos": () => <CreditosReporteDialog label="Acumulado Vencimientos" />,
-
-  // === Importaciones ===
-  "Embarque": () => <OrdenImportacion />,
-  "Orden Importación": () => <OrdenImportacion />,
-  "Internos": () => <OrdenImportacion />,
-  "Orden de Importación": () => <OrdenImportacion />,
-  "Embarques de Importación": () => <OrdenImportacion />,
-  "Pedido Interno": () => <OrdenImportacion />,
-
-  // === Costos ===
-  "Valorizar F/I": () => <ValorizarFI />,
-  "Recalcular": () => <ProcesoLote label="Recalcular Costos" subtitle="Recalcula el costo promedio ponderado de todos los productos del periodo seleccionado." />,
-  "Ajustar Costos": () => <ValorizarFI />,
-  "Cerrar Mes": () => <ProcesoLote label="Cerrar Mes" subtitle="Congela el mes comercial: bloquea documentos y libera datos para auditoría." />,
-  "Consolidado": () => <ProcesoLote label="Consolidado" subtitle="Consolida movimientos y saldos de todos los almacenes." />,
-  "Trasladar Costos": () => <ProcesoLote label="Trasladar Costos" subtitle="Transfiere costos calculados hacia contabilidad y kardex valorizado." />,
-  "Generar Periodo": () => <ProcesoLote label="Generar Periodo" subtitle="Crea el nuevo periodo contable / comercial." />,
-  "Inv. Rotativo": () => <ProcesoLote label="Inventario Rotativo" subtitle="Genera muestras de conteo rotativo por categoría / ubicación." />,
-  "Importaciones": () => <CostosReporteDialog label="Importaciones" />,
-
-  // === Gerencia ===
-  "000 - Ventas": () => <GerenciaReporteDialog label="000 - Ventas" />,
-  "010 - Importaciones": () => <GerenciaReporteDialog label="010 - Importaciones" />,
-  "020 - Inventario y Costos": () => <GerenciaReporteDialog label="020 - Inventario y Costos" />,
-  "030 - Contabilidad": () => <GerenciaReporteDialog label="030 - Contabilidad" />,
-  "040 - Creditos y Cobranzas": () => <GerenciaReporteDialog label="040 - Creditos y Cobranzas" />,
-  "Datos para Indicadores": () => <GerenciaReporteDialog label="Datos para Indicadores" />,
-  "Tarjeta": () => <GerenciaReporteDialog label="Tarjeta" />,
-  "Contenedor Reportes": () => <GerenciaReporteDialog label="Contenedor Reportes" />,
-  "Estados Financieros": () => <GerenciaReporteDialog label="Estados Financieros" />,
-
-  // === Servicios ===
-  "Pedir Repuestos": () => <PedirRepuestos />,
-  "Cotizacion": () => <ReporteCotizaciones />,
-  "Orden de Trabajo": () => <OrdenTrabajo />,
-  "Solicitud OT": () => <OrdenTrabajo />,
-  "OT": () => <OrdenTrabajo />,
-  "Marcaciones": () => <Marcaciones title="Marcaciones — OT" />,
-  "Gastos Reales": () => <OrdenTrabajo />,
-  "Pre Marcacion": () => <Marcaciones title="Pre Marcación — OT" />,
-  "Pre Marcación": () => <Marcaciones title="Pre Marcación — OT" />,
-  "Marcar OT": () => <Marcaciones title="Marcar OT" />,
-  "Garantía": () => <GarantiaWin title="Garantía" />,
-  "Garantia": () => <GarantiaWin title="Garantía" />,
-  "Orden Reparación": () => <GarantiaWin title="Orden de Reparación" />,
-  "Reclamo Cliente": () => <GarantiaWin title="Reclamo Cliente" />,
-  "Control Vehicular": () => <Kilometraje />,
-  "Kilometraje": () => <Kilometraje />,
-  "Mantenimiento": () => <OficinaUsuario />,
-  "Oficina Usuario": () => <OficinaUsuario />,
-  "Gastos Detalle": () => <ServicioReporteDialog label="Gastos Detalle" />,
-  "Gastos Detallado": () => <ServicioReporteDialog label="Gastos Detallado" />,
-  "Liquidación x Garantia": () => <ServicioReporteDialog label="Liquidación x Garantia" />,
-  "LiquidaciÃ³n x Garantia": () => <ServicioReporteDialog label="LiquidaciÃ³n x Garantia" />,
-
-  // === Compras ===
-  "Solicitud de Compra": () => <SolicitudCompraList />,
-  "Solicitud Compra": () => <SolicitudCompraList />,
-  "Orden de Compra": () => <OrdenCompraList />,
-  "Solicitud Gasto": () => <SolicitudGastoList />,
-  "Planilla Viático": () => <PlanillaViaticosList />,
-  "Planilla Viatico": () => <PlanillaViaticosList />,
-  "Planilla Viáticos": () => <PlanillaViaticosList />,
-  "Tarifa Gasto Viaje": () => <MantenimientoCRUD label="Tarifa Gasto Viaje" columns={["Ruta", "Categoría", "Moneda", "Tarifa", "Estado"]} />,
-  "Tarifa Taxis Casa": () => <MantenimientoCRUD label="Tarifa Taxis Casa" columns={["Zona", "Horario", "Moneda", "Tarifa", "Estado"]} />,
-  "Tarifas Taxi Destino": () => <MantenimientoCRUD label="Tarifas Taxi Destino" columns={["Destino", "Tipo", "Moneda", "Tarifa", "Estado"]} />,
-  "Cuentas x Pagar": () => <CuentasPagarList />,
-  "Compras y/o Gastos": () => <RegistroComprasList />,
-  "Orden Compra": () => <OrdenCompraList />,
-  "Solicitud Gastos": () => <SolicitudGastoList />,
-  "Pagos Cuentas x Pagar": () => <ReportePagosCuentasXPagar />,
-  "Cuentas x Pagar Por Unidad": () => <ReporteCtasXPagarUnidad />,
-  "Tarifas": () => <PreciosManager initial="Precio Lista" />,
-
-  // === Personal ===
-  "Informacion": () => <FichaGeneral />,
-  "Ficha General": () => <FichaGeneral />,
-  "Vacaciones": () => <CapacitacionesWin title="Vacaciones" />,
-  "Capacitaciones": () => <CapacitacionesWin title="Capacitaciones" />,
-  "Evaluaciones": () => <CapacitacionesWin title="Evaluaciones de Desempeño" />,
-  "Planilla Sueldos": () => <PlanillaSueldos />,
-  "Quinta Categoría": () => <PlanillaSueldos />,
-  "Quinta Categoria": () => <PlanillaSueldos />,
-  "Faltas": () => <PersonalTiempo title="Faltas" />,
-  "Marcación": () => <MarcacionOnline />,
-  "Marcacion": () => <MarcacionOnline />,
-  "Asigna H. Extra": () => <PersonalTiempo title="Asignación H. Extra" />,
-  "Horarios": () => <PersonalTiempo title="Horarios / Turnos" />,
-  "Horas Extras": () => <PersonalTiempo title="Horas Extras" />,
-  "Ingresos": () => <PersonalTiempo title="Ingresos" />,
-  "Descuentos": () => <PersonalTiempo title="Descuentos" />,
-  "Jefe Área": () => <PersonalTiempo title="Jefe de Área" />,
-  "Jefe Area": () => <PersonalTiempo title="Jefe de Área" />,
-  "Recursos": () => <PersonalTiempo title="Recursos" />,
-  "Cronograma Mina": () => <PersonalTiempo title="Cronograma Mina" />,
-  "Marcación Online": () => <MarcacionOnline />,
-  "Marcacion Online": () => <MarcacionOnline />,
-  "Comunicaciones": () => <EnviarCorreos />,
-  "Admin. Lector": () => <MarcacionOnline />,
-  "Procesar Marcas": () => <ProcesarMarcas />,
-  "Asig. H. Extra": () => <PersonalTiempo title="Asignación H. Extra" />,
-  "Personal": () => <PersonalReporteDialog label="Personal" />,
-
-  // === Rondas ===
-  "Puntos Control Rutas": () => <PuntosControl title="Puntos de Control" />,
-  "Ruteador Rutas": () => <PuntosControl title="Ruteador de Rutas" />,
-  "Rondas": () => <PuntosControl title="Rondas" />,
-
-  // === Contabilidad ===
-  "Asientos": () => <Asientos />,
-  "Movimiento Bancos": () => <MovimientoBancos />,
-  "Registro Compra": () => <RegistroComprasList />,
-  "Recibo Honorario": () => <RegistroComprasList />,
-  "Diario": () => <ReporteContainer label="Libro Diario" />,
-  "Provisional": () => <CajaChica />,
-  "Reembolso": () => <CajaChica />,
-  "Arqueo Caja": () => <CajaChica />,
-  "Cuenta Destino": () => <ProcesoLote label="Cuenta Destino" subtitle="Reasigna asientos entre cuentas contables destino." />,
-  "Cierre Mes": () => <ProcesoLote label="Cierre Mes" subtitle="Cierre contable mensual con validación de saldos cuadrados." />,
-  "Dif. Tipo Cambio": () => <ProcesoLote label="Diferencia de Tipo de Cambio" subtitle="Calcula pérdidas / ganancias por diferencia en tipo de cambio del periodo." />,
-  "Generar TXT Libros": () => <GenerarTXT />,
-  "Flujo de Caja": () => <FlujoCaja />,
-  "Ctas x Pagar": () => <CuentasPagarList />,
-  "Libro Diario": () => <ContabilidadReporteDialog label="Libro Diario" />,
-  "Libro Mayor": () => <ContabilidadReporteDialog label="Libro Mayor" />,
-  "Caja y Bancos": () => <ContabilidadReporteDialog label="Caja y Bancos" />,
-  "Registro de Compras": () => <ContabilidadReporteDialog label="Registro de Compras" />,
-
-  // === Telefonía ===
-  "Modelos": () => <TelefoniaInv title="Modelos" />,
-  "Equipos": () => <TelefoniaInv title="Equipos" />,
-  "Planes": () => <TelefoniaInv title="Planes" />,
-  "Líneas": () => <TelefoniaInv title="Líneas" />,
-  "Lineas": () => <TelefoniaInv title="Líneas" />,
-  "Asigna Persona": () => <AsignaPersona />,
-
-  // === CRM ===
-  "Oportunidad Negocio": () => <CrmReporteDialog label="Oportunidad Negocio" />,
-  "Ocurrencias": () => <CrmReporteDialog label="Ocurrencias" />,
-  "Tarjeta Cliente": () => <CrmReporteDialog label="Tarjeta Cliente" />,
-  "Visita Clientes": () => <CrmReporteDialog label="Visita Clientes" />,
-  "Cuota Vendedor": () => <CrmReporteDialog label="Cuota Vendedor" />,
-
-  // === Activos ===
-  "Activos Fijos": () => <ActivosFijos />,
-  "Reporte Activos Fijos": () => <ReporteContainer label="Reporte Activos Fijos" />,
-
-  // === Tablas ===
-  "Clientes": () => <ClientesList />,
-  "Condición de Pago": () => <MantenimientoCRUD label="Condición de Pago" columns={["Código", "Descripción", "Días", "Tipo", "Estado"]} />,
-  "CondiciÃ³n de Pago": () => <MantenimientoCRUD label="Condición de Pago" columns={["Código", "Descripción", "Días", "Tipo", "Estado"]} />,
-  "Tipo Motores": () => <MantenimientoCRUD label="Tipo Motores" columns={["Código", "Tipo", "Marca", "Estado"]} />,
-  "Modelos ": () => <MantenimientoCRUD label="Modelos" columns={["Código", "Modelo", "Marca", "Estado"]} />,
-  "Categorías": () => <MantenimientoCRUD label="Categorías" columns={["Código", "Categoría", "Rubro", "Estado"]} />,
-  "Categorias": () => <MantenimientoCRUD label="Categorías" columns={["Código", "Categoría", "Rubro", "Estado"]} />,
-  "Partidas": () => <MantenimientoCRUD label="Partidas Arancelarias" columns={["Partida", "Descripción", "Ad Valorem", "Estado"]} />,
-  "Marcas": () => <MantenimientoCRUD label="Marcas" columns={["Código", "Marca", "Origen", "Estado"]} />,
-  "Plantilla Repuestos": () => <MantenimientoCRUD label="Plantillas de Repuestos" columns={["Código", "Plantilla", "Modelo", "Nº items", "Estado"]} />,
-  "Plantillas Repuestos": () => <MantenimientoCRUD label="Plantillas de Repuestos" columns={["Código", "Plantilla", "Modelo", "Nº items", "Estado"]} />,
-  "Plantilla Repuestos Cliente": () => <MantenimientoCRUD label="Plantillas de Repuestos por Cliente" columns={["Cliente", "Plantilla", "Modelo", "Vigencia", "Estado"]} />,
-  "Ubicacion Servicio": () => <MantenimientoCRUD label="Ubicación de Servicio" columns={["Código", "Ubicación", "Sede", "Responsable", "Estado"]} />,
-  "Vehículos": () => <MantenimientoCRUD label="Vehículos" columns={["Placa", "Marca", "Modelo", "Año", "Cliente", "Estado"]} />,
-  "Vehiculos": () => <MantenimientoCRUD label="Vehículos" columns={["Placa", "Marca", "Modelo", "Año", "Cliente", "Estado"]} />,
-  "Proveedores": () => <MantenimientoCRUD label="Proveedores" columns={["RUC", "Razón Social", "Dirección", "Contacto", "Teléfono", "Estado"]} />,
-  "Cuenta Contable": () => <MantenimientoCRUD label="Cuentas Contables" columns={["Cuenta", "Descripción", "Naturaleza", "Nivel", "Estado"]} />,
-  "Cuentas Destino": () => <MantenimientoCRUD label="Cuentas Destino" columns={["Cuenta", "Destino", "Módulo", "Estado"]} />,
-  "Rubro Planilla": () => <MantenimientoCRUD label="Rubros de Planilla" columns={["Código", "Rubro", "Tipo", "Afecta", "Estado"]} />,
-  "Rubro Planilla Ctas": () => <ConfigTabla title="Rubro Planilla Ctas" columns={["Rubro", "Cuenta Debe", "Cuenta Haber", "Estado"]} />,
-  "Horarios ": () => <MantenimientoCRUD label="Horarios" columns={["Código", "Horario", "Entrada", "Salida", "Tolerancia", "Estado"]} />,
-  "Feriados": () => <MantenimientoCRUD label="Feriados" columns={["Fecha", "Descripción", "Tipo", "Ámbito", "Estado"]} />,
-  "AFP": () => <MantenimientoCRUD label="AFP" columns={["Código", "AFP", "Comisión %", "Prima %", "Aporte %", "Estado"]} />,
-  "Cargos": () => <MantenimientoCRUD label="Cargos" columns={["Código", "Cargo", "Área", "Nivel", "Estado"]} />,
-  "Áreas": () => <MantenimientoCRUD label="Áreas" columns={["Código", "Área", "Responsable", "Estado"]} />,
-  "Areas": () => <MantenimientoCRUD label="Áreas" columns={["Código", "Área", "Responsable", "Estado"]} />,
-  "Motivos Faltas": () => <MantenimientoCRUD label="Motivos de Faltas" columns={["Código", "Motivo", "Justificada", "Descuenta", "Estado"]} />,
-  "Equipo Lector": () => <MantenimientoCRUD label="Equipos Lectores (Biométricos)" columns={["Serie", "Marca", "IP", "Sede", "Estado"]} />,
-  "Tipo Hora Extra": () => <MantenimientoCRUD label="Tipo Hora Extra" columns={["Código", "Tipo", "Factor", "Máximo", "Estado"]} />,
-  "Ruteador": () => <MantenimientoCRUD label="Ruteadores de Rondas" columns={["Código", "Ruteador", "Zona", "Estado"]} />,
-  "Rutas": () => <MantenimientoCRUD label="Rutas" columns={["Código", "Ruta", "Zona", "Nº puntos", "Estado"]} />,
-  "Puntos Control": () => <MantenimientoCRUD label="Puntos de Control" columns={["Código", "Punto", "Dirección", "Ruta", "Estado"]} />,
-
-  // === Logueo ===
-  "Cerrar Sesión": () => <CerrarSesion />,
-  "Cerrar Sesion": () => <CerrarSesion />,
-  "Cambiar Contraseña": () => <CambiarContrasena />,
-  "Cambiar Contrasena": () => <CambiarContrasena />,
-  "Cambiar Empresa": () => <CambiarEmpresa />,
-
-  // === Administración ===
-  "Usuarios": () => <UsuariosAdmin />,
-  "Perfiles": () => <Perfiles />,
-  "Sesiones": () => <Sesiones />,
-  "Atender Solicitud": () => <AtenderSolicitud />,
-  "Indicadores": () => <EncuestaWin title="Indicadores de Encuesta" />,
-  "Encuesta": () => <EncuestaWin title="Encuesta" />,
-  "Resultado": () => <ReporteContainer label="Resultados de Encuesta" />,
-  "Asignar Computadora": () => <ComputadoraAsignar />,
-  "Computadora": () => <ComputadoraInv />,
-  "Llamadas": () => <LlamadasWin />,
-  "Equipos Marcación Personal": () => <ConfigTabla title="Equipos Marcación Personal" columns={["Serie", "IP", "Sede", "Modelo", "Estado"]} />,
-  "Empresas": () => <ConfigTabla title="Empresas" columns={["RUC", "Razón Social", "Sucursal", "Régimen", "Estado"]} />,
-  "Series Documentos": () => <ConfigTabla title="Series de Documentos" columns={["Tipo Doc.", "Serie", "Correlativo", "Sede", "Estado"]} />,
-  "Locaciones": () => <ConfigTabla title="Locaciones / Sedes" columns={["Código", "Locación", "Dirección", "Ubigeo", "Estado"]} />,
-  "Rubros de Productos": () => <ConfigTabla title="Rubros de Productos" columns={["Código", "Rubro", "Cuenta contable", "Estado"]} />,
-  "Parámetros Locaciones": () => <ConfigTabla title="Parámetros de Locaciones" columns={["Locación", "Parámetro", "Valor", "Descripción"]} />,
-  "Parametros Locaciones": () => <ConfigTabla title="Parámetros de Locaciones" columns={["Locación", "Parámetro", "Valor", "Descripción"]} />,
-  "Parámetros Planilla Sueldos": () => <ConfigTabla title="Parámetros Planilla de Sueldos" columns={["Parámetro", "Valor", "Vigente desde", "Descripción"]} />,
-  "Parametros Planilla Sueldos": () => <ConfigTabla title="Parámetros Planilla de Sueldos" columns={["Parámetro", "Valor", "Vigente desde", "Descripción"]} />,
-  "Rubros x Empresa": () => <ConfigTabla title="Rubros por Empresa" columns={["Empresa", "Rubro", "Cuenta", "Estado"]} />,
-  "Tablero": () => <IndicadoresVentaDialog />,
-
-  // === Ayuda ===
-  "Solicitud": () => <SolicitudSoporte />,
-  "Información Cambios": () => <InfoCambios />,
-  "Informacion Cambios": () => <InfoCambios />,
-  "Acerca": () => <Acerca />,
-  };
-
-Object.assign(REGISTRY, {
-  "Reporte Activos Fijos": () => <ReporteActivosFijosWindow />,
-  "Indicadores": () => <IndicadoresEncuestaWindow />,
-  "Resultado": () => <ResultadoEncuestaWindow />,
-  "Empresas": () => <EmpresasWindow />,
-  "Equipos Marcación Personal": () => <EquiposMarcacionPersonalWindow />,
-  "Locaciones": () => <LocacionesWindow />,
-  "Parámetros Locaciones": () => <ParametrosLocacionesWindow />,
-  "Parametros Locaciones": () => <ParametrosLocacionesWindow />,
-  "Parámetros Planilla Sueldos": () => <ParametrosPlanillaSueldosWindow />,
-  "Parametros Planilla Sueldos": () => <ParametrosPlanillaSueldosWindow />,
-  "Rubros de Productos": () => <RubrosDeProductosWindow />,
-  "Rubros x Empresa": () => <RubrosXEmpresaWindow />,
-  "Series Documentos": () => <SeriesDocumentosWindow />,
-  "Documentos de Ventas": () => <ConsultaDocumentosVentaWindow />,
-  "Documentos de Tránsito": () => <TransitoDocs />,
-  "Documentos de Importación": () => <RibbonPlaceholder label="Documentos de Importación" />,
-  "Modelos Telefonía": () => <TelefoniaInv title="Modelos" />,
-  "Modelos Almacenes": () => <ModelosAlmacenesWindow />,
-  "Cotizaciones Ventas": () => <Cotizaciones />,
-  "Ordenes Compra Venta": () => <OrdenesCompra />,
-  "Cotizacion Servicio": () => <RibbonPlaceholder label="Cotizacion" />,
-  "Compras Motores": () => <RibbonPlaceholder label="Compras de Motores" />,
-  "Cerrar Mes": () => <CerrarMesCostosWindow />,
-  "Consolidado": () => <ConsolidadoCostosWindow />,
-  "Generar Periodo": () => <GenerarPeriodoCostosWindow />,
-  "Inv. Rotativo": () => <InventarioRotativoWindow />,
-  "Recalcular": () => <RecalcularCostosWindow />,
-  "Trasladar Costos": () => <TrasladarCostosWindow />,
-  "Cierre Mes": () => <CierreMesContableWindow />,
-  "Cuenta Destino": () => <CuentaDestinoWindow />,
-  "Dif. Tipo Cambio": () => <DiferenciaTipoCambioWindow />,
-  "Libro Diario": () => <LibroDiarioWindow />,
-  "Feriados": () => <FeriadosWindow />,
-  "Procesar Job": () => <ProcesarJobWindow />,
-  "Vincular G/R": () => <VincularGRWindow />,
-  "Asigna H. Extra": () => <AsignaHorasExtraWindow />,
-  "Cronograma Mina": () => <CronogramaMinaWindow />,
-  "Descuentos": () => <DescuentosWindow />,
-  "Horarios": () => <HorariosWindow />,
-  "Horas Extras": () => <HorasExtrasWindow />,
-  "Ingresos": () => <IngresosWindow />,
-  "Jefe Area": () => <JefeAreaWindow />,
-  "Recursos": () => <RecursosWindow />,
-  "Evaluaciones": () => <EvaluacionesWindow />,
-  "Vacaciones": () => <VacacionesWindow />,
-  "Rondas": () => <RondasWindow />,
-  "Ruteador Rutas": () => <RuteadorRutasWindow />,
-  "Equipos": () => <TelefoniaEquiposWindow />,
-  "Planes": () => <TelefoniaPlanesWindow />,
-  "Lineas": () => <TelefoniaLineasWindow />,
-  "000 - Ventas": () => <GerenciaVentasWindow />,
-  "010 - Importaciones": () => <GerenciaImportacionesWindow />,
-  "020 - Inventario y Costos": () => <GerenciaInventarioCostosWindow />,
-  "030 - Contabilidad": () => <GerenciaContabilidadWindow />,
-  "040 - Creditos y Cobranzas": () => <GerenciaCreditosWindow />,
-  "Contenedor Reportes": () => <ContenedorReportesWindow />,
-  "Datos para Indicadores": () => <DatosParaIndicadoresWindow />,
-  "Estados Financieros": () => <EstadosFinancierosWindow />,
-  "Tarjeta": () => <TarjetaGerenciaWindow />,
-  "Oportunidad Negocio": () => <OportunidadNegocioWindow />,
-  "Ocurrencias": () => <OcurrenciasWindow />,
-  "Cuota Vendedor": () => <CuotaVendedorWindow />,
-  "Visita Clientes": () => <VisitaClientesWindow />,
-  "Reclamo Cliente": () => <ReclamoClienteWindow />,
-  "Categorias": () => <CategoriasWindow />,
-  "Modelos": () => <ModelosAlmacenesWindow />,
-  "Tipo Motores": () => <TipoMotoresWindow />,
-  "Condición de Pago": () => <CondicionDePagoWindow />,
-  "Condicion de Pago": () => <CondicionDePagoWindow />,
-  "Proveedores": () => <ProveedoresWindow />,
-  "Cuenta Contable": () => <CuentaContableWindow />,
-  "Cuentas Destino": () => <CuentasDestinoTablaWindow />,
-  "Marcas": () => <MarcasWindow />,
-  "Partidas": () => <PartidasWindow />,
-  "AFP": () => <AFPWindow />,
-  "Cargos": () => <CargosWindow />,
-  "Áreas": () => <AreasWindow />,
-  "Areas": () => <AreasWindow />,
-  "Motivos Faltas": () => <MotivosFaltasWindow />,
-  "Equipo Lector": () => <EquipoLectorWindow />,
-  "Rubro Planilla": () => <RubroPlanillaWindow />,
-  "Rubro Planilla Ctas": () => <RubroPlanillaCtasWindow />,
-  "Tipo Hora Extra": () => <TipoHoraExtraWindow />,
-  "Rutas": () => <RutasWindow />,
-  "Ruteador": () => <RuteadorWindow />,
-  "Plantilla Repuestos": () => <PlantillaRepuestosWindow />,
-  "Plantilla Repuestos Cliente": () => <PlantillaRepuestosClienteWindow />,
-  "Ubicacion Servicio": () => <UbicacionServicioWindow />,
-  "Vehiculos": () => <VehiculosWindow />,
-  "Tarifa Gasto Viaje": () => <TarifaGastoViajeWindow />,
-  "Tarifa Taxis Casa": () => <TarifaTaxisCasaWindow />,
-  "Tarifas Taxi Destino": () => <TarifaTaxiDestinoWindow />,
-});
+  "Registro Auxiliar": () => <RegistroAuxiliarList />,
+  "Resumen Registro": () => <ResumenRegistroList />,
+  "Detalle": () => <ReporteVentasDetalladoList />,
+  "Guías Remisión": () => <ReporteGuiasRemision />,
+  "Nueva Guía": () => <GuiaRemision />,
+  "Nueva Nota": () => <NotaVentaList />,
+  "Reporte de Ventas Detallado": () => <ReporteVentasDetalladoList />,
+  "Reporte Venta Detallado": () => <ReporteVentasDetalladoList />,
+};
 
 
 // Reports of Ventas

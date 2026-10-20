@@ -56,7 +56,7 @@ const crearColor = (nombre: string, nodos: Nodo[], pal: Paleta) =>
         a.fill = c;
         a.stroke = f === 'K' ? TINTA : oscurecer(c === '#ffffff' ? '#8a93a0' : c, 0.5);
       } else {
-        a.stroke = k ? trazo(String(k), pal) : TINTA;
+        if (a.stroke === undefined) a.stroke = k ? trazo(String(k), pal) : TINTA;
       }
       return [tag, a];
     }) as unknown as IconNode,
@@ -64,6 +64,157 @@ const crearColor = (nombre: string, nodos: Nodo[], pal: Paleta) =>
 
 /* ---------- diseños (f = relleno, k = trazo; P/S/T = colores de la paleta, W = blanco, K = tinta) ---------- */
 const D: Record<string, Nodo[]> = {
+  QuickPlayRico: [
+    ['path', { d: 'M12.2 13.4 L21.7 18.6 L12.2 23.7Z', fill: '#f7f7f7', stroke: '#767676', strokeWidth: 0.9 }],
+    ['path', { d: 'M12.3 20.8A9.8 9.8 0 0 1 12.3 1.2L12.3 4.8A6.2 6.2 0 0 0 12.3 17.2Z', fill: '#f5f5f5', stroke: '#767676', strokeWidth: 0.9 }],
+    ['path', { d: 'M12.3 1.2A9.8 9.8 0 0 1 21.18 15.14L17.92 13.62A6.2 6.2 0 0 0 12.3 4.8Z', fill: '#3b3b3b', stroke: '#161616', strokeWidth: 0.9 }],
+    ['path', { d: 'M12.3 2.9A8.1 8.1 0 0 1 19.7 14.3', fill: 'none', stroke: '#8d8d8d', strokeWidth: 0.5 }],
+    ['path', { d: 'M3.4 8.6A9 9 0 0 1 9.4 2.8', fill: 'none', stroke: '#ffffff', strokeWidth: 0.8 }],
+  ],
+  ProvisionalRico: [
+    ['path', { d: 'M14.4 5.4C9.6 7 6.4 11 6.4 15.6 6.4 19.6 9 21.8 13 21.8H17.6C21.6 21.8 23.6 19.4 23.6 15.4 23.6 10.8 20.4 7 16 5.4Z', fill: '#55d076', stroke: '#1b6a33', strokeWidth: 0.9 }],
+    ['path', { d: 'M9.2 11.4C7.8 13 7.4 14.6 7.6 16.4', fill: 'none', stroke: '#a8f2ba', strokeWidth: 0.9 }],
+    ['path', { d: 'M17.6 9.4C19.4 10.6 20.6 12.4 20.8 14.4', fill: 'none', stroke: '#3fb55f', strokeWidth: 0.7 }],
+    ['path', { d: 'M13.8 5.6C12.6 4.2 12.6 2.6 14 1.6L15.4 3 17 1.4C18.4 2.4 18.4 4.2 17.4 5.6Z', fill: '#3fb55f', stroke: '#1b6a33', strokeWidth: 0.8 }],
+    ['ellipse', { cx: 15.6, cy: 5.7, rx: 2.6, ry: 0.9, fill: '#e3b63b', stroke: '#80580c', strokeWidth: 0.6 }],
+    ['path', { d: 'M0.8 20.6v1.7a4.4 1.9 0 0 0 8.8 0v-1.7Z', fill: '#d6a124', stroke: '#7a560c', strokeWidth: 0.7 }],
+    ['ellipse', { cx: 5.2, cy: 20.6, rx: 4.4, ry: 1.9, fill: '#f5cd45', stroke: '#7a560c', strokeWidth: 0.7 }],
+    ['path', { d: 'M0.8 18.8v1.7a4.4 1.9 0 0 0 8.8 0v-1.7Z', fill: '#d6a124', stroke: '#7a560c', strokeWidth: 0.7 }],
+    ['ellipse', { cx: 5.2, cy: 18.8, rx: 4.4, ry: 1.9, fill: '#f5cd45', stroke: '#7a560c', strokeWidth: 0.7 }],
+    ['path', { d: 'M0.8 17.0v1.7a4.4 1.9 0 0 0 8.8 0v-1.7Z', fill: '#d6a124', stroke: '#7a560c', strokeWidth: 0.7 }],
+    ['ellipse', { cx: 5.2, cy: 17, rx: 4.4, ry: 1.9, fill: '#f5cd45', stroke: '#7a560c', strokeWidth: 0.7 }],
+    ['path', { d: 'M4.4 16.1L5.6 15.4V18.2', fill: 'none', stroke: '#7a560c', strokeWidth: 1.1 }],
+  ],
+  ProcCtaDestRico: [
+    ['rect', { x: 1.2, y: 1.8, width: 2.4, height: 20.4, rx: 1.1, fill: '#e3ae2e', stroke: '#8a5f0a', strokeWidth: 0.8 }],
+    ['rect', { x: 20.4, y: 1.8, width: 2.4, height: 20.4, rx: 1.1, fill: '#e3ae2e', stroke: '#8a5f0a', strokeWidth: 0.8 }],
+    ['path', { d: 'M3.6 6H20.4M3.6 11H20.4M3.6 16H20.4', fill: 'none', stroke: '#c9921e', strokeWidth: 1.1 }],
+    ['rect', { x: 1.2, y: 19.6, width: 21.6, height: 2.6, rx: 0.6, fill: '#e9b839', stroke: '#8a5f0a', strokeWidth: 0.8 }],
+    ['circle', { cx: 6.8, cy: 6, r: 2.1, fill: '#1d1d1d', stroke: '#000000', strokeWidth: 0.5 }],
+    ['circle', { cx: 10.8, cy: 6, r: 2.1, fill: '#1d1d1d', stroke: '#000000', strokeWidth: 0.5 }],
+    ['circle', { cx: 7.2, cy: 11, r: 2.1, fill: '#1d1d1d', stroke: '#000000', strokeWidth: 0.5 }],
+    ['circle', { cx: 13.9, cy: 11, r: 2.1, fill: '#1d1d1d', stroke: '#000000', strokeWidth: 0.5 }],
+    ['circle', { cx: 7.2, cy: 16, r: 2.1, fill: '#1d1d1d', stroke: '#000000', strokeWidth: 0.5 }],
+    ['circle', { cx: 17, cy: 16, r: 2.1, fill: '#1d1d1d', stroke: '#000000', strokeWidth: 0.5 }],
+    ['circle', { cx: 6.2, cy: 5.3, r: 0.6, fill: '#8a8a8a', stroke: 'none' }],
+    ['circle', { cx: 10.2, cy: 5.3, r: 0.6, fill: '#8a8a8a', stroke: 'none' }],
+    ['circle', { cx: 6.6, cy: 10.3, r: 0.6, fill: '#8a8a8a', stroke: 'none' }],
+    ['circle', { cx: 13.3, cy: 10.3, r: 0.6, fill: '#8a8a8a', stroke: 'none' }],
+    ['circle', { cx: 6.6, cy: 15.3, r: 0.6, fill: '#8a8a8a', stroke: 'none' }],
+    ['circle', { cx: 16.4, cy: 15.3, r: 0.6, fill: '#8a8a8a', stroke: 'none' }],
+  ],
+  ProcCierreMesRico: [
+    ['rect', { x: 2, y: 3.2, width: 20, height: 19.2, rx: 1.6, fill: '#f4f4f4', stroke: '#b0b0b0', strokeWidth: 1 }],
+    ['path', { d: 'M2 8.4V4.8A1.6 1.6 0 0 1 3.6 3.2H20.4A1.6 1.6 0 0 1 22 4.8V8.4Z', fill: '#e1242b', stroke: '#9a1219', strokeWidth: 0.8 }],
+    ['path', { d: 'M4.4 6.1H10.8', fill: 'none', stroke: '#ffffff', strokeWidth: 1 }],
+    ['path', { d: 'M3.4 10.4H20.6M3.4 12.7H20.6M3.4 15H20.6M3.4 17.3H20.6M3.4 19.6H20.6', fill: 'none', stroke: '#d2d2d2', strokeWidth: 0.35 }],
+    ['path', { d: 'M5.86 9.2V21M8.32 9.2V21M10.78 9.2V21M13.24 9.2V21M15.7 9.2V21M18.16 9.2V21', fill: 'none', stroke: '#d2d2d2', strokeWidth: 0.35 }],
+    ['path', { d: 'M16.95 11.7h.01 M19.41 11.7h.01 M4.65 14h.01 M7.11 14h.01 M9.57 14h.01 M12.03 14h.01 M14.49 14h.01 M16.95 14h.01 M19.41 14h.01 M4.65 16.3h.01 M7.11 16.3h.01 M9.57 16.3h.01 M12.03 16.3h.01 M14.49 16.3h.01 M16.95 16.3h.01 M19.41 16.3h.01 M4.65 18.6h.01 M7.11 18.6h.01 M9.57 18.6h.01 M12.03 18.6h.01 M14.49 18.6h.01 M16.95 18.6h.01 M19.41 18.6h.01 M4.65 20.9h.01 M7.11 20.9h.01 M9.57 20.9h.01 M12.03 20.9h.01 M14.49 20.9h.01 M16.95 20.9h.01 M19.41 20.9h.01', fill: 'none', stroke: '#7a7a7a', strokeWidth: 0.9 }],
+    ['rect', { x: 4.4, y: 1.2, width: 1, height: 3.2, rx: 0.5, fill: '#cfcfcf', stroke: '#7c7c7c', strokeWidth: 0.45 }],
+    ['rect', { x: 6.9, y: 1.2, width: 1, height: 3.2, rx: 0.5, fill: '#cfcfcf', stroke: '#7c7c7c', strokeWidth: 0.45 }],
+    ['rect', { x: 9.4, y: 1.2, width: 1, height: 3.2, rx: 0.5, fill: '#cfcfcf', stroke: '#7c7c7c', strokeWidth: 0.45 }],
+    ['rect', { x: 11.9, y: 1.2, width: 1, height: 3.2, rx: 0.5, fill: '#cfcfcf', stroke: '#7c7c7c', strokeWidth: 0.45 }],
+    ['rect', { x: 14.4, y: 1.2, width: 1, height: 3.2, rx: 0.5, fill: '#cfcfcf', stroke: '#7c7c7c', strokeWidth: 0.45 }],
+    ['rect', { x: 16.9, y: 1.2, width: 1, height: 3.2, rx: 0.5, fill: '#cfcfcf', stroke: '#7c7c7c', strokeWidth: 0.45 }],
+    ['rect', { x: 19.4, y: 1.2, width: 1, height: 3.2, rx: 0.5, fill: '#cfcfcf', stroke: '#7c7c7c', strokeWidth: 0.45 }],
+  ],
+  RechazarRico: [
+    ['circle', { cx: 12, cy: 12, r: 8.4, fill: 'none', stroke: '#6a0a0a', strokeWidth: 5.4 }],
+    ['path', { d: 'M6.2 6.2L17.8 17.8', fill: 'none', stroke: '#6a0a0a', strokeWidth: 4.6 }],
+    ['circle', { cx: 12, cy: 12, r: 8.4, fill: 'none', stroke: '#e8281f', strokeWidth: 4 }],
+    ['path', { d: 'M6.2 6.2L17.8 17.8', fill: 'none', stroke: '#e8281f', strokeWidth: 3.2 }],
+    ['path', { d: 'M5.6 9.6A7.4 7.4 0 0 1 12 4.4', fill: 'none', stroke: '#ff9f98', strokeWidth: 0.9 }],
+    ['path', { d: 'M7.4 6.6L10 9.2', fill: 'none', stroke: '#ff9f98', strokeWidth: 0.8 }],
+  ],
+  RegComprasRico: [
+    ['rect', { x: 6.6, y: 5.8, width: 4.8, height: 5.2, rx: 0.4, fill: '#c9934a', stroke: '#7a4f1a', strokeWidth: 0.8 }],
+    ['rect', { x: 12.4, y: 7.4, width: 6.2, height: 3.8, rx: 0.4, fill: '#d9a860', stroke: '#7a4f1a', strokeWidth: 0.8 }],
+    ['path', { d: 'M5.4 11L10.6 4', fill: 'none', stroke: '#8a9086', strokeWidth: 1.2 }],
+    ['path', { d: 'M18.6 11L13.4 4', fill: 'none', stroke: '#8a9086', strokeWidth: 1.2 }],
+    ['circle', { cx: 10.8, cy: 3.8, r: 0.9, fill: '#79bc50', stroke: '#3a6a20', strokeWidth: 0.5 }],
+    ['circle', { cx: 13.2, cy: 3.8, r: 0.9, fill: '#79bc50', stroke: '#3a6a20', strokeWidth: 0.5 }],
+    ['path', { d: 'M3.2 13H20.8L19.1 20.7A1.5 1.5 0 0 1 17.6 22H6.4A1.5 1.5 0 0 1 4.9 20.7Z', fill: '#69b04a', stroke: '#3a6a20', strokeWidth: 0.9 }],
+    ['path', { d: 'M6.8 14.8V19.6M9.4 14.8V19.8M12 14.8V19.8M14.6 14.8V19.8M17.2 14.8V19.6', fill: 'none', stroke: '#c87a30', strokeWidth: 1 }],
+    ['rect', { x: 2, y: 10.4, width: 20, height: 2.8, rx: 1, fill: '#7cc055', stroke: '#3a6a20', strokeWidth: 0.9 }],
+  ],
+  RecalcularRico: [
+    ['path', { d: 'M10.57 4.74L10.89 2.26L13.11 2.26L13.43 4.74A7.4 7.4 0 0 1 15.11 5.28L16.83 3.47L18.62 4.77L17.43 6.97A7.4 7.4 0 0 1 18.46 8.39L20.92 7.94L21.60 10.04L19.35 11.12A7.4 7.4 0 0 1 19.35 12.88L21.60 13.96L20.92 16.06L18.46 15.61A7.4 7.4 0 0 1 17.43 17.03L18.62 19.23L16.83 20.53L15.11 18.72A7.4 7.4 0 0 1 13.43 19.26L13.11 21.74L10.89 21.74L10.57 19.26A7.4 7.4 0 0 1 8.89 18.72L7.17 20.53L5.38 19.23L6.57 17.03A7.4 7.4 0 0 1 5.54 15.61L3.08 16.06L2.40 13.96L4.65 12.88A7.4 7.4 0 0 1 4.65 11.12L2.40 10.04L3.08 7.94L5.54 8.39A7.4 7.4 0 0 1 6.57 6.97L5.38 4.77L7.17 3.47L8.89 5.28A7.4 7.4 0 0 1 10.57 4.74Z', fill: '#b6cbe3', stroke: '#566f8f', strokeWidth: 0.9 }],
+    ['circle', { cx: 12, cy: 12, r: 3.7, fill: '#ffffff', stroke: '#566f8f', strokeWidth: 0.9 }],
+    ['path', { d: 'M5.4 9.2C6.2 7.4 7.6 6 9.4 5.2', fill: 'none', stroke: '#e9f0f9', strokeWidth: 0.8 }],
+  ],
+  PreMarcacionRico: [
+    ['circle', { cx: 12, cy: 12, r: 10.2, fill: '#151515', stroke: '#000000', strokeWidth: 0.6 }],
+    ['circle', { cx: 12, cy: 12, r: 8.4, fill: '#f5f5f5', stroke: '#bdbdbd', strokeWidth: 0.5 }],
+    ['path', { d: 'M5 8A8.4 8.4 0 0 1 12 3.6', fill: 'none', stroke: '#ffffff', strokeWidth: 0.8 }],
+    ['path', { d: 'M12 4.6v1.5M12 17.9v1.5M4.6 12h1.5M17.9 12h1.5', fill: 'none', stroke: '#222222', strokeWidth: 0.9 }],
+    ['path', { d: 'M11.6 12.4L8.4 4.8', fill: 'none', stroke: '#111111', strokeWidth: 0.8 }],
+    ['path', { d: 'M11.6 12.4L14.8 8.4', fill: 'none', stroke: '#111111', strokeWidth: 0.8 }],
+    ['circle', { cx: 11.6, cy: 12.4, r: 0.5, fill: '#111111', stroke: 'none' }],
+  ],
+  ProcesarRico: [
+    ['rect', { x: 9.2, y: 4.4, width: 14, height: 17.4, rx: 0.3, fill: '#8c8c8c', stroke: 'none' }],
+    ['rect', { x: 7.4, y: 2.4, width: 14, height: 17.2, rx: 0.3, fill: '#f6f6f6', stroke: '#161616', strokeWidth: 1.2 }],
+    ['rect', { x: 8.2, y: 3.4, width: 12.4, height: 2.8, rx: 0, fill: '#0000d8', stroke: 'none' }],
+    ['rect', { x: 13.4, y: 9.6, width: 6.8, height: 2, rx: 0, fill: '#0000d8', stroke: 'none' }],
+    ['path', { d: 'M9.2 8H19M12 13.6H20M12 15.2H20M12 16.8H18', fill: 'none', stroke: '#8a8a8a', strokeWidth: 0.7 }],
+    ['rect', { x: 2, y: 9.4, width: 8.6, height: 9.6, rx: 0.3, fill: '#ebebeb', stroke: '#161616', strokeWidth: 1.1 }],
+    ['path', { d: 'M2.9 10.4h.01M2.9 12h.01M2.9 13.6h.01M2.9 15.2h.01M2.9 16.8h.01M2.9 18.2h.01', fill: 'none', stroke: '#161616', strokeWidth: 1.1 }],
+    ['path', { d: 'M4.6 11.2H9.4M4.6 12.8H9.4M4.6 14.4H9.4M4.6 16H9.4M4.6 17.6H8', fill: 'none', stroke: '#4a4a4a', strokeWidth: 0.7 }],
+    ['path', { d: 'M10.2 19 L13.1664 17.282 L11.3136 15.758Z', fill: '#f0d7a8', stroke: '#161616', strokeWidth: 0.7 }],
+    ['path', { d: 'M11.3136 15.758 L13.1664 17.282 L19.8984 9.098 L18.0456 7.574Z', fill: '#ffe81a', stroke: '#161616', strokeWidth: 0.8 }],
+    ['path', { d: 'M18.0456 7.574 L19.8984 9.098 L21.3264 7.362 L19.4736 5.838Z', fill: '#e82020', stroke: '#161616', strokeWidth: 0.8 }],
+    ['path', { d: 'M10.2 19 L11.229 18.3911 L10.599 17.8729Z', fill: '#222222', stroke: 'none' }],
+  ],
+  ReembolsoRico: [
+    ['path', { d: 'M12.6 9.6 L19.4 2.2 L24 6.6 L17.2 14Z', fill: '#5fcf46', stroke: '#2c7a1a', strokeWidth: 0.8, transform: 'translate(0 0) scale(1)' }],
+    ['path', { d: 'M12.1 10.4 L18.9 3 L23.5 7.4 L16.7 14.8Z', fill: '#7be05a', stroke: '#2c7a1a', strokeWidth: 0.8, transform: 'translate(0 0) scale(1)' }],
+    ['path', { d: 'M11.6 11.2 L18.4 3.8 L23 8.2 L16.2 15.6Z', fill: '#9aeb7a', stroke: '#2c7a1a', strokeWidth: 0.8, transform: 'translate(0 0) scale(1)' }],
+    ['path', { d: 'M14.4 11.4L19.6 6', fill: 'none', stroke: '#3f9a2a', strokeWidth: 0.6, transform: 'translate(0 0) scale(1)' }],
+    ['circle', { cx: 17.6, cy: 9.2, r: 0.8, fill: '#1b4a10', stroke: 'none', transform: 'translate(0 0) scale(1)' }],
+    ['path', { d: 'M4 13.2C6.4 11.8 9.2 10.8 12.6 11.2 14.6 11.5 15.6 12.6 15.2 13.8L14 14.5C15.9 14.4 17.2 15.4 16.8 16.8 17.4 18.4 16 19.6 14.2 19.4 12.6 20.8 10 21.4 7.2 20.6L4 20.2Z', fill: '#f3b98a', stroke: '#9b5a26', strokeWidth: 0.9, transform: 'translate(-0.9 -1.6) scale(1.1)' }],
+    ['path', { d: 'M13.4 14.6H16.2M13.8 17.2H16.2', fill: 'none', stroke: '#b9773a', strokeWidth: 0.7, transform: 'translate(-0.9 -1.6) scale(1.1)' }],
+    ['path', { d: 'M5.6 15.2C7.4 13.8 10 13.9 11.6 15', fill: 'none', stroke: '#b9773a', strokeWidth: 0.8, transform: 'translate(-0.9 -1.6) scale(1.1)' }],
+    ['path', { d: 'M1.4 12.6 L4.2 12.3 L4.2 20.5 L1.4 20.8Z', fill: '#141414', stroke: '#000000', strokeWidth: 0.6, transform: 'translate(-0.9 -1.6) scale(1.1)' }],
+  ],
+  ProcessRico: [
+    ['path', { d: 'M9.74 3.30L10.04 0.85L11.96 0.85L12.26 3.30A7.8 7.8 0 0 1 13.76 3.70L15.25 1.73L16.91 2.69L15.94 4.96A7.8 7.8 0 0 1 17.04 6.06L19.31 5.09L20.27 6.75L18.30 8.24A7.8 7.8 0 0 1 18.70 9.74L21.15 10.04L21.15 11.96L18.70 12.26A7.8 7.8 0 0 1 18.30 13.76L20.27 15.25L19.31 16.91L17.04 15.94A7.8 7.8 0 0 1 15.94 17.04L16.91 19.31L15.25 20.27L13.76 18.30A7.8 7.8 0 0 1 12.26 18.70L11.96 21.15L10.04 21.15L9.74 18.70A7.8 7.8 0 0 1 8.24 18.30L6.75 20.27L5.09 19.31L6.06 17.04A7.8 7.8 0 0 1 4.96 15.94L2.69 16.91L1.73 15.25L3.70 13.76A7.8 7.8 0 0 1 3.30 12.26L0.85 11.96L0.85 10.04L3.30 9.74A7.8 7.8 0 0 1 3.70 8.24L1.73 6.75L2.69 5.09L4.96 6.06A7.8 7.8 0 0 1 6.06 4.96L5.09 2.69L6.75 1.73L8.24 3.70A7.8 7.8 0 0 1 9.74 3.30Z', fill: '#bdbdbd', stroke: '#6f6f6f', strokeWidth: 0.9 }],
+    ['circle', { cx: 11, cy: 11, r: 4, fill: '#ffffff', stroke: '#6f6f6f', strokeWidth: 0.9 }],
+    ['path', { d: 'M4.8 7.4C5.8 5.8 7.2 4.7 8.8 4.1', fill: 'none', stroke: '#ececec', strokeWidth: 0.8 }],
+    ['path', { d: 'M12.2 17.2 L14.1 15.3 L16.9 18.1 L21.5 12.1 L23.4 13.8 L17 21.7Z', fill: '#74c11e', stroke: '#3b7a06', strokeWidth: 0.8 }],
+    ['path', { d: 'M14.2 16.2L16.8 19', fill: 'none', stroke: '#a6e05a', strokeWidth: 0.6 }],
+  ],
+  ReclamoGarantiaHojaRico: [
+    ['rect', { x: 5, y: 3.4, width: 16.4, height: 19.2, rx: 0.8, fill: '#d4d4d4', stroke: 'none' }],
+    ['rect', { x: 4, y: 2.4, width: 16.4, height: 19.2, rx: 0.8, fill: '#f3f3f3', stroke: '#a9a9a9', strokeWidth: 1.1 }],
+    ['path', { d: 'M5 6.6H19.4M5 8.9H19.4M5 11.2H19.4M5 13.5H19.4M5 15.8H19.4M5 18.1H19.4', fill: 'none', stroke: '#8fb0d0', strokeWidth: 0.8 }],
+    ['path', { d: 'M7.6 3V21', fill: 'none', stroke: '#d42a2a', strokeWidth: 1.1 }],
+  ],
+  Rechazar3Rico: [
+    ['rect', { x: 1.6, y: 3.2, width: 20.8, height: 17.6, rx: 2.8, fill: '#c8cccc', stroke: '#5b6261', strokeWidth: 1.4 }],
+    ['rect', { x: 2.8, y: 4.4, width: 18.4, height: 7.6, rx: 1.8, fill: '#e9ecec', stroke: 'none' }],
+    ['path', { d: 'M8 8L16 16M16 8L8 16', fill: 'none', stroke: '#303636', strokeWidth: 3.4 }],
+  ],
+  RegresarRico: [
+    ['rect', { x: 5.2, y: 3, width: 1.7, height: 18, rx: 0.3, fill: '#2f5b94', stroke: 'none' }],
+    ['path', { d: 'M7.4 12 L17 3.2 L17 20.8Z', fill: '#cfe0f4', stroke: 'none' }],
+    ['path', { d: 'M18.4 3L8.2 12L18.4 21', fill: 'none', stroke: '#3a73c4', strokeWidth: 2.6 }],
+    ['path', { d: 'M18.4 3.4L9.4 12L18.4 20.6', fill: 'none', stroke: '#8fb7f0', strokeWidth: 0.9 }],
+  ],
+  ProcessJobRico: [
+    ['path', { d: 'M5.4 19.4L16.2 8.6', fill: 'none', stroke: '#4a4d52', strokeWidth: 3.8 }],
+    ['path', { d: 'M5.4 19.4L16.2 8.6', fill: 'none', stroke: '#d3d6da', strokeWidth: 2.8 }],
+    ['path', { d: 'M6.4 18.4L15 9.8', fill: 'none', stroke: '#1c1c1c', strokeWidth: 1.1 }],
+    ['circle', { cx: 4.2, cy: 20.6, r: 2, fill: '#d3d6da', stroke: '#4a4d52', strokeWidth: 0.9 }],
+    ['circle', { cx: 4.2, cy: 20.6, r: 0.9, fill: '#9aa0a6', stroke: '#4a4d52', strokeWidth: 0.5 }],
+    ['path', { d: 'M14.4 9.4C13.2 7.8 13.4 5.4 15.2 4C16.6 2.9 18.6 2.9 20 3.8L17.8 6.4 19.6 8.2 22.4 6C23 7.8 22.4 9.8 20.8 11 19 12.2 16.2 11.4 14.4 9.4Z', fill: '#d3d6da', stroke: '#4a4d52', strokeWidth: 0.9 }],
+    ['path', { d: 'M2.6 2.6L13 13', fill: 'none', stroke: '#5d6167', strokeWidth: 2.4 }],
+    ['path', { d: 'M2.6 2.6L13 13', fill: 'none', stroke: '#e4e7ea', strokeWidth: 1.5 }],
+    ['path', { d: 'M12.2 12.2L14.2 14.2', fill: 'none', stroke: '#222222', strokeWidth: 3.4 }],
+    ['path', { d: 'M13.2 13.2L20.6 20.6', fill: 'none', stroke: '#6b4a00', strokeWidth: 4.8 }],
+    ['path', { d: 'M13.2 13.2L20.6 20.6', fill: 'none', stroke: '#f5c314', strokeWidth: 3.8 }],
+    ['path', { d: 'M16.5514 14.2886L14.2886 16.5514M18.0314 15.7686L15.7686 18.0314M19.5114 17.2486L17.2486 19.5114', fill: 'none', stroke: '#c99a0a', strokeWidth: 0.6 }],
+    ['path', { d: 'M13.9071 12.4929L21.3071 19.8929', fill: 'none', stroke: '#ffe27a', strokeWidth: 0.6 }],
+  ],
   MaximunRico: [
     ['rect', { x: 3, y: 5, width: 15.5, height: 16.5, rx: 1.6, fill: '#f3f4f6', stroke: '#7b8088', strokeWidth: 1 }],
     ['rect', { x: 4.6, y: 6.6, width: 12.3, height: 13.2, rx: 1, fill: '#ffffff', stroke: 'none', fillOpacity: 0.7 }],
@@ -455,7 +606,7 @@ const D: Record<string, Nodo[]> = {
     ['path', { d: 'M14.3 13.4h-3.6a1.7 1.7 0 0 0 0 3.4h2.8a1.7 1.7 0 0 1 0 3.4H9.8', fill: 'none', stroke: '#ffffff', strokeWidth: 1.5 }],
     ['path', { d: 'M12 11.8v9.6', fill: 'none', stroke: '#ffffff', strokeWidth: 1.2 }],
   ],
-  Separar: [
+  SepararPuzzle: [
     ['path', { d: 'M8 4H2.5M2.5 4 5 1.5M2.5 4 5 6.5' }],
     ['path', { d: 'M16 4h5.5m0 0L19 1.5M21.5 4 19 6.5' }],
     ['path', { d: 'M2 9h9v4.3a2.2 2.2 0 0 1 0 4.5V20H2Z', f: 'P' }],
@@ -1594,12 +1745,12 @@ export const LupaColorIcon = crearColor('Lupa', D.Search, { p: '#cfe6fa', s: '#e
 export const Mail20ColorIcon = crearColor('Mail20', D.Keypad, { p: '#5b5a24' });
 export const ManoHaciaAbajoColorIcon = crearColor('ManoHaciaAbajo', D.ThumbsDown, { p: '#e8262b' });
 export const MaterialColorIcon = crearColor('Material', D.Wrench, { p: '#9aa0a6' });
-export const MaximunColorIcon = crearColor('Maximun', D.MaximunRico, { p: '#cfe0f5', s: '#c88a2a' });
+export const MaximunColorIcon = crearColor('Maximun', D.MaximunRico, RICA);
 export const NotasColorIcon = crearColor('Notas', D.DocNot, { p: '#fffbe8' });
 export const NuevaMarcacionColorIcon = crearColor('NuevaMarcacion', D.ClockSpark, { p: '#8e63b5' });
 export const NuevoMultipleColorIcon = crearColor('NuevoMultiple', D.FilesPlus, { p: '#e6efe4', s: '#43a52b' });
 export const OfficeColorIcon = crearColor('Office', D.Building, { p: '#b7bbc1', s: '#2b6fd0' });
-export const PagosColorIcon = crearColor('Pagos', D.PagosRico, { p: '#9fdcaa' });
+export const PagosColorIcon = crearColor('Pagos', D.PagosRico, RICA);
 export const AboutColorIcon = crearColor('About', D.Info, { p: '#2f6fd0' });
 export const ActMailColorIcon = crearColor('ActMail', D.AtSign, { p: '#2b2f36' });
 export const ActualizarCostosColorIcon = crearColor('ActualizarCostos', D.RotateCcw, { p: '#4a8a1a' });
@@ -1635,7 +1786,7 @@ export const ChequeoColorIcon = crearColor('Chequeo', D.CircleCheck, { p: '#8fc4
 export const ClasesColorIcon = crearColor('Clases', D.BookBookmark, { p: '#3b3d40', s: '#e8863a' });
 export const CleanClienteColorIcon = crearColor('CleanCliente', D.Broom, { p: '#f0c94f' });
 export const ClienteColorIcon = crearColor('Cliente', D.UserTie, { p: '#f0c9a0', s: '#1c58b0' });
-export const ComisionIcoColorIcon = crearColor('ComisionIco', D.MoneyBag, { p: '#2b2f36' });
+export const ComisionIcoColorIcon = crearColor('ComisionIco', D.ComisionIcoRico, RICA);
 export const CompraColorIcon = crearColor('Compra', D.ListOrdered, { p: '#2b2f36' });
 export const CondensadosColorIcon = crearColor('Condensados', D.FolderStar, { p: '#2b2f36' });
 export const ConsolidadoColorIcon = crearColor('Consolidado', D.NotebookSpiral, { p: '#f5b942' });
@@ -1663,7 +1814,7 @@ export const DespachoColorIcon = crearColor('Despacho', D.HandHelping, { p: '#d4
 export const DetalleColorIcon = crearColor('Detalle', D.Search, { p: '#d4ecfb', s: '#e8920c' });
 export const DiarioAlmacenColorIcon = crearColor('DiarioAlmacen', D.Book, { p: '#4f8fe8' });
 export const DiarioPagoColorIcon = crearColor('DiarioPago', D.NotebookPen, { p: '#3b3d42', s: '#f0b429' });
-export const DocColorIcon = crearColor('Doc', D.Books, { p: '#354c4a', s: '#e8c840' });
+export const DocColorIcon = crearColor('Doc', D.DocRico, RICA);
 export const DocElecDescargarColorIcon = crearColor('DocElecDescargar', D.InvDown, { p: '#f5f7fa', s: '#4f8ef6' });
 export const DocElecEliminarColorIcon = crearColor('DocElecEliminar', D.InvX, { p: '#f5f7fa', s: '#4f8ef6' });
 export const DocElecGenerarColorIcon = crearColor('DocElecGenerar', D.InvOk, { p: '#f5f7fa', s: '#4f8ef6' });
@@ -1714,7 +1865,7 @@ export const InventarioColorIcon = crearColor('Inventario', D.Digits123, { p: '#
 export const Laptop16ColorIcon = crearColor('Laptop16', D.Laptop, { p: '#b5dcf5', s: '#7d8590' });
 export const Laptop48ColorIcon = crearColor('Laptop48', D.Laptop, { p: '#b5d8ee', s: '#7d8590' });
 export const LetrasAceptadasColorIcon = crearColor('LetrasAceptadas', D.ThumbsUp, { p: '#f2b79a' });
-export const LibrosContColorIcon = crearColor('LibrosCont', D.Books, { p: '#27b0e8', s: '#79a31a' });
+export const LibrosContColorIcon = crearColor('LibrosCont', D.LibrosContRico, RICA);
 export const LineaTelefonicaColorIcon = crearColor('LineaTelefonica', D.Phone, { p: '#ffffff' });
 export const LinkicoColorIcon = crearColor('Linkico', D.Link, { p: '#8a8d92' });
 export const LiquidacionColorIcon = crearColor('Liquidacion', D.Dollar, { p: '#4cb52e' });
@@ -1738,7 +1889,8 @@ export const PendienteFacturacionColorIcon = crearColor('PendienteFacturacion', 
 export const ReclamoGarantiaColorIcon = crearColor('ReclamoGarantia', D.ReclamoGarantia, { p: '#e0983c', s: '#d62f2f', t: '#f6c97a' });
 export const ValeRequisicionColorIcon = crearColor('ValeRequisicion', D.ValeRequisicion, { p: '#ececec', s: '#8f8f8f' });
 export const RegistroAuxiliarColorIcon = crearColor('RegistroAuxiliar', D.RegistroAuxiliar, { p: '#e8c987', s: '#a3792a', t: '#e4ebf1' });
-export const SepararColorIcon = crearColor('Separar', D.Separar, { p: '#fdd270', t: '#ffffff' });
+
+export const SepararPuzzleColorIcon = crearColor('SepararPuzzle', D.SepararPuzzle, { p: '#fdd270', t: '#ffffff' });
 export const RegistroResumenColorIcon = crearColor('RegistroResumen', D.RegistroResumen, { p: '#56b9f7', t: '#e3ecec' });
 export const RegistroColorIcon = crearColor('Registro', D.Registro, { p: '#b39a6a', s: '#a3865a', t: '#f1f2fb' });
 
@@ -1764,7 +1916,7 @@ export const ReportColorIcon = crearColor('Report', D.ReportRico, RICA);
 export const ResumenGeneralColorIcon = crearColor('ResumenGeneral', D.ResumenGeneralRico, RICA);
 export const ScdrespsColorIcon = crearColor('Scdresps', D.ScdrespsRico, RICA);
 export const SemaforoColorIcon = crearColor('Semaforo', D.SemaforoRico, RICA);
-export const SepararRicoColorIcon = crearColor('Separar', D.SepararRico, RICA);
+export const SepararColorIcon = crearColor('Separar', D.SepararRico, RICA);
 export const SepararAmbosColorIcon = crearColor('SepararAmbos', D.SepararAmbosRico, RICA);
 export const SesionIconColorIcon = crearColor('SesionIcon', D.SesionIconRico, RICA);
 export const SobregiroColorIcon = crearColor('Sobregiro', D.SobregiroRico, RICA);
@@ -1772,6 +1924,22 @@ export const SolGastosColorIcon = crearColor('SolGastos', D.SolGastosRico, RICA)
 export const SolicGarantiaColorIcon = crearColor('SolicGarantia', D.SolicGarantiaRico, RICA);
 export const ReordenarColorIcon = crearColor('Reordenar', D.ReordenarRico, RICA);
 export const RepAsistenciaColorIcon = crearColor('RepAsistencia', D.RepAsistenciaRico, RICA);
+
+export const QuickPlayColorIcon = crearColor('QuickPlay', D.QuickPlayRico, RICA);
+export const ProvisionalColorIcon = crearColor('Provisional', D.ProvisionalRico, RICA);
+export const ProcCtaDestColorIcon = crearColor('ProcCtaDest', D.ProcCtaDestRico, RICA);
+export const ProcCierreMesColorIcon = crearColor('ProcCierreMes', D.ProcCierreMesRico, RICA);
+export const RechazarColorIcon = crearColor('Rechazar', D.RechazarRico, RICA);
+export const RegComprasColorIcon = crearColor('RegCompras', D.RegComprasRico, RICA);
+export const RecalcularColorIcon = crearColor('Recalcular', D.RecalcularRico, RICA);
+export const PreMarcacionColorIcon = crearColor('PreMarcacion', D.PreMarcacionRico, RICA);
+export const ProcesarColorIcon = crearColor('Procesar', D.ProcesarRico, RICA);
+export const ReembolsoColorIcon = crearColor('Reembolso', D.ReembolsoRico, RICA);
+export const ProcessColorIcon = crearColor('Process', D.ProcessRico, RICA);
+export const ReclamoGarantiaHojaColorIcon = crearColor('ReclamoGarantiaHoja', D.ReclamoGarantiaHojaRico, RICA);
+export const Rechazar3ColorIcon = crearColor('Rechazar3', D.Rechazar3Rico, RICA);
+export const RegresarColorIcon = crearColor('Regresar', D.RegresarRico, RICA);
+export const ProcessJobColorIcon = crearColor('ProcessJob', D.ProcessJobRico, RICA);
 
 export const ICONOS_COLOR = {
   ACTIVITL: ActivitlColorIcon,
@@ -1808,7 +1976,6 @@ export const ICONOS_COLOR = {
   Check1: Check1ColorIcon,
   Compra_Con: CompraConColorIcon,
   Compras: ComprasColorIcon,
-  Consignaciones: CompraConColorIcon,
   Cont_diario: ContDiarioColorIcon,
   CrdFle04: CrdFle04ColorIcon,
   CrdFle12: CrdFle12ColorIcon,
@@ -1829,7 +1996,6 @@ export const ICONOS_COLOR = {
   Embarque: EmbarqueColorIcon,
   Empresa: EmpresaColorIcon,
   Enviar: EnviarColorIcon,
-  EnviarCorreos: EnviarPrColorIcon,
   Enviar_Pr: EnviarPrColorIcon,
   Equipos: EquiposColorIcon,
   Factura: FacturaColorIcon,
@@ -1938,17 +2104,14 @@ export const ICONOS_COLOR = {
   des_per_mas: DesPerMasColorIcon,
   despacho: DespachoColorIcon,
   detalle: DetalleColorIcon,
-  detalledescuento: DsctoColorIcon,
   diarioAlmacen: DiarioAlmacenColorIcon,
   diarioPago: DiarioPagoColorIcon,
   doc: DocColorIcon,
-  doc_ingresos: NuevoMultipleColorIcon,
   doc_elec_descargar: DocElecDescargarColorIcon,
   doc_elec_eliminar: DocElecEliminarColorIcon,
   doc_elec_generar: DocElecGenerarColorIcon,
   doc_elec_lupa: DocElecLupaColorIcon,
   documentosEmitidos: DocumentosEmitidosColorIcon,
-  documentos: Books256ColorIcon,
   editar2: Editar2ColorIcon,
   equipo_mar: EquipoMarColorIcon,
   equipo_telefonico: EquipoTelefonicoColorIcon,
@@ -1960,7 +2123,6 @@ export const ICONOS_COLOR = {
   fact_generar: FactGenerarColorIcon,
   fact_lupa: FactLupaColorIcon,
   fal_masivo: FalMasivoColorIcon,
-  factoresrubros: AporPlanillasColorIcon,
   faltas_ico: FaltasIcoColorIcon,
   familiares: FamiliaresColorIcon,
   gasto_real_rubro: GastoRealRubroColorIcon,
@@ -2003,28 +2165,21 @@ export const ICONOS_COLOR = {
   mantenimiento: MantenimientoColorIcon,
   marca: MarcaColorIcon,
   mayor_aux: MayorAuxColorIcon,
-  mensualesxcliente: Brcase48ColorIcon,
   mercaderia: MercaderiaColorIcon,
   mesa_control: MesaControlColorIcon,
   modelo_telefono: ModeloTelefonoColorIcon,
   motores: MotoresColorIcon,
   movimiento: MovimientoColorIcon,
   mp_icon: MpIconColorIcon,
-  mti: MovimientoColorIcon,
   observacion: ObservacionColorIcon,
   ordenesCompra: OrdenesCompraColorIcon,
   partidas: PartidasColorIcon,
   precioCore: PrecioCoreColorIcon,
-  preciofabricantes: CreditosColorIcon,
-  presupuesto_venta: PendienteFacturacionColorIcon,
   pendiente_facturacion: PendienteFacturacionColorIcon,
-  precios: DolarColorIcon,
   reclamoGarantia: ReclamoGarantiaColorIcon,
-  resumenBoletas: EnviarPrColorIcon,
   valeRequisicion: ValeRequisicionColorIcon,
   registroAuxiliar: RegistroAuxiliarColorIcon,
-  Separar__: SepararColorIcon,
-  separarOrden: SepararColorIcon,
+  Separar__: SepararPuzzleColorIcon,
   registroResumen: RegistroResumenColorIcon,
   registro: RegistroColorIcon,
   Ticket: TicketColorIcon,
@@ -2036,7 +2191,7 @@ export const ICONOS_COLOR = {
   vencimientoAcumulada: VencimientoAcumuladaColorIcon,
   vencimientoDetalle: VencimientoDetalleColorIcon,
   upload: UploadColorIcon,
-  vencimientos: VencimientoAcumuladaColorIcon,
+  vencimientos: VencimientosColorIcon,
   vendedor: VendedorColorIcon,
   stockValorizado: StockValorizadoColorIcon,
   Tools: ToolsColorIcon,
@@ -2057,6 +2212,22 @@ export const ICONOS_COLOR = {
   Solic_Garantia: SolicGarantiaColorIcon,
   Reordenar: ReordenarColorIcon,
   Rep_Asistencia: RepAsistenciaColorIcon,
+  QuickPlay: QuickPlayColorIcon,
+  Provisional: ProvisionalColorIcon,
+  proc_cta_dest: ProcCtaDestColorIcon,
+  proc_cierre_mes: ProcCierreMesColorIcon,
+  Rechazar: RechazarColorIcon,
+  Reg_Compras: RegComprasColorIcon,
+  Recalcular: RecalcularColorIcon,
+  PreMarcacion: PreMarcacionColorIcon,
+  Procesar: ProcesarColorIcon,
+  Reembolso: ReembolsoColorIcon,
+  Process: ProcessColorIcon,
+  Processs: ProcessColorIcon,
+  reclamo_garantia: ReclamoGarantiaHojaColorIcon,
+  rechazar3: Rechazar3ColorIcon,
+  Regresar: RegresarColorIcon,
+  ProcessJob: ProcessJobColorIcon,
 } as const;
 
 export type NombreIconoColor = keyof typeof ICONOS_COLOR;

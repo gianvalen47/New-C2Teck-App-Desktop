@@ -12,8 +12,9 @@
     "format": "prettier --write .",
     "desktop": "cd electron && npm start",
     "desktop:setup": "npm install && cd electron && npm install && cd .. && node scripts/setup-desktop.cjs",
-    "desktop:build": "npm run build && cd electron && npm run package:win"
-    ,"wcf-probe":"powershell -NoProfile -ExecutionPolicy Bypass -Command \"& { param($code='08',$proj='./wcf-probe/wcfprobe.csproj'); $env:SIGECOM_COD_EMP=$code; Set-Location '${PWD}'; dotnet run --project $proj }\""
+    "desktop:build": "npm run build && cd electron && npm run package:win",
+    "mapper": "node scripts/mapper-server.cjs",
+    "wcf-probe": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"& { param($code='08',$proj='./wcf-probe/wcfprobe.csproj'); $env:SIGECOM_COD_EMP=$code; Set-Location '${PWD}'; dotnet run --project $proj }\""
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
