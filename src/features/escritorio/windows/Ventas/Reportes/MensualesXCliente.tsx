@@ -1,69 +1,156 @@
-// Auto-extraido de windows (1).tsx (monolito legacy) — revisar antes de usar en produccion.
-import { X } from "lucide-react";
+import { useState } from "react";
 import {
-  inp,
   btn,
   btnPrimary,
-  Field,
-  WindowShell,
   Fs,
-  Radio
+  inp,
+  Radio,
+  WindowShell,
 } from "@/components/ui/desktop-primitives";
 
 export function ReporteMensualClienteList() {
+  const [todoVendedor, setTodoVendedor] = useState(true);
+
   return (
-    <WindowShell title="Reporte de Ventas Mensuales por Cliente"
-    >
-      <div className="p-3 space-y-3 max-w-2xl mx-auto text-[11.5px] text-slate-800">
-        <div className="grid grid-cols-[auto_1fr_auto_1fr] items-center gap-x-2 gap-y-2">
-          <div className="text-right font-medium">Del :</div>
-          <div><input className={inp} type="date" defaultValue="2026-08-01" /></div>
-          <div className="text-right font-medium">Al :</div>
-          <div><input className={inp} type="date" defaultValue="2026-08-08" /></div>
-        </div>
-
-        <div className="grid grid-cols-3 gap-2">
-          <Field label="Oficina"><select className={inp}><option>(Todos)</option></select></Field>
-          <Field label="Almacén"><select className={inp}><option>(Todos)</option></select></Field>
-          <Field label="Rubro"><select className={inp}><option>(Todos)</option></select></Field>
-        </div>
-
-        <Fs legend="Buscar Por Vendedor">
-          <label className="flex items-center gap-2"><input type="checkbox" defaultChecked className="accent-[#2A5590]" />Todo Vendedor</label>
-          <Field label="Vendedor"><select className={inp}><option>(Todos)</option></select></Field>
-        </Fs>
-
-        <Field label="Sector"><select className={inp}><option>(Todos)</option></select></Field>
-
-        <Fs legend="Reporte">
-          <div className="flex flex-col gap-1">
-            <Radio name="reporte" label="Detalle" defaultChecked />
-            <Radio name="reporte" label="Resumen" />
+    <WindowShell title="Reporte de Ventas Mensuales por Cliente">
+      <div className="flex h-full items-center justify-center overflow-auto p-2 text-[11.5px] text-slate-800">
+        <div className="w-full max-w-[460px] space-y-2 px-1 py-1">
+          <div className="flex items-center justify-center gap-5">
+            <span className="font-bold">Fechas</span>
+            <label className="flex items-center gap-1.5">
+              <span className="font-bold">Del :</span>
+              <input
+                aria-label="Fecha desde"
+                className={`${inp} h-6 w-[100px] px-1`}
+                type="date"
+                defaultValue="2026-10-01"
+              />
+            </label>
+            <label className="flex items-center gap-1.5">
+              <span className="font-bold">Al</span>
+              <input
+                aria-label="Fecha hasta"
+                className={`${inp} h-6 w-[100px] px-1`}
+                type="date"
+                defaultValue="2026-10-15"
+              />
+            </label>
           </div>
-        </Fs>
 
-        <div className="grid grid-cols-3 gap-3">
-          <Fs legend="Ordenado X">
-            <div className="flex flex-col gap-1">
-              <Radio name="orden_x" label="Cliente" defaultChecked />
-              <Radio name="orden_x" label="Total Venta" />
+          <div className="grid grid-cols-[1.3fr_0.85fr] items-center gap-3">
+            <div className="space-y-1">
+              <label className="grid grid-cols-[80px_minmax(0,1fr)] items-center gap-1">
+                <span className="font-bold">Oficina:</span>
+                <select className={`${inp} h-6 min-w-0 px-1`} defaultValue="all">
+                  <option value="all">(Todos)</option>
+                </select>
+              </label>
+              <label className="grid grid-cols-[80px_minmax(0,1fr)] items-center gap-1">
+                <span className="font-bold">Almacén:</span>
+                <select className={`${inp} h-6 min-w-0 px-1`} defaultValue="all">
+                  <option value="all">(Todos)</option>
+                </select>
+              </label>
+              <label className="grid grid-cols-[80px_minmax(0,1fr)] items-center gap-1">
+                <span className="font-bold">Rubro:</span>
+                <select className={`${inp} h-6 min-w-0 px-1`} defaultValue="all">
+                  <option value="all">(Todos)</option>
+                </select>
+              </label>
             </div>
+
+            <Fs legend="Reporte" className="px-2 pb-1 pt-0">
+              <div className="flex justify-center gap-3">
+                <Radio
+                  name="reporte-mensual-cliente-tipo"
+                  label="Detalle"
+                  defaultChecked
+                />
+                <Radio name="reporte-mensual-cliente-tipo" label="Resumen" />
+              </div>
+            </Fs>
+          </div>
+
+          <Fs legend="Buscar Por Vendedor" className="px-2 pb-1 pt-0">
+            <label className="flex items-center gap-1.5 font-bold">
+              <input
+                type="checkbox"
+                checked={todoVendedor}
+                onChange={(event) => setTodoVendedor(event.target.checked)}
+                className="accent-[#2A5590]"
+              />
+              Todo Vendedor
+            </label>
+            <label className="grid grid-cols-[76px_minmax(0,1fr)] items-center gap-1">
+              <span className="font-bold">Vendedor:</span>
+              <select
+                className={`${inp} h-6 min-w-0 px-1`}
+                defaultValue="all"
+                disabled={todoVendedor}
+              >
+                <option value="all">(Todos)</option>
+              </select>
+            </label>
           </Fs>
-          <Fs legend="Tipo de Orden">
-            <div className="flex flex-col gap-1">
-              <Radio name="tipo_orden" label="Ascendente" defaultChecked />
-              <Radio name="tipo_orden" label="Descendente" />
-            </div>
-          </Fs>
-          <Fs legend="Moneda">
-            <div className="flex flex-col gap-1">
-              <Radio name="moneda" label="En Soles" defaultChecked />
-              <Radio name="moneda" label="En Dólares" />
-            </div>
-          </Fs>
+
+          <label className="grid max-w-[260px] grid-cols-[64px_minmax(0,1fr)] items-center gap-1">
+            <span className="font-bold">Sector:</span>
+            <select className={`${inp} h-6 min-w-0 px-1`} defaultValue="all">
+              <option value="all">(Todos)</option>
+            </select>
+          </label>
+
+          <div className="grid grid-cols-3 gap-2">
+            <Fs legend="Ordenado X" className="px-2 pb-1 pt-0">
+              <div className="flex flex-col gap-0.5">
+                <Radio
+                  name="reporte-mensual-cliente-ordenado"
+                  label="Cliente"
+                  defaultChecked
+                />
+                <Radio
+                  name="reporte-mensual-cliente-ordenado"
+                  label="Total Venta"
+                />
+              </div>
+            </Fs>
+            <Fs legend="Tipo de Orden" className="px-2 pb-1 pt-0">
+              <div className="flex flex-col gap-0.5">
+                <Radio
+                  name="reporte-mensual-cliente-direccion"
+                  label="Ascendente"
+                  defaultChecked
+                />
+                <Radio
+                  name="reporte-mensual-cliente-direccion"
+                  label="Descendente"
+                />
+              </div>
+            </Fs>
+            <Fs legend="Moneda" className="px-2 pb-1 pt-0">
+              <div className="flex flex-col gap-0.5">
+                <Radio
+                  name="reporte-mensual-cliente-moneda"
+                  label="En Soles"
+                  defaultChecked
+                />
+                <Radio
+                  name="reporte-mensual-cliente-moneda"
+                  label="En Dólares"
+                />
+              </div>
+            </Fs>
+          </div>
+
+          <div className="flex justify-center gap-2 pt-1">
+            <button type="button" className={btnPrimary}>
+              Aceptar
+            </button>
+            <button type="button" className={btn}>
+              Cancelar
+            </button>
+          </div>
         </div>
-
-        <div className="mt-2 flex justify-center gap-2"><button className={btnPrimary}>Aceptar</button><button className={btn}>Cancelar</button></div>
       </div>
     </WindowShell>
   );

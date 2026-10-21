@@ -1,91 +1,80 @@
-import type { ReactNode } from "react";
-import { ArrowUpDown, LogOut, RefreshCw, Search, X } from "lucide-react";
-import { btn, btnPrimary, iconBtn, inp, squareIconBtn, tbSep } from "@/features/escritorio/windows/uiStyles";
-
-function Field({ label, className = "", children }: { label: string; className?: string; children: ReactNode }) {
-  return (
-    <label className={`flex flex-col gap-0.5 ${className}`}>
-      <span className="text-[10.5px] text-slate-600 font-medium leading-tight">{label}</span>
-      {children}
-    </label>
-  );
-}
-
-const rows = [
-  { producto: "BOMBA HIDRAULICA X90", stockActual: "120", stockCritico: "26", cobertura: "38 días", sugerido: "55" },
-  { producto: "FILTRO DE AIRE 250", stockActual: "85", stockCritico: "18", cobertura: "29 días", sugerido: "42" },
-  { producto: "ACEITE LUBRIFICANTE 4L", stockActual: "64", stockCritico: "22", cobertura: "31 días", sugerido: "48" },
-  { producto: "RODAMIENTO 6205", stockActual: "40", stockCritico: "12", cobertura: "18 días", sugerido: "22" },
-];
+import { useState } from "react";
+import { Check, X } from "lucide-react";
+import {
+  btn,
+  btnPrimary,
+  Fs,
+  inp,
+  WindowShell,
+} from "@/components/ui/desktop-primitives";
 
 export function ProcesarCoberturaList() {
+  const [fecha, setFecha] = useState("2026-10-20");
+  const [meses, setMeses] = useState(3);
+
   return (
-    <div className="h-full flex flex-col bg-[#EEF3F8] text-slate-800">
-      <div className="flex items-center justify-between px-3 py-1.5 bg-gradient-to-b from-[#3E5B7A] to-[#2A3F55] border-b border-[#1F2E3F] text-[12px] text-white">
-        <span className="font-medium">Procesar Cobertura</span>
-        <div className="flex items-center gap-1">
-          <button className={iconBtn} title="Procesar"><RefreshCw className="h-4 w-4 text-white" /></button>
-          {tbSep}
-          <button className={iconBtn} title="Ver resultados"><Search className="h-4 w-4 text-white" /></button>
-          {tbSep}
-          <button className={iconBtn} title="Salir"><LogOut className="h-4 w-4 text-white" /></button>
-        </div>
-      </div>
+    <WindowShell title="Procesar Cobertura de Tablero">
+      <div className="flex h-full items-center justify-center overflow-auto p-2 text-[11.5px] text-slate-800">
+        <Fs
+          legend="Procesar"
+          className="w-full max-w-[390px] px-3 pb-3 pt-1"
+        >
+          <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-center gap-x-5 gap-y-3 py-1">
+            <label className="grid grid-cols-[48px_minmax(0,1fr)] items-center gap-1">
+              <span className="font-bold">Fecha</span>
+              <input
+                aria-label="Fecha de cobertura"
+                className={`${inp} h-6 min-w-0 px-1`}
+                type="date"
+                value={fecha}
+                onChange={(event) => setFecha(event.target.value)}
+              />
+            </label>
 
-      <div className="flex items-center gap-1 px-2 py-1.5 bg-gradient-to-b from-[#EDF2F7] to-[#D9E2EC] border-b border-slate-300 text-slate-700 overflow-x-auto">
-        <button className={squareIconBtn} title="Procesar"><RefreshCw className="h-3.5 w-3.5" /></button>
-        <button className={squareIconBtn} title="Ver resultados"><Search className="h-3.5 w-3.5" /></button>
-        {tbSep}
-        <button className={squareIconBtn} title="Cerrar"><X className="h-3.5 w-3.5" /></button>
-      </div>
+            <label className="grid grid-cols-[42px_minmax(0,1fr)] items-center gap-1">
+              <span className="font-bold">Meses</span>
+              <input
+                aria-label="Cantidad de meses"
+                className={`${inp} h-6 w-[64px] px-1`}
+                type="number"
+                min={1}
+                value={meses}
+                onChange={(event) => setMeses(Number(event.target.value))}
+              />
+            </label>
 
-      <div className="px-2 py-2 border-b border-slate-300 bg-[#F7FAFC]">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-          <Field label="Año" className="min-w-[90px]"><input className={`${inp} font-mono`} defaultValue="2026" /></Field>
-          <Field label="Mes" className="min-w-[120px]"><select className={inp}><option>ENERO</option><option>FEBRERO</option><option>MARZO</option><option>ABRIL</option><option>MAYO</option><option>JUNIO</option><option>JULIO</option><option>AGOSTO</option><option>SETIEMBRE</option><option>OCTUBRE</option><option>NOVIEMBRE</option><option>DICIEMBRE</option></select></Field>
-          <Field label="Almacén" className="min-w-[160px]"><select className={inp}><option>Central Lima</option><option>Norte</option><option>Sur</option></select></Field>
-        </div>
-        <div className="mt-2 flex justify-end"><button className={`${btnPrimary} h-7`}><RefreshCw className="h-3.5 w-3.5" />Procesar</button></div>
-      </div>
+            <label className="grid grid-cols-[48px_minmax(0,1fr)] items-center gap-1">
+              <span className="font-bold">Oficina</span>
+              <select className={`${inp} h-6 min-w-0 px-1`} defaultValue="LIMA">
+                <option value="LIMA">LIMA</option>
+              </select>
+            </label>
 
-      <div className="flex-1 min-h-0 overflow-hidden px-2 pb-2 pt-2">
-        <div className="h-full overflow-auto rounded-sm border border-slate-300 bg-white shadow-sm">
-          <table className="w-full border-collapse text-[11px]">
-            <thead className="sticky top-0 z-10 bg-slate-100 text-slate-700">
-              <tr>
-                {[
-                  "Producto",
-                  "Stock Actual",
-                  "Stock Crítico",
-                  "Cobertura Días",
-                  "Sugerido",
-                ].map((h) => (
-                  <th key={h} className="border-b border-slate-300 px-2 py-1.5 text-left font-semibold whitespace-nowrap">
-                    <span className="inline-flex items-center gap-1"><ArrowUpDown className="h-3 w-3 opacity-60" />{h}</span>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row) => (
-                <tr key={row.producto} className="hover:bg-slate-50">
-                  <td className="border-b border-slate-200 px-2 py-1.5 whitespace-nowrap">{row.producto}</td>
-                  <td className="border-b border-slate-200 px-2 py-1.5 font-mono text-right">{row.stockActual}</td>
-                  <td className="border-b border-slate-200 px-2 py-1.5 font-mono text-right">{row.stockCritico}</td>
-                  <td className="border-b border-slate-200 px-2 py-1.5 font-mono text-right">{row.cobertura}</td>
-                  <td className="border-b border-slate-200 px-2 py-1.5 font-mono text-right text-emerald-700">{row.sugerido}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            <label className="grid grid-cols-[58px_minmax(0,1fr)] items-center gap-1">
+              <span className="font-bold">Almacén</span>
+              <select className={`${inp} h-6 min-w-0 px-1`} defaultValue="">
+                <option value=""></option>
+                <option value="central">Central</option>
+              </select>
+            </label>
+          </div>
+
+          <div className="flex justify-center gap-2 pt-1">
+            <button type="button" className={btnPrimary}>
+              <Check className="h-3.5 w-3.5 text-emerald-300" />
+              Procesar
+            </button>
+            <button type="button" className={btn}>
+              <X className="h-3.5 w-3.5" />
+              Cancelar
+            </button>
+          </div>
+        </Fs>
       </div>
-    </div>
+    </WindowShell>
   );
 }
 
 export function ProcesarCobertura() {
-  return (
-    <ProcesarCoberturaList />
-  );
+  return <ProcesarCoberturaList />;
 }

@@ -644,7 +644,11 @@ add("Reporte Acumulada", ReporteAcumulada);
 add("Reporte GR Pendiente", ReporteGRPendiente);
 add("Reporte Cotizaciones", ReporteCotizaciones);
 add("Reporte Vale Requisición", ReporteValeRequisicionList);
-add("Reporte Mensual Cliente", ReporteMensualClienteList);
+addAliases(
+  "Reporte Mensual Cliente",
+  ["Mensuales x Cliente", "Reporte de Ventas Mensuales por Cliente"],
+  ReporteMensualClienteList,
+);
 add("Reporte Detalle Descuento", ReporteDetalleDescuentoList);
 add("Reporte Reclamos", ReporteReclamosList);
 add("Reporte Orden Compra", ReporteOrdenCompra);
@@ -677,7 +681,11 @@ add("Mantenimiento Productos", MantenimientoProductos);
 add("Tarjetas", Tarjetas);
 add("Documento Consulta", DocumentoConsulta);
 
-add("Procesar Cobertura", ProcesarCobertura);
+addAliases(
+  "Procesar Cobertura",
+  ["Procesar Cobertura de Tablero"],
+  ProcesarCobertura,
+);
 add("Calendario", Calendario);
 add("Indicadores Venta Dialog", IndicadoresVentaDialog);
 
@@ -688,7 +696,11 @@ add("Movimientos Almacen Report", MovimientosAlmacenReport);
 add("Documento Reporte", DocumentoReporte);
 add("Reporte Valorizado", ReporteValorizado);
 add("Reporte Inventario", ReporteInventario);
-add("Reporte Transferencia", ReporteTransferencia);
+addAliases(
+  "Reporte Transferencia Interna",
+  ["Reporte Transferencia", "Transferencias"],
+  ReporteTransferencia,
+);
 
 // --- Créditos ---
 add("Anticipos", Anticipos);
@@ -1120,12 +1132,20 @@ const REGISTRY: Record<string, (label: string) => ReactNode> = {
   "Registro": () => <RegistroVenta />,
   "Registro Auxiliar": () => <RegistroAuxiliarList />,
   "Resumen Registro": () => <ResumenRegistroList />,
+  "Reporte Mensual Cliente": () => <ReporteMensualCliente />,
+  "Mensuales x Cliente": () => <ReporteMensualCliente />,
+  "Reporte de Ventas Mensuales por Cliente": () => <ReporteMensualCliente />,
   "Detalle": () => <ReporteVentasDetalladoList />,
   "Guías Remisión": () => <ReporteGuiasRemision />,
   "Nueva Guía": () => <GuiaRemision />,
   "Nueva Nota": () => <NotaVentaList />,
   "Reporte de Ventas Detallado": () => <ReporteVentasDetalladoList />,
   "Reporte Venta Detallado": () => <ReporteVentasDetalladoList />,
+  "Reporte Transferencia": () => <ReporteTransferenciaList />,
+  "Reporte Transferencia Interna": () => <ReporteTransferenciaList />,
+  "Transferencias": () => <ReporteTransferencia />,
+  "Procesar Cobertura": () => <ProcesarCobertura />,
+  "Procesar Cobertura de Tablero": () => <ProcesarCobertura />,
 };
 
 
