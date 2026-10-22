@@ -5,7 +5,13 @@ from datetime import date, timedelta
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 
-from legacy_adapter import fetch_tipo_cambio_legacy, validate_user, validate_user_legacy, is_legacy_source_enabled
+from legacy_adapter import (
+    fetch_tipo_cambio_guia_legacy,
+    fetch_tipo_cambio_legacy,
+    validate_user,
+    validate_user_legacy,
+    is_legacy_source_enabled,
+)
 
 router = APIRouter()
 
@@ -138,8 +144,8 @@ class CompanySwitchRequest(BaseModel):
 
 
 @router.get("/auth/tipo-cambio")
-def get_tipo_cambio(fecha: date, empresa: str | None = None):
-    resultado = _fetch_latest_tipo_cambio(fecha, company_code=empresa)
+def get_tipo_cambio(fecha: date, empresa: str | None = None, moneda: str = "US"):
+    resultado = _fetch_latest_tipo_cambio(fecha, company_code=empresa, moneda=moneda)
     if resultado is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -151,6 +157,31 @@ def get_tipo_cambio(fecha: date, empresa: str | None = None):
         "fecha_tipo_cambio": fecha_tipo_cambio.strftime("%d/%m/%Y"),
         "tipo_cambio_compra": tipo_cambio[0],
         "tipo_cambio_venta": tipo_cambio[1],
+    }
+
+
+@router.get("/auth/tipo-cambio-guia")
+def get_tipo_cambio_guia(fecha: date, moneda: str = "US"):
+    try:
+        value = fetch_tipo_cambio_guia_legacy(
+            moneda=moneda,
+            fecha=fecha.strftime("%Y-%m-%d"),
+        )
+    except Exception as exc:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=f"No se pudo consultar el tipo de cambio de SIGECOM: {type(exc).__name__}.",
+        ) from exc
+
+    if value is None:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="El adaptador SIGECOM no devolvió el tipo de cambio de la guía.",
+        )
+    return {
+        "fecha": fecha.strftime("%Y-%m-%d"),
+        "moneda": moneda.upper(),
+        "tipo_cambio": value,
     }
 
 
@@ -287,11 +318,11 @@ def _fetch_legacy_tipo_cambio(moneda: str, fecha: str, company_code: str | None 
     return float(compra), float(venta)
 
 
-def _fetch_latest_tipo_cambio(fecha: date, company_code: str | None = None):
+def _fetch_latest_tipo_cambio(fecha: date, company_code: str | None = None, moneda: str = "US"):
     for days_ago in range(8):
         fecha_candidata = fecha - timedelta(days=days_ago)
         fecha_legacy = fecha_candidata.strftime("%d/%m/%Y")
-        tipo_cambio = _fetch_legacy_tipo_cambio("US", fecha_legacy, company_code=company_code)
+        tipo_cambio = _fetch_legacy_tipo_cambio(moneda, fecha_legacy, company_code=company_code)
         if tipo_cambio and tipo_cambio[0] > 0 and tipo_cambio[1] > 0:
             return tipo_cambio, fecha_candidata
     return None

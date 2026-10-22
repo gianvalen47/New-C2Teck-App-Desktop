@@ -37,6 +37,7 @@ import {
   type GuiaRemisionDigital,
   fetchSigecoomClients,
   fetchSigecoomLocations,
+  fetchTipoCambioGuia,
   getSigecoomClient,
   type GuiaRemisionRow,
   type GuiaRemisionFull,
@@ -225,6 +226,13 @@ function normalizeReferenceDisplay(value: string | number | null | undefined) {
   return text.replace(/\s*\/\s*/g, " / ");
 }
 
+function getLocalDateISO() {
+  const today = new Date();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  return `${today.getFullYear()}-${month}-${day}`;
+}
+
 function resolveLegacyGuideDisplayFields(g: any) {
   const clientPayload = g?.Cliente ?? g?.cliente ?? {};
   const nestedAddress = pickFirstNonEmpty(
@@ -241,6 +249,9 @@ function resolveLegacyGuideDisplayFields(g: any) {
   const fiscalObject = g?.DireccionFiscal ?? g?.direccion_fiscal ?? g?.Fiscal ?? g?.fiscal ?? {};
   const motivoObj = g?.Motivos ?? g?.motivos ?? g?.Motivo ?? g?.motivo ?? {};
   const cotizacionObj = g?.Cotizacion ?? g?.cotizacion ?? {};
+  const locacionObj = g?.Locacion ?? g?.locacion ?? {};
+  const almacenObj = g?.Almacen ?? g?.almacen ?? {};
+  const personaObj = g?.Persona ?? g?.persona ?? {};
 
   const referenceValue = pickFirstNonEmpty(
     findAnyLegacyValue(g, ["NumJob", "num_job", "Referencia", "referencia", "Ref", "ref", "NumFac", "num_fac"]),
@@ -266,6 +277,18 @@ function resolveLegacyGuideDisplayFields(g: any) {
     g?.cotizacion?.IdCotizacion,
     g?.Cotizacion?.NumCot,
     g?.cotizacion?.NumCot,
+  );
+  const cotizacionId = pickFirstNonEmpty(
+    g?.id_cotizacion,
+    g?.IdCotizacion,
+    cotizacionObj?.IdCotizacion,
+    cotizacionObj?.id_cotizacion,
+  );
+  const cotizacionNumero = pickFirstNonEmpty(
+    cotizacionObj?.NumCot,
+    cotizacionObj?.num_cot,
+    g?.NumCot,
+    g?.num_cot,
   );
 
   const clienteNombre = pickFirstNonEmpty(
@@ -357,10 +380,37 @@ function resolveLegacyGuideDisplayFields(g: any) {
     g?.LocacionCliente,
     g?.locacion_cliente,
   );
+  const vendedor = pickFirstNonEmpty(
+    personaObj?.ApeNom,
+    personaObj?.apenom,
+    g?.vendedor,
+    g?.nom_vendedor,
+    g?.ape_nom,
+  );
+  const oficina = pickFirstNonEmpty(
+    locacionObj?.DesOfi,
+    locacionObj?.des_ofi,
+    locacionObj?.Oficina?.DesOfi,
+    locacionObj?.oficina?.des_ofi,
+    locacionObj?.Oficina,
+    locacionObj?.oficina,
+    locacionObj?.DesLocacion,
+    locacionObj?.des_locacion,
+  );
+  const almacen = pickFirstNonEmpty(
+    almacenObj?.DesAlm,
+    almacenObj?.des_alm,
+    almacenObj?.Nombre,
+    almacenObj?.nombre,
+    g?.DesAlm,
+    g?.des_alm,
+  );
 
   return {
     referencia: normalizeReferenceDisplay(referenceValue),
     cotizacion: cotizacionValue === "" ? "" : String(cotizacionValue),
+    cotizacionId: cotizacionId === "" ? "" : String(cotizacionId),
+    cotizacionNumero: cotizacionNumero === "" ? "" : String(cotizacionNumero),
     clienteNombre: clienteNombre === "" ? "" : String(clienteNombre),
     fiscalAddress: fiscalAddress === "" ? "" : String(fiscalAddress),
     partida: partida === "" ? "" : String(partida),
@@ -368,6 +418,9 @@ function resolveLegacyGuideDisplayFields(g: any) {
     motivo: motivo === "" ? "" : String(motivo),
     numOrden: numOrden === "" ? "" : String(numOrden),
     localizacion,
+    vendedor: vendedor === "" ? "" : String(vendedor),
+    oficina: oficina === "" ? "" : String(oficina),
+    almacen: almacen === "" ? "" : String(almacen),
   };
 }
 
@@ -1648,7 +1701,7 @@ type FormMode = "view" | "edit" | "new";
 
 export function GuiaRemisionForm({
   idGuia,
-  idLocacion = 1,
+  idLocacion = 0,
   onClose,
   onSaved,
   detailOnly = false,
@@ -1682,10 +1735,14 @@ export function GuiaRemisionForm({
 
   // Form fields
   const [numDoc, setNumDoc] = useState(isNew ? "" : "");
-  const [fecDoc, setFecDoc] = useState(new Date().toISOString().slice(0, 10));
+  const [fecDoc, setFecDoc] = useState(getLocalDateISO);
   const [codMon, setCodMon] = useState("NS");
   const [igv, setIgv] = useState("18.00");
-  const [tipCambio, setTipCambio] = useState("3.411");
+  const [tipCambio, setTipCambio] = useState("");
+  const [tipoCambioLoading, setTipoCambioLoading] = useState(false);
+  const [vendedor, setVendedor] = useState("");
+  const [oficina, setOficina] = useState("");
+  const [almacen, setAlmacen] = useState("");
   const [idCliente, setIdCliente] = useState<number | "">("");
   const [desCliente, setDesCliente] = useState("");
   const [idLocCli, setIdLocCli] = useState<number | "">("");
@@ -1695,8 +1752,9 @@ export function GuiaRemisionForm({
   const [codMot, setCodMot] = useState("1");
   const [numJob, setNumJob] = useState("");
   const [idCotizacion, setIdCotizacion] = useState<number | "">("");
+  const [numCotizacion, setNumCotizacion] = useState("");
   const [llegada, setLlegada] = useState("");
-  const [partida, setPartida] = useState("CAL. ANTONIO ULLOA NRO. 2182 URB. EL FLORES");
+  const [partida, setPartida] = useState("");
   const [numOrden, setNumOrden] = useState("");
   const [pesoTotal, setPesoTotal] = useState("0.000");
   const [codUniMedPeso, setCodUniMedPeso] = useState("KGM");
@@ -1709,9 +1767,31 @@ export function GuiaRemisionForm({
 
   const editable = mode === "new" || mode === "edit";
 
+  useEffect(() => {
+    if ((!editable && !idGuia) || !fecDoc || !codMon) return;
+
+    let active = true;
+    setTipoCambioLoading(true);
+    fetchTipoCambioGuia(fecDoc, codMon)
+      .then((tipoCambio) => {
+        if (active) setTipCambio(tipoCambio.toFixed(3));
+      })
+      .catch((error: unknown) => {
+        if (!active) return;
+        setTipCambio("");
+        toast.error(error instanceof Error ? error.message : "No se pudo obtener el tipo de cambio.");
+      })
+      .finally(() => {
+        if (active) setTipoCambioLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [editable, fecDoc, codMon, idGuia]);
+
   const hydrateLookupTexts = useCallback(async (g: GuiaRemisionFull) => {
     const legacy = resolveLegacyGuideDisplayFields(g as any);
-    const locationLookup = await fetchSigecoomLocations().catch(() => [] as Location[]);
     const rawClientId = pickFirstNonEmpty(
       g?.id_cliente,
       (g as any)?.IdCliente,
@@ -1739,12 +1819,16 @@ export function GuiaRemisionForm({
       (g as any)?.cliente?.IdFiscal,
       "",
     );
-    const location = locationLookup.find((loc) => String(loc.id) === String(rawLocCliId ?? g.id_loc_cli ?? legacy.localizacion ?? ""));
-    const locText = location
-      ? [location.warehouse, location.aisle, location.shelf, location.row, location.level]
-        .filter(Boolean)
-        .join(" / ") || location.description || location.code
-      : (legacy.localizacion ? String(legacy.localizacion) : "");
+    const locacionCliente = (g as any)?.LocacionCliente ?? (g as any)?.locacion_cliente ?? {};
+    const locText = pickFirstNonEmpty(
+      locacionCliente?.Nombre,
+      locacionCliente?.nombre,
+      locacionCliente?.DirCli,
+      locacionCliente?.dir_cli,
+      locacionCliente?.Direccion,
+      locacionCliente?.direccion,
+      legacy.localizacion,
+    );
 
     const legacyClientName = pickFirstNonEmpty(
       legacy.clienteNombre,
@@ -1796,7 +1880,7 @@ export function GuiaRemisionForm({
     }
 
     const locCliValue = rawLocCliId !== "" ? rawLocCliId : (g.id_loc_cli ?? legacy.localizacion ?? "");
-    setDesLocCli(locText || "");
+    setDesLocCli(locText === "" ? "" : String(locText));
     setIdLocCli(typeof locCliValue === "number" ? locCliValue : (locCliValue && String(locCliValue).trim() !== "" ? Number(locCliValue) : ""));
     setIdFiscal(rawFiscalId !== "" ? (typeof rawFiscalId === "number" ? rawFiscalId : Number(rawFiscalId)) : "");
   }, []);
@@ -1838,10 +1922,13 @@ export function GuiaRemisionForm({
       setFecDoc((g.fec_doc ?? (g as any).FecDoc ?? new Date().toISOString().slice(0, 10)).slice(0, 10));
       setCodMon(g.cod_mon ?? (g as any).CodMon ?? "NS");
       setIgv(String(g.igv ?? (g as any).IGV ?? "18.00"));
-      setTipCambio(String(g.tip_cambio ?? (g as any).TipCambio ?? 1));
+      setTipCambio(String(g.tip_cambio ?? (g as any).TipCambio ?? ""));
       setIdCliente(legacyClientId !== "" ? Number(legacyClientId) : "");
       setIdLocCli(legacyLocCliId !== "" ? Number(legacyLocCliId) : "");
       setIdFiscal(legacyFiscalId !== "" ? Number(legacyFiscalId) : "");
+      setVendedor(derivedFields.vendedor);
+      setOficina(derivedFields.oficina);
+      setAlmacen(derivedFields.almacen);
       setCodMot(
         pickFirstNonEmpty(
           g.cod_mot,
@@ -1854,7 +1941,8 @@ export function GuiaRemisionForm({
         ) as string
       );
       setNumJob(derivedFields.referencia || "");
-      setIdCotizacion(derivedFields.cotizacion === "" ? "" : Number(derivedFields.cotizacion));
+      setIdCotizacion(derivedFields.cotizacionId === "" ? "" : Number(derivedFields.cotizacionId));
+      setNumCotizacion(derivedFields.cotizacionNumero || "");
       setLlegada(derivedFields.llegada || g.pto_llegada || (g as any).PtoLlegada || "");
       setPartida(derivedFields.partida || g.pto_partida || (g as any).PtoPartida || "");
       setNumOrden(derivedFields.numOrden || g.num_orden || (g as any).NumOrden || "");
@@ -1885,8 +1973,18 @@ export function GuiaRemisionForm({
   }, [idGuia, hydrateLookupTexts]);
 
   const handleSave = async () => {
+    if (isNew && idLocacion <= 0) {
+      toast.error("No se encontró la ubicación activa para emitir la guía");
+      return;
+    }
     if (!idCliente) { toast.error("Ingrese el cliente"); return; }
     if (!numDoc) { toast.error("Ingrese el número de documento"); return; }
+    if (!fecDoc) { toast.error("Ingrese la fecha del documento"); return; }
+    if (!codMon) { toast.error("Seleccione la moneda"); return; }
+    if (!Number.isFinite(Number(tipCambio)) || Number(tipCambio) <= 0) {
+      toast.error("No hay un tipo de cambio válido para la fecha y empresa seleccionadas");
+      return;
+    }
     if (parseFloat(pesoTotal) <= 0) { toast.error("El peso total no puede ser CERO"); return; }
     if (parseInt(numBultos) <= 0) { toast.error("La cantidad de bultos no puede ser CERO"); return; }
 
@@ -1973,12 +2071,15 @@ export function GuiaRemisionForm({
     });
     return arr;
   }, [detailles, sortBy]);
+  const detailBruto = detailles.reduce((sum, detail) => sum + detail.can_mer * detail.pre_mer, 0);
+  const detailDscto = detailles.reduce((sum, detail) => sum + detail.can_mer * detail.dsc_mer, 0);
+  const calculatedVenta = detailBruto - detailDscto + Number(totFlete || 0) + Number(totEmbarque || 0);
   const totals = {
-    bruto: detailles.reduce((s, d) => s + d.can_mer * d.pre_mer, 0),
-    dscto: detailles.reduce((s, d) => s + d.can_mer * d.dsc_mer, 0),
-    venta: guia?.tot_venta ?? 0,
+    bruto: guia?.tot_bruto || detailBruto,
+    dscto: guia?.tot_dscto || detailDscto,
+    venta: guia?.tot_venta || calculatedVenta,
     igv_amt: guia?.tot_igv ?? 0,
-    neto: guia?.tot_neto ?? 0,
+    neto: guia?.tot_neto || calculatedVenta + (guia?.tot_igv ?? 0),
   };
 
   if (loading) {
@@ -2012,11 +2113,6 @@ export function GuiaRemisionForm({
     }
     const nextMon = codMon === "NS" ? "US" : "NS";
     setCodMon(nextMon);
-    if (nextMon === "US") {
-      if (!tipCambio || Number(tipCambio) <= 1) setTipCambio("3.411");
-    } else {
-      setTipCambio("1.000");
-    }
     toast.success(`Moneda actualizada a ${nextMon === "NS" ? "PEN" : "USD"}`);
   };
 
@@ -2078,7 +2174,8 @@ export function GuiaRemisionForm({
 
       {/* Sub-header */}
       <div className="text-center text-[11px] font-bold text-slate-800 bg-[#EEF2F7] border-b border-slate-300 py-0.5">
-        OFICINA: LIMA {" — "} ALMACÉN: COMERCIAL
+        {oficina ? `OFICINA: ${oficina}` : `LOCACIÓN: ${idLocacion || "No asignada"}`}
+        {almacen ? ` — ALMACÉN: ${almacen}` : ""}
       </div>
 
       <div className={[isNew ? "overflow-auto" : "flex-1 min-h-0 overflow-auto", "p-1.5 space-y-1"].join(" ")}>
@@ -2128,11 +2225,12 @@ export function GuiaRemisionForm({
                     />
                   </InlineField>
                   <InlineField label="Tip.Cam." labelWidth="w-[58px]">
-                    <input 
-                      className={`${inp} font-mono`} 
-                      value={tipCambio || ""} 
-                      onChange={e => setTipCambio(e.target.value)} 
-                      readOnly={!editable} 
+                    <input
+                      className={`${inp} font-mono`}
+                      value={tipCambio || ""}
+                      readOnly
+                      aria-busy={tipoCambioLoading}
+                      title={tipoCambioLoading ? "Consultando tipo de cambio" : "Tipo de cambio del día consultado al servicio"}
                     />
                   </InlineField>
                 </div>
@@ -2162,31 +2260,13 @@ export function GuiaRemisionForm({
                   </InlineField>
                   <InlineField label="Loc.Cliente" labelWidth="w-[75px]">
                     <div className="flex gap-1 w-full">
-                      <input 
-                        className={inp} 
-                        value={desLocCli || (idLocCli ? `ID: ${idLocCli}` : "")} 
-                        onChange={e => setDesLocCli(e.target.value)} 
-                        readOnly={!editable} 
-                        placeholder="(Buscar locación…)" 
+                      <input
+                        className={inp}
+                        value={desLocCli || (idLocCli ? `ID: ${idLocCli}` : "")}
+                        readOnly
+                        placeholder="(Catálogo de locaciones no disponible)"
+                        title="El servicio actual no expone las locaciones asociadas al cliente"
                       />
-                      {editable && (
-                        <>
-                          <button 
-                            type="button"
-                            className={squareIconBtn} 
-                            title="Editar Locación"
-                          >
-                            <Pencil className="h-3 w-3" />
-                          </button>
-                          <button 
-                            type="button"
-                            className={squareIconBtn} 
-                            title="Buscar Locación"
-                          >
-                            <Search className="h-3.5 w-3.5" />
-                          </button>
-                        </>
-                      )}
                     </div>
                   </InlineField>
                 </div>
@@ -2195,31 +2275,13 @@ export function GuiaRemisionForm({
                 <div className="grid grid-cols-[1fr_1.1fr] gap-2 items-center">
                   <InlineField label="Dir. Fiscal" labelWidth="w-[65px]">
                     <div className="flex gap-1 w-full">
-                      <input 
-                        className={inp} 
-                        value={desFiscal || (idFiscal ? `ID: ${idFiscal}` : "")} 
-                        onChange={e => setDesFiscal(e.target.value)} 
-                        readOnly={!editable} 
-                        placeholder="(Buscar dirección…)" 
+                      <input
+                        className={inp}
+                        value={desFiscal || (idFiscal ? `ID: ${idFiscal}` : "")}
+                        readOnly
+                        placeholder="(Catálogo fiscal no disponible)"
+                        title="El servicio actual no expone las direcciones fiscales del cliente"
                       />
-                      {editable && (
-                        <>
-                          <button 
-                            type="button"
-                            className={squareIconBtn} 
-                            title="Editar Dirección"
-                          >
-                            <Pencil className="h-3 w-3" />
-                          </button>
-                          <button 
-                            type="button"
-                            className={squareIconBtn} 
-                            title="Buscar Dirección"
-                          >
-                            <Search className="h-3.5 w-3.5" />
-                          </button>
-                        </>
-                      )}
                     </div>
                   </InlineField>
                   <InlineField label="Motivo" labelWidth="w-[75px]">
@@ -2261,11 +2323,11 @@ export function GuiaRemisionForm({
                       </div>
                     </InlineField>
                     <InlineField label="Cotización" labelWidth="w-[70px]">
-                      <input 
-                        className={inp} 
-                        value={idCotizacion ?? ""} 
-                        onChange={e => setIdCotizacion(parseInt(e.target.value, 10) || 0)}
-                        readOnly={!editable} 
+                      <input
+                        className={inp}
+                        value={numCotizacion || idCotizacion || ""}
+                        readOnly
+                        title="Se muestra el número asociado en la guía; la búsqueda de cotizaciones requiere el catálogo del servicio original."
                       />
                     </InlineField>
                   </div>
@@ -2290,11 +2352,11 @@ export function GuiaRemisionForm({
                     />
                   </InlineField>
                   <InlineField label="Vendedor" labelWidth="w-[75px]">
-                    <input 
-                      className={inp} 
-                      value="" 
-                      readOnly 
-                      placeholder="(asignado por sistema)" 
+                    <input
+                      className={inp}
+                      value={vendedor}
+                      readOnly
+                      placeholder="(no disponible en la guía)"
                     />
                   </InlineField>
                 </div>
@@ -2541,10 +2603,14 @@ export function GuiaRemisionForm({
             if (!Number.isNaN(parsed)) {
               setIdCliente(parsed);
             } else {
+              setIdCliente("");
               toast.warning("Este cliente no tiene código numérico compatible para la guía");
             }
             setDesCliente(c.name);
-            setDesFiscal(c.address || "");
+            setIdLocCli("");
+            setDesLocCli("");
+            setIdFiscal("");
+            setDesFiscal("");
             setShowClienteLookup(false);
           }}
         />
@@ -2730,7 +2796,11 @@ export function GuiaRemisionList() {
     const initialY = (isNewForm ? 18 : 32) + offset;
     const x = Math.max(0, Math.min(initialX, Math.max(0, maxW - w)));
     const y = Math.max(0, Math.min(initialY, Math.max(0, maxH - h)));
-    const resolvedIdLocacion = defaultIdLocacion ?? inferIdLocacionFromSession() ?? 1;
+    const resolvedIdLocacion = defaultIdLocacion ?? inferIdLocacionFromSession() ?? 0;
+    if (!idGuia && (!resolvedIdLocacion || resolvedIdLocacion <= 0)) {
+      toast.error("No se encontró una ubicación activa para la nueva guía");
+      return;
+    }
     setFormWindows((prev) => [
       ...prev,
       {
@@ -2750,12 +2820,12 @@ export function GuiaRemisionList() {
 
   const handleNuevo = () => {
     setSelected(null);
-    openFormWindow(undefined, false, inferIdLocacionFromSession() ?? 1);
+    openFormWindow(undefined, false, inferIdLocacionFromSession());
   };
 
   const handleMostrar = (row: GuiaRemisionRow, detailOnly = true) => {
     setSelected(row);
-    openFormWindow(String(row.id), detailOnly, Number(row.id_locacion) || inferIdLocacionFromSession() || 1);
+    openFormWindow(String(row.id), detailOnly, Number(row.id_locacion) || inferIdLocacionFromSession());
   };
 
   const handleEliminar = (row: GuiaRemisionRow, detailOnly = true) => {

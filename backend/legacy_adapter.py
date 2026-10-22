@@ -466,7 +466,7 @@ def fetch_tipo_cambio_legacy(moneda: str = "US", fecha: str | None = None, compa
                 # Prefer the public SUNAT API when the adapter returns identical
                 # compra/venta so the desktop matches the original VB.NET client.
                 try:
-                    if float(compra) == float(venta):
+                    if moneda == "US" and float(compra) == float(venta):
                         # Try public SUNAT API before accepting adapter's identical value
                         try:
                             fecha_iso = datetime.strptime(fecha, "%d/%m/%Y").strftime("%Y-%m-%d")
@@ -493,6 +493,9 @@ def fetch_tipo_cambio_legacy(moneda: str = "US", fecha: str | None = None, compa
                 return float(compra), float(venta)
 
     logger.warning("No real exchange rate returned by the legacy SIGECOM adapter for %s on %s.", moneda, fecha)
+
+    if moneda != "US":
+        return None
 
     # Fallback: try public SUNAT API (used by the original VB.NET client)
     try:
@@ -521,6 +524,25 @@ def fetch_tipo_cambio_legacy(moneda: str = "US", fecha: str | None = None, compa
         pass
 
     return None
+
+
+def fetch_tipo_cambio_guia_legacy(moneda: str, fecha: str) -> float | None:
+    """Fetch the exact exchange rate used by frmGuiaRemision.MostrarTipoCambio."""
+    if not LEGACY_ADAPTER_BASE_URL:
+        return None
+
+    query = urlencode({"moneda": moneda, "fecha": fecha})
+    payload = _read_json(
+        build_legacy_url(f"/api/v1/tipo-cambio-guia?{query}"),
+        timeout=8,
+    )
+    if not isinstance(payload, dict):
+        raise ValueError("El servicio SIGECOM devolvió una respuesta de tipo de cambio no válida.")
+
+    value = _coerce_float_value(payload.get("tipo_cambio"))
+    if value is None or value <= 0:
+        raise ValueError("SIGECOM devolvió un tipo de cambio no válido para la guía.")
+    return value
 
 
 def validate_user(username: str, password: str, company_code: str | None = None) -> dict | None:
@@ -963,6 +985,65 @@ def list_guias_legacy(
             raise
 
 
+def _normalize_guia_detalle(detalle: dict, id_guia: int, item_index: int) -> dict:
+    """Normalize a WCF detail row to the shape used by the React form."""
+    row = {str(key).lower(): value for key, value in detalle.items()}
+    cantidad = _normalize_decimal(_lookup_value(row, "can_mer", "cantidad"))
+    precio = _normalize_decimal(_lookup_value(row, "pre_mer", "precio"))
+    descuento = _normalize_decimal(_lookup_value(row, "dsc_mer", "descuento"))
+    total = _normalize_decimal(_lookup_value(row, "total_fila", "total"))
+
+    if cantidad is None or precio is None or descuento is None:
+        raise ValueError(f"El detalle {item_index} de la guía {id_guia} no contiene cantidad, precio o descuento válido.")
+    if total is None:
+        total = round(cantidad * precio - cantidad * descuento, 4)
+
+    detalle_id = _normalize_id(_lookup_value(row, "id", "id_guia_det", "id_detalle"))
+    if detalle_id is None:
+        raise ValueError(f"El detalle {item_index} de la guía {id_guia} no contiene IdGuiaDet.")
+    codigo = _lookup_value(row, "cod_mer", "codigo")
+    if not codigo:
+        raise ValueError(f"El detalle {item_index} de la guía {id_guia} no contiene código de mercadería.")
+
+    return {
+        "id": detalle_id,
+        "id_guia": _normalize_id(_lookup_value(row, "id_guia")) or id_guia,
+        "item": _normalize_id(_lookup_value(row, "item")) or item_index,
+        "cod_mer": str(codigo),
+        "des_mer": str(_lookup_value(row, "des_mer", "descripcion") or ""),
+        "cod_uni_med": str(_lookup_value(row, "cod_uni_med") or ""),
+        "can_mer": cantidad,
+        "pre_mer": precio,
+        "dsc_mer": descuento,
+        "total_fila": total,
+        "total_suger": _normalize_decimal(_lookup_value(row, "total_suger", "total_fila_sug")),
+        "id_sugerido_cab": _normalize_id(_lookup_value(row, "id_sugerido_cab")),
+        "regalo": _normalize_boolean(_lookup_value(row, "regalo")),
+        "no_core": _normalize_boolean(_lookup_value(row, "no_core")),
+    }
+
+
+def _get_guia_with_details(guia: dict) -> dict:
+    normalized = _normalize_guia(guia)
+    raw_id = normalized.get("id")
+    try:
+        id_guia = int(raw_id)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("SIGECOM no devolvió un IdGuia numérico para consultar sus detalles.") from exc
+
+    payload = _read_json(build_legacy_url(f"/api/v1/guias-remision/{id_guia}/detalles"))
+    if not isinstance(payload, list):
+        raise ValueError(f"El servicio de detalles de la guía {id_guia} devolvió una respuesta no válida.")
+    if any(not isinstance(detalle, dict) for detalle in payload):
+        raise ValueError(f"El servicio de detalles de la guía {id_guia} devolvió filas no válidas.")
+
+    normalized["detalles"] = [
+        _normalize_guia_detalle(detalle, id_guia, index)
+        for index, detalle in enumerate(payload, start=1)
+    ]
+    return normalized
+
+
 def get_guia_legacy(id_guia: int | str):
     """Fetch a single guía by id.
 
@@ -985,9 +1066,9 @@ def get_guia_legacy(id_guia: int | str):
                         and rec.get("id_serie_doc") == lookup["id_serie_doc"]
                         and rec.get("num_doc") == lookup["num_doc"]
                     ):
-                        return rec
-            return _normalize_guia(data[0] if data else {})
-        return _normalize_guia(data)
+                        return _get_guia_with_details(row)
+            return _get_guia_with_details(data[0] if data else {})
+        return _get_guia_with_details(data)
     except Exception as e:
         fallback_error = e
         logger.error(f"Failed to get guía {id_guia} from legacy adapter: {e}")
@@ -1002,7 +1083,7 @@ def get_guia_legacy(id_guia: int | str):
                     and rec.get("id_serie_doc") == lookup["id_serie_doc"]
                     and rec.get("num_doc") == lookup["num_doc"]
                 ):
-                    return _normalize_guia(rec)
+                    return _get_guia_with_details(rec)
     except Exception as snapshot_error:
         logger.error(f"Failed to resolve composite guía {id_guia} from snapshot: {snapshot_error}")
 
@@ -1041,10 +1122,27 @@ def _normalize_guia(guia: dict) -> dict:
     if not guia:
         return {}
 
+    cliente = _lookup_value(guia, "cliente", "Cliente") or {}
+    locacion_cliente = _lookup_value(guia, "locacion_cliente", "LocacionCliente") or {}
+    direccion_fiscal = _lookup_value(guia, "direccion_fiscal", "DireccionFiscal") or {}
+    persona = _lookup_value(guia, "persona", "Persona") or {}
+    cotizacion_data = _lookup_value(guia, "cotizacion", "Cotizacion") or {}
+    locacion = _lookup_value(guia, "locacion", "Locacion") or {}
+    motivo_data = _lookup_value(guia, "motivos", "Motivos", "motivo", "Motivo") or {}
+    modo_data = _lookup_value(guia, "modo_traslado", "ModoTraslado") or {}
+    unidad_peso_data = _lookup_value(guia, "unidad_medida_peso", "UnidadMedidaPeso") or {}
+    moneda_data = _lookup_value(guia, "moneda", "Moneda") or {}
+    orden_compra = _lookup_value(guia, "orden_compra", "OrdenCompra") or {}
+
     num_fac_value = _lookup_value(guia, "num_fac", "NumFac", "Referencia", "referencia", "Ref", "ref", "num_job", "NumJob")
-    num_cot_value = _lookup_value(guia, "num_cot", "NumCot", "Cotizacion", "cotizacion", "Cotiz", "cotiz", "id_cotizacion", "IdCotizacion")
+    cotizacion_id_value = _lookup_value(
+        guia, "id_cotizacion", "IdCotizacion"
+    ) or _lookup_value(cotizacion_data, "id_cotizacion", "IdCotizacion")
+    num_cot_value = _lookup_value(guia, "num_cot", "NumCot") or _lookup_value(cotizacion_data, "num_cot", "NumCot")
+    if not num_cot_value or _normalize_decimal(num_cot_value) == 0:
+        num_cot_value = cotizacion_id_value
     num_job_value = _lookup_value(guia, "num_job", "NumJob", "NumFac", "num_fac", "Referencia", "referencia", "Ref", "ref")
-    id_cotizacion_value = _lookup_value(guia, "id_cotizacion", "IdCotizacion", "NumCot", "num_cot", "Cotizacion", "cotizacion", "Cotiz", "cotiz")
+    id_cotizacion_value = cotizacion_id_value or num_cot_value
 
     num_job = str(num_job_value or num_fac_value or "")
     num_fac = str(num_fac_value or "")
@@ -1055,15 +1153,31 @@ def _normalize_guia(guia: dict) -> dict:
     tiene_notas = _normalize_boolean(tiene_notas_raw) if tiene_notas_raw is not None else bool((observacion_value or "").strip())
 
     normalized = {
-        "id": _normalize_id(_lookup_value(guia, "id", "Id")),
-        "id_locacion": _normalize_id(_lookup_value(guia, "id_locacion", "IdLocacion")),
+        "id": _normalize_id(_lookup_value(guia, "id", "Id", "IdGuia")),
+        "id_locacion": _normalize_id(
+            _lookup_value(guia, "id_locacion", "IdLocacion")
+            or _lookup_value(locacion, "id_locacion", "IdLocacion")
+        ),
         "fec_doc": _normalize_datetime(_lookup_value(guia, "fec_doc", "FecDoc")),
         "id_serie_doc": _normalize_id(_lookup_value(guia, "id_serie_doc", "IdSerieDoc")),
         "num_doc": _normalize_id(_lookup_value(guia, "num_doc", "NumDoc")),
-        "id_cliente": _normalize_id(_lookup_value(guia, "id_cliente", "IdCliente")),
-        "id_loc_cli": _normalize_id(_lookup_value(guia, "id_loc_cli", "IdLocCli")),
-        "id_fiscal": _normalize_id(_lookup_value(guia, "id_fiscal", "IdFiscal")),
-        "cod_mot": str(_lookup_value(guia, "cod_mot", "CodMot") or ""),
+        "id_cliente": _normalize_id(
+            _lookup_value(guia, "id_cliente", "IdCliente")
+            or _lookup_value(cliente, "id_cliente", "IdCliente")
+        ),
+        "id_loc_cli": _normalize_id(
+            _lookup_value(guia, "id_loc_cli", "IdLocCli")
+            or _lookup_value(locacion_cliente, "id_loc_cli", "IdLocCli")
+        ),
+        "id_fiscal": _normalize_id(
+            _lookup_value(guia, "id_fiscal", "IdFiscal")
+            or _lookup_value(direccion_fiscal, "id_fiscal", "IdFiscal")
+        ),
+        "cod_mot": str(
+            _lookup_value(guia, "cod_mot", "CodMot")
+            or _lookup_value(motivo_data, "cod_mot", "CodMot")
+            or ""
+        ),
         "num_job": num_job,
         "num_fac": num_fac,
         "num_cot": num_cot,
@@ -1071,8 +1185,12 @@ def _normalize_guia(guia: dict) -> dict:
         "cotizacion": id_cotizacion,
         "pto_partida": str(_lookup_value(guia, "pto_partida", "PtoPartida") or ""),
         "pto_llegada": str(_lookup_value(guia, "pto_llegada", "PtoLlegada") or ""),
-        "cod_mon": str(_lookup_value(guia, "cod_mon", "CodMon") or "US"),
-        "igv": _normalize_decimal(_lookup_value(guia, "igv", "IGV")),
+        "cod_mon": str(
+            _lookup_value(guia, "cod_mon", "CodMon")
+            or _lookup_value(moneda_data, "cod_mon", "CodMon")
+            or "US"
+        ),
+        "igv": _normalize_decimal(_lookup_value(guia, "igv", "Igv", "IGV")),
         "tip_cambio": _normalize_decimal(_lookup_value(guia, "tip_cambio", "TipCambio")),
         "tot_flete": _normalize_decimal(_lookup_value(guia, "tot_flete", "TotFlete")),
         "tot_embarque": _normalize_decimal(_lookup_value(guia, "tot_embarque", "TotEmbarque")),
@@ -1081,19 +1199,79 @@ def _normalize_guia(guia: dict) -> dict:
         "tot_venta": _normalize_decimal(_lookup_value(guia, "tot_venta", "TotVenta")),
         "tot_igv": _normalize_decimal(_lookup_value(guia, "tot_igv", "TotIGV")),
         "tot_neto": _normalize_decimal(_lookup_value(guia, "tot_neto", "TotNeto")),
-        "cliente_nombre": str(_lookup_value(guia, "cliente_nombre", "DesCli", "ClienteNombre") or ""),
+        "cliente_nombre": str(
+            _lookup_value(guia, "cliente_nombre", "DesCli", "ClienteNombre")
+            or _lookup_value(cliente, "des_cli", "DesCli")
+            or ""
+        ),
         "estado_sunat": str(_lookup_value(guia, "estado_sunat", "EstadoSunat") or ""),
         "cod_serie": str(_lookup_value(guia, "cod_serie", "CodSerie") or ""),
         "tot_neto_sug": _normalize_decimal(_lookup_value(guia, "tot_neto_sug", "TotNetoSug", "TotNeto")),
-        "num_orden": str(_lookup_value(guia, "num_orden", "NumOrden", "Orden", "orden") or ""),
+        "num_orden": str(
+            _lookup_value(guia, "num_orden", "NumOrden", "Orden", "orden")
+            or _lookup_value(orden_compra, "num_orden", "NumOrden")
+            or ""
+        ),
         "id_cotizacion": id_cotizacion,
         "observacion": str(observacion_value or ""),
         "tiene_notas": tiene_notas,
         "peso_bruto": _normalize_decimal(_lookup_value(guia, "peso_bruto", "PesoBruto")),
-        "cod_uni_med_peso": str(_lookup_value(guia, "cod_uni_med_peso", "CodUniMedPeso") or "KGM"),
+        "cod_uni_med_peso": str(
+            _lookup_value(guia, "cod_uni_med_peso", "CodUniMedPeso")
+            or _lookup_value(unidad_peso_data, "cod_uni_med_peso", "CodUniMedPeso")
+            or "KGM"
+        ),
         "numero_bultos": _normalize_id(_lookup_value(guia, "numero_bultos", "NumeroBultos")),
         "fec_traslado": _normalize_datetime(_lookup_value(guia, "fec_traslado", "FecTraslado")),
-        "cod_modo": str(_lookup_value(guia, "cod_modo", "CodModo") or ""),
+        "cod_modo": str(
+            _lookup_value(guia, "cod_modo", "CodModo")
+            or _lookup_value(modo_data, "cod_modo", "CodModo")
+            or ""
+        ),
+        "LocacionCliente": {
+            "IdLocCli": _normalize_id(_lookup_value(locacion_cliente, "id_loc_cli", "IdLocCli")),
+            "Nombre": str(_lookup_value(locacion_cliente, "nombre", "Nombre") or ""),
+            "DirCli": str(_lookup_value(locacion_cliente, "dir_cli", "DirCli") or ""),
+        },
+        "DireccionFiscal": {
+            "IdFiscal": _normalize_id(_lookup_value(direccion_fiscal, "id_fiscal", "IdFiscal")),
+            "Direccion": str(_lookup_value(direccion_fiscal, "direccion", "Direccion") or ""),
+        },
+        "Persona": {
+            "ApeNom": str(_lookup_value(persona, "ape_nom", "ApeNom") or ""),
+        },
+        "Locacion": {
+            "IdLocacion": _normalize_id(_lookup_value(locacion, "id_locacion", "IdLocacion")),
+            "PuntoPartida": str(_lookup_value(locacion, "punto_partida", "PuntoPartida") or ""),
+            "Oficina": {
+                "DesOfi": str(
+                    _lookup_value(
+                        _lookup_value(locacion, "oficina", "Oficina") or {},
+                        "des_ofi",
+                        "DesOfi",
+                    )
+                    or ""
+                ),
+            },
+        },
+        "Almacen": {
+            "DesAlm": str(
+                _lookup_value(
+                    _lookup_value(locacion, "almacen", "Almacen") or {},
+                    "des_alm",
+                    "DesAlm",
+                )
+                or ""
+            ),
+        },
+        "Motivos": {
+            "CodMot": _normalize_id(_lookup_value(motivo_data, "cod_mot", "CodMot")),
+            "DesMot": str(_lookup_value(motivo_data, "des_mot", "DesMot") or ""),
+        },
+        "Cotizacion": {
+            "IdCotizacion": _normalize_id(cotizacion_id_value),
+            "NumCot": _normalize_id(num_cot_value),
+        },
         "estado": str(_lookup_value(guia, "estado", "Estado") or ""),
         "created_at": _normalize_datetime(_lookup_value(guia, "created_at", "CreatedAt") or _lookup_value(guia, "fec_doc", "FecDoc")),
         "updated_at": _normalize_datetime(_lookup_value(guia, "updated_at", "UpdatedAt") or _lookup_value(guia, "fec_doc", "FecDoc")),

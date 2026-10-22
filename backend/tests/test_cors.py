@@ -101,7 +101,7 @@ def test_exchange_rate_lookup_uses_selected_date_and_company(monkeypatch):
 
     response = TestClient(app).get(
         "/api/v1/auth/tipo-cambio",
-        params={"fecha": "2026-10-12", "empresa": "08"},
+        params={"fecha": "2026-10-12", "empresa": "08", "moneda": "EU"},
     )
 
     assert response.status_code == 200
@@ -111,7 +111,7 @@ def test_exchange_rate_lookup_uses_selected_date_and_company(monkeypatch):
         "tipo_cambio_compra": 3.448,
         "tipo_cambio_venta": 3.457,
     }
-    assert requested == {"moneda": "US", "fecha": "12/10/2026", "company_code": "08"}
+    assert requested == {"moneda": "EU", "fecha": "12/10/2026", "company_code": "08"}
 
 
 def test_exchange_rate_lookup_uses_the_latest_prior_available_date(monkeypatch):

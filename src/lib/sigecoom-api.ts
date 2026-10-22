@@ -32,7 +32,7 @@ export type SigecoomSale = {
   total: number;
   extra_data?: Record<string, any>;
   status: string;
-  created_at: string;
+  created_at?: string;
   updated_at?: string;
 };
 
@@ -411,8 +411,9 @@ export async function syncSessionTipoCambio(): Promise<number | null> {
 export async function fetchTipoCambio(
   fecha: string,
   empresa?: string,
+  moneda = "US",
 ): Promise<Pick<SessionInfo, "tipo_cambio_compra" | "tipo_cambio_venta">> {
-  const params = new URLSearchParams({ fecha });
+  const params = new URLSearchParams({ fecha, moneda });
   if (empresa) params.set("empresa", empresa);
   const url = `${API_BASE_URL}${API_V1_PREFIX}/auth/tipo-cambio?${params.toString()}`;
   const response = await fetch(url);
@@ -426,6 +427,22 @@ export async function fetchTipoCambio(
     throw new Error("El servicio devolvió un tipo de cambio no válido.");
   }
   return { tipo_cambio_compra: compra, tipo_cambio_venta: venta };
+}
+
+export async function fetchTipoCambioGuia(fecha: string, moneda: string): Promise<number> {
+  const params = new URLSearchParams({ fecha, moneda });
+  const response = await fetch(`${API_BASE_URL}${API_V1_PREFIX}/auth/tipo-cambio-guia?${params.toString()}`);
+  if (!response.ok) {
+    const errorBody = await response.json().catch(() => null) as { detail?: string } | null;
+    throw new Error(errorBody?.detail ?? "No se pudo consultar el tipo de cambio de la guía.");
+  }
+
+  const payload = await response.json();
+  const value = Number(payload.tipo_cambio);
+  if (!Number.isFinite(value) || value <= 0) {
+    throw new Error("SIGECOM devolvió un tipo de cambio no válido para la guía.");
+  }
+  return value;
 }
 
 export async function login(
@@ -1859,7 +1876,7 @@ export type GuiaRemisionDet = {
   total_fila: number;
   regalo: boolean;
   no_core: boolean;
-  created_at: string;
+  created_at?: string;
   updated_at?: string;
 };
 
@@ -2084,7 +2101,10 @@ export async function fetchGuiaRemision(id: number | string): Promise<GuiaRemisi
     // ignore
   }
   const response = await apiFetch(url, { headers });
-  if (!response.ok) throw new Error("Guía no encontrada");
+  if (!response.ok) {
+    const errorBody = await response.json().catch(() => null) as { detail?: string; title?: string } | null;
+    throw new Error(errorBody?.detail ?? errorBody?.title ?? "No se pudo obtener la guía desde el servidor.");
+  }
   return response.json();
 }
 
