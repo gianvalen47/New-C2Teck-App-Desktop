@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("wcfprobe")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95b3eab35184c3494c343c7c26347f7fd3d73e07")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1ddbdc124ff06dc17373b643fb5a1db3805205a9")]
 [assembly: System.Reflection.AssemblyProductAttribute("wcfprobe")]
 [assembly: System.Reflection.AssemblyTitleAttribute("wcfprobe")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
