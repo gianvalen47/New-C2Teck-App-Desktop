@@ -200,6 +200,23 @@ function getInitialSize(label: string): WindowSize {
     "Cuentas Corrientes": { w: 650, h: 570 },
     "Reporte de Cuentas Corrientes": { w: 650, h: 570 },
     "Reporte Cuentas Corrientes": { w: 650, h: 570 },
+    "Ctas Ctes": { w: 560, h: 450 },
+    "Reporte de Cuentas Corrientes Contabilidad": { w: 560, h: 450 },
+    "Ctas Ctes Pendiente": { w: 560, h: 600 },
+    "Reporte Cuentas Corrientes Pendientes": { w: 560, h: 600 },
+    "Reporte de Cuentas Corrientes Pendientes": { w: 560, h: 600 },
+    "Reporte Reembolso": { w: 550, h: 360 },
+    "Reporte de Reembolso x Tipo de Gasto": { w: 550, h: 360 },
+    "Reembolso x Tipo de Gasto": { w: 550, h: 360 },
+    "Report Ctas X Pagar": { w: 470, h: 530 },
+    "Reporte de Cuentas x Pagar Contable": { w: 470, h: 530 },
+    "Reporte de Cuentas por Pagar Contable": { w: 470, h: 530 },
+    "Ctas x Pagar Contable": { w: 470, h: 530 },
+    "ReporteVencimiento": { w: 550, h: 380 },
+    "Reporte de Vencimientos de Cuentas x Pagar Contable": { w: 550, h: 380 },
+    "Reporte de Vencimientos de Cuentas por Pagar Contable": { w: 550, h: 380 },
+    "Reporte Vencimientos Cuentas por Pagar Contable": { w: 550, h: 380 },
+    "Indicadores de Usuario": { w: 680, h: 550 },
     "Documentos Emitidos": { w: 580, h: 470 },
     "Reporte Doc Emi": { w: 580, h: 470 },
     "Reporte de Documentos Emitidos": { w: 580, h: 470 },
@@ -221,6 +238,9 @@ function getInitialSize(label: string): WindowSize {
     "Reporte Gerencial de Créditos y Cobranzas": { w: 510, h: 410 },
     "Estados Financieros": { w: 620, h: 390 },
     "Reporte Estado Financiero Gerencia": { w: 620, h: 390 },
+    "Estado Financiero": { w: 560, h: 380 },
+    "Reporte Balances": { w: 560, h: 380 },
+    "Reporte de Balances": { w: 560, h: 380 },
     "GMROI": { w: 570, h: 380 },
     "Reporte de GMROI": { w: 570, h: 380 },
     "Importaciones": { w: 380, h: 470 },
@@ -236,6 +256,9 @@ function getInitialSize(label: string): WindowSize {
     "Resumen General": { w: 410, h: 390 },
     "Reporte de Resumen General": { w: 410, h: 390 },
     "Resumen General Costos Report": { w: 410, h: 390 },
+    "Sobregiro": { w: 340, h: 240 },
+    "Reporte de Sobregiro": { w: 340, h: 240 },
+    "Sobregiro Costos Report": { w: 340, h: 240 },
     "Stock Valorizado": { w: 570, h: 470 },
     "Reporte de Stock Valorizado": { w: 570, h: 470 },
     "Stock Valorizado Costos Report": { w: 570, h: 470 },
@@ -287,7 +310,20 @@ function getInitialSize(label: string): WindowSize {
 
     // Taller
     "Orden de Trabajo": { w: 920, h: 700 },
-    "OT": { w: 920, h: 700 },
+    "OT": { w: 680, h: 560 },
+    "Reporte de OT": { w: 680, h: 560 },
+    "Reporte OT": { w: 680, h: 560 },
+    "Reporte Solicitud OT": { w: 620, h: 440 },
+    "Solicitud de OT": { w: 620, h: 440 },
+    "Reporte de Solicitud de OT": { w: 620, h: 440 },
+    "Solicitud Garantia": { w: 560, h: 480 },
+    "Solicitud Garantía": { w: 560, h: 480 },
+    "Reporte Solicitud Garantía": { w: 560, h: 480 },
+    "Reporte de Solicitud de Garantía": { w: 560, h: 480 },
+    "Reporte Solicitud Gastos": { w: 780, h: 480 },
+    "Solicitud Gastos": { w: 780, h: 480 },
+    "Reporte de Solicitud de Gastos": { w: 780, h: 480 },
+    "Reporte de Solicitud de Gasto": { w: 780, h: 480 },
 
     // Personal
     "Marcaciones": { w: 880, h: 650 },
@@ -296,8 +332,13 @@ function getInitialSize(label: string): WindowSize {
 
     // CRM
     "Oportunidad": { w: 920, h: 700 },
-    "Oportunidad Negocio": { w: 920, h: 700 },
+    "Oportunidad Negocio": { w: 470, h: 530 },
+    "Reporte de Oportunidad de Negocio": { w: 470, h: 530 },
+    "Reporte Oportunidad Negocio": { w: 470, h: 530 },
     "Visita Clientes": { w: 880, h: 680 },
+    "Reporte Visita Clientes": { w: 560, h: 350 },
+    "Reporte de Visita de Cliente": { w: 560, h: 350 },
+    "Reporte Visita de Cliente": { w: 560, h: 350 },
   };
 
   // Buscar tamaño específico
@@ -350,7 +391,9 @@ const WINDOW_TITLE_OVERRIDES: Record<string, string> = {
   "Boleta": "BOLETAS DE VENTA",
   "Cotizaciones": "COTIZACIONES",
   "Orden de Trabajo": "ORDEN DE TRABAJO",
-  "OT": "ORDEN DE TRABAJO",
+  "OT": "REPORTE DE OT",
+  "Reporte de OT": "REPORTE DE OT",
+  "Reporte OT": "REPORTE DE OT",
 };
 
 const WINDOW_TITLE_OVERRIDES_NORMALIZED: Record<string, string> = Object.fromEntries(

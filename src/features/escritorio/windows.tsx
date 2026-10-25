@@ -238,6 +238,7 @@ import { KardexCostosReport } from "./windows/Costos/Reportes/Kardex";
 import { CondensadosCostosReport } from "./windows/Costos/Reportes/Condensados";
 import { MotoresCostosReport } from "./windows/Costos/Reportes/Motores";
 import { ResumenGeneralCostosReport } from "./windows/Costos/Reportes/ResumenGeneral";
+import { SobregiroCostosReport } from "./windows/Costos/Reportes/Sobregiro";
 import { CerrarMesCostosWindow } from "./windows/Contabilidad/Costos/Procesos/CerrarMes";
 import { ConsolidadoCostosWindow } from "./windows/Contabilidad/Costos/Procesos/Consolidado";
 import { GenerarPeriodoCostosWindow } from "./windows/Contabilidad/Costos/Procesos/GenerarPeriodo";
@@ -518,6 +519,7 @@ import { AtenderSolicitud, AtenderSolicitudList } from "./windows/Administracion
 
 // Reportes
 import { IndicadoresEncuesta, IndicadoresEncuestaWindow } from "./windows/Administracion/Reportes/Indicadores";
+import { IndicadoresUsuario } from "./windows/Administracion/Reportes/IndicadoresUsuario";
 
 // Encuestas
 import { EncuestaWin, EncuestaWinList } from "./windows/Administracion/Encuestas/Encuesta";
@@ -866,6 +868,7 @@ addAliases(
   ["Reporte de Resumen General", "Resumen General Costos Report"],
   ResumenGeneralCostosReport,
 );
+addAliases("Sobregiro", ["Reporte de Sobregiro", "Sobregiro Costos Report"], SobregiroCostosReport);
 
 add("Cerrar Mes Costos Window", CerrarMesCostosWindow);
 add("Consolidado Costos Window", ConsolidadoCostosWindow);
@@ -926,7 +929,7 @@ add("Oficina Usuario", OficinaUsuario);
 
 add("Consultas Gastos Reales", ConsultasGastosReales);
 add("Consultas Marcaciones", ConsultasMarcaciones);
-add("OT", OT);
+addAliases("OT", ["Reporte de OT", "Reporte OT"], OT);
 
 add("Actividades", Actividades);
 add("Plantilla", Plantilla);
@@ -959,7 +962,16 @@ add("Movimiento Repuestos", MovimientoRepuestos);
 add("Reporte OT", ReporteOT);
 add("Pendiente Facturacion", PendienteFacturacion);
 add("Solicitud Garantia", SolicitudGarantia);
-add("Reporte Solicitud OT", ReporteSolicitudOT);
+addAliases(
+  "Reporte Solicitud Garantía",
+  ["Solicitud Garantía", "Reporte de Solicitud de Garantía"],
+  SolicitudGarantia,
+);
+addAliases(
+  "Reporte Solicitud OT",
+  ["Solicitud de OT", "Reporte de Solicitud de OT"],
+  ReporteSolicitudOT,
+);
 add("Tiempo Reparacion", TiempoReparacion);
 
 // --- Compras ---
@@ -976,7 +988,11 @@ add("Tarifa Taxi Destino Window", TarifaTaxiDestinoWindow);
 
 add("Compra Y O Gastos", CompraYOGastos);
 add("Reporte Pagos Cuentas X Pagar", ReportePagosCuentasXPagar);
-add("Reporte Solicitud Gastos", ReporteSolicitudGastos);
+addAliases(
+  "Reporte Solicitud Gastos",
+  ["Solicitud Gastos", "Reporte de Solicitud de Gastos", "Reporte de Solicitud de Gasto"],
+  ReporteSolicitudGastos,
+);
 add("Reporte Ctas X Pagar Unidad", ReporteCtasXPagarUnidad);
 
 // --- Personal ---
@@ -1041,13 +1057,41 @@ add("Registro De Compras", RegistroDeCompras);
 
 add("Cheques Girados", ChequesGirados);
 add("Ctas Ctes", CtasCtes);
-add("Ctas Ctes Pendiente", CtasCtesPendiente);
-add("Report Ctas X Pagar", ReportCtasXPagar);
-add("Estado Financiero", EstadoFinanciero);
+addAliases(
+  "Ctas Ctes Pendiente",
+  ["Reporte Cuentas Corrientes Pendientes", "Reporte de Cuentas Corrientes Pendientes"],
+  CtasCtesPendiente,
+);
+addAliases(
+  "Report Ctas X Pagar",
+  [
+    "Reporte de Cuentas x Pagar Contable",
+    "Reporte de Cuentas por Pagar Contable",
+    "Ctas x Pagar Contable",
+  ],
+  ReportCtasXPagar,
+);
+addAliases(
+  "Estado Financiero",
+  ["Reporte Balances", "Reporte de Balances"],
+  EstadoFinanciero,
+);
 add("Report Auxiliar", ReportAuxiliar);
 add("Report Provisionales", ReportProvisionales);
-add("Reporte Reembolso", ReporteReembolso);
-add("ReporteVencimiento", ReporteVencimiento);
+addAliases(
+  "Reporte Reembolso",
+  ["Reporte de Reembolso x Tipo de Gasto", "Reembolso x Tipo de Gasto"],
+  ReporteReembolso,
+);
+addAliases(
+  "ReporteVencimiento",
+  [
+    "Reporte de Vencimientos de Cuentas x Pagar Contable",
+    "Reporte de Vencimientos de Cuentas por Pagar Contable",
+    "Reporte Vencimientos Cuentas por Pagar Contable",
+  ],
+  ReporteVencimiento,
+);
 
 // --- Telefonía ---
 add("Telefonia Inv", TelefoniaInv);
@@ -1062,8 +1106,16 @@ add("Ocurrencias", Ocurrencias);
 add("Oportunidad Negocio Window", OportunidadNegocioWindow);
 add("CRMTarjetaCliente", CRMTarjetaCliente);
 add("Visita Clientes", VisitaClientes);
-add("Oportunidad Negocio", OportunidadNegocio);
-add("Reporte Visita Clientes", ReporteVisitaClientes);
+addAliases(
+  "Oportunidad Negocio",
+  ["Reporte de Oportunidad de Negocio", "Reporte Oportunidad Negocio"],
+  OportunidadNegocio,
+);
+addAliases(
+  "Reporte Visita Clientes",
+  ["Reporte de Visita de Cliente", "Reporte Visita de Cliente"],
+  ReporteVisitaClientes,
+);
 
 // --- Tablas ---
 add("Categorias Window", CategoriasWindow);
@@ -1101,6 +1153,7 @@ add("Perfiles", Perfiles);
 add("Sesiones", Sesiones);
 add("Atender Solicitud", AtenderSolicitud);
 add("Indicadores Encuesta", IndicadoresEncuesta);
+add("Indicadores de Usuario", IndicadoresUsuario);
 add("Encuesta Win", EncuestaWin);
 add("Resultado", Resultado);
 add("Computadora Asignar", ComputadoraAsignar);
@@ -1251,6 +1304,41 @@ const REGISTRY: Record<string, (label: string) => ReactNode> = {
   "Reporte Gerencial de Créditos y Cobranzas": () => <GerenciaCreditosWindow />,
   "Estados Financieros": () => <EstadosFinancierosWindow />,
   "Reporte Estado Financiero Gerencia": () => <EstadosFinancierosWindow />,
+  "OT": () => <OT />,
+  "Reporte de OT": () => <OT />,
+  "Reporte OT": () => <OT />,
+  "Reporte Solicitud OT": () => <ReporteSolicitudOT />,
+  "Solicitud de OT": () => <ReporteSolicitudOT />,
+  "Reporte de Solicitud de OT": () => <ReporteSolicitudOT />,
+  "Reporte Solicitud Gastos": () => <ReporteSolicitudGastos />,
+  "Solicitud Gastos": () => <ReporteSolicitudGastos />,
+  "Reporte de Solicitud de Gastos": () => <ReporteSolicitudGastos />,
+  "Reporte de Solicitud de Gasto": () => <ReporteSolicitudGastos />,
+  "Estado Financiero": () => <EstadoFinanciero />,
+  "Reporte Balances": () => <EstadoFinanciero />,
+  "Reporte de Balances": () => <EstadoFinanciero />,
+  "Ctas Ctes Pendiente": () => <CtasCtesPendiente />,
+  "Reporte Cuentas Corrientes Pendientes": () => <CtasCtesPendiente />,
+  "Reporte de Cuentas Corrientes Pendientes": () => <CtasCtesPendiente />,
+  "Ctas Ctes": () => <CtasCtes />,
+  "Reporte de Cuentas Corrientes Contabilidad": () => <CtasCtes />,
+  "Report Ctas X Pagar": () => <ReportCtasXPagar />,
+  "Reporte de Cuentas x Pagar Contable": () => <ReportCtasXPagar />,
+  "Reporte de Cuentas por Pagar Contable": () => <ReportCtasXPagar />,
+  "Ctas x Pagar Contable": () => <ReportCtasXPagar />,
+  "Reporte Visita Clientes": () => <ReporteVisitaClientes />,
+  "Reporte de Visita de Cliente": () => <ReporteVisitaClientes />,
+  "Reporte Visita de Cliente": () => <ReporteVisitaClientes />,
+  "Oportunidad Negocio": () => <OportunidadNegocio />,
+  "Reporte de Oportunidad de Negocio": () => <OportunidadNegocio />,
+  "Reporte Oportunidad Negocio": () => <OportunidadNegocio />,
+  "Reporte Reembolso": () => <ReporteReembolso />,
+  "Reporte de Reembolso x Tipo de Gasto": () => <ReporteReembolso />,
+  "Reembolso x Tipo de Gasto": () => <ReporteReembolso />,
+  "Solicitud Garantia": () => <SolicitudGarantia />,
+  "Solicitud Garantía": () => <SolicitudGarantia />,
+  "Reporte Solicitud Garantía": () => <SolicitudGarantia />,
+  "Reporte de Solicitud de Garantía": () => <SolicitudGarantia />,
   "Guía Remisión": () => <GuiaRemision />,
   "Guia Remision": () => <GuiaRemision />,
   "Factura": () => <FacturaVentaList />,
@@ -1346,6 +1434,10 @@ const REGISTRY: Record<string, (label: string) => ReactNode> = {
   "Reporte de Pedidos": () => <ReporteOrdenImportacion />,
   "Reporte Orden Importacion": () => <ReporteOrdenImportacion />,
   "Reporte Orden de Importación": () => <ReporteOrdenImportacion />,
+  "ReporteVencimiento": () => <ReporteVencimiento />,
+  "Reporte de Vencimientos de Cuentas x Pagar Contable": () => <ReporteVencimiento />,
+  "Reporte de Vencimientos de Cuentas por Pagar Contable": () => <ReporteVencimiento />,
+  "Reporte Vencimientos Cuentas por Pagar Contable": () => <ReporteVencimiento />,
   "Detalle Vencimientos": () => <Detalle title="Reporte de Vencimientos" />,
   "Reporte de Vencimientos": () => <Detalle title="Reporte de Vencimientos" />,
   "Vencimientos Detalle": () => <Detalle title="Reporte de Vencimientos" />,
@@ -1401,7 +1493,9 @@ const COSTOS_REPORTES = new Set([
 // Reports of Contabilidad
 const CONTABILIDAD_REPORTES = new Set([
   "Reembolsos", "Ctas Ctes", "Mayor Auxiliar", "Cheques Girados",
-  "Libros Oficiales", "Ctas Ctes Pendiente", "Estado Financiero", "Provisionales",
+  "Libros Oficiales", "Ctas Ctes Pendiente", "Reporte Cuentas Corrientes Pendientes", "Reporte de Cuentas Corrientes Pendientes",
+  "Estado Financiero", "Reporte Balances", "Reporte de Balances", "Provisionales",
+  "Report Ctas X Pagar", "Reporte de Cuentas x Pagar Contable", "Reporte de Cuentas por Pagar Contable", "Ctas x Pagar Contable",
 ]);
 
 // Reports of Compras
@@ -1417,6 +1511,8 @@ const GERENCIA_REPORTES = new Set([
 
 const CRM_REPORTES = new Set([
   "Oportunidad Negocio", "Tarjeta Cliente", "Cuota Vendedor", "Ocurrencias", "Visita Clientes",
+  "Reporte de Oportunidad de Negocio", "Reporte Oportunidad Negocio",
+  "Reporte Visita Clientes", "Reporte de Visita de Cliente", "Reporte Visita de Cliente",
 ]);
 
 // Reports of Servicios / Talleres
