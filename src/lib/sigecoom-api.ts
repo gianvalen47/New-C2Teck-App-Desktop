@@ -1996,6 +1996,8 @@ function inferIdLocacionFromSessionCompany(): number | undefined {
     const legacyMap: Record<string, number> = {
       '08': 87, '8': 87,
       '05': 72, '5': 72,
+      '02': 30, '2': 30,
+      '07': 81, '7': 81,
       '30': 30, '31': 31,
       '72': 72, '73': 73, '75': 75,
       '80': 80, '81': 81, '83': 83,
@@ -2083,6 +2085,42 @@ export async function fetchGuiasRemision(params: {
     // If it's not JSON but OK, return empty array as fallback
     return [] as any;
   }
+}
+
+export async function fetchGuiaRemisionNewNumber(
+  idLocacion: number,
+): Promise<{ id_serie_doc: number; num_doc: number }> {
+  const params = new URLSearchParams({ id_locacion: String(idLocacion) });
+  const response = await apiFetch(`${API_BASE_URL}${API_V1_PREFIX}/guias-remision/nuevo?${params}`);
+  const result = await response.json().catch(() => ({})) as {
+    id_serie_doc?: number;
+    num_doc?: number;
+    detail?: string;
+  };
+  if (!response.ok) {
+    throw new Error(result.detail ?? "No se pudo obtener la numeración de la guía.");
+  }
+  if (!Number.isInteger(result.id_serie_doc) || !Number.isInteger(result.num_doc)) {
+    throw new Error("SIGECOM devolvió una serie o número de guía no válido.");
+  }
+  return { id_serie_doc: result.id_serie_doc!, num_doc: result.num_doc! };
+}
+
+export async function fetchGuiaRemisionStartingPoint(idLocacion: number): Promise<string> {
+  const response = await apiFetch(
+    `${API_BASE_URL}${API_V1_PREFIX}/guias-remision/locaciones/${idLocacion}/partida`,
+  );
+  const result = await response.json().catch(() => ({})) as {
+    pto_partida?: string;
+    detail?: string;
+  };
+  if (!response.ok) {
+    throw new Error(result.detail ?? "No se pudo obtener el punto de partida de la locación.");
+  }
+  if (typeof result.pto_partida !== "string") {
+    throw new Error("SIGECOM devolvió un punto de partida no válido.");
+  }
+  return result.pto_partida;
 }
 
 

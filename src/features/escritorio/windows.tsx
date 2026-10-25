@@ -233,6 +233,11 @@ import { CuadrarCierreCostosWindow } from "./windows/Costos/Reportes/CuadrarCier
 import { DiarioAlmacenCostosReport } from "./windows/Costos/Reportes/DiarioDeAlmacen";
 import { StockValorizadoCostosReport } from "./windows/Costos/Reportes/StockValorizado";
 import { GmroiCostosReport } from "./windows/Costos/Reportes/GMROI";
+import { ImportacionesCostosReport } from "./windows/Costos/Reportes/Importaciones";
+import { KardexCostosReport } from "./windows/Costos/Reportes/Kardex";
+import { CondensadosCostosReport } from "./windows/Costos/Reportes/Condensados";
+import { MotoresCostosReport } from "./windows/Costos/Reportes/Motores";
+import { ResumenGeneralCostosReport } from "./windows/Costos/Reportes/ResumenGeneral";
 import { CerrarMesCostosWindow } from "./windows/Contabilidad/Costos/Procesos/CerrarMes";
 import { ConsolidadoCostosWindow } from "./windows/Contabilidad/Costos/Procesos/Consolidado";
 import { GenerarPeriodoCostosWindow } from "./windows/Contabilidad/Costos/Procesos/GenerarPeriodo";
@@ -689,13 +694,41 @@ addAliases(
 add("Calendario", Calendario);
 add("Indicadores Venta Dialog", IndicadoresVentaDialog);
 
-add("Vale Materiales Report", ValeMaterialesReport);
-add("Toma Inventario Report", TomaInventarioReport);
-add("Sin Movimiento Report", SinMovimientoReport);
-add("Movimientos Almacen Report", MovimientosAlmacenReport);
-add("Documento Reporte", DocumentoReporte);
-add("Reporte Valorizado", ReporteValorizado);
-add("Reporte Inventario", ReporteInventario);
+addAliases(
+  "Reporte de Entrega de Materiales",
+  ["Vale Materiales Report", "Vale Materiales", "Entrega de Materiales"],
+  ValeMaterialesReport,
+);
+addAliases(
+  "Reporte Toma de Inventario",
+  ["Toma Inventario Report", "Toma de Inventario"],
+  TomaInventarioReport,
+);
+addAliases(
+  "Sin Movimiento Report",
+  ["Sin Movimiento", "Inventario sin Movimiento", "Reporte Sin Movimiento"],
+  SinMovimientoReport,
+);
+addAliases(
+  "Reporte de Movimientos de Almacén",
+  ["Movimientos Almacen Report", "Movimientos", "Movimientos Almacen"],
+  MovimientosAlmacenReport,
+);
+addAliases(
+  "Documento Reporte",
+  ["Reporte de Documentos", "Reporte Documentos"],
+  DocumentoReporte,
+);
+addAliases(
+  "Inventario Permanente Valorizado",
+  ["Inv. Perm. Valorizado", "Reporte Valorizado"],
+  ReporteValorizado,
+);
+addAliases(
+  "Reporte de Inventario",
+  ["Reporte Inventario", "Inventario General"],
+  ReporteInventario,
+);
 addAliases(
   "Reporte Transferencia Interna",
   ["Reporte Transferencia", "Transferencias"],
@@ -727,23 +760,61 @@ add("Vencimientos Créditos Report", VencimientosCreditosReport);
 add("Tarjeta Cliente", TarjetaCliente);
 
 add("Acumulado", Acumulado);
+addAliases(
+  "Acumulado Vencimientos",
+  ["Vencimientos Acumulado", "Reporte de Vencimientos Acumulado"],
+  Acumulado,
+);
 add("Detalle", Detalle);
+addAliases(
+  "Detalle Vencimientos",
+  ["Reporte de Vencimientos", "Vencimientos Detalle"],
+  Detalle,
+);
 add("Reporte Clientes", ReporteClientes);
-add("Cuentas Corrientes", CuentasCorrientes);
-add("Reporte Diario", ReporteDiario);
-add("Reporte Doc Emi", ReporteDocEmi);
+addAliases(
+  "Cuentas Corrientes",
+  ["Reporte de Cuentas Corrientes", "Reporte Cuentas Corrientes"],
+  CuentasCorrientes,
+);
+addAliases(
+  "Diario de Pagos",
+  ["Reporte Diario", "Reporte Diario de Pagos"],
+  ReporteDiario,
+);
+addAliases(
+  "Documentos Emitidos",
+  ["Reporte Doc Emi", "Reporte de Documentos Emitidos"],
+  ReporteDocEmi,
+);
 add("Letras Aceptadas", LetrasAceptadas);
 add("Reporte Not Deb Cred", ReporteNotDebCred);
-add("Reporte Planillas", ReportePlanillas);
-add("Reporte Vis Co", ReporteVisCo);
+addAliases(
+  "Reporte de Planilla",
+  ["Reporte Planillas", "Planillas Report"],
+  ReportePlanillas,
+);
+addAliases(
+  "Reporte de Visitas del Cobrador",
+  ["Reporte Vis Co", "Visita Cobrador", "Visitas Cobrador"],
+  ReporteVisCo,
+);
 
 // --- Importaciones ---
 add("Import Doc", ImportDoc);
 add("Import Embarque", ImportEmbarque);
 add("Orden Importacion", OrdenImportacion);
 add("Internos", Internos);
-add("Embarque Importacion", EmbarqueImportacion);
-add("Reporte Orden Importacion", ReporteOrdenImportacion);
+addAliases(
+  "Embarques de Importación",
+  ["Embarque Importacion", "Reporte de Embarques", "Embarques Importacion"],
+  EmbarqueImportacion,
+);
+addAliases(
+  "Reporte de Pedidos",
+  ["Reporte Orden Importacion", "Reporte Orden de Importación"],
+  ReporteOrdenImportacion,
+);
 add("Pedido Interno", PedidoInterno);
 
 // --- Costos ---
@@ -757,11 +828,44 @@ add("Recalcular", Recalcular);
 add("Trasladar Costos", TrasladarCostos);
 add("Actualizar Costos", ActualizarCostos);
 
-add("Costo Venta Costos Report", CostoVentaCostosReport);
+addAliases(
+  "Costo de Venta",
+  ["Reporte de Costo de Venta", "Costo Venta Costos Report"],
+  CostoVentaCostosReport,
+);
 add("Cuadrar Cierre Costos Window", CuadrarCierreCostosWindow);
 add("Diario Almacen Costos Report", DiarioAlmacenCostosReport);
-add("Stock Valorizado Costos Report", StockValorizadoCostosReport);
-add("Gmroi Costos Report", GmroiCostosReport);
+addAliases(
+  "Stock Valorizado",
+  ["Reporte de Stock Valorizado", "Stock Valorizado Costos Report"],
+  StockValorizadoCostosReport,
+);
+addAliases("GMROI", ["Reporte de GMROI", "Gmroi Costos Report"], GmroiCostosReport);
+addAliases(
+  "Importaciones",
+  ["Reporte de Importaciones", "Importaciones Costos Report"],
+  ImportacionesCostosReport,
+);
+addAliases(
+  "Kardex",
+  ["Kardex de Almacén", "Kardex de Almacen", "Kardex Costos Report"],
+  KardexCostosReport,
+);
+addAliases(
+  "Condensados",
+  ["Reporte de Condensados", "Condensados Costos Report"],
+  CondensadosCostosReport,
+);
+addAliases(
+  "Motores Costos Report",
+  ["Reporte de Motores"],
+  MotoresCostosReport,
+);
+addAliases(
+  "Resumen General",
+  ["Reporte de Resumen General", "Resumen General Costos Report"],
+  ResumenGeneralCostosReport,
+);
 
 add("Cerrar Mes Costos Window", CerrarMesCostosWindow);
 add("Consolidado Costos Window", ConsolidadoCostosWindow);
@@ -771,14 +875,38 @@ add("Recalcular Costos Window", RecalcularCostosWindow);
 add("Trasladar Costos Window", TrasladarCostosWindow);
 
 // --- Gerencia ---
-add("Gerencia Ventas Window", GerenciaVentasWindow);
-add("Gerencia Importaciones Window", GerenciaImportacionesWindow);
-add("Gerencia Inventario Costos Window", GerenciaInventarioCostosWindow);
-add("Gerencia Contabilidad Window", GerenciaContabilidadWindow);
-add("Gerencia Creditos Window", GerenciaCreditosWindow);
+addAliases(
+  "Gerencia Ventas Window",
+  ["000 - Ventas", "Reporte Gerencial de Ventas"],
+  GerenciaVentasWindow,
+);
+addAliases(
+  "Gerencia Importaciones Window",
+  ["010 - Importaciones", "Reporte Gerencial de Importaciones"],
+  GerenciaImportacionesWindow,
+);
+addAliases(
+  "Gerencia Inventario Costos Window",
+  ["020 - Inventario y Costos", "Reporte Gerencial de Inventarios y Costos"],
+  GerenciaInventarioCostosWindow,
+);
+addAliases(
+  "Gerencia Contabilidad Window",
+  ["030 - Contabilidad", "Reporte Gerencial de Contabilidad"],
+  GerenciaContabilidadWindow,
+);
+addAliases(
+  "Gerencia Creditos Window",
+  ["040 - Creditos y Cobranzas", "040 - Créditos y Cobranzas", "Reporte Gerencial de Créditos y Cobranzas"],
+  GerenciaCreditosWindow,
+);
 add("Contenedor Reportes", ContenedorReportes);
 add("Datos Para Indicadores", DatosParaIndicadores);
-add("Estados Financieros", EstadosFinancieros);
+addAliases(
+  "Estados Financieros",
+  ["Reporte Estado Financiero Gerencia"],
+  EstadosFinancierosWindow,
+);
 add("Tarjeta", Tarjeta);
 
 // --- Servicios ---
@@ -1105,6 +1233,24 @@ function ProcesarMarcas() {
 
 // ---------- Registry ----------
 const REGISTRY: Record<string, (label: string) => ReactNode> = {
+  "000 - Ventas": () => <GerenciaVentasWindow />,
+  "Gerencia Ventas Window": () => <GerenciaVentasWindow />,
+  "Reporte Gerencial de Ventas": () => <GerenciaVentasWindow />,
+  "010 - Importaciones": () => <GerenciaImportacionesWindow />,
+  "Gerencia Importaciones Window": () => <GerenciaImportacionesWindow />,
+  "Reporte Gerencial de Importaciones": () => <GerenciaImportacionesWindow />,
+  "020 - Inventario y Costos": () => <GerenciaInventarioCostosWindow />,
+  "Gerencia Inventario Costos Window": () => <GerenciaInventarioCostosWindow />,
+  "Reporte Gerencial de Inventarios y Costos": () => <GerenciaInventarioCostosWindow />,
+  "030 - Contabilidad": () => <GerenciaContabilidadWindow />,
+  "Gerencia Contabilidad Window": () => <GerenciaContabilidadWindow />,
+  "Reporte Gerencial de Contabilidad": () => <GerenciaContabilidadWindow />,
+  "040 - Creditos y Cobranzas": () => <GerenciaCreditosWindow />,
+  "040 - Créditos y Cobranzas": () => <GerenciaCreditosWindow />,
+  "Gerencia Creditos Window": () => <GerenciaCreditosWindow />,
+  "Reporte Gerencial de Créditos y Cobranzas": () => <GerenciaCreditosWindow />,
+  "Estados Financieros": () => <EstadosFinancierosWindow />,
+  "Reporte Estado Financiero Gerencia": () => <EstadosFinancierosWindow />,
   "Guía Remisión": () => <GuiaRemision />,
   "Guia Remision": () => <GuiaRemision />,
   "Factura": () => <FacturaVentaList />,
@@ -1146,6 +1292,83 @@ const REGISTRY: Record<string, (label: string) => ReactNode> = {
   "Transferencias": () => <ReporteTransferencia />,
   "Procesar Cobertura": () => <ProcesarCobertura />,
   "Procesar Cobertura de Tablero": () => <ProcesarCobertura />,
+  "Sin Movimiento Report": () => <SinMovimientoReport />,
+  "Sin Movimiento": () => <SinMovimientoReport />,
+  "Inventario sin Movimiento": () => <SinMovimientoReport />,
+  "Reporte Sin Movimiento": () => <SinMovimientoReport />,
+  "Reporte Toma de Inventario": () => <TomaInventarioReport />,
+  "Toma Inventario Report": () => <TomaInventarioReport />,
+  "Toma de Inventario": () => <TomaInventarioReport />,
+  "Inventario Permanente Valorizado": () => <ReporteValorizado />,
+  "Inv. Perm. Valorizado": () => <ReporteValorizado />,
+  "Reporte Valorizado": () => <ReporteValorizado />,
+  "Documento Reporte": () => <DocumentoReporte />,
+  "Reporte de Documentos": () => <DocumentoReporte />,
+  "Reporte Documentos": () => <DocumentoReporte />,
+  "Reporte de Visitas del Cobrador": () => <ReporteVisCo />,
+  "Reporte Vis Co": () => <ReporteVisCo />,
+  "Visita Cobrador": () => <ReporteVisCo />,
+  "Visitas Cobrador": () => <ReporteVisCo />,
+  "Reporte de Planilla": () => <ReportePlanillas />,
+  "Reporte Planillas": () => <ReportePlanillas />,
+  "Planillas Report": () => <ReportePlanillas />,
+  "Diario de Pagos": () => <ReporteDiario />,
+  "Reporte Diario": () => <ReporteDiario />,
+  "Reporte Diario de Pagos": () => <ReporteDiario />,
+  "Cuentas Corrientes": () => <CuentasCorrientes />,
+  "Reporte de Cuentas Corrientes": () => <CuentasCorrientes />,
+  "Reporte Cuentas Corrientes": () => <CuentasCorrientes />,
+  "Documentos Emitidos": () => <ReporteDocEmi />,
+  "Reporte Doc Emi": () => <ReporteDocEmi />,
+  "Reporte de Documentos Emitidos": () => <ReporteDocEmi />,
+  "Costo de Venta": () => <CostoVentaCostosReport />,
+  "Reporte de Costo de Venta": () => <CostoVentaCostosReport />,
+  "Stock Valorizado": () => <StockValorizadoCostosReport />,
+  "Reporte de Stock Valorizado": () => <StockValorizadoCostosReport />,
+  "GMROI": () => <GmroiCostosReport />,
+  "Reporte de GMROI": () => <GmroiCostosReport />,
+  "Importaciones": () => <ImportacionesCostosReport />,
+  "Reporte de Importaciones": () => <ImportacionesCostosReport />,
+  "Importaciones Costos Report": () => <ImportacionesCostosReport />,
+  "Kardex": () => <KardexCostosReport />,
+  "Kardex de Almacén": () => <KardexCostosReport />,
+  "Kardex de Almacen": () => <KardexCostosReport />,
+  "Condensados": () => <CondensadosCostosReport />,
+  "Reporte de Condensados": () => <CondensadosCostosReport />,
+  "Motores Costos Report": () => <MotoresCostosReport />,
+  "Reporte de Motores": () => <MotoresCostosReport />,
+  "Resumen General": () => <ResumenGeneralCostosReport />,
+  "Reporte de Resumen General": () => <ResumenGeneralCostosReport />,
+  "Embarques de Importación": () => <EmbarqueImportacion />,
+  "Embarque Importacion": () => <EmbarqueImportacion />,
+  "Reporte de Embarques": () => <EmbarqueImportacion />,
+  "Embarques Importacion": () => <EmbarqueImportacion />,
+  "Reporte de Pedidos": () => <ReporteOrdenImportacion />,
+  "Reporte Orden Importacion": () => <ReporteOrdenImportacion />,
+  "Reporte Orden de Importación": () => <ReporteOrdenImportacion />,
+  "Detalle Vencimientos": () => <Detalle title="Reporte de Vencimientos" />,
+  "Reporte de Vencimientos": () => <Detalle title="Reporte de Vencimientos" />,
+  "Vencimientos Detalle": () => <Detalle title="Reporte de Vencimientos" />,
+  "Acumulado Vencimientos": () => (
+    <Acumulado title="Reporte de Vencimientos Acumulado" />
+  ),
+  "Vencimientos Acumulado": () => (
+    <Acumulado title="Reporte de Vencimientos Acumulado" />
+  ),
+  "Reporte de Vencimientos Acumulado": () => (
+    <Acumulado title="Reporte de Vencimientos Acumulado" />
+  ),
+  "Reporte de Inventario": () => <ReporteInventario />,
+  "Reporte Inventario": () => <ReporteInventario />,
+  "Inventario General": () => <ReporteInventario />,
+  "Vale Materiales Report": () => <ValeMaterialesReport />,
+  "Vale Materiales": () => <ValeMaterialesReport />,
+  "Entrega de Materiales": () => <ValeMaterialesReport />,
+  "Reporte de Entrega de Materiales": () => <ValeMaterialesReport />,
+  "Movimientos Almacen Report": () => <MovimientosAlmacenReport />,
+  "Movimientos": () => <MovimientosAlmacenReport />,
+  "Movimientos Almacen": () => <MovimientosAlmacenReport />,
+  "Reporte de Movimientos de Almacén": () => <MovimientosAlmacenReport />,
 };
 
 

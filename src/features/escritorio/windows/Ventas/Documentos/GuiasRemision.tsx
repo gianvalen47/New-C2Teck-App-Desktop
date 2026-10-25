@@ -38,6 +38,8 @@ import {
   fetchSigecoomClients,
   fetchSigecoomLocations,
   fetchTipoCambioGuia,
+  fetchGuiaRemisionNewNumber,
+  fetchGuiaRemisionStartingPoint,
   getSigecoomClient,
   type GuiaRemisionRow,
   type GuiaRemisionFull,
@@ -74,7 +76,7 @@ export function GuiaRemision() {
 }
 
 export function NuevaGuia() {
-  return <GuiaRemisionForm onClose={() => {}} />;
+  return <GuiaRemisionForm idLocacion={inferIdLocacionFromSession() ?? 0} onClose={() => {}} />;
 }
 
 const ESTADO_COLORS: Record<string, string> = {
@@ -428,6 +430,28 @@ function resolveLegacyGuideDisplayFields(g: any) {
 // reutilizado en Oficina, Almacén y Estado para que todos los casilleros se vean/comporten igual.
 type CodeDescOption = { code: string; label: string; value: string; extra?: string };
 
+const GUIA_MOTIVO_OPTIONS: CodeDescOption[] = [
+  { code: "1", label: "Venta", value: "1" },
+  { code: "2", label: "Transferencia Gratuita", value: "2" },
+  { code: "3", label: "Consignación", value: "3" },
+  { code: "4", label: "Traslado entre establecimientos", value: "4" },
+  { code: "5", label: "Traslado por devolución", value: "5" },
+];
+
+const GUIA_PESO_UNIT_OPTIONS: CodeDescOption[] = [
+  { code: "FT", label: "Pies", value: "FT" },
+  { code: "GRM", label: "Gramos", value: "GRM" },
+  { code: "INC", label: "Pulgada", value: "INC" },
+  { code: "KGM", label: "Kilogramos", value: "KGM" },
+  { code: "LBR", label: "Libras", value: "LBR" },
+  { code: "TN", label: "Tonelada", value: "TN" },
+];
+
+const GUIA_MODO_TRASLADO_OPTIONS: CodeDescOption[] = [
+  { code: "01", label: "Transporte Público", value: "01" },
+  { code: "02", label: "Transporte Privado", value: "02" },
+];
+
 function CodeDescSelector({
   value,
   onChange,
@@ -435,6 +459,7 @@ function CodeDescSelector({
   allLabel = "Todos",
   width = "w-[220px]",
   extraHeader,
+  disabled = false,
 }: {
   value: string;
   onChange: (next: string) => void;
@@ -443,6 +468,7 @@ function CodeDescSelector({
   width?: string;
   /** Encabezado de una 3ª columna opcional (ej. "CodAlm" en el combo de Almacén de frmGuiasRemision.vb) */
   extraHeader?: string;
+  disabled?: boolean;
 }) {
   const gridCols = extraHeader ? "grid-cols-[46px_1fr_64px]" : "grid-cols-[58px_1fr]";
   const [open, setOpen] = useState(false);
@@ -510,14 +536,15 @@ function CodeDescSelector({
     <div ref={ref} className="relative w-full">
       <button
         type="button"
-        className={`${inp} flex w-full items-center justify-between gap-2 px-2 text-left`}
+        disabled={disabled}
+        className={`${inp} flex w-full items-center justify-between gap-2 px-2 text-left disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500`}
         onClick={() => setOpen((prev) => !prev)}
       >
         <span className="truncate text-[11px] text-slate-700">{selectedLabel}</span>
         <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
       </button>
 
-      {open && createPortal(
+      {open && !disabled && createPortal(
         <div
           ref={panelRef}
           style={{ position: "fixed", top: panelPos.top, left: panelPos.left }}
@@ -1178,6 +1205,8 @@ function inferIdLocacionFromSession(): number | undefined {
     const map: Record<string, number> = {
       "08": 87, "8": 87,
       "05": 72, "5": 72,
+      "02": 30, "2": 30,
+      "07": 81, "7": 81,
       "30": 30, "31": 31,
       "72": 72, "73": 73, "75": 75,
       "80": 80, "81": 81, "83": 83,
@@ -1735,6 +1764,7 @@ export function GuiaRemisionForm({
 
   // Form fields
   const [numDoc, setNumDoc] = useState(isNew ? "" : "");
+  const [idSerieDoc, setIdSerieDoc] = useState<number | "">("");
   const [fecDoc, setFecDoc] = useState(getLocalDateISO);
   const [codMon, setCodMon] = useState("NS");
   const [igv, setIgv] = useState("18.00");
@@ -1766,6 +1796,53 @@ export function GuiaRemisionForm({
   const [observacion, setObservacion] = useState("");
 
   const editable = mode === "new" || mode === "edit";
+  const clientLocationOptions = useMemo<CodeDescOption[]>(
+    () => idLocCli === "" ? [] : [{
+      code: String(idLocCli),
+      label: desLocCli || `Locación ${idLocCli}`,
+      value: String(idLocCli),
+    }],
+    [desLocCli, idLocCli],
+  );
+  const fiscalAddressOptions = useMemo<CodeDescOption[]>(
+    () => idFiscal === "" ? [] : [{
+      code: String(idFiscal),
+      label: desFiscal || `Dirección fiscal ${idFiscal}`,
+      value: String(idFiscal),
+    }],
+    [desFiscal, idFiscal],
+  );
+
+  useEffect(() => {
+    if (!isNew || idLocacion <= 0) return;
+
+    let active = true;
+    fetchGuiaRemisionNewNumber(idLocacion)
+      .then(({ id_serie_doc, num_doc }) => {
+        if (!active) return;
+        setIdSerieDoc((current) => current === "" ? id_serie_doc : current);
+        setNumDoc((current) => current === "" ? String(num_doc) : current);
+      })
+      .catch((error: unknown) => {
+        if (active) {
+          toast.error(error instanceof Error ? error.message : "No se pudo obtener el número de guía.");
+        }
+      });
+
+    fetchGuiaRemisionStartingPoint(idLocacion)
+      .then((startingPoint) => {
+        if (active) setPartida((current) => current || startingPoint);
+      })
+      .catch((error: unknown) => {
+        if (active) {
+          toast.error(error instanceof Error ? error.message : "No se pudo obtener la partida de la locación.");
+        }
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [idLocacion, isNew]);
 
   useEffect(() => {
     if ((!editable && !idGuia) || !fecDoc || !codMon) return;
@@ -1977,6 +2054,10 @@ export function GuiaRemisionForm({
       toast.error("No se encontró la ubicación activa para emitir la guía");
       return;
     }
+    if (isNew && !idSerieDoc) {
+      toast.error("No se obtuvo la serie de guía para la locación activa");
+      return;
+    }
     if (!idCliente) { toast.error("Ingrese el cliente"); return; }
     if (!numDoc) { toast.error("Ingrese el número de documento"); return; }
     if (!fecDoc) { toast.error("Ingrese la fecha del documento"); return; }
@@ -1992,6 +2073,7 @@ export function GuiaRemisionForm({
     try {
       const payload = {
         id_locacion: idLocacion,
+        id_serie_doc: Number(idSerieDoc) || undefined,
         fec_doc: fecDoc,
         num_doc: parseInt(numDoc),
         id_cliente: Number(idCliente),
@@ -2259,44 +2341,46 @@ export function GuiaRemisionForm({
                     </div>
                   </InlineField>
                   <InlineField label="Loc.Cliente" labelWidth="w-[75px]">
-                    <div className="flex gap-1 w-full">
-                      <input
-                        className={inp}
-                        value={desLocCli || (idLocCli ? `ID: ${idLocCli}` : "")}
-                        readOnly
-                        placeholder="(Catálogo de locaciones no disponible)"
-                        title="El servicio actual no expone las locaciones asociadas al cliente"
-                      />
-                    </div>
+                    <CodeDescSelector
+                      value={idLocCli === "" ? "" : String(idLocCli)}
+                      onChange={(next) => {
+                        const selected = clientLocationOptions.find((option) => option.value === next);
+                        setIdLocCli(next ? Number(next) : "");
+                        setDesLocCli(selected?.label ?? "");
+                      }}
+                      options={clientLocationOptions}
+                      allLabel="Seleccione"
+                      width="w-[280px]"
+                      disabled={!editable || !idCliente}
+                    />
                   </InlineField>
                 </div>
 
                 {/* FILA 3 */}
                 <div className="grid grid-cols-[1fr_1.1fr] gap-2 items-center">
                   <InlineField label="Dir. Fiscal" labelWidth="w-[65px]">
-                    <div className="flex gap-1 w-full">
-                      <input
-                        className={inp}
-                        value={desFiscal || (idFiscal ? `ID: ${idFiscal}` : "")}
-                        readOnly
-                        placeholder="(Catálogo fiscal no disponible)"
-                        title="El servicio actual no expone las direcciones fiscales del cliente"
-                      />
-                    </div>
+                    <CodeDescSelector
+                      value={idFiscal === "" ? "" : String(idFiscal)}
+                      onChange={(next) => {
+                        const selected = fiscalAddressOptions.find((option) => option.value === next);
+                        setIdFiscal(next ? Number(next) : "");
+                        setDesFiscal(selected?.label ?? "");
+                      }}
+                      options={fiscalAddressOptions}
+                      allLabel="Seleccione"
+                      width="w-[280px]"
+                      disabled={!editable || !idCliente}
+                    />
                   </InlineField>
                   <InlineField label="Motivo" labelWidth="w-[75px]">
-                    <select 
-                      className={inp} 
-                      value={codMot || "1"} 
-                      onChange={e => setCodMot(e.target.value)} 
+                    <CodeDescSelector
+                      value={codMot}
+                      onChange={setCodMot}
+                      options={GUIA_MOTIVO_OPTIONS}
+                      allLabel="Seleccione"
+                      width="w-[300px]"
                       disabled={!editable}
-                    >
-                      <option value="1">Venta</option>
-                      <option value="2">Transferencia Gratuita</option>
-                      <option value="3">Consignación</option>
-                      <option value="4">Traslado entre establecimientos</option>
-                      <option value="5">Traslado por devolución</option>
-                    </select>
+                    />
                   </InlineField>
                 </div>
 
@@ -2413,16 +2497,14 @@ export function GuiaRemisionForm({
                 />
               </InlineField>
               <InlineField label="Unid. Medida Peso" labelWidth="w-[115px]">
-                <select 
-                  className={`${inp} max-w-[140px]`} 
-                  value={codUniMedPeso || "KGM"} 
-                  onChange={e => setCodUniMedPeso(e.target.value)} 
+                <CodeDescSelector
+                  value={codUniMedPeso}
+                  onChange={setCodUniMedPeso}
+                  options={GUIA_PESO_UNIT_OPTIONS}
+                  allLabel="Seleccione"
+                  width="w-[220px]"
                   disabled={!editable}
-                >
-                  <option value="KGM">Kilogramos</option>
-                  <option value="TNE">Toneladas</option>
-                  <option value="LBR">Libras</option>
-                </select>
+                />
               </InlineField>
               <InlineField label="Cant. Bultos / Palets" labelWidth="w-[130px]">
                 <input 
@@ -2437,15 +2519,14 @@ export function GuiaRemisionForm({
             {/* FILA 7 */}
             <div className="grid grid-cols-[1fr_260px] gap-2 items-center">
               <InlineField label="Modo Traslado" labelWidth="w-[95px]">
-                <select 
-                  className={`${inp} max-w-[220px]`} 
-                  value={modoTraslado || "02"} 
-                  onChange={e => setModoTraslado(e.target.value)} 
+                <CodeDescSelector
+                  value={modoTraslado}
+                  onChange={setModoTraslado}
+                  options={GUIA_MODO_TRASLADO_OPTIONS}
+                  allLabel="Seleccione"
+                  width="w-[260px]"
                   disabled={!editable}
-                >
-                  <option value="01">Transporte Público</option>
-                  <option value="02">Transporte Privado</option>
-                </select>
+                />
               </InlineField>
               <InlineField label="Fecha Inicio Traslado" labelWidth="w-[130px]">
                 <input 
@@ -2797,10 +2878,6 @@ export function GuiaRemisionList() {
     const x = Math.max(0, Math.min(initialX, Math.max(0, maxW - w)));
     const y = Math.max(0, Math.min(initialY, Math.max(0, maxH - h)));
     const resolvedIdLocacion = defaultIdLocacion ?? inferIdLocacionFromSession() ?? 0;
-    if (!idGuia && (!resolvedIdLocacion || resolvedIdLocacion <= 0)) {
-      toast.error("No se encontró una ubicación activa para la nueva guía");
-      return;
-    }
     setFormWindows((prev) => [
       ...prev,
       {

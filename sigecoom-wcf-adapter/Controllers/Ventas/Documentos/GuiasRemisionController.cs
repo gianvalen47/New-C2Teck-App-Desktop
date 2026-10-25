@@ -7,6 +7,7 @@ using System.ServiceModel;
 using Microsoft.AspNetCore.Mvc;
 using sigecoom_wcf_proxies.GuiaRemisionService;
 using sigecoom_wcf_proxies.GuiaRemisionDetService;
+using MaestroServiceClient = sigecoom_wcf_proxies.MaestroService.MaestroClient;
 
 namespace sigecoom_wcf_adapter.Controllers
 {
@@ -16,6 +17,7 @@ namespace sigecoom_wcf_adapter.Controllers
     {
         private readonly string _serviceAddress;
         private readonly string _detailsServiceAddress;
+        private readonly string _maestroServiceAddress;
         private readonly string? _domain;
         private readonly string? _username;
         private readonly string? _password;
@@ -28,6 +30,8 @@ namespace sigecoom_wcf_adapter.Controllers
             _detailsServiceAddress = configuration.GetValue<string>("Sigecoom:GuiaRemisionDetServiceBaseUrl")
                 ?? Environment.GetEnvironmentVariable("SIGECOM_GUIA_REMISION_DET_SERVICE_URL")
                 ?? "net.tcp://192.168.10.252/ServicioBLL/GuiaRemisionDetService/";
+            _maestroServiceAddress = configuration.GetValue<string>("Sigecoom:MaestroServiceBaseUrl")
+                ?? "net.tcp://192.168.10.252/ServicioBLL/Maestro/";
 
             _domain = configuration.GetValue<string>("Sigecoom:Domain")
                 ?? Environment.GetEnvironmentVariable("SIGECOM_DOMAIN");
@@ -87,6 +91,83 @@ namespace sigecoom_wcf_adapter.Controllers
                 return Problem(
                     title: "SIGECOM WCF error",
                     detail: ex.Message,
+                    statusCode: StatusCodes.Status503ServiceUnavailable);
+            }
+        }
+
+        [HttpGet("nuevo")]
+        public IActionResult GetNewDocumentNumber([FromQuery(Name = "id_locacion")] int idLocacion)
+        {
+            if (idLocacion <= 0)
+            {
+                return BadRequest(new ProblemDetails
+                {
+                    Title = "Locación inválida",
+                    Detail = "Debe indicar una locación válida para sugerir el número de guía.",
+                    Status = StatusCodes.Status400BadRequest,
+                });
+            }
+
+            try
+            {
+                using var client = CreateClient();
+                var idSerieDoc = client.MostraIdSerie(idLocacion);
+                if (idSerieDoc <= 0)
+                {
+                    return Problem(
+                        title: "SIGECOM no encontró una serie para la locación",
+                        detail: $"No hay una serie de guía configurada para la locación {idLocacion}.",
+                        statusCode: StatusCodes.Status404NotFound);
+                }
+
+                var numDoc = client.SugerirNumero(idSerieDoc);
+                if (numDoc <= 0)
+                {
+                    return Problem(
+                        title: "SIGECOM no sugirió un número de guía",
+                        detail: $"La serie {idSerieDoc} no devolvió un número válido.",
+                        statusCode: StatusCodes.Status502BadGateway);
+                }
+
+                return Ok(new { id_serie_doc = idSerieDoc, num_doc = numDoc });
+            }
+            catch (Exception ex)
+            {
+                return Problem(
+                    title: "SIGECOM WCF error",
+                    detail: ex.InnerException?.Message ?? ex.Message,
+                    statusCode: StatusCodes.Status503ServiceUnavailable);
+            }
+        }
+
+        [HttpGet("locaciones/{idLocacion:int}/partida")]
+        public IActionResult GetLocationStartingPoint(int idLocacion)
+        {
+            if (idLocacion <= 0)
+            {
+                return BadRequest(new ProblemDetails
+                {
+                    Title = "Locación inválida",
+                    Detail = "Debe indicar una locación válida para consultar el punto de partida.",
+                    Status = StatusCodes.Status400BadRequest,
+                });
+            }
+
+            try
+            {
+                using var client = CreateMaestroClient();
+                var partida = client.MostrarDato(
+                    "SIGECOM.Maestro.Locaciones",
+                    "PuntoPartida",
+                    "IdLocacion",
+                    idLocacion.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                return Ok(new { id_locacion = idLocacion, pto_partida = partida ?? string.Empty });
+            }
+            catch (Exception ex)
+            {
+                return Problem(
+                    title: "SIGECOM WCF error",
+                    detail: ex.InnerException?.Message ?? ex.Message,
                     statusCode: StatusCodes.Status503ServiceUnavailable);
             }
         }
@@ -187,6 +268,44 @@ namespace sigecoom_wcf_adapter.Controllers
                 client.ClientCredentials.Windows.ClientCredential = CredentialCache.DefaultNetworkCredentials;
             }
 
+            client.ClientCredentials.Windows.AllowedImpersonationLevel = TokenImpersonationLevel.Impersonation;
+            return client;
+        }
+
+        private MaestroServiceClient CreateMaestroClient()
+        {
+            var binding = new NetTcpBinding(SecurityMode.Transport)
+            {
+                CloseTimeout = TimeSpan.FromMinutes(1),
+                OpenTimeout = TimeSpan.FromMinutes(1),
+                ReceiveTimeout = TimeSpan.FromMinutes(10),
+                SendTimeout = TimeSpan.FromMinutes(1),
+                MaxBufferPoolSize = 524_288,
+                MaxBufferSize = 65_536_066,
+                MaxReceivedMessageSize = 65_536_066,
+                Security = new NetTcpSecurity
+                {
+                    Mode = SecurityMode.Transport,
+                    Transport = new TcpTransportSecurity
+                    {
+                        ClientCredentialType = TcpClientCredentialType.Windows,
+                        ProtectionLevel = ProtectionLevel.EncryptAndSign,
+                    }
+                }
+            };
+
+            var client = new MaestroServiceClient(binding, new EndpointAddress(_maestroServiceAddress));
+            if (!string.IsNullOrWhiteSpace(_username) && !string.IsNullOrWhiteSpace(_password))
+            {
+                client.ClientCredentials.Windows.ClientCredential = new NetworkCredential(
+                    _username,
+                    _password,
+                    string.IsNullOrWhiteSpace(_domain) ? Environment.UserDomainName : _domain);
+            }
+            else
+            {
+                client.ClientCredentials.Windows.ClientCredential = CredentialCache.DefaultNetworkCredentials;
+            }
             client.ClientCredentials.Windows.AllowedImpersonationLevel = TokenImpersonationLevel.Impersonation;
             return client;
         }

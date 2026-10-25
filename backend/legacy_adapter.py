@@ -545,6 +545,48 @@ def fetch_tipo_cambio_guia_legacy(moneda: str, fecha: str) -> float | None:
     return value
 
 
+def get_guia_new_number_legacy(id_locacion: int) -> dict:
+    """Request the next delivery-guide number and series from SIGECOM."""
+    if id_locacion <= 0:
+        raise ValueError("La locación debe ser un número positivo.")
+
+    payload = _read_json(
+        build_legacy_url(f"/api/v1/guias-remision/nuevo?id_locacion={id_locacion}"),
+        timeout=10,
+    )
+    if not isinstance(payload, dict):
+        raise ValueError("SIGECOM devolvió una numeración de guía no válida.")
+
+    try:
+        id_serie_doc = int(payload["id_serie_doc"])
+        num_doc = int(payload["num_doc"])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise ValueError("SIGECOM no devolvió la serie y número de guía.") from exc
+
+    if id_serie_doc <= 0 or num_doc <= 0:
+        raise ValueError("SIGECOM devolvió una serie o número de guía no válido.")
+    return {"id_serie_doc": id_serie_doc, "num_doc": num_doc}
+
+
+def get_guia_location_starting_point_legacy(id_locacion: int) -> str:
+    """Request the configured starting-point address for a SIGECOM location."""
+    if id_locacion <= 0:
+        raise ValueError("La locación debe ser un número positivo.")
+
+    payload = _read_json(
+        build_legacy_url(f"/api/v1/guias-remision/locaciones/{id_locacion}/partida"),
+        timeout=10,
+    )
+    if not isinstance(payload, dict):
+        raise ValueError("SIGECOM devolvió un punto de partida no válido.")
+    partida = payload.get("pto_partida")
+    if partida is None:
+        return ""
+    if not isinstance(partida, str):
+        raise ValueError("SIGECOM devolvió un punto de partida con formato no válido.")
+    return partida
+
+
 def validate_user(username: str, password: str, company_code: str | None = None) -> dict | None:
     """Canonical helper to validate a SIGECOM user against the legacy adapter/WCF."""
     return validate_user_legacy(username=username, password=password, company_code=company_code)

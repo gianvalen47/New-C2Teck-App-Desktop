@@ -1,45 +1,152 @@
-// Auto-extraido de windows (1).tsx (monolito legacy) — revisar antes de usar en produccion.
-import { RefreshCw, Filter } from "lucide-react";
+import { useState } from "react";
+import { CheckCircle2, LogOut } from "lucide-react";
 import {
-  inp,
   btn,
   btnPrimary,
-  Field,
-  DataTable,
-  WindowShell,
   Fs,
-  Radio
+  inp,
+  WindowShell,
 } from "@/components/ui/desktop-primitives";
 
-export function GmroiCostosReportList() { 
+type ReportType = "rubro" | "unidad" | "mercaderia";
+type ExportType = "pantalla" | "excel";
+
+export function GmroiCostosReportList({
+  title = "Reporte de GMROI",
+}: {
+  title?: string;
+}) {
+  const [reportType, setReportType] = useState<ReportType>("rubro");
+  const [exportType, setExportType] = useState<ExportType>("pantalla");
+
   return (
-    <WindowShell title="Vales de Requisiciones"
-      toolbar={<>
-        <button className={btn}><Filter className="h-3.5 w-3.5" />Filtros</button>
-        <button className={btnPrimary}><RefreshCw className="h-3.5 w-3.5" />Generar</button>
-      </>}
-    >
-      <div className="p-3 space-y-2 max-w-2xl mx-auto text-[11.5px] text-slate-800">
-        <Fs legend="Rango de fechas">
-          <Field label="Del"><input className={inp} type="date" defaultValue="2026-01-07" /></Field>
-          <Field label="Al"><input className={inp} type="date" defaultValue="2026-07-21" /></Field>
-        </Fs>
-        <div className="grid grid-cols-2 gap-2">
-          <Fs legend="Localización"><Field label="Oficina"><select className={inp}><option>LIMA</option></select></Field></Fs>
-          <Fs legend="Almacén"><Field label=""><select className={inp}><option>COMERCIAL</option></select></Field></Fs>
+    <WindowShell title={title}>
+      <div className="flex h-full items-start justify-center overflow-auto p-2 text-[11.5px] text-slate-800">
+        <div className="w-full max-w-[490px] space-y-2">
+          <Fs legend="Tipo" className="px-2 pb-2 pt-0">
+            <div className="flex items-center justify-between gap-2">
+              <label className="inline-flex items-center gap-1 font-bold">
+                <input
+                  type="radio"
+                  name="gmroi-tipo"
+                  checked={reportType === "rubro"}
+                  onChange={() => setReportType("rubro")}
+                  className="accent-[#0874c9]"
+                />
+                Resumen x Rubro
+              </label>
+              <label className="inline-flex items-center gap-1 font-bold">
+                <input
+                  type="radio"
+                  name="gmroi-tipo"
+                  checked={reportType === "unidad"}
+                  onChange={() => setReportType("unidad")}
+                  className="accent-[#0874c9]"
+                />
+                Resumen x Unidad Negocio
+              </label>
+              <label className="inline-flex items-center gap-1 font-bold">
+                <input
+                  type="radio"
+                  name="gmroi-tipo"
+                  checked={reportType === "mercaderia"}
+                  onChange={() => setReportType("mercaderia")}
+                  className="accent-[#0874c9]"
+                />
+                Detallado x Mercadería
+              </label>
+            </div>
+          </Fs>
+
+          <Fs legend="Rango de Fechas" className="px-3 pb-2 pt-0">
+            <div className="flex items-center justify-center gap-10">
+              <label className="flex items-center gap-1.5">
+                <span className="font-bold">Fechas Del :</span>
+                <input
+                  aria-label="Fecha desde"
+                  className={`${inp} h-6 w-[98px] px-1`}
+                  type="date"
+                  defaultValue="2026-01-01"
+                />
+              </label>
+              <label className="flex items-center gap-1.5">
+                <span className="font-bold">A :</span>
+                <input
+                  aria-label="Fecha hasta"
+                  className={`${inp} h-6 w-[98px] px-1`}
+                  type="date"
+                  defaultValue="2026-09-30"
+                />
+              </label>
+            </div>
+          </Fs>
+
+          <div className="grid grid-cols-2 gap-x-6 gap-y-1 px-2">
+            <label className="grid grid-cols-[52px_minmax(0,1fr)] items-center gap-1">
+              <span className="font-bold">Oficina:</span>
+              <select className={`${inp} h-6 min-w-0 px-1`} defaultValue="all">
+                <option value="all">(Todos)</option>
+              </select>
+            </label>
+            <label className="grid grid-cols-[58px_minmax(0,1fr)] items-center gap-1">
+              <span className="font-bold">Almacén:</span>
+              <select className={`${inp} h-6 min-w-0 px-1`} defaultValue="all">
+                <option value="all">(Todos)</option>
+              </select>
+            </label>
+            <label className="col-span-2 grid grid-cols-[52px_132px] items-center gap-1">
+              <span className="font-bold">Rubro:</span>
+              <select className={`${inp} h-6 min-w-0 px-1`} defaultValue="all">
+                <option value="all">(Todos)</option>
+              </select>
+            </label>
+          </div>
+
+          <Fs legend="Exportar" className="mx-auto w-[245px] px-2 pb-2 pt-0">
+            <div className="flex items-center justify-center gap-8">
+              <label className="inline-flex items-center gap-1 font-bold">
+                <input
+                  type="radio"
+                  name="gmroi-exportar"
+                  checked={exportType === "pantalla"}
+                  onChange={() => setExportType("pantalla")}
+                  className="accent-[#0874c9]"
+                />
+                Pantalla
+              </label>
+              <label className="inline-flex items-center gap-1">
+                <input
+                  type="radio"
+                  name="gmroi-exportar"
+                  checked={exportType === "excel"}
+                  onChange={() => setExportType("excel")}
+                  className="accent-[#0874c9]"
+                />
+                Excel
+              </label>
+            </div>
+          </Fs>
+
+          <div className="flex justify-center gap-2 pt-1">
+            <button type="button" className={btnPrimary}>
+              <CheckCircle2 className="h-4 w-4 text-green-300" />
+              Aceptar
+            </button>
+            <button type="button" className={btn}>
+              <LogOut className="h-4 w-4 text-slate-700" />
+              Cancelar
+            </button>
+          </div>
         </div>
-        <Fs legend="Estado">
-          <Field label=""><select className={inp}><option>(Todos)</option></select></Field>
-          <Field label="Rubro"><select className={inp}><option>(Todos)</option></select></Field>
-        </Fs>
-        <Fs legend="Exportar"><div className="flex flex-col gap-1"><Radio name="exp" label="Pantalla" defaultChecked /><Radio name="exp" label="Exportar" /></div></Fs>
-        <DataTable columns={["Fecha", "Vale", "Concepto", "Cantidad", "Estado", "Ofic."]} rows={5} />
-        <div className="mt-2 flex justify-end gap-2"><button className={btn}>Cancelar</button><button className={btnPrimary}>Aceptar</button></div>
       </div>
     </WindowShell>
   );
 }
 
-export function GmroiCostosReport() {
-    return <GmroiCostosReportList />;
+export function GmroiCostosReport({
+  title = "Reporte de GMROI",
+}: {
+  title?: string;
+}) {
+  return <GmroiCostosReportList title={title} />;
 }

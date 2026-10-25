@@ -827,7 +827,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
         { icon: BookMarked, label: "Kardex" },
         { icon: TrendingUp, label: "Costo de Venta" },
         { icon: FileBarChart, label: "Condensados" },
-        { icon: Wrench, label: "Motores" },
+        { icon: Wrench, label: "Motores", openLabel: "Motores Costos Report" },
         { icon: FileSpreadsheet, label: "Resumen General" },
         { icon: AlertTriangle, label: "Sobregiro" },
         { icon: BarChart3, label: "GMROI" },

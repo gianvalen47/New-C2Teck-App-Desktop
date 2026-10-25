@@ -26,7 +26,9 @@ from sqlalchemy import or_
 from config import SessionLocal, SIGECOM_DATA_SOURCE
 from legacy_adapter import (
     _filter_active_company,
+    get_guia_location_starting_point_legacy,
     get_guia_legacy,
+    get_guia_new_number_legacy,
     is_legacy_source_enabled,
     list_guias_legacy,
     parse_guia_lookup_id,
@@ -332,6 +334,43 @@ def list_guias(
 
     guias = query.order_by(GuiaRemisionModel.fec_doc.desc()).offset(skip).limit(limit).all()
     return [_build_list_row(guia, db) for guia in guias]
+
+
+@router.get("/nuevo", summary="Obtener serie y número sugerido para una guía nueva")
+def get_new_guide_number(id_locacion: int = Query(..., gt=0)):
+    if not is_legacy_source_enabled():
+        raise HTTPException(
+            status_code=status.HTTP_501_NOT_IMPLEMENTED,
+            detail="La numeración sugerida solo está disponible mediante SIGECOM.",
+        )
+    try:
+        return get_guia_new_number_legacy(id_locacion)
+    except Exception as exc:
+        logger.exception("No se pudo obtener la numeración para la locación %s", id_locacion)
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=f"No se pudo obtener la numeración de la guía desde SIGECOM: {exc}",
+        ) from exc
+
+
+@router.get("/locaciones/{id_locacion:int}/partida", summary="Obtener punto de partida de una locación")
+def get_location_starting_point(id_locacion: int):
+    if not is_legacy_source_enabled():
+        raise HTTPException(
+            status_code=status.HTTP_501_NOT_IMPLEMENTED,
+            detail="El punto de partida solo está disponible mediante SIGECOM.",
+        )
+    try:
+        return {
+            "id_locacion": id_locacion,
+            "pto_partida": get_guia_location_starting_point_legacy(id_locacion),
+        }
+    except Exception as exc:
+        logger.exception("No se pudo obtener el punto de partida para la locación %s", id_locacion)
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=f"No se pudo obtener el punto de partida desde SIGECOM: {exc}",
+        ) from exc
 
 
 @router.get("/{id_guia}", summary="Obtener Guía de Remisión")
