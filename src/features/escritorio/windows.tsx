@@ -315,7 +315,7 @@ import { VentasPorMantenimientos, VentasPorMantenimientosList } from "./windows/
 import { ReportesCotizaciones, ReportesCotizacionesList } from "./windows/Servicios/Reportes/Cotizaciones";
 import { GastosDetallado, GastosDetalladoList } from "./windows/Servicios/Reportes/GastosDetallado";
 import { GastosPorRubros, GastosPorRubrosList } from "./windows/Servicios/Reportes/GastosPorRubros";
-import { HorasDeTrabajo, HorasDeTrabajoList } from "./windows/Servicios/Reportes/HorasDeTrabajo";
+import { HorasDeTrabajo } from "./windows/Servicios/Reportes/HorasDeTrabajo";
 import { HorasEscalon, HorasEscalonList } from "./windows/Servicios/Reportes/HorasEscalon";
 import { HorasMuertas, HorasMuertasList } from "./windows/Servicios/Reportes/HorasMuertas";
 import { LiquidacionXGarantia, LiquidacionXGarantiaList } from "./windows/Servicios/Reportes/LiquidacionXGarantia";
@@ -773,7 +773,11 @@ addAliases(
   ["Reporte de Vencimientos", "Vencimientos Detalle"],
   Detalle,
 );
-add("Reporte Clientes", ReporteClientes);
+addAliases(
+  "Reporte Límite de Crédito",
+  ["Reporte Clientes", "Reporte Limite de Credito"],
+  ReporteClientes,
+);
 addAliases(
   "Cuentas Corrientes",
   ["Reporte de Cuentas Corrientes", "Reporte Cuentas Corrientes"],
@@ -789,8 +793,21 @@ addAliases(
   ["Reporte Doc Emi", "Reporte de Documentos Emitidos"],
   ReporteDocEmi,
 );
-add("Letras Aceptadas", LetrasAceptadas);
-add("Reporte Not Deb Cred", ReporteNotDebCred);
+addAliases(
+  "Reporte de Letras",
+  ["Letras Aceptadas", "Reporte de Letras Aceptadas"],
+  LetrasAceptadas,
+);
+addAliases(
+  "Reporte de Notas Débito/Crédito",
+  [
+    "Reporte Not Deb Cred",
+    "Notas Débito/Crédito",
+    "Notas Débito / Crédito",
+    "Reporte de Notas Debito/Credito",
+  ],
+  ReporteNotDebCred,
+);
 addAliases(
   "Reporte de Planilla",
   ["Reporte Planillas", "Planillas Report"],
@@ -943,24 +960,86 @@ add("Motores", Motores);
 add("Repuestos", Repuestos);
 add("Seguimiento", Seguimiento);
 
-add("Disponibilidad Del Motor", DisponibilidadDelMotor);
-add("Horas De Motores", HorasDeMotores);
-add("Motores A Dar De Baja", MotoresADarDeBaja);
-add("Proyeccion De Reparaciones", ProyeccionDeReparaciones);
-add("Repuestos A Importar", RepuestosAImportar);
-add("Seguimientos", Seguimientos);
-add("Ventas Por Mantenimientos", VentasPorMantenimientos);
+addAliases(
+  "Reporte de Disponibilidad Motor",
+  ["Disponibilidad Del Motor", "Disponibilidad Motor"],
+  DisponibilidadDelMotor,
+);
+addAliases(
+  "Reporte de Horas Motor",
+  ["Horas De Motores", "Horas de Motores"],
+  HorasDeMotores,
+);
+addAliases(
+  "Reporte de Motores a Dar de Baja",
+  ["Motores A Dar De Baja"],
+  MotoresADarDeBaja,
+);
+addAliases(
+  "Reporte de Proyección de Reparaciones Anuales",
+  ["Proyeccion De Reparaciones", "Reporte de Proyeccion de Reparaciones Anuales"],
+  ProyeccionDeReparaciones,
+);
+addAliases(
+  "Reporte Proyección de Repuestos a Consumir",
+  [
+    "Reporte Proyeccion de Repuestos a Consumir",
+    "Repuestos A Importar",
+    "Repuestos a Importar",
+  ],
+  RepuestosAImportar,
+);
+addAliases(
+  "Reporte de Seguimiento",
+  ["Seguimientos", "Reporte Seguimiento"],
+  Seguimientos,
+);
+addAliases(
+  "Reporte Ventas Proyectadas por Mantenimiento",
+  ["Ventas Por Mantenimientos"],
+  VentasPorMantenimientos,
+);
 
-add("Reportes Cotizaciones", ReportesCotizaciones);
-add("Gastos Detallado", GastosDetallado);
-add("Gastos Por Rubros", GastosPorRubros);
-add("Horas De Trabajo", HorasDeTrabajo);
-add("Horas Escalon", HorasEscalon);
-add("Horas Muertas", HorasMuertas);
-add("Liquidacion X Garantia", LiquidacionXGarantia);
-add("Movimiento Repuestos", MovimientoRepuestos);
+addAliases(
+  "Reporte de Cotización",
+  ["Reporte de Cotizacion", "Reportes Cotizaciones"],
+  ReportesCotizaciones,
+);
+addAliases("Gastos Detallado", ["Gastos Generales"], GastosDetallado);
+addAliases(
+  "Total x Rubro",
+  ["Gastos Por Rubros", "Gastos por Rubro", "Gastos Viaje Total x Rubro"],
+  GastosPorRubros,
+);
+addAliases("Horas Generales", ["Horas De Trabajo"], HorasDeTrabajo);
+addAliases(
+  "Reporte Consolidado de Horas",
+  ["Horas Escalon", "Horas Escalón"],
+  HorasEscalon,
+);
+addAliases("Reporte de Horas Muertas", ["Horas Muertas"], HorasMuertas);
+addAliases(
+  "OT Garantia",
+  [
+    "OT Garantía",
+    "Liquidacion X Garantia",
+    "Liquidación X Garantía",
+    "Liquidacion x Garantia",
+    "Liquidación x Garantía",
+  ],
+  LiquidacionXGarantia,
+);
+addAliases(
+  "Reporte de Movimiento de Repuestos",
+  ["Movimiento Repuestos"],
+  MovimientoRepuestos,
+);
 add("Reporte OT", ReporteOT);
-add("Pendiente Facturacion", PendienteFacturacion);
+addAliases(
+  "OT Pendiente Facturación",
+  ["Pendiente Facturación", "Pendiente Facturacion", "OT Pendiente Facturacion"],
+  PendienteFacturacion,
+);
 add("Solicitud Garantia", SolicitudGarantia);
 addAliases(
   "Reporte Solicitud Garantía",
@@ -972,7 +1051,11 @@ addAliases(
   ["Solicitud de OT", "Reporte de Solicitud de OT"],
   ReporteSolicitudOT,
 );
-add("Tiempo Reparacion", TiempoReparacion);
+addAliases(
+  "OT Tiempo de Reparación",
+  ["OT Tiempo de Reparacion", "Tiempo Reparación", "Tiempo Reparacion"],
+  TiempoReparacion,
+);
 
 // --- Compras ---
 add("Cotizaciones Compra", CotizacionesCompra);
@@ -1015,22 +1098,102 @@ add("Vacaciones Window", VacacionesWindow);
 add("Procesar Marcas List", ProcesarMarcasList);
 add("Admin Lector", AdminLector);
 
-add("Asig H Extra", AsigHExtra);
-add("Asignacion Horario", AsignacionHorario);
-add("Asistencia", Asistencia);
-add("Capacitaciones", Capacitaciones);
-add("Contratos", Contratos);
-add("Reporte Cronograma Mina", ReporteCronogramaMina);
-add("Reporte Descuentos", ReporteDescuentos);
-add("Faltas", Faltas);
-add("Horas Extra", HorasExtra);
-add("Reporte Ingresos", ReporteIngresos);
-add("Onomasticos", Onomasticos);
-add("Personal", Personal);
-add("Reporte Planilla Sueldos", ReportePlanillaSueldos);
-add("Reporte Recursos", ReporteRecursos);
-add("Tardanzas", Tardanzas);
-add("Reporte Vacaciones", ReporteVacaciones);
+addAliases(
+  "Asig H Extra",
+  [
+    "Reporte de Asignación de Hora Extra",
+    "Reporte de Asignacion de Hora Extra",
+    "Asignación de Hora Extra",
+    "Asignacion de Hora Extra",
+  ],
+  AsigHExtra,
+);
+addAliases(
+  "Asignacion Horario",
+  [
+    "Reporte de Asignación de Horario",
+    "Reporte de Asignacion de Horario",
+    "Asignación de Horario",
+    "Asignacion de Horario",
+  ],
+  AsignacionHorario,
+);
+addAliases(
+  "Asistencia",
+  ["Reporte de Asistencias", "Reporte Asistencias", "Reporte de Asistencia"],
+  Asistencia,
+);
+addAliases(
+  "Capacitaciones",
+  ["Reporte de Capacitación", "Reporte de Capacitaciones", "Reporte Capacitacion"],
+  Capacitaciones,
+);
+addAliases(
+  "Contratos",
+  ["Reporte de Contratos", "Reporte Contratos"],
+  Contratos,
+);
+addAliases(
+  "Reporte Cronograma Mina",
+  ["Reporte de Cronograma Minas", "Cronograma Mina Report"],
+  ReporteCronogramaMina,
+);
+addAliases(
+  "Reporte Descuentos",
+  ["Reporte de Descuentos", "Descuentos Report"],
+  ReporteDescuentos,
+);
+addAliases(
+  "Faltas",
+  ["Reporte de Faltas de Personal", "Reporte de Faltas", "Reporte Faltas Personal"],
+  Faltas,
+);
+addAliases(
+  "Horas Extra",
+  ["Reporte de Horas Extra", "Reporte de Horas Extras", "Horas Extra Report"],
+  HorasExtra,
+);
+addAliases(
+  "Reporte Ingresos",
+  ["Reporte de Ingresos", "Reporte de Ingresos de Personal", "Ingresos Report"],
+  ReporteIngresos,
+);
+addAliases(
+  "Onomasticos",
+  ["Reporte de Onomasticos", "Reporte de Onomásticos", "Onomásticos"],
+  Onomasticos,
+);
+addAliases(
+  "Personal",
+  ["Reporte de Personal", "Reporte Personal", "Personal Report"],
+  Personal,
+);
+addAliases(
+  "Reporte Planilla Sueldos",
+  ["Planilla Oficial de Sueldos", "Reporte Planilla Oficial", "Planilla Oficial"],
+  ReportePlanillaSueldos,
+);
+addAliases(
+  "Reporte Recursos",
+  [
+    "Reporte de Recursos",
+    "Reporte de Asignación de Recursos",
+    "Reporte de Asignacion de Recursos",
+    "Reporte Asignación de Recursos",
+    "Reporte Asignacion de Recursos",
+  ],
+  ReporteRecursos,
+);
+addAliases(
+  "Tardanzas",
+  ["Reporte de Tardanzas", "Reporte Tardanzas"],
+  Tardanzas,
+);
+addAliases(
+  "Reporte Vacaciones",
+  ["Reporte de Vacaciones", "Vacaciones Report"],
+  ReporteVacaciones,
+);
 
 // --- Rondas ---
 add("Puntos Control", PuntosControl);
@@ -1438,17 +1601,17 @@ const REGISTRY: Record<string, (label: string) => ReactNode> = {
   "Reporte de Vencimientos de Cuentas x Pagar Contable": () => <ReporteVencimiento />,
   "Reporte de Vencimientos de Cuentas por Pagar Contable": () => <ReporteVencimiento />,
   "Reporte Vencimientos Cuentas por Pagar Contable": () => <ReporteVencimiento />,
-  "Detalle Vencimientos": () => <Detalle title="Reporte de Vencimientos" />,
-  "Reporte de Vencimientos": () => <Detalle title="Reporte de Vencimientos" />,
-  "Vencimientos Detalle": () => <Detalle title="Reporte de Vencimientos" />,
+  "Detalle Vencimientos": () => <Detalle />,
+  "Reporte de Vencimientos": () => <Detalle />,
+  "Vencimientos Detalle": () => <Detalle />,
   "Acumulado Vencimientos": () => (
-    <Acumulado title="Reporte de Vencimientos Acumulado" />
+    <Acumulado />
   ),
   "Vencimientos Acumulado": () => (
-    <Acumulado title="Reporte de Vencimientos Acumulado" />
+    <Acumulado />
   ),
   "Reporte de Vencimientos Acumulado": () => (
-    <Acumulado title="Reporte de Vencimientos Acumulado" />
+    <Acumulado />
   ),
   "Reporte de Inventario": () => <ReporteInventario />,
   "Reporte Inventario": () => <ReporteInventario />,
@@ -1474,7 +1637,10 @@ const VENTAS_REPORTES = new Set([
 // Reports of Créditos
 const CREDITOS_REPORTES = new Set([
   "Cuentas Corrientes", "Documentos Emitidos", "Notas Débito/Crédito", "Notas Débito / Crédito",
+  "Reporte de Notas Débito/Crédito", "Reporte de Notas Debito/Credito", "Reporte Not Deb Cred",
   "Vista Cobrador", "Clientes", "Diario de Pagos", "Letras Aceptadas",
+  "Reporte de Letras", "Reporte de Letras Aceptadas",
+  "Reporte Límite de Crédito", "Reporte Limite de Credito", "Reporte Clientes",
   "Vencimientos",
 ]);
 
@@ -1518,16 +1684,30 @@ const CRM_REPORTES = new Set([
 // Reports of Servicios / Talleres
 const SERVICIOS_REPORTES = new Set([
   "Actividades", "Plantilla", "Productividad", "Programación", "Programacion", "Tablero",
-  "Movimiento Repuestos", "Horas Motor", "Seguimiento", "Generar Pedido", "Horas Escalon", "Horas Escalón",
-  "Motores", "Repuestos", "Gastos Detallados", "Horas de Trabajo", "Gastos Por Rubros",
-  "Liquidación x Garantía", "Liquidacion x Garantia", "LiquidaciÃ³n x Garantia", "Solicitud Garantía", "Solicitud Garantia",
-  "Horas Muertas", "Pendiente Facturación", "Pendiente Facturacion", "Tiempo Reparación", "Tiempo Reparacion",
+  "Reporte de Cotización", "Reporte de Cotizacion", "Reportes Cotizaciones",
+  "Reporte de Horas Motor", "Horas De Motores", "Horas de Motores",
+  "Reporte de Disponibilidad Motor", "Disponibilidad Del Motor", "Disponibilidad Motor",
+  "Reporte de Seguimiento", "Seguimientos", "Reporte Seguimiento",
+  "Movimiento Repuestos", "Reporte de Movimiento de Repuestos", "Horas Motor", "Seguimiento",
+  "Generar Pedido", "Horas Escalon", "Horas Escalón", "Reporte Consolidado de Horas",
+  "Motores", "Reporte de Motores a Dar de Baja", "Motores A Dar De Baja",
+  "Reporte Proyección de Repuestos a Consumir",
+  "Reporte Proyeccion de Repuestos a Consumir", "Repuestos A Importar", "Repuestos a Importar",
+  "Reporte de Proyección de Reparaciones Anuales", "Reporte de Proyeccion de Reparaciones Anuales",
+  "Proyeccion De Reparaciones",
+  "Reporte Ventas Proyectadas por Mantenimiento", "Ventas Por Mantenimientos",
+  "Repuestos", "Gastos Detallados", "Gastos Detallado", "Gastos Generales",
+  "Horas de Trabajo", "Gastos Por Rubros", "Gastos por Rubro", "Total x Rubro",
+  "OT Garantia", "OT Garantía", "Liquidación x Garantía", "Liquidacion x Garantia", "LiquidaciÃ³n x Garantia", "Solicitud Garantía", "Solicitud Garantia",
+  "Horas Muertas", "Reporte de Horas Muertas", "OT Pendiente Facturación", "Pendiente Facturación", "Pendiente Facturacion",
+  "OT Pendiente Facturacion", "OT Tiempo de Reparación", "OT Tiempo de Reparacion", "Tiempo Reparación", "Tiempo Reparacion",
   "Proyección", "Proyeccion",
 ]);
 
 // Reports of Personal / RRHH
 const PERSONAL_REPORTES = new Set([
-  "Tardanzas", "Contratos", "Asistencia", "Onomásticos", "Onomasticos", "Asignación Horario", "Asignacion Horario",
+  "Tardanzas", "Contratos", "Asistencia", "Onomásticos", "Onomasticos", "Reporte de Onomasticos",
+  "Reporte de Onomásticos", "Asignación Horario", "Asignacion Horario",
 ]);
 
 const normalizeSet = (values: Iterable<string>) => new Set(Array.from(values, normalizeWindowLookupKey));

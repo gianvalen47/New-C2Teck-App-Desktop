@@ -9,6 +9,7 @@
 
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { createPortal } from "react-dom";
+import { motion } from "framer-motion";
 import {
   Printer, Plus, Search, Trash2, X, Save, RefreshCw, LogOut,
   Car, CreditCard, Receipt, Package, Filter, Wrench, Clock,
@@ -1699,26 +1700,48 @@ function DraggableToolWindow({
 
   if (typeof document === "undefined") return null;
 
+  const layerZIndex = Math.max(1_000, win.z - 1);
+
   return createPortal(
-    <div
-      className="fixed bg-[#F1F3F8] border border-slate-500 shadow-2xl rounded-sm overflow-hidden pointer-events-auto"
-      style={{ left: win.x, top: win.y, width: win.w, height: win.h, zIndex: win.z }}
-      onMouseDown={onFocus}
-    >
-      <div
-        className="flex items-center justify-between px-3 py-1.5 bg-gradient-to-b from-[#3E5B7A] to-[#2A3F55] border-b border-[#1F2E3F] text-[12px] text-white cursor-move"
-        onMouseDown={(e) => {
-          onFocus();
-          dragRef.current = { dx: e.clientX - win.x, dy: e.clientY - win.y };
-          document.body.style.userSelect = "none";
-          e.preventDefault();
+    <>
+      <motion.div
+        className="fixed inset-0 bg-black/25"
+        style={{ zIndex: layerZIndex }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.18, ease: "easeOut" }}
+        onMouseDown={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
         }}
+        aria-hidden="true"
       >
-        <span className="font-medium">{win.title}</span>
-        <button onClick={onClose} className="hover:bg-white/20 rounded px-1" title="Cerrar"><X className="h-3.5 w-3.5" /></button>
-      </div>
-      <div className="h-[calc(100%-31px)] overflow-auto bg-[#F8FBFF] text-slate-800">{children}</div>
-    </div>,
+      </motion.div>
+      <motion.div
+        className="fixed bg-[#F1F3F8] border border-slate-500 shadow-2xl rounded-sm overflow-hidden pointer-events-auto"
+        style={{ left: win.x, top: win.y, width: win.w, height: win.h, zIndex: layerZIndex + 1 }}
+        onMouseDown={onFocus}
+        initial={{ opacity: 0, scale: 0.96, y: 8 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.18, ease: "easeOut" }}
+        role="dialog"
+        aria-modal="true"
+      >
+        <div
+          className="flex items-center justify-between px-3 py-1.5 bg-gradient-to-b from-[#3E5B7A] to-[#2A3F55] border-b border-[#1F2E3F] text-[12px] text-white cursor-move"
+          onMouseDown={(e) => {
+            onFocus();
+            dragRef.current = { dx: e.clientX - win.x, dy: e.clientY - win.y };
+            document.body.style.userSelect = "none";
+            e.preventDefault();
+          }}
+        >
+          <span className="font-medium">{win.title}</span>
+          <button onClick={onClose} className="hover:bg-white/20 rounded px-1" title="Cerrar"><X className="h-3.5 w-3.5" /></button>
+        </div>
+        <div className="h-[calc(100%-31px)] overflow-auto bg-[#F8FBFF] text-slate-800">{children}</div>
+      </motion.div>
+    </>,
     document.body,
   );
 }

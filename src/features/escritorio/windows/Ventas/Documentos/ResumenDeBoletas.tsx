@@ -1,5 +1,4 @@
-import { createPortal } from "react-dom";
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   CalendarDays,
   FileText,
@@ -19,7 +18,7 @@ import {
 import { toast } from "sonner";
 import { fetchBoletas } from "@/lib/sigecoom-api";
 import { actionBtn, btn, btnPrimary, iconBtn, inp, squareIconBtn, tbSep } from "@/features/escritorio/windows/uiStyles";
-import { Field, YearMonthFields, EstadoBadge } from "@/features/escritorio/windows/shared/uiComponents";
+import { DraggableFormWindow as AnimatedDraggableFormWindow, Field, YearMonthFields, EstadoBadge } from "@/features/escritorio/windows/shared/uiComponents";
 
 type ResumenBoletaRow = {
   id: string;
@@ -95,77 +94,6 @@ type ResumenBoletaFormWindow = {
   h: number;
   z: number;
 };
-
-function DraggableFormWindow({
-  win,
-  onFocus,
-  onMove,
-  onClose,
-  children,
-}: {
-  win: ResumenBoletaFormWindow;
-  onFocus: () => void;
-  onMove: (id: string, x: number, y: number) => void;
-  onClose: () => void;
-  children: ReactNode;
-}) {
-  const dragRef = useRef<{ dx: number; dy: number } | null>(null);
-
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      if (!dragRef.current) return;
-      const maxW = window.innerWidth;
-      const maxH = Math.max(320, window.innerHeight - 56);
-      const nextXRaw = event.clientX - dragRef.current.dx;
-      const nextYRaw = event.clientY - dragRef.current.dy;
-      const nextX = Math.max(0, Math.min(nextXRaw, Math.max(0, maxW - win.w)));
-      const nextY = Math.max(0, Math.min(nextYRaw, Math.max(0, maxH - win.h)));
-      onMove(win.id, nextX, nextY);
-    };
-
-    const handleMouseUp = () => {
-      dragRef.current = null;
-      document.body.style.userSelect = "";
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-      document.body.style.userSelect = "";
-    };
-  }, [onMove, win.id, win.w, win.h]);
-
-  if (typeof document === "undefined") return null;
-
-  return createPortal(
-    <div
-      className="fixed bg-[#F1F3F8] border border-slate-500 shadow-2xl rounded-sm overflow-hidden pointer-events-auto"
-      style={{ left: win.x, top: win.y, width: win.w, height: win.h, zIndex: win.z }}
-      onMouseDown={onFocus}
-      role="dialog"
-      aria-modal="true"
-    >
-      <div
-        className="flex items-center justify-between px-3 py-1.5 bg-gradient-to-b from-[#3E5B7A] to-[#2A3F55] border-b border-[#1F2E3F] text-[12px] text-white cursor-move"
-        onMouseDown={(e) => {
-          onFocus();
-          dragRef.current = { dx: e.clientX - win.x, dy: e.clientY - win.y };
-          document.body.style.userSelect = "none";
-          e.preventDefault();
-        }}
-      >
-        <span className="font-medium">{win.title}</span>
-        <button className="hover:bg-white/20 rounded px-1" onClick={onClose} title="Cerrar ventana">
-          <X className="h-3.5 w-3.5 text-white" />
-        </button>
-      </div>
-      <div className="h-[calc(100%-31px)] overflow-hidden bg-[#F8FBFF] text-slate-800">{children}</div>
-    </div>,
-    document.body
-  );
-}
 
 function ResumenEditor({
   row,
@@ -468,7 +396,7 @@ export function ResumenDeBoletasList() {
       </div>
 
       {showEditor && selectedRow && (
-        <DraggableFormWindow
+        <AnimatedDraggableFormWindow
           win={window}
           onFocus={() => setWindow((prev) => ({ ...prev, z: prev.z + 1 }))}
           onMove={(id, x, y) => setWindow((prev) => ({ ...prev, id, x, y }))}
@@ -480,7 +408,7 @@ export function ResumenDeBoletasList() {
             onClose={() => setShowEditor(false)}
             onSave={saveRow}
           />
-        </DraggableFormWindow>
+        </AnimatedDraggableFormWindow>
       )}
     </div>
   );
