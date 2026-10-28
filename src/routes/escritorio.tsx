@@ -1955,7 +1955,7 @@ function DesktopAppInner() {
         <Workspace />
 
         <div className="shrink-0 border-t border-slate-900/80 bg-[#060B13]">
-          <div className="shrink-0 h-9 bg-gradient-to-b from-[#0a1220] to-[#060911] border-t border-[#00E5FF]/20 border-b border-white/70 flex items-center gap-1 px-2 overflow-x-auto">
+          <div className="shrink-0 h-9 bg-gradient-to-b from-[#0a1220] to-[#060911] border-t border-[#00E5FF]/20 flex items-center gap-1 px-2 overflow-x-auto">
             <div className="flex items-center gap-1.5 mr-2 pr-2 border-r border-slate-700/60">
               <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#10B981]" />
               <span className="text-[10px] font-mono text-slate-400 tracking-wider uppercase">Systeck MDI</span>
