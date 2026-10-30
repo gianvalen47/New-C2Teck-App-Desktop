@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useState } from "react";
 import {
   FileText,
   LogOut,
@@ -10,55 +10,53 @@ import {
   Save,
   Search,
   Send,
-  Trash2,
-  Wrench,
-  X,
 } from "lucide-react";
-import { actionBtn, btn, btnPrimary, iconBtn, inp, tbSep } from "@/features/escritorio/windows/uiStyles";
+import { btn, btnPrimary, iconBtn, inp, tbSep } from "@/features/escritorio/windows/uiStyles";
+import {
+  CodeDescSelector,
+  type CodeDescOption,
+} from "@/features/escritorio/windows/shared/SearchFieldControls";
 
 type ReclamoRow = {
-  id: string;
+  numero: string;
   fecha: string;
   control: string;
   cliente: string;
-  documento: string;
-  equipo: string;
-  falla: string;
   estado: string;
   resultado: string;
 };
 
 const rows: ReclamoRow[] = [
-  { id: "RC-0001", fecha: "2026-09-08", control: "CTR-0100", cliente: "LUCY VENTAS S.A.C.", documento: "F001-1001", equipo: "BOMBA 2000", falla: "No arranca", estado: "REGISTRADO", resultado: "PENDIENTE" },
-  { id: "RC-0002", fecha: "2026-09-07", control: "CTR-0101", cliente: "MERCADOS DEL SUR", documento: "F001-1002", equipo: "MOTOR ELÉCTRICO", falla: "Fuga de aceite", estado: "EN EVALUACIÓN", resultado: "PROCEDE" },
-  { id: "RC-0003", fecha: "2026-09-06", control: "CTR-0102", cliente: "ALMACEN DEL NORTE", documento: "B001-1001", equipo: "CARGADOR", falla: "Falla electrónica", estado: "CERRADO", resultado: "NO PROCEDE" },
+  { numero: "88", fecha: "2026-10-29", control: "CTR-0100", cliente: "LUCY VENTAS S.A.C.", estado: "REGISTRADO", resultado: "PENDIENTE" },
+  { numero: "87", fecha: "2026-10-28", control: "CTR-0101", cliente: "MERCADOS DEL SUR", estado: "EN EVALUACIÓN", resultado: "PROCEDE" },
+  { numero: "86", fecha: "2026-10-27", control: "CTR-0102", cliente: "ALMACEN DEL NORTE", estado: "CERRADO", resultado: "NO PROCEDE" },
 ];
 
-const ESTADO_COLORS: Record<string, string> = {
-  REGISTRADO: "text-blue-700 bg-blue-50 border-blue-200",
-  "EN EVALUACIÓN": "text-amber-700 bg-amber-50 border-amber-200",
-  CERRADO: "text-emerald-700 bg-emerald-50 border-emerald-200",
-  ANULADO: "text-red-700 bg-red-50 border-red-200",
-  PENDIENTE: "text-slate-600 bg-slate-100 border-slate-200",
-  PROCEDE: "text-emerald-700 bg-emerald-50 border-emerald-200",
-  "NO PROCEDE": "text-red-700 bg-red-50 border-red-200",
-};
+const OFFICE_OPTIONS: CodeDescOption[] = [
+  { code: "01", label: "LIMA", value: "LIMA" },
+  { code: "02", label: "AREQUIPA", value: "AREQUIPA" },
+];
 
-function Field({ label, className = "", children }: { label: string; className?: string; children: ReactNode }) {
-  return (
-    <label className={`flex flex-col gap-0.5 ${className}`}>
-      <span className="text-[10.5px] text-slate-600 font-medium leading-tight">{label}</span>
-      {children}
-    </label>
-  );
-}
+const WAREHOUSE_OPTIONS: CodeDescOption[] = [
+  { code: "01", label: "COMERCIAL", value: "COMERCIAL" },
+  { code: "02", label: "PRINCIPAL", value: "PRINCIPAL" },
+];
 
-function EstadoBadge({ value }: { value: string }) {
-  const cls = ESTADO_COLORS[value] ?? "text-slate-600 bg-slate-50 border-slate-200";
-  return <span className={`inline-block px-1.5 py-0 text-[10px] font-bold rounded border ${cls}`}>{value}</span>;
-}
+const STATUS_OPTIONS: CodeDescOption[] = [
+  { code: "01", label: "REGISTRADO", value: "REGISTRADO" },
+  { code: "02", label: "EN EVALUACIÓN", value: "EN EVALUACIÓN" },
+  { code: "03", label: "CERRADO", value: "CERRADO" },
+  { code: "04", label: "ANULADO", value: "ANULADO" },
+];
 
 export function ReclamoGarantiaList() {
+  const [selectedNumero, setSelectedNumero] = useState<string | null>(null);
+  const [fechaDesde, setFechaDesde] = useState("2026-01-01");
+  const [fechaHasta, setFechaHasta] = useState("2026-10-29");
+  const [office, setOffice] = useState("LIMA");
+  const [warehouse, setWarehouse] = useState("");
+  const [estado, setEstado] = useState("");
+
   return (
     <div className="relative h-full min-h-0 flex flex-col overflow-hidden bg-[#F3F6FA]">
       <div className="flex items-center gap-1 px-2 py-1.5 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] border-b border-slate-400/50 shrink-0 overflow-x-auto">
@@ -81,52 +79,82 @@ export function ReclamoGarantiaList() {
         <button className={iconBtn} title="Cerrar ventana"><LogOut className="h-4 w-4" /></button>
       </div>
 
-      <div className="flex flex-wrap items-end gap-2 px-2 py-1.5 bg-[#F0F4F8] border-b border-slate-300">
-        <Field label="N° Reclamo" className="w-24"><input className={`${inp} font-mono`} defaultValue="" /></Field>
-        <Field label="Fecha" className="w-28"><input className={inp} type="date" defaultValue="2026-09-08" /></Field>
-        <Field label="Control" className="w-28"><input className={inp} defaultValue="" /></Field>
-        <Field label="Cliente" className="w-52"><div className="flex gap-1"><input className={inp} defaultValue="(Todos)" /><button className={btn} type="button" title="Buscar cliente"><Search className="h-3 w-3" /></button></div></Field>
-        <Field label="Estado" className="w-28"><select className={inp} defaultValue="(Todos)"><option>(Todos)</option><option>REGISTRADO</option><option>EN EVALUACIÓN</option><option>CERRADO</option><option>ANULADO</option></select></Field>
-        <Field label="Resultado" className="w-28"><select className={inp} defaultValue="(Todos)"><option>(Todos)</option><option>PENDIENTE</option><option>PROCEDE</option><option>NO PROCEDE</option></select></Field>
-        <button className={btnPrimary}><Search className="h-3.5 w-3.5" />Buscar</button>
-      </div>
+      <fieldset className="mx-1.5 mt-1.5 shrink-0 border border-[#7A96B4] bg-[#ECF1F7] px-2 pb-1.5 pt-0">
+        <legend className="px-1 text-[10.5px] font-bold text-slate-700">RECLAMOS</legend>
+        <div className="flex flex-col gap-1">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <label className="flex items-center gap-1">
+              <span className="text-[11px] font-semibold text-slate-800 whitespace-nowrap">Fecha Del :</span>
+              <input className={`${inp} w-[138px]`} type="date" value={fechaDesde} onChange={(event) => setFechaDesde(event.target.value)} />
+            </label>
+            <label className="flex items-center gap-1">
+              <span className="text-[11px] font-semibold text-slate-800 whitespace-nowrap">Al :</span>
+              <input className={`${inp} w-[138px]`} type="date" value={fechaHasta} onChange={(event) => setFechaHasta(event.target.value)} />
+            </label>
+          </div>
+          <div className="flex flex-wrap items-end gap-x-2 gap-y-1">
+            <label className="flex flex-col gap-0.5 w-56">
+              <span className="text-[10.5px] font-semibold text-slate-700">Cliente:</span>
+              <span className="flex gap-1">
+                <input className={inp} />
+                <button className={btn} type="button" title="Buscar cliente"><Search className="h-3 w-3" /></button>
+              </span>
+            </label>
+            <label className="flex flex-col gap-0.5 w-28">
+              <span className="text-[10.5px] font-semibold text-slate-700">Oficina:</span>
+              <CodeDescSelector value={office} onChange={setOffice} options={OFFICE_OPTIONS} allLabel="(Todas)" />
+            </label>
+            <label className="flex flex-col gap-0.5 w-32">
+              <span className="text-[10.5px] font-semibold text-slate-700">Almacén:</span>
+              <CodeDescSelector value={warehouse} onChange={setWarehouse} options={WAREHOUSE_OPTIONS} allLabel="(Todos)" />
+            </label>
+            <label className="flex flex-col gap-0.5 w-28">
+              <span className="text-[10.5px] font-semibold text-slate-700">Estado:</span>
+              <CodeDescSelector value={estado} onChange={setEstado} options={STATUS_OPTIONS} allLabel="(Todos)" />
+            </label>
+            <label className="flex flex-col gap-0.5 w-20">
+              <span className="text-[10.5px] font-semibold text-slate-700">Número:</span>
+              <input className={`${inp} font-mono`} />
+            </label>
+            <button type="button" className={`${btnPrimary} h-7`}><Search className="h-3.5 w-3.5" />Buscar</button>
+          </div>
+        </div>
+      </fieldset>
 
       <div className="flex-1 min-h-0 overflow-auto p-1.5">
         <div className="border border-slate-400/60 bg-white rounded-sm h-full overflow-auto">
-          <table className="w-full text-[11.5px]">
+          <table className="w-full min-w-[700px] text-[11.5px]">
             <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0 z-10">
               <tr>
-                {[
-                  "N°",
-                  "Fecha",
-                  "Control",
-                  "Cliente",
-                  "Documento",
-                  "Equipo",
-                  "Falla",
-                  "Estado",
-                  "Resultado",
-                ].map((header) => (
+                {["Número", "Fecha", "Control", "Cliente", "Estado", "Resultado"].map((header) => (
                   <th key={header} className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap">
                     {header}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
-              {rows.map((row, index) => (
-                <tr key={row.id} className={index % 2 === 0 ? "bg-white" : "bg-[#F6F9FC]"}>
-                  <td className="px-3 py-2 border-r border-slate-100 font-mono font-medium">{row.id}</td>
-                  <td className="px-3 py-2 border-r border-slate-100 whitespace-nowrap">{row.fecha}</td>
-                  <td className="px-3 py-2 border-r border-slate-100 font-mono">{row.control}</td>
-                  <td className="px-3 py-2 border-r border-slate-100 max-w-[220px] truncate">{row.cliente}</td>
-                  <td className="px-3 py-2 border-r border-slate-100 font-mono">{row.documento}</td>
-                  <td className="px-3 py-2 border-r border-slate-100">{row.equipo}</td>
-                  <td className="px-3 py-2 border-r border-slate-100 max-w-[180px] truncate">{row.falla}</td>
-                  <td className="px-3 py-2 border-r border-slate-100"><EstadoBadge value={row.estado} /></td>
-                  <td className="px-3 py-2"><EstadoBadge value={row.resultado} /></td>
-                </tr>
-              ))}
+            <tbody>
+              {Array.from({ length: 10 }, (_, index) => {
+                const row = rows[index];
+                const selected = row?.numero === selectedNumero;
+                const rowClass = selected
+                  ? "bg-[#D6E4F4] outline outline-1 outline-[#3E5B7A]"
+                  : index % 2 === 0 ? "bg-white" : "bg-[#F6F9FC]";
+                return (
+                  <tr
+                    key={row?.numero ?? `empty-${index}`}
+                    onClick={() => row && setSelectedNumero(row.numero)}
+                    className={`${row ? "cursor-pointer hover:bg-[#E8F0F8]/60" : ""} border-b border-slate-200 ${rowClass}`}
+                  >
+                    <td className="h-[23px] border-r border-slate-200 px-2 py-0.5 text-center font-mono font-medium">{row?.numero}</td>
+                    <td className="border-r border-slate-200 px-2 py-0.5 text-center whitespace-nowrap">{row?.fecha}</td>
+                    <td className="border-r border-slate-200 px-2 py-0.5 text-center font-mono">{row?.control}</td>
+                    <td className="border-r border-slate-200 px-2 py-0.5">{row?.cliente}</td>
+                    <td className="border-r border-slate-200 px-2 py-0.5 text-center">{row?.estado}</td>
+                    <td className="px-2 py-0.5 text-center">{row?.resultado}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

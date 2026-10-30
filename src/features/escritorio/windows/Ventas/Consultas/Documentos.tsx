@@ -1,8 +1,16 @@
+import { useMemo, useState } from "react";
 import { RegistryWindowList } from "@/features/escritorio/windows/shared/RegistryWindowList";
+import {
+  CodeDescSelector,
+  MonthSelector,
+  YearSpinner,
+  type CodeDescOption,
+} from "@/features/escritorio/windows/shared/SearchFieldControls";
 import type { ReactNode } from "react";
-import { iconBtn, inp, btn, btnPrimary, tbSep } from "@/features/escritorio/windows/uiStyles";
+import { iconBtn, inp, btn, tbSep } from "@/features/escritorio/windows/uiStyles";
 import {
   FileSearch,
+  Eraser,
   LogOut,
   Mail,
   Package,
@@ -40,27 +48,49 @@ export const stdToolbar14 = (
 );
 
 type DocumentoRow = {
-  codigo: string;
-  fecha: string;
-  cliente: string;
-  documento: string;
   serie: string;
   numero: string;
+  fecha: string;
+  nroFactura: string;
+  ordenTrabajo: string;
+  cliente: string;
+  documento: string;
+  tipo: string;
+  oficina: string;
+  almacen: string;
+  moneda: string;
   total: string;
   estado: string;
 };
 
 const rows: DocumentoRow[] = [
-  { codigo: "F001", fecha: "2026-09-08", cliente: "LUCY VENTAS S.A.C.", documento: "Factura", serie: "F001", numero: "1001", total: "S/ 1,248.00", estado: "ACEPTADO" },
-  { codigo: "B001", fecha: "2026-09-08", cliente: "MERCADOS DEL SUR", documento: "Boleta", serie: "B001", numero: "1002", total: "S/ 2,430.50", estado: "PENDIENTE" },
-  { codigo: "G001", fecha: "2026-09-07", cliente: "ALMACEN DEL NORTE", documento: "Guía de Remisión", serie: "G001", numero: "420", total: "S/ 0.00", estado: "ENVIADO" },
+  { serie: "G001", numero: "421", fecha: "2026-10-29", nroFactura: "F001-1001", ordenTrabajo: "1205", cliente: "REMAN CENTER PERU S.A.C.", documento: "Guía de Remisión", tipo: "Todos", oficina: "IQUITOS", almacen: "COMERCIAL", moneda: "S/.", total: "2,847.10", estado: "ENVIADO" },
+  { serie: "F001", numero: "1001", fecha: "2026-10-28", nroFactura: "F001-1001", ordenTrabajo: "1204", cliente: "COMERCIAL DEL NORTE S.A.C.", documento: "Factura", tipo: "Contado", oficina: "IQUITOS", almacen: "COMERCIAL", moneda: "S/.", total: "1,560.00", estado: "ACEPTADO" },
+  { serie: "B001", numero: "1002", fecha: "2026-10-17", nroFactura: "", ordenTrabajo: "1198", cliente: "SERVICIOS INDUSTRIALES LIMA", documento: "Boleta", tipo: "Contado", oficina: "LIMA", almacen: "PRINCIPAL", moneda: "US$", total: "980.50", estado: "PENDIENTE" },
+  { serie: "G001", numero: "418", fecha: "2026-09-30", nroFactura: "F001-0998", ordenTrabajo: "1182", cliente: "MERCADOS DEL SUR", documento: "Guía de Remisión", tipo: "Todos", oficina: "IQUITOS", almacen: "COMERCIAL", moneda: "S/.", total: "4,250.00", estado: "ENVIADO" },
 ];
 
-const ESTADO_COLORS: Record<string, string> = {
-  ACEPTADO: "text-emerald-700 bg-emerald-50 border-emerald-200",
-  PENDIENTE: "text-amber-700 bg-amber-50 border-amber-200",
-  ENVIADO: "text-blue-700 bg-blue-50 border-blue-200",
-};
+const OFFICE_OPTIONS: CodeDescOption[] = [
+  { code: "01", label: "IQUITOS", value: "IQUITOS" },
+  { code: "02", label: "LIMA", value: "LIMA" },
+  { code: "03", label: "AREQUIPA", value: "AREQUIPA" },
+];
+
+const WAREHOUSE_OPTIONS: CodeDescOption[] = [
+  { code: "01", label: "COMERCIAL", value: "COMERCIAL" },
+  { code: "02", label: "PRINCIPAL", value: "PRINCIPAL" },
+];
+
+const DOCUMENT_OPTIONS: CodeDescOption[] = [
+  { code: "01", label: "Guía de Remisión", value: "Guía de Remisión" },
+  { code: "02", label: "Factura", value: "Factura" },
+  { code: "03", label: "Boleta", value: "Boleta" },
+];
+
+const TYPE_OPTIONS: CodeDescOption[] = [
+  { code: "01", label: "Contado", value: "Contado" },
+  { code: "02", label: "Crédito", value: "Crédito" },
+];
 
 function Field({ label, className = "", children }: { label: string; className?: string; children: ReactNode }) {
   return (
@@ -71,70 +101,135 @@ function Field({ label, className = "", children }: { label: string; className?:
   );
 }
 
-function EstadoBadge({ value }: { value: string }) {
-  const cls = ESTADO_COLORS[value] ?? "text-slate-600 bg-slate-50 border-slate-200";
-  return <span className={`inline-block px-1.5 py-0 text-[10px] font-bold rounded border ${cls}`}>{value}</span>;
-}
-
 export function DocumentosList() {
+  const [year, setYear] = useState("2026");
+  const [month, setMonth] = useState("10");
+  const [document, setDocument] = useState("Guía de Remisión");
+  const [type, setType] = useState("");
+  const [office, setOffice] = useState("IQUITOS");
+  const [warehouse, setWarehouse] = useState("");
+  const [client, setClient] = useState("");
+  const [appliedClient, setAppliedClient] = useState("");
+  const [workOrder, setWorkOrder] = useState("");
+  const [number, setNumber] = useState("");
+  const [appliedNumber, setAppliedNumber] = useState("");
+  const [status, setStatus] = useState("");
+
+  const visibleRows = useMemo(() => rows.filter((row) => {
+    const date = new Date(`${row.fecha}T00:00:00`);
+    if (year && date.getFullYear() !== Number(year)) return false;
+    if (month && date.getMonth() + 1 !== Number(month)) return false;
+    if (document && row.documento !== document) return false;
+    if (type && row.tipo !== type) return false;
+    if (office && row.oficina !== office) return false;
+    if (warehouse && row.almacen !== warehouse) return false;
+    if (appliedClient && !row.cliente.toLowerCase().includes(appliedClient)) return false;
+    if (workOrder.trim() && !row.ordenTrabajo.includes(workOrder.trim())) return false;
+    if (appliedNumber && !row.numero.includes(appliedNumber.trim())) return false;
+    if (status && row.estado !== status) return false;
+    return true;
+  }), [year, month, document, type, office, warehouse, appliedClient, workOrder, appliedNumber, status]);
+
+  const applyNumberSearch = () => setAppliedNumber(number.trim());
+  const applyClientSearch = () => setAppliedClient(client.trim().toLowerCase());
+  const clearClientSearch = () => {
+    setClient("");
+    setAppliedClient("");
+  };
+
   return (
     <div className="relative h-full min-h-0 flex flex-col overflow-hidden bg-[#F3F6FA]">
       <div className="flex items-center gap-1 px-2 py-1.5 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] border-b border-slate-400/50 shrink-0 overflow-x-auto">
         {stdToolbar14}
       </div>
 
-      <div className="flex flex-wrap items-end gap-2 px-2 py-1.5 bg-[#F0F4F8] border-b border-slate-300">
-        <Field label="Periodo" className="w-20"><input className={`${inp} font-mono`} defaultValue="2026" /></Field>
-        <Field label="Mes" className="w-28"><select className={inp} defaultValue="SEPTIEMBRE"><option>SEPTIEMBRE</option><option>AGOSTO</option><option>JULIO</option></select></Field>
-        <Field label="Oficina" className="w-28"><select className={inp} defaultValue="LIMA"><option>LIMA</option><option>AREQUIPA</option></select></Field>
-        <Field label="Almacén" className="w-32"><select className={inp} defaultValue="COMERCIAL"><option>COMERCIAL</option><option>PRINCIPAL</option></select></Field>
-        <Field label="Cliente" className="w-52"><div className="flex gap-1"><input className={inp} defaultValue="(Todos)" /><button className={btn} type="button" title="Buscar cliente"><Search className="h-3 w-3" /></button></div></Field>
-        <Field label="Documento" className="w-28"><select className={inp} defaultValue="(Todos)"><option>(Todos)</option><option>FACTURA</option><option>BOLETA</option><option>GUIA</option></select></Field>
-        <Field label="Número" className="w-24"><input className={`${inp} font-mono`} defaultValue="" /></Field>
-        <button className={btnPrimary}><Search className="h-3.5 w-3.5" />Buscar</button>
-      </div>
+      <fieldset className="mx-1.5 mt-1.5 border border-[#7A96B4] bg-[#ECF1F7] px-2 pb-1.5 pt-0 shrink-0">
+        <legend className="px-1 text-[10.5px] font-bold text-slate-700">Datos de Búsqueda</legend>
+        <div className="flex flex-wrap items-end gap-x-1.5 gap-y-1">
+          <Field label="Período" className="w-[82px]"><YearSpinner value={year} onChange={setYear} /></Field>
+          <Field label="Mes" className="w-[100px]"><MonthSelector value={month} onChange={setMonth} /></Field>
+          <Field label="Documento" className="w-[106px]">
+            <CodeDescSelector value={document} onChange={setDocument} options={DOCUMENT_OPTIONS} allLabel="(Todos)" />
+          </Field>
+          <Field label="Tipo" className="w-[76px]">
+            <CodeDescSelector value={type} onChange={setType} options={TYPE_OPTIONS} allLabel="(Todos)" />
+          </Field>
+          <Field label="Oficina" className="w-[92px]">
+            <CodeDescSelector value={office} onChange={setOffice} options={OFFICE_OPTIONS} allLabel="(Todas)" />
+          </Field>
+          <Field label="Almacén" className="w-[96px]">
+            <CodeDescSelector value={warehouse} onChange={setWarehouse} options={WAREHOUSE_OPTIONS} allLabel="(Todos)" />
+          </Field>
+          <div className="flex w-[132px] flex-col gap-0.5">
+            <span className="text-[10.5px] font-medium leading-tight text-slate-600">Cliente</span>
+            <div className="flex items-center gap-0.5">
+              <input
+                className={inp}
+                value={client}
+                onChange={(event) => setClient(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") applyClientSearch();
+                }}
+              />
+              <button className={iconBtn} type="button" title="Buscar cliente" onClick={applyClientSearch}><Search className="h-3 w-3" /></button>
+              <button className={iconBtn} type="button" title="Limpiar cliente" onClick={clearClientSearch}><Eraser className="h-3 w-3" /></button>
+            </div>
+          </div>
+          <Field label="#OT" className="w-[50px]">
+            <input className={`${inp} text-center font-mono`} value={workOrder} onChange={(event) => setWorkOrder(event.target.value)} />
+          </Field>
+          <Field label="Número" className="w-[62px]">
+            <input
+              className={`${inp} text-center font-mono`}
+              value={number}
+              onChange={(event) => setNumber(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") applyNumberSearch();
+              }}
+            />
+          </Field>
+          <button type="button" className={btn} onClick={applyNumberSearch}>
+            <Search className="h-3.5 w-3.5" />Buscar
+          </button>
+        </div>
+      </fieldset>
 
       <div className="flex-1 min-h-0 overflow-auto p-1.5">
         <div className="border border-slate-400/60 bg-white rounded-sm h-full overflow-auto">
-          <table className="w-full text-[11.5px]">
+          <table className="w-full min-w-[790px] text-[11.5px]">
             <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0 z-10">
               <tr>
-                {[
-                  "Código",
-                  "Fecha",
-                  "Cliente",
-                  "Documento",
-                  "Serie",
-                  "Número",
-                  "Total",
-                  "Estado",
-                ].map((header) => (
+                {["Serie", "Número", "Fecha", "Nro.Fact.", "# OT", "Cliente", "Mon.", "Total", "Est."].map((header) => (
                   <th key={header} className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap">
                     {header}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
-              {rows.map((row, index) => (
-                <tr key={`${row.codigo}-${row.numero}`} className={index % 2 === 0 ? "bg-white" : "bg-[#F6F9FC]"}>
-                  <td className="px-3 py-2 border-r border-slate-100 font-mono font-medium">{row.codigo}</td>
-                  <td className="px-3 py-2 border-r border-slate-100">{row.fecha}</td>
-                  <td className="px-3 py-2 border-r border-slate-100 max-w-[220px] truncate">{row.cliente}</td>
-                  <td className="px-3 py-2 border-r border-slate-100">{row.documento}</td>
-                  <td className="px-3 py-2 border-r border-slate-100 font-mono">{row.serie}</td>
-                  <td className="px-3 py-2 border-r border-slate-100 font-mono">{row.numero}</td>
-                  <td className="px-3 py-2 border-r border-slate-100 font-mono text-right">{row.total}</td>
-                  <td className="px-3 py-2"><EstadoBadge value={row.estado} /></td>
-                </tr>
-              ))}
+            <tbody>
+              {Array.from({ length: Math.max(16, visibleRows.length) }, (_, index) => {
+                const row = visibleRows[index];
+                return (
+                  <tr key={row ? `${row.serie}-${row.numero}` : `empty-${index}`} className={index % 2 === 0 ? "bg-white" : "bg-[#F6F9FC]"}>
+                    <td className="h-[20px] border border-blue-200 px-2 font-mono">{row?.serie}</td>
+                    <td className="h-[20px] border border-blue-200 px-2 font-mono">{row?.numero}</td>
+                    <td className="h-[20px] border border-blue-200 px-2">{row?.fecha}</td>
+                    <td className="h-[20px] border border-blue-200 px-2 font-mono">{row?.nroFactura}</td>
+                    <td className="h-[20px] border border-blue-200 px-2 font-mono">{row?.ordenTrabajo}</td>
+                    <td className="h-[20px] border border-blue-200 px-2">{row?.cliente}</td>
+                    <td className="h-[20px] border border-blue-200 px-2 text-center">{row?.moneda}</td>
+                    <td className="h-[20px] border border-blue-200 px-2 text-right font-mono">{row?.total}</td>
+                    <td className="h-[20px] border border-blue-200 px-2">{row?.estado}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
       </div>
 
       <div className="shrink-0 border-t border-slate-400/50 bg-gradient-to-b from-[#D6DEE8] to-[#C0CCDB] px-3 py-0.5 text-[11px] text-slate-700 text-center font-medium flex items-center justify-center whitespace-nowrap overflow-hidden">
-        Registros : {rows.length}
+        Registros : {visibleRows.length}
       </div>
     </div>
   );

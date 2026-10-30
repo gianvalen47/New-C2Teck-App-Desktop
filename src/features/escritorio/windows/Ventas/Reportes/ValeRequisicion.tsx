@@ -1,41 +1,158 @@
-// Auto-extraido de windows (1).tsx (monolito legacy) — revisar antes de usar en produccion.
-import { RefreshCw, Filter } from "lucide-react";
+import { useState } from "react";
 import {
-  inp,
   btn,
   btnPrimary,
-  Field,
-  DataTable,
-  WindowShell,
   Fs,
-  Radio
+  inp,
+  Radio,
+  WindowShell,
 } from "@/components/ui/desktop-primitives";
-import { Vales } from "@/features/escritorio/windows/Almacenes/Almacen/Vales";
 
-export function ReporteValeRequisicionList() {
+function toDateInputValue(date: Date) {
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${date.getFullYear()}-${month}-${day}`;
+}
+
+function getMonthStart() {
+  const today = new Date();
+  return toDateInputValue(new Date(today.getFullYear(), today.getMonth(), 1));
+}
+
+function getToday() {
+  return toDateInputValue(new Date());
+}
+
+export function ReporteValeRequisicionList({
+  title = "Vales de Requisiciones",
+}: {
+  title?: string;
+}) {
+  const [startDate, setStartDate] = useState(getMonthStart);
+  const [endDate, setEndDate] = useState(getToday);
+  const [office, setOffice] = useState("LIMA");
+  const [warehouse, setWarehouse] = useState("COMERCIAL");
+  const [status, setStatus] = useState("(Todos)");
+  const [category, setCategory] = useState("(Todos)");
+
+  const filterClass =
+    "grid grid-cols-[68px_minmax(0,1fr)] items-center gap-1 font-bold";
+
   return (
-    <WindowShell title="Vales de Requisiciones"
-      toolbar={<>
-        <button className={btn}><Filter className="h-3.5 w-3.5" />Filtros</button>
-        <button className={btnPrimary}><RefreshCw className="h-3.5 w-3.5" />Generar</button>
-      </>}
-    >
-      <div className="p-3 space-y-2 max-w-2xl mx-auto text-[11.5px] text-slate-800">
-        <Fs legend="Rango de fechas">
-          <Field label="Del"><input className={inp} type="date" defaultValue="2026-01-07" /></Field>
-          <Field label="Al"><input className={inp} type="date" defaultValue="2026-07-21" /></Field>
-        </Fs>
-        <div className="grid grid-cols-2 gap-2">
-          <Fs legend="Localización"><Field label="Oficina"><select className={inp}><option>LIMA</option></select></Field></Fs>
-          <Fs legend="Almacén"><Field label=""><select className={inp}><option>COMERCIAL</option></select></Field></Fs>
+    <WindowShell title={title}>
+      <div className="flex h-full items-center justify-center overflow-auto p-2 text-[11.5px] text-slate-800">
+        <div className="w-full max-w-[460px] space-y-2 px-1 py-1">
+          <div className="flex items-center justify-center gap-5">
+            <span className="font-bold">Fechas</span>
+            <label className="flex items-center gap-1.5">
+              <span className="font-bold">Del :</span>
+              <input
+                aria-label="Fecha desde"
+                className={`${inp} h-6 w-[100px] px-1`}
+                type="date"
+                min="2010-01-01"
+                value={startDate}
+                onChange={(event) => setStartDate(event.target.value)}
+              />
+            </label>
+            <label className="flex items-center gap-1.5">
+              <span className="font-bold">Al</span>
+              <input
+                aria-label="Fecha hasta"
+                className={`${inp} h-6 w-[100px] px-1`}
+                type="date"
+                min="2010-01-01"
+                value={endDate}
+                onChange={(event) => setEndDate(event.target.value)}
+              />
+            </label>
+          </div>
+
+          <div className="grid grid-cols-2 gap-x-3 gap-y-1">
+            <label className={filterClass}>
+              <span>Oficina:</span>
+              <select
+                aria-label="Oficina"
+                className={`${inp} h-6 min-w-0 px-1`}
+                value={office}
+                onChange={(event) => setOffice(event.target.value)}
+              >
+                <option>LIMA</option>
+              </select>
+            </label>
+            <label className={filterClass}>
+              <span>Almacén:</span>
+              <select
+                aria-label="Almacén"
+                className={`${inp} h-6 min-w-0 px-1`}
+                value={warehouse}
+                onChange={(event) => setWarehouse(event.target.value)}
+              >
+                <option>COMERCIAL</option>
+              </select>
+            </label>
+            <label className={filterClass}>
+              <span>Estado:</span>
+              <select
+                aria-label="Estado"
+                className={`${inp} h-6 min-w-0 px-1`}
+                value={status}
+                onChange={(event) => setStatus(event.target.value)}
+              >
+                <option>(Todos)</option>
+              </select>
+            </label>
+            <label className={filterClass}>
+              <span>Rubro:</span>
+              <select
+                aria-label="Rubro"
+                className={`${inp} h-6 min-w-0 px-1`}
+                value={category}
+                onChange={(event) => setCategory(event.target.value)}
+              >
+                <option>(Todos)</option>
+              </select>
+            </label>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2">
+            <Fs legend="Tipo Reporte" className="px-2 pb-1 pt-0">
+              <div className="flex justify-center gap-3">
+                <Radio
+                  name="vale-requisicion-tipo-reporte"
+                  label="Resumen"
+                  defaultChecked
+                />
+                <Radio
+                  name="vale-requisicion-tipo-reporte"
+                  label="Detalle"
+                />
+              </div>
+            </Fs>
+            <Fs legend="Exportar" className="px-2 pb-1 pt-0">
+              <div className="flex justify-center gap-3">
+                <Radio
+                  name="vale-requisicion-exportar"
+                  label="Pantalla"
+                  defaultChecked
+                />
+                <Radio
+                  name="vale-requisicion-exportar"
+                  label="Exportar"
+                />
+              </div>
+            </Fs>
+          </div>
+
+          <div className="flex justify-center gap-2 pt-1">
+            <button type="button" className={btnPrimary}>
+              Aceptar
+            </button>
+            <button type="button" className={btn}>
+              Cancelar
+            </button>
+          </div>
         </div>
-        <Fs legend="Estado">
-          <Field label=""><select className={inp}><option>(Todos)</option></select></Field>
-          <Field label="Rubro"><select className={inp}><option>(Todos)</option></select></Field>
-        </Fs>
-        <Fs legend="Exportar"><div className="flex flex-col gap-1"><Radio name="exp" label="Pantalla" defaultChecked /><Radio name="exp" label="Exportar" /></div></Fs>
-        <DataTable columns={["Fecha", "Vale", "Concepto", "Cantidad", "Estado", "Ofic."]} rows={5} />
-        <div className="mt-2 flex justify-end gap-2"><button className={btn}>Cancelar</button><button className={btnPrimary}>Aceptar</button></div>
       </div>
     </WindowShell>
   );

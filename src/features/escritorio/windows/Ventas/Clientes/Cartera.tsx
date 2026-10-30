@@ -1,140 +1,123 @@
-import type { ReactNode } from "react";
+import { useMemo, useState } from "react";
+import { FileText, LogOut, Plus, Printer, RefreshCw } from "lucide-react";
+import { toast } from "sonner";
+import { btn, iconBtn, inp, tbSep } from "@/features/escritorio/windows/uiStyles";
 import {
-  FileText,
-  LogOut,
-  Mail,
-  Pencil,
-  Plus,
-  Printer,
-  RefreshCw,
-  Save,
-  Search,
-  Send,
-  Wrench,
-} from "lucide-react";
-import { btn, btnPrimary, iconBtn, inp, tbSep } from "@/features/escritorio/windows/uiStyles";
+  CodeDescSelector,
+  type CodeDescOption,
+} from "@/features/escritorio/windows/shared/SearchFieldControls";
 
 type ClienteRow = {
   codigo: string;
-  ruc: string;
-  razonSocial: string;
+  cliente: string;
   grupo: string;
   vendedor: string;
-  condicion: string;
-  limite: string;
-  estado: string;
-  fActualizacion: string;
+  fecha: string;
 };
 
 const rows: ClienteRow[] = [
-  { codigo: "C-0001", ruc: "20100012345", razonSocial: "LUCY VENTAS S.A.C.", grupo: "COMERCIAL", vendedor: "VENDEDOR 01", condicion: "CONTADO", limite: "S/ 80,000", estado: "ACTIVO", fActualizacion: "2026-09-08" },
-  { codigo: "C-0002", ruc: "20100023456", razonSocial: "MERCADOS DEL SUR", grupo: "MINERÍA", vendedor: "VENDEDOR 02", condicion: "CREDITO 30D", limite: "S/ 150,000", estado: "ACTIVO", fActualizacion: "2026-09-07" },
-  { codigo: "C-0003", ruc: "20100034567", razonSocial: "ALMACEN DEL NORTE", grupo: "SERVICIOS", vendedor: "VENDEDOR 03", condicion: "CREDITO 45D", limite: "S/ 120,000", estado: "INACTIVO", fActualizacion: "2026-08-22" },
+  { codigo: "C-0001", cliente: "LUCY VENTAS S.A.C.", grupo: "COMERCIAL", vendedor: "01", fecha: "2026-09-08" },
+  { codigo: "C-0002", cliente: "MERCADOS DEL SUR", grupo: "MINERÍA", vendedor: "02", fecha: "2026-09-07" },
+  { codigo: "C-0003", cliente: "ALMACEN DEL NORTE", grupo: "SERVICIOS", vendedor: "03", fecha: "2026-08-22" },
 ];
 
-const ESTADO_COLORS: Record<string, string> = {
-  ACTIVO: "text-emerald-700 bg-emerald-50 border-emerald-200",
-  INACTIVO: "text-red-700 bg-red-50 border-red-200",
-};
-
-function Field({ label, className = "", children }: { label: string; className?: string; children: ReactNode }) {
-  return (
-    <label className={`flex flex-col gap-0.5 ${className}`}>
-      <span className="text-[10.5px] text-slate-600 font-medium leading-tight">{label}</span>
-      {children}
-    </label>
-  );
-}
-
-function EstadoBadge({ value }: { value: string }) {
-  const cls = ESTADO_COLORS[value] ?? "text-slate-600 bg-slate-50 border-slate-200";
-  return <span className={`inline-block px-1.5 py-0 text-[10px] font-bold rounded border ${cls}`}>{value}</span>;
-}
+const SELLER_OPTIONS: CodeDescOption[] = [
+  { code: "01", label: "VENDEDOR 01", value: "01" },
+  { code: "02", label: "VENDEDOR 02", value: "02" },
+  { code: "03", label: "VENDEDOR 03", value: "03" },
+];
 
 export function CarteraList() {
+  const [seller, setSeller] = useState("");
+  const visibleRows = useMemo(
+    () => seller ? rows.filter((row) => row.vendedor === seller) : rows,
+    [seller],
+  );
+
   return (
-    <div className="relative h-full min-h-0 flex flex-col overflow-hidden bg-[#F3F6FA]">
-      <div className="flex items-center gap-1 px-2 py-1.5 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] border-b border-slate-400/50 shrink-0 overflow-x-auto">
-        <button className={iconBtn} title="Imprimir cartera"><Printer className="h-4 w-4" /></button>
+    <div className="relative flex h-full min-h-0 flex-col overflow-hidden bg-[#F3F6FA]">
+      <div className="flex shrink-0 items-center gap-1 overflow-x-auto border-b border-slate-400/50 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] px-2 py-1.5">
+        <button type="button" className={iconBtn} title="Imprimir cartera">
+          <Printer className="h-4 w-4" />
+        </button>
         {tbSep}
-        <button className={iconBtn} title="Nuevo cliente"><Plus className="h-4 w-4" /></button>
+        <button type="button" className={iconBtn} title="Reporte de cartera">
+          <FileText className="h-4 w-4" />
+        </button>
         {tbSep}
-        <button className={iconBtn} title="Editar cliente"><Pencil className="h-4 w-4" /></button>
+        <button type="button" className={iconBtn} title="Actualizar cartera" onClick={() => setSeller("")}>
+          <RefreshCw className="h-4 w-4" />
+        </button>
         {tbSep}
-        <button className={iconBtn} title="Guardar cambios"><Save className="h-4 w-4" /></button>
-        {tbSep}
-        <button className={iconBtn} title="Enviar"><Send className="h-4 w-4" /></button>
-        {tbSep}
-        <button className={iconBtn} title="Actualizar"><RefreshCw className="h-4 w-4" /></button>
-        {tbSep}
-        <button className={iconBtn} title="Reporte"><FileText className="h-4 w-4" /></button>
-        {tbSep}
-        <button className={iconBtn} title="Gestión"><Wrench className="h-4 w-4" /></button>
-        {tbSep}
-        <button className={iconBtn} title="Mensajería"><Mail className="h-4 w-4" /></button>
-        {tbSep}
-        <button className={iconBtn} title="Cerrar ventana"><LogOut className="h-4 w-4" /></button>
+        <button type="button" className={iconBtn} title="Cerrar ventana">
+          <LogOut className="h-4 w-4" />
+        </button>
       </div>
 
-      <div className="flex flex-wrap items-end gap-2 px-2 py-1.5 bg-[#F0F4F8] border-b border-slate-300">
-        <Field label="Código" className="w-24"><input className={`${inp} font-mono`} defaultValue="" /></Field>
-        <Field label="Cliente" className="w-52"><div className="flex gap-1"><input className={inp} defaultValue="(Todos)" /><button className={btn} type="button" title="Buscar cliente"><Search className="h-3 w-3" /></button></div></Field>
-        <Field label="Grupo" className="w-40"><select className={inp} defaultValue="(Todos)"><option>(Todos)</option><option>MINERÍA</option><option>COMERCIAL</option><option>SERVICIOS</option></select></Field>
-        <Field label="Vendedor" className="w-44"><select className={inp} defaultValue="(Todos)"><option>(Todos)</option><option>VENDEDOR 01</option><option>VENDEDOR 02</option><option>VENDEDOR 03</option></select></Field>
-        <Field label="Estado" className="w-28"><select className={inp} defaultValue="ACTIVO"><option>ACTIVO</option><option>INACTIVO</option><option>(Todos)</option></select></Field>
-        <button className={btnPrimary}><Search className="h-3.5 w-3.5" />Buscar</button>
-      </div>
+      <fieldset className="mx-1.5 mt-1.5 flex min-h-0 flex-1 flex-col border border-[#7A96B4] bg-[#ECF1F7] px-2 pb-2 pt-0">
+        <legend className="px-1 text-[10.5px] font-bold text-slate-700">Cartera de Clientes</legend>
+        <div className="flex shrink-0 items-center gap-2 px-1 py-1">
+          <span className="text-[11px] font-semibold text-slate-800">Vendedor</span>
+          <div className="min-w-0 flex-1">
+            <CodeDescSelector
+              value={seller}
+              onChange={setSeller}
+              options={SELLER_OPTIONS}
+              allLabel=""
+              width="w-[280px]"
+            />
+          </div>
+          <button
+            type="button"
+            className={`${btn} shrink-0`}
+            onClick={() => toast.info("Agregar clientes requiere conexión al servicio de clientes.")}
+          >
+            <Plus className="h-3.5 w-3.5" />
+            Agregar Cliente
+          </button>
+        </div>
 
-      <div className="flex-1 min-h-0 overflow-auto p-1.5">
-        <div className="border border-slate-400/60 bg-white rounded-sm h-full overflow-auto">
-          <table className="w-full text-[11.5px]">
-            <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0 z-10">
+        <div className="min-h-0 flex-1 overflow-auto border border-slate-400/60 bg-white">
+          <table className="w-full min-w-[560px] border-collapse text-[11.5px]">
+            <colgroup>
+              <col className="w-[15%]" />
+              <col className="w-[45%]" />
+              <col className="w-[25%]" />
+              <col className="w-[15%]" />
+            </colgroup>
+            <thead className="sticky top-0 z-10 bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800">
               <tr>
-                {[
-                  "Código",
-                  "RUC",
-                  "Razón Social",
-                  "Grupo Ventas",
-                  "Vendedor",
-                  "Cond. Pago",
-                  "Límite Crédito",
-                  "Estado",
-                  "F.Actualización",
-                ].map((header) => (
-                  <th key={header} className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap">
+                {["Código", "Cliente", "Grupo Ventas", "Fecha"].map((header) => (
+                  <th key={header} className="border border-slate-300/80 px-2 py-0.5 text-center font-semibold whitespace-nowrap">
                     {header}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
-              {rows.map((row, index) => (
+            <tbody>
+              {visibleRows.map((row, index) => (
                 <tr key={row.codigo} className={index % 2 === 0 ? "bg-white" : "bg-[#F6F9FC]"}>
-                  <td className="px-3 py-2 border-r border-slate-100 font-mono font-medium">{row.codigo}</td>
-                  <td className="px-3 py-2 border-r border-slate-100 font-mono">{row.ruc}</td>
-                  <td className="px-3 py-2 border-r border-slate-100 max-w-[220px] truncate">{row.razonSocial}</td>
-                  <td className="px-3 py-2 border-r border-slate-100">{row.grupo}</td>
-                  <td className="px-3 py-2 border-r border-slate-100">{row.vendedor}</td>
-                  <td className="px-3 py-2 border-r border-slate-100">{row.condicion}</td>
-                  <td className="px-3 py-2 border-r border-slate-100 font-mono text-right">{row.limite}</td>
-                  <td className="px-3 py-2 border-r border-slate-100"><EstadoBadge value={row.estado} /></td>
-                  <td className="px-3 py-2">{row.fActualizacion}</td>
+                  <td className="h-[20px] border border-blue-200 px-2 font-mono">{row.codigo}</td>
+                  <td className="h-[20px] border border-blue-200 px-2">{row.cliente}</td>
+                  <td className="h-[20px] border border-blue-200 px-2">{row.grupo}</td>
+                  <td className="h-[20px] border border-blue-200 px-2">{row.fecha}</td>
+                </tr>
+              ))}
+              {Array.from({ length: Math.max(0, 8 - visibleRows.length) }, (_, index) => (
+                <tr key={`empty-${index}`} className={index % 2 === 0 ? "bg-white" : "bg-[#F6F9FC]"}>
+                  {Array.from({ length: 4 }, (_, column) => (
+                    <td key={column} className="h-[20px] border border-blue-200 px-2" />
+                  ))}
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </div>
-
-      <div className="shrink-0 border-t border-slate-400/50 bg-gradient-to-b from-[#D6DEE8] to-[#C0CCDB] px-3 py-0.5 text-[11px] text-slate-700 text-center font-medium flex items-center justify-center whitespace-nowrap overflow-hidden">
-        Registros : {rows.length}
-      </div>
+      </fieldset>
     </div>
   );
 }
 
 export function Cartera() {
-  return (
-    <CarteraList />
-  );
+  return <CarteraList />;
 }

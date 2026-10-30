@@ -2765,6 +2765,7 @@ export function GuiaRemisionList() {
   const [mes, setMes] = useState(() => getTodayDateParts().month);
   const [estado, setEstado] = useState("");
   const [numDoc, setNumDoc] = useState("");
+  const [appliedNumDoc, setAppliedNumDoc] = useState("");
   const [clientFilterId, setClientFilterId] = useState<number | "">("");
   const [clientFilterLabel, setClientFilterLabel] = useState("(Todos)");
   const [officeFilter, setOfficeFilter] = useState("");
@@ -2781,8 +2782,10 @@ export function GuiaRemisionList() {
   const [toolWindows, setToolWindows] = useState<GuiaToolWindow[]>([]);
   const zRef = useRef(3000);
   const cascadeRef = useRef(0);
+  const loadRequestRef = useRef(0);
 
   const load = useCallback(async () => {
+    const requestId = ++loadRequestRef.current;
     setLoading(true);
     try {
       // If no explicit location filter is set, try to infer id_locacion from
@@ -2790,7 +2793,7 @@ export function GuiaRemisionList() {
       // ensures users on company 08 immediately see guías for id_locacion=87
       // without restarting the app.
       let inferredIdLocacion: number | undefined = undefined;
-      if (locationFilterId === "") {
+      if (locationFilterId === "" && !officeFilter && !warehouseFilter) {
         inferredIdLocacion = inferIdLocacionFromSession();
       }
 
@@ -2800,24 +2803,25 @@ export function GuiaRemisionList() {
         id_locacion: locationFilterId !== "" ? Number(locationFilterId) : inferredIdLocacion,
         id_cliente: clientFilterId !== "" ? Number(clientFilterId) : undefined,
         estado: estado || undefined,
-        num_doc: numDoc ? parseInt(numDoc) : undefined,
+        num_doc: appliedNumDoc ? parseInt(appliedNumDoc) : undefined,
         limit: 500,
       };
       try { console.info('[GuiasRemision] fetching with params', queryParams); } catch (_) {}
 
       const data = await fetchGuiasRemision(queryParams as any);
+      if (requestId !== loadRequestRef.current) return;
       try { const d:any = data; console.info('[GuiasRemision] fetched rows count', Array.isArray(d) ? d.length : (d && (d as any).items ? (d as any).items.length : null)); } catch (_) {}
       setRows(data);
       setSearched(true);
     } catch (e: any) {
+      if (requestId !== loadRequestRef.current) return;
       toast.error(e.message ?? "Error al cargar guías");
     } finally {
-      setLoading(false);
+      if (requestId === loadRequestRef.current) setLoading(false);
     }
-  }, [anio, mes, estado, numDoc, clientFilterId, locationFilterId]);
+  }, [anio, mes, estado, appliedNumDoc, clientFilterId, locationFilterId, officeFilter, warehouseFilter]);
 
   useEffect(() => {
-    load();
     fetchSigecoomClients(0, 0)
       .then((res) => {
         const data = res.items;
@@ -2842,6 +2846,13 @@ export function GuiaRemisionList() {
       })
       .catch((e: any) => console.warn("No se pudo cargar locaciones", e));
   }, []);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      void load();
+    }, 0);
+    return () => window.clearTimeout(timeout);
+  }, [load]);
 
   // Reload list when session (empresa) changes so headers/allowed codes are updated
   useEffect(() => {
@@ -2877,9 +2888,7 @@ export function GuiaRemisionList() {
       const warehouseMatch = warehouseFilter ? loc.warehouse === warehouseFilter : true;
       return officeMatch && warehouseMatch;
     });
-    if (candidate) {
-      setLocationFilterId(Number(candidate.id));
-    }
+    setLocationFilterId(candidate ? Number(candidate.id) : "");
   }, [officeFilter, warehouseFilter, locations]);
 
   const openFormWindow = useCallback((idGuia?: number | string, detailOnly = false, defaultIdLocacion?: number) => {
@@ -3257,9 +3266,27 @@ export function GuiaRemisionList() {
           />
         </Field>
         <Field label="N° Doc" className="w-20">
-          <input className={`${inp} font-mono`} value={numDoc} onChange={e => setNumDoc(e.target.value)} />
+          <input
+            className={`${inp} font-mono`}
+            value={numDoc}
+            onChange={e => setNumDoc(e.target.value)}
+            onKeyDown={e => {
+              if (e.key === "Enter") {
+                if (numDoc === appliedNumDoc) void load();
+                else setAppliedNumDoc(numDoc);
+              }
+            }}
+          />
         </Field>
-        <button className={btnPrimary} onClick={load} disabled={loading}>
+        <button
+          className={btnPrimary}
+          onClick={() => {
+            if (numDoc === appliedNumDoc) void load();
+            else setAppliedNumDoc(numDoc);
+          }}
+          disabled={loading}
+          title="Buscar por número de documento"
+        >
           <Search className="h-3.5 w-3.5" />{loading ? "Buscando…" : "Buscar"}
         </button>
       </div>

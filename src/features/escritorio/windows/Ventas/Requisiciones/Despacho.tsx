@@ -1,153 +1,232 @@
-import type { ReactNode } from "react";
+import { useMemo, useState } from "react";
+import { Eraser, FileText, LogOut, Printer, RefreshCw, Search } from "lucide-react";
+import { btn, iconBtn, inp, tbSep } from "@/features/escritorio/windows/uiStyles";
 import {
-  FileText,
-  LogOut,
-  Mail,
-  Package,
-  Pencil,
-  Plus,
-  Printer,
-  RefreshCw,
-  Save,
-  Search,
-  Send,
-  Truck,
-  Wrench,
-} from "lucide-react";
-import { btn, btnPrimary, iconBtn, inp, tbSep } from "@/features/escritorio/windows/uiStyles";
+  CodeDescSelector,
+  MonthSelector,
+  YearSpinner,
+  type CodeDescOption,
+} from "@/features/escritorio/windows/shared/SearchFieldControls";
 
 type DespachoRow = {
+  requisicion: string;
   numero: string;
   fecha: string;
-  salida: string;
-  retorno: string;
-  chofer: string;
-  placa: string;
-  destino: string;
-  observacion: string;
+  cliente: string;
+  moneda: string;
+  total: string;
   estado: string;
+  oficina: string;
+  almacen: string;
 };
 
 const rows: DespachoRow[] = [
-  { numero: "D-0001", fecha: "2026-09-08", salida: "08:00", retorno: "11:30", chofer: "JUAN PEREZ", placa: "ABC-123", destino: "LIMA SUR", observacion: "Entrega programada", estado: "EN RUTA" },
-  { numero: "D-0002", fecha: "2026-09-08", salida: "09:15", retorno: "12:50", chofer: "CARLOS RUIZ", placa: "XYZ-987", destino: "CALLAO", observacion: "Reposición de stock", estado: "FINALIZADO" },
-  { numero: "D-0003", fecha: "2026-09-07", salida: "07:40", retorno: "09:10", chofer: "PEDRO GARCÍA", placa: "QWE-456", destino: "AREQUIPA", observacion: "Pedido de cliente", estado: "PENDIENTE" },
+  { requisicion: "1052", numero: "421", fecha: "2026-10-29", cliente: "REMAN CENTER PERU S.A.C.", moneda: "S/.", total: "2,847.10", estado: "GENERADO", oficina: "IQUITOS", almacen: "COMERCIAL" },
+  { requisicion: "1051", numero: "420", fecha: "2026-10-28", cliente: "COMERCIAL DEL NORTE S.A.C.", moneda: "S/.", total: "1,560.00", estado: "ATENDIDO", oficina: "IQUITOS", almacen: "COMERCIAL" },
+  { requisicion: "1049", numero: "419", fecha: "2026-10-17", cliente: "SERVICIOS INDUSTRIALES LIMA", moneda: "US$", total: "980.50", estado: "PENDIENTE", oficina: "LIMA", almacen: "PRINCIPAL" },
+  { requisicion: "1038", numero: "418", fecha: "2026-09-30", cliente: "MERCADOS DEL SUR", moneda: "S/.", total: "4,250.00", estado: "ATENDIDO", oficina: "IQUITOS", almacen: "COMERCIAL" },
+  { requisicion: "1012", numero: "417", fecha: "2026-08-14", cliente: "ALMACEN DEL NORTE", moneda: "S/.", total: "735.90", estado: "PENDIENTE", oficina: "LIMA", almacen: "PRINCIPAL" },
 ];
 
-const ESTADO_COLORS: Record<string, string> = {
-  PENDIENTE: "text-amber-700 bg-amber-50 border-amber-200",
-  "EN RUTA": "text-blue-700 bg-blue-50 border-blue-200",
-  FINALIZADO: "text-emerald-700 bg-emerald-50 border-emerald-200",
-  ANULADO: "text-red-700 bg-red-50 border-red-200",
-};
+const OFFICE_OPTIONS: CodeDescOption[] = [
+  { code: "01", label: "IQUITOS", value: "IQUITOS" },
+  { code: "02", label: "LIMA", value: "LIMA" },
+];
 
-function Field({ label, className = "", children }: { label: string; className?: string; children: ReactNode }) {
-  return (
-    <label className={`flex flex-col gap-0.5 ${className}`}>
-      <span className="text-[10.5px] text-slate-600 font-medium leading-tight">{label}</span>
-      {children}
-    </label>
-  );
-}
+const WAREHOUSE_OPTIONS: CodeDescOption[] = [
+  { code: "01", label: "COMERCIAL", value: "COMERCIAL" },
+  { code: "02", label: "PRINCIPAL", value: "PRINCIPAL" },
+];
 
-function EstadoBadge({ value }: { value: string }) {
-  const cls = ESTADO_COLORS[value] ?? "text-slate-600 bg-slate-50 border-slate-200";
-  return <span className={`inline-block px-1.5 py-0 text-[10px] font-bold rounded border ${cls}`}>{value}</span>;
-}
+const STATUS_OPTIONS: CodeDescOption[] = [
+  { code: "GE", label: "GENERADO", value: "GENERADO" },
+  { code: "AT", label: "ATENDIDO", value: "ATENDIDO" },
+  { code: "PE", label: "PENDIENTE", value: "PENDIENTE" },
+  { code: "AN", label: "ANULADO", value: "ANULADO" },
+];
 
 export function DespachoList() {
+  const [year, setYear] = useState("2026");
+  const [month, setMonth] = useState("10");
+  const [office, setOffice] = useState("IQUITOS");
+  const [warehouse, setWarehouse] = useState("COMERCIAL");
+  const [client, setClient] = useState("");
+  const [appliedClient, setAppliedClient] = useState("");
+  const [status, setStatus] = useState("");
+  const [orderNumber, setOrderNumber] = useState("");
+  const [appliedOrderNumber, setAppliedOrderNumber] = useState("");
+  const [selectedRequisition, setSelectedRequisition] = useState<string | null>(null);
+
+  const visibleRows = useMemo(() => rows.filter((row) => {
+    const date = new Date(`${row.fecha}T00:00:00`);
+    if (year && date.getFullYear() !== Number(year)) return false;
+    if (month && date.getMonth() + 1 !== Number(month)) return false;
+    if (office && row.oficina !== office) return false;
+    if (warehouse && row.almacen !== warehouse) return false;
+    if (appliedClient && !row.cliente.toLowerCase().includes(appliedClient.toLowerCase())) return false;
+    if (status && row.estado !== status) return false;
+    if (appliedOrderNumber && !row.numero.includes(appliedOrderNumber.trim())) return false;
+    return true;
+  }), [year, month, office, warehouse, appliedClient, status, appliedOrderNumber]);
+
+  const searchByOrderNumber = () => setAppliedOrderNumber(orderNumber.trim());
+  const applyClientSearch = () => setAppliedClient(client.trim().toLowerCase());
+  const clearClient = () => {
+    setClient("");
+    setAppliedClient("");
+  };
+
   return (
-    <div className="relative h-full min-h-0 flex flex-col overflow-hidden bg-[#F3F6FA]">
-      <div className="flex items-center gap-1 px-2 py-1.5 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] border-b border-slate-400/50 shrink-0 overflow-x-auto">
-        <button className={iconBtn} title="Imprimir despacho"><Printer className="h-4 w-4" /></button>
+    <div className="relative flex h-full min-h-0 flex-col overflow-hidden bg-[#F3F6FA]">
+      <div className="flex shrink-0 items-center gap-1 overflow-x-auto border-b border-slate-400/50 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] px-2 py-1.5">
+        <button type="button" className={iconBtn} title="Imprimir despachos">
+          <Printer className="h-4 w-4" />
+        </button>
         {tbSep}
-        <button className={iconBtn} title="Nuevo despacho"><Plus className="h-4 w-4" /></button>
+        <button type="button" className={iconBtn} title="Reporte de despachos">
+          <FileText className="h-4 w-4" />
+        </button>
         {tbSep}
-        <button className={iconBtn} title="Editar despacho"><Pencil className="h-4 w-4" /></button>
+        <button
+          type="button"
+          className={iconBtn}
+          title="Actualizar"
+          onClick={() => {
+            setAppliedOrderNumber("");
+            setOrderNumber("");
+          }}
+        >
+          <RefreshCw className="h-4 w-4" />
+        </button>
         {tbSep}
-        <button className={iconBtn} title="Guardar"><Save className="h-4 w-4" /></button>
-        {tbSep}
-        <button className={iconBtn} title="Envío"><Send className="h-4 w-4" /></button>
-        {tbSep}
-        <button className={iconBtn} title="Actualizar"><RefreshCw className="h-4 w-4" /></button>
-        {tbSep}
-        <button className={iconBtn} title="Paquete"><Package className="h-4 w-4" /></button>
-        {tbSep}
-        <button className={iconBtn} title="Vehículo"><Truck className="h-4 w-4" /></button>
-        {tbSep}
-        <button className={iconBtn} title="Mensajería"><Mail className="h-4 w-4" /></button>
-        {tbSep}
-        <button className={iconBtn} title="Cerrar ventana"><LogOut className="h-4 w-4" /></button>
+        <button type="button" className={iconBtn} title="Cerrar ventana">
+          <LogOut className="h-4 w-4" />
+        </button>
       </div>
 
-      <div className="px-2 py-1.5 bg-[#F0F4F8] border-b border-slate-300">
-        <div className="grid grid-cols-4 gap-2 text-[11px]">
-          <div className="rounded-sm border border-slate-300 bg-white px-2 py-1"><span className="text-slate-600">Pendientes:</span> <b className="font-mono text-slate-900">3</b></div>
-          <div className="rounded-sm border border-slate-300 bg-white px-2 py-1"><span className="text-slate-600">En ruta:</span> <b className="font-mono text-slate-900">5</b></div>
-          <div className="rounded-sm border border-slate-300 bg-white px-2 py-1"><span className="text-slate-600">Finalizados:</span> <b className="font-mono text-slate-900">12</b></div>
-          <div className="rounded-sm border border-slate-300 bg-white px-2 py-1"><span className="text-slate-600">Anulados:</span> <b className="font-mono text-slate-900">1</b></div>
+      <fieldset className="mx-1.5 mt-1.5 shrink-0 border border-[#7A96B4] bg-[#ECF1F7] px-2 pb-1.5 pt-0">
+        <legend className="px-1 text-[10.5px] font-bold text-slate-700">Datos de Búsqueda</legend>
+        <div className="flex flex-wrap items-end gap-x-2 gap-y-1">
+          <label className="flex w-[82px] flex-col gap-0.5">
+            <span className="text-[10.5px] font-semibold text-slate-700">Año</span>
+            <YearSpinner value={year} onChange={setYear} />
+          </label>
+          <label className="flex w-[100px] flex-col gap-0.5">
+            <span className="text-[10.5px] font-semibold text-slate-700">Mes</span>
+            <MonthSelector value={month} onChange={setMonth} />
+          </label>
+          <label className="flex w-[92px] flex-col gap-0.5">
+            <span className="text-[10.5px] font-semibold text-slate-700">Oficina</span>
+            <CodeDescSelector value={office} onChange={setOffice} options={OFFICE_OPTIONS} allLabel="(Todas)" />
+          </label>
+          <label className="flex w-[124px] flex-col gap-0.5">
+            <span className="text-[10.5px] font-semibold text-slate-700">Almacén</span>
+            <CodeDescSelector value={warehouse} onChange={setWarehouse} options={WAREHOUSE_OPTIONS} allLabel="(Todos)" />
+          </label>
+          <div className="flex w-[172px] flex-col gap-0.5">
+            <span className="text-[10.5px] font-semibold text-slate-700">Cliente</span>
+            <div className="flex items-center gap-1">
+              <input
+                className={inp}
+                value={client}
+                placeholder="(Todos)"
+                onChange={(event) => setClient(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") applyClientSearch();
+                }}
+              />
+              <button type="button" className={iconBtn} title="Buscar cliente" onClick={applyClientSearch}>
+                <Search className="h-3.5 w-3.5" />
+              </button>
+              <button type="button" className={iconBtn} title="Limpiar cliente" onClick={clearClient}>
+                <Eraser className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          </div>
+          <label className="flex w-[100px] flex-col gap-0.5">
+            <span className="text-[10.5px] font-semibold text-slate-700">Estado</span>
+            <CodeDescSelector value={status} onChange={setStatus} options={STATUS_OPTIONS} allLabel="(Todos)" />
+          </label>
+          <div className="flex w-[112px] flex-col gap-0.5">
+            <label htmlFor="despacho-order-number" className="text-[10.5px] font-semibold text-slate-700">
+              Número O.C.
+            </label>
+            <div className="flex items-center gap-1">
+              <input
+                id="despacho-order-number"
+                className={`${inp} min-w-0 text-center font-mono`}
+                value={orderNumber}
+                onChange={(event) => setOrderNumber(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") searchByOrderNumber();
+                }}
+              />
+              <button type="button" className={`${btn} shrink-0`} title="Buscar número de orden" onClick={searchByOrderNumber}>
+                <Search className="h-3.5 w-3.5" />
+                Buscar
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
+      </fieldset>
 
-      <div className="flex flex-wrap items-end gap-2 px-2 py-1.5 bg-[#F0F4F8] border-b border-slate-300">
-        <Field label="Fecha Inicio" className="w-28"><input className={inp} type="date" defaultValue="2026-09-01" /></Field>
-        <Field label="Fecha Fin" className="w-28"><input className={inp} type="date" defaultValue="2026-09-08" /></Field>
-        <Field label="Chofer" className="w-52"><div className="flex gap-1"><input className={inp} defaultValue="(Todos)" /><button className={btn} type="button" title="Buscar chofer"><Search className="h-3 w-3" /></button></div></Field>
-        <Field label="Placa" className="w-28"><input className={`${inp} font-mono`} defaultValue="" /></Field>
-        <Field label="Estado" className="w-28"><select className={inp} defaultValue="(Todos)"><option>(Todos)</option><option>GENERADO</option><option>EN RUTA</option><option>FINALIZADO</option><option>ANULADO</option></select></Field>
-        <button className={btnPrimary}><Search className="h-3.5 w-3.5" />Buscar</button>
-      </div>
-
-      <div className="flex-1 min-h-0 overflow-auto p-1.5">
-        <div className="border border-slate-400/60 bg-white rounded-sm h-full overflow-auto">
-          <table className="w-full text-[11.5px]">
-            <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0 z-10">
+      <div className="min-h-0 flex-1 overflow-auto p-1.5">
+        <div className="h-full overflow-auto rounded-sm border border-slate-400/60 bg-white">
+          <table className="w-full min-w-[790px] border-collapse text-[11px]">
+            <colgroup>
+              <col className="w-[8%]" />
+              <col className="w-[10%]" />
+              <col className="w-[12%]" />
+              <col className="w-[35%]" />
+              <col className="w-[6%]" />
+              <col className="w-[13%]" />
+              <col className="w-[16%]" />
+            </colgroup>
+            <thead className="sticky top-0 z-10 bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800">
               <tr>
-                {[
-                  "Número",
-                  "Fecha",
-                  "Hora Salida",
-                  "Hora Retorno",
-                  "Chofer",
-                  "Placa",
-                  "Destino",
-                  "Observación",
-                  "Estado",
-                ].map((header) => (
-                  <th key={header} className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap">
+                {["Nº Req", "Número", "Fecha", "Cliente", "Mon.", "Total", "Estado"].map((header) => (
+                  <th key={header} className="border border-slate-300/70 px-2 py-1 text-center font-semibold whitespace-nowrap">
                     {header}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
-              {rows.map((row, index) => (
-                <tr key={row.numero} className={index % 2 === 0 ? "bg-white" : "bg-[#F6F9FC]"}>
-                  <td className="px-3 py-2 border-r border-slate-100 font-mono font-medium">{row.numero}</td>
-                  <td className="px-3 py-2 border-r border-slate-100">{row.fecha}</td>
-                  <td className="px-3 py-2 border-r border-slate-100">{row.salida}</td>
-                  <td className="px-3 py-2 border-r border-slate-100">{row.retorno}</td>
-                  <td className="px-3 py-2 border-r border-slate-100">{row.chofer}</td>
-                  <td className="px-3 py-2 border-r border-slate-100 font-mono">{row.placa}</td>
-                  <td className="px-3 py-2 border-r border-slate-100">{row.destino}</td>
-                  <td className="px-3 py-2 border-r border-slate-100 max-w-[220px] truncate">{row.observacion}</td>
-                  <td className="px-3 py-2"><EstadoBadge value={row.estado} /></td>
-                </tr>
-              ))}
+            <tbody>
+              {Array.from({ length: Math.max(14, visibleRows.length) }, (_, index) => {
+                const row = visibleRows[index];
+                const selected = row?.requisicion === selectedRequisition;
+                const rowClass = selected
+                  ? "bg-[#D6E4F4] outline outline-1 outline-[#3E5B7A]"
+                  : index % 2 === 0 ? "bg-white" : "bg-[#F6F9FC]";
+                return (
+                  <tr
+                    key={row?.requisicion ?? `empty-${index}`}
+                    onClick={() => row && setSelectedRequisition(row.requisicion)}
+                    className={`${row ? "cursor-pointer hover:bg-[#E8F0F8]/60" : ""} ${rowClass}`}
+                  >
+                    <td className="h-[20px] border border-blue-200 px-2 text-center font-mono">{row?.requisicion}</td>
+                    <td className="h-[20px] border border-blue-200 px-2 text-center font-mono">{row?.numero}</td>
+                    <td className="h-[20px] border border-blue-200 px-2 text-center">{row?.fecha}</td>
+                    <td className="h-[20px] border border-blue-200 px-2">{row?.cliente}</td>
+                    <td className="h-[20px] border border-blue-200 px-2 text-center">{row?.moneda}</td>
+                    <td className="h-[20px] border border-blue-200 px-2 text-right font-mono">{row?.total}</td>
+                    <td className="h-[20px] border border-blue-200 px-2">{row?.estado}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
       </div>
 
-      <div className="shrink-0 border-t border-slate-400/50 bg-gradient-to-b from-[#D6DEE8] to-[#C0CCDB] px-3 py-0.5 text-[11px] text-slate-700 text-center font-medium flex items-center justify-center whitespace-nowrap overflow-hidden">
-        Registros : {rows.length}
+      <div className="flex shrink-0 items-center justify-between border-t border-slate-400/50 bg-gradient-to-b from-[#D6DEE8] to-[#C0CCDB] px-3 py-1 text-[11px] text-slate-700">
+        <span aria-hidden="true" className="h-4 w-px bg-slate-400/70" />
+        <span className="font-semibold">Registros: {visibleRows.length}</span>
       </div>
     </div>
   );
 }
 
 export function Despacho() {
-  return (
-    <DespachoList />
-  );
+  return <DespachoList />;
 }

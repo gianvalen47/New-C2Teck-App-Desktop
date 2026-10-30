@@ -57,7 +57,7 @@ export function KardexCostosReport({
               <span className="text-right font-bold">Almacén</span>
               <select
                 aria-label="Almacén"
-                className={`${inp} h-6 w-full px-1`}
+                className={`${inp} h-6 w-[150px] max-w-full px-1`}
                 defaultValue="comercial"
               >
                 <option value="comercial">COMERCIAL</option>
@@ -67,11 +67,11 @@ export function KardexCostosReport({
               <span className="text-right font-bold">Artículo</span>
               <input
                 aria-label="Artículo"
-                className={`${inp} h-6 min-w-0 px-1`}
+                className={`${inp} h-6 w-[150px] max-w-full px-1`}
               />
               <button
                 type="button"
-                className={`${iconBtn} border border-slate-400/70`}
+                className={`${iconBtn} h-6 w-[150px] max-w-full px-1`}
                 aria-label="Buscar artículo"
               >
                 <Search className="h-4 w-4" />

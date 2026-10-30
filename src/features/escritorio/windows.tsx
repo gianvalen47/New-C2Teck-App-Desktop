@@ -45,7 +45,6 @@ import { enhanceToolbar } from "./windows/shared/toolbars";
 import { RibbonPlaceholder } from "./windows/shared/RibbonPlaceholder";
 
 // Specific feature windows (moved to their own modules)
-import { ConsultaPreciosDialogList, ConsultaPreciosDialog } from "./windows/Precios/ConsultaPreciosDialog";
 
 // Additional window components referenced in legacy monolith
 import { NewGuideWindow } from "./NewGuideWindow";
@@ -79,7 +78,7 @@ import { Cartera, CarteraList } from "./windows/Ventas/Clientes/Cartera";
 import { Despacho, DespachoList } from "./windows/Ventas/Requisiciones/Despacho";
 
 // Consultas
-import { PrecioConsulta, PrecioConsultaList } from "./windows/Ventas/Consultas/Precios";
+import { PrecioConsulta } from "./windows/Ventas/Consultas/Precios";
 import { ConsultaDocumentosVentaWindow, ConsultaDocumentosVentaList } from "./windows/Ventas/Consultas/Documentos";
 
 // Indicadores
@@ -610,7 +609,11 @@ function addAliases(baseLabel: string, aliases: string[], component: WindowCompo
 }
 
 // --- Precios ---
-add("Consulta Precios", ConsultaPreciosDialogList);
+addAliases(
+  "Consulta de Precios",
+  ["Consulta Precios", "Precio Consulta", "Precios"],
+  PrecioConsulta,
+);
 add("Precios Cliente", PrecioClienteList);
 add("Precio Oferta", PrecioOfertaList);
 add("Precio Lista", PrecioListaList);
@@ -631,15 +634,16 @@ add("Boleta", Boleta);
 add("Resumen de Boletas", ResumenBoletas);
 
 add("Cotizaciones", Cotizaciones);
+add("Cotizaciones Ventas", Cotizaciones);
 add("Reclamo Garantía", ReclamoGarantia);
 add("Separar Orden", SepararOrden);
 add("Órdenes Compra", OrdenesCompra);
+add("Ordenes Compra Venta", OrdenesCompra);
 add("Actualizar Vendedor", ActualizarVendedor);
 add("Enviar Correos", EnviarCorreos);
 
 add("Cartera", Cartera);
 add("Despacho", Despacho);
-add("Precio Consulta", PrecioConsulta);
 add("Consulta Documentos Venta", ConsultaDocumentosVentaWindow);
 add("Tablero Indicador", TableroIndicador);
 
@@ -650,7 +654,7 @@ add("Reporte Ventas Detallado", ReporteVentasDetalladoList);
 add("Reporte Acumulada", ReporteAcumulada);
 add("Reporte GR Pendiente", ReporteGRPendiente);
 add("Reporte Cotizaciones", ReporteCotizaciones);
-add("Reporte Vale Requisición", ReporteValeRequisicionList);
+add("Vale Requisición", ReporteValeRequisicionList);
 addAliases(
   "Reporte Mensual Cliente",
   ["Mensuales x Cliente", "Reporte de Ventas Mensuales por Cliente"],
@@ -1532,6 +1536,9 @@ const REGISTRY: Record<string, (label: string) => ReactNode> = {
   "Reporte Mensual Cliente": () => <ReporteMensualCliente />,
   "Mensuales x Cliente": () => <ReporteMensualCliente />,
   "Reporte de Ventas Mensuales por Cliente": () => <ReporteMensualCliente />,
+  "Vales de Requisiciones": (label) => <ReporteValeRequisicionList title={label} />,
+  "Reporte Vale Requisición": (label) => <ReporteValeRequisicionList title={label} />,
+  "Vale Requisición": (label) => <ReporteValeRequisicionList title={label} />,
   "Detalle": () => <ReporteVentasDetalladoList />,
   "Guías Remisión": () => <ReporteGuiasRemision />,
   "Nueva Guía": () => <GuiaRemision />,
@@ -1579,6 +1586,7 @@ const REGISTRY: Record<string, (label: string) => ReactNode> = {
   "GMROI": () => <GmroiCostosReport />,
   "Reporte de GMROI": () => <GmroiCostosReport />,
   "Importaciones": () => <ImportacionesCostosReport />,
+  "Inventario": () => <ReporteInventario />,
   "Reporte de Importaciones": () => <ImportacionesCostosReport />,
   "Importaciones Costos Report": () => <ImportacionesCostosReport />,
   "Kardex": () => <KardexCostosReport />,
@@ -1712,7 +1720,17 @@ const PERSONAL_REPORTES = new Set([
 
 const normalizeSet = (values: Iterable<string>) => new Set(Array.from(values, normalizeWindowLookupKey));
 const NORMALIZED_REGISTRY: Record<string, (label: string) => ReactNode> = Object.fromEntries(
-  Object.entries(REGISTRY).map(([key, value]) => [normalizeWindowLookupKey(key), value]),
+  [
+    ...Object.entries(registry)
+      .filter(([key, component]) =>
+        component !== ReporteContainer || normalizeWindowLabel(key) === normalizeWindowLabel("Reporte Container"),
+      )
+      .map(([key, Component]) => [
+        normalizeWindowLookupKey(key),
+        () => <Component />,
+      ]),
+    ...Object.entries(REGISTRY).map(([key, value]) => [normalizeWindowLookupKey(key), value]),
+  ],
 );
 const VENTAS_REPORTES_NORMALIZED = normalizeSet(VENTAS_REPORTES);
 const CREDITOS_REPORTES_NORMALIZED = normalizeSet(CREDITOS_REPORTES);

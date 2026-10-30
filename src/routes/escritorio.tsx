@@ -141,7 +141,7 @@ const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
   requisiciones: "ValeRequisicion",
   consultas: "doc_elec_lupa",
   indicadores: "indicadorico32",
-  tablero: "QuickPlay",
+  tablero: "Semaforo",
   almacen: "almacen",
   almacenes: "almacen",
   motores: "motores",
@@ -346,7 +346,7 @@ const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
   "tarifa gasto viaje": "Tarifas",
   "tarifa taxis casa": "importacion",
   "tarifas taxi destino": "Taxi",
-  "cuentas x pagar": "ctas_ctes",
+  "cuentas x pagar": "ctasPagar",
   "ctas x pagar": "diarioPago",
   "compras y o gastos": "Compra_Con",
   "pagos cuentas x pagar": "Pagos",
@@ -380,7 +380,7 @@ const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
   faltas: "faltas_ico",
   marcacion: "mp_icon",
   "marcacion online": "equipo_mar",
-  marcaciones: "mp_icon2",
+  marcaciones: "mp_icon",
   "pre marcacion": "PreMarcacion",
   "asigna h extra": "HorsExt2",
   "asig h extra": "HorsExt2",
@@ -461,7 +461,7 @@ const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
   // TABLAS
   "condicion de pago": "Cronograma_ico",
   "tipo motores": "motores",
-  categorias: "clases",
+  categorias: "diarioPago",
   "precios core": "precioCore",
   partidas: "partidas",
   marcas: "marca",
@@ -470,9 +470,9 @@ const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
   "ubicacion servicio": "Buscar.ico",
   vehiculos: "car_256",
   "cuenta contable": "cuenta_mas",
-  "cuentas destino": "proc_cta_dest",
+  "cuentas destino": "tes_asientos",
   "rubro planilla": "ing_planillas",
-  "rubro planilla ctas": "apor_planillas",
+  "rubro planilla ctas": "tes_asientos",
   afp: "Afp2",
   cargos: "Cargo_per",
   areas: "area_costo",
@@ -585,12 +585,12 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
         { icon: Search, label: "Consultas", big: true, dropdown: true, menu: [
           { title: "Consultas", items: [
             { icon: DollarSign, label: "Precios" },
-            { icon: FileText, label: "Documentos", iconKey: "documentos", openLabel: "Documentos de Ventas" },
+            { icon: FileText, label: "Documentos", iconKey: "documentos", openLabel: "Consulta Documentos Venta" },
           ]},
         ]},
         { icon: BarChart3, label: "Indicadores", big: true, dropdown: true, menu: [
           { title: "Indicadores", items: [
-            { icon: LayoutGrid, label: "Tablero" },
+            { icon: LayoutGrid, label: "Tablero", openLabel: "Tablero Indicador" },
           ]},
         ]},
       ],
@@ -615,19 +615,19 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
             { icon: FileCheck, label: "Resumen Registro" },
           ]},
         ] },
-        { icon: FileEdit, label: "Detalle" },
+        { icon: FileEdit, label: "Detalle", openLabel: "Reporte Ventas Detallado" },
         { icon: FileCheck, label: "Acumulada" },
         { icon: ScrollText, label: "G/R Pendiente" },
-        { icon: FileSearch, label: "Cotizaciones" },
+        { icon: FileSearch, label: "Cotizaciones", openLabel: "Reporte Cotizaciones" },
         { icon: HandCoins, label: "Vale Requisición" },
         { icon: Users, label: "Mensuales x Cliente" },
         { icon: Percent, label: "Detalle Descuento" },
         { icon: Receipt, label: "Reclamos" },
-        { icon: Boxes, label: "Órdenes Compra" },
+        { icon: Boxes, label: "Órdenes Compra", openLabel: "Reporte Orden Compra" },
         { icon: Package, label: "Consignaciones" },
         { icon: Truck, label: "Guías Remisión" },
         { icon: Wallet, label: "Presupuesto Venta" },
-        { icon: Coins, label: "Comisiones" },
+        { icon: Coins, label: "Comisiones", openLabel: "Reporte Comisiones" },
       ],
     },
   ],
@@ -636,36 +636,36 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Almacén",
       items: [
-        { icon: PackageOpen, label: "Doc.Ingresos" },
-        { icon: PackageX, label: "Doc.Salidas" },
+        { icon: PackageOpen, label: "Doc.Ingresos", openLabel: "Doc. Ingresos" },
+        { icon: PackageX, label: "Doc.Salidas", openLabel: "Doc. Salidas" },
         { icon: CheckCircle2, label: "Chequeo F/I" },
-        { icon: ClipboardCheck, label: "T / I" },
-        { icon: Wrench, label: "M T I" },
+        { icon: ClipboardCheck, label: "T / I", openLabel: "Almacén T/I" },
+        { icon: Wrench, label: "M T I", openLabel: "Almacén MTI" },
         { icon: HandCoins, label: "Vales" },
         { icon: ClipboardEdit, label: "Atender OT" },
-        { icon: Truck, label: "Despachos" },
+        { icon: Truck, label: "Despachos", openLabel: "Despacho Almacén" },
         { icon: UserSearch, label: "Datos Despacho Clientes" },
       ],
     },
     {
       title: "Motores",
       items: [
-        { icon: ArrowRightLeft, label: "Transferencias" },
-        { icon: ShoppingCart, label: "Compras", openLabel: "Compras Motores" },
+        { icon: ArrowRightLeft, label: "Transferencias", openLabel: "Memos Transferencias Internas" },
+        { icon: ShoppingCart, label: "Compras", openLabel: "Compra Motores" },
       ],
     },
     {
       title: "Tránsito",
       items: [
-        { icon: FileText, label: "Documentos", openLabel: "Documentos de Tránsito" },
-        { icon: XCircle, label: "Anulación en Consulta" },
+        { icon: FileText, label: "Documentos", openLabel: "Tránsito Docs" },
+        { icon: XCircle, label: "Anulación en Consulta", openLabel: "Anulación Consulta" },
       ],
     },
     {
       title: "Mantenimiento",
       items: [
-        { icon: Box, label: "Productos" },
-        { icon: DollarSign, label: "Liqui. Gastos" },
+        { icon: Box, label: "Productos", openLabel: "Mantenimiento Productos" },
+        { icon: DollarSign, label: "Liqui. Gastos", openLabel: "Liqui Gastos" },
         { icon: Sliders, label: "Act. Min Max" },
         { icon: MapPin, label: "Ubicaciones" },
       ],
@@ -674,7 +674,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       title: "Consultas",
       items: [
         { icon: Tag, label: "Tarjetas" },
-        { icon: FileText, label: "Documentos", openLabel: "Documentos de Importación" },
+        { icon: FileText, label: "Documentos", openLabel: "Documento Consulta" },
       ],
     },
     {
@@ -692,7 +692,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
         { icon: ClipboardCheck, label: "Toma de Inventario" },
         { icon: ArrowLeftRight, label: "Movimientos" },
         { icon: HandCoins, label: "Vale Materiales" },
-        { icon: FileText, label: "Documentos" },
+        { icon: FileText, label: "Documentos", openLabel: "Reporte de Documentos" },
         { icon: PackageCheck, label: "Inv. Perm. Valorizado" },
         { icon: FileMinus, label: "Sin Movimiento" },
         { icon: ArrowRightLeft, label: "Transferencias" },
@@ -713,22 +713,22 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Aprobaciones",
       items: [
-        { icon: BadgeCheck, label: "Créditos" },
-        { icon: FileEdit, label: "Cotiz. Taller" },
-        { icon: Lock, label: "Permiso Usuario" },
-        { icon: Mail, label: "Recepcion Doc." },
+        { icon: BadgeCheck, label: "Créditos", openLabel: "Aprobación Créditos" },
+        { icon: FileEdit, label: "Cotiz. Taller", openLabel: "Cotiz Taller Crédito" },
+        { icon: Lock, label: "Permiso Usuario", openLabel: "Permiso Usuario Créditos" },
+        { icon: Mail, label: "Recepcion Doc.", openLabel: "Recepción Doc Créditos" },
       ],
     },
     {
       title: "Mantenimiento",
       items: [
-        { icon: Percent, label: "Factores y Descuentos" },
-        { icon: Banknote, label: "Saldo Bancos" },
+        { icon: Percent, label: "Factores y Descuentos", openLabel: "Factores Descuentos Window" },
+        { icon: Banknote, label: "Saldo Bancos", openLabel: "Saldo Bancos Créditos" },
         { icon: UserSearch, label: "Visitas Cobrador" },
-        { icon: RefreshCw, label: "Procesar Job" },
-        { icon: Truck, label: "Vincular G/R" },
-        { icon: CalendarDays, label: "Feriados" },
-        { icon: DollarSign, label: "Tipo Cambio Ventas" },
+        { icon: RefreshCw, label: "Procesar Job", openLabel: "Procesar Job Window" },
+        { icon: Truck, label: "Vincular G/R", openLabel: "Vincular GR Window" },
+        { icon: CalendarDays, label: "Feriados", openLabel: "Feriados Window" },
+        { icon: DollarSign, label: "Tipo Cambio Ventas", openLabel: "Tipo Cambios Ventas" },
         { icon: RefreshCcw, label: "Renueva Tipo Cambio" },
         { icon: Wrench, label: "Mantenimiento Tipo de Cambio" },
 
@@ -739,9 +739,9 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       items: [
         { icon: BookOpen, label: "Consultas", big: true, dropdown: true, menu: [
           { title: "Consultas", items: [
-            { icon: HandCoins, label: "Ctas. x Cobrar" },
+            { icon: HandCoins, label: "Ctas. x Cobrar", openLabel: "Ctas x Cobrar" },
             { icon: IdCard, label: "Tarjeta Cliente" },
-            { icon: FileClock, label: "Vencimientos" },
+            { icon: FileClock, label: "Vencimientos", openLabel: "Vencimientos Créditos Report" },
           ]},
         ]},
       ],
@@ -762,7 +762,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
             { icon: FileCheck, label: "Acumulado Vencimientos" },
           ]},
         ] },
-        { icon: Users, label: "Clientes" },
+        { icon: Users, label: "Clientes", openLabel: "Reporte Clientes" },
       ],
     },
   ],
@@ -771,8 +771,8 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Importaciones",
       items: [
-        { icon: FileText, label: "Documentos" },
-        { icon: Ship, label: "Embarque" },
+        { icon: FileText, label: "Documentos", openLabel: "Import Doc" },
+        { icon: Ship, label: "Embarque", openLabel: "Import Embarque" },
       ],
     },
     {
@@ -785,7 +785,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Reportes",
       items: [
-        { icon: Import, label: "Orden de Importación" },
+        { icon: Import, label: "Orden de Importación", openLabel: "Reporte Orden Importacion" },
         { icon: Ship, label: "Embarques de Importación" },
         { icon: ClipboardList, label: "Pedido Interno" },
       ],
@@ -796,7 +796,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Importaciones",
       items: [
-        { icon: Calculator, label: "Valorizar F/I", big: true },
+        { icon: Calculator, label: "Valorizar F/I", big: true, openLabel: "Import Valorizar FI" },
       ],
     },
     {
@@ -808,7 +808,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
         { icon: FolderOpen, label: "Consolidado" },
         { icon: Move, label: "Trasladar Costos" },
         { icon: CalendarDays, label: "Generar Periodo" },
-        { icon: RefreshCw, label: "Inv. Rotativo" },
+        { icon: RefreshCw, label: "Inv. Rotativo", openLabel: "Inv Rotativo" },
       ],
     },
     {
@@ -821,9 +821,9 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       title: "Reportes",
       items: [
         { icon: Plane, label: "Importaciones" },
-        { icon: BookOpen, label: "Diario de Almacen" },
+        { icon: BookOpen, label: "Diario de Almacen", openLabel: "Diario Almacen Costos Report" },
         { icon: DollarSign, label: "Stock Valorizado" },
-        { icon: FileCheck, label: "Cuadrar Cierre" },
+        { icon: FileCheck, label: "Cuadrar Cierre", openLabel: "Cuadrar Cierre Costos Window" },
         { icon: BookMarked, label: "Kardex" },
         { icon: TrendingUp, label: "Costo de Venta" },
         { icon: FileBarChart, label: "Condensados" },
@@ -844,7 +844,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
         { icon: Package, label: "020 - Inventario y Costos" },
         { icon: BookText, label: "030 - Contabilidad" },
         { icon: HandCoins, label: "040 - Creditos y Cobranzas" },
-        { icon: BarChart2, label: "Datos para Indicadores" },
+        { icon: BarChart2, label: "Datos para Indicadores", openLabel: "Datos Para Indicadores" },
         { icon: CreditCard, label: "Tarjeta" },
         { icon: FolderOpen, label: "Contenedor Reportes" },
         { icon: PieChart, label: "Estados Financieros" },
@@ -862,7 +862,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Ventas",
       items: [
-        { icon: FileEdit, label: "Cotizacion", openLabel: "Cotizacion Servicio" },
+        { icon: FileEdit, label: "Cotizacion", openLabel: "Venta Cotizacion" },
       ],
     },
     {
@@ -913,8 +913,8 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
           { title: "Proyección", items: [
             { icon: ArrowLeftRight, label: "Movimiento Repuestos" },
             { icon: Clock, label: "Horas Escalon" },
-            { icon: Timer, label: "Horas de Trabajo" },
-            { icon: DollarSign, label: "Gastos Detalle" },
+            { icon: Timer, label: "Horas de Trabajo", openLabel: "Horas De Trabajo" },
+            { icon: DollarSign, label: "Gastos Detalle", openLabel: "Gastos Detallado" },
             { icon: Factory, label: "Horas Motor" },
             { icon: FileSearch, label: "Seguimiento" },
             { icon: Send, label: "Generar Pedido" },
@@ -929,26 +929,26 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       items: [
         { icon: ArrowLeftRight, label: "Movimiento Repuestos" },
         { icon: Clock, label: "Horas Escalon" },
-        { icon: Timer, label: "Horas de Trabajo" },
-        { icon: DollarSign, label: "Gastos Detallado" },
+        { icon: Timer, label: "Horas de Trabajo", openLabel: "Horas De Trabajo" },
+        { icon: DollarSign, label: "Gastos Detallado", openLabel: "Gastos Detallado" },
         { icon: DollarSign, label: "Gastos Por Rubros" },
         { icon: FileClock, label: "Pendiente Facturacion" },
         { icon: Award, label: "Liquidación x Garantia" },
         { icon: Clock, label: "Tiempo Reparación" },
         { icon: Award, label: "Solicitud Garantia" },
-        { icon: FileEdit, label: "Cotizaciones" },
-        { icon: FileSignature, label: "Solicitud OT" },
+        { icon: FileEdit, label: "Cotizaciones", openLabel: "Reportes Cotizaciones" },
+        { icon: FileSignature, label: "Solicitud OT", openLabel: "Reporte Solicitud OT" },
         { icon: Wrench, label: "OT" },
         { icon: AlarmClock, label: "Horas Muertas" },
         { icon: LineChart, label: "Proyección", dropdown: true, menu: [
           { title: "Proyección", items: [
             { icon: FileText, label: "Horas de Motores" },
             { icon: FileText, label: "Seguimientos" },
-            { icon: FileText, label: "Motores a dar de Baja" },
-            { icon: FileText, label: "Disponibilidad del Motor" },
+            { icon: FileText, label: "Motores a dar de Baja", openLabel: "Motores A Dar De Baja" },
+            { icon: FileText, label: "Disponibilidad del Motor", openLabel: "Disponibilidad Del Motor" },
             { icon: FileSpreadsheet, label: "Repuestos a Importar" },
-            { icon: FileCheck, label: "Ventas por mantenimiento" },
-            { icon: FileCheck, label: "Proyección de Reparaciones" },
+            { icon: FileCheck, label: "Ventas por mantenimiento", openLabel: "Ventas Por Mantenimientos" },
+            { icon: FileCheck, label: "Proyección de Reparaciones", openLabel: "Reporte de Proyección de Reparaciones Anuales" },
           ]},
         ] },
       ],
@@ -959,26 +959,26 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Compras",
       items: [
-        { icon: ClipboardList, label: "Solicitud de Compra" },
-        { icon: ShoppingCart, label: "Orden de Compra" },
-        { icon: FileEdit, label: "Cotizaciones" },
+        { icon: ClipboardList, label: "Solicitud de Compra", openLabel: "Solicitud Compra Compras" },
+        { icon: ShoppingCart, label: "Orden de Compra", openLabel: "Orden Compra Compras" },
+        { icon: FileEdit, label: "Cotizaciones", openLabel: "Cotizaciones Compra" },
       ],
     },
     {
       title: "Control",
       items: [
         { icon: FileSignature, label: "Solicitud Gasto" },
-        { icon: FileSpreadsheet, label: "Planilla Viatico" },
-        { icon: Plane, label: "Tarifa Gasto Viaje" },
-        { icon: Car, label: "Tarifa Taxis Casa" },
-        { icon: Car, label: "Tarifas Taxi Destino" },
-        { icon: HandCoins, label: "Cuentas x Pagar" },
+        { icon: FileSpreadsheet, label: "Planilla Viatico", openLabel: "Planilla Viaticos" },
+        { icon: Plane, label: "Tarifa Gasto Viaje", openLabel: "Tarifa Gasto Viaje Window" },
+        { icon: Car, label: "Tarifa Taxis Casa", openLabel: "Tarifa Taxis Casa Window" },
+        { icon: Car, label: "Tarifas Taxi Destino", openLabel: "Tarifa Taxi Destino Window" },
+        { icon: HandCoins, label: "Cuentas x Pagar", openLabel: "Ctas X Pagar" },
       ],
     },
     {
       title: "Consultas",
       items: [
-        { icon: DollarSign, label: "Compras y/o Gastos" },
+        { icon: DollarSign, label: "Compras y/o Gastos", openLabel: "Compra Y O Gastos" },
       ],
     },
     {
@@ -988,8 +988,8 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
         { icon: FileSignature, label: "Solicitud Gastos" },
         { icon: FileClock, label: "Vencimientos" },
         { icon: HandCoins, label: "Cuentas x Pagar" },
-        { icon: Coins, label: "Pagos Cuentas x Pagar" },
-        { icon: Building2, label: "Cuentas x Pagar Por Unidad" },
+        { icon: Coins, label: "Pagos Cuentas x Pagar", openLabel: "Reporte Pagos Cuentas X Pagar" },
+        { icon: Building2, label: "Cuentas x Pagar Por Unidad", openLabel: "Reporte Ctas X Pagar Unidad" },
       ],
     },
   ],
@@ -1000,9 +1000,9 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
         { icon: UserSearch, label: "Informacion", big: true, dropdown: true, menu: [
           { title: "Información", items: [
             { icon: IdCard, label: "Ficha General" },
-            { icon: CalendarDays, label: "Vacaciones" },
-            { icon: GraduationCap, label: "Capacitaciones" },
-            { icon: ClipboardCheck, label: "Evaluaciones" },
+            { icon: CalendarDays, label: "Vacaciones", openLabel: "Vacaciones Window" },
+            { icon: GraduationCap, label: "Capacitaciones", openLabel: "Capacitaciones Win" },
+            { icon: ClipboardCheck, label: "Evaluaciones", openLabel: "Evaluaciones Window" },
           ]},
         ]},
         { icon: FileSpreadsheet, label: "Planilla\nSueldos", big: true, dropdown: true, menu: [
@@ -1017,14 +1017,14 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
       items: [
         { icon: AlertTriangle, label: "Faltas" },
         { icon: UserCheck, label: "Marcacion" },
-        { icon: UserPlus, label: "Asigna H. Extra" },
-        { icon: CalendarDays, label: "Horarios" },
-        { icon: Clock, label: "Horas Extras" },
-        { icon: UserPlus, label: "Ingresos" },
-        { icon: Percent, label: "Descuentos" },
-        { icon: UserCog, label: "Jefe Area" },
-        { icon: UserCheck, label: "Recursos" },
-        { icon: CalendarCheck, label: "Cronograma Mina" },
+        { icon: UserPlus, label: "Asigna H. Extra", openLabel: "Asigna Horas Extra Window" },
+        { icon: CalendarDays, label: "Horarios", openLabel: "Horarios Window" },
+        { icon: Clock, label: "Horas Extras", openLabel: "Horas Extras Window" },
+        { icon: UserPlus, label: "Ingresos", openLabel: "Ingresos Window" },
+        { icon: Percent, label: "Descuentos", openLabel: "Descuentos Window" },
+        { icon: UserCog, label: "Jefe Area", openLabel: "Jefe Area Window" },
+        { icon: UserCheck, label: "Recursos", openLabel: "Recursos Window" },
+        { icon: CalendarCheck, label: "Cronograma Mina", openLabel: "Cronograma Mina Window" },
         { icon: Radio, label: "Marcación Online" },
       ],
     },
@@ -1034,7 +1034,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
         { icon: MonitorSmartphone, label: "Comunicaciones", big: true, dropdown: true, menu: [
           { title: "Comunicaciones", items: [
             { icon: ScanLine, label: "Admin. Lector" },
-            { icon: RefreshCcw, label: "Procesar Marcas" },
+            { icon: RefreshCcw, label: "Procesar Marcas", openLabel: "Procesar Marcas List" },
           ]},
         ]},
       ],
@@ -1042,21 +1042,21 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Reportes",
       items: [
-        { icon: FileSpreadsheet, label: "Planilla Sueldos" },
+        { icon: FileSpreadsheet, label: "Planilla Sueldos", openLabel: "Reporte Planilla Sueldos" },
         { icon: UserCheck, label: "Asistencia" },
-        { icon: UserPlus, label: "Asig. H. Extra" },
-        { icon: Clock, label: "Horas Extras" },
+        { icon: UserPlus, label: "Asig. H. Extra", openLabel: "Asig H Extra" },
+        { icon: Clock, label: "Horas Extras", openLabel: "Horas Extra" },
         { icon: AlarmClock, label: "Tardanzas" },
         { icon: AlertTriangle, label: "Faltas" },
-        { icon: UserPlus, label: "Ingresos" },
-        { icon: Percent, label: "Descuentos" },
-        { icon: UserSearch, label: "Recursos" },
-        { icon: CalendarDays, label: "Vacaciones" },
+        { icon: UserPlus, label: "Ingresos", openLabel: "Reporte Ingresos" },
+        { icon: Percent, label: "Descuentos", openLabel: "Reporte Descuentos" },
+        { icon: UserSearch, label: "Recursos", openLabel: "Reporte Recursos" },
+        { icon: CalendarDays, label: "Vacaciones", openLabel: "Reporte Vacaciones" },
         { icon: Users, label: "Personal" },
         { icon: GraduationCap, label: "Capacitaciones" },
         { icon: FileSignature, label: "Contratos" },
         { icon: Gift, label: "Onomasticos" },
-        { icon: CalendarCheck, label: "Cronograma Mina" },
+        { icon: CalendarCheck, label: "Cronograma Mina", openLabel: "Reporte Cronograma Mina" },
         { icon: ClipboardType, label: "Asignación Horario" },
       ],
     },
@@ -1066,7 +1066,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Asignacion",
       items: [
-        { icon: MapPin, label: "Puntos Control Rutas" },
+        { icon: MapPin, label: "Puntos Control Rutas", openLabel: "Puntos Control" },
         { icon: Navigation, label: "Ruteador Rutas" },
         { icon: RouteIcon, label: "Rondas" },
       ],
@@ -1105,33 +1105,33 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Procesos",
       items: [
-        { icon: Landmark, label: "Cuenta Destino" },
-        { icon: Lock, label: "Cierre Mes" },
-        { icon: ArrowUpDown, label: "Dif. Tipo Cambio" },
-        { icon: FileDown, label: "Generar TXT Libros" },
-        { icon: TrendingUp, label: "Flujo de Caja" },
+        { icon: Landmark, label: "Cuenta Destino", openLabel: "Cuenta Destino Window" },
+        { icon: Lock, label: "Cierre Mes", openLabel: "Cierre Mes Contable Window" },
+        { icon: ArrowUpDown, label: "Dif. Tipo Cambio", openLabel: "Diferencia Tipo Cambio Window" },
+        { icon: FileDown, label: "Generar TXT Libros", openLabel: "Generar TXT" },
+        { icon: TrendingUp, label: "Flujo de Caja", openLabel: "Flujo Caja" },
       ],
     },
     {
       title: "Reportes",
       items: [
-        { icon: HandCoins, label: "Ctas x Pagar" },
-        { icon: FileClock, label: "Vencimientos" },
-        { icon: Coins, label: "Reembolsos" },
+        { icon: HandCoins, label: "Ctas x Pagar", openLabel: "Report Ctas X Pagar" },
+        { icon: FileClock, label: "Vencimientos", openLabel: "ReporteVencimiento" },
+        { icon: Coins, label: "Reembolsos", openLabel: "Reporte Reembolso" },
         { icon: BookMarked, label: "Libros Oficiales", dropdown: true, menu: [
           { title: "Libros Oficiales", items: [
-            { icon: BookText, label: "Libro Diario" },
+            { icon: BookText, label: "Libro Diario", openLabel: "Libro Diario Window" },
             { icon: BookOpen, label: "Libro Mayor" },
-            { icon: Wallet, label: "Caja y Bancos" },
-            { icon: ShoppingCart, label: "Registro de Compras" },
+            { icon: Wallet, label: "Caja y Bancos", openLabel: "Caja Y Bancos" },
+            { icon: ShoppingCart, label: "Registro de Compras", openLabel: "Registro De Compras" },
           ]},
         ] },
         { icon: Building, label: "Ctas Ctes" },
         { icon: FileWarning, label: "Ctas Ctes Pendiente" },
-        { icon: BookCheck, label: "Mayor Auxiliar" },
+        { icon: BookCheck, label: "Mayor Auxiliar", openLabel: "Report Auxiliar" },
         { icon: PieChart, label: "Estado Financiero" },
         { icon: CreditCard, label: "Cheques Girados" },
-        { icon: Wallet, label: "Provisionales" },
+        { icon: Wallet, label: "Provisionales", openLabel: "Report Provisionales" },
       ],
     },
   ],
@@ -1139,15 +1139,15 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Mantenimiento",
       items: [
-        { icon: Smartphone, label: "Modelos", openLabel: "Modelos Telefonía" },
-        { icon: Phone, label: "Equipos" },
-        { icon: Signal, label: "Planes" },
+        { icon: Smartphone, label: "Modelos", openLabel: "Telefonia Inv" },
+        { icon: Phone, label: "Equipos", openLabel: "Telefonia Equipos Window" },
+        { icon: Signal, label: "Planes", openLabel: "Telefonia Planes Window" },
       ],
     },
     {
       title: "Asignación",
       items: [
-        { icon: RouteIcon, label: "Lineas" },
+        { icon: RouteIcon, label: "Lineas", openLabel: "Telefonia Lineas Window" },
         { icon: UserPlus, label: "Asigna Persona" },
       ],
     },
@@ -1189,70 +1189,70 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Ventas",
       items: [
-        { icon: Users, label: "Clientes" },
-        { icon: CreditCard, label: "Condición de Pago" },
+        { icon: Users, label: "Clientes", openLabel: "ClientesList" },
+        { icon: CreditCard, label: "Condición de Pago", openLabel: "Condicion De Pago Window" },
       ],
     },
     {
       title: "Almacenes",
       items: [
-        { icon: Package, label: "Productos" },
-        { icon: Factory, label: "Tipo Motores" },
-        { icon: Layers, label: "Modelos", openLabel: "Modelos Almacenes" },
-        { icon: Tags, label: "Categorias" },
+        { icon: Package, label: "Productos", openLabel: "ProductosList" },
+        { icon: Factory, label: "Tipo Motores", openLabel: "Tipo Motores Window" },
+        { icon: Layers, label: "Modelos", openLabel: "Modelos Almacenes Window" },
+        { icon: Tags, label: "Categorias", openLabel: "Categorias Window" },
       ],
     },
     {
       title: "Importaciones",
       items: [
-        { icon: Boxes, label: "Partidas" },
-        { icon: Tag, label: "Marcas" },
+        { icon: Boxes, label: "Partidas", openLabel: "Partidas Window" },
+        { icon: Tag, label: "Marcas", openLabel: "Marcas Window" },
       ],
     },
     {
       title: "Servicios",
       items: [
-        { icon: ClipboardList, label: "Plantilla Repuestos" },
-        { icon: ClipboardEdit, label: "Plantilla Repuestos Cliente" },
-        { icon: MapPin, label: "Ubicacion Servicio" },
-        { icon: Car, label: "Vehiculos" },
+        { icon: ClipboardList, label: "Plantilla Repuestos", openLabel: "Plantilla Repuestos Window" },
+        { icon: ClipboardEdit, label: "Plantilla Repuestos Cliente", openLabel: "Plantilla Repuestos Cliente Window" },
+        { icon: MapPin, label: "Ubicacion Servicio", openLabel: "Ubicacion Servicio Window" },
+        { icon: Car, label: "Vehiculos", openLabel: "VehiculosWindow" },
       ],
     },
     {
       title: "Compras",
       items: [
-        { icon: ShoppingCart, label: "Proveedores" },
-        { icon: CreditCard, label: "Condición de Pago" },
+        { icon: ShoppingCart, label: "Proveedores", openLabel: "ProveedoresWindow" },
+        { icon: CreditCard, label: "Condición de Pago", openLabel: "Condicion De Pago Window" },
       ],
     },
     {
       title: "Contabilidad",
       items: [
-        { icon: BookOpen, label: "Cuenta Contable" },
-        { icon: Landmark, label: "Cuentas Destino" },
+        { icon: BookOpen, label: "Cuenta Contable", openLabel: "Cuenta Contable Window" },
+        { icon: Landmark, label: "Cuentas Destino", openLabel: "Cuentas Destino Tabla Window" },
       ],
     },
     {
       title: "Personal",
       items: [
-        { icon: FileSpreadsheet, label: "Rubro Planilla" },
-        { icon: FileBarChart, label: "Rubro Planilla Ctas" },
-        { icon: Clock, label: "Horarios" },
-        { icon: CalendarCheck, label: "Feriados" },
-        { icon: PiggyBank, label: "AFP" },
-        { icon: Contact, label: "Cargos" },
-        { icon: Building2, label: "Áreas" },
-        { icon: AlertTriangle, label: "Motivos Faltas" },
-        { icon: ScanLine, label: "Equipo Lector" },
-        { icon: Timer, label: "Tipo Hora Extra" },
+        { icon: FileSpreadsheet, label: "Rubro Planilla", openLabel: "Rubro Planilla Window" },
+        { icon: FileBarChart, label: "Rubro Planilla Ctas", openLabel: "Rubro Planilla Ctas Window" },
+        { icon: Clock, label: "Horarios", openLabel: "Horarios Window" },
+        { icon: CalendarCheck, label: "Feriados", openLabel: "Feriados Window" },
+        { icon: PiggyBank, label: "AFP", openLabel: "AFPWindow" },
+        { icon: Contact, label: "Cargos", openLabel: "CargosWindow" },
+        { icon: Building2, label: "Áreas", openLabel: "AreasWindow" },
+        { icon: AlertTriangle, label: "Motivos Faltas", openLabel: "Motivos FaltasWindow" },
+        { icon: ScanLine, label: "Equipo Lector", openLabel: "Equipo Lector Window" },
+        { icon: Timer, label: "Tipo Hora Extra", openLabel: "Tipo Hora Extra Window" },
       ],
     },
     {
       title: "Rondas",
       items: [
-        { icon: Navigation, label: "Ruteador" },
-        { icon: RouteIcon, label: "Rutas" },
-        { icon: Radio, label: "Puntos Control" },
+        { icon: Navigation, label: "Ruteador", openLabel: "RuteadorWindow" },
+        { icon: RouteIcon, label: "Rutas", openLabel: "RutasWindow" },
+        { icon: Radio, label: "Puntos Control", openLabel: "Puntos Control" },
       ],
     },
   ],
@@ -1270,7 +1270,7 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Seguridad",
       items: [
-        { icon: Users, label: "Usuarios" },
+        { icon: Users, label: "Usuarios", openLabel: "Usuarios Admin" },
         { icon: UserCog, label: "Perfiles" },
         { icon: Circle, label: "Sesiones" },
       ],
@@ -1290,34 +1290,34 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Encuestas",
       items: [
-        { icon: ClipboardList, label: "Encuesta" },
+        { icon: ClipboardList, label: "Encuesta", openLabel: "Encuesta Win" },
         { icon: FileBarChart, label: "Resultado" },
       ],
     },
     {
       title: "Inventario",
       items: [
-        { icon: MonitorSmartphone, label: "Asignar Computadora" },
-        { icon: Cpu, label: "Computadora" },
+        { icon: MonitorSmartphone, label: "Asignar Computadora", openLabel: "Computadora Asignar" },
+        { icon: Cpu, label: "Computadora", openLabel: "Computadora Inv" },
       ],
     },
     {
       title: "Llamadas",
       items: [
-        { icon: Phone, label: "Llamadas" },
+        { icon: Phone, label: "Llamadas", openLabel: "Llamadas Win" },
       ],
     },
     {
       title: "Tablas Generales",
       items: [
-        { icon: ScanLine, label: "Equipos Marcación Personal" },
-        { icon: Building2, label: "Empresas" },
-        { icon: ListOrdered, label: "Series Documentos" },
-        { icon: MapPin, label: "Locaciones" },
-        { icon: Tags, label: "Rubros de Productos" },
-        { icon: Sliders, label: "Parametros Locaciones" },
-        { icon: FileSpreadsheet, label: "Parametros Planilla Sueldos" },
-        { icon: Briefcase, label: "Rubros x Empresa" },
+        { icon: ScanLine, label: "Equipos Marcación Personal", openLabel: "Equipos Marcacion Personal Window" },
+        { icon: Building2, label: "Empresas", openLabel: "Empresas Window" },
+        { icon: ListOrdered, label: "Series Documentos", openLabel: "Series Documentos Window" },
+        { icon: MapPin, label: "Locaciones", openLabel: "Locaciones Window" },
+        { icon: Tags, label: "Rubros de Productos", openLabel: "Rubros De Productos Window" },
+        { icon: Sliders, label: "Parametros Locaciones", openLabel: "Parametros Locaciones Window" },
+        { icon: FileSpreadsheet, label: "Parametros Planilla Sueldos", openLabel: "Parametros Planilla Sueldos Window" },
+        { icon: Briefcase, label: "Rubros x Empresa", openLabel: "Rubros X Empresa Window" },
       ],
     },
   ],
@@ -1325,13 +1325,13 @@ const RIBBONS: Record<string, RibbonGroup[]> = {
     {
       title: "Usuario",
       items: [
-        { icon: Mail, label: "Solicitud" },
+        { icon: Mail, label: "Solicitud", openLabel: "Solicitud Soporte" },
       ],
     },
     {
       title: "Ayuda",
       items: [
-        { icon: FileText, label: "Información Cambios" },
+        { icon: FileText, label: "Información Cambios", openLabel: "Info Cambios" },
         { icon: Info, label: "Acerca" },
       ],
     },
@@ -2614,7 +2614,7 @@ function TabsCarousel({
 }
 
 
-function RibbonBigButton({ icon: Icon, label, iconKey, dropdown, menu, onOpen }: RibbonBtn & { onOpen: (label: string) => void }) {
+function RibbonBigButton({ icon: Icon, label, iconKey, dropdown, menu, openLabel, onOpen }: RibbonBtn & { onOpen: (label: string) => void }) {
   const [open, setOpen] = useState(false);
   const btnRef = useRef<HTMLButtonElement>(null);
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
@@ -2623,7 +2623,7 @@ function RibbonBigButton({ icon: Icon, label, iconKey, dropdown, menu, onOpen }:
 
   const toggle = () => {
     if (!menu) {
-      onOpen(cleanLabel);
+      onOpen(openLabel ?? cleanLabel);
       return;
     }
     if (!open && btnRef.current) {
@@ -2670,7 +2670,7 @@ function RibbonBigButton({ icon: Icon, label, iconKey, dropdown, menu, onOpen }:
                     {sec.items.map((it, itemIndex) => (
                       <button
                         key={`${it.label}-${itemIndex}`}
-                        onClick={() => { onOpen(it.label); setOpen(false); }}
+                        onClick={() => { onOpen(it.openLabel ?? it.label); setOpen(false); }}
                         className="flex items-center gap-1.5 px-1.5 py-0.5 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border border-transparent text-left whitespace-nowrap"
                       >
                         <SmallColorIcon label={it.label} iconKey={it.iconKey} size={22} className="shrink-0" />
@@ -2710,14 +2710,14 @@ function DesktopPopoutWindow({ label, onClose }: { label: string; onClose: () =>
   );
 }
 
-function RibbonSmallButton({ icon: Icon, label, iconKey, dropdown, menu, onOpen }: RibbonBtn & { onOpen: (label: string) => void }) {
+function RibbonSmallButton({ icon: Icon, label, iconKey, dropdown, menu, openLabel, onOpen }: RibbonBtn & { onOpen: (label: string) => void }) {
   const [open, setOpen] = useState(false);
   const btnRef = useRef<HTMLButtonElement>(null);
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
 
   const toggle = () => {
     if (!menu) {
-      onOpen(label);
+      onOpen(openLabel ?? label);
       return;
     }
     if (!open && btnRef.current) {
@@ -2760,7 +2760,7 @@ function RibbonSmallButton({ icon: Icon, label, iconKey, dropdown, menu, onOpen 
                     {sec.items.map((it, itemIndex) => (
                       <button
                         key={`${it.label}-${itemIndex}`}
-                        onClick={() => { onOpen(it.label); setOpen(false); }}
+                        onClick={() => { onOpen(it.openLabel ?? it.label); setOpen(false); }}
                         className="flex items-center gap-1.5 px-1.5 py-0.5 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border border-transparent text-left whitespace-nowrap"
                       >
                         <SmallColorIcon label={it.label} iconKey={it.iconKey} size={18} className="shrink-0" />

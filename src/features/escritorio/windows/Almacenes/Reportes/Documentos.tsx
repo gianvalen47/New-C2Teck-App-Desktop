@@ -30,7 +30,7 @@ export function DocumentoReporteList({
                 <span className="font-bold">Fechas Del :</span>
                 <input
                   aria-label="Fecha desde"
-                  className={`${inp} h-6 w-[98px] px-1`}
+                  className={`${inp} h-6 w-[100px] px-1`}
                   type="date"
                   defaultValue="2026-10-01"
                 />
@@ -39,7 +39,7 @@ export function DocumentoReporteList({
                 <span className="font-bold">Al :</span>
                 <input
                   aria-label="Fecha hasta"
-                  className={`${inp} h-6 w-[98px] px-1`}
+                  className={`${inp} h-6 w-[100px] px-1`}
                   type="date"
                   defaultValue="2026-10-24"
                 />
