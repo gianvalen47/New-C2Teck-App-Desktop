@@ -3,11 +3,14 @@ import { createPortal } from "react-dom";
 import * as React from 'react';
 import systeckIcon from "@/assets/Systeck.ico";
 import logoC2 from "@/assets/Logos/LogoC2teck02.png";
+import { useReducedMotion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import systeckWallpaper from "@/assets/Background/systeck-wallpaper-hd.png";
 import {
   X, Check, Save, Printer, Search, Plus, Trash2, FileDown, FileSpreadsheet,
   Mail, Send, RefreshCw, Filter, Calendar, DollarSign, User, Package,
   Wrench, Clock, Car, MapPin, Phone, Users, GraduationCap, Fingerprint, Play, Square,
-  Minus, Maximize2, Minimize2, Copy, Zap, Receipt, LogOut, Settings, ArrowDown, ArrowRight, FileSearch, Percent, CreditCard, Pencil, BarChart3, TrendingUp, TrendingDown, Activity, Brain, Server, ShieldAlert, Sparkles, FileText
+  Minus, Maximize2, Minimize2, Copy, Zap, Receipt, LogOut, Settings, ArrowDown, ArrowRight, FileSearch, Percent, CreditCard, Pencil, BarChart3, TrendingUp, TrendingDown, Activity, Brain, Server, ShieldAlert, Sparkles, FileText,  LayoutDashboard, EyeOff, Building2,
 } from "lucide-react";
 import {
   inp,
@@ -546,7 +549,7 @@ import { RubrosXEmpresaWindow, RubrosXEmpresaList } from "./windows/Administraci
 import { SolicitudSoporte, SolicitudSoporteList } from "./windows/Ayuda/Usuario/Solicitud";
 // Ayuda
 import { Acerca, AcercaList } from "./windows/Ayuda/Ayuda/Acerca";
-import { InfoCambios, InfoCambiosList } from "./windows/Ayuda/Ayuda/InfoCambios";
+import { InfoCambios } from "./windows/Ayuda/Ayuda/InformacionCambios";
 
 
 import { ReporteGuias } from "./windows/Reportes/ReporteGuias";
@@ -1802,6 +1805,9 @@ export function renderWindow(label: string): ReactNode {
 // ---------- MDI floating workspace ----------
 export function Workspace() {
   const { windows, active, open, close, focus, move, toggleMaximize, minimize, restore } = useWindows();
+  const [dashboardEnabled, setDashboardEnabled] = useState(true);
+  const visibleWindows = windows.filter(w => !w.isMinimized);
+  const reduceMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   
   // company logo state — updates when session changes
@@ -1935,7 +1941,7 @@ export function Workspace() {
 
   // No session/logo logic here — keep `Workspace` focused on window rendering.
 
-  const visible = windows.filter(w => !w.isMinimized);
+  const visible = visibleWindows;
   const minimized = windows.filter(w => w.isMinimized);
 
   return (
@@ -1945,8 +1951,57 @@ export function Workspace() {
       className="relative flex-1 bg-slate-200/70 overflow-hidden z-20 min-h-0"
       style={{ flex: 1, backgroundImage: "radial-gradient(circle at 1px 1px, rgba(62,91,122,0.10) 1px, transparent 0)", backgroundSize: "22px 22px" }}
     >
-      {/* Watermark — always visible behind floating windows */}
-      <div className={["absolute inset-0 grid place-items-center select-none pointer-events-none px-8 transition-opacity duration-300", windows.length > 0 ? "opacity-30" : "opacity-100"].join(" ")}>
+      <AnimatePresence initial={false}>
+        {!dashboardEnabled && (
+          <motion.div
+            key="desktop-wallpaper"
+            className="absolute inset-0 bg-cover bg-center"
+            role="img"
+            aria-label="Fondo de pantalla de Systeck, Logo de la empresa"
+            style={{ backgroundImage: `url(${systeckWallpaper})` }}
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 1.14, filter: "blur(14px) brightness(1.25)", clipPath: "circle(12% at 50% 50%)" }}
+            animate={reduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, filter: "blur(0px) brightness(1)", clipPath: "circle(150% at 50% 50%)" }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 1.025, filter: "blur(6px)" }}
+            transition={{ duration: reduceMotion ? 0.08 : 1.1, ease: [0.22, 1, 0.36, 1] }}
+          />
+        )}
+      </AnimatePresence>
+
+      {!dashboardEnabled && windows.length === 0 && (
+        <motion.div
+          className="absolute inset-0 z-10 flex flex-col items-end justify-end gap-3 p-6 pointer-events-none"
+          initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: reduceMotion ? 0 : 0.7, duration: reduceMotion ? 0.08 : 0.4 }}
+        >
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setDashboardEnabled(true)}
+            aria-label="Activar dashboard operativo"
+            title="Activar dashboard operativo"
+            className="pointer-events-auto border-slate-300 bg-white/80 text-slate-800 shadow-sm transition-colors hover:bg-white hover:text-slate-900"
+          >
+            <LayoutDashboard />
+            Activar dashboard operativo
+          </Button>
+        </motion.div>
+      )}
+
+      <Button
+        variant="ghost"
+        size="icon"
+        className="absolute right-3 top-3 z-[10000] h-8 w-8 bg-white/75 text-slate-800 shadow-sm hover:bg-white"
+        aria-label={dashboardEnabled ? "Desactivar dashboard operativo" : "Activar dashboard operativo"}
+        title={dashboardEnabled ? "Desactivar dashboard operativo" : "Activar dashboard operativo"}
+        aria-pressed={dashboardEnabled}
+        onClick={() => setDashboardEnabled(enabled => !enabled)}
+      >
+        {dashboardEnabled ? <EyeOff /> : <LayoutDashboard />}
+      </Button>
+
+      {/* Watermark remains behind windows when the desktop dashboard is enabled. */}
+      <div className={["absolute inset-0 grid place-items-center select-none pointer-events-none px-8 transition-opacity duration-300", !dashboardEnabled ? "opacity-0" : windows.length > 0 ? "opacity-30" : "opacity-100"].join(" ")}>
         <div className="text-center">
           <img
               src={empresaLogoUrl || c2teckWatermark}
@@ -2024,7 +2079,7 @@ const isDiagonalResize = (direction: ResizeDirection) => ["ne", "nw", "se", "sw"
 
 const STATUS_BAR_H = DESKTOP_STATUS_BAR_H;
 
-function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove, onToggleMaximize, onMinimize }: FWProps) {
+export function FloatingWindow({ win, isActive, containerRef, onFocus, onClose, onMove, onToggleMaximize, onMinimize }: FWProps) {
   const [pos, setPos] = useState({ x: win.position.x, y: win.position.y });
   const [localSize, setLocalSize] = useState({ w: win.size.w, h: win.size.h });
   const posRef = useRef(pos);

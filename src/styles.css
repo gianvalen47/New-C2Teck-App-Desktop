@@ -37,6 +37,25 @@
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-border: var(--sidebar-border);
+  --color-boot: var(--boot);
+  --color-boot-panel: var(--boot-panel);
+  --color-boot-foreground: var(--boot-foreground);
+  --color-boot-muted: var(--boot-muted);
+  --color-boot-border: var(--boot-border);
+  --color-boot-accent: var(--boot-accent);
+  --color-boot-accent-dim: var(--boot-accent-dim);
+  --color-boot-highlight: var(--boot-highlight);
+  --color-boot-success: var(--boot-success);
+  --color-login-bg: var(--login-bg);
+  --color-login-panel: var(--login-panel);
+  --color-login-input: var(--login-input);
+  --color-login-foreground: var(--login-foreground);
+  --color-login-muted: var(--login-muted);
+  --color-login-border: var(--login-border);
+  --color-login-accent: var(--login-accent);
+  --color-login-success: var(--login-success);
+  --color-login-action: var(--login-action);
+  --color-login-action-foreground: var(--login-action-foreground);
   --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
 }
@@ -81,6 +100,27 @@
   --sidebar: oklch(0.14 0.01 260);
   --sidebar-foreground: oklch(0.90 0.01 260);
   --sidebar-border: oklch(0.28 0.015 260 / 60%);
+  --boot: oklch(0.14 0.018 255);
+  --boot-panel: oklch(0.18 0.025 250 / 72%);
+  --boot-foreground: oklch(0.96 0.01 220);
+  --boot-muted: oklch(0.67 0.035 235);
+  --boot-border: oklch(0.54 0.09 225 / 34%);
+  --boot-accent: oklch(0.82 0.17 210);
+  --boot-accent-dim: oklch(0.59 0.16 240);
+  --boot-highlight: oklch(0.86 0.12 175);
+  --boot-success: oklch(0.77 0.17 155);
+  --login-bg: oklch(0.145 0.018 255);
+  --login-panel: oklch(0.19 0.025 252 / 84%);
+  --login-input: oklch(0.16 0.018 252 / 88%);
+  --login-foreground: oklch(0.96 0.01 225);
+  --login-muted: oklch(0.68 0.028 235);
+  --login-border: oklch(0.58 0.08 225 / 30%);
+  --login-accent: oklch(0.82 0.17 210);
+  --login-success: oklch(0.77 0.17 155);
+  --login-action: oklch(0.67 0.15 225);
+  --login-action-foreground: oklch(0.98 0.005 225);
+  --cinematic-ribbon: linear-gradient(105deg, var(--boot-accent-dim), var(--boot-accent) 42%, var(--boot-foreground) 49%, var(--boot-accent) 56%, var(--boot-accent-dim));
+  --cinematic-glow: 0 0 24px color-mix(in oklab, var(--boot-accent) 45%, transparent);
   --doc-canvas: oklch(0.965 0.006 245);
   --doc-surface: oklch(0.995 0.002 245);
   --doc-line: oklch(0.86 0.018 245);
@@ -122,7 +162,33 @@
   --color-doc-warning: var(--doc-warning);
   --color-doc-warning-soft: var(--doc-warning-soft);
   --color-doc-table-head: var(--doc-table-head);
+  color-scheme: light;
 }
+
+[data-entry-theme="light"] {
+  --boot: oklch(0.975 0.008 235);
+  --boot-panel: oklch(1 0 0 / 85%);
+  --boot-foreground: oklch(0.22 0.035 250);
+  --boot-muted: oklch(0.42 0.035 245);
+  --boot-border: oklch(0.68 0.075 225 / 45%);
+  --boot-accent: oklch(0.46 0.14 235);
+  --boot-accent-dim: oklch(0.61 0.12 235);
+  --boot-highlight: oklch(0.53 0.13 175);
+  --boot-success: oklch(0.46 0.14 155);
+  --login-bg: oklch(0.965 0.012 240);
+  --login-panel: oklch(1 0 0 / 92%);
+  --login-input: oklch(0.955 0.012 240 / 95%);
+  --login-foreground: oklch(0.2 0.035 250);
+  --login-muted: oklch(0.43 0.03 245);
+  --login-border: oklch(0.69 0.055 230 / 62%);
+  --login-accent: oklch(0.46 0.14 235);
+  --login-success: oklch(0.44 0.14 155);
+  --login-action: oklch(0.43 0.13 240);
+  --login-action-foreground: oklch(0.99 0 0);
+  color-scheme: light;
+}
+
+[data-entry-theme="dark"] { color-scheme: dark; }
 
 @layer base {
   * { border-color: var(--color-border); }
@@ -147,6 +213,105 @@
   border-radius: var(--radius);
 }
 
+@utility shadow-boot-glow {
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--boot-accent) 12%, transparent), 0 0 44px color-mix(in oklab, var(--boot-accent) 25%, transparent);
+}
+
+@utility shadow-boot-line {
+  box-shadow: 0 0 16px color-mix(in oklab, var(--boot-accent) 70%, transparent);
+}
+
+@utility shadow-boot-dot {
+  box-shadow: 0 0 8px var(--boot-accent);
+}
+
+@utility shadow-login-panel {
+  box-shadow: 0 32px 100px color-mix(in oklab, var(--boot) 82%, transparent), 0 0 0 1px color-mix(in oklab, var(--login-accent) 8%, transparent);
+}
+
+@utility shadow-login-icon {
+  box-shadow: 0 0 24px color-mix(in oklab, var(--login-accent) 20%, transparent);
+}
+
+@utility shadow-login-button {
+  box-shadow: 0 10px 32px color-mix(in oklab, var(--login-accent) 24%, transparent);
+}
+
+.boot-grid {
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--boot-accent) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--boot-accent) 7%, transparent) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, transparent, var(--foreground) 18%, var(--foreground) 78%, transparent);
+}
+
+.boot-ambient,
+.login-ambient {
+  background:
+    radial-gradient(circle at 50% 42%, color-mix(in oklab, var(--boot-accent) 13%, transparent), transparent 35%),
+    radial-gradient(circle at 78% 18%, color-mix(in oklab, var(--boot-highlight) 6%, transparent), transparent 24%);
+}
+
+.cinematic-brand { isolation: isolate; perspective: 700px; }
+.cinematic-stroke {
+  position: absolute;
+  left: 0;
+  height: 27%;
+  width: 100%;
+  background: var(--cinematic-ribbon);
+  box-shadow: var(--cinematic-glow);
+}
+.cinematic-stroke-top { top: 0; clip-path: polygon(11% 0, 100% 0, 89% 100%, 0 100%); }
+.cinematic-stroke-middle { top: 36.5%; transform: skewY(28deg); transform-origin: 50% 50%; }
+.cinematic-stroke-bottom { bottom: 0; clip-path: polygon(11% 0, 100% 0, 89% 100%, 0 100%); }
+.cinematic-rays {
+  inset: -40vh -35vw;
+  display: flex;
+  justify-content: center;
+  gap: 1.6%;
+  z-index: -1;
+  opacity: 0;
+  transform: scaleX(0.06);
+  animation: cinematic-expansion 2.7s cubic-bezier(0.65, 0, 0.25, 1) both;
+  mask-image: linear-gradient(transparent, var(--boot-foreground) 25%, var(--boot-foreground) 70%, transparent);
+}
+.cinematic-rays i {
+  width: 0.6%;
+  height: 100%;
+  background: linear-gradient(transparent 5%, var(--boot-accent) 40%, var(--boot-highlight) 65%, transparent 95%);
+  box-shadow: var(--cinematic-glow);
+}
+.cinematic-rays i:nth-child(3n) { width: 1.2%; background: var(--cinematic-ribbon); transform: translateY(8%); }
+.cinematic-rays i:nth-child(4n) { opacity: 0.35; transform: translateY(-12%); }
+.cinematic-rays i:nth-child(5n) { width: 0.25%; opacity: 0.7; }
+.cinematic-arrival .cinematic-rays { animation-duration: 2.4s; }
+.company-logo-slot-sheen {
+  background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--boot-accent) 28%, transparent), transparent);
+  animation: company-logo-sheen 4.8s ease-in-out infinite;
+}
+.company-brand-slot {
+  border-color: var(--boot-border);
+  background: color-mix(in oklab, var(--boot-panel) 72%, transparent);
+  color: var(--boot-muted);
+  animation: company-brand-breathe 5.4s ease-in-out infinite alternate;
+  transition: border-color 220ms ease, color 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
+}
+.company-brand-slot:nth-child(2) { animation-delay: -1.8s; }
+.company-brand-slot:nth-child(3) { animation-delay: -3.6s; }
+.company-brand-slot:hover {
+  border-color: var(--boot-accent);
+  background: color-mix(in oklab, var(--boot-panel) 92%, transparent);
+  color: var(--boot-foreground);
+  box-shadow: 0 0 18px color-mix(in oklab, var(--boot-accent) 16%, transparent);
+}
+.company-brand-sheen {
+  background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--boot-accent) 24%, transparent), transparent);
+  animation: company-brand-sheen 5.6s ease-in-out infinite;
+}
+.company-workspace-strip {
+  animation: company-strip-in 420ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
 @utility no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -159,6 +324,31 @@
 }
 
 /* Enterprise desktop motion system */
+@keyframes company-logo-sheen {
+  0%, 58% { transform: translateX(0); opacity: 0; }
+  72% { opacity: 1; }
+  100% { transform: translateX(520%); opacity: 0; }
+}
+@keyframes company-brand-sheen {
+  0%, 62% { transform: translateX(0); opacity: 0; }
+  74% { opacity: 1; }
+  100% { transform: translateX(440%); opacity: 0; }
+}
+@keyframes company-brand-breathe {
+  from { box-shadow: 0 0 0 color-mix(in oklab, var(--boot-accent) 0%, transparent); }
+  to { box-shadow: 0 0 14px color-mix(in oklab, var(--boot-accent) 10%, transparent); }
+}
+@keyframes company-strip-in {
+  from { opacity: 0; translate: 0 -5px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@keyframes cinematic-expansion {
+  0%, 25% { opacity: 0; transform: scaleX(0.06); }
+  45% { opacity: 0.25; transform: scaleX(0.15); }
+  70% { opacity: 0.65; transform: scaleX(0.5); }
+  100% { opacity: 0; transform: scaleX(1.4); }
+}
+
 @keyframes desktop-window-enter {
   0% { opacity: 0; transform: translateY(10px) scale(0.975); filter: saturate(0.75); }
   70% { opacity: 1; transform: translateY(-1px) scale(1.002); filter: saturate(1); }
@@ -327,6 +517,46 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .cinematic-rays { animation: none; display: none; }
+  .company-logo-slot-sheen, .company-brand-sheen, .company-brand-slot, .company-workspace-strip { animation: none; }
+}
+
+.login-ambient {
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--login-accent) 5%, transparent), transparent 45%),
+    radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--login-accent) 10%, transparent), transparent 38%);
+}
+
+.login-entry { transition: background-color 300ms ease, color 300ms ease; }
+.login-entry .login-ambient { animation: login-atmosphere 10s ease-in-out infinite alternate; }
+.login-edge { background: linear-gradient(90deg, transparent, var(--login-accent), transparent); }
+.login-form > header { animation: login-detail-in 450ms ease both; }
+.login-fields > * { animation: login-detail-in 400ms ease both; }
+.login-fields > :nth-child(1) { animation-delay: 60ms; }
+.login-fields > :nth-child(2) { animation-delay: 100ms; }
+.login-fields > :nth-child(3) { animation-delay: 140ms; }
+.login-fields > :nth-child(4) { animation-delay: 180ms; }
+.login-fields > :nth-child(5) { animation-delay: 220ms; }
+.login-fields > :nth-child(n+6) { animation-delay: 260ms; }
+.login-entry input, .login-entry select {
+  transition: border-color 180ms ease, background-color 250ms ease, color 250ms ease, box-shadow 180ms ease;
+}
+.login-entry label > .relative > svg { transition: color 180ms ease, opacity 180ms ease; }
+.login-entry label:focus-within > span:first-child { color: var(--login-accent); }
+.login-entry label:focus-within > .relative > svg { color: var(--login-accent); }
+.login-entry label > span:first-child { transition: color 180ms ease; }
+.login-entry button { transition: background-color 180ms ease, color 180ms ease, box-shadow 180ms ease, transform 150ms ease; }
+.login-entry button:not(:disabled):active { transform: scale(0.98); }
+.login-submit::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 30%, color-mix(in oklab, var(--login-action-foreground) 16%, transparent), transparent 70%);
+  transform: translateX(-110%);
+  transition: transform 550ms ease;
+}
+.login-submit:not(:disabled):hover::after { transform: translateX(110%);
   .desktop-window-enter,
   .desktop-window-exit,
   .desktop-window-minimize,
@@ -350,4 +580,28 @@
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+.mdi-background-surface {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.28 0.025 250);
+  --muted-foreground: oklch(0.58 0.025 250);
+  --input: oklch(0.82 0.015 250);
+  --accent: oklch(0.94 0.016 235);
+  --accent-foreground: var(--foreground);
+  --ring: oklch(0.55 0.13 235);
+  background: var(--background);
+  color-scheme: light;
+}
+.mdi-dashboard-toggle {
+  color: var(--boot-foreground);
+  --accent: var(--boot-panel);
+  --accent-foreground: var(--boot-accent);
+}
+.mdi-dashboard-hide { color: var(--foreground); }
+
+[data-entry-theme="light"] select option { background: var(--login-panel); color: var(--login-foreground); }
+@media (prefers-reduced-motion: reduce) {
+  .login-entry *, .login-entry *::after { animation: none !important; transition-duration: 0.01ms !important; }
+  .login-entry button:not(:disabled):active { transform: none; }
 }

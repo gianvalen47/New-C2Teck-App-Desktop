@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Versiones · SIGECOM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>
+  /* Aplica el tema guardado antes de pintar para evitar parpadeos */
+  (function () {
+    var t = 'dark';
+    try { t = localStorage.getItem('sigecom-theme') || 'dark'; } catch (e) {}
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="brand-mark"></span>SIGECOM</div>
+    <div class="topbar-right">
+      <div class="status"><span class="dot"></span>SISTEMA OPERATIVO · v9.5.2.0</div>
+      <button class="theme-toggle" id="themeBtn" type="button" aria-label="Cambiar tema">
+        <span class="ico" id="themeIco">☾</span><span class="lbl" id="themeLbl">Tema oscuro</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <span class="eyebrow">Notas de versión</span>
+  <h1>Historial de <span class="grad">versiones</span><br>SIGECOM</h1>
+  <p class="lead">Seguimiento de mejoras, nuevas funcionalidades y correcciones del sistema de gestión comercial, ordenado de la actualización más reciente a la más antigua.</p>
+  <div class="stats">
+    <div class="stat"><b>9.5.2.0</b><span>Versión actual</span></div>
+    <div class="stat"><b>12-12-2019</b><span>Última actualización</span></div>
+    <div class="stat"><b>9</b><span>Actualizaciones publicadas</span></div>
+  </div>
+</section>
+
+<main class="layout">
+
+  <aside class="side">
+    <h2>Índice de versiones</h2>
+    <ul id="toc">
+      <li><a href="#v9520">v9.5.2.0<small>12-12-2019</small></a></li>
+      <li><a href="#v9510">v9.5.1.0<small>05-08-2019</small></a></li>
+      <li><a href="#v9210">v9.2.1.0<small>16-10-2018</small></a></li>
+      <li><a href="#v8110">v8.1.1.0<small>20-08-2018</small></a></li>
+      <li><a href="#v7110">v7.1.1.0<small>02-07-2018</small></a></li>
+      <li><a href="#v6110">v6.1.1.0<small>21-05-2018</small></a></li>
+      <li><a href="#u0705">Actualización<small>07-05-2018</small></a></li>
+      <li><a href="#u0305">Actualización<small>03-05-2018</small></a></li>
+      <li><a href="#u0404">Actualización<small>04-04-2018</small></a></li>
+    </ul>
+  </aside>
+
+  <div>
+    <div class="controls">
+      <label class="search">
+        <span aria-hidden="true">⌕</span>
+        <input id="q" type="search" placeholder="Buscar en las versiones (ej. JOB, CRM, garantía)…" aria-label="Buscar">
+      </label>
+      <div class="chips" id="chips">
+        <button class="chip on" data-f="all">Todo</button>
+        <button class="chip" data-f="mejoras">Mejoras</button>
+        <button class="chip" data-f="nuevo">Nuevo</button>
+        <button class="chip" data-f="correcciones">Correcciones</button>
+      </div>
+    </div>
+
+    <div class="timeline" id="timeline">
+
+      <!-- 9.5.2.0 -->
+      <article class="release" id="v9520" data-types="mejoras">
+        <div class="release-head">
+          <div class="release-title"><span class="version">9.5.2.0</span><h2>Actualización 12-12-2019</h2><span class="latest">Actual</span></div>
+          <div class="meta">Diciembre 12 · 08:30</div>
+        </div>
+        <div class="release-body">
+          <section class="block">
+            <span class="tag mejoras">Mejoras</span>
+            <p>Se puso en producción la versión completa de lo que es Activos fijos en el sistema.</p>
+            <p>Se realizaron cambios en el sistema con respecto a JOB. Los cambios consisten en lo siguiente:</p>
+            <ul>
+              <li>Se implementó el Contenedor de Archivos. Se pueden registrar archivos en PDF, imágenes, contratos, especificaciones técnicas, etc.</li>
+            </ul>
+            <p>Se realizaron cambios en el sistema a Solicitud de Gastos. Los cambios consisten en lo siguiente:</p>
+            <ul>
+              <li>Se implementó el Contenedor de Archivos. Se pueden registrar archivos en PDF, imágenes, órdenes de compra, facturas, o cualquier tipo de documentos que le sean de utilidad al usuario.</li>
+            </ul>
+          </section>
+        </div>
+      </article>
+
+      <!-- 9.5.1.0 -->
+      <article class="release" id="v9510" data-types="mejoras nuevo">
+        <div class="release-head">
+          <div class="release-title"><span class="version">9.5.1.0</span><h2>Actualización 05-08-2019</h2></div>
+          <div class="meta">Agosto 20 · 08:30</div>
+        </div>
+        <div class="release-body">
+          <section class="block">
+            <span class="tag mejoras">Mejoras</span>
+            <p>Se realizaron cambios en el ingreso de la información para todo lo que es reclamos de garantía a fábrica. Los cambios consisten en lo siguiente:</p>
+            <ul>
+              <li>El ingreso de los reclamos de garantía se hará a través de una nueva interfaz que se llama RECLAMO DEL CLIENTE, es una opción en el menú del sistema dentro del grupo garantías de servicios. El usuario debe ingresar los ensayos primarios del reclamo de cliente sobre una pieza fallada de un motor.</li>
+              <li>El formulario AFA se renombró por ORDEN DE REPARACIÓN.</li>
+              <li>En la orden de reparación se añadieron los siguientes datos que deben ser ingresados: la serie del repuesto, la orden de trabajo de la mina, el número de vale de nuestro almacén al entregar el repuesto, factura de importación, el pedido de importación y la fecha de llegada.</li>
+              <li>Se agregó la opción de ingresar las horas de mano de obra de cada técnico y las guías involucradas.</li>
+              <li>Se modificaron los formatos de impresión de los reclamos de garantía: uno es del reclamo del cliente, horas del reclamo detallado y el resumen del reclamo.</li>
+              <li>Se agregó una opción más en el reporte de tardanzas, que es el RECORD DE PUNTUALIDAD.</li>
+            </ul>
+          </section>
+          <section class="block">
+            <span class="tag nuevo">Nuevo</span>
+            <p>Se puso en producción un avance de lo que es Activos fijos en el sistema. Dentro del módulo de ACTIVOS se encuentran las siguientes opciones.</p>
+            <ul>
+              <li>Dentro del menú debe ingresar a la opción "Activos Fijos", donde deben registrarse todos los activos de la empresa, desde una herramienta de servicios, oficinas y equipos, etc.</li>
+              <li>Se pueden registrar dentro del activo las solicitudes de gastos que se realicen para un activo, ya sea por primera vez en la compra o por algún mantenimiento realizado a algún equipo.</li>
+              <li>Por obligación de la SUNAT, se ha contratado el servicio de un OSE (Operador de Servicios Electrónicos) para la validación de nuestros comprobantes electrónicos emitidos desde nuestro sistema.</li>
+              <li>Se crearon más empresas dentro del sistema, por lo cual se ha separado el menú de opciones según el perfil que tenga el usuario.</li>
+              <li>Se cambió la aplicación en la versión del NET Framework del 3.5 al 4.5, lo cual significó un cambio en la codificación.</li>
+            </ul>
+          </section>
+        </div>
+      </article>
+
+      <!-- 9.2.1.0 -->
+      <article class="release" id="v9210" data-types="mejoras">
+        <div class="release-head">
+          <div class="release-title"><span class="version">9.2.1.0</span><h2>Actualización 16-10-2018</h2></div>
+          <div class="meta">Agosto 20 · 08:30</div>
+        </div>
+        <div class="release-body">
+          <section class="block">
+            <span class="tag mejoras">Mejoras</span>
+            <p>Se realizaron cambios en el ingreso de la información para lo que es seguimiento de motores. Los cambios consisten en lo siguiente:</p>
+            <ul>
+              <li>El ingreso de la hora de inicio y fin será juntamente con la fecha. Es decir, debe ingresarse la fecha y a continuación la hora. Debe ingresarse la información correctamente, considerando que las horas son en base a 24 horas. De caso contrario afectará los reportes y los indicadores de disponibilidad. La cantidad de horas se calculará automáticamente. Con este cambio se soluciona las paradas que implican más de un día de trabajo.</li>
+              <li>Se ingresaron a la lista de componentes de acuerdo a los sistemas. Es decir, cuando usted seleccione el sistema del motor se filtrarán sus componentes y al seleccionar el componente se activará la lista de posiciones.</li>
+              <li>En la ficha del motor se activó la lista de equipos por mina. Es decir, cuando usted seleccione una ubicación minera se listarán los equipos correspondientes a esa mina, la cual ya no será editable el nombre. Se debe tener actualizado el número de equipo en el motor, ya que eso se registra en el seguimiento y ahí no es modificable, ya que jala la información de acuerdo al equipo asignado en su ficha.</li>
+              <li>Por último, el usuario debe seleccionar la casilla "Afecta Disponibilidad" para los seguimientos que implican una parada en el motor. Es importante activar esta opción para que los indicadores de disponibilidad no salgan distorsionados y tengan que estar trabajando manualmente en Excel, cuando el sistema ya lo presenta.</li>
+            </ul>
+          </section>
+        </div>
+      </article>
+
+      <!-- 8.1.1.0 -->
+      <article class="release" id="v8110" data-types="mejoras nuevo">
+        <div class="release-head">
+          <div class="release-title"><span class="version">8.1.1.0</span><h2>Actualización 20-08-2018</h2></div>
+          <div class="meta">Agosto 20 · 08:30</div>
+        </div>
+        <div class="release-body">
+          <section class="block">
+            <span class="tag mejoras">Mejoras</span>
+            <p>Se realizaron cambios en la alimentación de la información al sistema con respecto al JOB.</p>
+            <ul>
+              <li>Se agregaron en el registro de la información las fechas de llegada, inicio de reparación, fin de desarmado, fin de reparación, inicio de módulo, fin de módulo y fecha de entrega.</li>
+              <li>La fecha de inicio y final de reparación con el fin de desarmado se actualizan automáticamente, solo si el JOB está dentro de una programación de actividades y están siendo marcadas por el técnico. Si no lo estuviera, deberá hacerse manualmente.</li>
+              <li>La fecha de entrega se actualiza automáticamente si generas la guía de remisión desde el JOB, de caso contrario debes hacerlo manualmente.</li>
+              <li>Para todos los JOBS internos se habilitó el campo para ingresar el valor por cada hora a cobrar. El monto a ingresar debe ser en la moneda de dólares.</li>
+            </ul>
+          </section>
+          <section class="block">
+            <span class="tag nuevo">Nuevo</span>
+            <p>Se puso en producción el CRM (en inglés Customer Relationship Management, o Gestión de las relaciones con clientes) en el sistema. Dentro del módulo CRM se encuentran las siguientes opciones.</p>
+            <ul>
+              <li>Dentro del menú debe ingresar a la opción "Oportunidad de Negocio", donde deben registrarse todas las oportunidades comerciales que el vendedor tenga para la empresa. También se deben ingresar las visitas realizadas, vincular las cotizaciones emitidas, actualizar las etapas del avance, todo relacionado a la oportunidad de negocio.</li>
+              <li>Se pueden registrar dentro de la oportunidad archivos en PDF, imágenes, como es el caso de un plano, contratos, especificaciones técnicas, etc.</li>
+              <li>El usuario puede ingresar cualquier tipo de ocurrencia que encuentre con respecto a un cliente. Si la información encontrada es una oportunidad de negocio lo puede indicar así. Ingrese el correo electrónico, para que el sistema envíe la información a la persona interesada de la unidad de negocio. Los interesados harán seguimiento a la oportunidad de negocio y el sistema lanzará una alerta a la unidad para atender esta información ingresada. Todas las ocurrencias registradas se quedan en el historial del cliente, la cual se podrá visualizar en su tarjeta.</li>
+              <li>Dentro de las cotizaciones de repuestos usted podrá registrar archivos relacionados a ella. Con esto descartaríamos que las cotizaciones de motores no se hagan en el sistema por tener muchos datos técnicos, ya que esta información se podrá adjuntar como PDF a la cotización.</li>
+              <li>Podrá realizar consultas de información del cliente, como sus contactos, ventas, estadísticas y sus ocurrencias, en una opción que se llama "tarjeta del cliente".</li>
+            </ul>
+          </section>
+        </div>
+      </article>
+
+      <!-- 7.1.1.0 -->
+      <article class="release" id="v7110" data-types="mejoras nuevo">
+        <div class="release-head">
+          <div class="release-title"><span class="version">7.1.1.0</span><h2>Actualización 02-07-2018</h2></div>
+          <div class="meta">Junio 02 · 08:30</div>
+        </div>
+        <div class="release-body">
+          <section class="block">
+            <span class="tag mejoras">Mejoras</span>
+            <p>Se agregaron en el sistema la opción de registrar gastos sin JOB y seleccionar otros rubros para cada tipo de gasto.</p>
+            <ol>
+              <li>Consiste en que por cada tipo de gasto se desplegará una nueva lista de rubros que seleccionar, eso se activa al momento de registrar un comprobante de pago en las solicitudes de gastos.</li>
+              <li>El usuario debe seleccionar según el criterio a que corresponda cada gasto, en caso de duda debe consultar con las personas encargadas de supervisar los costos.</li>
+              <li>El sistema, a partir de esta versión, permite ingresar documentos al área de servicios y componentes sin ser necesario ingresar un número de JOB. Para que esto suceda, debe activar la casilla "<strong>Aplica al Costo</strong>". Esto es para los documentos que ingresan al costo de la empresa mas no es un gasto.</li>
+            </ol>
+          </section>
+          <section class="block">
+            <span class="tag nuevo">Nuevo</span>
+            <ul>
+              <li>Se puso en producción las guías de remisión electrónica.</li>
+              <li>En forma práctica, lo único que cambia es el reemplazo de imprimir en forma física la guía, sobre el formato preimpreso, a un documento electrónico (XML). Para esto, debe elegir la opción "<strong>Generar Guía Electrónica</strong>".</li>
+              <li>Los pasos son de la misma manera que se dan en las facturas electrónicas.</li>
+              <li>Los demás procesos con respecto a las guías seguirán de la misma manera que se vienen dando.</li>
+            </ul>
+          </section>
+        </div>
+      </article>
+
+      <!-- 6.1.1.0 -->
+      <article class="release" id="v6110" data-types="mejoras nuevo">
+        <div class="release-head">
+          <div class="release-title"><span class="version">6.1.1.0</span><h2>Actualización 21-05-2018</h2></div>
+          <div class="meta">Mayo 21 · 17:30</div>
+        </div>
+        <div class="release-body">
+          <section class="block">
+            <span class="tag mejoras">Mejoras</span>
+            <p>Se agregaron en el sistema el nuevo formato de ingreso de listas de precios.</p>
+            <ol>
+              <li>Consiste en que la lista de precios se ingrese de forma única, donde pueden ingresar varios rubros a la vez, y ya no será uno por uno. Se creará una sola lista donde usted ingresará por única vez todos los códigos que usted desee ingresar. Para eso, debe asignarle un nombre a la lista de precios.</li>
+              <li>Todas las listas deben tener fecha de vencimiento, la cual será un dato obligatorio para el sistema.</li>
+              <li>El sistema de forma arbitraria dará de baja una lista de precios si llegó a su fecha de vencimiento. Pero para esto, el sistema lanzará una alerta para que puedan tomar las precauciones del caso.</li>
+              <li>Hay una opción para que el usuario pueda ampliar la fecha de vencimiento y eso solo puede hacerlo el Gerente Administrativo.</li>
+              <li>Una lista, luego de estar aprobada en el sistema, puede seguir ingresando otros ítems que necesiten pertenecer a la lista que creó anteriormente. Pero estos nuevos datos pasarán de nuevo por la aprobación correspondiente.</li>
+              <li>Los niveles de aprobación seguirán siendo como siempre se viene realizando. Osea la aprobación inicial del Jefe de Área, y luego la aprobación final del Gerente Administrativo.</li>
+              <li>Los mismos pasos se darán para las tres listas que tenemos: Lista de precios, lista de precio de clientes y lista oferta.</li>
+            </ol>
+          </section>
+          <section class="block">
+            <span class="tag nuevo">Nuevo</span>
+            <ul>
+              <li>Se añadió la opción de cargar las marcaciones de personal de forma masiva desde una hoja de cálculo (Excel).</li>
+            </ul>
+          </section>
+        </div>
+      </article>
+
+      <!-- 07-05-2018 -->
+      <article class="release" id="u0705" data-types="mejoras nuevo">
+        <div class="release-head">
+          <div class="release-title"><h2>Actualización 07-05-2018</h2></div>
+          <div class="meta">Mayo 07 · 02:30</div>
+        </div>
+        <div class="release-body">
+          <section class="block">
+            <span class="tag mejoras">Mejoras</span>
+            <p>Se agregaron en el sistema información con respecto a los pedidos de importación.</p>
+            <ol>
+              <li>Consiste en que a partir de ahora se podrán ver algunos indicadores de fechas que muestran cómo va el pedido desde que sale del fabricante.</li>
+              <li>Como es el caso de la fecha que llega a Miami, se llena el contenedor y la fecha probable de llegada a nuestro almacén.</li>
+            </ol>
+          </section>
+          <section class="block">
+            <span class="tag nuevo">Nuevo</span>
+            <ul>
+              <li>Se implementó en el sistema el ingreso de costos al motor a través de un documento de almacén. Como es el caso de las notas de crédito entre otros.</li>
+            </ul>
+          </section>
+        </div>
+      </article>
+
+      <!-- 03-05-2018 -->
+      <article class="release" id="u0305" data-types="correcciones">
+        <div class="release-head">
+          <div class="release-title"><h2>Actualización 03-05-2018</h2></div>
+          <div class="meta">Mayo 03 · 02:30</div>
+        </div>
+        <div class="release-body">
+          <section class="block">
+            <span class="tag correcciones">Correcciones</span>
+            <ul>
+              <li>Los campos de precio y descripción de la mercadería, <mark>no es necesario ingresarla</mark>, el sistema lo registrará de acuerdo al número de parte.</li>
+              <li>El sistema, en caso no encontrara el precio, lo registrará en cero y al finalizar el ingreso comunicará un mensaje de los códigos que fueron ingresados en cero y lo grabará en el estado de ingreso del pedido. Estos códigos podrán ser actualizados manualmente dentro del documento.</li>
+              <li>Si usted ingresa los campos mencionados en el Excel, el sistema respetará esos datos y los registrará tal como usted los puso; si usted lo deja vacío, el sistema lo registrará con los datos de la ficha de la mercadería.</li>
+            </ul>
+          </section>
+        </div>
+      </article>
+
+      <!-- 04-04-2018 -->
+      <article class="release" id="u0404" data-types="mejoras">
+        <div class="release-head">
+          <div class="release-title"><h2>Actualización 04-04-2018</h2></div>
+          <div class="meta">Abril 04 · 02:30</div>
+        </div>
+        <div class="release-body">
+          <section class="block">
+            <span class="tag mejoras">Mejoras</span>
+            <ul>
+              <li>Se implementó en el sistema el ingreso de costos al motor a través de un documento de almacén. Como es el caso de las notas de crédito entre otros.</li>
+              <li>Este cambio está relacionado al personal que alimenta información a los motores que están en stock, a los que estén adicionando o quitando costos.</li>
+              <li>Esta opción está en el módulo de almacén.</li>
+            </ul>
+          </section>
+        </div>
+      </article>
+
+    </div>
+    <p class="empty" id="empty">// Sin resultados para tu búsqueda</p>
+  </div>
+</main>
+
+<footer class="site">SIGECOM · SISTEMA DE GESTIÓN COMERCIAL</footer>
+
+<script>
+(function () {
+  var releases = Array.prototype.slice.call(document.querySelectorAll('.release'));
+  var chips = document.querySelectorAll('.chip');
+  var q = document.getElementById('q');
+  var empty = document.getElementById('empty');
+  var filter = 'all';
+
+  function apply() {
+    var term = q.value.trim().toLowerCase();
+    var shown = 0;
+    releases.forEach(function (r) {
+      var okType = filter === 'all' || r.dataset.types.split(' ').indexOf(filter) !== -1;
+      var okText = !term || r.textContent.toLowerCase().indexOf(term) !== -1;
+      var show = okType && okText;
+      r.classList.toggle('hidden', !show);
+      if (show) shown++;
+    });
+    empty.classList.toggle('show', shown === 0);
+  }
+
+  chips.forEach(function (c) {
+    c.addEventListener('click', function () {
+      chips.forEach(function (x) { x.classList.remove('on'); });
+      c.classList.add('on');
+      filter = c.dataset.f;
+      apply();
+    });
+  });
+  q.addEventListener('input', apply);
+
+  // Cambio de tema (oscuro / claro)
+  var root = document.documentElement;
+  var btn = document.getElementById('themeBtn');
+  var ico = document.getElementById('themeIco');
+  var lbl = document.getElementById('themeLbl');
+  function paintBtn() {
+    var light = root.getAttribute('data-theme') === 'light';
+    ico.textContent = light ? '☀' : '☾';
+    lbl.textContent = light ? 'Tema claro' : 'Tema oscuro';
+    btn.setAttribute('aria-label', light ? 'Cambiar a tema oscuro' : 'Cambiar a tema claro');
+  }
+  btn.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('sigecom-theme', next); } catch (e) {}
+    paintBtn();
+  });
+  paintBtn();
+
+  // Resaltar la versión visible en el índice lateral
+  var links = document.querySelectorAll('#toc a');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          links.forEach(function (l) {
+            l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    releases.forEach(function (r) { io.observe(r); });
+  }
+})();
+</script>
+</body>
+</html>
