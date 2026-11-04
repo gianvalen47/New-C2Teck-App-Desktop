@@ -156,7 +156,7 @@ export function Workspace() {
   );
 }
 
-function DesktopDashboard({ onDeactivate }: { onDeactivate: () => void }) {
+export function DesktopDashboard({ onDeactivate }: { onDeactivate: () => void }) {
   const reduceMotion = useReducedMotion();
   const panel = { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0, transition: { duration: reduceMotion ? 0.08 : 0.25 } } };
   return (

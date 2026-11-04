@@ -10,7 +10,7 @@ import {
   X, Check, Save, Printer, Search, Plus, Trash2, FileDown, FileSpreadsheet,
   Mail, Send, RefreshCw, Filter, Calendar, DollarSign, User, Package,
   Wrench, Clock, Car, MapPin, Phone, Users, GraduationCap, Fingerprint, Play, Square,
-  Minus, Maximize2, Minimize2, Copy, Zap, Receipt, LogOut, Settings, ArrowDown, ArrowRight, FileSearch, Percent, CreditCard, Pencil, BarChart3, TrendingUp, TrendingDown, Activity, Brain, Server, ShieldAlert, Sparkles, FileText,  LayoutDashboard, EyeOff, Building2,
+  Minus, Maximize2, Minimize2, Copy, Zap, Receipt, LogOut, Settings, ArrowDown, ArrowRight, FileSearch, Percent, CreditCard, Pencil, BarChart3, TrendingUp, TrendingDown, Activity, Brain, Server, ShieldAlert, Sparkles, FileText, LayoutDashboard, Building2,
 } from "lucide-react";
 import {
   inp,
@@ -594,6 +594,12 @@ import {
 // specific window UIs in individual modules (already moved into subfolders).
 
 export type WindowComponent = React.ComponentType<any>;
+
+const LazyDesktopDashboard = React.lazy(() =>
+  import("./dashboard").then(({ DesktopDashboard }) => ({
+    default: DesktopDashboard,
+  })),
+);
 
 /* Utility: build a registry with aliases while keeping easy-to-read source
    for future maintenance. We intentionally include many normalized labels and
@@ -1805,7 +1811,7 @@ export function renderWindow(label: string): ReactNode {
 // ---------- MDI floating workspace ----------
 export function Workspace() {
   const { windows, active, open, close, focus, move, toggleMaximize, minimize, restore } = useWindows();
-  const [dashboardEnabled, setDashboardEnabled] = useState(true);
+  const [dashboardEnabled, setDashboardEnabled] = useState(false);
   const visibleWindows = windows.filter(w => !w.isMinimized);
   const reduceMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -1951,66 +1957,58 @@ export function Workspace() {
       className="relative flex-1 bg-slate-200/70 overflow-hidden z-20 min-h-0"
       style={{ flex: 1, backgroundImage: "radial-gradient(circle at 1px 1px, rgba(62,91,122,0.10) 1px, transparent 0)", backgroundSize: "22px 22px" }}
     >
-      <AnimatePresence initial={false}>
-        {!dashboardEnabled && (
+      <AnimatePresence mode="wait" initial={false}>
+        {dashboardEnabled ? (
+          <motion.div
+            key="operational-dashboard"
+            className="absolute inset-0 overflow-hidden"
+            initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: reduceMotion ? 0 : -8 }}
+            transition={{ duration: reduceMotion ? 0.08 : 0.32, ease: "easeInOut" }}
+          >
+            <React.Suspense fallback={<div className="absolute inset-0 bg-slate-100" />}>
+              <LazyDesktopDashboard onDeactivate={() => setDashboardEnabled(false)} />
+            </React.Suspense>
+          </motion.div>
+        ) : (
           <motion.div
             key="desktop-wallpaper"
-            className="absolute inset-0 bg-cover bg-center"
-            role="img"
-            aria-label="Fondo de pantalla de Systeck, Logo de la empresa"
-            style={{ backgroundImage: `url(${systeckWallpaper})` }}
-            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 1.14, filter: "blur(14px) brightness(1.25)", clipPath: "circle(12% at 50% 50%)" }}
-            animate={reduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, filter: "blur(0px) brightness(1)", clipPath: "circle(150% at 50% 50%)" }}
-            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 1.025, filter: "blur(6px)" }}
-            transition={{ duration: reduceMotion ? 0.08 : 1.1, ease: [0.22, 1, 0.36, 1] }}
-          />
+            className="absolute inset-0 overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: reduceMotion ? 0.08 : 0.32 }}
+          >
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              role="img"
+              aria-label="Fondo de pantalla de Systeck"
+              style={{ backgroundImage: `url(${systeckWallpaper})` }}
+            />
+            <div className="absolute inset-0 grid place-items-center px-8 pointer-events-none">
+              <img
+                src={empresaLogoUrl || c2teckWatermark}
+                alt={session?.empresa_actual?.nombre || "C2Teck"}
+                className="max-h-[60vh] max-w-[70vw] w-auto h-auto object-contain drop-shadow-[0_8px_24px_rgba(28,55,85,0.18)]"
+              />
+            </div>
+            <div className="absolute inset-x-0 bottom-0 flex justify-end p-6">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setDashboardEnabled(true)}
+                aria-label="Activar dashboard operativo"
+                title="Activar dashboard operativo"
+                className="border-slate-300 bg-white/85 text-slate-800 shadow-sm transition-colors hover:bg-white hover:text-slate-900"
+              >
+                <LayoutDashboard />
+                Activar dashboard operativo
+              </Button>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
-
-      {!dashboardEnabled && windows.length === 0 && (
-        <motion.div
-          className="absolute inset-0 z-10 flex flex-col items-end justify-end gap-3 p-6 pointer-events-none"
-          initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: reduceMotion ? 0 : 0.7, duration: reduceMotion ? 0.08 : 0.4 }}
-        >
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setDashboardEnabled(true)}
-            aria-label="Activar dashboard operativo"
-            title="Activar dashboard operativo"
-            className="pointer-events-auto border-slate-300 bg-white/80 text-slate-800 shadow-sm transition-colors hover:bg-white hover:text-slate-900"
-          >
-            <LayoutDashboard />
-            Activar dashboard operativo
-          </Button>
-        </motion.div>
-      )}
-
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute right-3 top-3 z-[10000] h-8 w-8 bg-white/75 text-slate-800 shadow-sm hover:bg-white"
-        aria-label={dashboardEnabled ? "Desactivar dashboard operativo" : "Activar dashboard operativo"}
-        title={dashboardEnabled ? "Desactivar dashboard operativo" : "Activar dashboard operativo"}
-        aria-pressed={dashboardEnabled}
-        onClick={() => setDashboardEnabled(enabled => !enabled)}
-      >
-        {dashboardEnabled ? <EyeOff /> : <LayoutDashboard />}
-      </Button>
-
-      {/* Watermark remains behind windows when the desktop dashboard is enabled. */}
-      <div className={["absolute inset-0 grid place-items-center select-none pointer-events-none px-8 transition-opacity duration-300", !dashboardEnabled ? "opacity-0" : windows.length > 0 ? "opacity-30" : "opacity-100"].join(" ")}>
-        <div className="text-center">
-          <img
-              src={empresaLogoUrl || c2teckWatermark}
-              alt="C2TECK"
-              className="max-w-[70vw] max-h-[60vh] w-auto h-auto object-contain opacity-90 drop-shadow-[0_10px_30px_rgba(58,85,115,0.25)]"
-            />
-            <div className="text-slate-400 text-[11px] mt-6 font-mono">// abre un módulo desde el ribbon superior</div>
-          </div>
-      </div>
 
       {/* Company logo top-left removed — central watermark shows company logo instead */}
 

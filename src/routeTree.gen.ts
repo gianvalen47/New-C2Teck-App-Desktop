@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VersionesRouteImport } from './routes/versiones'
 import { Route as ProductosRouteImport } from './routes/productos'
 import { Route as PortalRouteImport } from './routes/portal'
 import { Route as NosotrosRouteImport } from './routes/nosotros'
@@ -168,6 +169,11 @@ import { Route as DashboardActivosfijosDepreciacionRouteImport } from './routes/
 import { Route as DashboardActivosfijosConsultasRouteImport } from './routes/dashboard.activosfijos.consultas'
 import { Route as DashboardActivosfijosCompraRouteImport } from './routes/dashboard.activosfijos.compra'
 
+const VersionesRoute = VersionesRouteImport.update({
+  id: '/versiones',
+  path: '/versiones',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductosRoute = ProductosRouteImport.update({
   id: '/productos',
   path: '/productos',
@@ -1060,6 +1066,7 @@ export interface FileRoutesByFullPath {
   '/nosotros': typeof NosotrosRoute
   '/portal': typeof PortalRoute
   '/productos': typeof ProductosRoute
+  '/versiones': typeof VersionesRoute
   '/dashboard/activos-fijos': typeof DashboardActivosFijosRoute
   '/dashboard/administracion': typeof DashboardAdministracionRouteWithChildren
   '/dashboard/almacen': typeof DashboardAlmacenRouteWithChildren
@@ -1219,6 +1226,7 @@ export interface FileRoutesByTo {
   '/nosotros': typeof NosotrosRoute
   '/portal': typeof PortalRoute
   '/productos': typeof ProductosRoute
+  '/versiones': typeof VersionesRoute
   '/dashboard/activos-fijos': typeof DashboardActivosFijosRoute
   '/dashboard/administracion': typeof DashboardAdministracionRouteWithChildren
   '/dashboard/almacen': typeof DashboardAlmacenRouteWithChildren
@@ -1380,6 +1388,7 @@ export interface FileRoutesById {
   '/nosotros': typeof NosotrosRoute
   '/portal': typeof PortalRoute
   '/productos': typeof ProductosRoute
+  '/versiones': typeof VersionesRoute
   '/dashboard/activos-fijos': typeof DashboardActivosFijosRoute
   '/dashboard/administracion': typeof DashboardAdministracionRouteWithChildren
   '/dashboard/almacen': typeof DashboardAlmacenRouteWithChildren
@@ -1542,6 +1551,7 @@ export interface FileRouteTypes {
     | '/nosotros'
     | '/portal'
     | '/productos'
+    | '/versiones'
     | '/dashboard/activos-fijos'
     | '/dashboard/administracion'
     | '/dashboard/almacen'
@@ -1701,6 +1711,7 @@ export interface FileRouteTypes {
     | '/nosotros'
     | '/portal'
     | '/productos'
+    | '/versiones'
     | '/dashboard/activos-fijos'
     | '/dashboard/administracion'
     | '/dashboard/almacen'
@@ -1861,6 +1872,7 @@ export interface FileRouteTypes {
     | '/nosotros'
     | '/portal'
     | '/productos'
+    | '/versiones'
     | '/dashboard/activos-fijos'
     | '/dashboard/administracion'
     | '/dashboard/almacen'
@@ -2022,10 +2034,18 @@ export interface RootRouteChildren {
   NosotrosRoute: typeof NosotrosRoute
   PortalRoute: typeof PortalRoute
   ProductosRoute: typeof ProductosRoute
+  VersionesRoute: typeof VersionesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/versiones': {
+      id: '/versiones'
+      path: '/versiones'
+      fullPath: '/versiones'
+      preLoaderRoute: typeof VersionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/productos': {
       id: '/productos'
       path: '/productos'
@@ -3648,6 +3668,7 @@ const rootRouteChildren: RootRouteChildren = {
   NosotrosRoute: NosotrosRoute,
   PortalRoute: PortalRoute,
   ProductosRoute: ProductosRoute,
+  VersionesRoute: VersionesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

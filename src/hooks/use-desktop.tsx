@@ -10,6 +10,7 @@ declare global {
       close: () => void;
       isMaximized: () => Promise<boolean>;
       loginSuccess: () => void;
+      openVersionHistory: () => Promise<void>;
     };
   }
 }

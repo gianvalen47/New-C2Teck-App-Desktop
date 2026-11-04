@@ -1,8 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
-import { ShieldCheck, Cpu, ArrowLeft, KeyRound } from "lucide-react";
+import { ShieldCheck, Cpu, ArrowLeft, KeyRound, Monitor } from "lucide-react";
 import { login } from "@/lib/sigecoom-api";
+import { clearFrontendDemoMode, enableFrontendDemoMode } from "@/lib/frontend-demo";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -26,6 +27,7 @@ function LoginPage() {
     setLoading(true);
 
     try {
+      clearFrontendDemoMode();
       const session = await login(username.trim(), password);
       localStorage.setItem("sigecoom_session", JSON.stringify(session));
       toast.success("Autenticación validada", { description: `Bienvenido ${session.username} (${session.perfil}).` });
@@ -128,6 +130,25 @@ function LoginPage() {
               className="w-full h-11 rounded-md border border-primary/40 text-primary font-semibold hover:bg-primary/10 inline-flex items-center justify-center gap-2"
             >
               <KeyRound className="h-4 w-4" /> Ingresar con Hideez Key
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                try {
+                  enableFrontendDemoMode();
+                  toast.info("Vista previa sin conexión", {
+                    description: "Solo se mostrará la interfaz; SIGECOM y sus datos no estarán disponibles.",
+                  });
+                  navigate({ to: "/escritorio" });
+                } catch (error) {
+                  toast.error("No se pudo iniciar la vista previa", {
+                    description: error instanceof Error ? error.message : "Revisa el almacenamiento local del navegador.",
+                  });
+                }
+              }}
+              className="w-full h-11 rounded-md border border-slate-400/40 text-muted-foreground font-semibold hover:bg-muted inline-flex items-center justify-center gap-2"
+            >
+              <Monitor className="h-4 w-4" /> Entrar sin conexión (solo frontend)
             </button>
           </form>
 

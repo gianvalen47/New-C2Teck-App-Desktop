@@ -139,6 +139,13 @@ ipcMain.on("window:maximize", () => {
 });
 ipcMain.on("window:close", () => mainWindow?.close());
 ipcMain.handle("window:isMaximized", () => mainWindow?.isMaximized() ?? false);
+ipcMain.handle("external:open-version-history", async () => {
+  const versionUrl = new URL(STANDALONE_URL || getAppUrl());
+  versionUrl.pathname = "/versiones";
+  versionUrl.search = "";
+  versionUrl.hash = "";
+  await shell.openExternal(versionUrl.toString());
+});
 ipcMain.on("desktop:login-success", () => {
   if (loginWindow && !loginWindow.isDestroyed()) {
     loginWindow.close();

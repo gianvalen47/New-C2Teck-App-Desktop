@@ -9,4 +9,5 @@ contextBridge.exposeInMainWorld("c2teckDesktop", {
   close: () => ipcRenderer.send("window:close"),
   isMaximized: () => ipcRenderer.invoke("window:isMaximized"),
   loginSuccess: () => ipcRenderer.send("desktop:login-success"),
+  openVersionHistory: () => ipcRenderer.invoke("external:open-version-history"),
 });

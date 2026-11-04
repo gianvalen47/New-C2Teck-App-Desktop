@@ -40,6 +40,7 @@ import {
 } from "lucide-react";
 
 import { fetchSession, fetchTipoCambio, login, type SessionInfo } from "@/lib/sigecoom-api";
+import { clearFrontendDemoMode, createFrontendDemoSession, enableFrontendDemoMode, isFrontendDemoMode } from "@/lib/frontend-demo";
 import { SessionProvider, useSession } from "@/context/SessionContext";
 import { CompanyPickerModal, type Company } from "@/features/escritorio/windows/Logueo/CambiarEmpresa";
 
@@ -79,9 +80,13 @@ function SessionStatus() {
   const [s, setS] = useState<SessionInfo | null>(null);
   useEffect(() => {
     let mounted = true;
-    fetchSession()
-      .then((res) => { if (mounted) setS(res); })
-      .catch(() => { /* ignore */ });
+    if (isFrontendDemoMode()) {
+      setS(createFrontendDemoSession());
+    } else {
+      fetchSession()
+        .then((res) => { if (mounted) setS(res); })
+        .catch(() => { /* ignore */ });
+    }
     const onSessionUpdated = (ev: Event) => {
       try {
         const custom = ev as CustomEvent | undefined;
@@ -92,7 +97,11 @@ function SessionStatus() {
         }
       } catch (_) {}
       // fallback: re-fetch session
-      fetchSession().then((res) => { if (mounted) setS(res); }).catch(() => {});
+      if (isFrontendDemoMode()) {
+        if (mounted) setS(createFrontendDemoSession());
+      } else {
+        fetchSession().then((res) => { if (mounted) setS(res); }).catch(() => {});
+      }
     };
     window.addEventListener('systeck-session-updated', onSessionUpdated as EventListener);
 
@@ -1522,6 +1531,7 @@ function DesktopAppInner() {
 
   useEffect(() => {
     let mounted = true;
+    const frontendDemoMode = isFrontendDemoMode();
 
     if (isDesktop) {
       setDesktopAuthenticated(false);
@@ -1533,7 +1543,9 @@ function DesktopAppInner() {
 
     (async () => {
       try {
-        const session = await fetchSession();
+        const session = frontendDemoMode
+          ? createFrontendDemoSession()
+          : await fetchSession();
         if (!mounted) return;
         if (loginMode) {
           setUser("");
@@ -1560,7 +1572,9 @@ function DesktopAppInner() {
         // but do NOT automatically authenticate when we're rendering the
         // small login window (loginMode). The small window should always
         // show the login UI so the user can enter credentials there.
-        if (session && session.username && !loginMode) {
+        if (frontendDemoMode && !loginMode) {
+          setDesktopAuthenticated(true);
+        } else if (session && session.username && !loginMode) {
           setDesktopAuthenticated(true);
         }
 
@@ -1587,7 +1601,7 @@ function DesktopAppInner() {
   }, [isDesktop, loginMode]);
 
   useEffect(() => {
-    if (!isDesktop || desktopAuthenticated || !fecha) return;
+    if (isFrontendDemoMode() || !isDesktop || desktopAuthenticated || !fecha) return;
 
     let activeRequest = true;
     const requestId = ++tipoCambioRequestId.current;
@@ -1650,6 +1664,7 @@ function DesktopAppInner() {
     setBusy(true);
 
     try {
+      clearFrontendDemoMode();
       const session = await login(user.trim(), pass, fecha);
       localStorage.setItem("sigecoom_session", JSON.stringify(session));
       setUser(session.username || "");
@@ -1688,10 +1703,61 @@ function DesktopAppInner() {
     }
   };
 
+  const enterFrontendDemo = () => {
+    try {
+      enableFrontendDemoMode();
+      const demoSession = createFrontendDemoSession();
+      setUser(demoSession.username);
+      setPass("");
+      setTc("");
+      setTcLoading(false);
+      setDesktopAuthenticated(true);
+      setDesktopReady(true);
+      window.dispatchEvent(new CustomEvent("systeck-session-updated", { detail: demoSession }));
+      toast.info("Vista previa sin conexión", {
+        description: "Solo se mostrará la interfaz; SIGECOM y sus datos no estarán disponibles.",
+      });
+      window.c2teckDesktop?.loginSuccess?.();
+    } catch (error) {
+      toast.error("No se pudo iniciar la vista previa", {
+        description: error instanceof Error ? error.message : "Revisa el almacenamiento local del navegador.",
+      });
+    }
+  };
+
   const inputCls = "h-9 w-full rounded border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-300";
 
   const openDesktopWindow = (label: string) => {
-    // Siempre abrir ventanas simuladas dentro del MDI del escritorio.
+    const normalizedLabel = label
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLocaleLowerCase("es");
+
+    if (normalizedLabel === "info cambios" || normalizedLabel === "informacion cambios") {
+      if (window.c2teckDesktop?.openVersionHistory) {
+        window.c2teckDesktop.openVersionHistory().catch((error: unknown) => {
+          toast.error("No se pudo abrir el historial de versiones", {
+            description: error instanceof Error ? error.message : "Intenta abrirlo nuevamente.",
+          });
+        });
+      } else {
+        const openedWindow = window.open(
+          new URL("/versiones", window.location.origin).toString(),
+          "_blank",
+        );
+        if (!openedWindow) {
+          toast.error("El navegador bloqueó la nueva pestaña", {
+            description: "Permite las ventanas emergentes para abrir el historial de versiones.",
+          });
+        } else {
+          openedWindow.opener = null;
+        }
+      }
+      return;
+    }
+
     openWindow(label);
   };
 
@@ -1726,6 +1792,7 @@ function DesktopAppInner() {
         onSucursalChange={setSucursal}
         onToggleShowPass={() => setShowPass((v) => !v)}
         onCapsChange={setCapsOn}
+        onFrontendDemo={enterFrontendDemo}
       />
     );
   }
@@ -2042,6 +2109,7 @@ function DesktopAppInner() {
           onSucursalChange={setSucursal}
           onToggleShowPass={() => setShowPass((v) => !v)}
           onCapsChange={setCapsOn}
+          onFrontendDemo={enterFrontendDemo}
         />
       )}
 
@@ -2074,6 +2142,7 @@ function DesktopLogin({
   onSucursalChange,
   onToggleShowPass,
   onCapsChange,
+  onFrontendDemo,
 }: {
   busy: boolean;
   user: string;
@@ -2091,6 +2160,7 @@ function DesktopLogin({
   onSucursalChange: (value: string) => void;
   onToggleShowPass: () => void;
   onCapsChange: (value: boolean) => void;
+  onFrontendDemo: () => void;
 }) {
   const inputCls = "h-9 rounded-md border border-slate-300 bg-white px-3 text-sm text-slate-900 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-300 flex-1";
   const [recover, setRecover] = useState(false);
@@ -2203,6 +2273,10 @@ function DesktopLogin({
             <div className="shrink-0 space-y-2 mt-2">
               <div className="flex items-center justify-end gap-2 pt-2 pb-2 border-t border-slate-300">
                 <button type="button" onClick={() => window.close()} className="h-7 px-4 text-[12px] rounded-sm border border-slate-400/70 bg-gradient-to-b from-[#F6F9FC] to-[#DDE4EC] hover:from-[#EEF2F7] hover:to-[#C9D3DF] text-slate-800 whitespace-nowrap">Cancelar</button>
+                <button type="button" onClick={onFrontendDemo} className="h-7 px-3 text-[12px] rounded-sm border border-slate-400/70 bg-gradient-to-b from-white to-[#E8EDF3] hover:from-white hover:to-[#DDE4EC] text-slate-700 whitespace-nowrap inline-flex items-center gap-1.5">
+                  <MonitorSmartphone className="h-3.5 w-3.5" />
+                  Solo frontend
+                </button>
                 <button type="submit" disabled={busy} className="h-7 px-6 text-[12px] font-semibold rounded-sm border border-[#2A3F55] bg-gradient-to-b from-[#4C6E93] to-[#2A3F55] hover:from-[#5A80A9] text-white disabled:opacity-60 whitespace-nowrap">{busy ? "Conectando..." : "OK"}</button>
               </div>
               <div className="text-center">

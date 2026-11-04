@@ -1,4 +1,10 @@
+import { isFrontendDemoMode } from "@/lib/frontend-demo";
+
 export async function apiFetch(input: RequestInfo | URL, init?: RequestInit) {
+  if (isFrontendDemoMode()) {
+    throw new Error("Modo de vista previa: las operaciones con SIGECOM están deshabilitadas.");
+  }
+
   const sessionRaw = typeof window !== 'undefined' ? window.localStorage.getItem('sigecoom_session') : null;
   let codigo: string | null = null;
   if (sessionRaw) {
