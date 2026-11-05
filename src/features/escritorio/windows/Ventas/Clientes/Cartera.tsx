@@ -6,6 +6,7 @@ import {
   CodeDescSelector,
   type CodeDescOption,
 } from "@/features/escritorio/windows/shared/SearchFieldControls";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 type ClienteRow = {
   codigo: string;
@@ -78,7 +79,7 @@ export function CarteraList() {
         </div>
 
         <div className="min-h-0 flex-1 overflow-auto border border-slate-400/60 bg-white">
-          <table className="w-full min-w-[560px] border-collapse text-[11.5px]">
+          <SortableTable className="w-full min-w-[560px] border-collapse text-[11.5px]">
             <colgroup>
               <col className="w-[15%]" />
               <col className="w-[45%]" />
@@ -111,7 +112,7 @@ export function CarteraList() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </fieldset>
     </div>

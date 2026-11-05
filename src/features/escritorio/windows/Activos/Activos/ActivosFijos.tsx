@@ -11,6 +11,7 @@ import {
   updateInventoryItem,
   type InventoryItem
 } from "@/lib/sigecoom-api";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export function ActivosFijosList() {
   const [assets, setAssets] = useState<InventoryItem[]>([]);
@@ -156,7 +157,7 @@ export function ActivosFijosList() {
       </div>
 
       <div className="border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]"><tr>
             <th className="px-2 py-2 text-left border-b border-slate-300">SKU</th>
             <th className="px-2 py-2 text-left border-b border-slate-300">Activo</th>
@@ -183,7 +184,7 @@ export function ActivosFijosList() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );

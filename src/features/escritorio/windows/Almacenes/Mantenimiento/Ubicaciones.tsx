@@ -8,6 +8,7 @@ import {
   type Location,
   updateSigecoomLocation,
 } from "@/lib/sigecoom-api";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 function Field({ label, className = "", children }: { label: string; className?: string; children: React.ReactNode }) {
   return (
@@ -173,7 +174,7 @@ export function UbicacionesList() {
         </div>
 
         <div className="border border-slate-300 rounded-sm bg-white overflow-auto shadow-sm">
-          <table className="w-full text-[11px] border-collapse">
+          <SortableTable className="w-full text-[11px] border-collapse">
             <thead className="bg-[#F3F6FA]"><tr>
               <th className="px-2 py-2 text-left border-b border-slate-300">Sel</th>
               <th className="px-2 py-2 text-left border-b border-slate-300">Código</th>
@@ -204,7 +205,7 @@ export function UbicacionesList() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
     </div>

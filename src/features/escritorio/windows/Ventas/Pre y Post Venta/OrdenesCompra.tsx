@@ -14,6 +14,7 @@ import {
   YearSpinner,
   type CodeDescOption,
 } from "@/features/escritorio/windows/shared/SearchFieldControls";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 type OrdenCompraRow = {
   numero: string;
@@ -129,7 +130,7 @@ export function OrdenesCompraList() {
 
       <div className="min-h-0 flex-1 overflow-auto p-1.5">
         <div className="h-full overflow-auto rounded-sm border border-slate-400/60 bg-white">
-          <table className="w-full min-w-[780px] text-[11px]">
+          <SortableTable className="w-full min-w-[780px] text-[11px]">
             <thead className="sticky top-0 z-10 bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800">
               <tr>
                 {["Número", "Fecha", "Cliente", "Mon.", "Total", "Estado", "TotNetoSug"].map((header) => (
@@ -163,7 +164,7 @@ export function OrdenesCompraList() {
                 );
               })}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
 

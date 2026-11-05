@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { Settings, ShieldCheck, FileDigit, Coins, RefreshCcw, Upload, CheckCircle2, AlertTriangle, UserCog, Building2 } from "lucide-react";
 import { useStore, actions, validateRUC, ROLE_LABEL, type Role, type ModuleKey } from "@/lib/store";
 import { cn } from "@/lib/utils";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 
 export const Route = createFileRoute("/dashboard/settings")({
@@ -225,7 +226,7 @@ function RolesTenantsPanel() {
           <span className="ml-auto text-[10px] text-muted-foreground">Perfil activo: <span className="text-success">{ROLE_LABEL[role]}</span></span>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-xs">
+          <SortableTable className="w-full text-xs">
             <thead>
               <tr className="text-muted-foreground">
                 <th className="text-left py-2 px-2">Módulo</th>
@@ -261,7 +262,7 @@ function RolesTenantsPanel() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
         <p className="mt-3 text-[10px] text-muted-foreground">Al modificar un permiso, el menú lateral se actualiza inmediatamente para todos los usuarios asignados a ese rol.</p>
       </div>

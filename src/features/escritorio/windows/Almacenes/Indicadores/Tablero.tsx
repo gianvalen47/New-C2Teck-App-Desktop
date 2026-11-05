@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpDown, LogOut, Search, X } from "lucide-react";
 import { btn, btnPrimary, iconBtn, inp, squareIconBtn, tbSep } from "@/features/escritorio/windows/uiStyles";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 function Panel({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -49,7 +50,7 @@ export function IndicadoresVentaDialogList() {
               <button className={`${btnPrimary} h-7`}><Search className="h-3.5 w-3.5" />Buscar</button>
             </div>
             <div className="mt-2 overflow-hidden rounded-sm border border-slate-300">
-              <table className="w-full border-collapse text-[11px]">
+              <SortableTable className="w-full border-collapse text-[11px]">
                 <thead className="bg-slate-100 text-slate-700">
                   <tr>
                     {[
@@ -82,7 +83,7 @@ export function IndicadoresVentaDialogList() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </SortableTable>
             </div>
           </Panel>
 
@@ -95,7 +96,7 @@ export function IndicadoresVentaDialogList() {
               <button className={iconBtn} title="Siguiente"><ArrowRight className="h-4 w-4" /></button>
             </div>
             <div className="mt-2 overflow-hidden rounded-sm border border-slate-300">
-              <table className="w-full border-collapse text-[11px]">
+              <SortableTable className="w-full border-collapse text-[11px]">
                 <thead className="bg-slate-100 text-slate-700">
                   <tr>
                     {[
@@ -128,7 +129,7 @@ export function IndicadoresVentaDialogList() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </SortableTable>
             </div>
           </Panel>
         </div>

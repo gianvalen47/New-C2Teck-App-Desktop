@@ -179,7 +179,7 @@ function getInitialSize(label: string): WindowSize {
     "Calendario": { w: 900, h: 650 },
 
     // Precios
-    "Precios Cliente": { w: 880, h: 660 },
+    "Precios Cliente": { w: 920, h: 640 },
     "Precio Oferta": { w: 880, h: 660 },
     "Factores Rubros": { w: 900, h: 680 },
     "Precio Lista": { w: 880, h: 660 },

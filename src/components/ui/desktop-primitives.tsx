@@ -8,6 +8,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { Search } from "lucide-react";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 // ---------- Estilos base para Inputs y Botones ERP ----------
 export const inp = "h-7 px-2 text-[12px] bg-white border border-slate-400/70 rounded-sm outline-none focus:border-[#3E5B7A] focus:ring-1 focus:ring-[#3E5B7A]/30";
@@ -108,21 +109,16 @@ export function Radio({ name, label, defaultChecked }: { name: string; label: st
 
 // ---------- Tablas y Resúmenes ----------
 export function DataTable({ columns, rows = 0, className = "" }: { columns: string[]; rows?: number; className?: string }) {
-  const [sortBy, setSortBy] = useState<{ col: string; asc: boolean } | null>(null);
   const visibleRows = rows === 0 ? 100 : rows;
 
   return (
     <div className={`border border-slate-400/60 bg-white rounded-sm ${className || "overflow-y-auto max-h-[600px]"}`}>
-      <table className="w-full text-[11.5px]">
+      <SortableTable className="w-full text-[11.5px]">
         <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0">
           <tr>
             {columns.map((c) => (
-              <th
-                key={c}
-                className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold cursor-pointer hover:bg-[#E6EEF9]"
-                onClick={() => setSortBy((prev) => (prev?.col === c ? { col: c, asc: !prev.asc } : { col: c, asc: true }))}
-              >
-                {c} {sortBy?.col === c ? (sortBy.asc ? "▲" : "▼") : ""}
+              <th key={c} className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold">
+                {c}
               </th>
             ))}
           </tr>
@@ -136,7 +132,7 @@ export function DataTable({ columns, rows = 0, className = "" }: { columns: stri
             </tr>
           ))}
         </tbody>
-      </table>
+      </SortableTable>
     </div>
   );
 }

@@ -9,6 +9,7 @@ import {
   Fs,
   Radio
 } from "@/components/ui/desktop-primitives";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export function EnviarCorreosList() {
   return (
@@ -25,11 +26,11 @@ export function EnviarCorreosList() {
           <label className="text-right pt-1 font-bold">De :</label><input className={inp} />
           <label className="text-right pt-1 font-bold">Para :</label>
           <div className="border border-[#7A96B4] bg-white h-24 overflow-auto">
-            <table className="w-full text-[11.5px]">
+            <SortableTable className="w-full text-[11.5px]">
               <thead className="bg-gradient-to-b from-[#EAF0F7] to-[#C9D6E5] text-[#243B55]">
                 <tr><th className="border-r border-b border-[#7A96B4] px-2 py-[3px] text-center">Descripción</th><th className="border-b border-[#7A96B4] px-2 py-[3px] text-center">Correo</th></tr>
               </thead>
-            </table>
+            </SortableTable>
           </div>
           <label className="text-right pt-1 font-bold">Asunto :</label><input className={inp} />
           <label className="text-right pt-1 font-bold">Mensaje :</label><textarea className={`${inp} h-24 py-1`} />
@@ -42,11 +43,11 @@ export function EnviarCorreosList() {
           </div>
           <label className="text-right pt-1 font-bold">Adjuntos :</label>
           <div className="border border-[#7A96B4] bg-white h-16 overflow-auto">
-            <table className="w-full text-[11.5px]">
+            <SortableTable className="w-full text-[11.5px]">
               <thead className="bg-gradient-to-b from-[#EAF0F7] to-[#C9D6E5] text-[#243B55]">
                 <tr><th className="border-r border-b border-[#7A96B4] px-2 py-[3px] text-center">Nombre</th><th className="border-b border-[#7A96B4] px-2 py-[3px] text-center w-28">Tamaño ( kb.)</th></tr>
               </thead>
-            </table>
+            </SortableTable>
           </div>
         </div>
         <div className="flex justify-end gap-2 pt-2">

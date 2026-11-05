@@ -22,6 +22,7 @@ import {
 } from "@/lib/sigecoom-api";
 
 import { inp, btn, btnPrimary, iconBtn, actionBtn, squareIconBtn, tbSep } from "./uiStyles";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 function Field({ label, className = "", children }: { label: string; className?: string; children: React.ReactNode }) {
   return (
@@ -289,7 +290,7 @@ export function OrdenCompraList() {
 
       <div className="flex-1 min-h-0 overflow-auto p-1.5">
         <div className="border border-slate-400/60 bg-white rounded-sm h-full overflow-auto">
-          <table className="w-full text-[11.5px]">
+          <SortableTable className="w-full text-[11.5px]">
             <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0 z-10">
               <tr>
                 <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev.col === 'series' ? { col: 'series', asc: !prev.asc } : { col: 'series', asc: true })}>Orden {sortBy.col === 'series' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
@@ -338,7 +339,7 @@ export function OrdenCompraList() {
                 );
               })}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
 

@@ -14,6 +14,7 @@ import {
   updateSigecoomSale,
   type SigecoomSale
 } from "@/lib/sigecoom-api";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export function LetrasList() {
   const [letters, setLetters] = useState<SigecoomSale[]>([]);
@@ -116,7 +117,7 @@ export function LetrasList() {
         <Field label="Carga"><input className={inp} value={loadingLetters ? "Cargando..." : "Lista actualizada"} readOnly /></Field>
       </div>
       <div className="border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]"><tr><th className="px-2 py-2 text-left border-b border-slate-300">Sel</th><th className="px-2 py-2 text-left border-b border-slate-300">Nº Letra</th><th className="px-2 py-2 text-left border-b border-slate-300">Fecha Giro</th><th className="px-2 py-2 text-left border-b border-slate-300">Cliente</th><th className="px-2 py-2 text-left border-b border-slate-300">Vencimiento</th><th className="px-2 py-2 text-left border-b border-slate-300">Moneda</th><th className="px-2 py-2 text-right border-b border-slate-300">Importe</th><th className="px-2 py-2 text-left border-b border-slate-300">Banco</th><th className="px-2 py-2 text-left border-b border-slate-300">Estado</th></tr></thead>
           <tbody>
             {visibleLetters.length === 0 ? (
@@ -135,7 +136,7 @@ export function LetrasList() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );

@@ -24,6 +24,7 @@ import { stdToolbar5 } from "@/features/escritorio/windows/shared/toolbarPresets
 import { actionBtn, btn, btnPrimary, iconBtn, inp, squareIconBtn, tbSep } from "@/features/escritorio/windows/uiStyles";
 import { fetchBoletas, fetchSession, getSessionTipoCambioCompra } from "@/lib/sigecoom-api";
 import { Field, InlineField, YearSpinner, EstadoBadge, DraggableFormWindow, type BoletaFormWindow, FiltersPanel, ESTADO_FILTER_OPTIONS } from "@/features/escritorio/windows/shared/uiComponents";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 type BoletaRow = {
   id: string;
@@ -530,7 +531,7 @@ export function BoletaList() {
       <div className="flex-1 min-h-0 overflow-auto p-1.5">
         <div className="border border-slate-400/60 bg-white rounded-sm h-full overflow-auto">
           <div className="overflow-auto flex-1 h-full">
-            <table className="w-full text-[11.5px] border-collapse">
+            <SortableTable className="w-full text-[11.5px] border-collapse">
               <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0 z-10 select-none shadow-xs">
                 <tr>
                   <th className="w-6 px-1 py-1 text-center border-r border-slate-300 font-semibold"></th>
@@ -648,7 +649,7 @@ export function BoletaList() {
                   })
                 )}
               </tbody>
-            </table>
+            </SortableTable>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import './GuiasDevolucion.css'
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export default function GuiasDevolucion(): JSX.Element {
   const [rows] = useState<any[]>([])
@@ -43,7 +44,7 @@ export default function GuiasDevolucion(): JSX.Element {
       </header>
 
       <div className="gd-list-grid" onContextMenu={onContextMenu}>
-        <table>
+        <SortableTable>
           <thead>
             <tr>
               <th>Número</th>
@@ -74,7 +75,7 @@ export default function GuiasDevolucion(): JSX.Element {
               </tr>
             )}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
 
       <footer className="gd-list-status">Registros : {rows.length}</footer>

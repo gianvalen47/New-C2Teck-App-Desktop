@@ -11,6 +11,7 @@ import {
 import {
   createSigecoomSale
 } from "@/lib/sigecoom-api";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export function PlanillasList() {
   const [collector, setCollector] = useState("");
@@ -84,7 +85,7 @@ export function PlanillasList() {
       </div>
       {message && <div className="mb-3 rounded-sm border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">{message}</div>}
       <div className="border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]">
             <tr>
               <th className="px-2 py-2 text-left border-b border-slate-300">Planilla</th>
@@ -113,7 +114,7 @@ export function PlanillasList() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );

@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { ScrollText, Filter, Download, FileText, ShieldCheck } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export const Route = createFileRoute("/dashboard/audit")({
   head: () => ({
@@ -89,7 +90,7 @@ function AuditPage() {
 
       <div className="card-elevated overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <SortableTable className="w-full text-sm">
             <thead className="text-left text-xs uppercase text-muted-foreground bg-muted/30">
               <tr>
                 <th className="px-3 py-2">Timestamp</th>
@@ -126,7 +127,7 @@ function AuditPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
     </div>

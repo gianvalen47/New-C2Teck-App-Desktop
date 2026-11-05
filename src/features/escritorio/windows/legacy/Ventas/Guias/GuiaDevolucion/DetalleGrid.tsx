@@ -1,5 +1,6 @@
 import React from 'react'
 import './DetalleGrid.css'
+import { SortableTable } from "@/components/ui/sortable-table";
 
 type Column = {
   key: string
@@ -28,7 +29,7 @@ export default function DetalleGrid({ columns = [], rows = [] }: Props) {
 
   return (
     <div className="detalle-grid">
-      <table>
+      <SortableTable>
         <thead>
           <tr>
             {visibleCols.length
@@ -63,7 +64,7 @@ export default function DetalleGrid({ columns = [], rows = [] }: Props) {
             </tr>
           )}
         </tbody>
-      </table>
+      </SortableTable>
     </div>
   )
 }

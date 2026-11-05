@@ -51,6 +51,7 @@ import {
 } from "@/lib/sigecoom-api";
 
 import { inp, btn, btnPrimary, iconBtn, actionBtn, squareIconBtn, tbSep } from "@/features/escritorio/windows/uiStyles";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 function Field({ label, children, className = "" }: { label: string; children: React.ReactNode; className?: string }) {
   return (
@@ -801,7 +802,7 @@ function ClienteLookupModal({
 
         <div className="p-2">
           <div className="border border-slate-300 bg-white h-[280px] overflow-auto">
-            <table className="w-full text-[11px]">
+            <SortableTable className="w-full text-[11px]">
               <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] sticky top-0 z-10">
                 <tr>
                   <th className="px-2 py-1 text-left border-r border-slate-300 font-semibold">Código</th>
@@ -834,7 +835,7 @@ function ClienteLookupModal({
                   );
                 })}
               </tbody>
-            </table>
+            </SortableTable>
           </div>
 
           <div className="mt-2 flex items-center justify-between">
@@ -1303,7 +1304,7 @@ function ToolGuiaClienteBody({ selected }: { selected: GuiaRemisionRow | null })
       </div>
 
       <div className="border border-slate-300 bg-white h-[330px] overflow-auto">
-        <table className="w-full text-[11px]">
+        <SortableTable className="w-full text-[11px]">
           <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] text-slate-800 sticky top-0">
             <tr>
               {"Serie|N° Doc|Fecha|Moneda|TotBruto|TotDscto|TotVenta|TotIgv|TotNeto".split("|").map((h) => (
@@ -1316,7 +1317,7 @@ function ToolGuiaClienteBody({ selected }: { selected: GuiaRemisionRow | null })
               <td colSpan={9} className="text-center text-slate-400 py-6">Sin datos</td>
             </tr>
           </tbody>
-        </table>
+        </SortableTable>
       </div>
       <div className="text-center text-[11px] font-semibold text-slate-700">Registros : 0</div>
     </div>
@@ -1349,7 +1350,7 @@ function ToolEstadosBody({ selected }: { selected: GuiaRemisionRow | null }) {
   return (
     <div className="h-full p-3 bg-[#F8FBFF]">
       <div className="border border-slate-300 bg-white h-[320px] overflow-auto">
-        <table className="w-full text-[11px]">
+        <SortableTable className="w-full text-[11px]">
           <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] text-slate-800 sticky top-0">
             <tr>
               {"Estado|Fecha|Hora|Observacion|Usuario".split("|").map((h) => (
@@ -1370,7 +1371,7 @@ function ToolEstadosBody({ selected }: { selected: GuiaRemisionRow | null }) {
               <tr><td colSpan={5} className="text-center text-slate-500 py-6">Seleccione una guia</td></tr>
             )}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </div>
   );
@@ -1513,7 +1514,7 @@ function ToolAgregarConsumoJobBody({
 
       <div className="flex-1 min-h-0 px-3">
         <div className="border border-slate-300 bg-white h-full overflow-auto">
-          <table className="w-full text-[11px]">
+          <SortableTable className="w-full text-[11px]">
             <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] text-slate-800 sticky top-0">
               <tr>
                 {"Item|Código|Descripción|Cant.|Marca|Modelo|Importado".split("|").map((h) => (
@@ -1536,7 +1537,7 @@ function ToolAgregarConsumoJobBody({
                 </tr>
               ))}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
 
@@ -1614,7 +1615,7 @@ function ToolPreciosSugeridosBody() {
   return (
     <div className="h-full p-3 bg-[#F8FBFF]">
       <div className="border border-slate-300 bg-white h-[340px] overflow-auto">
-        <table className="w-full text-[11px]">
+        <SortableTable className="w-full text-[11px]">
           <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] text-slate-800 sticky top-0">
             <tr>
               {"Codigo|Descripcion|Precio|Dscto|PrecioSug|DsctoSug|Fec. Apro|Usuario".split("|").map((h) => (
@@ -1627,7 +1628,7 @@ function ToolPreciosSugeridosBody() {
               <td className="px-2 py-6 text-center text-slate-500" colSpan={8}>Sin datos</td>
             </tr>
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </div>
   );
@@ -2608,7 +2609,7 @@ export function GuiaRemisionForm({
               )}
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full text-[11.5px]">
+              <SortableTable className="w-full text-[11.5px]">
                 <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800">
                   <tr>
                     {[
@@ -2668,7 +2669,7 @@ export function GuiaRemisionForm({
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </SortableTable>
             </div>
 
             {/* Detalles block end */}
@@ -3294,7 +3295,7 @@ export function GuiaRemisionList() {
       {/* Grid */}
       <div className="flex-1 min-h-0 overflow-auto p-1.5">
         <div className="border border-slate-400/60 bg-white rounded-sm h-full overflow-auto">
-          <table className="w-full text-[11.5px]">
+          <SortableTable className="w-full text-[11.5px]">
             <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0 z-10">
               <tr>
                 <th className="px-2 py-1 text-center border-r border-slate-300/70 font-semibold whitespace-nowrap cursor-pointer hover:bg-[#E6EEF9]" onClick={() => setSortBy(prev => prev?.col === 'num_doc' ? { col: 'num_doc', asc: !prev.asc } : { col: 'num_doc', asc: true })}>Número {sortBy?.col === 'num_doc' ? (sortBy.asc ? '▲' : '▼') : ''}</th>
@@ -3372,7 +3373,7 @@ export function GuiaRemisionList() {
                 );
               })}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
 

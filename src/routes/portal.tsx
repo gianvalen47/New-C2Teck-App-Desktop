@@ -6,6 +6,7 @@ import { PublicLayout } from "@/components/layout/PublicLayout";
 import { useStore, formatSoles } from "@/lib/store";
 import { invoices as legacyInvoices } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export const Route = createFileRoute("/portal")({
   head: () => ({
@@ -162,7 +163,7 @@ function ReceiptViewer({ receipt, onClose }: { receipt: FoundReceipt; onClose: (
         </div>
 
         <div className="mt-4 rounded-lg border border-border overflow-x-auto">
-          <table className="w-full text-sm min-w-[440px]">
+          <SortableTable className="w-full text-sm min-w-[440px]">
             <thead className="bg-muted/30 text-xs uppercase text-muted-foreground">
               <tr><th className="px-3 py-2 text-left">Descripción</th><th className="px-3 py-2 text-right">Cant.</th><th className="px-3 py-2 text-right">Unit.</th><th className="px-3 py-2 text-right">Importe</th></tr>
             </thead>
@@ -176,7 +177,7 @@ function ReceiptViewer({ receipt, onClose }: { receipt: FoundReceipt; onClose: (
                 </tr>
               ))}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2 justify-end">

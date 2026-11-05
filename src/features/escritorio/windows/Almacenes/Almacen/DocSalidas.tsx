@@ -13,6 +13,7 @@ import {
   X,
 } from "lucide-react";
 import { btnPrimary, iconBtn, inp, squareIconBtn, tbSep } from "@/features/escritorio/windows/uiStyles";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 function Field({ label, className = "", children }: { label: string; className?: string; children: ReactNode }) {
   return (
@@ -96,7 +97,7 @@ export function DocSalidasList() {
 
       <div className="flex-1 min-h-0 overflow-hidden px-2 pb-2">
         <div className="h-full overflow-auto rounded-sm border border-slate-300 bg-white shadow-sm">
-          <table className="w-full border-collapse text-[11px]">
+          <SortableTable className="w-full border-collapse text-[11px]">
             <thead className="sticky top-0 z-10 bg-slate-100 text-slate-700">
               <tr>
                 {[
@@ -129,7 +130,7 @@ export function DocSalidasList() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
     </div>

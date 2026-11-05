@@ -6,6 +6,7 @@ import { KpiCard } from "@/components/ui/kpi-card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { leads } from "@/lib/mock-data";
 import { fetchBackendHealth, fetchSigecoomClients, type BackendHealth, type SigecoomClient } from "@/lib/sigecoom-api";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export const Route = createFileRoute("/dashboard/crm")({
   head: () => ({
@@ -117,7 +118,7 @@ function CRMPage() {
             <div className="text-xs text-muted-foreground">Últimos {leads.length}</div>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <SortableTable className="w-full text-sm">
               <thead className="text-left text-xs uppercase text-muted-foreground bg-muted/30">
                 <tr><th className="px-3 py-2">ID</th><th className="px-3 py-2">Cliente</th><th className="px-3 py-2">Contacto</th><th className="px-3 py-2">Interés</th><th className="px-3 py-2">Etapa</th></tr>
               </thead>
@@ -132,7 +133,7 @@ function CRMPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </SortableTable>
           </div>
 
           <div className="mt-6 rounded-lg border border-border p-4">

@@ -26,6 +26,7 @@ import {
   type GuiaDevolucionDetalle,
 } from "@/lib/sigecoom-api";
 import { inp, btn, btnPrimary, iconBtn, actionBtn, squareIconBtn, tbSep } from "@/features/escritorio/windows/uiStyles";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 // ── Constantes y Helpers ─────────────────────────────────────────────────────
 
@@ -296,7 +297,7 @@ export function GuiaDevolucionList() {
       {/* ── Tabla Janus GridEX ── */}
       <div className="flex-1 min-h-0 overflow-auto p-1.5">
         <div className="h-full overflow-auto rounded-sm border border-slate-400/60 bg-white">
-          <table className="w-full text-[11px] border-collapse">
+          <SortableTable className="w-full text-[11px] border-collapse">
             <thead className="sticky top-0 z-10 bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 select-none shadow-xs">
               <tr>
                 <th className="w-6 px-1 py-1 text-center border-r border-slate-300 font-semibold"></th>
@@ -410,7 +411,7 @@ export function GuiaDevolucionList() {
                 })
               )}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
 
@@ -769,7 +770,7 @@ function GuiaDevolucionFormModal({
                   </div>
 
                   <div className="max-h-[220px] overflow-auto mt-1 border border-slate-200 rounded-xs">
-                    <table className="w-full text-[11px] border-collapse">
+                    <SortableTable className="w-full text-[11px] border-collapse">
                       <thead className="sticky top-0 bg-[#EEF2F7] text-slate-700 select-none">
                         <tr>
                           <th className="w-6 px-1 py-1 text-center border-r border-slate-300">#</th>
@@ -837,7 +838,7 @@ function GuiaDevolucionFormModal({
                           })
                         )}
                       </tbody>
-                    </table>
+                    </SortableTable>
                   </div>
                 </div>
 
@@ -1077,7 +1078,7 @@ function ClienteLookupModal({
           ) : filtered.length === 0 ? (
             <div className="py-8 text-center text-slate-400">No se encontraron clientes</div>
           ) : (
-            <table className="w-full border-collapse text-[11px]">
+            <SortableTable className="w-full border-collapse text-[11px]">
               <thead className="sticky top-0 bg-[#EEF2F7] text-slate-700">
                 <tr>
                   <th className="px-2 py-1 text-left border-r border-slate-200">R.U.C.</th>
@@ -1104,7 +1105,7 @@ function ClienteLookupModal({
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </SortableTable>
           )}
         </div>
 

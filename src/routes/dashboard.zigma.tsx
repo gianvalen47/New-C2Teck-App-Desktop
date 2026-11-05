@@ -6,6 +6,7 @@ import { zigmaNiches } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { actions, useStore, type SaleLine, type Sale } from "@/lib/store";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export const Route = createFileRoute("/dashboard/zigma")({
   head: () => ({
@@ -183,7 +184,7 @@ function TiendasView() {
           <button className="rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground">Agregar</button>
         </form>
         <div className="overflow-x-auto -mx-2 sm:mx-0">
-        <table className="w-full text-sm min-w-[520px]">
+        <SortableTable className="w-full text-sm min-w-[520px]">
           <thead className="text-left text-xs uppercase text-muted-foreground bg-muted/30">
             <tr><th className="px-3 py-2">SKU</th><th className="px-3 py-2">Producto</th><th className="px-3 py-2 text-right">P.U.</th><th className="px-3 py-2 text-right">Cant.</th><th className="px-3 py-2 text-right">Total</th><th /></tr>
           </thead>
@@ -201,7 +202,7 @@ function TiendasView() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
         </div>
       </div>
       <div className="rounded-xl bg-gradient-to-br from-primary/20 to-success/10 border border-primary/30 p-6">
@@ -413,7 +414,7 @@ function GymView() {
         </button>
       </div>
       <div className="overflow-x-auto -mx-2 sm:mx-0">
-      <table className="w-full text-sm min-w-[560px]">
+      <SortableTable className="w-full text-sm min-w-[560px]">
         <thead className="text-left text-xs uppercase text-muted-foreground bg-muted/30">
           <tr><th className="px-3 py-2">Socio</th><th className="px-3 py-2">Plan</th><th className="px-3 py-2">Vencimiento</th><th className="px-3 py-2">Check-in hoy</th><th className="px-3 py-2">Estado</th></tr>
         </thead>
@@ -428,7 +429,7 @@ function GymView() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </SortableTable>
       </div>
     </div>
   );

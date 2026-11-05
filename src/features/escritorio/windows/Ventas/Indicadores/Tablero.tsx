@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { toast } from "sonner";
 import { btnPrimary, inp, squareIconBtn } from "@/features/escritorio/windows/uiStyles";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 const COLUMNS = ["INDICADOR", "U/M", "FRECUENCIA", "PB", "OBJ.", "REAL", "🚦", "G"];
 const EMPTY_ROWS = Array.from({ length: 10 }, (_, index) => index);
@@ -13,7 +14,7 @@ function IndicatorGrid({ label }: { label: string }) {
       aria-label={`Indicadores ${label}`}
       className="min-h-0 flex-1 overflow-auto border border-slate-400/60 bg-white"
     >
-      <table className="h-full w-full min-w-[560px] border-collapse text-[11px]">
+      <SortableTable className="h-full w-full min-w-[560px] border-collapse text-[11px]">
         <colgroup>
           <col className="w-[48%]" />
           <col className="w-[6%]" />
@@ -45,7 +46,7 @@ function IndicatorGrid({ label }: { label: string }) {
             </tr>
           ))}
         </tbody>
-      </table>
+      </SortableTable>
     </div>
   );
 }

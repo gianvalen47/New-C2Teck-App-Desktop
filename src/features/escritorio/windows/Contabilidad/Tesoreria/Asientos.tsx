@@ -13,6 +13,7 @@ import {
   createSigecoomJournalEntry,
   type SigecoomJournalEntry
 } from "@/lib/sigecoom-api";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export function AsientosList() {
   const [entries, setEntries] = useState<SigecoomJournalEntry[]>([]);
@@ -149,7 +150,7 @@ export function AsientosList() {
       </div>
 
       <div className="mt-3 overflow-auto border border-slate-300 rounded-sm bg-white">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#EEF2F7] text-slate-800">
             <tr>
               <th className="px-2 py-2 border-b border-slate-300 text-left">Cuenta</th>
@@ -174,7 +175,7 @@ export function AsientosList() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
 
       <div className="mt-3 grid grid-cols-3 gap-3 text-[12px] text-slate-700">
@@ -186,7 +187,7 @@ export function AsientosList() {
       <div className="mt-6">
         <div className="text-[11px] font-semibold text-slate-700 uppercase mb-2">Últimos asientos registrados</div>
         <div className="overflow-auto border border-slate-300 rounded-sm bg-white">
-          <table className="w-full text-[11px] border-collapse">
+          <SortableTable className="w-full text-[11px] border-collapse">
             <thead className="bg-[#EEF2F7] text-slate-800">
               <tr>
                 <th className="px-2 py-2 border-b border-slate-300 text-left">Asiento</th>
@@ -213,7 +214,7 @@ export function AsientosList() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
     </WindowShell>

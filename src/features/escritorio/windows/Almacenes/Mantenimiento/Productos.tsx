@@ -10,6 +10,7 @@ import {
   updateInventoryItem,
 } from "@/lib/sigecoom-api";
 import { downloadBlob } from "@/features/escritorio/windows/shared/LegacySupport";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 function Field({ label, className = "", children }: { label: string; className?: string; children: React.ReactNode }) {
   return (
@@ -248,7 +249,7 @@ export function ProductosList() {
         </div>
 
         <div className="border border-slate-300 rounded-sm bg-white overflow-auto shadow-sm">
-          <table className="w-full text-[11px] border-collapse">
+          <SortableTable className="w-full text-[11px] border-collapse">
             <thead className="bg-[#F3F6FA]"><tr>
               <th className="px-2 py-2 text-left border-b border-slate-300">SKU</th>
               <th className="px-2 py-2 text-left border-b border-slate-300">Descripción</th>
@@ -271,7 +272,7 @@ export function ProductosList() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
       <input ref={fileInputRef} type="file" accept=".csv" className="hidden" onChange={handleImport} />

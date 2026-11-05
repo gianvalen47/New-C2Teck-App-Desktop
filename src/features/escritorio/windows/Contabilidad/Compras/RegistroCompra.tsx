@@ -15,6 +15,7 @@ import {
 } from "@/lib/sigecoom-api";
 import { Boleta } from "@/features/escritorio/windows/Ventas/Documentos/Boletas";
 import { Factura } from "@/features/escritorio/windows/Ventas/Documentos/Facturas";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export function RegistroCompraList() {
   const [registers, setRegisters] = useState<PurchaseRegister[]>([]);
@@ -149,7 +150,7 @@ export function RegistroCompraList() {
       {/* Registers List */}
       <div className="mt-4">
         <div className="overflow-auto max-h-96 border border-slate-200 rounded">
-          <table className="w-full text-sm">
+          <SortableTable className="w-full text-sm">
             <thead className="sticky top-0 bg-slate-100 border-b">
               <tr>
                 <th className="px-3 py-2 text-left">Tipo</th>
@@ -186,7 +187,7 @@ export function RegistroCompraList() {
                 ))
               )}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
     </WindowShell>

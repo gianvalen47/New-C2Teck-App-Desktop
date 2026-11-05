@@ -112,6 +112,7 @@ import {
 } from "@/context/WindowsContext";
 import c2teckWatermark from "@/assets/Logos/LogoC2teck02.png";
 import { toast } from "sonner";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 function downloadBlob(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob);
@@ -1509,11 +1510,11 @@ function EnviarCorreos() {
           <label className="text-right pt-1 font-bold">De :</label><input className={inp} />
           <label className="text-right pt-1 font-bold">Para :</label>
           <div className="border border-[#7A96B4] bg-white h-24 overflow-auto">
-            <table className="w-full text-[11.5px]">
+            <SortableTable className="w-full text-[11.5px]">
               <thead className="bg-gradient-to-b from-[#EAF0F7] to-[#C9D6E5] text-[#243B55]">
                 <tr><th className="border-r border-b border-[#7A96B4] px-2 py-[3px] text-center">Descripción</th><th className="border-b border-[#7A96B4] px-2 py-[3px] text-center">Correo</th></tr>
               </thead>
-            </table>
+            </SortableTable>
           </div>
           <label className="text-right pt-1 font-bold">Asunto :</label><input className={inp} />
           <label className="text-right pt-1 font-bold">Mensaje :</label><textarea className={`${inp} h-24 py-1`} />
@@ -1526,11 +1527,11 @@ function EnviarCorreos() {
           </div>
           <label className="text-right pt-1 font-bold">Adjuntos :</label>
           <div className="border border-[#7A96B4] bg-white h-16 overflow-auto">
-            <table className="w-full text-[11.5px]">
+            <SortableTable className="w-full text-[11.5px]">
               <thead className="bg-gradient-to-b from-[#EAF0F7] to-[#C9D6E5] text-[#243B55]">
                 <tr><th className="border-r border-b border-[#7A96B4] px-2 py-[3px] text-center">Nombre</th><th className="border-b border-[#7A96B4] px-2 py-[3px] text-center w-28">Tamaño ( kb.)</th></tr>
               </thead>
-            </table>
+            </SortableTable>
           </div>
         </div>
         <div className="flex justify-end gap-2 pt-2">
@@ -3465,7 +3466,7 @@ function CtasXCobrar() {
         <Field label="Cond. Pago"><select className={inp}><option>(Todas)</option><option>CONTADO</option><option>CRÉDITO 15</option><option>CRÉDITO 30</option></select></Field>
       </div>
       <div className="border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]">
             <tr>
               <th className="px-2 py-2 text-left border-b border-slate-300">Doc.</th>
@@ -3485,7 +3486,7 @@ function CtasXCobrar() {
               <td colSpan={10} className="px-2 py-4 text-sm text-slate-500">No hay cuentas por cobrar.</td>
             </tr>
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );
@@ -3567,7 +3568,7 @@ function Anticipos() {
       </div>
       {message && <div className="mt-3 rounded-sm border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">{message}</div>}
       <div className="mt-3 border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]">
             <tr>
               <th className="px-2 py-2 text-left border-b border-slate-300">Fecha</th>
@@ -3590,7 +3591,7 @@ function Anticipos() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );
@@ -3668,7 +3669,7 @@ function Planillas() {
       </div>
       {message && <div className="mb-3 rounded-sm border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">{message}</div>}
       <div className="border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]">
             <tr>
               <th className="px-2 py-2 text-left border-b border-slate-300">Planilla</th>
@@ -3697,7 +3698,7 @@ function Planillas() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );
@@ -3804,7 +3805,7 @@ function Letras() {
         <Field label="Carga"><input className={inp} value={loadingLetters ? "Cargando..." : "Lista actualizada"} readOnly /></Field>
       </div>
       <div className="border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]"><tr><th className="px-2 py-2 text-left border-b border-slate-300">Sel</th><th className="px-2 py-2 text-left border-b border-slate-300">Nº Letra</th><th className="px-2 py-2 text-left border-b border-slate-300">Fecha Giro</th><th className="px-2 py-2 text-left border-b border-slate-300">Cliente</th><th className="px-2 py-2 text-left border-b border-slate-300">Vencimiento</th><th className="px-2 py-2 text-left border-b border-slate-300">Moneda</th><th className="px-2 py-2 text-right border-b border-slate-300">Importe</th><th className="px-2 py-2 text-left border-b border-slate-300">Banco</th><th className="px-2 py-2 text-left border-b border-slate-300">Estado</th></tr></thead>
           <tbody>
             {visibleLetters.length === 0 ? (
@@ -3823,7 +3824,7 @@ function Letras() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );
@@ -3862,7 +3863,7 @@ function AprobacionCreditos() {
         <Field label="Cliente"><input className={inp} defaultValue="" /></Field>
       </div>
       {message && <div className="mb-3 rounded-sm border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">{message}</div>}
-      <div className="border border-slate-300 rounded-sm bg-white overflow-auto"><table className="w-full text-[11px] border-collapse"><thead className="bg-[#F3F6FA]"><tr><th className="px-2 py-2 text-left border-b border-slate-300">#</th><th className="px-2 py-2 text-left border-b border-slate-300">Cliente</th><th className="px-2 py-2 text-left border-b border-slate-300">Solicita</th><th className="px-2 py-2 text-left border-b border-slate-300">Vendedor</th><th className="px-2 py-2 text-right border-b border-slate-300">Monto</th><th className="px-2 py-2 text-left border-b border-slate-300">Línea Actual</th><th className="px-2 py-2 text-left border-b border-slate-300">Línea Solicitada</th><th className="px-2 py-2 text-left border-b border-slate-300">Estado</th><th className="px-2 py-2 text-left border-b border-slate-300">Acción</th></tr></thead><tbody><tr><td colSpan={9} className="px-2 py-4 text-sm text-slate-500">No hay solicitudes de crédito.</td></tr></tbody></table></div>
+      <div className="border border-slate-300 rounded-sm bg-white overflow-auto"><SortableTable className="w-full text-[11px] border-collapse"><thead className="bg-[#F3F6FA]"><tr><th className="px-2 py-2 text-left border-b border-slate-300">#</th><th className="px-2 py-2 text-left border-b border-slate-300">Cliente</th><th className="px-2 py-2 text-left border-b border-slate-300">Solicita</th><th className="px-2 py-2 text-left border-b border-slate-300">Vendedor</th><th className="px-2 py-2 text-right border-b border-slate-300">Monto</th><th className="px-2 py-2 text-left border-b border-slate-300">Línea Actual</th><th className="px-2 py-2 text-left border-b border-slate-300">Línea Solicitada</th><th className="px-2 py-2 text-left border-b border-slate-300">Estado</th><th className="px-2 py-2 text-left border-b border-slate-300">Acción</th></tr></thead><tbody><tr><td colSpan={9} className="px-2 py-4 text-sm text-slate-500">No hay solicitudes de crédito.</td></tr></tbody></SortableTable></div>
     </WindowShell>
   );
 }
@@ -4001,7 +4002,7 @@ function SaldoBancosCreditos() {
       </SearchBar>
       {message ? <div className="mb-2 rounded-sm border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">{message}</div> : null}
       <div className="border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]"><tr><th className="px-2 py-2 text-left border-b border-slate-300">Fecha</th><th className="px-2 py-2 text-left border-b border-slate-300">Banco</th><th className="px-2 py-2 text-left border-b border-slate-300">Cuenta</th><th className="px-2 py-2 text-left border-b border-slate-300">Operación</th><th className="px-2 py-2 text-left border-b border-slate-300">Descripción</th><th className="px-2 py-2 text-left border-b border-slate-300">Mon.</th><th className="px-2 py-2 text-right border-b border-slate-300">Cargo</th><th className="px-2 py-2 text-right border-b border-slate-300">Abono</th><th className="px-2 py-2 text-right border-b border-slate-300">Saldo</th><th className="px-2 py-2 text-left border-b border-slate-300">Estado</th><th className="px-2 py-2 text-left border-b border-slate-300">Acción</th></tr></thead>
           <tbody>
             {records.length === 0 ? (
@@ -4024,7 +4025,7 @@ function SaldoBancosCreditos() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );
@@ -4079,7 +4080,7 @@ function TipoCambio() {
         <Field label="Venta"><input className={inp} type="number" step="0.001" value={sell} onChange={(e) => setSell(Number(e.target.value))} /></Field>
       </div>
       {message ? <div className="mt-2 rounded-sm border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">{message}</div> : null}
-      <div className="mt-4"><div className="border border-slate-300 rounded-sm bg-white overflow-auto"><table className="w-full text-[11px] border-collapse"><thead className="bg-[#F3F6FA]"><tr><th className="px-2 py-2 text-left border-b border-slate-300">Fecha</th><th className="px-2 py-2 text-left border-b border-slate-300">Moneda</th><th className="px-2 py-2 text-right border-b border-slate-300">Compra</th><th className="px-2 py-2 text-right border-b border-slate-300">Venta</th><th className="px-2 py-2 text-left border-b border-slate-300">Fuente</th><th className="px-2 py-2 text-left border-b border-slate-300">Acción</th></tr></thead><tbody>{history.length === 0 ? <tr><td colSpan={6} className="px-2 py-4 text-sm text-slate-500">No hay cambios registrados.</td></tr> : history.map((row) => <tr key={row.id}><td className="px-2 py-2 border-b border-slate-200">{row.date}</td><td className="px-2 py-2 border-b border-slate-200">{row.currency}</td><td className="px-2 py-2 border-b border-slate-200 text-right font-mono">{row.buy.toFixed(3)}</td><td className="px-2 py-2 border-b border-slate-200 text-right font-mono">{row.sell.toFixed(3)}</td><td className="px-2 py-2 border-b border-slate-200">{row.source}</td><td className="px-2 py-2 border-b border-slate-200"><button className={btn}>Usar</button></td></tr>)}</tbody></table></div></div>
+      <div className="mt-4"><div className="border border-slate-300 rounded-sm bg-white overflow-auto"><SortableTable className="w-full text-[11px] border-collapse"><thead className="bg-[#F3F6FA]"><tr><th className="px-2 py-2 text-left border-b border-slate-300">Fecha</th><th className="px-2 py-2 text-left border-b border-slate-300">Moneda</th><th className="px-2 py-2 text-right border-b border-slate-300">Compra</th><th className="px-2 py-2 text-right border-b border-slate-300">Venta</th><th className="px-2 py-2 text-left border-b border-slate-300">Fuente</th><th className="px-2 py-2 text-left border-b border-slate-300">Acción</th></tr></thead><tbody>{history.length === 0 ? <tr><td colSpan={6} className="px-2 py-4 text-sm text-slate-500">No hay cambios registrados.</td></tr> : history.map((row) => <tr key={row.id}><td className="px-2 py-2 border-b border-slate-200">{row.date}</td><td className="px-2 py-2 border-b border-slate-200">{row.currency}</td><td className="px-2 py-2 border-b border-slate-200 text-right font-mono">{row.buy.toFixed(3)}</td><td className="px-2 py-2 border-b border-slate-200 text-right font-mono">{row.sell.toFixed(3)}</td><td className="px-2 py-2 border-b border-slate-200">{row.source}</td><td className="px-2 py-2 border-b border-slate-200"><button className={btn}>Usar</button></td></tr>)}</tbody></SortableTable></div></div>
     </WindowShell>
   );
 }
@@ -4361,7 +4362,7 @@ function Productos() {
         </div>
       </div>
       <div className="mt-4 border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]"><tr>
             <th className="px-2 py-2 text-left border-b border-slate-300">SKU</th>
             <th className="px-2 py-2 text-left border-b border-slate-300">Descripción</th>
@@ -4384,7 +4385,7 @@ function Productos() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );
@@ -4530,7 +4531,7 @@ function Ubicaciones() {
         <Field label="Ocupación %"><input className={inp} type="number" value={occupancy} onChange={(e) => setOccupancy(e.target.value === "" ? "" : Number(e.target.value))} /></Field>
       </div>
       <div className="border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]"><tr>
             <th className="px-2 py-2 text-left border-b border-slate-300">Sel</th>
             <th className="px-2 py-2 text-left border-b border-slate-300">Código</th>
@@ -4561,7 +4562,7 @@ function Ubicaciones() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );
@@ -4783,7 +4784,7 @@ function OrdenImportacion() {
         <Field label="Naviera"><input className={inp} value={shippingLine} onChange={(e) => setShippingLine(e.target.value)} /></Field>
       </div>
       <div className="mt-3 border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]"><tr>
             <th className="px-2 py-2 text-left border-b border-slate-300">Sel</th>
             <th className="px-2 py-2 text-left border-b border-slate-300">OI Nº</th>
@@ -4814,7 +4815,7 @@ function OrdenImportacion() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );
@@ -4967,7 +4968,7 @@ function ActivosFijos() {
       </div>
 
       <div className="border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]"><tr>
             <th className="px-2 py-2 text-left border-b border-slate-300">SKU</th>
             <th className="px-2 py-2 text-left border-b border-slate-300">Activo</th>
@@ -4994,7 +4995,7 @@ function ActivosFijos() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );
@@ -5125,7 +5126,7 @@ function ValorizarFI() {
         <Field label="Total Gastos"><input className={inp} value={totalExtras.toFixed(2)} readOnly /></Field>
       </div>
       <div className="border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]"><tr>
             <th className="px-2 py-2 text-left border-b border-slate-300">Sel</th>
             <th className="px-2 py-2 text-left border-b border-slate-300">SKU</th>
@@ -5152,7 +5153,7 @@ function ValorizarFI() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );
@@ -5336,7 +5337,7 @@ function Asientos() {
       </div>
 
       <div className="mt-3 overflow-auto border border-slate-300 rounded-sm bg-white">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#EEF2F7] text-slate-800">
             <tr>
               <th className="px-2 py-2 border-b border-slate-300 text-left">Cuenta</th>
@@ -5361,7 +5362,7 @@ function Asientos() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
 
       <div className="mt-3 grid grid-cols-3 gap-3 text-[12px] text-slate-700">
@@ -5373,7 +5374,7 @@ function Asientos() {
       <div className="mt-6">
         <div className="text-[11px] font-semibold text-slate-700 uppercase mb-2">Últimos asientos registrados</div>
         <div className="overflow-auto border border-slate-300 rounded-sm bg-white">
-          <table className="w-full text-[11px] border-collapse">
+          <SortableTable className="w-full text-[11px] border-collapse">
             <thead className="bg-[#EEF2F7] text-slate-800">
               <tr>
                 <th className="px-2 py-2 border-b border-slate-300 text-left">Asiento</th>
@@ -5400,7 +5401,7 @@ function Asientos() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
     </WindowShell>
@@ -5619,7 +5620,7 @@ function MovimientoBancos() {
         <div>
           <div className="text-[11px] font-semibold text-[#2A3F55] mb-1 uppercase">Estado de Cuenta Banco</div>
           <div className="overflow-auto border border-slate-300 rounded-sm bg-white">
-            <table className="w-full text-[11px] border-collapse">
+            <SortableTable className="w-full text-[11px] border-collapse">
               <thead className="bg-[#EEF2F7] text-slate-800">
                 <tr>
                   <th className="px-2 py-2 border-b border-slate-300 text-left">Sel</th>
@@ -5652,14 +5653,14 @@ function MovimientoBancos() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </SortableTable>
           </div>
         </div>
 
         <div>
           <div className="text-[11px] font-semibold text-[#2A3F55] mb-1 uppercase">Movimientos ERP</div>
           <div className="overflow-auto border border-slate-300 rounded-sm bg-white">
-            <table className="w-full text-[11px] border-collapse">
+            <SortableTable className="w-full text-[11px] border-collapse">
               <thead className="bg-[#EEF2F7] text-slate-800">
                 <tr>
                   <th className="px-2 py-2 border-b border-slate-300 text-left">Sel</th>
@@ -5692,7 +5693,7 @@ function MovimientoBancos() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </SortableTable>
           </div>
         </div>
       </div>
@@ -5833,7 +5834,7 @@ function RegistroCompra() {
       {/* Registers List */}
       <div className="mt-4">
         <div className="overflow-auto max-h-96 border border-slate-200 rounded">
-          <table className="w-full text-sm">
+          <SortableTable className="w-full text-sm">
             <thead className="sticky top-0 bg-slate-100 border-b">
               <tr>
                 <th className="px-3 py-2 text-left">Tipo</th>
@@ -5870,7 +5871,7 @@ function RegistroCompra() {
                 ))
               )}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
     </WindowShell>
@@ -6166,7 +6167,7 @@ function CajaChica() {
 
       {/* Gastos Table */}
       <div className="mt-4 overflow-auto max-h-64 border border-slate-200 rounded">
-        <table className="w-full text-sm">
+        <SortableTable className="w-full text-sm">
           <thead className="sticky top-0 bg-slate-100 border-b">
             <tr>
               <th className="px-3 py-2 text-left">#</th>
@@ -6238,7 +6239,7 @@ function CajaChica() {
               ))
             )}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
 
       {/* Balance Summary */}

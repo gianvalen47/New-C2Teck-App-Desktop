@@ -8,6 +8,7 @@ import {
   Field,
   WindowShell
 } from "@/components/ui/desktop-primitives";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export function CtasXCobrarList() {
   const [search, setSearch] = useState("");
@@ -42,7 +43,7 @@ export function CtasXCobrarList() {
         <Field label="Cond. Pago"><select className={inp}><option>(Todas)</option><option>CONTADO</option><option>CRÉDITO 15</option><option>CRÉDITO 30</option></select></Field>
       </div>
       <div className="border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]">
             <tr>
               <th className="px-2 py-2 text-left border-b border-slate-300">Doc.</th>
@@ -62,7 +63,7 @@ export function CtasXCobrarList() {
               <td colSpan={10} className="px-2 py-4 text-sm text-slate-500">No hay cuentas por cobrar.</td>
             </tr>
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );

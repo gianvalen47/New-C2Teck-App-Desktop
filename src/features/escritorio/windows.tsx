@@ -88,7 +88,7 @@ import { ConsultaDocumentosVentaWindow, ConsultaDocumentosVentaList } from "./wi
 import { TableroIndicador, TableroIndicadorList } from "./windows/Ventas/Indicadores/Tablero";
 
 // Precios
-import { PrecioClienteList, PrecioCliente } from "./windows/Ventas/Precios/PrecioCliente";
+import { PrecioClienteList, PrecioCliente } from "./windows/Ventas/Precios/PreciosCliente";
 import { PrecioOfertaList, PrecioOferta } from "./windows/Ventas/Precios/PrecioOferta";
 import { PrecioListaList, PrecioLista } from "./windows/Ventas/Precios/PrecioLista";
 import { PrecioFabricantesList, PrecioFabricantes } from "./windows/Ventas/Precios/PrecioFabricantes";

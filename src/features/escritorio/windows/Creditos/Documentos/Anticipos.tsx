@@ -12,6 +12,7 @@ import {
   createSigecoomSale
 } from "@/lib/sigecoom-api";
 import { Factura } from "@/features/escritorio/windows/Ventas/Documentos/Facturas";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export function AnticiposList() {
   const [clientName, setClientName] = useState("");
@@ -89,7 +90,7 @@ export function AnticiposList() {
       </div>
       {message && <div className="mt-3 rounded-sm border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">{message}</div>}
       <div className="mt-3 border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]">
             <tr>
               <th className="px-2 py-2 text-left border-b border-slate-300">Fecha</th>
@@ -112,7 +113,7 @@ export function AnticiposList() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );

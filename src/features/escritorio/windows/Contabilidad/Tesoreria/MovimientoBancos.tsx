@@ -17,6 +17,7 @@ import {
   type BankAccount,
   type BankTransaction
 } from "@/lib/sigecoom-api";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export function MovimientoBancosList() {
   const [accounts, setAccounts] = useState<BankAccount[]>([]);
@@ -230,7 +231,7 @@ export function MovimientoBancosList() {
         <div>
           <div className="text-[11px] font-semibold text-[#2A3F55] mb-1 uppercase">Estado de Cuenta Banco</div>
           <div className="overflow-auto border border-slate-300 rounded-sm bg-white">
-            <table className="w-full text-[11px] border-collapse">
+            <SortableTable className="w-full text-[11px] border-collapse">
               <thead className="bg-[#EEF2F7] text-slate-800">
                 <tr>
                   <th className="px-2 py-2 border-b border-slate-300 text-left">Sel</th>
@@ -263,14 +264,14 @@ export function MovimientoBancosList() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </SortableTable>
           </div>
         </div>
 
         <div>
           <div className="text-[11px] font-semibold text-[#2A3F55] mb-1 uppercase">Movimientos ERP</div>
           <div className="overflow-auto border border-slate-300 rounded-sm bg-white">
-            <table className="w-full text-[11px] border-collapse">
+            <SortableTable className="w-full text-[11px] border-collapse">
               <thead className="bg-[#EEF2F7] text-slate-800">
                 <tr>
                   <th className="px-2 py-2 border-b border-slate-300 text-left">Sel</th>
@@ -303,7 +304,7 @@ export function MovimientoBancosList() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </SortableTable>
           </div>
         </div>
       </div>

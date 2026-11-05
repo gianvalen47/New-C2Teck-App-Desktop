@@ -51,6 +51,7 @@ import {
 } from "@/lib/sigecoom-api";
 import { Field, InlineField, YearMonthFields, DraggableFormWindow, CodeDescSelector, ESTADO_FILTER_OPTIONS } from "@/features/escritorio/windows/shared/uiComponents";
 import { inp, btn, btnPrimary, iconBtn, actionBtn, squareIconBtn, tbSep } from "@/features/escritorio/windows/uiStyles";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 const MESES = [
   "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO",
@@ -697,7 +698,7 @@ function ClienteLookupModal({ onClose, onSelect }: { onClose: () => void; onSele
         </div>
 
         <div className="flex-1 overflow-auto p-1">
-          <table className="w-full text-[11px] border-collapse">
+          <SortableTable className="w-full text-[11px] border-collapse">
             <thead className="sticky top-0 bg-[#EEF2F7] text-slate-700">
               <tr>
                 <th className="border-b border-r border-slate-300 px-2 py-1 text-left">Documento</th>
@@ -729,7 +730,7 @@ function ClienteLookupModal({ onClose, onSelect }: { onClose: () => void; onSele
                 })
               )}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
 
         <div className="flex items-center justify-end gap-2 border-t border-slate-300 bg-[#EEF2F7] px-3 py-1.5">
@@ -1199,7 +1200,7 @@ export function FacturaVentaList() {
       <div className="flex-1 min-h-0 overflow-auto p-1.5">
         <div className="border border-slate-400/60 bg-white rounded-sm h-full overflow-auto">
           <div className="overflow-auto flex-1 h-full">
-            <table className="w-full text-[11.5px] border-collapse">
+            <SortableTable className="w-full text-[11.5px] border-collapse">
               <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0 z-10 select-none shadow-xs">
                 <tr>
                   <th className="w-6 px-1 py-1 text-center border-r border-slate-300 font-semibold"></th>
@@ -1324,7 +1325,7 @@ export function FacturaVentaList() {
                   })
                 )}
               </tbody>
-            </table>
+            </SortableTable>
           </div>
         </div>
       </div>

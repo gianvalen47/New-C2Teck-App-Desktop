@@ -11,6 +11,7 @@ import {
   updateSigecoomSale,
   type SigecoomSale
 } from "@/lib/sigecoom-api";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export function OrdenImportacionList() {
   const [orders, setOrders] = useState<SigecoomSale[]>([]);
@@ -161,7 +162,7 @@ export function OrdenImportacionList() {
         <Field label="Naviera"><input className={inp} value={shippingLine} onChange={(e) => setShippingLine(e.target.value)} /></Field>
       </div>
       <div className="mt-3 border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]"><tr>
             <th className="px-2 py-2 text-left border-b border-slate-300">Sel</th>
             <th className="px-2 py-2 text-left border-b border-slate-300">OI Nº</th>
@@ -192,7 +193,7 @@ export function OrdenImportacionList() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );

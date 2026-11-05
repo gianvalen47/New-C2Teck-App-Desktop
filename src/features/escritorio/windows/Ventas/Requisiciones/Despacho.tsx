@@ -7,6 +7,7 @@ import {
   YearSpinner,
   type CodeDescOption,
 } from "@/features/escritorio/windows/shared/SearchFieldControls";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 type DespachoRow = {
   requisicion: string;
@@ -172,7 +173,7 @@ export function DespachoList() {
 
       <div className="min-h-0 flex-1 overflow-auto p-1.5">
         <div className="h-full overflow-auto rounded-sm border border-slate-400/60 bg-white">
-          <table className="w-full min-w-[790px] border-collapse text-[11px]">
+          <SortableTable className="w-full min-w-[790px] border-collapse text-[11px]">
             <colgroup>
               <col className="w-[8%]" />
               <col className="w-[10%]" />
@@ -215,7 +216,7 @@ export function DespachoList() {
                 );
               })}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
 

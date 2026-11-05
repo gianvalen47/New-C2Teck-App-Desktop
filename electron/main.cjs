@@ -27,12 +27,11 @@ function createWindow(appUrl, options = {}) {
     title,
   } = options;
 
-  if (!isLogin && mainWindow && !mainWindow.isDestroyed()) {
-    mainWindow.close();
-  }
-
   if (isLogin && loginWindow && !loginWindow.isDestroyed()) {
     loginWindow.close();
+  }
+  if (!isLogin && mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.close();
   }
 
   const win = new BrowserWindow({
@@ -41,7 +40,7 @@ function createWindow(appUrl, options = {}) {
     minWidth,
     minHeight,
     useContentSize: true,
-    backgroundColor: "#F5F7FA",
+    backgroundColor: "#0B1120",
     title: title || "Systeck (Versión 10.6.30) — C2TECK S.A.C.",
     icon: fs.existsSync(path.join(__dirname, "icon.png"))
       ? path.join(__dirname, "icon.png")
@@ -65,12 +64,19 @@ function createWindow(appUrl, options = {}) {
     mainWindow = win;
   }
 
-  win.once("ready-to-show", () => {
-    win.show();
-    win.focus();
-  });
-
   win.loadURL(appUrl);
+
+  win.webContents.on(
+    "did-fail-load",
+    (_event, errorCode, errorDescription, _validatedURL, isMainFrame) => {
+      if (!isMainFrame || errorCode === -3 || win.isDestroyed()) return;
+      dialog.showErrorBox(
+        isLogin ? "No se pudo iniciar el acceso — Systeck" : "No se pudo iniciar el escritorio — Systeck",
+        `La aplicación no pudo cargar.\n\n${errorDescription} (${errorCode})`,
+      );
+      win.close();
+    },
+  );
 
   win.webContents.setWindowOpenHandler(({ url }) => {
     const base = new URL(appUrl).origin;
@@ -93,16 +99,15 @@ function createWindow(appUrl, options = {}) {
 }
 
 function openDesktopLoginWindow() {
-  if (mainWindow && !mainWindow.isDestroyed()) {
-    mainWindow.close();
-    mainWindow = null;
+  if (loginWindow && !loginWindow.isDestroyed()) {
+    loginWindow.focus();
+    return;
   }
 
   const appUrl = STANDALONE_URL || getAppUrl();
   const loginUrl = new URL(appUrl);
   loginUrl.searchParams.set("login", "1");
   loginUrl.searchParams.set("desktop", "1");
-  // Mark as new login to force the updated desktop login UI in the renderer
   loginUrl.searchParams.set("newLogin", "1");
   createWindow(loginUrl.toString(), {
     width: 580,
@@ -122,7 +127,9 @@ function openDesktopAppWindow() {
   }
 
   const appUrl = STANDALONE_URL || getAppUrl();
-  createWindow(appUrl, {
+  const desktopUrl = new URL(appUrl);
+  desktopUrl.searchParams.set("desktop", "1");
+  createWindow(desktopUrl.toString(), {
     width: 1600,
     height: 900,
     minWidth: 1280,
@@ -131,14 +138,56 @@ function openDesktopAppWindow() {
   });
 }
 
-ipcMain.on("window:minimize", () => mainWindow?.minimize());
-ipcMain.on("window:maximize", () => {
-  if (!mainWindow) return;
-  if (mainWindow.isMaximized()) mainWindow.unmaximize();
-  else mainWindow.maximize();
+function getWindowForSender(sender) {
+  if (mainWindow && !mainWindow.isDestroyed() && mainWindow.webContents === sender) {
+    return mainWindow;
+  }
+  if (loginWindow && !loginWindow.isDestroyed() && loginWindow.webContents === sender) {
+    return loginWindow;
+  }
+  return null;
+}
+
+ipcMain.on("window:minimize", (event) => getWindowForSender(event.sender)?.minimize());
+ipcMain.on("window:maximize", (event) => {
+  const win = getWindowForSender(event.sender);
+  if (!win) return;
+  if (win.isMaximized()) win.unmaximize();
+  else win.maximize();
 });
-ipcMain.on("window:close", () => mainWindow?.close());
-ipcMain.handle("window:isMaximized", () => mainWindow?.isMaximized() ?? false);
+ipcMain.on("window:close", (event) => getWindowForSender(event.sender)?.close());
+ipcMain.handle("window:isMaximized", (event) => getWindowForSender(event.sender)?.isMaximized() ?? false);
+ipcMain.on("desktop:startup-ready", (event) => {
+  if (
+    !loginWindow ||
+    loginWindow.isDestroyed() ||
+    loginWindow.webContents !== event.sender
+  ) {
+    return;
+  }
+
+  if (!loginWindow.isVisible()) {
+    loginWindow.show();
+    loginWindow.focus();
+  }
+});
+ipcMain.on("desktop:workspace-ready", (event) => {
+  if (
+    !mainWindow ||
+    mainWindow.isDestroyed() ||
+    mainWindow.webContents !== event.sender
+  ) {
+    return;
+  }
+
+  if (!mainWindow.isVisible()) {
+    mainWindow.show();
+    mainWindow.focus();
+  }
+  if (loginWindow && !loginWindow.isDestroyed()) {
+    loginWindow.close();
+  }
+});
 ipcMain.handle("external:open-version-history", async () => {
   const versionUrl = new URL(STANDALONE_URL || getAppUrl());
   versionUrl.pathname = "/versiones";
@@ -146,9 +195,9 @@ ipcMain.handle("external:open-version-history", async () => {
   versionUrl.hash = "";
   await shell.openExternal(versionUrl.toString());
 });
-ipcMain.on("desktop:login-success", () => {
-  if (loginWindow && !loginWindow.isDestroyed()) {
-    loginWindow.close();
+ipcMain.on("desktop:login-success", (event) => {
+  if (!loginWindow || loginWindow.isDestroyed() || loginWindow.webContents !== event.sender) {
+    return;
   }
   openDesktopAppWindow();
 });
@@ -160,7 +209,6 @@ async function bootstrap() {
     mainWindow.close();
     mainWindow = null;
   }
-
   if (loginWindow && !loginWindow.isDestroyed()) {
     loginWindow.close();
     loginWindow = null;

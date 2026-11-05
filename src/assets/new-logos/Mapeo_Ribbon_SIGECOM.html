@@ -7894,6 +7894,29 @@
     window.cambiosPendientes = {};
     window.fileHandle = null;
 
+    function normalizarClaveIcono(valor) {
+      return valor
+        .replace(/\\n|\n/g, ' ')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, ' ')
+        .trim();
+    }
+
+    function obtenerClaveIconoFila(tr) {
+      return normalizarClaveIcono([tr.dataset.tab, tr.dataset.grp, tr.dataset.text].filter(Boolean).join(' '));
+    }
+
+    function actualizarIconoFila(tr, iconKey) {
+      const input = tr.querySelector('.input-key');
+      const previewDiv = document.getElementById('preview_' + tr.id);
+      if (input) input.value = iconKey;
+      if (previewDiv) {
+        previewDiv.innerHTML = window.CATALOG[iconKey]?.svg || '<span style="color:#64748b;font-size:10px;">—</span>';
+      }
+    }
+
     async function verificarServidor() {
       try {
         const res = await fetch(SERVER_URL + '/api/status', { method: 'GET' });
@@ -7911,9 +7934,24 @@
       }
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      verificarServidor();
+    async function cargarAliasesServidor() {
+      try {
+        const res = await fetch(SERVER_URL + '/api/aliases');
+        if (!res.ok) throw new Error('No se pudieron cargar las asignaciones guardadas');
+        const { aliases } = await res.json();
+        document.querySelectorAll('#tablaIconos tbody tr[data-tab]').forEach(tr => {
+          const iconKey = aliases[obtenerClaveIconoFila(tr)] || aliases[tr.dataset.norm];
+          if (iconKey) actualizarIconoFila(tr, iconKey);
+        });
+      } catch (error) {
+        console.error('Error cargando asignaciones de iconos:', error);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      await verificarServidor();
       setInterval(verificarServidor, 4000);
+      if (window.serverConectado) await cargarAliasesServidor();
       actualizarContador();
       cargarCambiosLocales();
       renderModalGrid();
@@ -7933,7 +7971,7 @@
 
       const previewDiv = document.getElementById('preview_' + rowId);
       const savedSpan = document.getElementById('saved_' + rowId);
-      const normText = tr.getAttribute('data-norm');
+      const iconAliasKey = obtenerClaveIconoFila(tr);
 
       const icono = window.CATALOG[nuevoKey];
       if (icono && icono.svg) {
@@ -7943,7 +7981,7 @@
       }
 
       tr.classList.add('modified');
-      window.cambiosPendientes[normText] = nuevoKey;
+      window.cambiosPendientes[iconAliasKey] = nuevoKey;
       localStorage.setItem('sigecom_ribbon_overrides', JSON.stringify(window.cambiosPendientes));
 
       if (window.serverConectado) {
@@ -7951,7 +7989,7 @@
           const res = await fetch(SERVER_URL + '/api/save', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ label: normText, iconKey: nuevoKey })
+            body: JSON.stringify({ label: iconAliasKey, iconKey: nuevoKey })
           });
           if (res.ok) {
             savedSpan.innerText = '✓ Guardado';
@@ -8051,10 +8089,10 @@
       const lines = [];
       inputs.forEach(inp => {
         const tr = inp.closest('tr');
-        const norm = tr.getAttribute('data-norm');
+        const iconAliasKey = obtenerClaveIconoFila(tr);
         const key = inp.value.trim();
-        if (norm && key) {
-          lines.push('  "' + norm + '": "' + key + '",');
+        if (iconAliasKey && key) {
+          lines.push('  "' + iconAliasKey + '": "' + key + '",');
         }
       });
       const code = 'const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {\n' + lines.join('\n') + '\n};';
@@ -8066,18 +8104,12 @@
       try {
         const saved = JSON.parse(localStorage.getItem('sigecom_ribbon_overrides') || '{}');
         window.cambiosPendientes = saved;
-        for (const [norm, key] of Object.entries(saved)) {
-          const tr = document.querySelector('tr[data-norm="' + norm + '"]');
-          if (tr) {
-            const inp = tr.querySelector('.input-key');
-            if (inp) {
-              inp.value = key;
-              const previewDiv = document.getElementById('preview_' + tr.id);
-              if (window.CATALOG[key]?.svg) previewDiv.innerHTML = window.CATALOG[key].svg;
-              tr.classList.add('modified');
-            }
-          }
-        }
+        document.querySelectorAll('#tablaIconos tbody tr[data-tab]').forEach(tr => {
+          const key = saved[obtenerClaveIconoFila(tr)] || saved[tr.dataset.norm];
+          if (!key) return;
+          actualizarIconoFila(tr, key);
+          tr.classList.add('modified');
+        });
       } catch (e) {}
     }
 

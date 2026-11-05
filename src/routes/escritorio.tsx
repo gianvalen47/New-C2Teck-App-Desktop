@@ -43,6 +43,7 @@ import { fetchSession, fetchTipoCambio, login, type SessionInfo } from "@/lib/si
 import { clearFrontendDemoMode, createFrontendDemoSession, enableFrontendDemoMode, isFrontendDemoMode } from "@/lib/frontend-demo";
 import { SessionProvider, useSession } from "@/context/SessionContext";
 import { CompanyPickerModal, type Company } from "@/features/escritorio/windows/Logueo/CambiarEmpresa";
+import { BootSplashScreen, WorkspaceIntro, type EntryTheme } from "@/features/escritorio/boot-sequence";
 
 export const Route = createFileRoute("/escritorio")({
   head: () => ({
@@ -533,6 +534,14 @@ const SMALL_COLOR_ICON_ALIASES: Record<string, string> = {
   "tiempo reparacia n": "Material",
   "embarques de importacia n": "Embarque",
   "generar": "planillas",
+  "ventas pre y post venta cotizaciones": "cotizacion",
+  "ventas reportes cotizaciones": "cotizacion",
+  "almacenes motores transferencias": "transferencias",
+  "almacenes indicadores tablero": "grafica",
+  "almacenes reportes documentos": "doc",
+  "servicios consultas ot": "Tools",
+  "servicios reportes cotizaciones": "cotizacion",
+  "compras reportes vencimientos": "vencimientos",
 };
 
 const normalizeSmallColorIconKey = (value: string) =>
@@ -548,9 +557,10 @@ const SMALL_COLOR_ICON_LOOKUP: Record<string, any> = Object.fromEntries(
   Object.entries(ICONOS_COLOR).map(([name, icon]) => [normalizeSmallColorIconKey(name), icon]),
 );
 
-function SmallColorIcon({ label, iconKey, className, size = 19 }: { label: string; iconKey?: string; className?: string; size?: number }) {
+function SmallColorIcon({ label, iconKey, iconScope, className, size = 19 }: { label: string; iconKey?: string; iconScope?: string; className?: string; size?: number }) {
   const normalizedLabel = normalizeSmallColorIconKey(label);
-  const mappedKey = iconKey ?? SMALL_COLOR_ICON_ALIASES[normalizedLabel] ?? normalizedLabel;
+  const scopedLabel = iconScope ? normalizeSmallColorIconKey(`${iconScope} ${label}`) : "";
+  const mappedKey = (scopedLabel && SMALL_COLOR_ICON_ALIASES[scopedLabel]) ?? iconKey ?? SMALL_COLOR_ICON_ALIASES[normalizedLabel] ?? normalizedLabel;
   const Icon = SMALL_COLOR_ICON_LOOKUP[normalizeSmallColorIconKey(mappedKey)] ?? SMALL_COLOR_ICON_LOOKUP.doc ?? ICONOS_COLOR.doc;
 
   return <Icon size={size} className={className} strokeWidth={1.8} />;
@@ -1383,10 +1393,53 @@ function collectRibbonLabels(ribbons: Record<string, RibbonGroup[]>) {
 const ALL_RIBBON_LABELS = collectRibbonLabels(RIBBONS);
 
 function DesktopApp() {
+  const desktopMode = useDesktopMode();
+  const [startupTransitionVisible, setStartupTransitionVisible] = useState(true);
+  const [startupReady, setStartupReady] = useState(false);
+  const [startupUser, setStartupUser] = useState("");
+  const [startupTheme, setStartupTheme] = useState<EntryTheme>("dark");
+  const searchParams =
+    typeof window === "undefined"
+      ? new URLSearchParams()
+      : new URLSearchParams(window.location.search);
+  const isPopupWindow = searchParams.has("popup");
+  const isLoginWindow = searchParams.get("login") === "1";
+  const showStartup = desktopMode.isDesktop && !isPopupWindow;
+
   return (
     <WindowsProvider>
       <SessionProvider>
-        <DesktopAppInner />
+        <div
+          style={{
+            visibility: showStartup && startupTransitionVisible ? "hidden" : "visible",
+          }}
+        >
+          <DesktopAppInner
+            desktopMode={desktopMode}
+            onStartupReadyChange={setStartupReady}
+            onStartupUserChange={setStartupUser}
+          />
+        </div>
+        <AnimatePresence>
+          {startupTransitionVisible && showStartup && isLoginWindow && (
+            <BootSplashScreen
+              key="desktop-startup"
+              onComplete={() => setStartupTransitionVisible(false)}
+              ready={startupReady}
+              theme={startupTheme}
+              onThemeChange={setStartupTheme}
+            />
+          )}
+          {startupTransitionVisible && showStartup && !isLoginWindow && (
+            <WorkspaceIntro
+              key="workspace-startup"
+              user={startupUser}
+              ready={startupReady}
+              theme={startupTheme}
+              onComplete={() => setStartupTransitionVisible(false)}
+            />
+          )}
+        </AnimatePresence>
       </SessionProvider>
     </WindowsProvider>
   );
@@ -1422,7 +1475,15 @@ const TAB_ACCENTS: Record<string, string> = {
   Ayuda: "from-[#0369A1] to-[#075985]",
 };
 
-function DesktopAppInner() {
+function DesktopAppInner({
+  desktopMode,
+  onStartupReadyChange,
+  onStartupUserChange,
+}: {
+  desktopMode: ReturnType<typeof useDesktopMode>;
+  onStartupReadyChange: (ready: boolean) => void;
+  onStartupUserChange: (user: string) => void;
+}) {
   const [active, setActive] = useState("Ventas");
   const ribbon = RIBBONS[active] ?? RIBBONS.Ventas;
   const [ribbonMode, setRibbonMode] = useState<"expanded" | "hidden" | "overlay">("expanded");
@@ -1484,7 +1545,7 @@ function DesktopAppInner() {
     setNotificationsOpen(true);
   };
   const [now, setNow] = useState("");
-  const { isDesktop, minimize, maximize, close } = useDesktopMode();
+  const { isDesktop, minimize, maximize, close } = desktopMode;
   const { open: openWindow, windows, active: activeWindowId, close: closeWindow, focus: focusWindow, toggleFromTaskbar } = useWindows();
   const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
   const [recover, setRecover] = useState(false);
@@ -1533,6 +1594,7 @@ function DesktopAppInner() {
     let mounted = true;
     const frontendDemoMode = isFrontendDemoMode();
 
+    onStartupReadyChange(!isDesktop);
     if (isDesktop) {
       setDesktopAuthenticated(false);
       setDesktopReady(false);
@@ -1549,8 +1611,11 @@ function DesktopAppInner() {
         if (!mounted) return;
         if (loginMode) {
           setUser("");
+          onStartupUserChange("");
         } else {
-          setUser(session.username || "");
+          const sessionUser = session.username || "";
+          setUser(sessionUser);
+          onStartupUserChange(sessionUser);
         }
         setFecha(toDateInputValue(new Date().toLocaleDateString("es-PE")));
 
@@ -1592,19 +1657,25 @@ function DesktopAppInner() {
       } finally {
         if (!mounted) return;
         setDesktopReady(true);
+        onStartupReadyChange(true);
       }
     })();
 
     return () => {
       mounted = false;
     };
-  }, [isDesktop, loginMode]);
+  }, [isDesktop, loginMode, onStartupReadyChange, onStartupUserChange]);
 
   useEffect(() => {
-    if (isFrontendDemoMode() || !isDesktop || desktopAuthenticated || !fecha) return;
+    if (!desktopReady) return;
+    if (isFrontendDemoMode() || !isDesktop || desktopAuthenticated || !fecha) {
+      onStartupReadyChange(true);
+      return;
+    }
 
     let activeRequest = true;
     const requestId = ++tipoCambioRequestId.current;
+    onStartupReadyChange(false);
     setTc("");
     setTcLoading(true);
 
@@ -1621,14 +1692,17 @@ function DesktopAppInner() {
         });
       })
       .finally(() => {
-        if (activeRequest && requestId === tipoCambioRequestId.current) setTcLoading(false);
+        if (activeRequest && requestId === tipoCambioRequestId.current) {
+          setTcLoading(false);
+          onStartupReadyChange(true);
+        }
       });
 
     return () => {
       activeRequest = false;
       if (requestId === tipoCambioRequestId.current) tipoCambioRequestId.current++;
     };
-  }, [desktopAuthenticated, fecha, isDesktop, selectedCompany?.codigo]);
+  }, [desktopAuthenticated, desktopReady, fecha, isDesktop, onStartupReadyChange, selectedCompany?.codigo]);
 
   useEffect(() => {
     if (!popupLabel) {
@@ -1668,6 +1742,7 @@ function DesktopAppInner() {
       const session = await login(user.trim(), pass, fecha);
       localStorage.setItem("sigecoom_session", JSON.stringify(session));
       setUser(session.username || "");
+      onStartupUserChange(session.username || "");
       setFecha(toDateInputValue(session.fecha_transaccion) || fecha);
 
       // Set selected company from session if provided
@@ -1708,6 +1783,7 @@ function DesktopAppInner() {
       enableFrontendDemoMode();
       const demoSession = createFrontendDemoSession();
       setUser(demoSession.username);
+      onStartupUserChange(demoSession.username);
       setPass("");
       setTc("");
       setTcLoading(false);
@@ -1773,7 +1849,7 @@ function DesktopAppInner() {
   // Do not block rendering while `desktopReady` is false — rendering
   // the app immediately avoids a blank screen during startup/login.
 
-  if (isDesktop && !desktopAuthenticated) {
+  if (isDesktop && (loginMode || !desktopAuthenticated)) {
     return (
       <DesktopLogin
         busy={busy}
@@ -1958,7 +2034,7 @@ function DesktopAppInner() {
           style={{ zIndex: 29 }}
         >
           <div className="px-2 py-1 h-[104px]">
-            <RibbonContent ribbon={ribbon} openDesktopWindow={openDesktopWindow} />
+            <RibbonContent ribbon={ribbon} active={active} openDesktopWindow={openDesktopWindow} />
           </div>
         </div>
 
@@ -1983,7 +2059,7 @@ function DesktopAppInner() {
           transition={{ duration: 0.18 }}
           className="h-full w-full"
         >
-          <RibbonContent ribbon={ribbon} openDesktopWindow={openDesktopWindow} />
+          <RibbonContent ribbon={ribbon} active={active} openDesktopWindow={openDesktopWindow} />
         </motion.div>
       </AnimatePresence>
     </div>
@@ -2347,7 +2423,7 @@ function RecoverPasswordModal({ onClose }: { onClose: () => void }) {
 }
 
 
-function RibbonContent({ ribbon, openDesktopWindow }: { ribbon: RibbonGroup[]; openDesktopWindow: (label: string) => void }) {
+function RibbonContent({ ribbon, active, openDesktopWindow }: { ribbon: RibbonGroup[]; active: string; openDesktopWindow: (label: string) => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [collapsedGroups, setCollapsedGroups] = useState<Set<number>>(new Set());
   const expandedWidthCache = useRef<number[]>([]);
@@ -2457,16 +2533,16 @@ function RibbonContent({ ribbon, openDesktopWindow }: { ribbon: RibbonGroup[]; o
     <div ref={containerRef} className="flex items-stretch flex-nowrap h-full w-full overflow-hidden">
       {ribbon.map((group, gi) => (
         collapsedGroups.has(gi) ? (
-          <CollapsedGroupButton key={gi} group={group} onOpen={openDesktopWindow} />
+          <CollapsedGroupButton key={gi} group={group} iconTab={active} onOpen={openDesktopWindow} />
         ) : (
           <div key={gi} className="flex flex-col shrink-0 border-r border-slate-200 last:border-r-0">
             <div className="flex items-start gap-1 px-2 pt-1 pb-0.5 min-h-[78px]">
               {group.items.filter((item) => item.big).map((btn) => (
-                <RibbonBigButton key={btn.label} {...btn} onOpen={openDesktopWindow} />
+                <RibbonBigButton key={btn.label} {...btn} iconTab={active} iconScope={`${active} ${group.title ?? ""}`} onOpen={openDesktopWindow} />
               ))}
               <div className="grid grid-flow-col grid-rows-2 auto-cols-max gap-x-3 gap-y-0.5 pt-0.5">
                 {group.items.filter((item) => !item.big).map((btn) => (
-                  <RibbonSmallButton key={btn.label} {...btn} onOpen={openDesktopWindow} />
+                  <RibbonSmallButton key={btn.label} {...btn} iconTab={active} iconScope={`${active} ${group.title ?? ""}`} onOpen={openDesktopWindow} />
                 ))}
               </div>
             </div>
@@ -2482,7 +2558,7 @@ function RibbonContent({ ribbon, openDesktopWindow }: { ribbon: RibbonGroup[]; o
   );
 }
 
-function CollapsedGroupButton({ group, onOpen }: { group: RibbonGroup; onOpen: (label: string) => void }) {
+function CollapsedGroupButton({ group, iconTab, onOpen }: { group: RibbonGroup; iconTab: string; onOpen: (label: string) => void }) {
   const [open, setOpen] = useState(false);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
@@ -2516,7 +2592,7 @@ function CollapsedGroupButton({ group, onOpen }: { group: RibbonGroup; onOpen: (
               : "border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6]",
           ].join(" ")}
         >
-          <SmallColorIcon label={label} size={30} className="shrink-0 drop-shadow-[0_1px_1px_rgba(15,23,42,0.15)] transition-transform" />
+          <SmallColorIcon label={label} iconScope={`${iconTab} ${group.title ?? ""}`} size={30} className="shrink-0 drop-shadow-[0_1px_1px_rgba(15,23,42,0.15)] transition-transform" />
           <span className="text-[10.5px] leading-tight text-center whitespace-pre text-slate-800 font-bold">{label}</span>
           <ChevronDown className="h-2.5 w-2.5 text-slate-600" />
         </motion.button>
@@ -2547,7 +2623,7 @@ function CollapsedGroupButton({ group, onOpen }: { group: RibbonGroup; onOpen: (
                       expandedItem === item.label ? "bg-gradient-to-b from-[#FCE9A8] to-[#F5C86A] border-[#B8892E]" : "border-transparent",
                     ].join(" ")}
                   >
-                    <SmallColorIcon label={item.label} iconKey={item.iconKey} className="h-4 w-4 shrink-0" size={16} />
+                    <SmallColorIcon label={item.label} iconKey={item.iconKey} iconScope={`${iconTab} ${group.title ?? ""}`} className="h-4 w-4 shrink-0" size={16} />
                     <span className="text-[11.5px] text-slate-800 whitespace-nowrap flex-1">{item.label.replace(/\n/g, " ")}</span>
                     {item.menu && <ChevronDown className="h-3 w-3 text-slate-600 shrink-0" />}
                   </button>
@@ -2559,7 +2635,7 @@ function CollapsedGroupButton({ group, onOpen }: { group: RibbonGroup; onOpen: (
                           onClick={() => { openWindow(subitem.openLabel ?? subitem.label); setOpen(false); setExpandedItem(null); }}
                           className="flex w-full items-center gap-2 px-1.5 py-1 rounded border border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6] text-left"
                         >
-                          <SmallColorIcon label={subitem.label} iconKey={subitem.iconKey} className="h-4 w-4 shrink-0" size={16} />
+                          <SmallColorIcon label={subitem.label} iconKey={subitem.iconKey} iconScope={`${iconTab} ${section.title}`} className="h-4 w-4 shrink-0" size={16} />
                           <span className="text-[11.5px] text-slate-800 whitespace-nowrap font-bold">{subitem.label}</span>
                         </button>
                       ))}
@@ -2688,7 +2764,7 @@ function TabsCarousel({
 }
 
 
-function RibbonBigButton({ icon: Icon, label, iconKey, dropdown, menu, openLabel, onOpen }: RibbonBtn & { onOpen: (label: string) => void }) {
+function RibbonBigButton({ icon: Icon, label, iconKey, iconTab, iconScope, dropdown, menu, openLabel, onOpen }: RibbonBtn & { iconTab: string; iconScope: string; onOpen: (label: string) => void }) {
   const [open, setOpen] = useState(false);
   const btnRef = useRef<HTMLButtonElement>(null);
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
@@ -2723,7 +2799,7 @@ function RibbonBigButton({ icon: Icon, label, iconKey, dropdown, menu, openLabel
         ].join(" ")}
       >
         {iconKey ? (
-          <SmallColorIcon label={cleanLabel} iconKey={iconKey} size={30} className="drop-shadow-[0_1px_1px_rgba(15,23,42,0.15)] group-hover/rb:scale-105 transition-transform" />
+          <SmallColorIcon label={cleanLabel} iconKey={iconKey} iconScope={iconScope} size={30} className="drop-shadow-[0_1px_1px_rgba(15,23,42,0.15)] group-hover/rb:scale-105 transition-transform" />
         ) : (
           <Glyph name={cleanLabel} size={30} className="drop-shadow-[0_1px_1px_rgba(15,23,42,0.15)] group-hover/rb:scale-105 transition-transform" />
         )}
@@ -2747,7 +2823,7 @@ function RibbonBigButton({ icon: Icon, label, iconKey, dropdown, menu, openLabel
                         onClick={() => { onOpen(it.openLabel ?? it.label); setOpen(false); }}
                         className="flex items-center gap-1.5 px-1.5 py-0.5 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border border-transparent text-left whitespace-nowrap"
                       >
-                        <SmallColorIcon label={it.label} iconKey={it.iconKey} size={22} className="shrink-0" />
+                        <SmallColorIcon label={it.label} iconKey={it.iconKey} iconScope={`${iconTab} ${sec.title}`} size={22} className="shrink-0" />
                       <span className="text-[11.5px] text-slate-800 whitespace-nowrap font-bold">{it.label}</span>
                       </button>
                     ))}
@@ -2784,7 +2860,7 @@ function DesktopPopoutWindow({ label, onClose }: { label: string; onClose: () =>
   );
 }
 
-function RibbonSmallButton({ icon: Icon, label, iconKey, dropdown, menu, openLabel, onOpen }: RibbonBtn & { onOpen: (label: string) => void }) {
+function RibbonSmallButton({ icon: Icon, label, iconKey, iconTab, iconScope, dropdown, menu, openLabel, onOpen }: RibbonBtn & { iconTab: string; iconScope: string; onOpen: (label: string) => void }) {
   const [open, setOpen] = useState(false);
   const btnRef = useRef<HTMLButtonElement>(null);
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
@@ -2816,7 +2892,7 @@ function RibbonSmallButton({ icon: Icon, label, iconKey, dropdown, menu, openLab
             : "border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6]",
         ].join(" ")}
       >
-        <SmallColorIcon label={label} iconKey={iconKey} size={19} className="shrink-0 group-hover/rs:scale-105 transition-transform" />
+        <SmallColorIcon label={label} iconKey={iconKey} iconScope={iconScope} size={19} className="shrink-0 group-hover/rs:scale-105 transition-transform" />
         <span className="text-slate-800 truncate font-bold">{label}</span>
         {dropdown && <ChevronDown className="h-2 w-2 text-slate-600" />}
       </motion.button>
@@ -2837,7 +2913,7 @@ function RibbonSmallButton({ icon: Icon, label, iconKey, dropdown, menu, openLab
                         onClick={() => { onOpen(it.openLabel ?? it.label); setOpen(false); }}
                         className="flex items-center gap-1.5 px-1.5 py-0.5 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border border-transparent text-left whitespace-nowrap"
                       >
-                        <SmallColorIcon label={it.label} iconKey={it.iconKey} size={18} className="shrink-0" />
+                        <SmallColorIcon label={it.label} iconKey={it.iconKey} iconScope={`${iconTab} ${sec.title}`} size={18} className="shrink-0" />
                         <span className="text-[11px] text-slate-800 whitespace-nowrap font-bold">{it.label}</span>
                       </button>
                     ))}

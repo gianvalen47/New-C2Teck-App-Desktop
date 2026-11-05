@@ -12,6 +12,7 @@ import { fetchSigecoomSales, type SigecoomSale } from "@/lib/sigecoom-api";
 import { useStore, actions, formatSoles, type OTStatus, type PurchaseOrder } from "@/lib/store";
 import { Line, LineChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, Bar, BarChart, Legend, Cell } from "recharts";
 import { cn } from "@/lib/utils";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 
 export const Route = createFileRoute("/dashboard/erp")({
@@ -135,7 +136,7 @@ function VentasTab() {
           </button>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <SortableTable className="w-full text-sm">
             <thead className="text-left text-xs uppercase text-muted-foreground bg-muted/30">
               <tr>
                 <th className="px-4 py-3">Serie-Correlativo</th>
@@ -158,7 +159,7 @@ function VentasTab() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
 
@@ -260,7 +261,7 @@ function ComprasTab() {
             </button>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <SortableTable className="w-full text-sm">
               <thead className="text-left text-xs uppercase text-muted-foreground bg-muted/30">
                 <tr>
                   <th className="px-3 py-2">SKU</th><th className="px-3 py-2">Producto</th>
@@ -288,7 +289,7 @@ function ComprasTab() {
                   );
                 })}
               </tbody>
-            </table>
+            </SortableTable>
           </div>
         </div>
 
@@ -318,7 +319,7 @@ function ComprasTab() {
           </div>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <SortableTable className="w-full text-sm">
             <thead className="text-left text-xs uppercase text-muted-foreground bg-muted/30">
               <tr>
                 <th className="px-3 py-2">Fecha</th><th className="px-3 py-2">Tipo</th>
@@ -350,7 +351,7 @@ function ComprasTab() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
 
@@ -491,7 +492,7 @@ function POPrintModal({ po, onClose }: { po: PurchaseOrder; onClose: () => void 
           <div><p className="text-slate-500 text-xs">Proveedor</p><p className="font-medium">{po.supplier}</p></div>
           <div><p className="text-slate-500 text-xs">Fecha de emisión</p><p className="font-medium">{po.createdAt}</p></div>
         </div>
-        <table className="w-full text-sm border-t border-slate-200">
+        <SortableTable className="w-full text-sm border-t border-slate-200">
           <thead className="text-left text-xs uppercase text-slate-500">
             <tr><th className="py-2">SKU</th><th className="py-2">Descripción</th><th className="py-2 text-right">Cant.</th><th className="py-2 text-right">Costo U.</th><th className="py-2 text-right">Subtotal</th></tr>
           </thead>
@@ -506,7 +507,7 @@ function POPrintModal({ po, onClose }: { po: PurchaseOrder; onClose: () => void 
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
         <div className="mt-4 flex justify-end">
           <div className="w-64 text-sm">
             <div className="flex justify-between py-1"><span className="text-slate-500">Subtotal</span><span>S/ {(total / (1 + settings.igvRate / 100)).toFixed(2)}</span></div>
@@ -541,7 +542,7 @@ function ContaTab() {
       <div className="card-elevated p-5">
         <h3 className="font-display font-semibold mb-3">Libros Electrónicos (PLE) generados</h3>
         <div className="overflow-x-auto -mx-2 sm:mx-0">
-        <table className="w-full text-sm min-w-[560px]">
+        <SortableTable className="w-full text-sm min-w-[560px]">
           <thead className="text-left text-xs uppercase text-muted-foreground bg-muted/30">
             <tr><th className="px-4 py-3">Código</th><th className="px-4 py-3">Libro</th><th className="px-4 py-3">Periodo</th><th className="px-4 py-3">Estado</th></tr>
           </thead>
@@ -555,7 +556,7 @@ function ContaTab() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
         </div>
       </div>
     </div>
@@ -569,7 +570,7 @@ function PlanillasTab() {
       <div className="card-elevated p-5 lg:col-span-2">
         <h3 className="font-display font-semibold mb-3">Directorio de empleados</h3>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <SortableTable className="w-full text-sm">
             <thead className="text-left text-xs uppercase text-muted-foreground bg-muted/30">
               <tr><th className="px-4 py-3">DNI</th><th className="px-4 py-3">Nombre</th><th className="px-4 py-3">Cargo</th><th className="px-4 py-3">Área</th><th className="px-4 py-3">Turno</th><th className="px-4 py-3">Estado</th></tr>
             </thead>
@@ -585,7 +586,7 @@ function PlanillasTab() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
       <div className="card-elevated p-5">

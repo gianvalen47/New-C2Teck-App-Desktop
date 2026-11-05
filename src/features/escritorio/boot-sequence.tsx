@@ -215,28 +215,45 @@ function CinematicBrand({ arrival = false }: { arrival?: boolean }) {
   );
 }
 
-export function WorkspaceIntro({ user, theme, onComplete }: { user: string; theme: EntryTheme; onComplete: () => void }) {
+export function WorkspaceIntro({ user, ready, theme, onComplete }: { user: string; ready: boolean; theme: EntryTheme; onComplete: () => void }) {
   const reduceMotion = useReducedMotion();
   const [progress, setProgress] = useState(0);
   const completeRef = useRef(onComplete);
+  const readyRef = useRef(ready);
   useEffect(() => { completeRef.current = onComplete; }, [onComplete]);
+  useEffect(() => { readyRef.current = ready; }, [ready]);
+  useEffect(() => {
+    let paintFrame = 0;
+    const startupFrame = window.requestAnimationFrame(() => {
+      paintFrame = window.requestAnimationFrame(() => {
+        window.c2teckDesktop?.workspaceReady();
+      });
+    });
+
+    return () => {
+      window.cancelAnimationFrame(startupFrame);
+      if (paintFrame) window.cancelAnimationFrame(paintFrame);
+    };
+  }, []);
   useEffect(() => {
     const duration = reduceMotion ? 450 : 2200;
     const started = performance.now();
     let completionTimer: number | undefined;
     const timer = window.setInterval(() => {
-      const next = Math.min(100, Math.round((performance.now() - started) / duration * 100));
+      const elapsed = performance.now() - started;
+      const next = Math.min(96, Math.round(elapsed / duration * 96));
       setProgress(next);
-      if (next === 100) {
+      if (elapsed >= duration && readyRef.current) {
+        setProgress(100);
         window.clearInterval(timer);
         completionTimer = window.setTimeout(() => completeRef.current(), reduceMotion ? 120 : 400);
       }
     }, 32);
     return () => { window.clearInterval(timer); window.clearTimeout(completionTimer); };
   }, [reduceMotion]);
-  const ready = progress === 100;
+  const introComplete = progress === 100;
   const stages = ["Preparando espacio de trabajo", "Organizando módulos y herramientas", "Preparando ventanas e indicadores", "Escritorio listo"];
-  const stage = ready ? 3 : Math.min(2, Math.floor(progress / 34));
+  const stage = introComplete ? 3 : Math.min(2, Math.floor(progress / 34));
   return (
     <motion.section
       data-entry-theme={theme}
@@ -256,12 +273,12 @@ export function WorkspaceIntro({ user, theme, onComplete }: { user: string; them
         <div className="relative mx-auto mb-6 flex h-20 w-20 items-center justify-center">
           <div className="absolute inset-0 rounded-full border-2 border-boot-border" />
           <motion.div aria-hidden="true" className="absolute inset-0 rounded-full border-2 border-transparent border-t-boot-accent border-r-boot-accent/40"
-            animate={{ rotate: ready || reduceMotion ? 0 : 360, opacity: ready ? 0 : 1 }}
-            transition={{ rotate: { duration: 1.2, repeat: ready || reduceMotion ? 0 : Infinity, ease: "linear" }, opacity: { duration: 0.2 } }}
+            animate={{ rotate: introComplete || reduceMotion ? 0 : 360, opacity: introComplete ? 0 : 1 }}
+            transition={{ rotate: { duration: 1.2, repeat: introComplete || reduceMotion ? 0 : Infinity, ease: "linear" }, opacity: { duration: 0.2 } }}
           />
           <AnimatePresence mode="wait" initial={false}>
-            <motion.div key={ready ? "ready" : "loading"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.1 }}>
-              {ready ? <Check className="h-7 w-7 text-boot-success" /> : <Monitor className="h-7 w-7 text-boot-accent" strokeWidth={1.5} />}
+            <motion.div key={introComplete ? "ready" : "loading"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.1 }}>
+              {introComplete ? <Check className="h-7 w-7 text-boot-success" /> : <Monitor className="h-7 w-7 text-boot-accent" strokeWidth={1.5} />}
             </motion.div>
           </AnimatePresence>
         </div>
@@ -270,7 +287,7 @@ export function WorkspaceIntro({ user, theme, onComplete }: { user: string; them
         <div className="mt-4"><CompanyBrandDeck compact /></div>
         <div className="mt-8">
           <div className="mb-2 flex items-center justify-between text-xs">
-            <span className="font-medium text-boot-foreground">{ready ? "Carga completada" : "Cargando escritorio…"}</span>
+            <span className="font-medium text-boot-foreground">{progress === 100 ? "Carga completada" : "Cargando escritorio…"}</span>
             <span className="font-mono tabular-nums text-boot-muted">{progress}%</span>
           </div>
           <div role="progressbar" aria-label="Carga del escritorio" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress} className="h-1.5 overflow-hidden rounded-full bg-boot-border">
@@ -280,7 +297,7 @@ export function WorkspaceIntro({ user, theme, onComplete }: { user: string; them
         </div>
         <LoadingDetails progress={progress} workspace />
         <div className="mt-6 flex items-center justify-center gap-2 text-[10px] text-boot-muted">
-          <ShieldCheck className="h-3.5 w-3.5 text-boot-success" /> Sesión de demostración
+          <ShieldCheck className="h-3.5 w-3.5 text-boot-success" /> Preparando sesión y módulos
         </div>
       </motion.div>
       </div>
@@ -288,14 +305,33 @@ export function WorkspaceIntro({ user, theme, onComplete }: { user: string; them
   );
 }
 
-export function BootSplashScreen({ onComplete, theme, onThemeChange }: { onComplete: () => void; theme: EntryTheme; onThemeChange: (theme: EntryTheme) => void }) {
+export function BootSplashScreen({ onComplete, ready, theme, onThemeChange }: { onComplete: () => void; ready: boolean; theme: EntryTheme; onThemeChange: (theme: EntryTheme) => void }) {
   const reduceMotion = useReducedMotion();
   const [progress, setProgress] = useState(0);
   const onCompleteRef = useRef(onComplete);
+  const readyRef = useRef(ready);
 
   useEffect(() => {
     onCompleteRef.current = onComplete;
   }, [onComplete]);
+
+  useEffect(() => {
+    readyRef.current = ready;
+  }, [ready]);
+
+  useEffect(() => {
+    let paintFrame = 0;
+    const startupFrame = window.requestAnimationFrame(() => {
+      paintFrame = window.requestAnimationFrame(() => {
+        window.c2teckDesktop?.startupReady();
+      });
+    });
+
+    return () => {
+      window.cancelAnimationFrame(startupFrame);
+      if (paintFrame) window.cancelAnimationFrame(paintFrame);
+    };
+  }, []);
 
   useEffect(() => {
     const duration = reduceMotion ? 800 : 2800;
@@ -303,9 +339,10 @@ export function BootSplashScreen({ onComplete, theme, onThemeChange }: { onCompl
     let completionTimer: number | undefined;
     const tick = window.setInterval(() => {
       const elapsed = performance.now() - started;
-      const next = Math.min(100, Math.round((elapsed / duration) * 100));
+      const next = Math.min(96, Math.round((elapsed / duration) * 96));
       setProgress(next);
-      if (next >= 100) {
+      if (elapsed >= duration && readyRef.current) {
+        setProgress(100);
         window.clearInterval(tick);
         completionTimer = window.setTimeout(() => onCompleteRef.current(), reduceMotion ? 80 : 180);
       }
@@ -313,12 +350,14 @@ export function BootSplashScreen({ onComplete, theme, onThemeChange }: { onCompl
     return () => { window.clearInterval(tick); window.clearTimeout(completionTimer); };
   }, [reduceMotion]);
 
-  const messageIndex = Math.min(BOOT_MESSAGES.length - 1, Math.floor(progress / 21));
+  const messageIndex = progress === 100
+    ? BOOT_MESSAGES.length - 1
+    : Math.min(BOOT_MESSAGES.length - 2, Math.floor(progress / 21));
 
   return (
     <motion.section
       key="boot"
-      initial={{ opacity: 0 }}
+      initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, scale: 1.05, filter: "blur(14px)" }}
       transition={{ duration: reduceMotion ? 0.1 : 0.42, ease: "easeInOut" }}

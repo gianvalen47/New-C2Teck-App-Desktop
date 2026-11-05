@@ -21,6 +21,7 @@ import {
   YearSpinner,
   type CodeDescOption,
 } from "@/features/escritorio/windows/shared/SearchFieldControls";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 const OFFICE_OPTIONS: CodeDescOption[] = [
   { code: "01", label: "LIMA", value: "LIMA" },
@@ -147,7 +148,7 @@ export function CotizacionesList() {
 
       <div className="flex-1 min-h-0 overflow-auto p-1.5">
         <div className="border border-slate-400/60 bg-white rounded-sm h-full overflow-auto">
-          <table className="w-full text-[11.5px]">
+          <SortableTable className="w-full text-[11.5px]">
             <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0 z-10">
               <tr>
                 {["Número", "Fecha", "Cliente", "Mon.", "Total", "Estado", "Vendedor", "TotNetoSug."].map((header) => (
@@ -178,7 +179,7 @@ export function CotizacionesList() {
                 );
               })}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
 

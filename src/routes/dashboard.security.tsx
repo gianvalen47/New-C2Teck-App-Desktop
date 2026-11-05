@@ -7,6 +7,7 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import { hideezDevices } from "@/lib/mock-data";
 import { useStore, actions, type AuthLog } from "@/lib/store";
 import { cn } from "@/lib/utils";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export const Route = createFileRoute("/dashboard/security")({
   head: () => ({
@@ -60,7 +61,7 @@ function SecurityPage() {
         <div className="card-elevated p-5 lg:col-span-2">
           <h3 className="font-display font-semibold mb-3">Llaves aprovisionadas</h3>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <SortableTable className="w-full text-sm">
               <thead className="text-left text-xs uppercase text-muted-foreground bg-muted/30">
                 <tr><th className="px-3 py-2">ID</th><th className="px-3 py-2">Modelo</th><th className="px-3 py-2">Usuario</th><th className="px-3 py-2">Enlace</th><th className="px-3 py-2">Batería</th><th className="px-3 py-2">Estado</th></tr>
               </thead>
@@ -86,7 +87,7 @@ function SecurityPage() {
                   );
                 })}
               </tbody>
-            </table>
+            </SortableTable>
           </div>
         </div>
       </div>
@@ -94,7 +95,7 @@ function SecurityPage() {
       <div className="card-elevated p-5">
         <h3 className="font-display font-semibold mb-4">Matriz de acceso — Workforce Identity</h3>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <SortableTable className="w-full text-sm">
             <thead className="text-left text-xs uppercase text-muted-foreground bg-muted/30">
               <tr>
                 <th className="px-3 py-2">Empleado</th>
@@ -126,7 +127,7 @@ function SecurityPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
         <div className="mt-4 flex items-start gap-3 rounded-lg border border-warning/30 bg-warning/10 p-3 text-xs">
           <ShieldAlert className="h-4 w-4 text-warning shrink-0 mt-0.5" />
@@ -189,7 +190,7 @@ function AuthAuditTrail() {
         </button>
       </div>
       <div className="overflow-x-auto max-h-96 overflow-y-auto">
-        <table className="w-full text-sm">
+        <SortableTable className="w-full text-sm">
           <thead className="text-left text-xs uppercase text-muted-foreground bg-muted/30 sticky top-0">
             <tr>
               <th className="px-3 py-2">Timestamp</th>
@@ -214,7 +215,7 @@ function AuthAuditTrail() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </div>
   );

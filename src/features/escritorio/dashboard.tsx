@@ -17,6 +17,7 @@ import systeckWallpaper from "@/assets/Background/systeck-wallpaper-hd.png";
 import {
   useWindows,
 } from "@/context/WindowsContext";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export function Workspace() {
   const { windows, active, focus, move, toggleMaximize, minimize, toggleFromTaskbar, close } = useWindows();
@@ -237,7 +238,7 @@ export function DesktopDashboard({ onDeactivate }: { onDeactivate: () => void })
           </div>
           <div className="text-[10px] font-mono text-cyan-300">// tail -f systeck.audit.log</div>
         </div>
-        <table className="w-full text-[11.5px]">
+        <SortableTable className="w-full text-[11.5px]">
           <thead className="bg-slate-100 text-slate-700">
             <tr>
               <th className="px-2 py-1 text-left font-semibold w-8"></th>
@@ -262,7 +263,7 @@ export function DesktopDashboard({ onDeactivate }: { onDeactivate: () => void })
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </motion.div>
     </motion.div>
   );

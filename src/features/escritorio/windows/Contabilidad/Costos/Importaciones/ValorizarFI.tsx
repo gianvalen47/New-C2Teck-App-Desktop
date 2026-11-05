@@ -10,6 +10,7 @@ import {
   updateInventoryItem,
   type InventoryItem
 } from "@/lib/sigecoom-api";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export function ValorizarFIList() {
   const [items, setItems] = useState<InventoryItem[]>([]);
@@ -133,7 +134,7 @@ export function ValorizarFIList() {
         <Field label="Total Gastos"><input className={inp} value={totalExtras.toFixed(2)} readOnly /></Field>
       </div>
       <div className="border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]"><tr>
             <th className="px-2 py-2 text-left border-b border-slate-300">Sel</th>
             <th className="px-2 py-2 text-left border-b border-slate-300">SKU</th>
@@ -160,7 +161,7 @@ export function ValorizarFIList() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );

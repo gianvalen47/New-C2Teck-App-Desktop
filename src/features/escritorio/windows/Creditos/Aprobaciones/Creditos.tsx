@@ -8,6 +8,7 @@ import {
   Field,
   WindowShell
 } from "@/components/ui/desktop-primitives";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export function AprobacionCreditosList() {
   const [type, setType] = useState("Extensión de línea");
@@ -42,7 +43,7 @@ export function AprobacionCreditosList() {
         <Field label="Cliente"><input className={inp} defaultValue="" /></Field>
       </div>
       {message && <div className="mb-3 rounded-sm border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">{message}</div>}
-      <div className="border border-slate-300 rounded-sm bg-white overflow-auto"><table className="w-full text-[11px] border-collapse"><thead className="bg-[#F3F6FA]"><tr><th className="px-2 py-2 text-left border-b border-slate-300">#</th><th className="px-2 py-2 text-left border-b border-slate-300">Cliente</th><th className="px-2 py-2 text-left border-b border-slate-300">Solicita</th><th className="px-2 py-2 text-left border-b border-slate-300">Vendedor</th><th className="px-2 py-2 text-right border-b border-slate-300">Monto</th><th className="px-2 py-2 text-left border-b border-slate-300">Línea Actual</th><th className="px-2 py-2 text-left border-b border-slate-300">Línea Solicitada</th><th className="px-2 py-2 text-left border-b border-slate-300">Estado</th><th className="px-2 py-2 text-left border-b border-slate-300">Acción</th></tr></thead><tbody><tr><td colSpan={9} className="px-2 py-4 text-sm text-slate-500">No hay solicitudes de crédito.</td></tr></tbody></table></div>
+      <div className="border border-slate-300 rounded-sm bg-white overflow-auto"><SortableTable className="w-full text-[11px] border-collapse"><thead className="bg-[#F3F6FA]"><tr><th className="px-2 py-2 text-left border-b border-slate-300">#</th><th className="px-2 py-2 text-left border-b border-slate-300">Cliente</th><th className="px-2 py-2 text-left border-b border-slate-300">Solicita</th><th className="px-2 py-2 text-left border-b border-slate-300">Vendedor</th><th className="px-2 py-2 text-right border-b border-slate-300">Monto</th><th className="px-2 py-2 text-left border-b border-slate-300">Línea Actual</th><th className="px-2 py-2 text-left border-b border-slate-300">Línea Solicitada</th><th className="px-2 py-2 text-left border-b border-slate-300">Estado</th><th className="px-2 py-2 text-left border-b border-slate-300">Acción</th></tr></thead><tbody><tr><td colSpan={9} className="px-2 py-4 text-sm text-slate-500">No hay solicitudes de crédito.</td></tr></tbody></SortableTable></div>
     </WindowShell>
   );
 }

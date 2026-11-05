@@ -24,6 +24,7 @@ import {
   Wrench,
 } from "lucide-react";
 import { TicketPrinterIcon } from "@/components/ui/icons";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export const stdToolbar14 = (
   <>
@@ -196,7 +197,7 @@ export function DocumentosList() {
 
       <div className="flex-1 min-h-0 overflow-auto p-1.5">
         <div className="border border-slate-400/60 bg-white rounded-sm h-full overflow-auto">
-          <table className="w-full min-w-[790px] text-[11.5px]">
+          <SortableTable className="w-full min-w-[790px] text-[11.5px]">
             <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0 z-10">
               <tr>
                 {["Serie", "Número", "Fecha", "Nro.Fact.", "# OT", "Cliente", "Mon.", "Total", "Est."].map((header) => (
@@ -224,7 +225,7 @@ export function DocumentosList() {
                 );
               })}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
 

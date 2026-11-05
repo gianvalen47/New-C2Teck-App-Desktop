@@ -16,6 +16,7 @@ import {
   CodeDescSelector,
   type CodeDescOption,
 } from "@/features/escritorio/windows/shared/SearchFieldControls";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 type ReclamoRow = {
   numero: string;
@@ -123,7 +124,7 @@ export function ReclamoGarantiaList() {
 
       <div className="flex-1 min-h-0 overflow-auto p-1.5">
         <div className="border border-slate-400/60 bg-white rounded-sm h-full overflow-auto">
-          <table className="w-full min-w-[700px] text-[11.5px]">
+          <SortableTable className="w-full min-w-[700px] text-[11.5px]">
             <thead className="bg-gradient-to-b from-[#EEF2F7] to-[#C9D3DF] text-slate-800 sticky top-0 z-10">
               <tr>
                 {["Número", "Fecha", "Control", "Cliente", "Estado", "Resultado"].map((header) => (
@@ -156,7 +157,7 @@ export function ReclamoGarantiaList() {
                 );
               })}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
 

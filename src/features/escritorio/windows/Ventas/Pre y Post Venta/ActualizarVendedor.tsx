@@ -7,6 +7,7 @@ import {
   CodeDescSelector,
   type CodeDescOption,
 } from "@/features/escritorio/windows/shared/SearchFieldControls";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 const OFFICE_OPTIONS: CodeDescOption[] = [
   { code: "01", label: "LIMA", value: "LIMA" },
@@ -198,7 +199,7 @@ export function ActualizarVendedorList() {
         </div>
 
         <div className="border border-slate-400/60 bg-white rounded-sm h-full overflow-auto">
-          <table className="w-full text-[11.5px]">
+          <SortableTable className="w-full text-[11.5px]">
             <colgroup>
               {DETAIL_WIDTHS.map((width, index) => <col key={DETAIL_COLUMNS[index]} style={{ width }} />)}
             </colgroup>
@@ -223,7 +224,7 @@ export function ActualizarVendedorList() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </SortableTable>
         </div>
       </div>
 

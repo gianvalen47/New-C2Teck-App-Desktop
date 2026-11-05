@@ -8,6 +8,7 @@ import {
   WindowShell,
   SearchBar
 } from "@/components/ui/desktop-primitives";
+import { SortableTable } from "@/components/ui/sortable-table";
 
 export function SaldoBancosCreditosList() {
   const [records, setRecords] = useState<Array<{
@@ -67,7 +68,7 @@ export function SaldoBancosCreditosList() {
       </SearchBar>
       {message ? <div className="mb-2 rounded-sm border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700">{message}</div> : null}
       <div className="border border-slate-300 rounded-sm bg-white overflow-auto">
-        <table className="w-full text-[11px] border-collapse">
+        <SortableTable className="w-full text-[11px] border-collapse">
           <thead className="bg-[#F3F6FA]"><tr><th className="px-2 py-2 text-left border-b border-slate-300">Fecha</th><th className="px-2 py-2 text-left border-b border-slate-300">Banco</th><th className="px-2 py-2 text-left border-b border-slate-300">Cuenta</th><th className="px-2 py-2 text-left border-b border-slate-300">Operación</th><th className="px-2 py-2 text-left border-b border-slate-300">Descripción</th><th className="px-2 py-2 text-left border-b border-slate-300">Mon.</th><th className="px-2 py-2 text-right border-b border-slate-300">Cargo</th><th className="px-2 py-2 text-right border-b border-slate-300">Abono</th><th className="px-2 py-2 text-right border-b border-slate-300">Saldo</th><th className="px-2 py-2 text-left border-b border-slate-300">Estado</th><th className="px-2 py-2 text-left border-b border-slate-300">Acción</th></tr></thead>
           <tbody>
             {records.length === 0 ? (
@@ -90,7 +91,7 @@ export function SaldoBancosCreditosList() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </SortableTable>
       </div>
     </WindowShell>
   );
