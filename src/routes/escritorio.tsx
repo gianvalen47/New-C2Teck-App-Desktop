@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import "./escritorio-diseno.css";
 import { useState, useRef, useEffect, useLayoutEffect, FormEvent, type CSSProperties } from "react";
 import {
   motion,
@@ -15,7 +16,7 @@ import { Glyph } from "@/features/escritorio/glyphs";
 import { ICONOS_COLOR } from "@/assets/new-logos/iconos-sigecom-color";
 import systeckIcon from "@/assets/Systeck.ico";
 import {
-  Minus, Square, X, ChevronDown, Bell, ShieldCheck, Cpu as CpuIcon, HelpCircle, Circle, ArrowLeft,
+  Minus, Square, X, ChevronDown, Bell, ShieldCheck, Cpu as CpuIcon, HelpCircle, Circle, ArrowLeft, Moon, Sun, Star, PrinterIcon,
   FileText, ShoppingBag, Users, ClipboardList, Search, BarChart3,
   Tag, Tags, Percent, Factory, Layers, DollarSign, Package,
   Contact, Briefcase, MonitorSmartphone, Cpu, ListOrdered, ScanLine,
@@ -1446,34 +1447,47 @@ function DesktopApp() {
 }
 
 function useNow() {
-  const [now, setNow] = useState(new Date());
+  const [now, setNow] = useState<Date | null>(null);
   useEffect(() => {
+    setNow(new Date());
     const t = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(t);
   }, []);
   return now;
 }
 
-const TAB_ACCENTS: Record<string, string> = {
-  Ventas: "from-[#0F5FAA] to-[#0A3F73]",
-  Almacenes: "from-[#0E7E52] to-[#08553A]",
-  "Créditos": "from-[#A44900] to-[#6F3000]",
-  "Importaciones": "from-[#1D4ED8] to-[#0B255F]",
-  Costos: "from-[#7C3AED] to-[#4C1D95]",
-  Gerencia: "from-[#0F172A] to-[#020617]",
-  Servicios: "from-[#0891B2] to-[#164E63]",
-  Compras: "from-[#B45309] to-[#78350F]",
-  Personal: "from-[#DB2777] to-[#831843]",
-  Rondas: "from-[#059669] to-[#064E3B]",
-  Contabilidad: "from-[#4338CA] to-[#1E1B4B]",
-  "Telefonía": "from-[#0284C7] to-[#0C4A6E]",
-  CRM: "from-[#E11D48] to-[#881337]",
-  Activos: "from-[#65A30D] to-[#365314]",
-  Tablas: "from-[#525252] to-[#171717]",
-  Logueo: "from-[#7C2D12] to-[#431407]",
-  "Administración": "from-[#334155] to-[#0F172A]",
-  Ayuda: "from-[#0369A1] to-[#075985]",
+type TabLed = { from: string; to: string; glow: string };
+
+const DEFAULT_LED: TabLed = { from: "#7DD3FC", to: "#E0F2FE", glow: "rgba(125,211,252,0.8)" };
+
+/* Bright LED filament per module tab: lit core + colored bloom. */
+const TAB_LEDS: Record<string, TabLed> = {
+  Ventas: { from: "#38BDF8", to: "#00E5FF", glow: "rgba(0,229,255,0.85)" },
+  Almacenes: { from: "#34D399", to: "#A7F3D0", glow: "rgba(52,211,153,0.8)" },
+  "Créditos": { from: "#FBBF24", to: "#FEF08A", glow: "rgba(251,191,36,0.8)" },
+  "Importaciones": { from: "#818CF8", to: "#C7D2FE", glow: "rgba(129,140,248,0.8)" },
+  Costos: { from: "#C084FC", to: "#E9D5FF", glow: "rgba(192,132,252,0.8)" },
+  Gerencia: { from: "#E2E8F0", to: "#FFFFFF", glow: "rgba(226,232,240,0.75)" },
+  Servicios: { from: "#22D3EE", to: "#BAE6FD", glow: "rgba(34,211,238,0.8)" },
+  Compras: { from: "#FB923C", to: "#FED7AA", glow: "rgba(251,146,60,0.8)" },
+  Personal: { from: "#F472B6", to: "#FBCFE8", glow: "rgba(244,114,182,0.8)" },
+  Rondas: { from: "#4ADE80", to: "#BBF7D0", glow: "rgba(74,222,128,0.8)" },
+  Contabilidad: { from: "#A5B4FC", to: "#E0E7FF", glow: "rgba(165,180,252,0.8)" },
+  "Telefonía": { from: "#60A5FA", to: "#BFDBFE", glow: "rgba(96,165,250,0.8)" },
+  CRM: { from: "#FB7185", to: "#FECDD3", glow: "rgba(251,113,133,0.8)" },
+  Activos: { from: "#A3E635", to: "#D9F99D", glow: "rgba(163,230,53,0.8)" },
+  Tablas: { from: "#CBD5E1", to: "#F1F5F9", glow: "rgba(203,213,225,0.7)" },
+  Logueo: { from: "#FACC15", to: "#FEF9C3", glow: "rgba(250,204,21,0.8)" },
+  "Administración": { from: "#2DD4BF", to: "#99F6E4", glow: "rgba(45,212,191,0.8)" },
+  Ayuda: { from: "#7DD3FC", to: "#E0F2FE", glow: "rgba(125,211,252,0.8)" },
 };
+
+const ledStyle = (led: TabLed) =>
+  ({ "--led-from": led.from, "--led-to": led.to, "--led-glow": led.glow } as CSSProperties);
+
+
+
+
 
 function DesktopAppInner({
   desktopMode,
@@ -1485,7 +1499,52 @@ function DesktopAppInner({
   onStartupUserChange: (user: string) => void;
 }) {
   const [active, setActive] = useState("Ventas");
+  const [darkTheme, setDarkTheme] = useState(false);
+  const [commandQuery, setCommandQuery] = useState("");
+  const [commandOpen, setCommandOpen] = useState(false);
+  const commandRef = useRef<HTMLInputElement>(null);
+  const commandPanelRef = useRef<HTMLDivElement>(null);
+  const commandButtonRef = useRef<HTMLButtonElement>(null);
+  const liveClock = useNow();
   const ribbon = RIBBONS[active] ?? RIBBONS.Ventas;
+
+  // Persistencia exclusivamente visual: no modifica sesión ni datos de SIGECOM.
+  useEffect(() => {
+    try { setDarkTheme(window.localStorage.getItem("systeck-desktop-theme") === "dark"); }
+    catch { /* localStorage puede estar restringido */ }
+  }, []);
+  useEffect(() => {
+    document.documentElement.classList.toggle("desktop-dark", darkTheme);
+    try { window.localStorage.setItem("systeck-desktop-theme", darkTheme ? "dark" : "light"); }
+    catch { /* no impedir el renderizado */ }
+    return () => document.documentElement.classList.remove("desktop-dark");
+  }, [darkTheme]);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setCommandOpen(true);
+        commandRef.current?.focus();
+      } else if (e.key === "Escape") {
+        setCommandOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+  // El buscador deja de ocupar la barra de título. Se abre desde Acceso rápido o Ctrl+K.
+  useEffect(() => {
+    if (!commandOpen) return;
+    commandRef.current?.focus();
+    const onOutside = (event: PointerEvent) => {
+      const node = event.target as Node;
+      if (commandPanelRef.current?.contains(node) || commandButtonRef.current?.contains(node)) return;
+      setCommandOpen(false);
+    };
+    document.addEventListener("pointerdown", onOutside);
+    return () => document.removeEventListener("pointerdown", onOutside);
+  }, [commandOpen]);
+
   const [ribbonMode, setRibbonMode] = useState<"expanded" | "hidden" | "overlay">("expanded");
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [notificationsClosing, setNotificationsClosing] = useState(false);
@@ -1544,15 +1603,11 @@ function DesktopAppInner({
     setNotificationsClosing(false);
     setNotificationsOpen(true);
   };
-  const [now, setNow] = useState("");
   const { isDesktop, minimize, maximize, close } = desktopMode;
   const { open: openWindow, windows, active: activeWindowId, close: closeWindow, focus: focusWindow, toggleFromTaskbar } = useWindows();
   const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
   const [recover, setRecover] = useState(false);
   const [starred, setStarred] = useState(false);
-  const [cpuLoad, setCpuLoad] = useState(23);
-  const [memLoad, setMemLoad] = useState(48);
-  const accent = TAB_ACCENTS[active] ?? "from-[#3A5573] to-[#243B55]";
   const popupLabel = params.get("popup");
   const loginMode = params.get("login") === "1";
   const [desktopAuthenticated, setDesktopAuthenticated] = useState(false);
@@ -1574,10 +1629,6 @@ function DesktopAppInner({
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const sessionCtx = useSession();
 
-
-  useEffect(() => {
-    setNow(new Date().toLocaleDateString("es-PE"));
-  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -1837,6 +1888,13 @@ function DesktopAppInner({
     openWindow(label);
   };
 
+  const matchedCommands = commandQuery.trim()
+    ? ALL_RIBBON_LABELS.filter((label) =>
+        label.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+          .includes(commandQuery.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()),
+      ).slice(0, 8)
+    : [];
+
   if (popupLabel && isDesktop) {
     return <DesktopPopoutWindow label={popupLabel} onClose={close} />;
   }
@@ -1876,11 +1934,14 @@ function DesktopAppInner({
   return (
 
     <div className={[
-      "min-h-screen font-sans",
+      "desktop-motion-root relative h-screen w-screen min-h-0 overflow-hidden font-sans flex",
+      darkTheme ? "desktop-dark" : "",
       isDesktop
-        ? "bg-[#DDE4EC] p-0 m-0 flex items-stretch justify-stretch"
-        : "bg-slate-900 p-2 sm:p-6 flex items-center justify-center",
-    ].join(" ")}>
+        ? "p-0 m-0 items-stretch justify-stretch"
+        : "p-1 sm:p-2 items-center justify-center",
+    ].join(" ")}
+      style={{ background: "radial-gradient(ellipse at 20% 0%, #4a5b76 0%, #1e293b 45%, #0b1220 100%)" }}
+    >
       {companyPickerOpen && (
         <CompanyPickerModal
           current={selectedCompany}
@@ -1897,15 +1958,21 @@ function DesktopAppInner({
           }}
         />
       )}
-      {/* Ventana */}
+      {/* Fondo discreto y marco empresarial, sin interferir con ventanas nativas. */}
+      <div aria-hidden="true" className="desktop-wallpaper-grid pointer-events-none absolute inset-0 opacity-[0.07]" style={{
+        backgroundImage: "linear-gradient(rgba(255,255,255,.7) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.7) 1px, transparent 1px)",
+        backgroundSize: "38px 38px",
+        maskImage: "radial-gradient(ellipse at center, black 40%, transparent 90%)",
+      }} />
+      {/* Ventana: se mantienen las funciones de maximizar, minimizar y cerrar. */}
       <div className={[
-        "w-full h-full flex flex-col bg-[#DDE4EC] text-slate-800 overflow-visible",
+        "desktop-main-window desktop-shell-enter relative z-10 w-full h-full min-h-0 flex flex-col bg-[#F4F7FB] text-slate-800 overflow-hidden",
         isDesktop
           ? "h-screen rounded-none shadow-none border-0"
-          : "max-w-[1400px] rounded-lg shadow-2xl border border-slate-700",
+          : "max-w-[1600px] rounded-xl shadow-[0_40px_120px_-30px_rgba(0,0,0,0.85),0_0_0_1px_rgba(148,163,184,0.28)]",
       ].join(" ")}>
         <div
-          className="relative z-30 h-8 bg-white flex items-center justify-between px-0 text-white text-xs select-none"
+          className="desktop-chrome relative z-[65] shrink-0 h-[34px] bg-white flex items-center justify-between pl-2.5 pr-0 text-slate-900 text-xs select-none border-b border-slate-300"
           style={{ ["WebkitAppRegion" as any]: "drag" } as React.CSSProperties}
           onDoubleClick={() => {
             if (isDesktop) {
@@ -1913,15 +1980,27 @@ function DesktopAppInner({
             }
           }}
         >
-          <div className="absolute left-1/2 -translate-x-1/2 font-semibold tracking-tight text-[12px] text-slate-900">
-            Systeck ERP
+          {/* Título centrado. Sin logotipo C2 ni subtítulo de empresa/módulo. */}
+          <div
+            className="desktop-centered-title pointer-events-none absolute left-1/2 top-1/2 flex w-[min(540px,52vw)] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center text-center leading-tight"
+            aria-label="Systeck ERP v10.6.30 Enterprise"
+          >
+            <div className="flex max-w-full items-center justify-center gap-1.5 whitespace-nowrap text-[13px] font-bold tracking-[0.01em] text-slate-900">
+              <span>Systeck ERP</span>
+              <span className="font-medium text-slate-500">v10.6.30</span>
+              <span className="rounded bg-slate-900 px-1.5 py-[2px] text-[8.5px] font-bold tracking-[0.09em] text-white">ENTERPRISE</span>
+            </div>
           </div>
           <div className="ml-auto flex items-center" style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}>
-            <button onClick={toggleNotifications} aria-expanded={notificationsOpen && !notificationsClosing} title="Notificaciones" className={`group/notice h-10 w-10 grid place-items-center relative text-slate-700 transition-all duration-200 active:scale-90 ${notificationsOpen && !notificationsClosing ? "bg-slate-900/10" : "hover:bg-slate-900/5"}`}>
+            <button onClick={toggleNotifications} aria-expanded={notificationsOpen && !notificationsClosing} title="Notificaciones" className={`desktop-chrome-action group/notice h-[34px] w-10 grid place-items-center relative text-slate-700 transition-all duration-200 active:scale-90 ${notificationsOpen && !notificationsClosing ? "bg-slate-900/10" : "hover:bg-slate-900/5"}`}>
               <Bell className={`h-3.5 w-3.5 group-hover/notice:desktop-bell-ring ${notificationsOpen && !notificationsClosing ? "desktop-bell-ring" : ""}`} />
               {unreadCount > 0 && <span className="desktop-badge-pulse absolute right-1.5 top-1 flex h-4 min-w-4 items-center justify-center rounded-full border border-white bg-red-500 px-1 text-[8px] font-bold text-white shadow-lg">{unreadCount}</span>}
             </button>
-            <button title="Ayuda" className="h-10 w-10 text-slate-700 hover:bg-slate-900/5 grid place-items-center transition-all duration-200 active:scale-90">
+            <button type="button" onClick={() => setDarkTheme(v => !v)} title={darkTheme ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
+              aria-pressed={darkTheme} className="desktop-chrome-action h-[34px] w-10 text-slate-700 hover:bg-slate-900/5 grid place-items-center transition-all duration-200 active:scale-90">
+              {darkTheme ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
+            </button>
+            <button onClick={() => openDesktopWindow("Acerca")} title="Ayuda" className="desktop-chrome-action h-[34px] w-10 text-slate-700 hover:bg-slate-900/5 grid place-items-center transition-all duration-200 active:scale-90">
               <HelpCircle className="h-3.5 w-3.5" />
             </button>
             <div className="h-5 w-px bg-white/15 mx-1" />
@@ -1929,19 +2008,19 @@ function DesktopAppInner({
               type="button"
               onClick={isDesktop ? minimize : undefined}
               style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}
-              className="h-10 w-11 text-slate-700 hover:bg-slate-900/10 grid place-items-center transition-all duration-150 active:scale-90"
+              className="desktop-chrome-action h-[34px] w-[46px] text-slate-700 hover:bg-slate-900/10 grid place-items-center transition-colors duration-150"
               ><Minus className="h-3.5 w-3.5" /></button>
             <button
               type="button"
               onClick={isDesktop ? maximize : undefined}
               style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}
-              className="h-10 w-11 text-slate-700 hover:bg-slate-900/10 grid place-items-center transition-all duration-150 active:scale-90"
+              className="desktop-chrome-action h-[34px] w-[46px] text-slate-700 hover:bg-slate-900/10 grid place-items-center transition-colors duration-150"
               ><Square className="h-3 w-3" /></button>
             <button
               type="button"
               onClick={isDesktop ? close : undefined}
               style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}
-              className="h-10 w-11 text-slate-700 hover:bg-red-600 hover:text-white grid place-items-center transition-all duration-150 active:scale-90"
+              className="desktop-chrome-action h-[34px] w-[46px] text-slate-700 hover:bg-red-600 hover:text-white grid place-items-center transition-colors duration-150"
               ><X className="h-4 w-4" /></button>
           </div>
         </div>
@@ -1976,7 +2055,7 @@ function DesktopAppInner({
         {/* Quick access + tabs */}
         <div
           onContextMenu={(e) => { e.preventDefault(); setRibbonMenu({ x: e.clientX, y: e.clientY }); }}
-          className="shrink-0 bg-gradient-to-b from-[#EEF2F7] to-[#D6DEE8] flex items-stretch relative z-30"
+          className="desktop-tabbar desktop-tabbar-enter relative z-[70] flex min-h-[50px] shrink-0 items-stretch border-b border-slate-400/40 bg-gradient-to-b from-[#F1F5FB] to-[#DDE5EF] shadow-[0_1px_0_rgba(255,255,255,0.75)_inset]"
         >
           <AppOrb
             companyName={selectedCompany?.nombre}
@@ -2025,7 +2104,7 @@ function DesktopAppInner({
         {/* Overlay ribbon (does NOT push workspace) */}
         <div
           className={[
-            "absolute left-0 right-0 top-full overflow-hidden bg-gradient-to-b from-[#F8FAFC] to-[#EEF2F7] border-b border-slate-300 shadow-[0_12px_24px_-12px_rgba(15,23,42,0.35)] transition-[max-height,opacity,transform] duration-300 ease-out",
+            "desktop-ribbon-surface absolute left-0 right-0 top-full overflow-hidden bg-gradient-to-b from-[#FBFCFE] via-[#F0F5FB] to-[#DFE7F1] border-b border-slate-300 shadow-[0_12px_24px_-12px_rgba(15,23,42,0.35)] transition-[max-height,opacity,transform] duration-300 ease-out",
             ribbonMode === "overlay"
               ? "max-h-[112px] opacity-100 translate-y-0 pointer-events-auto"
               : "max-h-0 opacity-0 -translate-y-1 pointer-events-none",
@@ -2041,7 +2120,7 @@ function DesktopAppInner({
         {/* Ribbon animado (in-flow, mantiene el comportamiento original) */}
 <div
   className={[
-    "shrink-0 overflow-hidden bg-gradient-to-b from-[#F8FAFC] to-[#EEF2F7] transition-[height,opacity] duration-300 ease-out",
+    "desktop-ribbon-surface shrink-0 overflow-hidden bg-gradient-to-b from-[#FBFCFE] via-[#F0F5FB] to-[#DFE7F1] transition-[height,opacity] duration-300 ease-out",
     ribbonMode === "expanded" && !ribbonMinimized ? "h-[104px] opacity-100 border-b border-slate-300" : "h-0 opacity-0",
   ].join(" ")}
 >
@@ -2057,7 +2136,7 @@ function DesktopAppInner({
           animate={{ opacity: 1, y: 0, transition: EASE_OUT }}
           exit={{ opacity: 0, transition: EASE_FAST }}
           transition={{ duration: 0.18 }}
-          className="h-full w-full"
+          className="desktop-ribbon-enter h-full w-full"
         >
           <RibbonContent ribbon={ribbon} active={active} openDesktopWindow={openDesktopWindow} />
         </motion.div>
@@ -2070,7 +2149,7 @@ function DesktopAppInner({
           <div
             style={{ left: ribbonMenu.x, top: ribbonMenu.y }}
             onMouseDown={(e) => e.stopPropagation()}
-            className="fixed z-[100] min-w-[220px] rounded-sm border border-slate-400 bg-[#F1F1F1] py-1 shadow-[0_6px_20px_rgba(0,0,0,0.25)] text-[12px] text-slate-800"
+            className="desktop-context-menu desktop-menu-enter fixed z-[100] min-w-[220px] rounded-sm border border-slate-400 bg-[#F1F1F1] py-1 shadow-[0_6px_20px_rgba(0,0,0,0.25)] text-[12px] text-slate-800"
           >
             <button
               onClick={() => { toast.success("Añadido a la barra de acceso rápido"); setRibbonMenu(null); }}
@@ -2097,10 +2176,10 @@ function DesktopAppInner({
         {/* Workspace MDI */}
         <Workspace />
 
-        <div className="shrink-0 border-t border-slate-900/80 bg-[#060B13]">
+        <div className="desktop-status desktop-status-enter shrink-0 border-t border-slate-900/80 bg-[#060B13]">
           <div className="shrink-0 h-9 bg-gradient-to-b from-[#0a1220] to-[#060911] border-t border-[#00E5FF]/20 flex items-center gap-1 px-2 overflow-x-auto">
             <div className="flex items-center gap-1.5 mr-2 pr-2 border-r border-slate-700/60">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#10B981]" />
+              <span className="desktop-online-dot h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#10B981]" />
               <span className="text-[10px] font-mono text-slate-400 tracking-wider uppercase">Systeck MDI</span>
             </div>
             {windows.length === 0 && (
@@ -2111,9 +2190,10 @@ function DesktopAppInner({
               return (
                 <div
                   key={w.id}
+                  data-active={isActive}
                   onClick={() => focusWindow(w.id)}
                   className={[
-                    "group shrink-0 flex items-center h-7 rounded-sm border overflow-hidden transition-colors",
+                    "desktop-task-entry group shrink-0 flex items-center h-7 rounded-sm border overflow-hidden transition-colors",
                     isActive
                       ? "bg-[#00E5FF]/15 border-[#00E5FF]/50 shadow-[inset_0_-2px_0_0_#00E5FF]"
                       : w.isMinimized
@@ -2150,19 +2230,13 @@ function DesktopAppInner({
             </div>
           </div>
 
-          <div className="h-7 px-2 flex items-center gap-2 overflow-x-auto text-[10.5px] text-slate-200 font-mono">
+          <div className="desktop-status-line h-8 px-3 flex items-center gap-2 overflow-x-auto text-[10.5px] text-slate-200 font-mono bg-gradient-to-b from-[#1E2A44] to-[#0B1220]">
+            <span className="flex items-center gap-1.5 shrink-0"><span className="desktop-online-dot h-1.5 w-1.5 rounded-full bg-emerald-400" /> Systeck ERP</span>
+            <span className="text-slate-600 shrink-0">│</span>
             <SessionStatus />
-            <span className="text-slate-500 shrink-0">|</span>
-            <span className="shrink-0 inline-flex items-center gap-1.5 px-1.5 h-5 rounded border border-indigo-400/40 bg-indigo-500/10 text-indigo-200">
-              <Zap className="h-2.5 w-2.5 text-cyan-300 animate-pulse" />
-              <span>Systeck-AI Core: <b className="text-emerald-300">ONLINE</b></span>
-            </span>
-            <span className="shrink-0 inline-flex items-center gap-1 px-1.5 h-5 rounded border border-cyan-400/40 bg-cyan-500/10 text-cyan-200">
-              GPU Usage: <b className="text-cyan-100">24%</b>
-            </span>
-            <span className="shrink-0 inline-flex items-center gap-1 px-1.5 h-5 rounded border border-cyan-400/40 bg-cyan-500/10 text-cyan-200">
-              Model Latency: <b className="text-cyan-100">12ms</b>
-            </span>
+            <span className="text-slate-600 shrink-0">│</span>
+            <span className="shrink-0">T.C. sesión: <b className="text-amber-300">{tc || "—"}</b></span>
+            <span className="ml-auto shrink-0 tabular-nums"><b className="text-white">{liveClock?.toLocaleDateString("es-PE") ?? "--/--/----"}</b> <span className="text-cyan-300">{liveClock?.toLocaleTimeString("es-PE") ?? "--:--:--"}</span></span>
           </div>
         </div>
       </div>
@@ -2530,24 +2604,24 @@ function RibbonContent({ ribbon, active, openDesktopWindow }: { ribbon: RibbonGr
   }, [ribbon, collapsedGroups]);
 
   return (
-    <div ref={containerRef} className="flex items-stretch flex-nowrap h-full w-full overflow-hidden">
+    <div ref={containerRef} className="flex items-stretch flex-nowrap h-full w-full overflow-hidden relative">
       {ribbon.map((group, gi) => (
         collapsedGroups.has(gi) ? (
-          <CollapsedGroupButton key={gi} group={group} iconTab={active} onOpen={openDesktopWindow} />
+          <CollapsedGroupButton key={gi} group={group} groupIndex={gi} iconTab={active} onOpen={openDesktopWindow} />
         ) : (
-          <div key={gi} className="flex flex-col shrink-0 border-r border-slate-200 last:border-r-0">
-            <div className="flex items-start gap-1 px-2 pt-1 pb-0.5 min-h-[78px]">
+          <div key={gi} style={{ "--desktop-group-delay": `${Math.min(gi, 8) * 27}ms` } as CSSProperties} className="desktop-ribbon-group group/rgrp flex flex-col shrink-0 border-r border-slate-300/40 last:border-r-0 px-0.5 hover:bg-white/40 transition-colors">
+            <div className="flex items-start gap-0.5 px-2 pt-1 pb-0.5 min-h-[78px]">
               {group.items.filter((item) => item.big).map((btn) => (
                 <RibbonBigButton key={btn.label} {...btn} iconTab={active} iconScope={`${active} ${group.title ?? ""}`} onOpen={openDesktopWindow} />
               ))}
-              <div className="grid grid-flow-col grid-rows-2 auto-cols-max gap-x-3 gap-y-0.5 pt-0.5">
+              <div className="grid grid-flow-col grid-rows-2 auto-cols-max gap-x-2 gap-y-0.5 pt-0.5">
                 {group.items.filter((item) => !item.big).map((btn) => (
                   <RibbonSmallButton key={btn.label} {...btn} iconTab={active} iconScope={`${active} ${group.title ?? ""}`} onOpen={openDesktopWindow} />
                 ))}
               </div>
             </div>
             {group.title && (
-              <div className="shrink-0 text-[9.5px] lg:text-[10px] text-slate-500 mt-auto px-2 pt-0.5 pb-[3px] border-t border-slate-200/80 bg-slate-50/60 text-center uppercase tracking-wider">
+                <div className="desktop-ribbon-group-title shrink-0 text-[9px] lg:text-[9.5px] font-bold text-slate-500 mt-auto px-2 pt-0.5 pb-[3px] border-t border-slate-300/50 text-center uppercase tracking-[0.16em]">
                 {group.title}
               </div>
             )}
@@ -2558,7 +2632,7 @@ function RibbonContent({ ribbon, active, openDesktopWindow }: { ribbon: RibbonGr
   );
 }
 
-function CollapsedGroupButton({ group, iconTab, onOpen }: { group: RibbonGroup; iconTab: string; onOpen: (label: string) => void }) {
+function CollapsedGroupButton({ group, groupIndex, iconTab, onOpen }: { group: RibbonGroup; groupIndex: number; iconTab: string; onOpen: (label: string) => void }) {
   const [open, setOpen] = useState(false);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
@@ -2576,7 +2650,7 @@ function CollapsedGroupButton({ group, iconTab, onOpen }: { group: RibbonGroup; 
   };
 
   return (
-    <div className="flex flex-col shrink-0 border-r border-slate-200 last:border-r-0">
+    <div style={{ "--desktop-group-delay": `${Math.min(groupIndex, 8) * 27}ms` } as CSSProperties} className="desktop-ribbon-group flex flex-col shrink-0 border-r border-slate-200 last:border-r-0">
       <div className="flex items-start px-1.5 pt-1 pb-0.5 min-h-[78px]">
         <motion.button
           ref={btnRef}
@@ -2586,14 +2660,14 @@ function CollapsedGroupButton({ group, iconTab, onOpen }: { group: RibbonGroup; 
           whileTap={{ scale: 0.97, y: 0 }}
           transition={{ duration: 0.12 }}
           className={[
-            "flex flex-col items-center justify-center gap-1 rounded border w-[64px] h-[72px] px-1.5 press-fx",
+            "desktop-command flex flex-col items-center justify-center gap-1 rounded-md border w-[68px] h-[72px] px-1.5",
             open
-              ? "bg-gradient-to-b from-[#FCE9A8] to-[#F5C86A] border-[#B8892E] shadow-inner"
-              : "border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6]",
+              ? "bg-gradient-to-b from-white to-[#DDE7F3] border-[#7FA8D6] shadow-inner"
+              : "border-transparent hover:bg-white/70 hover:border-slate-300/70",
           ].join(" ")}
         >
           <SmallColorIcon label={label} iconScope={`${iconTab} ${group.title ?? ""}`} size={30} className="shrink-0 drop-shadow-[0_1px_1px_rgba(15,23,42,0.15)] transition-transform" />
-          <span className="text-[10.5px] leading-tight text-center whitespace-pre text-slate-800 font-bold">{label}</span>
+          <span className="text-[10.5px] leading-tight text-center whitespace-pre text-slate-800 font-medium">{label}</span>
           <ChevronDown className="h-2.5 w-2.5 text-slate-600" />
         </motion.button>
       </div>
@@ -2601,12 +2675,12 @@ function CollapsedGroupButton({ group, iconTab, onOpen }: { group: RibbonGroup; 
         <>
           <div className="fixed inset-0 z-40" onClick={() => { setOpen(false); setExpandedItem(null); }} />
           <div
-            className="fixed z-50 bg-[#F3F6FA] border border-slate-400/70 shadow-xl rounded-sm p-2 min-w-[220px] max-w-[calc(100vw-16px)] max-h-[calc(100vh-16px)] overflow-y-auto"
+            className="desktop-menu-surface desktop-menu-enter fixed z-[2147483646] bg-[#F3F6FA] border border-slate-400/70 shadow-xl rounded-sm p-2 min-w-[220px] max-w-[calc(100vw-16px)] max-h-[calc(100vh-16px)] overflow-y-auto"
             style={{ left: Math.min(pos.left, window.innerWidth - 236), top: Math.min(pos.top, window.innerHeight - 120) }}
           >
-            <div className="flex flex-col gap-0.5 px-1 py-1">
+            <div className="flex flex-col gap-0 px-0 py-0.5">
               {group.items.map((item, itemIndex) => (
-                <div key={`${item.label}-${itemIndex}`}>
+                <div key={`${item.label}-${itemIndex}`} style={{ "--desktop-item-delay": `${Math.min(itemIndex, 24) * 23}ms` } as CSSProperties} className="desktop-menu-item">
                   <button
                     onClick={() => {
                       if (item.menu) {
@@ -2619,7 +2693,7 @@ function CollapsedGroupButton({ group, iconTab, onOpen }: { group: RibbonGroup; 
                     }}
                     aria-expanded={item.menu ? expandedItem === item.label : undefined}
                     className={[
-                      "flex w-full items-center gap-2 px-1.5 py-1 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border text-left",
+                      "desktop-menu-action flex w-full items-center gap-2 px-1.5 py-1 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border text-left",
                       expandedItem === item.label ? "bg-gradient-to-b from-[#FCE9A8] to-[#F5C86A] border-[#B8892E]" : "border-transparent",
                     ].join(" ")}
                   >
@@ -2628,12 +2702,12 @@ function CollapsedGroupButton({ group, iconTab, onOpen }: { group: RibbonGroup; 
                     {item.menu && <ChevronDown className="h-3 w-3 text-slate-600 shrink-0" />}
                   </button>
                   {expandedItem === item.label && item.menu?.map((section, sectionIndex) => (
-                    <div key={`${section.title}-${sectionIndex}`} className="ml-3 pl-2 border-l border-slate-300 py-0.5">
+                    <div key={`${section.title}-${sectionIndex}`} className="desktop-submenu-enter ml-3 pl-2 border-l border-slate-300 py-0.5">
                       {section.items.map((subitem, subitemIndex) => (
                 <button
                           key={`${subitem.label}-${subitemIndex}`}
                           onClick={() => { openWindow(subitem.openLabel ?? subitem.label); setOpen(false); setExpandedItem(null); }}
-                          className="flex w-full items-center gap-2 px-1.5 py-1 rounded border border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6] text-left"
+                          className="desktop-menu-action flex w-full items-center gap-2 px-1.5 py-1 rounded border border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6] text-left"
                         >
                           <SmallColorIcon label={subitem.label} iconKey={subitem.iconKey} iconScope={`${iconTab} ${section.title}`} className="h-4 w-4 shrink-0" size={16} />
                           <span className="text-[11.5px] text-slate-800 whitespace-nowrap font-bold">{subitem.label}</span>
@@ -2662,27 +2736,37 @@ function AppOrb({ companyName, onSwitchCompany, onCloseApp }: { companyName?: st
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
   return (
-    <div ref={ref} className="relative z-40 shrink-0 flex items-center pl-0 pr-0">
+    <div ref={ref} className="desktop-app-orb-wrap relative z-[100] shrink-0 flex items-center pl-2 pr-2.5 overflow-visible">
       <button
         onClick={() => setOpen(v => !v)}
         title="Menú de aplicación"
-        style={{ ["WebkitAppRegion" as any]: "no-drag" } as React.CSSProperties}
-        className={`group relative -translate-y-4.5 grid h-9 w-9 place-items-center rounded-full ring-1 ring-slate-900/40 bg-[radial-gradient(circle_at_32%_28%,#FFFFFF_0%,#E4ECF5_35%,#A9B8CB_70%,#6B7C93_100%)] shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.9),inset_0_-3px_5px_rgba(30,45,70,0.45),inset_0_0_0_1px_rgba(255,255,255,0.15),0_2px_3px_rgba(0,0,0,0.35),0_4px_10px_rgba(0,0,0,0.25)] transition-all duration-200 hover:bg-[radial-gradient(circle_at_32%_28%,#FFF9D6_0%,#FFD966_35%,#C9962A_72%,#7A5A10_100%)] hover:ring-amber-700/60 hover:shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.95),inset_0_-3px_6px_rgba(90,55,5,0.55),inset_0_0_0_1px_rgba(255,220,120,0.35),0_0_14px_rgba(245,196,64,0.6),0_2px_4px_rgba(0,0,0,0.4)] ${open ? "ring-2 ring-amber-500 bg-[radial-gradient(circle_at_32%_28%,#FFF9D6_0%,#FFD966_35%,#C9962A_72%,#7A5A10_100%)]" : ""}`}
+        style={open ? {
+          backgroundImage: "radial-gradient(circle at 32% 28%, #FFF9D6 0%, #FFD966 35%, #C9962A 72%, #7A5A10 100%)",
+          boxShadow: "inset 0 2px 4px rgba(0,0,0,0.4), inset 0 0 0 2px rgba(202,138,4,0.9), 0 0 10px rgba(245,196,64,0.45), 0 2px 4px rgba(0,0,0,0.3)",
+        } : undefined}
+        className={`desktop-app-orb group relative z-[105] h-[36px] w-[36px] rounded-full grid place-items-center
+          ring-1 ring-slate-400/50
+          bg-[radial-gradient(circle_at_32%_28%,#FFFFFF_0%,#F8FAFC_45%,#E8EEF4_75%,#D6DEE8_100%)]
+          shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.95),inset_0_-2px_4px_rgba(148,163,184,0.35),inset_0_0_0_1px_rgba(255,255,255,0.5),0_1px_2px_rgba(0,0,0,0.2),0_3px_8px_rgba(0,0,0,0.12)]
+          ${open
+            ? ""
+            : "hover:bg-[radial-gradient(circle_at_32%_28%,#FFFDF0_0%,#FDF3CE_38%,#F7E39C_72%,#E9CE7E_100%)] hover:ring-amber-400/80 hover:shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.95),inset_0_-2px_4px_rgba(148,163,184,0.35),inset_0_0_0_1px_rgba(255,255,255,0.5),0_0_12px_rgba(245,196,64,0.55),0_2px_4px_rgba(0,0,0,0.25)] active:bg-[radial-gradient(circle_at_32%_28%,#FFF9D6_0%,#FFD966_35%,#C9962A_72%,#7A5A10_100%)] active:ring-amber-500/70 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.4),0_1px_2px_rgba(0,0,0,0.3)]"}
+        `}
       >
-        <img src={systeckIcon} alt="Systeck" className="relative z-10 h-6 w-6 object-contain drop-shadow-[0_1px_1px_rgba(0,0,0,0.55)]" />
+        <img src={systeckIcon} alt="Systeck" className="relative z-10 h-[25px] w-[25px] object-contain drop-shadow-[0_1px_1px_rgba(0,0,0,0.55)]" />
         <span aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden rounded-full">
           <span className="absolute left-[14%] right-[14%] top-[6%] h-[42%] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.85)_0%,rgba(255,255,255,0.35)_45%,rgba(255,255,255,0)_75%)] blur-[0.5px]" />
         </span>
         <span aria-hidden className="pointer-events-none absolute inset-0 rounded-full shadow-[inset_0_-1px_0_rgba(255,255,255,0.25)]" />
       </button>
       {open && (
-        <div className="absolute top-[calc(100%-1.1rem)] left-1 mt-1 z-[100] w-60 rounded-md border border-slate-400/70 bg-[#F8FAFC] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+        <div className="desktop-app-menu desktop-menu-enter absolute top-full left-1 mt-1 z-[100] w-60 rounded-md border border-slate-400/70 bg-[#F8FAFC] shadow-2xl overflow-hidden">
           <div className="px-3 py-2 bg-gradient-to-b from-[#4A6789] to-[#243B55] text-white text-[11px] font-semibold tracking-wide flex items-center gap-2">
             <Cpu className="h-3.5 w-3.5 text-amber-300" /> Systeck — {companyName?.trim() || "C2TECK S.A.C."}
           </div>
           <button
             onClick={() => { setOpen(false); onSwitchCompany(); }}
-            className="w-full text-left px-3 py-2.5 text-[12px] text-slate-800 hover:bg-[#DDE7F3] flex items-center gap-2.5 border-b border-slate-200"
+            className="desktop-app-menu-item w-full text-left px-3 py-2.5 text-[12px] text-slate-800 hover:bg-[#DDE7F3] flex items-center gap-2.5 border-b border-slate-200"
           >
             <Building2 className="h-4 w-4 text-[#3E5B7A]" />
             <div>
@@ -2692,7 +2776,7 @@ function AppOrb({ companyName, onSwitchCompany, onCloseApp }: { companyName?: st
           </button>
           <button
             onClick={() => { setOpen(false); onCloseApp(); }}
-            className="w-full text-left px-3 py-2.5 text-[12px] text-slate-800 hover:bg-red-50 flex items-center gap-2.5"
+            className="desktop-app-menu-item w-full text-left px-3 py-2.5 text-[12px] text-slate-800 hover:bg-red-50 flex items-center gap-2.5"
           >
             <LogOut className="h-4 w-4 text-red-600" />
             <div>
@@ -2706,63 +2790,55 @@ function AppOrb({ companyName, onSwitchCompany, onCloseApp }: { companyName?: st
   );
 }
 
-// Carrusel de Pestañas Animado con el prop onTabClick tipado
+// Pestañas LED del nuevo escritorio: mantiene onTabClick y doble clic del Ribbon.
 function TabsCarousel({
-  tabs,
-  active,
-  onSelect,
-  onTabClick,
+  tabs, active, onSelect, onTabClick,
 }: {
   tabs: string[];
   active: string;
   onSelect: (tab: string) => void;
   onTabClick?: (e: React.MouseEvent<HTMLButtonElement>, t: string) => void;
 }) {
-  const handleTabClick = (e: React.MouseEvent<HTMLButtonElement>, t: string) => {
-    if (onTabClick) {
-      onTabClick(e, t);
-    } else {
-      onSelect(t);
-    }
-  };
-
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const track = scrollRef.current;
+    if (!track) return;
+    const selected = Array.from(track.querySelectorAll<HTMLButtonElement>("button[data-active='true']"))[0];
+    if (!selected) return;
+    const left = selected.offsetLeft - track.offsetLeft;
+    const right = left + selected.offsetWidth;
+    const visibleLeft = track.scrollLeft;
+    const visibleRight = visibleLeft + track.clientWidth;
+    if (left >= visibleLeft + 8 && right <= visibleRight - 8) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    track.scrollTo({ left: Math.max(0, left - track.clientWidth / 2 + selected.offsetWidth / 2), behavior: reduced ? "auto" : "smooth" });
+  }, [active]);
   return (
-    <div className="flex h-full items-center px-2 pt-1 gap-0 overflow-hidden">
-      <div className="flex h-full items-center gap-1 pr-1 shrink-0">
-        <button type="button" className="h-5 w-5 rounded hover:bg-white/60 grid place-items-center flex-shrink-0">
-          <ChevronDown className="h-3 w-3" />
-        </button>
-        <div className="w-px h-4 bg-slate-400/30"></div>
-      </div>
+    <div ref={scrollRef} className="no-scrollbar flex h-full items-end gap-0.5 overflow-x-auto px-2 pt-1.5">
       {tabs.map((t) => {
         const isActive = active === t;
         return (
-          <button
-            key={t}
-            type="button"
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleTabClick(e, t)}
+          <button key={t} type="button"
+            onClick={(e) => onTabClick ? onTabClick(e, t) : onSelect(t)}
+            aria-current={isActive ? "page" : undefined}
+            data-active={isActive}
+            style={ledStyle(TAB_LEDS[t] ?? DEFAULT_LED)}
             className={[
-              "relative flex-1 px-2.5 py-1.5 text-[11px] font-medium rounded-t border-x border-t transition-colors text-center whitespace-nowrap select-none",
-              isActive
-                ? "bg-[#F3F6FA] border-slate-400/60 text-slate-900 font-semibold -mb-[2px] z-10"
-                : "bg-transparent border-transparent text-slate-600 hover:bg-white/40 hover:text-slate-800",
+              "desktop-module-tab relative shrink-0 px-3 py-2 text-[13px] font-semibold rounded-t-md transition-[color,background-color,box-shadow] select-none",
+              isActive ? "desktop-module-tab-active -mb-px" : "text-slate-600 hover:bg-white/70 hover:text-slate-900",
             ].join(" ")}
           >
-            <span className="relative z-10">{t}</span>
-            {isActive && (
-  <motion.div
-    layoutId="activeTabLine"
-    className="absolute bottom-0 left-3 right-3 h-[1.5px] bg-[#1E3A8A]/80 rounded-full"
-    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-  />
-)}
+            <span className="desktop-tab-label relative z-10">{t}</span>
+            <span aria-hidden="true" className={[
+              "pointer-events-none absolute -top-px left-1 right-1 rounded-t",
+              isActive ? "desktop-tab-indicator desktop-led-line h-[2.5px]" : "desktop-led-line-dim h-[1.5px]",
+            ].join(" ")} />
           </button>
         );
       })}
     </div>
   );
 }
-
 
 function RibbonBigButton({ icon: Icon, label, iconKey, iconTab, iconScope, dropdown, menu, openLabel, onOpen }: RibbonBtn & { iconTab: string; iconScope: string; onOpen: (label: string) => void }) {
   const [open, setOpen] = useState(false);
@@ -2792,10 +2868,10 @@ function RibbonBigButton({ icon: Icon, label, iconKey, iconTab, iconScope, dropd
         whileTap={{ scale: 0.97, y: 0 }}
         transition={{ duration: 0.12 }}
         className={[
-          "flex flex-col items-center gap-1 px-1.5 py-0.5 rounded border w-[64px]",
+          "desktop-command desktop-ribbon-action group/rb flex flex-col items-center gap-1 px-1.5 py-1 rounded-md border border-transparent w-[68px] transition-all duration-200 active:scale-[0.96]",
           open
-            ? "bg-gradient-to-b from-[#FCE9A8] to-[#F5C86A] border-[#B8892E] shadow-inner"
-            : "border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6]",
+            ? "bg-gradient-to-b from-white to-[#DDE7F3] !border-[#7FA8D6] shadow-[0_2px_6px_rgba(15,95,170,0.25)]"
+            : "hover:bg-white/70 hover:!border-slate-300/70 hover:shadow-[0_2px_5px_rgba(15,23,42,0.08)]",
         ].join(" ")}
       >
         {iconKey ? (
@@ -2810,7 +2886,7 @@ function RibbonBigButton({ icon: Icon, label, iconKey, iconTab, iconScope, dropd
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
           <div
-            className="fixed z-[2147483646] bg-[#F3F6FA] border border-slate-400/70 shadow-xl rounded-sm p-2"
+            className="desktop-menu-surface desktop-menu-enter fixed z-[2147483646] bg-white/95 backdrop-blur border border-slate-300 shadow-[0_20px_60px_-15px_rgba(15,23,42,0.35)] rounded-lg p-2 max-h-[calc(100vh-120px)] overflow-auto"
             style={{ left: pos.left, top: pos.top, maxWidth: "700px" }}
           >
             <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${menu.length}, minmax(0, 1fr))` }}>
@@ -2820,8 +2896,9 @@ function RibbonBigButton({ icon: Icon, label, iconKey, iconTab, iconScope, dropd
                     {sec.items.map((it, itemIndex) => (
                       <button
                         key={`${it.label}-${itemIndex}`}
+                        style={{ "--desktop-item-delay": `${Math.min(sectionIndex * 8 + itemIndex, 24) * 23}ms` } as CSSProperties}
                         onClick={() => { onOpen(it.openLabel ?? it.label); setOpen(false); }}
-                        className="flex items-center gap-1.5 px-1.5 py-0.5 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border border-transparent text-left whitespace-nowrap"
+                        className="desktop-menu-item desktop-menu-action desktop-command flex items-center gap-2 px-1.5 py-1 rounded-md hover:bg-gradient-to-r hover:from-[#EFF5FC] hover:to-white hover:border-[#BFD4EA] border border-transparent text-left whitespace-nowrap transition-all duration-150"
                       >
                         <SmallColorIcon label={it.label} iconKey={it.iconKey} iconScope={`${iconTab} ${sec.title}`} size={22} className="shrink-0" />
                       <span className="text-[11.5px] text-slate-800 whitespace-nowrap font-bold">{it.label}</span>
@@ -2865,58 +2942,102 @@ function RibbonSmallButton({ icon: Icon, label, iconKey, iconTab, iconScope, dro
   const btnRef = useRef<HTMLButtonElement>(null);
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
 
+  // Los menús de botones pequeños (p. ej. Registro de Venta) deben ser compactos.
+  // El ancho se ajusta a su texto; los iconos y la lógica de apertura se conservan.
+  const sectionWidths = (menu ?? []).map((section) => {
+    const longestItem = Math.max(0, ...section.items.map((item) => item.label.length));
+    return Math.max(154, Math.min(230, Math.ceil(Math.max(
+      longestItem * 5.8 + 44,
+      section.title.length * 5.6 + 28,
+    ))));
+  });
+  const menuWidth = Math.min(680, Math.max(154,
+    sectionWidths.reduce((total, width) => total + width, 0) + Math.max(0, sectionWidths.length - 1) * 6 + 12,
+  ));
+  const cleanLabel = label.replace(/\n/g, " ");
+  const closeMenu = () => setOpen(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeMenu();
+    };
+    window.addEventListener("keydown", onEscape);
+    return () => window.removeEventListener("keydown", onEscape);
+  }, [open]);
+
   const toggle = () => {
     if (!menu) {
       onOpen(openLabel ?? label);
       return;
     }
     if (!open && btnRef.current) {
-      const r = btnRef.current.getBoundingClientRect();
-      setPos({ left: r.left, top: r.bottom + 2 });
+      const rect = btnRef.current.getBoundingClientRect();
+      // Abajo del botón correspondiente y sin salirse de la pantalla.
+      setPos({
+        left: Math.max(8, Math.min(rect.left, window.innerWidth - menuWidth - 8)),
+        top: rect.bottom + 4,
+      });
     }
-    setOpen((v) => !v);
+    setOpen(value => !value);
   };
 
   return (
     <>
       <motion.button
         ref={btnRef}
+        type="button"
+        title={cleanLabel}
         onClick={toggle}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.96 }}
-        transition={{ duration: 0.1 }}
+        aria-haspopup={menu ? "menu" : undefined}
+        aria-expanded={menu ? open : undefined}
+        whileHover={{ scale: 1.02, y: -1 }}
+        whileTap={{ scale: 0.97, y: 0 }}
+        transition={{ duration: 0.12 }}
         className={[
-          "flex items-center gap-1 px-1 py-0.5 rounded border text-left text-[10px] press-fx hover:-translate-y-[1px] active:scale-95",
+          "desktop-command desktop-ribbon-action desktop-ribbon-small group/rs relative flex items-center gap-1.5 px-1 lg:px-1.5 py-px rounded-md border border-transparent text-left text-[10px] min-w-0 transition-[background-color,border-color,box-shadow] duration-200",
           open
-            ? "bg-gradient-to-b from-[#FCE9A8] to-[#F5C86A] border-[#B8892E]"
-            : "border-transparent hover:bg-[#DDE7F3] hover:border-[#7FA8D6]",
+            ? "desktop-ribbon-open bg-gradient-to-b from-white to-[#DDE7F3] !border-[#7FA8D6] shadow-[0_1px_0_rgba(255,255,255,0.9)_inset,0_2px_6px_rgba(15,95,170,0.25)]"
+            : "hover:bg-white/80 hover:!border-slate-300/70 hover:shadow-[0_1px_3px_rgba(15,23,42,0.08)]",
         ].join(" ")}
       >
-        <SmallColorIcon label={label} iconKey={iconKey} iconScope={iconScope} size={19} className="shrink-0 group-hover/rs:scale-105 transition-transform" />
-        <span className="text-slate-800 truncate font-bold">{label}</span>
-        {dropdown && <ChevronDown className="h-2 w-2 text-slate-600" />}
+        <SmallColorIcon label={label} iconKey={iconKey} iconScope={iconScope} size={19} className="shrink-0 transition-transform group-hover/rs:scale-105" />
+        <span className="text-slate-800 truncate font-medium">{label}</span>
+        {dropdown && <ChevronDown className="h-2 w-2 shrink-0 text-slate-600" />}
       </motion.button>
-      {open && menu && pos && createPortal(
+      {open && menu && pos && typeof document !== "undefined" && createPortal(
         <>
-          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+          <div className="fixed inset-0 z-[2147483645]" onClick={closeMenu} aria-hidden="true" />
           <div
-            className="fixed z-[2147483646] bg-[#F3F6FA] border border-slate-400/70 shadow-xl rounded-sm p-2"
-            style={{ left: pos.left, top: pos.top, maxWidth: "700px" }}
+            role="menu"
+            aria-label={`Opciones de ${cleanLabel}`}
+            className="desktop-menu-surface desktop-menu-enter desktop-ribbon-dropdown fixed z-[2147483646] rounded-[9px] border border-slate-300 bg-white/95 p-1.5 shadow-[0_9px_22px_-7px_rgba(15,23,42,0.28),0_0_0_1px_rgba(148,163,184,0.14)] backdrop-blur-sm max-h-[calc(100vh-120px)] overflow-y-auto"
+            style={{ left: pos.left, top: pos.top, width: `${menuWidth}px`, maxWidth: "calc(100vw - 16px)" }}
           >
-            <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${menu.length}, minmax(0, 1fr))` }}>
-              {menu.map((sec, sectionIndex) => (
-                <div key={`${sec.title}-${sectionIndex}`} className="flex flex-col">
-                  <div className="flex flex-col gap-0.5">
-                    {sec.items.map((it, itemIndex) => (
+            <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-4 rounded-t-[9px] bg-gradient-to-b from-slate-100 to-transparent" />
+            <div className="relative grid gap-1.5" style={{ gridTemplateColumns: sectionWidths.map(width => `${width}px`).join(" ") }}>
+              {menu.map((section, sectionIndex) => (
+                <div key={`${section.title}-${sectionIndex}`} className="flex min-w-0 flex-col">
+                  <div className="flex flex-col gap-0 px-0 py-0.5">
+                    {section.items.map((item, itemIndex) => (
                       <button
-                        key={`${it.label}-${itemIndex}`}
-                        onClick={() => { onOpen(it.openLabel ?? it.label); setOpen(false); }}
-                        className="flex items-center gap-1.5 px-1.5 py-0.5 rounded hover:bg-[#DDE7F3] hover:border-[#7FA8D6] border border-transparent text-left whitespace-nowrap"
+                        type="button"
+                        role="menuitem"
+                        key={`${item.label}-${itemIndex}`}
+                        style={{
+                          "--desktop-item-index": sectionIndex * 8 + itemIndex,
+                          "--desktop-item-delay": `${Math.min(sectionIndex * 8 + itemIndex, 24) * 24}ms`,
+                        } as CSSProperties}
+                        onClick={() => { onOpen(item.openLabel ?? item.label); closeMenu(); }}
+                        className="desktop-menu-item desktop-menu-action desktop-ribbon-menuitem group/mi flex items-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-left transition-all duration-150 hover:translate-x-0.5 hover:border-[#BFD4EA] hover:bg-gradient-to-r hover:from-[#EFF5FC] hover:to-white active:scale-[0.98]"
                       >
-                        <SmallColorIcon label={it.label} iconKey={it.iconKey} iconScope={`${iconTab} ${sec.title}`} size={18} className="shrink-0" />
-                        <span className="text-[11px] text-slate-800 whitespace-nowrap font-bold">{it.label}</span>
+                        <SmallColorIcon label={item.label} iconKey={item.iconKey} iconScope={`${iconTab} ${section.title}`} size={18} className="shrink-0" />
+                        <span className="text-[10.5px] font-medium text-slate-800 whitespace-nowrap">{item.label}</span>
                       </button>
                     ))}
+                  </div>
+                  <div className="mt-0.5 border-t border-slate-200 pt-1 text-center text-[8.5px] font-semibold uppercase tracking-[0.10em] text-slate-500">
+                    {section.title}
                   </div>
                 </div>
               ))}

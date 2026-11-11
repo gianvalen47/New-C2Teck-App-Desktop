@@ -1,0 +1,489 @@
+/* Systeck — capa visual importable por la ruta escritorio.tsx.
+   Conserva la lógica MDI, el backend y los componentes de ventanas originales.
+   No depende de plugins adicionales ni modifica estilos del login. */
+
+.desktop-motion-root {
+  --systeck-border: rgba(148, 163, 184, .38);
+  --systeck-ink: #1e293b;
+  --systeck-surface: #f4f7fb;
+  isolation: isolate;
+}
+.desktop-main-window { background: var(--systeck-surface); }
+.desktop-qat, .desktop-tabbar { position: relative; }
+.desktop-qat button, .desktop-tabbar button { transition: background-color .18s ease, color .18s ease, box-shadow .18s ease, transform .18s ease; }
+.desktop-qat button:hover { transform: translateY(-1px); }
+.desktop-qat button:active { transform: translateY(0) scale(.94); }
+
+/* Pestañas con filamento LED individual, como en new_escritorio.tsx. */
+.desktop-module-tab {
+  --led-from: #7dd3fc;
+  --led-to: #e0f2fe;
+  --led-glow: rgba(125, 211, 252, .8);
+  border: 1px solid transparent;
+  border-bottom: 0;
+  min-height: 29px;
+}
+.desktop-module-tab-active {
+  background: linear-gradient(180deg, #fff 0%, #f9fbff 60%, #eef4fc 100%);
+  color: #0f172a;
+  border-color: rgba(148,163,184,.48);
+  box-shadow: 0 -4px 12px -7px var(--led-glow), inset 0 1px 0 rgba(255,255,255,.9);
+}
+.desktop-module-tab:hover { color: #0b3b66; }
+.desktop-module-tab:focus-visible, .desktop-command:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 2px;
+}
+.desktop-led-line, .desktop-led-line-dim {
+  display: block;
+  background: linear-gradient(90deg, transparent 0%, var(--led-from) 18%, var(--led-to) 50%, var(--led-from) 82%, transparent 100%);
+  transition: opacity .25s ease, height .25s ease, box-shadow .25s ease;
+}
+.desktop-led-line {
+  box-shadow: 0 0 5px var(--led-glow), 0 0 11px var(--led-glow), 0 0 20px var(--led-glow);
+  animation: systeck-led-light .35s ease-out both;
+}
+.desktop-led-line-dim { opacity: .3; }
+.desktop-module-tab:hover .desktop-led-line-dim { opacity: .85; box-shadow: 0 0 9px var(--led-glow); }
+
+/* Ribbon: superficie cristalina y transición de cambio de módulo. */
+.desktop-ribbon-surface {
+  position: relative;
+  background-image: radial-gradient(ellipse at 10% 0%, rgba(59,130,246,.075), transparent 48%),
+                    radial-gradient(ellipse at 90% 100%, rgba(139,92,246,.05), transparent 50%),
+                    linear-gradient(180deg, #fbfcfe, #f0f5fb 52%, #dfe7f1);
+}
+.desktop-ribbon-enter { animation: systeck-ribbon-reveal .24s ease-out both; }
+.desktop-command { transition: background-color .18s ease, box-shadow .18s ease, transform .18s ease, border-color .18s ease, filter .18s ease; }
+.desktop-command:hover { filter: saturate(1.08); }
+.desktop-command:active { transform: scale(.965); }
+
+/* Menús flotantes renderizados en document.body mediante Portal. */
+.desktop-menu-surface {
+  background: rgba(255,255,255,.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  max-width: calc(100vw - 16px);
+}
+.desktop-menu-enter { transform-origin: top left; animation: systeck-pop .16s cubic-bezier(.2,.75,.35,1) both; }
+.desktop-menu-surface button:hover { transform: translateX(1px); }
+.desktop-menu-surface button { transition: background-color .15s ease, transform .15s ease; }
+
+/* Estado de avisos: overlay, centro de notificaciones y filas. */
+.desktop-overlay-in { animation: systeck-overlay-in .2s ease both; }
+.desktop-overlay-out { animation: systeck-overlay-out .22s ease both; }
+.desktop-notification-in { transform-origin: 95% 0%; animation: systeck-panel-in .3s cubic-bezier(.2,.75,.25,1) both; }
+.desktop-notification-out { transform-origin: 95% 0%; animation: systeck-panel-out .22s ease both; }
+.desktop-notice-row { animation: systeck-row-in .24s ease-out both; animation-delay: calc(var(--notice-index, 0) * 32ms); }
+.desktop-bell-ring { transform-origin: 50% 9%; animation: systeck-bell .65s ease-in-out; }
+.desktop-badge-pulse { animation: systeck-badge 2.4s ease-in-out infinite; }
+.group\/notice:hover .desktop-bell-ring { animation: systeck-bell .65s ease-in-out; }
+
+@keyframes systeck-led-light { from { opacity: 0; transform: scaleX(.7); } to { opacity: 1; transform: scaleX(1); } }
+@keyframes systeck-ribbon-reveal { from { filter: blur(2px); } to { filter: blur(0); } }
+@keyframes systeck-pop { from { opacity: 0; transform: translateY(-7px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes systeck-panel-in { from { opacity: 0; transform: translateY(-7px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes systeck-panel-out { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(-7px) scale(.97); } }
+@keyframes systeck-overlay-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes systeck-overlay-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes systeck-row-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes systeck-bell { 0%, 100% { transform: rotate(0); } 18%, 56% { transform: rotate(-14deg); } 35%, 76% { transform: rotate(12deg); } }
+@keyframes systeck-badge { 0%, 80%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,.05); } 35% { box-shadow: 0 0 0 5px rgba(239,68,68,0); } }
+
+/* Tema nocturno: cambia el shell y ribbon sin alterar los formularios reales de SIGECOM. */
+.desktop-motion-root.desktop-dark { --systeck-surface: #101a29; --systeck-border: rgba(148,163,184,.24); }
+.desktop-motion-root.desktop-dark .desktop-main-window { color: #e2e8f0; background: #111d2d; }
+.desktop-dark .desktop-main-window > div[class*="bg-white"]:first-of-type { background-color: #172337 !important; border-bottom-color: #334155 !important; }
+.desktop-dark .desktop-main-window > div[class*="bg-white"]:first-of-type .text-slate-900 { color: #f1f5f9 !important; }
+.desktop-dark .desktop-qat { background: linear-gradient(180deg, #26354a, #182638) !important; border-color: #3b4c60 !important; }
+.desktop-dark .desktop-tabbar { background: linear-gradient(180deg, #2a3a50, #1c2d43) !important; border-color: #42536a !important; }
+.desktop-dark .desktop-module-tab { color: #b5c6dd; }
+.desktop-dark .desktop-module-tab-active { background: linear-gradient(180deg, #2e3f57, #1c2b3c); border-color: #56708b; color: #fff !important; }
+.desktop-dark .desktop-ribbon-surface { background-image: radial-gradient(circle at 10% 0%, rgba(0,229,255,.07), transparent 50%), linear-gradient(180deg, #26394f, #1b2b3c 55%, #182638) !important; border-color: #32465b; }
+.desktop-dark .desktop-ribbon-surface .text-slate-800 { color: #e6eefb !important; }
+.desktop-dark .desktop-ribbon-surface .text-slate-500 { color: #9eb3d0 !important; }
+.desktop-dark .desktop-ribbon-surface .group\/rgrp { border-color: rgba(148,163,184,.22); }
+.desktop-dark .desktop-ribbon-surface .group\/rgrp:hover, .desktop-dark .desktop-ribbon-surface .desktop-command:hover { background: rgba(255,255,255,.1) !important; }
+.desktop-dark .desktop-qat button, .desktop-dark .desktop-qat span { color: #cbd5e1; }
+.desktop-dark .desktop-status { border-color: #0f172a; }
+html.desktop-dark .desktop-menu-surface { color: #e2e8f0; background: rgba(23,37,56,.97); border-color: #42536a; }
+html.desktop-dark .desktop-menu-surface span, html.desktop-dark .desktop-menu-surface div { color: #dbeafe; }
+html.desktop-dark .desktop-menu-surface button:hover { background: rgba(56,189,248,.14); }
+
+/* Accesibilidad y rendimiento: desactivar animaciones si la persona así lo solicita. */
+@media (prefers-reduced-motion: reduce) {
+  .desktop-motion-root *, .desktop-motion-root *::before, .desktop-motion-root *::after,
+  .desktop-menu-surface, .desktop-menu-surface *, .desktop-notification-in, .desktop-notification-out,
+  .desktop-overlay-in, .desktop-overlay-out {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* ===== Systeck Motion 2.0: efectos adicionales tomados del prototipo =====
+   Animaciones de superficies y controles, SIN modificar SVG ni registros ICONOS_COLOR. */
+.desktop-motion-root {
+  --systeck-anim-fast: 150ms;
+  --systeck-anim-normal: 260ms;
+  --systeck-ease-out: cubic-bezier(.19, .74, .27, 1);
+}
+.desktop-motion-root::before {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 29% 25%, rgba(125, 211, 252, .10), transparent 46%),
+              radial-gradient(ellipse at 78% 80%, rgba(99, 102, 241, .13), transparent 48%);
+  animation: systeck-ambient-drift 20s ease-in-out infinite alternate;
+  will-change: transform;
+}
+.desktop-wallpaper-grid { animation: systeck-wallpaper-reveal .9s ease both; }
+.desktop-shell-enter { animation: systeck-shell-arrive .38s var(--systeck-ease-out) backwards; }
+.desktop-chrome { position: relative; transition: background-color .32s ease, border-color .32s ease; }
+.desktop-chrome::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.96), transparent);
+}
+.desktop-brand-mark { animation: systeck-brand-arrive .38s cubic-bezier(.18,.84,.25,1.16) both; }
+.desktop-chrome-action { position: relative; transition: background .18s ease, transform .16s ease, color .18s ease; }
+.desktop-chrome-action:hover { transform: translateY(-1px); }
+.desktop-chrome-action:active { transform: translateY(0) scale(.92); }
+.desktop-search-field { transition: background-color .22s ease, border-color .22s ease, box-shadow .22s ease, transform .22s ease; }
+.desktop-search-field:focus-within { transform: translateY(-1px); box-shadow: 0 4px 12px -7px rgba(59,130,246,.25), 0 0 0 2px rgba(56,189,248,.15); }
+.desktop-command-results { transform-origin: top center; }
+.desktop-command-results .desktop-menu-item { animation: systeck-menu-item .18s ease-out backwards; animation-delay: var(--desktop-item-delay, 0ms); }
+
+/* Acceso rápido: reacción física en hover y estrella brillante al marcar favorito. */
+.desktop-qat-enter { animation: systeck-qat-enter .28s ease-out both; }
+.desktop-quick-btn { position: relative; }
+.desktop-quick-btn:hover { background: rgba(255,255,255,.9); box-shadow: 0 2px 5px rgba(15,23,42,.12); }
+.desktop-favorite-on { color: #d97706; }
+.desktop-favorite-on::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: -2px;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px rgba(245,158,11,.35), 0 0 12px rgba(251,191,36,.28);
+  animation: systeck-favorite-spark .42s ease-out both;
+}
+.desktop-online-dot { animation: systeck-online-glow 2.8s ease-in-out infinite; }
+.desktop-tabbar-enter { animation: systeck-tabbar-arrive .3s ease-out both; }
+.desktop-tab-rise { transition: transform .17s ease, background-color .2s ease, color .2s ease, box-shadow .22s ease; }
+.desktop-tab-rise:not(.desktop-module-tab-active):hover { transform: translateY(-2px); }
+.desktop-tab-rise:active { transform: translateY(0) scale(.97); }
+.desktop-tab-label { transition: color .15s ease; }
+.desktop-module-tab-active .desktop-tab-label { animation: systeck-active-tab-text .27s ease-out both; }
+.desktop-tab-indicator { overflow: visible; }
+.desktop-led-line { animation: systeck-led-light .35s ease-out both, systeck-led-glint 2.9s 1s ease-in-out infinite; }
+.desktop-led-line-dim { opacity: .34; }
+.desktop-module-tab:hover .desktop-led-line-dim { opacity: 1; box-shadow: 0 0 7px var(--led-glow), 0 0 13px var(--led-glow); }
+.desktop-module-tab-active { box-shadow: 0 -5px 14px -7px var(--led-glow), inset 0 1px 0 rgba(255,255,255,.9); }
+
+/* Ribbon: cada grupo entra unos milisegundos después del anterior. */
+.desktop-ribbon-surface { transition: background-color .25s ease, border-color .25s ease, box-shadow .25s ease; }
+.desktop-ribbon-enter { animation: systeck-ribbon-reveal .22s ease-out both; }
+.desktop-ribbon-group {
+  position: relative;
+  animation: systeck-ribbon-group-in .29s var(--systeck-ease-out) backwards;
+  animation-delay: var(--desktop-group-delay, 0ms);
+  transition: background-color .2s ease, border-color .2s ease;
+}
+.desktop-ribbon-group::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 3px 3px 13px;
+  border-radius: 6px;
+  opacity: 0;
+  background: linear-gradient(110deg, transparent 15%, rgba(255,255,255,.58) 52%, transparent 88%);
+  transform: translateX(-12px);
+  transition: transform .28s ease, opacity .28s ease;
+}
+.desktop-ribbon-group:hover::before { opacity: .5; transform: translateX(0); }
+.desktop-ribbon-group-title { transition: color .2s ease, letter-spacing .2s ease, border-color .2s ease; }
+.desktop-ribbon-group:hover .desktop-ribbon-group-title { color: #0f5fa3; border-top-color: rgba(59,130,246,.32); }
+.desktop-ribbon-action { position: relative; isolation: isolate; }
+.desktop-ribbon-action::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(110deg, transparent, rgba(255,255,255,.58), transparent);
+  opacity: 0;
+  transform: translateX(-15%);
+  transition: opacity .17s ease, transform .24s ease;
+}
+.desktop-ribbon-action:hover::before { opacity: .72; transform: translateX(15%); }
+/* Los SVG, PNG y demás iconos conservan exactamente su representación original. */
+
+/* Menús: apertura flotante, opciones escalonadas y submenús. */
+.desktop-menu-surface { transform-origin: top left; }
+.desktop-menu-item {
+  animation: systeck-menu-item .23s cubic-bezier(.2,.76,.25,1) backwards;
+  animation-delay: var(--desktop-item-delay, 0ms);
+}
+.desktop-menu-action { transition: background-color .16s ease, border-color .16s ease, transform .16s ease, box-shadow .16s ease; }
+.desktop-menu-action:hover { transform: translateX(2px); box-shadow: 0 1px 3px rgba(15,23,42,.08); }
+.desktop-submenu-enter { animation: systeck-submenu-open .2s ease-out both; }
+.desktop-context-menu { transform-origin: top left; animation: systeck-pop .17s ease-out both; }
+.desktop-app-menu { transform-origin: 12% 0%; }
+.desktop-app-menu-item { transition: background-color .18s ease, padding-left .2s ease; }
+.desktop-app-menu-item:hover { padding-left: 16px; }
+.desktop-app-orb { transition: filter .25s ease, box-shadow .25s ease, transform .25s ease; }
+.desktop-app-orb:hover { filter: saturate(1.12) brightness(1.04); transform: translateY(-1px) scale(1.035); }
+.desktop-app-orb:active { transform: translateY(0) scale(.96); }
+
+/* Bandeja MDI: las pestañas se incorporan y su selección emite un brillo tenue. */
+.desktop-status-enter { animation: systeck-status-arrive .28s ease-out both; }
+.desktop-task-entry { position: relative; animation: systeck-task-add .25s cubic-bezier(.2,.76,.3,1) backwards; transition: border-color .19s ease, background-color .19s ease, transform .19s ease, opacity .19s ease, box-shadow .19s ease; }
+.desktop-task-entry:hover { transform: translateY(-1px); }
+.desktop-task-entry:active { transform: translateY(0) scale(.98); }
+.desktop-task-entry[data-active="true"] { box-shadow: inset 0 -2px 0 #00e5ff, 0 0 11px -5px rgba(0,229,255,.55); }
+.desktop-status-line { position: relative; }
+.desktop-status-line::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,229,255,.25), transparent);
+  pointer-events: none;
+}
+
+@keyframes systeck-ambient-drift { from { transform: translate3d(-1%, -1%, 0) scale(1); } to { transform: translate3d(2%,1.6%,0) scale(1.04); } }
+@keyframes systeck-wallpaper-reveal { from { opacity: 0; } to { opacity: .07; } }
+@keyframes systeck-shell-arrive { from { opacity: .3; transform: translateY(7px) scale(.995); } to { opacity: 1; transform: none; } }
+@keyframes systeck-brand-arrive { from { opacity: .5; transform: scale(.85) rotate(-7deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+@keyframes systeck-qat-enter { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes systeck-tabbar-arrive { from { opacity: .45; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes systeck-active-tab-text { from { opacity: .55; } to { opacity: 1; } }
+@keyframes systeck-led-glint { 0%, 66%, 100% { filter: brightness(1); } 78% { filter: brightness(1.28); } }
+@keyframes systeck-online-glow { 0%,100% { box-shadow: 0 0 3px currentColor; opacity: .8; } 45% { box-shadow: 0 0 9px currentColor; opacity: 1; } }
+@keyframes systeck-favorite-spark { from { opacity: 0; transform: scale(.6); } 50% { opacity: 1; } to { opacity: .9; transform: scale(1); } }
+@keyframes systeck-ribbon-group-in { from { opacity: .1; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes systeck-menu-item { from { opacity: 0; transform: translateY(-4px) translateX(-3px); } to { opacity: 1; transform: translateY(0) translateX(0); } }
+@keyframes systeck-submenu-open { from { opacity: 0; transform: scaleY(.88) translateY(-3px); } to { opacity: 1; transform: scaleY(1) translateY(0); } }
+@keyframes systeck-status-arrive { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes systeck-task-add { from { opacity: 0; transform: translateY(6px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+/* El modo nocturno modifica las superficies, no los colores individuales de los iconos. */
+.desktop-dark .desktop-search-field { background: rgba(30,41,59,.95); border-color: #51657d; }
+.desktop-dark .desktop-search-field input { color: #e2e8f0; }
+.desktop-dark .desktop-search-field kbd { color: #dbeafe; border-color: #51657d; }
+.desktop-dark .desktop-chrome-action { color: #dbeafe; }
+.desktop-dark .desktop-brand-mark { border-color: #64748b; }
+.desktop-dark .desktop-ribbon-group:hover .desktop-ribbon-group-title { color: #7dd3fc; }
+.desktop-dark .desktop-ribbon-action::before { background: linear-gradient(110deg,transparent,rgba(255,255,255,.09),transparent); }
+.desktop-dark .desktop-app-menu { color: #e2e8f0; background: #1e293b; }
+.desktop-dark .desktop-app-menu-item { color: #e2e8f0; }
+.desktop-dark .desktop-app-menu-item:hover { background: rgba(56,189,248,.11); }
+.desktop-dark .desktop-context-menu { color: #e2e8f0; background: #1e293b; border-color: #475569; }
+.desktop-dark .desktop-tab-label { color: inherit; }
+
+@media (prefers-reduced-motion: reduce) {
+  .desktop-motion-root, .desktop-motion-root::before, .desktop-motion-root::after,
+  .desktop-app-menu, .desktop-context-menu,
+  .desktop-motion-root .desktop-task-entry, .desktop-motion-root .desktop-ribbon-group,
+  .desktop-motion-root .desktop-wallpaper-grid,
+  .desktop-motion-root .desktop-online-dot,
+  .desktop-motion-root .desktop-favorite-on::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+
+/* ===== Ajuste exacto: menús pequeños = menús grandes, filamentos = prototipo ===== */
+.desktop-motion-root .desktop-module-tab {
+  min-height: 30px;       /* Altura de cada pestaña */
+  border-bottom-width: 0;
+  padding: 4px 8px;      /* Espacio interior y anchura */
+  font-size: 12px;        /* Tamaño de las letras */
+  line-height: 16px;
+}
+.desktop-motion-root .desktop-module-tab .desktop-led-line,
+.desktop-motion-root .desktop-module-tab .desktop-led-line-dim {
+  left: 4px;
+  right: 4px;
+  top: -1px;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(90deg, var(--led-from), var(--led-to));
+  transform-origin: center;
+  pointer-events: none;
+}
+.desktop-motion-root .desktop-module-tab .desktop-led-line { height: 2.5px; }
+.desktop-motion-root .desktop-module-tab .desktop-led-line-dim { height: 1.5px; opacity: .3; box-shadow: 0 0 4px var(--led-glow); }
+.desktop-motion-root .desktop-module-tab .desktop-led-line::after {
+  content: "";
+  position: absolute;
+  inset: .5px 14% 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.95), transparent);
+  opacity: .9;
+}
+/* Exactamente el tratamiento sin resplandor de styles (1).css en el tema claro. */
+html:not(.desktop-dark) .desktop-motion-root .desktop-module-tab .desktop-led-line,
+html:not(.desktop-dark) .desktop-motion-root .desktop-module-tab .desktop-led-line-dim {
+  background: linear-gradient(90deg,
+      color-mix(in oklab, var(--led-from) 68%, var(--doc-ink)),
+      color-mix(in oklab, var(--led-to) 68%, var(--doc-ink)));
+  box-shadow: none;
+}
+html:not(.desktop-dark) .desktop-motion-root .desktop-module-tab .desktop-led-line::after { content: none; }
+html:not(.desktop-dark) .desktop-motion-root .desktop-module-tab .desktop-led-line-dim { opacity: .55; }
+html:not(.desktop-dark) .desktop-motion-root .desktop-module-tab-active {
+  background-image: linear-gradient(180deg,
+    color-mix(in oklab, var(--led-from) 18%, var(--doc-surface)),
+    color-mix(in oklab, var(--led-to) 10%, var(--doc-surface)));
+  color: var(--doc-ink);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--led-from) 28%, transparent),
+              0 1px 0 color-mix(in oklab, var(--led-from) 16%, transparent);
+}
+html.desktop-dark .desktop-motion-root .desktop-module-tab .desktop-led-line {
+  box-shadow: 0 0 6px var(--led-glow), 0 0 16px var(--led-glow),
+    0 0 30px var(--led-glow), 0 2px 14px var(--led-glow);
+}
+html.desktop-dark .desktop-motion-root .desktop-module-tab .desktop-led-line-dim { opacity: .45; }
+
+/* Los botones pequeños mantienen las animaciones de Clientes, pero con un panel compacto. */
+.desktop-ribbon-small.desktop-ribbon-open {
+  border-color: #7FA8D6;
+  background-image: linear-gradient(180deg, #fff, #DDE7F3);
+  box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 2px 6px rgba(15,95,170,.25);
+}
+.desktop-ribbon-small:hover,
+.desktop-ribbon-small.desktop-ribbon-open { border-radius: 6px; }
+.desktop-ribbon-dropdown {
+  overflow-x: hidden;
+  border-radius: 9px;
+  box-shadow: 0 9px 22px -7px rgba(15,23,42,.28),
+              0 0 0 1px rgba(148,163,184,.14);
+}
+.desktop-ribbon-dropdown .desktop-ribbon-menuitem {
+  min-height: 26px;
+  animation: systeck-menu-item .23s cubic-bezier(.2,.76,.25,1) backwards;
+  animation-delay: var(--desktop-item-delay, 0ms);
+  transition: background-color .16s ease, border-color .16s ease,
+              transform .16s ease, box-shadow .16s ease;
+}
+.desktop-ribbon-dropdown .desktop-ribbon-menuitem:hover,
+.desktop-ribbon-dropdown .desktop-ribbon-menuitem:focus-visible {
+  transform: translateX(2px);
+  background: linear-gradient(90deg,#EFF5FC,#fff);
+  border-color: #BFD4EA;
+  box-shadow: 0 1px 3px rgba(15,23,42,.08);
+}
+.desktop-ribbon-dropdown .desktop-ribbon-menuitem:active { transform: scale(.98); }
+html.desktop-dark .desktop-ribbon-small.desktop-ribbon-open {
+  background-image: linear-gradient(180deg,#1e3a5f,#172a45);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6, 0 4px 12px -4px rgba(59,130,246,.5);
+}
+html.desktop-dark .desktop-ribbon-dropdown .desktop-ribbon-menuitem:hover,
+html.desktop-dark .desktop-ribbon-dropdown .desktop-ribbon-menuitem:focus-visible {
+  background: linear-gradient(90deg, rgba(59,130,246,.22), rgba(59,130,246,.06));
+  border-color: rgba(96,165,250,.4);
+}
+@media (prefers-reduced-motion: reduce) {
+  .desktop-ribbon-dropdown .desktop-ribbon-menuitem,
+  .desktop-motion-root .desktop-module-tab .desktop-led-line,
+  .desktop-motion-root .desktop-module-tab .desktop-led-line-dim { animation: none !important; transition: none !important; }
+}
+
+
+/* Cabecera: el título reemplaza el campo de búsqueda; el icono de aplicación es visible en su totalidad. */
+.desktop-centered-title { text-shadow: 0 1px 0 rgba(255,255,255,.8); }
+.desktop-app-orb-wrap { overflow: visible; }
+.desktop-tabbar { overflow: visible; }
+.desktop-app-orb { transform: translateY(0); transform-origin: center; }
+@media (max-width: 690px) {
+  .desktop-centered-title { width: min(49vw, 320px); }
+  .desktop-centered-title > div { gap: 3px; font-size: 10px; }
+  .desktop-centered-title > span { font-size: 8px; }
+  .desktop-centered-title > div > span:last-child { font-size: 7px; }
+}
+@media (max-width: 460px) {
+  .desktop-centered-title { width: min(42vw, 220px); }
+  .desktop-centered-title > span { display: none; }
+  .desktop-centered-title > div > span:last-child { display: none; }
+}
+
+
+/* ===== Ajuste final solicitado: logo de aplicacion libre en zoom =====
+   La barra de pestañas se eleva SOLAMENTE mientras se interactua con el orbe.
+   De esta manera, Acceso Rapido y la cabecera no pueden tapar el circulo,
+   sin superponer de manera permanente la barra al buscador Ctrl+K. */
+.desktop-app-orb-wrap {
+  position: relative;
+  overflow: visible !important;
+  isolation: isolate;
+}
+.desktop-app-orb {
+  position: relative;
+  z-index: 2;
+  transform-origin: center center;
+  transition: transform 240ms cubic-bezier(.16, 1, .3, 1),
+              filter 240ms ease, box-shadow 240ms ease;
+  will-change: transform;
+}
+.desktop-app-orb:hover,
+.desktop-app-orb:focus-visible {
+  transform: translateY(-1px) scale(1.13);
+  filter: saturate(1.12) brightness(1.04);
+}
+.desktop-app-orb:active { transform: translateY(0) scale(1.04); }
+/* :has() soportado por Chromium / Electron moderno. Eleva TODO el contexto
+   del orbe por encima de las barras previa y superior al hacer zoom. */
+.desktop-tabbar:has(.desktop-app-orb:hover),
+.desktop-tabbar:has(.desktop-app-orb:focus-visible),
+.desktop-tabbar:has(.desktop-app-orb-wrap:focus-within) {
+  z-index: 95 !important;
+  overflow: visible !important;
+}
+.desktop-tabbar .desktop-app-orb-wrap:has(.desktop-app-orb:hover),
+.desktop-tabbar .desktop-app-orb-wrap:focus-within { z-index: 101 !important; }
+@media (prefers-reduced-motion: reduce) {
+  .desktop-app-orb { transition: none !important; }
+}
+
+
+/* Ajuste de cabecera solicitado: zona clicable hasta cada borde del sistema. */
+.desktop-chrome { min-height: 34px; height: 34px; overflow: visible; }
+.desktop-chrome > div:last-child { position: relative; z-index: 110; height: 100%; margin-right: 0 !important; }
+.desktop-chrome-action { height: 100%; border-radius: 0; transform: none !important; }
+.desktop-chrome-action:hover, .desktop-chrome-action:active { transform: none !important; }
+.desktop-chrome-action:last-child { margin-right: 0 !important; }
+
+/* Pestañas ampliadas: más altura, espacio interior y texto legible. LED sin cambios. */
+.desktop-tabbar { min-height: 50px; overflow: visible !important; }
+.desktop-module-tab { min-height: 41px; font-size: 13px; }
+
+/* Logo S completamente visible. Sin rebote, sin desplazamiento en hover o click. */
+.desktop-app-orb-wrap { position: relative; z-index: 115; overflow: visible !important; isolation: auto; }
+.desktop-app-orb {
+  z-index: 120;
+  transform: none !important;
+  transform-origin: center center;
+  transition: filter 160ms ease, box-shadow 160ms ease !important;
+  animation: none !important;
+  will-change: auto;
+}
+.desktop-app-orb:hover, .desktop-app-orb:focus-visible {
+  transform: none !important;
+  filter: saturate(1.1) brightness(1.04);
+}
+.desktop-app-orb:active { transform: none !important; }
+.desktop-tabbar:has(.desktop-app-orb:hover),
+.desktop-tabbar:has(.desktop-app-orb:focus-visible),
+.desktop-tabbar:has(.desktop-app-orb-wrap:focus-within) { z-index: 90 !important; overflow: visible !important; }
+@media (prefers-reduced-motion: reduce) { .desktop-app-orb { transition: none !important; } }

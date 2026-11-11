@@ -6,6 +6,7 @@ import logoC2 from "@/assets/Logos/LogoC2teck02.png";
 import { useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import systeckWallpaper from "@/assets/Background/systeck-wallpaper-hd.png";
+import systeckWallpaperNight from "@/assets/systeck-wallpaper-night.png";
 import {
   X, Check, Save, Printer, Search, Plus, Trash2, FileDown, FileSpreadsheet,
   Mail, Send, RefreshCw, Filter, Calendar, DollarSign, User, Package,
